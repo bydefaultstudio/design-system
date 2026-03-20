@@ -1,0 +1,1210 @@
+/* ─────────────────────────────
+   DESIGN SYSTEM FRAMEWORK
+   ───────────────────────────── */
+
+
+
+/* ------ 1. BRAND MAPPING ------ */
+
+/*
+ * This section maps brand book tokens into the design system.
+ * The brand book (brand-book/brand-book.css) defines --brand-* tokens.
+ * The DS reads them here with fallback defaults.
+ *
+ * If no brand book is loaded, the defaults below are used.
+ * Load order does not matter — CSS custom property fallbacks handle it.
+ *
+ *   <link rel="stylesheet" href="design-system/design-system.css">
+ *   <link rel="stylesheet" href="brand-book/brand-book.css">
+ */
+
+:root {
+  /* -- Fonts (from brand book) -- */
+  --font-primary: var(--brand-font-primary, "Inter", sans-serif);
+  --font-secondary: var(--brand-font-secondary, "Georgia", serif);
+  --font-tertiary: var(--brand-font-tertiary, monospace);
+
+  /* -- Brand colours (from brand book) -- */
+  --brand-dark: var(--brand-color-dark, #333333);
+  --brand-light: var(--brand-color-light, #f7f7f7);
+  --brand-accent: var(--brand-color-accent, #3485cd);
+
+  /* -- Base font sizes -- */
+  --font-2xs: 12px;
+  --font-xs: 14px;
+  --font-s: 16px;
+  --font-m: 18px;
+  --font-l: 22px;
+  --font-xl: 24px;
+  --font-2xl: 28px;
+  --font-3xl: 32px;
+  --font-4xl: 40px;
+  --font-5xl: 48px;
+  --font-6xl: 55px;
+  --font-7xl: 64px;
+
+  /* -- UI font sizes -- */
+  --button-font-size: var(--font-xs);
+  --button-font-size-small: var(--font-2xs);
+
+  /* -- Line height tokens -- */
+  --line-height-s: 1;
+  --line-height-m: 1.2;
+  --line-height-l: 1.4;
+  --line-height-xl: 1.6;
+  --line-height-2xl: 1.8;
+
+  /* -- Font weight tokens -- */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
+  --font-weight-black: 900;
+
+  /* -- Letter spacing tokens (em-based for proportional scaling) -- */
+  --letter-spacing-s: 0.03em;
+  --letter-spacing-m: 0.06em;
+  --letter-spacing-l: 0.08em;
+  --letter-spacing-xl: 0.11em;
+}
+
+/* ------ 2. SYSTEM TOKENS - COLORS ------ */
+
+:root {
+  /* -- Neutrals -- */
+  --neutral-50: #f7f7f7;
+  --neutral-100: #efefef;
+  --neutral-150: #e7e7e7;
+  --neutral-200: #dedede;
+  --neutral-300: #cccccc;
+  --neutral-400: #aaaaaa;
+  --neutral-500: #8c8c8c;
+  --neutral-600: #666666;
+  --neutral-700: #4d4d4d;
+  --neutral-800: #333333;
+  --neutral-900: #111111;
+  --neutral-950: #0a0a0a;
+
+  /* -- Black & White Alpha Tokens -- */
+  --black: #000000;
+  --black-alpha-5: #0000000d;
+  --black-alpha-10: #0000001a;
+  --black-alpha-15: #00000026;
+  --black-alpha-20: #00000033;
+  --black-alpha-30: #0000004d;
+  --black-alpha-40: #00000066;
+  --black-alpha-50: #00000080;
+
+  --white: #ffffff;
+  --white-alpha-5: #ffffff0d;
+  --white-alpha-10: #ffffff1a;
+  --white-alpha-15: #ffffff26;
+  --white-alpha-20: #ffffff33;
+  --white-alpha-30: #ffffff4d;
+  --white-alpha-40: #ffffff66;
+  --white-alpha-50: #ffffff80;
+
+  --transparent: transparent;
+
+  /* -- Semantic colours -- */
+  --text-primary: var(--brand-dark);
+  --text-secondary: var(--neutral-600);
+  --text-plain: var(--black);
+  --text-faded: var(--black-alpha-50);
+  --text-accent: var(--brand-accent);
+  --text-link: var(--brand-accent);
+
+  --background-primary: var(--white);
+  --background-secondary: var(--neutral-50);
+  --background-plain: var(--white);
+  --background-faded: var(--black-alpha-5);
+
+  --border-primary: var(--black);
+  --border-secondary: var(--neutral-300);
+  --border-faded: var(--black-alpha-15);
+
+  --button-primary: var(--text-link);
+  --button-text: var(--white);
+  --button-faded: color-mix(in srgb, var(--button-primary), transparent 80%);
+
+  /* -- Status colours (from brand book or defaults) -- */
+  --status-info: var(--brand-color-info, var(--brand-accent));
+  --status-success: var(--brand-color-success, #1a7f37);
+  --status-warning: var(--brand-color-warning, #9a6700);
+  --status-danger: var(--brand-color-danger, #cf222e);
+  --status-accent: var(--brand-color-accent-alt, #8250df);
+
+  /* -- Callout semantic tokens -- */
+  --callout-info: var(--status-info);
+  --callout-info-bg: color-mix(in srgb, var(--status-info), transparent 90%);
+  --callout-success: var(--status-success);
+  --callout-success-bg: color-mix(in srgb, var(--status-success), transparent 90%);
+  --callout-warning: var(--status-warning);
+  --callout-warning-bg: color-mix(in srgb, var(--status-warning), transparent 90%);
+  --callout-danger: var(--status-danger);
+  --callout-danger-bg: color-mix(in srgb, var(--status-danger), transparent 90%);
+  --callout-accent: var(--status-accent);
+  --callout-accent-bg: color-mix(in srgb, var(--status-accent), transparent 90%);
+
+  /* -- Form semantic tokens -- */
+  --input-border: var(--border-secondary);
+  --input-background: var(--background-primary);
+  --input-text: var(--text-plain);
+  --input-placeholder: var(--text-faded);
+  --input-focus: var(--brand-accent);
+  --input-disabled-bg: var(--background-faded);
+  --input-disabled-text: var(--text-faded);
+
+}
+
+/* ------ 3. SYSTEM TOKENS - SPACING & TYPOGRAPHY ------ */
+
+:root {
+  /* -- Unit tokens -- */
+  --none: 0;
+  --2xs: 0.125rem;
+  /* 2px */
+  --xs: 0.25rem;
+  /* 4px */
+  --s: 0.5rem;
+  /* 8px */
+  --m: 0.75rem;
+  /* 12px */
+  --l: 1rem;
+  /* 16px */
+  --xl: 1.5rem;
+  /* 24px */
+  --2xl: 2rem;
+  /* 32px */
+  --3xl: 2.5rem;
+  /* 40px */
+  --4xl: 3rem;
+  /* 48px */
+  --5xl: 3.5rem;
+  /* 56px */
+  --6xl: 4rem;
+  /* 64px */
+  --7xl: 4.5rem;
+  /* 72px */
+  --8xl: 5rem;
+  /* 80px */
+  --9xl: 5.5rem;
+  /* 88px */
+  --10xl: 6rem;
+  /* 96px */
+  --11xl: 6.5rem;
+  /* 104px */
+  --12xl: 7rem;
+  /* 112px */
+  --13xl: 7.5rem;
+  /* 120px */
+  --14xl: 10rem;
+  /* 160px */
+
+  /* -- Spacing scale -- */
+  --space-none: var(--none);
+  --space-2xs: var(--2xs);
+  --space-xs: var(--xs);
+  --space-s: var(--s);
+  --space-m: var(--m);
+  --space-l: var(--l);
+  --space-xl: var(--xl);
+  --space-2xl: var(--2xl);
+  --space-3xl: var(--3xl);
+  --space-4xl: var(--4xl);
+  --space-5xl: var(--5xl);
+  --space-6xl: var(--6xl);
+  --space-7xl: var(--7xl);
+  --space-8xl: var(--8xl);
+  --space-9xl: var(--9xl);
+  --space-10xl: var(--10xl);
+  --space-11xl: var(--11xl);
+  --space-12xl: var(--12xl);
+  --space-13xl: var(--13xl);
+  --space-14xl: var(--14xl);
+
+  /* -- Section spacing variables -- */
+  --section-xs: var(--space-xl);
+  --section-s: var(--space-2xl);
+  --section-m: var(--space-6xl);
+  --section-l: var(--space-10xl);
+  --section-xl: var(--space-14xl);
+
+  /* -- Border width tokens -- */
+  --border-s: 1px;
+  --border-m: 2px;
+  --border-l: 4px;
+
+  /* -- Border composition variables -- */
+  --border-width: var(--border-s);
+  --border-style: solid;
+  --border-color: var(--border-primary);
+
+
+}
+
+/* ------ 4. BASE STYLES ------ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-primary);
+  color: var(--text-plain);
+  font-size: var(--font-m);
+  font-weight: var(--font-weight-regular);
+  background: var(--background-primary);
+  line-height: var(--line-height-l);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* -- Page layout structure -- */
+.page-wrapper {
+  width: 100%;
+}
+
+.page-content {
+  width: 100%;
+}
+
+/* -- Headings -- */
+h1 {
+  font-size: var(--font-4xl);
+  line-height: var(--line-height-s);
+}
+
+h2 {
+  font-size: var(--font-2xl);
+  line-height: var(--line-height-s);
+}
+
+h3 {
+  font-size: var(--font-xl);
+  line-height: var(--line-height-m);
+}
+
+h4 {
+  font-size: var(--font-l);
+  line-height: var(--line-height-m);
+}
+
+h5 {
+  font-size: var(--font-m);
+  line-height: var(--line-height-m);
+}
+
+h6 {
+  font-size: var(--font-s);
+  line-height: var(--line-height-m);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--font-weight-semi-bold);
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-l);
+}
+
+/* -- Paragraphs -- */
+p {
+  margin-top: 0;
+  margin-bottom: var(--space-m);
+}
+
+/* -- Links -- */
+a {
+  color: var(--text-plain);
+  text-underline-offset: 2.5px;
+  text-decoration: underline;
+  -webkit-text-decoration-color: var(--text-link);
+  text-decoration-color: var(--text-link);
+  text-decoration-thickness: 1.5px;
+  transition: all 0.3s;
+}
+
+a:hover {
+  color: var(--text-link);
+  text-underline-offset: 4px;
+}
+
+/* -- Lists -- */
+ul,
+ol {
+  margin-top: 0;
+  margin-bottom: var(--space-m);
+  padding-left: var(--space-2xl);
+}
+
+li {
+  margin-top: var(--space-s);
+  margin-bottom: 0;
+}
+
+li:first-child {
+  margin-top: 0;
+}
+
+/* Nested lists */
+ul ul,
+ul ol,
+ol ul,
+ol ol {
+  margin-top: var(--space-s);
+  margin-bottom: 0;
+}
+
+/* List items with paragraphs */
+li > p {
+  margin-top: var(--space-l);
+  margin-bottom: 0;
+}
+
+li > p:first-child {
+  margin-top: 0;
+}
+
+/* -- Blockquotes -- */
+blockquote {
+  margin: var(--space-xl) 0;
+  padding-left: var(--space-l);
+  border-left: var(--border-m) solid var(--border-secondary);
+  color: var(--text-secondary);
+  font-size: var(--font-m);
+  font-style: italic;
+}
+
+blockquote p {
+  margin-top: 0;
+  margin-bottom: var(--space-m);
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* -- Horizontal rules -- */
+hr {
+  margin: var(--space-2xl) 0;
+  border: 0;
+  border-top: var(--border-s) solid var(--border-secondary);
+  height: 0;
+}
+
+/* ------ 5. LAYOUT PRIMITIVES ------ */
+
+/* -- Global horizontal padding -- */
+.padding-global {
+  padding-left: var(--space-l);
+  padding-right: var(--space-l);
+}
+
+/* -- Padding utilities -- */
+.padding-s {
+  padding: var(--space-s);
+}
+
+.padding-m {
+  padding: var(--space-m);
+}
+
+.padding-l {
+  padding: var(--space-l);
+}
+
+.padding-xl {
+  padding: var(--space-xl);
+}
+
+.padding-2xl {
+  padding: var(--space-2xl);
+}
+
+.padding-3xl {
+  padding: var(--space-3xl);
+}
+
+/* -- Containers -- */
+.container-small {
+  display: block;
+  max-width: 640px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-medium {
+  display: block;
+  max-width: 960px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-large {
+  display: block;
+  max-width: 1200px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* -- Max-width utilities -- */
+.max-width-small {
+  max-width: 640px;
+}
+
+.max-width-medium {
+  max-width: 960px;
+}
+
+.max-width-large {
+  max-width: 1200px;
+}
+
+.max-width-full {
+  max-width: 100%;
+}
+
+/* -- Section spacing -- */
+
+section {
+  display: block;
+}
+
+.padding-section {
+  display: block;
+}
+
+/* -- Top spacing combo classes -- */
+.top-small {
+  padding-top: var(--section-s);
+}
+
+.top-medium {
+  padding-top: var(--section-m);
+}
+
+.top-large {
+  padding-top: var(--section-l);
+}
+
+.top-xl {
+  padding-top: var(--section-xl);
+}
+
+/* -- Bottom spacing combo classes -- */
+.bottom-small {
+  padding-bottom: var(--section-s);
+}
+
+.bottom-medium {
+  padding-bottom: var(--section-m);
+}
+
+.bottom-large {
+  padding-bottom: var(--section-l);
+}
+
+.bottom-xl {
+  padding-bottom: var(--section-xl);
+}
+
+/* ------ 6. BLOCKS ------ */
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+}
+
+/* -- Gap modifiers -- */
+.gap-none {
+  gap: var(--space-none);
+}
+
+.gap-xs {
+  gap: var(--space-xs) !important;
+}
+
+.gap-s {
+  gap: var(--space-s) !important;
+}
+
+.gap-m {
+  gap: var(--space-m) !important;
+}
+
+.gap-l {
+  gap: var(--space-l) !important;
+}
+
+.gap-xl {
+  gap: var(--space-xl) !important;
+}
+
+.gap-2xl {
+  gap: var(--space-2xl) !important;
+}
+
+.gap-3xl {
+  gap: var(--space-3xl) !important;
+}
+
+
+/* -- Layout modifiers -- */
+.row {
+  flex-direction: row;
+}
+
+.row-reverse {
+  flex-direction: row-reverse;
+}
+
+.align-start {
+  align-items: flex-start;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-end {
+  align-items: flex-end;
+}
+
+.color-block {
+  border: var(--border-s) solid var(--border-faded);
+  aspect-ratio: 1/1;
+  height: 100%;
+  width: fit-content;
+  max-height: 100px;
+}
+
+/* ------ 7. GRID ------ */
+
+/* -- Grid -- */
+.grid {
+  display: grid;
+  gap: var(--space-m);
+  grid-template-columns: 1fr 1fr;
+  grid-auto-columns: 1fr;
+}
+
+/* -- Grid column modifiers -- */
+.cols-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.cols-4 {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.token-col {
+  grid-template-columns: 1fr auto;
+  padding: var(--space-m);
+}
+
+/* -- Grid item width modifiers -- */
+.fit-content {
+  width: fit-content;
+}
+
+/* ------ 8. BORDER UTILITIES ------ */
+
+/* -- Structural classes -- */
+.border {
+  border: var(--border-width) var(--border-style) var(--border-color);
+}
+
+.border-top {
+  border-top: var(--border-width) var(--border-style) var(--border-color);
+}
+
+.border-bottom {
+  border-bottom: var(--border-width) var(--border-style) var(--border-color);
+}
+
+.border-left {
+  border-left: var(--border-width) var(--border-style) var(--border-color);
+}
+
+.border-right {
+  border-right: var(--border-width) var(--border-style) var(--border-color);
+}
+
+/* -- Width combo classes -- */
+.border-s {
+  --border-width: var(--border-s);
+}
+
+.border-m {
+  --border-width: var(--border-m);
+}
+
+.border-l {
+  --border-width: var(--border-l);
+}
+
+/* -- Style combo classes -- */
+.border-solid {
+  --border-style: solid;
+}
+
+.border-dashed {
+  --border-style: dashed;
+}
+
+.border-dotted {
+  --border-style: dotted;
+}
+
+/* -- Color combo classes -- */
+.border-primary {
+  --border-color: var(--border-primary);
+}
+
+.border-secondary {
+  --border-color: var(--border-secondary);
+}
+
+.border-faded {
+  --border-color: var(--border-faded);
+}
+
+/* ------ 9. TYPOGRAPHY UTILITIES ------ */
+
+/* -- Font size utilities -- */
+.font-2xs {
+  font-size: var(--font-2xs);
+}
+
+.font-xs {
+  font-size: var(--font-xs);
+}
+
+.font-s {
+  font-size: var(--font-s);
+}
+
+.font-m {
+  font-size: var(--font-m);
+}
+
+.font-l {
+  font-size: var(--font-l);
+}
+
+.font-xl {
+  font-size: var(--font-xl);
+}
+
+.font-2xl {
+  font-size: var(--font-2xl);
+}
+
+.font-3xl {
+  font-size: var(--font-3xl);
+}
+
+.font-4xl {
+  font-size: var(--font-4xl);
+}
+
+.font-5xl {
+  font-size: var(--font-5xl);
+}
+
+.font-6xl {
+  font-size: var(--font-6xl);
+}
+
+/* -- Text size utilities -- */
+.text-size-large {
+  font-size: var(--font-l);
+}
+
+.text-size-medium {
+  font-size: var(--font-m);
+}
+
+.text-size-small {
+  font-size: var(--font-s);
+  line-height: var(--line-height-xl);
+}
+
+.text-size-xsmall {
+  font-size: var(--font-xs);
+  line-height: var(--line-height-xl);
+}
+
+/* -- Token labels -- */
+.token-tag {
+  display: inline-block;
+  font-size: var(--font-2xs);
+  font-family: var(--font-tertiary);
+  color: var(--text-plain);
+  background-color: var(--background-faded);
+  padding: var(--2xs) var(--s);
+  align-self: flex-start;
+  margin-bottom: var(--space-m);
+}
+
+.token-block {
+  padding: var(--space-s) 0;
+}
+
+/* -- Eyebrow text -- */
+.eyebrow {
+  font-family: var(--font-primary);
+  font-size: var(--font-s);
+  line-height: var(--line-height-m);
+  font-weight: var(--font-weight-extra-bold);
+  letter-spacing: var(--letter-spacing-xl);
+  text-transform: uppercase;
+}
+
+/* -- Button -- */
+
+.button,
+button {
+  font-family: var(--font-primary);
+  font-size: var(--button-font-size);
+  line-height: var(--line-height-s);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-s);
+  text-transform: uppercase;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  display: inline-block;
+  align-self: flex-start;
+  padding: var(--space-l) var(--space-2xl);
+  background-color: var(--button-primary);
+  color: var(--button-text);
+  border: var(--border-m) solid var(--button-primary);
+  cursor: pointer;
+  transform: scale3d(1none, 1none, 1none);
+  transform-style: preserve-3d;
+  transition: all .15s ease-in-out;
+  display: flex;
+}
+
+.button:hover,
+.is-outline.is-faded:hover,
+.demo-hover.button {
+  transform: scale(1.05);
+  background-color: var(--button-text);
+  color: var(--button-primary);
+  border: var(--border-m) solid var(--button-primary);
+  text-decoration: none;
+
+}
+
+.button:active,
+.demo-active.button {
+  transform: scale3d(1.0, 1.0, 1.0);
+}
+
+.is-faded {
+  background-color: var(--button-faded);
+  color: var(--button-primary);
+  border: var(--border-m) solid var(--transparent);
+}
+
+.is-outline {
+  background-color: var(--transparent);
+  color: var(--button-primary);
+  border: var(--border-m) solid var(--button-primary);
+}
+
+.is-outline.is-faded {
+  background-color: var(--transparent);
+  color: var(--button-primary);
+  border: var(--border-m) solid var(--button-faded);
+}
+
+.is-small {
+  font-size: var(--button-font-size-small);
+  padding: var(--space-m) var(--space-xl);
+}
+
+.button:disabled,
+.button.is-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.is-icon {
+  padding: var(--space-l);
+  border-radius: 50%;
+}
+
+.icn-svg {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+}
+
+.button-group {
+  grid-column-gap: var(--space-m);
+  grid-row-gap: var(--space-m);
+  flex-wrap: wrap;
+  align-items: center;
+  display: flex;
+}
+
+/* -- Demo specific styles -- */
+.type-demo > h1,
+.type-demo > h2,
+.type-demo > h3,
+.type-demo > h4,
+.type-demo > h5,
+.type-demo > h6 {
+  margin-top: var(--space-none);
+  margin-bottom: var(--space-xl);
+}
+
+.button-demo > button {
+  margin-top: var(--space-none);
+  margin-bottom: var(--space-l);
+}
+
+.button-demo > .token-tag {
+  margin-top: var(--space-none);
+  margin-bottom: var(--space-none);
+}
+
+
+/* ------ 10. BACKGROUND UTILITIES ------ */
+
+/* -- Background utilities -- */
+.bg-primary {
+  background-color: var(--background-primary);
+}
+
+.bg-secondary {
+  background-color: var(--background-secondary);
+}
+
+.bg-plain {
+  background-color: var(--background-plain);
+}
+
+.bg-faded {
+  background-color: var(--background-faded);
+}
+
+/* ------ 11. CALLOUTS & ALERTS ------ */
+
+/* -- Base callout -- */
+.callout {
+  padding: var(--space-m) var(--space-l);
+  margin-top: var(--space-l);
+  margin-bottom: var(--space-l);
+  border-left: var(--border-l) solid var(--border-secondary);
+  background-color: var(--background-faded);
+}
+
+.callout > *:first-child {
+  margin-top: 0;
+}
+
+.callout > *:last-child {
+  margin-bottom: 0;
+}
+
+/* -- Callout title -- */
+.callout-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  font-weight: var(--font-weight-semi-bold);
+  font-size: var(--font-s);
+  line-height: var(--line-height-s);
+  margin-bottom: var(--space-s);
+}
+
+/* -- Callout variants -- */
+.callout-note {
+  border-left-color: var(--callout-info);
+  background-color: var(--callout-info-bg);
+}
+
+.callout-note .callout-title {
+  color: var(--callout-info);
+}
+
+.callout-tip {
+  border-left-color: var(--callout-success);
+  background-color: var(--callout-success-bg);
+}
+
+.callout-tip .callout-title {
+  color: var(--callout-success);
+}
+
+.callout-warning {
+  border-left-color: var(--callout-warning);
+  background-color: var(--callout-warning-bg);
+}
+
+.callout-warning .callout-title {
+  color: var(--callout-warning);
+}
+
+.callout-caution {
+  border-left-color: var(--callout-danger);
+  background-color: var(--callout-danger-bg);
+}
+
+.callout-caution .callout-title {
+  color: var(--callout-danger);
+}
+
+.callout-important {
+  border-left-color: var(--callout-accent);
+  background-color: var(--callout-accent-bg);
+}
+
+.callout-important .callout-title {
+  color: var(--callout-accent);
+}
+
+/* ------ 12. FORM ELEMENTS ------ */
+
+/* -- Labels -- */
+label {
+  display: block;
+  font-size: var(--font-s);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+}
+
+/* -- Text inputs & textarea -- */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+input[type="url"],
+input[type="tel"],
+textarea,
+select {
+  font-family: var(--font-primary);
+  font-size: var(--font-s);
+  line-height: var(--line-height-l);
+  color: var(--input-text);
+  background-color: var(--input-background);
+  border: var(--border-s) solid var(--input-border);
+  padding: var(--space-s) var(--space-m);
+  width: 100%;
+  display: block;
+  transition: border-color 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="url"]:focus,
+input[type="tel"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus), transparent 75%);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--input-placeholder);
+}
+
+/* -- Textarea -- */
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* -- Select -- */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23666' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-m) center;
+  padding-right: var(--space-2xl);
+  cursor: pointer;
+}
+
+/* -- Disabled states -- */
+input:disabled,
+textarea:disabled,
+select:disabled {
+  background-color: var(--input-disabled-bg);
+  color: var(--input-disabled-text);
+  cursor: not-allowed;
+}
+
+/* -- Fieldset & legend -- */
+fieldset {
+  border: var(--border-s) solid var(--border-secondary);
+  padding: var(--space-l);
+  margin: 0 0 var(--space-l) 0;
+}
+
+legend {
+  font-size: var(--font-s);
+  font-weight: var(--font-weight-semi-bold);
+  padding: 0 var(--space-s);
+  color: var(--text-primary);
+}
+
+/* -- Checkbox & radio -- */
+input[type="checkbox"],
+input[type="radio"] {
+  width: var(--space-l);
+  height: var(--space-l);
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--input-focus);
+}
+
+/* -- Inline label + checkbox/radio pattern -- */
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+}
+
+.form-check label {
+  display: inline;
+  margin-bottom: 0;
+  font-weight: var(--font-weight-regular);
+  cursor: pointer;
+}
+
+/* -- Form group (label + input pair) -- */
+.form-group {
+  margin-bottom: var(--space-l);
+}
+
+/* ------ 13. FUTURE COMPONENTS ------ */
+
+/*
+ * The following elements are candidates for future design system styling.
+ * They are currently unstyled globally (some exist in markdown.css only).
+ * When implementing, add semantic tokens to :root and follow the
+ * composable pattern used by borders, buttons, and callouts.
+ *
+ * -- Inline code & code blocks --
+ * - code (inline)
+ * - pre (code blocks)
+ * - Syntax highlighting tokens
+ *
+ * -- Keyboard shortcuts --
+ * - kbd element
+ *
+ * -- Highlighted text --
+ * - mark element
+ *
+ * -- Disclosure --
+ * - details / summary elements
+ * - Styled accordion pattern
+ *
+ * -- Media captions --
+ * - figure / figcaption elements
+ *
+ * -- Badges & pills --
+ * - Status labels, version tags, category indicators
+ * - Composable: .badge + .badge-info, .badge-success, etc.
+ * - Should reuse --status-* tokens
+ *
+ * -- Text selection --
+ * - ::selection pseudo-element
+ * - Brand-aligned highlight color
+ *
+ * -- Scrollbar styling --
+ * - Custom scrollbar for overflow containers
+ * - Subtle, consistent with design system colors
+ *
+ * -- Abbreviations --
+ * - abbr element
+ * - Dotted underline with tooltip-style title
+ *
+ * -- Breadcrumbs --
+ * - Navigation trail component
+ * - .breadcrumb + .breadcrumb-item pattern
+ *
+ * -- Tabs (CSS-only) --
+ * - Tab navigation pattern using radio inputs
+ * - .tabs + .tab-item pattern
+ *
+ * -- Progress indicators (CSS-only) --
+ * - progress element styling
+ * - .progress-bar component
+ * - Should reuse --status-* tokens
+ *
+ * -- Tooltips (CSS-only) --
+ * - data-tooltip attribute pattern
+ * - Pure CSS with ::before/::after
+ *
+ * -- Toast / notification --
+ * - Notification bar component
+ * - Should reuse callout/status tokens
+ */
+
+/* ------ 14. RESPONSIVE ------ */
+
+@media (max-width: 768px) {
+  :root {
+    /* -- Mobile font sizes -- */
+    --font-2xs: 12px;
+    --font-xs: 12px;
+    --font-s: 14px;
+    --font-m: 16px;
+    --font-l: 18px;
+    --font-xl: 20px;
+    --font-2xl: 22px;
+    --font-3xl: 28px;
+    --font-4xl: 32px;
+    --font-5xl: 40px;
+    --font-6xl: 48px;
+
+    /* -- Mobile section spacing -- */
+    --section-xs: var(--space-l);
+    --section-s: var(--space-xl);
+    --section-m: var(--space-2xl);
+    --section-l: var(--space-5xl);
+    --section-xl: var(--space-8xl);
+
+    /* -- Mobile responsive space tokens -- */
+    --space-xs: 0.25rem;
+    --space-s: 0.25rem;
+    --space-m: 0.5rem;
+    --space-l: 0.75rem;
+    --space-xl: 1rem;
+    --space-2xl: 1.5rem;
+    --space-3xl: 2rem;
+    --space-4xl: 2rem;
+    --space-6xl: 3rem;
+  }
+}

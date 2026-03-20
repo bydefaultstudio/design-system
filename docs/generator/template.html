@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{PAGE_TITLE}} - Documentation</title>
+    <meta name="description" content="{{META_DESCRIPTION}}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    
+    <!-- Design System Framework (path set in docs/docs.config.js) -->
+    <link rel="stylesheet" href="{{DESIGN_SYSTEM_PATH}}" id="design-system-css"
+          onerror="document.getElementById('ds-missing-banner').style.display='flex'">
+    <!-- Brand Book (path set in docs/docs.config.js) -->
+    {{BRAND_CSS}}
+    
+    <!-- Google Fonts (configured in docs/docs.config.js) -->
+    {{GOOGLE_FONTS}}
+       
+    <!-- Markdown CSS -->
+    <link rel="stylesheet" href="assets/markdown.css">
+    
+    <!-- Docs-specific styles (additions) -->
+    <link rel="stylesheet" href="assets/docs.css">
+</head>
+<body>
+
+    <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
+    <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
+        <span>⚠️</span>
+        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">docs/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
+        <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
+    </div>
+
+    <div class="docs-container">
+        <!-- Sidebar Navigation (sticky on desktop, top bar on mobile) -->
+        <aside class="docs-sidebar">
+            <nav class="docs-nav">
+                <div class="docs-sidebar-header">
+                    <a href="{{INDEX_PATH}}" class="docs-logo-link">
+                        <img src="assets/images/logo.svg" alt="Logo" class="nav-logo">
+                        <img src="assets/images/logo-small.svg" alt="Logo" class="nav-logo-small">
+                    </a>
+                    <button class="docs-sidebar-toggle" aria-label="Collapse sidebar" type="button">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button class="docs-mobile-toggle" aria-label="Open navigation" type="button">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M3 5H17M3 10H17M3 15H17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="docs-nav-content">
+                    {{NAVIGATION}}
+                </div>
+            </nav>
+        </aside>
+
+        <div class="docs-main-area">
+            <!-- Page Header (full width, outside grid) -->
+            {{PAGE_HEADER}}
+            
+            <!-- Main Content + TOC grid -->
+            <div class="docs-content-grid padding-global">
+                <!-- Main Content -->
+                <main class="docs-main">
+                    <article class="markdown-body">
+                        {{PAGE_CONTENT}}
+                    </article>
+                </main>
+
+                <!-- Table of Contents -->
+                {{TOC_SECTION}}
+            </div>
+            
+            <!-- Footer -->
+            <footer class="docs-footer">
+                <div class="docs-footer-inner padding-global">
+                    <p class="docs-footer-text">{{FOOTER_TEXT}}</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    
+    <!-- Initialize Highlight.js and Copy functionality -->
+    <script>
+        (function() {
+            'use strict';
+            
+            function initHighlight() {
+                // Initialize Highlight.js on all code blocks
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+            
+            function initClipboard() {
+                const buttons = document.querySelectorAll('.copy-code-btn');
+                
+                buttons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const targetId = this.getAttribute('data-clipboard-target');
+                        const codeElement = document.querySelector(targetId);
+                        
+                        if (codeElement) {
+                            const text = codeElement.textContent;
+                            
+                            // Use modern clipboard API
+                            navigator.clipboard.writeText(text).then(() => {
+                                const textSpan = this.querySelector('.copy-text');
+                                if (textSpan) {
+                                    textSpan.textContent = 'Copied!';
+                                    setTimeout(() => {
+                                        textSpan.textContent = 'Copy';
+                                    }, 1500);
+                                }
+                            }).catch(err => {
+                                console.error('Copy failed:', err);
+                            });
+                        }
+                    });
+                });
+            }
+            
+            function initSidebarToggle() {
+                var SIDEBAR_KEY = 'docs-sidebar-collapsed';
+                var MOBILE_NAV_KEY = 'docs-mobile-nav-open';
+                var container = document.querySelector('.docs-container');
+                var sidebarToggle = document.querySelector('.docs-sidebar-toggle');
+                var mobileToggle = document.querySelector('.docs-mobile-toggle');
+
+                if (!container) return;
+
+                // Restore desktop sidebar state
+                if (localStorage.getItem(SIDEBAR_KEY) === 'true') {
+                    container.classList.add('sidebar-collapsed');
+                    if (sidebarToggle) sidebarToggle.setAttribute('aria-label', 'Expand sidebar');
+                }
+
+                // Restore mobile nav state
+                if (localStorage.getItem(MOBILE_NAV_KEY) === 'true') {
+                    container.classList.add('mobile-nav-open');
+                    if (mobileToggle) mobileToggle.setAttribute('aria-label', 'Close navigation');
+                }
+
+                if (sidebarToggle) {
+                    sidebarToggle.addEventListener('click', function onSidebarToggle() {
+                        var isCollapsed = container.classList.toggle('sidebar-collapsed');
+                        localStorage.setItem(SIDEBAR_KEY, isCollapsed);
+                        sidebarToggle.setAttribute('aria-label', isCollapsed ? 'Expand sidebar' : 'Collapse sidebar');
+                    });
+                }
+
+                if (mobileToggle) {
+                    mobileToggle.addEventListener('click', function onMobileToggle() {
+                        var isOpen = container.classList.toggle('mobile-nav-open');
+                        localStorage.setItem(MOBILE_NAV_KEY, isOpen);
+                        mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+                    });
+                }
+            }
+
+            function initTOCActiveState() {
+                const tocLinks = document.querySelectorAll('.toc-link');
+                const headings = document.querySelectorAll('h1[id], h2[id]');
+                
+                if (tocLinks.length === 0 || headings.length === 0) return;
+                
+                // Create a map of heading IDs to TOC links
+                const linkMap = new Map();
+                tocLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        const id = href.substring(1);
+                        linkMap.set(id, link);
+                    }
+                });
+                
+                // Intersection Observer to detect which heading is in view
+                const observerOptions = {
+                    rootMargin: '-20% 0px -70% 0px', // Trigger when heading is in top 30% of viewport
+                    threshold: 0
+                };
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const id = entry.target.id;
+                        const link = linkMap.get(id);
+                        
+                        if (entry.isIntersecting) {
+                            // Remove active from all links
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            // Add active to current link
+                            if (link) {
+                                link.classList.add('toc-link-active');
+                            }
+                        }
+                    });
+                }, observerOptions);
+                
+                // Observe all headings
+                headings.forEach(heading => {
+                    if (heading.id) {
+                        observer.observe(heading);
+                    }
+                });
+                
+                // Set initial active state based on scroll position
+                function setInitialActive() {
+                    let activeHeading = null;
+                    let maxTop = -Infinity;
+                    
+                    headings.forEach(heading => {
+                        const rect = heading.getBoundingClientRect();
+                        if (rect.top <= 100 && rect.top > maxTop) {
+                            maxTop = rect.top;
+                            activeHeading = heading;
+                        }
+                    });
+                    
+                    if (activeHeading && activeHeading.id) {
+                        const link = linkMap.get(activeHeading.id);
+                        if (link) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            link.classList.add('toc-link-active');
+                        }
+                    }
+                }
+                
+                // Set initial state
+                setInitialActive();
+                
+                // Update on scroll (debounced)
+                let scrollTimeout;
+                window.addEventListener('scroll', () => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(setInitialActive, 100);
+                });
+            }
+            
+            function init() {
+                initSidebarToggle();
+                initHighlight();
+                initClipboard();
+                initTOCActiveState();
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+</body>
+</html>
+
