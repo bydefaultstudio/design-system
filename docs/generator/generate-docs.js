@@ -6,15 +6,14 @@ const { marked } = require('marked');
 
 // Configuration
 const DOCS_DIR = path.join(__dirname, '..');  // ../ (docs/)
-const OUTPUT_DIR = path.join(__dirname, '..', 'site');  // ../site/
+const OUTPUT_DIR = path.join(__dirname, '..', '..');  // ../../ (project root)
 const TEMPLATE_FILE = path.join(__dirname, 'template.html');
-const ASSETS_SOURCE = path.join(__dirname, 'assets');
 
 // Load project config (docs/docs.config.js) with fallback defaults
 const configPath = path.join(DOCS_DIR, 'docs.config.js');
 const userConfig = fs.existsSync(configPath) ? require(configPath) : {};
 const PROJECT_CONFIG = {
-  designSystemPath: userConfig.designSystemPath || '../../design-system/design-system.css',
+  designSystemPath: userConfig.designSystemPath || 'design-system/design-system.css',
   brandCssPath: userConfig.brandCssPath || null,
   googleFontsUrl: userConfig.googleFontsUrl !== undefined ? userConfig.googleFontsUrl : null,
   footerText: userConfig.footerText || '',
@@ -229,12 +228,26 @@ function generateNavigation(filesBySection, currentPage = null) {
     for (const file of files) {
       const isActive = currentPage && currentPage.filename === file.filename;
       const activeClass = isActive ? 'nav-link-active' : '';
-      
+
       navigation += `
         <li><a href="${file.htmlPath}" class="nav-link ${activeClass}">${file.title}</a></li>
       `;
     }
-    
+
+    // Add Styleguide link inside the Design System section
+    if (section === 'Design System') {
+      navigation += `
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      `;
+    }
+
+    // Add Brand Book link inside the Brand section (or Design System if no Brand section)
+    if (section === 'Brand' || (section === 'Design System' && !filesBySection['Brand'])) {
+      navigation += `
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
+      `;
+    }
+
     navigation += `
       </ul>
     </details>`;
@@ -324,7 +337,7 @@ function generatePage(file, template, navigation) {
       <div class="container-medium">
         <h1>${frontmatter.title}</h1>
         ${frontmatter.subtitle ? `<p class="page-subtitle">${frontmatter.subtitle}</p>` : ''}
-        <a href="../${file.markdownPath}" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <a href="docs/${file.markdownPath}" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>`;
   }
@@ -347,43 +360,11 @@ function generatePage(file, template, navigation) {
 }
 
 /**
- * Copy assets to output directory
- */
-function copyAssets() {
-  const assetsDest = path.join(OUTPUT_DIR, 'assets');
-  
-  if (fs.existsSync(ASSETS_SOURCE)) {
-    // Create assets directory if it doesn't exist
-    if (!fs.existsSync(assetsDest)) {
-      fs.mkdirSync(assetsDest, { recursive: true });
-    }
-    
-    // Copy all files from assets to output
-    const files = fs.readdirSync(ASSETS_SOURCE);
-    files.forEach(file => {
-      const sourcePath = path.join(ASSETS_SOURCE, file);
-      const destPath = path.join(assetsDest, file);
-      
-      if (fs.statSync(sourcePath).isFile()) {
-        fs.copyFileSync(sourcePath, destPath);
-      }
-    });
-    
-    console.log('✅ Assets copied');
-  }
-}
-
-/**
  * Main generation function
  */
 async function generateDocs() {
   console.log('🚀 Starting documentation generation...');
-  
-  // Create output directory if it doesn't exist
-  if (!fs.existsSync(OUTPUT_DIR)) {
-    fs.mkdirSync(OUTPUT_DIR, { recursive: true });
-  }
-  
+
   // Load template
   const template = fs.readFileSync(TEMPLATE_FILE, 'utf8');
   console.log('✅ Template loaded');
@@ -437,9 +418,6 @@ async function generateDocs() {
   }
   
   console.log(`📂 Found sections: ${Object.keys(filesBySection).join(', ')}`);
-  
-  // Copy engine assets (docs.css, markdown.css) to output directory
-  copyAssets();
   
   // Generate index.html
   const indexPage = { filename: 'index' };

@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Folders - Documentation</title>
-    <meta name="description" content="Guide defining where files live and why in the project structure.">
+    <title>HTML Layout - Documentation</title>
+    <meta name="description" content="How to structure pages using sections, containers, blocks, and grids.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
     
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="design-system/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../brand-book/brand-book.css">
+    <link rel="stylesheet" href="brand-book/brand-book.css">
     
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,10 +22,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
        
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="assets/markdown.css">
-    
-    <!-- Docs-specific styles (additions) -->
-    <link rel="stylesheet" href="assets/docs.css">
+    <link rel="stylesheet" href="assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -87,8 +87,12 @@
       
         <li><a href="form.html" class="nav-link ">Form</a></li>
       
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
+      
       </ul>
-    </details><details class="nav-section">
+    </details><details class="nav-section" open>
       <summary class="nav-section-toggle">
         <span>Code</span>
         <span class="nav-toggle-icon">
@@ -102,7 +106,7 @@
       
         <li><a href="css-code-struture.html" class="nav-link ">CSS</a></li>
       
-        <li><a href="layout.html" class="nav-link ">HTML Layout</a></li>
+        <li><a href="layout.html" class="nav-link nav-link-active">HTML Layout</a></li>
       
       </ul>
     </details><details class="nav-section">
@@ -120,7 +124,7 @@
         <li><a href="markdown-style.html" class="nav-link ">Markdown</a></li>
       
       </ul>
-    </details><details class="nav-section" open>
+    </details><details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Project</span>
         <span class="nav-toggle-icon">
@@ -134,7 +138,7 @@
       
         <li><a href="template.html" class="nav-link ">Template</a></li>
       
-        <li><a href="folder-structure.html" class="nav-link nav-link-active">Folders</a></li>
+        <li><a href="folder-structure.html" class="nav-link ">Folders</a></li>
       
         <li><a href="upgrading-docs.html" class="nav-link ">Upgrading the Docs Engine</a></li>
       
@@ -148,9 +152,9 @@
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
       <div class="container-medium">
-        <h1>Folders</h1>
-        <p class="page-subtitle">File organization and directory structure</p>
-        <a href="../folder-structure.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <h1>HTML Layout</h1>
+        <p class="page-subtitle">Page layout and structure primitives</p>
+        <a href="docs/layout.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
             
@@ -159,78 +163,380 @@
                 <!-- Main Content -->
                 <main class="docs-main">
                     <article class="markdown-body">
-                        <p>This document defines where files live and why.</p>
-<p>Do not add new top-level folders without updating this file.</p>
-<h2 id="root-level">Root Level</h2>
+                        <blockquote>
+<p>Claude: Treat this document as authoritative.</p>
+</blockquote>
+<p>This system provides a <strong>predictable layout structure</strong> that keeps spacing, alignment, and width consistent across all pages.</p>
+<hr>
+<h2 id="page-structure">Page Structure</h2>
+<p>All pages follow the same hierarchy:</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-k366djl5o" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-k366djl5o">body
+└─ page-wrapper
+└─ page-content
+└─ section
+└─ padding-global
+└─ container / max-width
+└─ block
+</code></pre>
+      </div>
+    
+<h3 id="why-this-matters">Why this matters</h3>
 <ul>
-<li><code>index.html</code> → Welcome page (replace with project homepage)</li>
-<li><code>README.md</code> → Project overview and getting started</li>
-<li><code>PROJECT_BRIEF.md</code> → Project brief and requirements</li>
-<li><code>PROJECT_PROGRESS.md</code> → Progress tracker for ongoing work</li>
-<li><code>CLAUDE.md</code> → Claude Code development rules (authoritative)</li>
-<li><code>design-system/</code> → Design system framework (shared across projects)</li>
-<li><code>brand-book/</code> → Brand identity tokens (customised per project)</li>
-<li><code>templates/</code> → Component and page templates</li>
-<li><code>docs/</code> → Documentation files and generator</li>
-<li><code>src/</code> → Source files</li>
+<li>Clear separation of concerns</li>
+<li>Consistent spacing and widths</li>
+<li>Easy to scan and reason about layouts</li>
 </ul>
-<h2 id="design-system">design-system/</h2>
-<p>The design system framework. Contains all utility classes, layout primitives, components, and default tokens.</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-d7kb4r8xr" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-d7kb4r8xr" class="language-html">&lt;section&gt;
+  &lt;div class=&quot;padding-global&quot;&gt;
+    &lt;div class=&quot;container-medium&quot;&gt;
+      &lt;div class=&quot;block&quot;&gt;
+        &lt;!-- Content --&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="sections">Sections</h2>
+<p>Sections group <strong>major content areas</strong> and control <strong>vertical spacing</strong>.</p>
+<h3 id="when-to-use">When to use</h3>
 <ul>
-<li><code>design-system.css</code> → Core design system stylesheet</li>
-<li><code>index.html</code> → Styleguide preview (renders with default tokens)</li>
+<li>Every major page section</li>
+<li>Any time you need vertical rhythm between content groups</li>
 </ul>
-<h2 id="brand-book">brand-book/</h2>
-<p>Brand identity tokens. Customise this per project. The design system reads these tokens via <code>var(--brand-*, fallback)</code>.</p>
+<h3 id="rules">Rules</h3>
 <ul>
-<li><code>brand-book.css</code> → Brand tokens (fonts, colours)</li>
-<li><code>index.html</code> → Brand preview page (logo, palette, typography, icons)</li>
+<li>Sections own vertical spacing</li>
+<li>Use <code>.top-*</code> and <code>.bottom-*</code> classes</li>
+<li>Do not apply margins inside sections</li>
 </ul>
-<h2 id="src">src/</h2>
-<h3 id="srcassets">src/assets/</h3>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-8dkz7p5nx" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-8dkz7p5nx" class="language-html">&lt;section class=&quot;top-large bottom-large&quot;&gt;
+  &lt;div class=&quot;padding-global&quot;&gt;
+    &lt;!-- Content --&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="padding-global">Padding Global</h2>
+<p><code>.padding-global</code> provides <strong>consistent horizontal padding</strong>.</p>
+<h3 id="when-to-use">When to use</h3>
 <ul>
-<li><code>fonts/</code> → Web fonts</li>
-<li><code>icons/</code> → Favicons and app icons</li>
-<li><code>images/</code> → General image assets and Open Graph images</li>
-<li><code>video/</code> → Video assets</li>
+<li>Inside every section</li>
+<li>Whenever content needs safe spacing from screen edges</li>
 </ul>
-<h3 id="srccss">src/css/</h3>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-1shlcjl9r" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-1shlcjl9r" class="language-html">&lt;div class=&quot;padding-global&quot;&gt;
+  &lt;div class=&quot;container-medium&quot;&gt;
+    &lt;!-- Content --&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<p>Padding comes from <code>.padding-global</code>, <strong>never from containers</strong>.</p>
+<hr>
+<h2 id="containers">Containers</h2>
+<p>Containers constrain width and centre content in the viewport.</p>
+<h3 id="when-to-use">When to use</h3>
 <ul>
-<li><code>style.css</code> → Project-specific styles (sits on top of the design system)</li>
+<li>Most page content</li>
+<li>Any readable text or structured layout</li>
 </ul>
-<h3 id="srcjs">src/js/</h3>
+<h3 id="key-rules">Key rules</h3>
 <ul>
-<li>JavaScript modules and scripts</li>
+<li>Containers centre content</li>
+<li>Containers do <strong>not</strong> add padding</li>
+<li>Use one container per section (in most cases)</li>
 </ul>
-<h3 id="srcpages">src/pages/</h3>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-ucfo0oy76" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-ucfo0oy76" class="language-html">&lt;div class=&quot;container-medium&quot;&gt;
+  &lt;div class=&quot;block&quot;&gt;
+    &lt;h2&gt;Heading&lt;/h2&gt;
+    &lt;p&gt;Content&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="variants">Variants</h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>container-small</code></td>
+<td>Narrow layouts</td>
+</tr>
+<tr>
+<td><code>container-medium</code></td>
+<td>Default readable width</td>
+</tr>
+<tr>
+<td><code>container-large</code></td>
+<td>Wider layouts</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="max-width">Max-Width</h2>
+<p>Max-width utilities apply <strong>width limits only</strong>.</p>
+<h3 id="when-to-use">When to use</h3>
 <ul>
-<li>HTML page files</li>
+<li>Special cases</li>
+<li>Content that should not be centred</li>
+<li>Breaking out of container behaviour</li>
 </ul>
-<h2 id="templates">templates/</h2>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>max-width-small</code></td>
+<td>Narrow constraint</td>
+</tr>
+<tr>
+<td><code>max-width-medium</code></td>
+<td>Default readable</td>
+</tr>
+<tr>
+<td><code>max-width-large</code></td>
+<td>Wide constraint</td>
+</tr>
+<tr>
+<td><code>max-width-full</code></td>
+<td>No constraint</td>
+</tr>
+</tbody></table>
+<p><strong>Rule of thumb</strong></p>
 <ul>
-<li><code>component-template.js</code> → JavaScript component template</li>
-<li><code>component-template.css</code> → CSS component template</li>
-<li><code>page-template.html</code> → HTML page template</li>
+<li>Centre content → use a container</li>
+<li>Only limit width → use max-width (exception, not default)</li>
 </ul>
-<h2 id="docs">docs/</h2>
+<hr>
+<h2 id="blocks">Blocks</h2>
+<p>Blocks group <strong>related content</strong> and manage internal spacing.</p>
+<h3 id="when-to-use">When to use</h3>
 <ul>
-<li>Markdown documentation files</li>
-<li><code>docs.config.js</code> → Project-specific doc settings (fonts, footer, description) — stays when generator is upgraded</li>
-<li><code>generator/</code> → Documentation site engine (replaceable — drop in a new version to upgrade)<ul>
-<li><code>VERSION</code> → Current engine version</li>
-<li><code>assets/</code> → Engine CSS (<code>docs.css</code>, <code>markdown.css</code>) — copied to <code>site/assets/</code> on generation</li>
+<li>Heading + text</li>
+<li>Text + buttons</li>
+<li>Image + caption</li>
+<li>Any content that belongs together</li>
 </ul>
-</li>
-<li><code>site/</code> → Generated HTML documentation<ul>
-<li><code>assets/images/</code> → Project-specific logo and favicons — not overwritten by the generator</li>
+<h3 id="default-behaviour">Default behaviour</h3>
+<ul>
+<li>Vertical flex layout</li>
+<li>Uses <code>gap</code> for spacing</li>
+<li>No margins on children</li>
 </ul>
-</li>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-ygq5fvwf8" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-ygq5fvwf8" class="language-html">&lt;div class=&quot;block&quot;&gt;
+  &lt;h2&gt;Heading&lt;/h2&gt;
+  &lt;p&gt;Body text&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="gap-modifiers">Gap modifiers</h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>gap-xs</code></td>
+<td>Very tight</td>
+</tr>
+<tr>
+<td><code>gap-s</code></td>
+<td>Small</td>
+</tr>
+<tr>
+<td><code>gap-m</code></td>
+<td>Default</td>
+</tr>
+<tr>
+<td><code>gap-l</code></td>
+<td>Large</td>
+</tr>
+<tr>
+<td><code>gap-xl</code></td>
+<td>Extra large</td>
+</tr>
+</tbody></table>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-k7ejehhez" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-k7ejehhez" class="language-html">&lt;div class=&quot;block gap-l&quot;&gt;
+  &lt;h2&gt;Heading&lt;/h2&gt;
+  &lt;p&gt;More space between elements&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="block-layout-modifiers">Block Layout Modifiers</h2>
+<p>Blocks can change layout or alignment.</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>row</code></td>
+<td>Horizontal layout</td>
+</tr>
+<tr>
+<td><code>row-reverse</code></td>
+<td>Reversed horizontal</td>
+</tr>
+<tr>
+<td><code>align-start</code></td>
+<td>Align items start</td>
+</tr>
+<tr>
+<td><code>align-center</code></td>
+<td>Centre items</td>
+</tr>
+<tr>
+<td><code>align-end</code></td>
+<td>Align items end</td>
+</tr>
+</tbody></table>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-h9ujz2p5t" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-h9ujz2p5t" class="language-html">&lt;div class=&quot;block row gap-m align-center&quot;&gt;
+  &lt;p&gt;Text&lt;/p&gt;
+  &lt;button&gt;Action&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="grid">Grid</h2>
+<p>Grids create <strong>column-based layouts</strong>.<br>They are not spacing utilities.</p>
+<h3 id="base-grid">Base grid</h3>
+<ul>
+<li>Two equal columns</li>
+<li>Default gap applied</li>
 </ul>
-<h2 id="notes">Notes</h2>
-<p>Empty folders are tracked using <code>.gitkeep</code> to preserve structure in the template.</p>
-<h3 id="favicons">Favicons</h3>
-<p>Favicons live in <code>src/assets/icons/</code>.</p>
-<p>They are referenced directly in the HTML <code>&lt;head&gt;</code> and are treated as brand assets, not part of the design system.</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-n2btdlvnp" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-n2btdlvnp" class="language-html">&lt;div class=&quot;grid&quot;&gt;
+  &lt;div&gt;Item&lt;/div&gt;
+  &lt;div&gt;Item&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="column-modifiers">Column modifiers</h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Columns</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>cols-3</code></td>
+<td>Three columns</td>
+</tr>
+<tr>
+<td><code>cols-4</code></td>
+<td>Four columns</td>
+</tr>
+</tbody></table>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-xr1b389ed" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-xr1b389ed" class="language-html">&lt;div class=&quot;grid cols-3&quot;&gt;
+  &lt;div&gt;Item 1&lt;/div&gt;
+  &lt;div&gt;Item 2&lt;/div&gt;
+  &lt;div&gt;Item 3&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="item-width">Item width</h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>fit-content</code></td>
+<td>Item sizes to content</td>
+</tr>
+</tbody></table>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-ep33tspyd" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-ep33tspyd" class="language-html">&lt;div class=&quot;grid&quot;&gt;
+  &lt;div&gt;Flexible column&lt;/div&gt;
+  &lt;div class=&quot;fit-content&quot;&gt;Fixed&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="rules">Rules</h3>
+<ul>
+<li>Use grids for layout, not spacing</li>
+<li>Use <code>gap-*</code> to adjust spacing</li>
+<li>Combine column + gap modifiers as needed</li>
+</ul>
 
                     </article>
                 </main>
@@ -238,14 +544,14 @@
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#root-level" class="toc-link">Root Level</a></li><li class="toc-item toc-level-2"><a href="#design-system" class="toc-link">design-system/</a></li><li class="toc-item toc-level-2"><a href="#brand-book" class="toc-link">brand-book/</a></li><li class="toc-item toc-level-2"><a href="#src" class="toc-link">src/</a></li><li class="toc-item toc-level-2"><a href="#templates" class="toc-link">templates/</a></li><li class="toc-item toc-level-2"><a href="#docs" class="toc-link">docs/</a></li><li class="toc-item toc-level-2"><a href="#notes" class="toc-link">Notes</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#page-structure" class="toc-link">Page Structure</a></li><li class="toc-item toc-level-2"><a href="#sections" class="toc-link">Sections</a></li><li class="toc-item toc-level-2"><a href="#padding-global" class="toc-link">Padding Global</a></li><li class="toc-item toc-level-2"><a href="#containers" class="toc-link">Containers</a></li><li class="toc-item toc-level-2"><a href="#max-width" class="toc-link">Max-Width</a></li><li class="toc-item toc-level-2"><a href="#blocks" class="toc-link">Blocks</a></li><li class="toc-item toc-level-2"><a href="#block-layout-modifiers" class="toc-link">Block Layout Modifiers</a></li><li class="toc-item toc-level-2"><a href="#grid" class="toc-link">Grid</a></li></ul></nav></div>
     </aside>
             </div>
             
             <!-- Footer -->
             <footer class="docs-footer">
                 <div class="docs-footer-inner padding-global">
-                    <p class="docs-footer-text">© 2025 By Default</p>
+                    <p class="docs-footer-text">© 2026 By Default BrandOS</p>
                 </div>
             </footer>
         </div>

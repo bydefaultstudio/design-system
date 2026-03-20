@@ -126,7 +126,7 @@ Controls how search engines index and follow links on a page.
 Open Graph tags control how content appears when shared on Facebook, LinkedIn, and other social platforms.
 
 **Where to save images:**
-- Save Open Graph images in `src/assets/images/`
+- Save Open Graph images in `assets/images/`
 - Use descriptive filenames (e.g., `og-default.jpg`, `og-homepage.jpg`)
 
 ### Required Open Graph Tags

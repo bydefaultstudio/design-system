@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Callout - Documentation</title>
-    <meta name="description" content="How to use callout styles and semantic variants in the design system.">
+    <title>Border - Documentation</title>
+    <meta name="description" content="Guide to using the composable border architecture for flexible border styling.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
     
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="design-system/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../brand-book/brand-book.css">
+    <link rel="stylesheet" href="brand-book/brand-book.css">
     
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,10 +22,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
        
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="assets/markdown.css">
-    
-    <!-- Docs-specific styles (additions) -->
-    <link rel="stylesheet" href="assets/docs.css">
+    <link rel="stylesheet" href="assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -79,13 +79,17 @@
       
         <li><a href="spacing.html" class="nav-link ">Spacing</a></li>
       
-        <li><a href="border.html" class="nav-link ">Border</a></li>
+        <li><a href="border.html" class="nav-link nav-link-active">Border</a></li>
       
         <li><a href="button.html" class="nav-link ">Button</a></li>
       
-        <li><a href="callout.html" class="nav-link nav-link-active">Callout</a></li>
+        <li><a href="callout.html" class="nav-link ">Callout</a></li>
       
         <li><a href="form.html" class="nav-link ">Form</a></li>
+      
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
       
       </ul>
     </details><details class="nav-section">
@@ -148,9 +152,9 @@
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
       <div class="container-medium">
-        <h1>Callout</h1>
-        <p class="page-subtitle">Callout and alert component guidelines</p>
-        <a href="../callout.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <h1>Border</h1>
+        <p class="page-subtitle">Composable border system</p>
+        <a href="docs/border.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
             
@@ -162,196 +166,194 @@
                         <blockquote>
 <p>Claude: Treat this document as authoritative.</p>
 </blockquote>
-<p>Callouts are used to <strong>highlight important information</strong> within content. They draw attention to notes, tips, warnings, and other contextual messages.</p>
-<hr>
+<p>Borders use a <strong>composable architecture</strong> that separates structural positioning from styling concerns. This approach keeps the system extensible without class explosion.</p>
 <h2 id="core-principles">Core Principles</h2>
 <ul>
-<li>Callouts use a <strong>base + variant</strong> pattern (like buttons and borders)</li>
-<li>The base <code>.callout</code> class provides structure and neutral styling</li>
-<li>Variant classes add semantic color via left border and background tint</li>
-<li>All colors are controlled by semantic tokens that can be customized per project</li>
+<li><p>All border styling resolves through CSS variables</p>
+</li>
+<li><p><strong>Structural</strong> where the border appears (.border, .border-top, .border-bottom)</p>
+</li>
+<li><p><strong>Width</strong> how thick the border is (<code>.border-s</code>, <code>.border-m</code>, <code>.border-l</code>)</p>
+</li>
+<li><p><strong>Style</strong> how the line is drawn (<code>.border-solid</code>, <code>.border-dashed</code>, <code>.border-dotted</code>)</p>
+</li>
+<li><p><strong>Color</strong> what the border represents (<code>.border-primary</code>, <code>.border-secondary</code>, <code>.border-faded</code>)</p>
+</li>
 </ul>
+<p>All border styles resolve through CSS variables to keep behaviour consistent across the system.<br>Do not create combined classes like <code>.border-top-m</code> or hardcode border values inside structural classes.</p>
 <hr>
-<h2 id="status-color-tokens">Status Color Tokens</h2>
-<p>Callout variants are powered by status color tokens defined in <code>:root</code>. These are project-customizable primitives:</p>
+<h2 id="border-structure">Border Structure</h2>
+<p>Structural classes define <strong>where</strong> the border appears, not how it looks.</p>
 <table>
 <thead>
 <tr>
-<th>Token</th>
-<th>Default</th>
-<th>Purpose</th>
+<th>Class</th>
+<th>Effect</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--status-info</code></td>
-<td><code>var(--brand-accent)</code></td>
-<td>Informational, notes</td>
+<td><code>.border</code></td>
+<td>Border on all sides</td>
 </tr>
 <tr>
-<td><code>--status-success</code></td>
-<td><code>#1a7f37</code></td>
-<td>Tips, positive feedback</td>
+<td><code>.border-top</code></td>
+<td>Border on top only</td>
 </tr>
 <tr>
-<td><code>--status-warning</code></td>
-<td><code>#9a6700</code></td>
-<td>Warnings, attention needed</td>
+<td><code>.border-bottom</code></td>
+<td>Border on bottom only</td>
 </tr>
 <tr>
-<td><code>--status-danger</code></td>
-<td><code>#cf222e</code></td>
-<td>Caution, destructive actions</td>
+<td><code>.border-left</code></td>
+<td>Border on left only</td>
 </tr>
 <tr>
-<td><code>--status-accent</code></td>
-<td><code>#8250df</code></td>
-<td>Important, emphasis</td>
+<td><code>.border-right</code></td>
+<td>Border on right only</td>
 </tr>
 </tbody></table>
-<p>Each status color generates two semantic tokens:</p>
-<ul>
-<li><code>--callout-{type}</code> — the border/title color</li>
-<li><code>--callout-{type}-bg</code> — a 10% tint for the background</li>
-</ul>
+<h4 id="example">Example</h4>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-e6ue0twyg" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-e6ue0twyg" class="language-html">&lt;section class=&quot;border-bottom&quot;&gt;
+  &lt;!-- Content with bottom border --&gt;
+&lt;/section&gt;
+</code></pre>
+      </div>
+    
 <hr>
-<h2 id="base-callout">Base Callout</h2>
-<p>The <code>.callout</code> class provides the structural foundation:</p>
+<h2 id="border-width">Border Width</h2>
+<p>Width combo classes modify the border thickness.</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Width</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.border-s</code></td>
+<td>1px</td>
+<td>Small border (default)</td>
+</tr>
+<tr>
+<td><code>.border-m</code></td>
+<td>2px</td>
+<td>Medium border</td>
+</tr>
+<tr>
+<td><code>.border-l</code></td>
+<td>4px</td>
+<td>Large border</td>
+</tr>
+</tbody></table>
+<h4 id="example">Example</h4>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-tepshmmja" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-tdyhnnzlz" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-tepshmmja" class="language-html">&lt;div class=&quot;callout&quot;&gt;
-  &lt;p&gt;General-purpose highlighted content.&lt;/p&gt;
+        <pre><code id="code-tdyhnnzlz" class="language-html">&lt;div class=&quot;border border-m&quot;&gt;
+  &lt;!-- Content with medium border on all sides --&gt;
 &lt;/div&gt;
 </code></pre>
       </div>
     
-<p><strong>Structural properties:</strong></p>
-<ul>
-<li>Left border using <code>--border-l</code> width (4px)</li>
-<li>Padding using spacing tokens</li>
-<li>Neutral background (<code>--background-faded</code>)</li>
-<li>First/last child margin normalization</li>
-</ul>
 <hr>
-<h2 id="callout-title">Callout Title</h2>
-<p>Use <code>.callout-title</code> inside any callout for a styled heading:</p>
+<h2 id="border-style">Border Style</h2>
+<p>Style combo classes modify the border appearance.</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Style</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.border-solid</code></td>
+<td>solid</td>
+<td>Solid border (default)</td>
+</tr>
+<tr>
+<td><code>.border-dashed</code></td>
+<td>dashed</td>
+<td>Dashed border</td>
+</tr>
+<tr>
+<td><code>.border-dotted</code></td>
+<td>dotted</td>
+<td>Dotted border</td>
+</tr>
+</tbody></table>
+<h4 id="example">Example</h4>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-0qaxxxir1" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-knb5jpe4b" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-0qaxxxir1" class="language-html">&lt;div class=&quot;callout callout-note&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Note&lt;/div&gt;
-  &lt;p&gt;Content here.&lt;/p&gt;
+        <pre><code id="code-knb5jpe4b" class="language-html">&lt;div class=&quot;border border-dashed&quot;&gt;
+  &lt;!-- Content with dashed border --&gt;
 &lt;/div&gt;
 </code></pre>
       </div>
     
-<p>The title inherits the variant&#39;s accent color automatically.</p>
 <hr>
-<h2 id="variants">Variants</h2>
-<h3>Note (<code>.callout-note</code>)</h3>
-<p>For useful information users should know, even when skimming.</p>
+<h2 id="boder-color">Boder Color</h2>
+<p>Color combo classes modify the border color using semantic tokens.</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Color</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.border-primary</code></td>
+<td><code>var(--border-primary)</code></td>
+<td>Strong border (default)</td>
+</tr>
+<tr>
+<td><code>.border-secondary</code></td>
+<td><code>var(--border-secondary)</code></td>
+<td>Secondary color border</td>
+</tr>
+<tr>
+<td><code>.border-faded</code></td>
+<td><code>var(--border-faded)</code></td>
+<td>Faded border</td>
+</tr>
+</tbody></table>
+<h4 id="example">Example</h4>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-otvyarzj1" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-g0op75rmc" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-otvyarzj1" class="language-html">&lt;div class=&quot;callout callout-note&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Note&lt;/div&gt;
-  &lt;p&gt;Useful information that users should know.&lt;/p&gt;
+        <pre><code id="code-g0op75rmc" class="language-html">&lt;div class=&quot;border border-secondary&quot;&gt;
+  &lt;!-- Content with subtle border --&gt;
 &lt;/div&gt;
 </code></pre>
       </div>
     
-<h3>Tip (<code>.callout-tip</code>)</h3>
-<p>For helpful advice on doing things better or more easily.</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-msjpu3zpg" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-msjpu3zpg" class="language-html">&lt;div class=&quot;callout callout-tip&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Tip&lt;/div&gt;
-  &lt;p&gt;Helpful advice for doing things better.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3>Warning (<code>.callout-warning</code>)</h3>
-<p>For urgent information that needs immediate attention.</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-qbxccctmt" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-qbxccctmt" class="language-html">&lt;div class=&quot;callout callout-warning&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Warning&lt;/div&gt;
-  &lt;p&gt;Urgent information to avoid problems.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3>Caution (<code>.callout-caution</code>)</h3>
-<p>For advising about risks or negative outcomes.</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-8kiddyp75" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-8kiddyp75" class="language-html">&lt;div class=&quot;callout callout-caution&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Caution&lt;/div&gt;
-  &lt;p&gt;Risks or negative outcomes of certain actions.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3>Important (<code>.callout-important</code>)</h3>
-<p>For key information users need to achieve their goal.</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-s96kpfq3j" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-s96kpfq3j" class="language-html">&lt;div class=&quot;callout callout-important&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Important&lt;/div&gt;
-  &lt;p&gt;Key information users need to know.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
+<hr>
+<h2 id="limitations">Limitations</h2>
+<p>Native CSS dashed/dotted borders do not support adjustable dash spacing. This system intentionally avoids SVG or background-based borders to maintain simplicity and performance.</p>
 <hr>
 <h2 id="rules">Rules</h2>
-<table>
-<thead>
-<tr>
-<th>Do</th>
-<th>Don&#39;t</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Use semantic variants for meaning</td>
-<td>Use color to decorate without purpose</td>
-</tr>
-<tr>
-<td>Keep callout content concise</td>
-<td>Put entire sections inside callouts</td>
-</tr>
-<tr>
-<td>Use <code>.callout-title</code> for labeling</td>
-<td>Use headings (h1–h6) inside callouts</td>
-</tr>
-<tr>
-<td>Customize <code>--status-*</code> tokens per project</td>
-<td>Hardcode colors on individual callouts</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="relationship-to-markdown-alerts">Relationship to Markdown Alerts</h2>
-<p>The <code>.markdown-body</code> CSS includes GitHub-style alerts (<code>.markdown-alert-note</code>, etc.) with their own color tokens. These are scoped to rendered markdown content only.</p>
-<p>The design system callouts (<code>.callout</code>) are the <strong>global, project-wide</strong> equivalent. When building pages, always use <code>.callout</code> — not the markdown alert classes.</p>
+<ul>
+<li>Use the smallest possible number of classes</li>
+<li>Prefer semantic color tokens</li>
+<li>Keep the system extensible without class explosion</li>
+<li>Structural classes define position only</li>
+<li>Combo classes modify one concern each</li>
+<li>All styling resolves through CSS variables</li>
+</ul>
 
                     </article>
                 </main>
@@ -359,14 +361,14 @@
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#core-principles" class="toc-link">Core Principles</a></li><li class="toc-item toc-level-2"><a href="#status-color-tokens" class="toc-link">Status Color Tokens</a></li><li class="toc-item toc-level-2"><a href="#base-callout" class="toc-link">Base Callout</a></li><li class="toc-item toc-level-2"><a href="#callout-title" class="toc-link">Callout Title</a></li><li class="toc-item toc-level-2"><a href="#variants" class="toc-link">Variants</a></li><li class="toc-item toc-level-2"><a href="#rules" class="toc-link">Rules</a></li><li class="toc-item toc-level-2"><a href="#relationship-to-markdown-alerts" class="toc-link">Relationship to Markdown Alerts</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#core-principles" class="toc-link">Core Principles</a></li><li class="toc-item toc-level-2"><a href="#border-structure" class="toc-link">Border Structure</a></li><li class="toc-item toc-level-2"><a href="#border-width" class="toc-link">Border Width</a></li><li class="toc-item toc-level-2"><a href="#border-style" class="toc-link">Border Style</a></li><li class="toc-item toc-level-2"><a href="#boder-color" class="toc-link">Boder Color</a></li><li class="toc-item toc-level-2"><a href="#limitations" class="toc-link">Limitations</a></li><li class="toc-item toc-level-2"><a href="#rules" class="toc-link">Rules</a></li></ul></nav></div>
     </aside>
             </div>
             
             <!-- Footer -->
             <footer class="docs-footer">
                 <div class="docs-footer-inner padding-global">
-                    <p class="docs-footer-text">© 2025 By Default</p>
+                    <p class="docs-footer-text">© 2026 By Default BrandOS</p>
                 </div>
             </footer>
         </div>

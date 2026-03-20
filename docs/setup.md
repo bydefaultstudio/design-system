@@ -56,7 +56,7 @@ Update font families in `brand-book/brand-book.css`.
 ## Logo
 
 Replace the logo image:
-- `docs/site/assets/images/logo.svg` - Documentation site logo
+- `assets/images/logo.svg` - Documentation site logo
 
 ---
 
@@ -90,7 +90,7 @@ The documentation is ready to use, but you may want to:
 
 - [ ] Update brand colors in `brand-book/brand-book.css`
 - [ ] Update font families in `brand-book/brand-book.css`
-- [ ] Replace logo in `docs/site/assets/images/logo.svg`
+- [ ] Replace logo in `assets/images/logo.svg`
 - [ ] Fill in `PROJECT_BRIEF.md`
 - [ ] Update Google Fonts links (if applicable)
 - [ ] Review and customize documentation

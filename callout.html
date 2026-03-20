@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScript - Documentation</title>
-    <meta name="description" content="Guide defining how JavaScript should be structured and organized.">
+    <title>Callout - Documentation</title>
+    <meta name="description" content="How to use callout styles and semantic variants in the design system.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
     
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="design-system/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../brand-book/brand-book.css">
+    <link rel="stylesheet" href="brand-book/brand-book.css">
     
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,10 +22,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
        
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="assets/markdown.css">
-    
-    <!-- Docs-specific styles (additions) -->
-    <link rel="stylesheet" href="assets/docs.css">
+    <link rel="stylesheet" href="assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -61,7 +61,7 @@
     <ul class="nav-list nav-home">
       <li><a href="index.html" class="nav-link ">Home</a></li>
     </ul>
-  <details class="nav-section">
+  <details class="nav-section" open>
       <summary class="nav-section-toggle">
         <span>Design System</span>
         <span class="nav-toggle-icon">
@@ -83,12 +83,16 @@
       
         <li><a href="button.html" class="nav-link ">Button</a></li>
       
-        <li><a href="callout.html" class="nav-link ">Callout</a></li>
+        <li><a href="callout.html" class="nav-link nav-link-active">Callout</a></li>
       
         <li><a href="form.html" class="nav-link ">Form</a></li>
       
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
+      
       </ul>
-    </details><details class="nav-section" open>
+    </details><details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Code</span>
         <span class="nav-toggle-icon">
@@ -98,7 +102,7 @@
         </span>
       </summary>
       <ul class="nav-list">
-        <li><a href="js-code-structure.html" class="nav-link nav-link-active">JavaScript</a></li>
+        <li><a href="js-code-structure.html" class="nav-link ">JavaScript</a></li>
       
         <li><a href="css-code-struture.html" class="nav-link ">CSS</a></li>
       
@@ -148,9 +152,9 @@
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
       <div class="container-medium">
-        <h1>JavaScript</h1>
-        <p class="page-subtitle">JavaScript coding standards and organization guidelines</p>
-        <a href="../js-code-structure.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <h1>Callout</h1>
+        <p class="page-subtitle">Callout and alert component guidelines</p>
+        <a href="docs/callout.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
             
@@ -162,174 +166,196 @@
                         <blockquote>
 <p>Claude: Treat this document as authoritative.</p>
 </blockquote>
-<blockquote>
-<p>Claude: Follow these rules when writing or modifying JavaScript.</p>
-</blockquote>
-<h2 id="overview">Overview</h2>
-<p>This structure ensures readable, modular, and maintainable JavaScript with clear organization.</p>
+<p>Callouts are used to <strong>highlight important information</strong> within content. They draw attention to notes, tips, warnings, and other contextual messages.</p>
 <hr>
-<h2 id="file-structure">File Structure</h2>
-<p>Every JavaScript file should follow this organizational pattern:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-zejycorui" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-zejycorui" class="language-js">/**
- * Script Purpose: [Brief description]
- * Author: [Your Name]
- * Created: [Date]
- * Version: [Latest Version]
- * Last Updated: [Date]
- */
-
-console.log(&quot;Script Name v1.0.0&quot;);
-
-//
-//------- Utility Functions -------//
-//
-
-// Function Name
-function utilityFunction() {
-  // ... implementation
-}
-
-//
-//------- Main Functions -------//
-//
-
-// Initialize Component
-function initComponent() {
-  // ... implementation
-}
-
-//
-//------- Event Listeners -------//
-//
-
-// Setup Event Listeners
-function setupEventListeners() {
-  // ... implementation
-}
-
-//
-//------- Initialize -------//
-//
-
-document.addEventListener(&quot;DOMContentLoaded&quot;, () =&gt; {
-  initComponent();
-  setupEventListeners();
-});
-</code></pre>
-      </div>
-    
+<h2 id="core-principles">Core Principles</h2>
+<ul>
+<li>Callouts use a <strong>base + variant</strong> pattern (like buttons and borders)</li>
+<li>The base <code>.callout</code> class provides structure and neutral styling</li>
+<li>Variant classes add semantic color via left border and background tint</li>
+<li>All colors are controlled by semantic tokens that can be customized per project</li>
+</ul>
 <hr>
-<h2 id="section-organization">Section Organization</h2>
-<ol>
-<li><strong>File Header</strong> - Comment block with purpose, author, dates, version</li>
-<li><strong>Console Log</strong> - ONE <code>console.log()</code> at the top to confirm script loaded</li>
-<li><strong>Utility Functions</strong> - Reusable helper functions grouped together</li>
-<li><strong>Main Functions</strong> - Primary functionality grouped together</li>
-<li><strong>Event Listeners</strong> - Event handling functions grouped together</li>
-<li><strong>Initialize</strong> - All setup calls within <code>DOMContentLoaded</code> listener at the end</li>
-</ol>
-<hr>
-<h2 id="section-dividers">Section Dividers</h2>
-<p>Use clear headers when grouping similar functions:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-q71mov1ks" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-q71mov1ks" class="language-js">//
-//------- Section Name -------//
-//
-</code></pre>
-      </div>
-    
-<p>For standalone functions, use simple comments:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-ict3vhylj" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-ict3vhylj" class="language-js">// Function Name
-function doSomething() {
-  // ... implementation
-}
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="naming-conventions">Naming Conventions</h2>
+<h2 id="status-color-tokens">Status Color Tokens</h2>
+<p>Callout variants are powered by status color tokens defined in <code>:root</code>. These are project-customizable primitives:</p>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Example</th>
-<th>Rule</th>
+<th>Token</th>
+<th>Default</th>
+<th>Purpose</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>Functions</td>
-<td><code>initSlider()</code>, <code>handleClick()</code></td>
-<td>Use <strong>lower camelCase</strong>, short &amp; descriptive</td>
+<td><code>--status-info</code></td>
+<td><code>var(--brand-accent)</code></td>
+<td>Informational, notes</td>
 </tr>
 <tr>
-<td>Variables</td>
-<td><code>mainElement</code>, <code>scrollPos</code></td>
-<td>Contextual and readable</td>
+<td><code>--status-success</code></td>
+<td><code>#1a7f37</code></td>
+<td>Tips, positive feedback</td>
 </tr>
 <tr>
-<td>File Names</td>
-<td><code>slider.js</code>, <code>utils.js</code></td>
-<td>Use lowercase kebab-case</td>
+<td><code>--status-warning</code></td>
+<td><code>#9a6700</code></td>
+<td>Warnings, attention needed</td>
 </tr>
 <tr>
-<td>Constants</td>
-<td><code>MAX_ITEMS</code>, <code>API_URL</code></td>
-<td>Use UPPER_SNAKE_CASE</td>
+<td><code>--status-danger</code></td>
+<td><code>#cf222e</code></td>
+<td>Caution, destructive actions</td>
+</tr>
+<tr>
+<td><code>--status-accent</code></td>
+<td><code>#8250df</code></td>
+<td>Important, emphasis</td>
+</tr>
+</tbody></table>
+<p>Each status color generates two semantic tokens:</p>
+<ul>
+<li><code>--callout-{type}</code> — the border/title color</li>
+<li><code>--callout-{type}-bg</code> — a 10% tint for the background</li>
+</ul>
+<hr>
+<h2 id="base-callout">Base Callout</h2>
+<p>The <code>.callout</code> class provides the structural foundation:</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-8k7o6k8ti" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-8k7o6k8ti" class="language-html">&lt;div class=&quot;callout&quot;&gt;
+  &lt;p&gt;General-purpose highlighted content.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<p><strong>Structural properties:</strong></p>
+<ul>
+<li>Left border using <code>--border-l</code> width (4px)</li>
+<li>Padding using spacing tokens</li>
+<li>Neutral background (<code>--background-faded</code>)</li>
+<li>First/last child margin normalization</li>
+</ul>
+<hr>
+<h2 id="callout-title">Callout Title</h2>
+<p>Use <code>.callout-title</code> inside any callout for a styled heading:</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-2j8ej3uzy" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-2j8ej3uzy" class="language-html">&lt;div class=&quot;callout callout-note&quot;&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Note&lt;/div&gt;
+  &lt;p&gt;Content here.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<p>The title inherits the variant&#39;s accent color automatically.</p>
+<hr>
+<h2 id="variants">Variants</h2>
+<h3>Note (<code>.callout-note</code>)</h3>
+<p>For useful information users should know, even when skimming.</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-ka5rufgun" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-ka5rufgun" class="language-html">&lt;div class=&quot;callout callout-note&quot;&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Note&lt;/div&gt;
+  &lt;p&gt;Useful information that users should know.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3>Tip (<code>.callout-tip</code>)</h3>
+<p>For helpful advice on doing things better or more easily.</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-gi7kd7smx" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-gi7kd7smx" class="language-html">&lt;div class=&quot;callout callout-tip&quot;&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Tip&lt;/div&gt;
+  &lt;p&gt;Helpful advice for doing things better.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3>Warning (<code>.callout-warning</code>)</h3>
+<p>For urgent information that needs immediate attention.</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-nsmjewxqn" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-nsmjewxqn" class="language-html">&lt;div class=&quot;callout callout-warning&quot;&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Warning&lt;/div&gt;
+  &lt;p&gt;Urgent information to avoid problems.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3>Caution (<code>.callout-caution</code>)</h3>
+<p>For advising about risks or negative outcomes.</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-lxju5y18j" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-lxju5y18j" class="language-html">&lt;div class=&quot;callout callout-caution&quot;&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Caution&lt;/div&gt;
+  &lt;p&gt;Risks or negative outcomes of certain actions.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3>Important (<code>.callout-important</code>)</h3>
+<p>For key information users need to achieve their goal.</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-47lqn270j" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-47lqn270j" class="language-html">&lt;div class=&quot;callout callout-important&quot;&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Important&lt;/div&gt;
+  &lt;p&gt;Key information users need to know.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="rules">Rules</h2>
+<table>
+<thead>
+<tr>
+<th>Do</th>
+<th>Don&#39;t</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Use semantic variants for meaning</td>
+<td>Use color to decorate without purpose</td>
+</tr>
+<tr>
+<td>Keep callout content concise</td>
+<td>Put entire sections inside callouts</td>
+</tr>
+<tr>
+<td>Use <code>.callout-title</code> for labeling</td>
+<td>Use headings (h1–h6) inside callouts</td>
+</tr>
+<tr>
+<td>Customize <code>--status-*</code> tokens per project</td>
+<td>Hardcode colors on individual callouts</td>
 </tr>
 </tbody></table>
 <hr>
-<h2 id="initialization-pattern">Initialization Pattern</h2>
-<ol>
-<li>Define <strong>utility functions</strong> first</li>
-<li>Define <strong>main functions</strong> grouped by section</li>
-<li>Define <strong>event listeners</strong> separately</li>
-<li>Call everything within a single <code>DOMContentLoaded</code> listener <strong>at the end</strong></li>
-</ol>
-<hr>
-<h2 id="console-logging">Console Logging</h2>
-<p><strong>Each script should include ONE <code>console.log()</code> at the top</strong> to confirm the script has loaded. Don&#39;t add excessive console logs throughout your code.</p>
-<hr>
-<h2 id="rules-to-follow">Rules to Follow</h2>
-<h3 id="organization">Organization</h3>
-<ul>
-<li>✅ Group related functions together</li>
-<li>✅ Use section dividers for major groupings</li>
-<li>✅ Place initialization at the end</li>
-<li>✅ Keep utility functions separate from main functions</li>
-</ul>
-<h3 id="commenting">Commenting</h3>
-<ul>
-<li>✅ Include file header with metadata</li>
-<li>✅ Comment each function with its purpose</li>
-<li>✅ Use section dividers for major groupings</li>
-</ul>
-<h3 id="code-quality">Code Quality</h3>
-<ul>
-<li>✅ Use descriptive function names</li>
-<li>✅ Follow naming conventions consistently</li>
-<li>✅ Place initialization in <code>DOMContentLoaded</code> listener</li>
-</ul>
-<h3 id="what-to-avoid">What to Avoid</h3>
-<ul>
-<li>❌ Scattering related functions across the file</li>
-<li>❌ Mixing utility functions with main functions</li>
-<li>❌ Multiple initialization points</li>
-<li>❌ Excessive console logging</li>
-</ul>
+<h2 id="relationship-to-markdown-alerts">Relationship to Markdown Alerts</h2>
+<p>The <code>.markdown-body</code> CSS includes GitHub-style alerts (<code>.markdown-alert-note</code>, etc.) with their own color tokens. These are scoped to rendered markdown content only.</p>
+<p>The design system callouts (<code>.callout</code>) are the <strong>global, project-wide</strong> equivalent. When building pages, always use <code>.callout</code> — not the markdown alert classes.</p>
 
                     </article>
                 </main>
@@ -337,14 +363,14 @@ function doSomething() {
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#overview" class="toc-link">Overview</a></li><li class="toc-item toc-level-2"><a href="#file-structure" class="toc-link">File Structure</a></li><li class="toc-item toc-level-2"><a href="#section-organization" class="toc-link">Section Organization</a></li><li class="toc-item toc-level-2"><a href="#section-dividers" class="toc-link">Section Dividers</a></li><li class="toc-item toc-level-2"><a href="#naming-conventions" class="toc-link">Naming Conventions</a></li><li class="toc-item toc-level-2"><a href="#initialization-pattern" class="toc-link">Initialization Pattern</a></li><li class="toc-item toc-level-2"><a href="#console-logging" class="toc-link">Console Logging</a></li><li class="toc-item toc-level-2"><a href="#rules-to-follow" class="toc-link">Rules to Follow</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#core-principles" class="toc-link">Core Principles</a></li><li class="toc-item toc-level-2"><a href="#status-color-tokens" class="toc-link">Status Color Tokens</a></li><li class="toc-item toc-level-2"><a href="#base-callout" class="toc-link">Base Callout</a></li><li class="toc-item toc-level-2"><a href="#callout-title" class="toc-link">Callout Title</a></li><li class="toc-item toc-level-2"><a href="#variants" class="toc-link">Variants</a></li><li class="toc-item toc-level-2"><a href="#rules" class="toc-link">Rules</a></li><li class="toc-item toc-level-2"><a href="#relationship-to-markdown-alerts" class="toc-link">Relationship to Markdown Alerts</a></li></ul></nav></div>
     </aside>
             </div>
             
             <!-- Footer -->
             <footer class="docs-footer">
                 <div class="docs-footer-inner padding-global">
-                    <p class="docs-footer-text">© 2025 By Default</p>
+                    <p class="docs-footer-text">© 2026 By Default BrandOS</p>
                 </div>
             </footer>
         </div>

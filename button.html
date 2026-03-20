@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSS - Documentation</title>
-    <meta name="description" content="Guide defining how CSS should be structured, organized, and commented for maintainability.">
+    <title>Button - Documentation</title>
+    <meta name="description" content="How to use button styles and modifiers in the design system.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
     
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="design-system/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../brand-book/brand-book.css">
+    <link rel="stylesheet" href="brand-book/brand-book.css">
     
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,10 +22,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
        
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="assets/markdown.css">
-    
-    <!-- Docs-specific styles (additions) -->
-    <link rel="stylesheet" href="assets/docs.css">
+    <link rel="stylesheet" href="assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -61,7 +61,7 @@
     <ul class="nav-list nav-home">
       <li><a href="index.html" class="nav-link ">Home</a></li>
     </ul>
-  <details class="nav-section">
+  <details class="nav-section" open>
       <summary class="nav-section-toggle">
         <span>Design System</span>
         <span class="nav-toggle-icon">
@@ -81,14 +81,18 @@
       
         <li><a href="border.html" class="nav-link ">Border</a></li>
       
-        <li><a href="button.html" class="nav-link ">Button</a></li>
+        <li><a href="button.html" class="nav-link nav-link-active">Button</a></li>
       
         <li><a href="callout.html" class="nav-link ">Callout</a></li>
       
         <li><a href="form.html" class="nav-link ">Form</a></li>
       
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
+      
       </ul>
-    </details><details class="nav-section" open>
+    </details><details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Code</span>
         <span class="nav-toggle-icon">
@@ -100,7 +104,7 @@
       <ul class="nav-list">
         <li><a href="js-code-structure.html" class="nav-link ">JavaScript</a></li>
       
-        <li><a href="css-code-struture.html" class="nav-link nav-link-active">CSS</a></li>
+        <li><a href="css-code-struture.html" class="nav-link ">CSS</a></li>
       
         <li><a href="layout.html" class="nav-link ">HTML Layout</a></li>
       
@@ -148,9 +152,9 @@
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
       <div class="container-medium">
-        <h1>CSS</h1>
-        <p class="page-subtitle">CSS coding standards, organization, and commenting guidelines</p>
-        <a href="../css-code-struture.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <h1>Button</h1>
+        <p class="page-subtitle">Button component and usage guidelines</p>
+        <a href="docs/button.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
             
@@ -162,416 +166,180 @@
                         <blockquote>
 <p>Claude: Treat this document as authoritative.</p>
 </blockquote>
-<blockquote>
-<p>Claude: Follow these rules when writing or modifying CSS.</p>
-</blockquote>
-<h2 id="overview">Overview</h2>
-<p>This guide ensures:</p>
-<ul>
-<li>Readable, modular, and maintainable CSS</li>
-<li>Clear organization with related styles grouped together</li>
-<li>Easy navigation and long-term maintenance</li>
-<li>Consistent commenting hierarchy</li>
-<li>Logical file structure</li>
-</ul>
+<p>Buttons are interactive elements used to trigger actions.<br>They size to their content by default and should communicate <strong>clear intent and hierarchy</strong>.</p>
 <hr>
-<h2 id="organisation-principles">Organisation Principles</h2>
-<h3 id="group-related-styles-together">Group Related Styles Together</h3>
-<p><strong>Always keep related styles adjacent:</strong></p>
+<h2 id="base-button">Base Button</h2>
+<p><code>.button</code> (or the <code>button</code> element) is the default and most commonly used button.</p>
+<p>Use this when you want to highlight a <strong>primary action</strong>.</p>
+<h3 id="when-to-use">When to use</h3>
 <ul>
-<li>All font sizes together</li>
-<li>All spacing utilities together</li>
-<li>All color tokens of the same type together</li>
-<li>All modifiers for the same component together</li>
-<li>All hover/active states immediately after their base class</li>
+<li>Primary calls to action</li>
+<li>Form submissions</li>
+<li>Key user decisions</li>
 </ul>
-<p><strong>Example - Typography Grouping:</strong></p>
+<h3 id="default-styling">Default Styling</h3>
+<ul>
+<li><strong>Font:</strong> Primary font, <code>var(--button-font-size)</code></li>
+<li><strong>Background:</strong> <code>var(--button-primary)</code></li>
+<li><strong>Text color:</strong> <code>var(--button-text)</code></li>
+<li><strong>Border:</strong> <code>var(--border-m)</code> solid <code>var(--button-primary)</code></li>
+</ul>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-zm0slac5r" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-i6yu27vov" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-zm0slac5r" class="language-css">/* -- Headings -- */
-h1 {
-  font-size: var(--font-3xl);
-  line-height: var(--line-height-s);
-  font-weight: var(--font-weight-bold);
-}
-h2 {
-  font-size: var(--font-2xl);
-  line-height: var(--line-height-s);
-  font-weight: var(--font-weight-bold);
-}
-/* All headings grouped together */
-</code></pre>
-      </div>
-    
-<p><strong>Example - Component Grouping:</strong></p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-w9qw0y7h8" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-w9qw0y7h8" class="language-css">/* -- Button -- */
-.button, button {
-  padding: var(--space-s) var(--space-m);
-  background: var(--background-primary);
-  border: var(--border-s) solid var(--border-primary);
-}
-.button:hover {
-  background: var(--background-secondary);
-}
-.button.is-outline {
-  background: transparent;
-}
-/* All button-related styles together */
+        <pre><code id="code-i6yu27vov" class="language-html">&lt;button class=&quot;button&quot;&gt;Primary Action&lt;/button&gt;
 </code></pre>
       </div>
     
 <hr>
-<h2 id="token-organisation">Token Organisation</h2>
-<p>Use CSS custom properties (variables) for reusable values. Organize tokens logically:</p>
-<p><strong>Example - Token Grouping:</strong></p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-placeo9ru" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-placeo9ru" class="language-css">:root {
-  /* -- Unit tokens -- */
-  --unit-s: 0.5rem;    /* 8px */
-  --unit-m: 1rem;      /* 16px */
-
-  /* -- Spacing scale -- */
-  --space-s: var(--unit-s);
-  --space-m: var(--unit-m);
-
-  /* -- Typography tokens -- */
-  --font-size-base: 1rem;
-  --font-weight-bold: 700;
-}
-</code></pre>
-      </div>
-    
-<p><strong>Principles:</strong></p>
+<h2 id="outline-button">Outline Button</h2>
+<p><code>.is-outline</code> removes the filled background and uses a border instead.</p>
+<h3 id="when-to-use">When to use</h3>
 <ul>
-<li>Group tokens by purpose (units, spacing, typography, colors)</li>
-<li>Use subsections to organize within <code>:root</code></li>
-<li>Reference tokens when possible (e.g., <code>--space-m: var(--unit-m)</code>)</li>
-<li>Keep related tokens adjacent</li>
+<li>Secondary actions</li>
+<li>Actions that should not visually compete with the primary CTA</li>
+<li>Buttons placed near strong visual content</li>
 </ul>
-<hr>
-<h2 id="component-organization">Component Organization</h2>
-<p>When writing component styles, follow this order:</p>
-<ol>
-<li><strong>Base class first</strong></li>
-<li><strong>States immediately after base</strong> (hover, active, focus)</li>
-<li><strong>Modifiers grouped together</strong> (is-<em>, has-</em>)</li>
-<li><strong>Sub-components after modifiers</strong></li>
-</ol>
-<p><strong>Example:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-lve846y1a" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-889aemzjd" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-lve846y1a" class="language-css">/* -- Card -- */
-.card {
-  padding: var(--space-m);
-  background: var(--background-primary);
-}
-.card:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-.card.is-compact {
-  padding: var(--space-s);
-}
-/* All card-related styles together */
+        <pre><code id="code-889aemzjd" class="language-html">&lt;button class=&quot;button is-outline&quot;&gt;Secondary Action&lt;/button&gt;
 </code></pre>
       </div>
     
 <hr>
-<h2 id="property-ordering-for-readability">Property Ordering for Readability</h2>
-<p>Group related properties together within a selector:</p>
-<p><strong>Suggested order:</strong></p>
-<ol>
-<li>Layout (display, position, grid, flex)</li>
-<li>Box model (width, height, margin, padding)</li>
-<li>Visual (background, border, box-shadow)</li>
-<li>Typography (font, line-height, text-align)</li>
-<li>Other (opacity, cursor, transition)</li>
-</ol>
-<p><strong>Example:</strong></p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-tw6taizqi" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-tw6taizqi" class="language-css">.button {
-  /* Layout */
-  display: inline-flex;
-  
-  /* Box model */
-  padding: var(--space-m) var(--space-l);
-  
-  /* Visual */
-  background: var(--background-primary);
-  border: var(--border-s) solid var(--border-primary);
-  
-  /* Typography */
-  font-size: var(--font-m);
-  font-weight: var(--font-weight-semi-bold);
-}
-</code></pre>
-      </div>
-    
-<p><strong>Note</strong>: The comments above are for demonstration only. In actual code, the visual grouping is what matters, not the comments.</p>
-<hr>
-<h2 id="commenting-hierarchy">Commenting Hierarchy</h2>
-<p>Use <strong>three levels only</strong>. Do not invent new formats.</p>
-<h3 id="1-major-sections">1. Major Sections</h3>
-<p>Used for top‑level structure of the file.</p>
-<p><strong>Format</strong></p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-otp7jok9y" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-otp7jok9y" class="language-css">/* ------ Section Title ------ */
-</code></pre>
-      </div>
-    
-<p><strong>Rules</strong></p>
+<h2 id="faded-button">Faded Button</h2>
+<p><code>.is-faded</code> applies a subtle background using <code>var(--button-faded)</code>.</p>
+<h3 id="when-to-use">When to use</h3>
 <ul>
-<li>Always uppercase</li>
-<li>One line only</li>
-<li>Blank line before and after</li>
-<li>Use to mark major divisions in your CSS</li>
+<li>Low-priority actions</li>
+<li>Passive or optional interactions</li>
+<li>UI controls that should feel lightweight</li>
 </ul>
-<p><strong>Example</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-u65a6vlpf" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-83xv1fg2e" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-u65a6vlpf" class="language-css">/* ------ BASE STYLES ------ */
-
-body {
-  /* ... */
-}
+        <pre><code id="code-83xv1fg2e" class="language-html">&lt;button class=&quot;button is-faded&quot;&gt;Optional Action&lt;/button&gt;
 </code></pre>
       </div>
     
 <hr>
-<h3 id="2-subsections">2. Subsections</h3>
-<p>Used to group related concepts inside a section.</p>
-<p><strong>Format</strong></p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-6qo6s0hj2" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-6qo6s0hj2" class="language-css">/* -- Subsection name -- */
-</code></pre>
-      </div>
-    
-<p><strong>Rules</strong></p>
+<h2 id="outline-faded">Outline + Faded</h2>
+<p><code>.is-outline.is-faded</code> combines both modifiers.</p>
+<h3 id="when-to-use">When to use</h3>
 <ul>
-<li>Title case</li>
-<li>One line</li>
-<li>Use only when grouping related rules</li>
-<li>Blank line before</li>
+<li>Tertiary actions</li>
+<li>Utility controls</li>
+<li>Actions that should be visible but de-emphasised</li>
 </ul>
-<p><strong>Example</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-ho27ni2ib" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-wqeo3geb0" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-ho27ni2ib" class="language-css">/* -- Headings -- */
-h1 {
-  /* ... */
-}
-h2 {
-  /* ... */
-}
+        <pre><code id="code-wqeo3geb0" class="language-html">&lt;button class=&quot;button is-outline is-faded&quot;&gt;Tertiary Action&lt;/button&gt;
 </code></pre>
       </div>
     
 <hr>
-<h3 id="3-inline-feature-comments">3. Inline / Feature Comments</h3>
-<p>Used to clarify values or mark important behaviour.</p>
-<p><strong>Format</strong></p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-3m5x4h9oh" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-3m5x4h9oh" class="language-css">/* Short clarification */
-</code></pre>
-      </div>
-    
-<p><strong>Rules</strong></p>
+<h2 id="small-button">Small Button</h2>
+<p><code>.is-small</code> reduces font size and padding.</p>
+<h3 id="when-to-use">When to use</h3>
 <ul>
-<li>Keep factual and brief</li>
-<li>Prefer same-line comments</li>
-<li>Do not explain obvious CSS</li>
+<li>Dense UI areas</li>
+<li>Tables, cards, or compact layouts</li>
+<li>Secondary actions inside components</li>
 </ul>
-<p><strong>Example</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-z6agantn1" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-wa1dfberi" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-z6agantn1" class="language-css">--unit-xs: 0.25rem; /* 4px */
+        <pre><code id="code-wa1dfberi" class="language-html">&lt;button class=&quot;button is-small&quot;&gt;Small Action&lt;/button&gt;
 </code></pre>
       </div>
     
 <hr>
-<h2 id="responsive-code-organization">Responsive Code Organization</h2>
-<h3 id="adding-breakpoints">Adding Breakpoints</h3>
-<p>When adding responsive breakpoints, follow these guidelines:</p>
-<ol>
-<li><p><strong>Choose breakpoints that match your design</strong> - Common breakpoints include:</p>
+<h2 id="icon-button">Icon Button</h2>
+<p><code>.is-icon</code> creates a circular button designed for icons only.</p>
+<h3 id="when-to-use">When to use</h3>
 <ul>
-<li>Mobile: <code>768px</code> (max-width)</li>
-<li>Tablet: <code>1024px</code> (max-width)</li>
-<li>Desktop: <code>1440px</code> (min-width)</li>
+<li>Icon-only actions</li>
+<li>Toolbar controls</li>
+<li>Repeated UI actions (close, add, expand)</li>
 </ul>
-</li>
-<li><p><strong>Keep breakpoints consistent</strong> - Use the same breakpoints throughout your project</p>
-</li>
-<li><p><strong>Group responsive code together</strong> - Place all media queries in a dedicated section at the end of your file</p>
-</li>
-</ol>
-<p><strong>Example:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-26w73u240" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-invy0vxj9" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-26w73u240" class="language-css">/* ------ RESPONSIVE ------ */
-
-/* Mobile */
-@media (max-width: 768px) {
-  :root {
-    --font-size-base: 0.875rem;
-  }
-  .card {
-    padding: var(--space-s);
-  }
-}
+        <pre><code id="code-invy0vxj9" class="language-html">&lt;button class=&quot;button is-icon&quot;&gt;
+  &lt;div class=&quot;icn-svg&quot;&gt;
+    &lt;!-- SVG icon --&gt;
+  &lt;/div&gt;
+&lt;/button&gt;
 </code></pre>
       </div>
     
-<h3 id="organization">Organization</h3>
-<p>When organizing responsive code:</p>
-<ol>
-<li><strong>Override tokens in <code>:root</code></strong> - Don&#39;t override individual classes when possible</li>
-<li><strong>Group by token type</strong> - Fonts together, spacing together</li>
-<li><strong>Use subsections</strong> - Clearly mark what&#39;s being overridden</li>
-<li><strong>Always at the end</strong> - Responsive code should come last in the file</li>
-<li><strong>Comment breakpoints</strong> - Label each breakpoint clearly (Mobile, Tablet, Desktop)</li>
-</ol>
-<p><strong>Example:</strong></p>
+<hr>
+<h2 id="disabled-button">Disabled Button</h2>
+<p><code>:disabled</code> or <code>.is-disabled</code> reduces opacity and prevents interaction.</p>
+<h3 id="when-to-use">When to use</h3>
+<ul>
+<li>Actions that are temporarily unavailable</li>
+<li>Form submissions when validation is incomplete</li>
+<li>Controls that require a prerequisite action</li>
+</ul>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-l4zmu6pi5" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-y44rpm38q" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-l4zmu6pi5" class="language-css">/* ------ RESPONSIVE ------ */
-
-/* Mobile */
-@media (max-width: 768px) {
-  :root {
-    /* -- Mobile font sizes -- */
-    --font-size-base: 0.875rem;
-  }
-  .card {
-    padding: var(--space-s);
-  }
-}
+        <pre><code id="code-y44rpm38q" class="language-html">&lt;button class=&quot;button&quot; disabled&gt;Disabled Action&lt;/button&gt;
+&lt;button class=&quot;button is-outline&quot; disabled&gt;Disabled Outline&lt;/button&gt;
 </code></pre>
       </div>
     
-<h3 id="best-practices">Best Practices</h3>
-<ul>
-<li>Override tokens when possible, not individual classes</li>
-<li>Scale down proportionally</li>
-<li>Keep mobile values grouped by type</li>
-<li>Use clear subsection comments</li>
-</ul>
+<p><strong>Styling:</strong> <code>opacity: 0.4</code>, <code>cursor: not-allowed</code>, <code>pointer-events: none</code>.</p>
 <hr>
-<h2 id="rules-to-follow">Rules to Follow</h2>
-<h3 id="organization">Organization</h3>
-<ul>
-<li>✅ Group related styles together</li>
-<li>✅ Keep all font-related styles in one place</li>
-<li>✅ Keep all spacing utilities together</li>
-<li>✅ Keep all color tokens of the same type together</li>
-<li>✅ Place responsive code at the end</li>
-<li>✅ Keep related properties together within selectors</li>
-</ul>
-<h3 id="commenting">Commenting</h3>
-<ul>
-<li>✅ Use three-level commenting hierarchy</li>
-<li>✅ Do not mix comment styles</li>
-<li>✅ Do not skip levels</li>
-<li>✅ Do not add decorative separators</li>
-<li>✅ Prefer fewer comments over more</li>
-<li>✅ Comments should help <em>find</em> things, not explain theory</li>
-</ul>
-<h3 id="code-quality">Code Quality</h3>
-<ul>
-<li>✅ Use design system tokens, over hardcode values</li>
-<li>✅ Use semantic tokens over primitive tokens when possible</li>
-<li>✅ Keep related properties together (e.g., all typography properties)</li>
-<li>✅ Place states immediately after base classes</li>
-<li>✅ Group modifiers together</li>
-</ul>
-<h3 id="what-to-avoid">What to Avoid</h3>
-<ul>
-<li>❌ Scattering related styles across the file</li>
-<li>❌ Mixing font sizes with spacing utilities</li>
-<li>❌ Placing responsive code in the middle of sections</li>
-<li>❌ Hardcoding values that should use tokens</li>
-<li>❌ Using primitive tokens directly in layouts when semantic tokens exist</li>
-<li>❌ Separating component states and modifiers from their base class</li>
-</ul>
-<hr>
-<h2 id="quick-reference">Quick Reference</h2>
+<h2 id="combining-modifiers">Combining Modifiers</h2>
+<p>Button modifiers can be combined to match intent and context.</p>
+<h3 id="common-combinations">Common combinations</h3>
 <table>
 <thead>
 <tr>
-<th>Task</th>
-<th>Rule</th>
+<th>Combination</th>
+<th>Use case</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>Add new token</td>
-<td>Group with related tokens (colors with colors, spacing with spacing)</td>
+<td><code>.is-outline.is-faded</code></td>
+<td>Tertiary or utility actions</td>
 </tr>
 <tr>
-<td>Add new utility class</td>
-<td>Group with other utilities of the same type</td>
+<td><code>.is-small.is-outline</code></td>
+<td>Compact secondary actions</td>
 </tr>
 <tr>
-<td>Add new component</td>
-<td>Group all related styles together (base, states, modifiers, sub-components)</td>
-</tr>
-<tr>
-<td>Add responsive override</td>
-<td>Place at end of file, override tokens when possible</td>
-</tr>
-<tr>
-<td>Add modifier to component</td>
-<td>Place immediately after component base class</td>
-</tr>
-<tr>
-<td>Add state to component</td>
-<td>Place immediately after base class, before modifiers</td>
+<td><code>.is-small.is-faded</code></td>
+<td>Low-priority compact actions</td>
 </tr>
 </tbody></table>
+<hr>
+<h2 id="usage-rules">Usage Rules</h2>
+<ul>
+<li>Buttons should <strong>never stretch full width by default</strong></li>
+<li>Use one clear primary button per section when possible</li>
+<li>Use outline or faded styles to reduce visual competition</li>
+<li>Use icon buttons <strong>only</strong> when the icon meaning is clear</li>
+</ul>
+<p>If a button feels too prominent or too quiet, change the modifier — not the base styles.</p>
 
                     </article>
                 </main>
@@ -579,14 +347,14 @@ h2 {
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#overview" class="toc-link">Overview</a></li><li class="toc-item toc-level-2"><a href="#organisation-principles" class="toc-link">Organisation Principles</a></li><li class="toc-item toc-level-2"><a href="#token-organisation" class="toc-link">Token Organisation</a></li><li class="toc-item toc-level-2"><a href="#component-organization" class="toc-link">Component Organization</a></li><li class="toc-item toc-level-2"><a href="#property-ordering-for-readability" class="toc-link">Property Ordering for Readability</a></li><li class="toc-item toc-level-2"><a href="#commenting-hierarchy" class="toc-link">Commenting Hierarchy</a></li><li class="toc-item toc-level-2"><a href="#responsive-code-organization" class="toc-link">Responsive Code Organization</a></li><li class="toc-item toc-level-2"><a href="#rules-to-follow" class="toc-link">Rules to Follow</a></li><li class="toc-item toc-level-2"><a href="#quick-reference" class="toc-link">Quick Reference</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#base-button" class="toc-link">Base Button</a></li><li class="toc-item toc-level-2"><a href="#outline-button" class="toc-link">Outline Button</a></li><li class="toc-item toc-level-2"><a href="#faded-button" class="toc-link">Faded Button</a></li><li class="toc-item toc-level-2"><a href="#outline-faded" class="toc-link">Outline + Faded</a></li><li class="toc-item toc-level-2"><a href="#small-button" class="toc-link">Small Button</a></li><li class="toc-item toc-level-2"><a href="#icon-button" class="toc-link">Icon Button</a></li><li class="toc-item toc-level-2"><a href="#disabled-button" class="toc-link">Disabled Button</a></li><li class="toc-item toc-level-2"><a href="#combining-modifiers" class="toc-link">Combining Modifiers</a></li><li class="toc-item toc-level-2"><a href="#usage-rules" class="toc-link">Usage Rules</a></li></ul></nav></div>
     </aside>
             </div>
             
             <!-- Footer -->
             <footer class="docs-footer">
                 <div class="docs-footer-inner padding-global">
-                    <p class="docs-footer-text">© 2025 By Default</p>
+                    <p class="docs-footer-text">© 2026 By Default BrandOS</p>
                 </div>
             </footer>
         </div>

@@ -136,14 +136,13 @@ Every page must include:
 See `docs/folder-structure.md` for complete directory structure.
 
 **Key locations:**
+- `assets/` — all project assets (CSS, fonts, icons, images, video)
 - `design-system/` — design system framework (CSS + styleguide)
 - `brand-book/` — brand identity tokens (CSS + brand preview)
-- `src/assets/images/` — general images and Open Graph images
-- `src/assets/icons/` — favicons
 - `src/js/` — JavaScript files
 - `src/pages/` — HTML pages
 - `templates/` — reusable templates
-- `docs/` — documentation
+- `docs/` — documentation markdown source and generator
 
 ---
 

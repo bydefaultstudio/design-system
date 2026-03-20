@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upgrading the Docs Engine - Documentation</title>
-    <meta name="description" content="Guide to upgrading the documentation engine without affecting project content.">
+    <title>Form - Documentation</title>
+    <meta name="description" content="How to use form elements, labels, inputs, and layout patterns in the design system.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
     
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="design-system/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../brand-book/brand-book.css">
+    <link rel="stylesheet" href="brand-book/brand-book.css">
     
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,10 +22,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
        
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="assets/markdown.css">
-    
-    <!-- Docs-specific styles (additions) -->
-    <link rel="stylesheet" href="assets/docs.css">
+    <link rel="stylesheet" href="assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -61,7 +61,7 @@
     <ul class="nav-list nav-home">
       <li><a href="index.html" class="nav-link ">Home</a></li>
     </ul>
-  <details class="nav-section">
+  <details class="nav-section" open>
       <summary class="nav-section-toggle">
         <span>Design System</span>
         <span class="nav-toggle-icon">
@@ -85,7 +85,11 @@
       
         <li><a href="callout.html" class="nav-link ">Callout</a></li>
       
-        <li><a href="form.html" class="nav-link ">Form</a></li>
+        <li><a href="form.html" class="nav-link nav-link-active">Form</a></li>
+      
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
       
       </ul>
     </details><details class="nav-section">
@@ -120,7 +124,7 @@
         <li><a href="markdown-style.html" class="nav-link ">Markdown</a></li>
       
       </ul>
-    </details><details class="nav-section" open>
+    </details><details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Project</span>
         <span class="nav-toggle-icon">
@@ -136,7 +140,7 @@
       
         <li><a href="folder-structure.html" class="nav-link ">Folders</a></li>
       
-        <li><a href="upgrading-docs.html" class="nav-link nav-link-active">Upgrading the Docs Engine</a></li>
+        <li><a href="upgrading-docs.html" class="nav-link ">Upgrading the Docs Engine</a></li>
       
       </ul>
     </details>
@@ -148,9 +152,9 @@
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
       <div class="container-medium">
-        <h1>Upgrading the Docs Engine</h1>
-        <p class="page-subtitle">How to update the doc site across projects</p>
-        <a href="../upgrading-docs.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <h1>Form</h1>
+        <p class="page-subtitle">Form element styling and patterns</p>
+        <a href="docs/form.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
             
@@ -162,116 +166,243 @@
                         <blockquote>
 <p>Claude: Treat this document as authoritative.</p>
 </blockquote>
-<p>The doc site is split into two parts: <strong>content</strong> (your markdown files) and the <strong>engine</strong> (the generator that turns them into HTML). They are kept separate so you can upgrade the engine — better mobile nav, new sidebar, restyled layout — without ever touching your content.</p>
+<p>Form elements are styled globally using semantic tokens. All text inputs, textareas, selects, checkboxes, and radios share <strong>consistent sizing, focus states, and disabled styling</strong>.</p>
 <hr>
-<h2 id="what-stays-per-project-never-touch-these">What Stays Per-Project (Never Touch These)</h2>
+<h2 id="form-tokens">Form Tokens</h2>
+<p>All form styling is controlled by semantic tokens in <code>:root</code>:</p>
 <table>
 <thead>
 <tr>
-<th>File/Folder</th>
-<th>What it controls</th>
+<th>Token</th>
+<th>Default</th>
+<th>Purpose</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>docs/*.md</code></td>
-<td>All documentation content</td>
+<td><code>--input-border</code></td>
+<td><code>var(--border-secondary)</code></td>
+<td>Default border color</td>
 </tr>
 <tr>
-<td><code>docs/docs.config.js</code></td>
-<td>Design system path, brand book path, fonts, footer text, index description</td>
+<td><code>--input-background</code></td>
+<td><code>var(--background-primary)</code></td>
+<td>Input background</td>
 </tr>
 <tr>
-<td><code>docs/site/assets/images/</code></td>
-<td>Logo (<code>logo.svg</code>) and favicons</td>
+<td><code>--input-text</code></td>
+<td><code>var(--text-plain)</code></td>
+<td>Input text color</td>
+</tr>
+<tr>
+<td><code>--input-placeholder</code></td>
+<td><code>var(--text-faded)</code></td>
+<td>Placeholder text color</td>
+</tr>
+<tr>
+<td><code>--input-focus</code></td>
+<td><code>var(--brand-accent)</code></td>
+<td>Focus border and ring color</td>
+</tr>
+<tr>
+<td><code>--input-disabled-bg</code></td>
+<td><code>var(--background-faded)</code></td>
+<td>Disabled background</td>
+</tr>
+<tr>
+<td><code>--input-disabled-text</code></td>
+<td><code>var(--text-faded)</code></td>
+<td>Disabled text color</td>
 </tr>
 </tbody></table>
 <hr>
-<h2 id="what-gets-replaced-on-upgrade">What Gets Replaced on Upgrade</h2>
-<p>Everything inside <code>docs/generator/</code> is the engine. Replace this folder to upgrade.</p>
-<p>Check <code>docs/generator/VERSION</code> to see which version a project is running.</p>
-<hr>
-<h2 id="how-to-upgrade-a-project">How to Upgrade a Project</h2>
-<ol>
-<li>Open the <strong>Project Template</strong> — this is always where engine improvements happen first</li>
-<li>Copy the <code>docs/generator/</code> folder from the template</li>
-<li>Paste it into the target project, replacing the existing <code>docs/generator/</code> folder</li>
-<li>Open a terminal in the target project and run:</li>
-</ol>
+<h2 id="labels">Labels</h2>
+<p>Labels are styled as block elements with medium weight:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-tl2tpmw1g" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-9c44d330q" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-tl2tpmw1g" class="language-bash">cd docs/generator
-npm install
-npm run docgen
+        <pre><code id="code-9c44d330q" class="language-html">&lt;label for=&quot;name&quot;&gt;Full name&lt;/label&gt;
+&lt;input type=&quot;text&quot; id=&quot;name&quot; placeholder=&quot;Enter your name&quot;&gt;
 </code></pre>
       </div>
     
-<ol start="5">
-<li>Done — your markdown files, config, and images are untouched</li>
-</ol>
+<p><strong>Properties:</strong> <code>display: block</code>, <code>font-size: var(--font-s)</code>, <code>font-weight: var(--font-weight-medium)</code>, bottom margin for spacing from the input.</p>
 <hr>
-<h2 id="customising-a-project39s-doc-site">Customising a Project&#39;s Doc Site</h2>
-<p>Edit <code>docs/docs.config.js</code> in the project:</p>
+<h2 id="text-inputs">Text Inputs</h2>
+<p>All standard text input types are styled globally:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-qgt36njie" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-5e230oxay" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-qgt36njie" class="language-js">module.exports = {
-  // Path to design system CSS, relative from docs/site/
-  designSystemPath: &#39;../../design-system/design-system.css&#39;,
-
-  // Path to brand book CSS, relative from docs/site/
-  // Set to null to use framework defaults only
-  brandCssPath: &#39;../../brand-book/brand-book.css&#39;,
-
-  // Google Fonts URL — set to null to disable
-  googleFontsUrl: &#39;https://fonts.googleapis.com/...&#39;,
-
-  // Footer copyright text
-  footerText: &#39;© 2025 Your Studio Name&#39;,
-
-  // Description shown on the docs homepage
-  indexDescription: &#39;Documentation for Project Name.&#39;,
-};
+        <pre><code id="code-5e230oxay" class="language-html">&lt;input type=&quot;text&quot; placeholder=&quot;Text&quot;&gt;
+&lt;input type=&quot;email&quot; placeholder=&quot;Email&quot;&gt;
+&lt;input type=&quot;password&quot; placeholder=&quot;Password&quot;&gt;
+&lt;input type=&quot;number&quot; placeholder=&quot;Number&quot;&gt;
+&lt;input type=&quot;search&quot; placeholder=&quot;Search&quot;&gt;
+&lt;input type=&quot;url&quot; placeholder=&quot;URL&quot;&gt;
+&lt;input type=&quot;tel&quot; placeholder=&quot;Phone&quot;&gt;
 </code></pre>
       </div>
     
-<p>Replace the logo by swapping <code>docs/site/assets/images/logo.svg</code>.<br>Replace favicons by swapping <code>docs/site/assets/images/favicon.svg</code> and <code>favicon.ico</code>.</p>
+<p><strong>Properties:</strong> full width, consistent padding, border from <code>--input-border</code>, smooth focus transition.</p>
 <hr>
-<h2 id="design-system-css-convention">Design System CSS Convention</h2>
-<p>The design system CSS lives at <code>design-system/design-system.css</code>. The brand book lives at <code>brand-book/brand-book.css</code>. Both paths are referenced in <code>docs/docs.config.js</code> and used by every generated doc page.</p>
-<p><strong>If the path is wrong or the file is missing</strong>, every doc page will show a friendly amber banner at the top:</p>
-<blockquote>
-<p>Design system CSS not found. Check the path in <code>docs/docs.config.js</code> → <code>designSystemPath</code>, then re-run <code>npm run docgen</code>.</p>
-</blockquote>
-<p>To fix it:</p>
-<ol>
-<li>Confirm where your design system CSS lives</li>
-<li>Update <code>designSystemPath</code> in <code>docs/docs.config.js</code></li>
-<li>Run <code>npm run docgen</code></li>
-</ol>
-<p>The banner disappears as soon as the CSS loads correctly.</p>
+<h2 id="focus-state">Focus State</h2>
+<p>All inputs share a consistent focus style:</p>
+<ul>
+<li>Border color changes to <code>--input-focus</code></li>
+<li>A subtle box-shadow ring appears (2px, 75% transparent)</li>
+<li>No outline (replaced by box-shadow for consistency)</li>
+</ul>
+<p>This is accessibility-safe and keyboard-visible.</p>
 <hr>
-<h2 id="doc-generator-commands">Doc Generator Commands</h2>
-<p>Run these from inside <code>docs/generator/</code>:</p>
+<h2 id="textarea">Textarea</h2>
+<p>Textareas have a minimum height and allow vertical resizing:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-g3bzulf6w" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-wajvu4r0z" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-g3bzulf6w" class="language-bash">npm run docgen     # Generate HTML from markdown
-npm run serve      # View locally in browser
-npm run docwatch   # Auto-regenerate on markdown changes
-npm run docfull    # Generate + serve + watch (all at once)
+        <pre><code id="code-wajvu4r0z" class="language-html">&lt;label for=&quot;message&quot;&gt;Message&lt;/label&gt;
+&lt;textarea id=&quot;message&quot; placeholder=&quot;Enter your message...&quot;&gt;&lt;/textarea&gt;
+</code></pre>
+      </div>
+    
+<p><strong>Properties:</strong> <code>min-height: 120px</code>, <code>resize: vertical</code>.</p>
+<hr>
+<h2 id="select">Select</h2>
+<p>Selects use a custom dropdown arrow via an inline SVG background:</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-26eqdf5ot" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-26eqdf5ot" class="language-html">&lt;label for=&quot;country&quot;&gt;Country&lt;/label&gt;
+&lt;select id=&quot;country&quot;&gt;
+  &lt;option value=&quot;&quot; disabled selected&gt;Choose a country&lt;/option&gt;
+  &lt;option value=&quot;nz&quot;&gt;New Zealand&lt;/option&gt;
+  &lt;option value=&quot;au&quot;&gt;Australia&lt;/option&gt;
+&lt;/select&gt;
+</code></pre>
+      </div>
+    
+<p><strong>Properties:</strong> <code>appearance: none</code>, custom caret, right padding for arrow space.</p>
+<hr>
+<h2 id="disabled-state">Disabled State</h2>
+<p>Add the <code>disabled</code> attribute to any input, textarea, or select:</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-dzuplqcxe" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-dzuplqcxe" class="language-html">&lt;input type=&quot;text&quot; value=&quot;Cannot edit&quot; disabled&gt;
+</code></pre>
+      </div>
+    
+<p><strong>Properties:</strong> <code>--input-disabled-bg</code> background, <code>--input-disabled-text</code> color, <code>cursor: not-allowed</code>.</p>
+<hr>
+<h2 id="checkbox-amp-radio">Checkbox &amp; Radio</h2>
+<p>Checkboxes and radios use the native browser rendering with <code>accent-color</code> for brand alignment:</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-gtvwgn7lv" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-gtvwgn7lv" class="language-html">&lt;div class=&quot;form-check&quot;&gt;
+  &lt;input type=&quot;checkbox&quot; id=&quot;terms&quot;&gt;
+  &lt;label for=&quot;terms&quot;&gt;I agree to the terms&lt;/label&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<p><strong>Properties:</strong> consistent sizing via <code>width</code>/<code>height</code> tokens, <code>accent-color: var(--input-focus)</code>.</p>
+<hr>
+<h2 id="layout-patterns">Layout Patterns</h2>
+<h3 id="form-group">Form Group</h3>
+<p>Use <code>.form-group</code> to wrap a label + input pair with consistent bottom spacing:</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-f5hhg9lfs" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-f5hhg9lfs" class="language-html">&lt;div class=&quot;form-group&quot;&gt;
+  &lt;label for=&quot;name&quot;&gt;Name&lt;/label&gt;
+  &lt;input type=&quot;text&quot; id=&quot;name&quot;&gt;
+&lt;/div&gt;
+&lt;div class=&quot;form-group&quot;&gt;
+  &lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;
+  &lt;input type=&quot;email&quot; id=&quot;email&quot;&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="form-check">Form Check</h3>
+<p>Use <code>.form-check</code> for inline checkbox/radio + label pairs:</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-g1p6xcpmb" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-g1p6xcpmb" class="language-html">&lt;div class=&quot;form-check&quot;&gt;
+  &lt;input type=&quot;checkbox&quot; id=&quot;opt-in&quot;&gt;
+  &lt;label for=&quot;opt-in&quot;&gt;Subscribe to newsletter&lt;/label&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<p><strong>Properties:</strong> <code>display: flex</code>, <code>align-items: center</code>, <code>gap</code> for spacing. The label inside <code>.form-check</code> is inline with regular weight.</p>
+<h3 id="fieldset-amp-legend">Fieldset &amp; Legend</h3>
+<p>Use <code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code> to group related form controls:</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-oneswa837" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-oneswa837" class="language-html">&lt;fieldset&gt;
+  &lt;legend&gt;Contact details&lt;/legend&gt;
+  &lt;div class=&quot;form-group&quot;&gt;
+    &lt;label for=&quot;phone&quot;&gt;Phone&lt;/label&gt;
+    &lt;input type=&quot;tel&quot; id=&quot;phone&quot;&gt;
+  &lt;/div&gt;
+&lt;/fieldset&gt;
 </code></pre>
       </div>
     
 <hr>
-<h2 id="when-to-update-the-template-first">When to Update the Template First</h2>
-<p>Always improve the engine in the <strong>Project Template</strong>, not in a live project. That way the improvement is available to all future projects and can be copied across to existing ones cleanly.</p>
+<h2 id="rules">Rules</h2>
+<table>
+<thead>
+<tr>
+<th>Do</th>
+<th>Don&#39;t</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Use <code>&lt;label&gt;</code> with <code>for</code> attribute</td>
+<td>Use placeholder as a label replacement</td>
+</tr>
+<tr>
+<td>Use <code>.form-group</code> for spacing</td>
+<td>Add margins directly to inputs</td>
+</tr>
+<tr>
+<td>Use <code>.form-check</code> for checkbox/radio pairs</td>
+<td>Float labels next to checkboxes manually</td>
+</tr>
+<tr>
+<td>Use semantic tokens for customization</td>
+<td>Hardcode colors on individual inputs</td>
+</tr>
+<tr>
+<td>Use <code>&lt;fieldset&gt;</code> for logical grouping</td>
+<td>Use <code>&lt;div&gt;</code> with borders to fake fieldsets</td>
+</tr>
+<tr>
+<td>Keep inputs full-width by default</td>
+<td>Set fixed widths unless layout requires it</td>
+</tr>
+</tbody></table>
 
                     </article>
                 </main>
@@ -279,14 +410,14 @@ npm run docfull    # Generate + serve + watch (all at once)
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#what-stays-per-project-never-touch-these" class="toc-link">What Stays Per-Project (Never Touch These)</a></li><li class="toc-item toc-level-2"><a href="#what-gets-replaced-on-upgrade" class="toc-link">What Gets Replaced on Upgrade</a></li><li class="toc-item toc-level-2"><a href="#how-to-upgrade-a-project" class="toc-link">How to Upgrade a Project</a></li><li class="toc-item toc-level-2"><a href="#customising-a-project39s-doc-site" class="toc-link">Customising a Project&#39;s Doc Site</a></li><li class="toc-item toc-level-2"><a href="#design-system-css-convention" class="toc-link">Design System CSS Convention</a></li><li class="toc-item toc-level-2"><a href="#doc-generator-commands" class="toc-link">Doc Generator Commands</a></li><li class="toc-item toc-level-2"><a href="#when-to-update-the-template-first" class="toc-link">When to Update the Template First</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#form-tokens" class="toc-link">Form Tokens</a></li><li class="toc-item toc-level-2"><a href="#labels" class="toc-link">Labels</a></li><li class="toc-item toc-level-2"><a href="#text-inputs" class="toc-link">Text Inputs</a></li><li class="toc-item toc-level-2"><a href="#focus-state" class="toc-link">Focus State</a></li><li class="toc-item toc-level-2"><a href="#textarea" class="toc-link">Textarea</a></li><li class="toc-item toc-level-2"><a href="#select" class="toc-link">Select</a></li><li class="toc-item toc-level-2"><a href="#disabled-state" class="toc-link">Disabled State</a></li><li class="toc-item toc-level-2"><a href="#checkbox-amp-radio" class="toc-link">Checkbox &amp; Radio</a></li><li class="toc-item toc-level-2"><a href="#layout-patterns" class="toc-link">Layout Patterns</a></li><li class="toc-item toc-level-2"><a href="#rules" class="toc-link">Rules</a></li></ul></nav></div>
     </aside>
             </div>
             
             <!-- Footer -->
             <footer class="docs-footer">
                 <div class="docs-footer-inner padding-global">
-                    <p class="docs-footer-text">© 2025 By Default</p>
+                    <p class="docs-footer-text">© 2026 By Default BrandOS</p>
                 </div>
             </footer>
         </div>

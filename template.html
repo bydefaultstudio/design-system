@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form - Documentation</title>
-    <meta name="description" content="How to use form elements, labels, inputs, and layout patterns in the design system.">
+    <title>Template - Documentation</title>
+    <meta name="description" content="Explains the purpose, scope, and intended usage of this project template.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
     
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="design-system/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../brand-book/brand-book.css">
+    <link rel="stylesheet" href="brand-book/brand-book.css">
     
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,10 +22,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
        
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="assets/markdown.css">
-    
-    <!-- Docs-specific styles (additions) -->
-    <link rel="stylesheet" href="assets/docs.css">
+    <link rel="stylesheet" href="assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -61,7 +61,7 @@
     <ul class="nav-list nav-home">
       <li><a href="index.html" class="nav-link ">Home</a></li>
     </ul>
-  <details class="nav-section" open>
+  <details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Design System</span>
         <span class="nav-toggle-icon">
@@ -85,7 +85,11 @@
       
         <li><a href="callout.html" class="nav-link ">Callout</a></li>
       
-        <li><a href="form.html" class="nav-link nav-link-active">Form</a></li>
+        <li><a href="form.html" class="nav-link ">Form</a></li>
+      
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
       
       </ul>
     </details><details class="nav-section">
@@ -120,7 +124,7 @@
         <li><a href="markdown-style.html" class="nav-link ">Markdown</a></li>
       
       </ul>
-    </details><details class="nav-section">
+    </details><details class="nav-section" open>
       <summary class="nav-section-toggle">
         <span>Project</span>
         <span class="nav-toggle-icon">
@@ -132,7 +136,7 @@
       <ul class="nav-list">
         <li><a href="setup.html" class="nav-link ">Setup</a></li>
       
-        <li><a href="template.html" class="nav-link ">Template</a></li>
+        <li><a href="template.html" class="nav-link nav-link-active">Template</a></li>
       
         <li><a href="folder-structure.html" class="nav-link ">Folders</a></li>
       
@@ -148,9 +152,9 @@
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
       <div class="container-medium">
-        <h1>Form</h1>
-        <p class="page-subtitle">Form element styling and patterns</p>
-        <a href="../form.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <h1>Template</h1>
+        <p class="page-subtitle">What this template is and how to use it</p>
+        <a href="docs/template.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
             
@@ -162,243 +166,88 @@
                         <blockquote>
 <p>Claude: Treat this document as authoritative.</p>
 </blockquote>
-<p>Form elements are styled globally using semantic tokens. All text inputs, textareas, selects, checkboxes, and radios share <strong>consistent sizing, focus states, and disabled styling</strong>.</p>
+<p>This repository is a <strong>UI system starter template</strong> for building consistent, scalable front-end experiences using <strong>HTML, CSS, and JavaScript</strong>.</p>
 <hr>
-<h2 id="form-tokens">Form Tokens</h2>
-<p>All form styling is controlled by semantic tokens in <code>:root</code>:</p>
-<table>
-<thead>
-<tr>
-<th>Token</th>
-<th>Default</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>--input-border</code></td>
-<td><code>var(--border-secondary)</code></td>
-<td>Default border color</td>
-</tr>
-<tr>
-<td><code>--input-background</code></td>
-<td><code>var(--background-primary)</code></td>
-<td>Input background</td>
-</tr>
-<tr>
-<td><code>--input-text</code></td>
-<td><code>var(--text-plain)</code></td>
-<td>Input text color</td>
-</tr>
-<tr>
-<td><code>--input-placeholder</code></td>
-<td><code>var(--text-faded)</code></td>
-<td>Placeholder text color</td>
-</tr>
-<tr>
-<td><code>--input-focus</code></td>
-<td><code>var(--brand-accent)</code></td>
-<td>Focus border and ring color</td>
-</tr>
-<tr>
-<td><code>--input-disabled-bg</code></td>
-<td><code>var(--background-faded)</code></td>
-<td>Disabled background</td>
-</tr>
-<tr>
-<td><code>--input-disabled-text</code></td>
-<td><code>var(--text-faded)</code></td>
-<td>Disabled text color</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="labels">Labels</h2>
-<p>Labels are styled as block elements with medium weight:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-aia4pk1bo" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-aia4pk1bo" class="language-html">&lt;label for=&quot;name&quot;&gt;Full name&lt;/label&gt;
-&lt;input type=&quot;text&quot; id=&quot;name&quot; placeholder=&quot;Enter your name&quot;&gt;
-</code></pre>
-      </div>
-    
-<p><strong>Properties:</strong> <code>display: block</code>, <code>font-size: var(--font-s)</code>, <code>font-weight: var(--font-weight-medium)</code>, bottom margin for spacing from the input.</p>
-<hr>
-<h2 id="text-inputs">Text Inputs</h2>
-<p>All standard text input types are styled globally:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-ngk9tfcpb" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-ngk9tfcpb" class="language-html">&lt;input type=&quot;text&quot; placeholder=&quot;Text&quot;&gt;
-&lt;input type=&quot;email&quot; placeholder=&quot;Email&quot;&gt;
-&lt;input type=&quot;password&quot; placeholder=&quot;Password&quot;&gt;
-&lt;input type=&quot;number&quot; placeholder=&quot;Number&quot;&gt;
-&lt;input type=&quot;search&quot; placeholder=&quot;Search&quot;&gt;
-&lt;input type=&quot;url&quot; placeholder=&quot;URL&quot;&gt;
-&lt;input type=&quot;tel&quot; placeholder=&quot;Phone&quot;&gt;
-</code></pre>
-      </div>
-    
-<p><strong>Properties:</strong> full width, consistent padding, border from <code>--input-border</code>, smooth focus transition.</p>
-<hr>
-<h2 id="focus-state">Focus State</h2>
-<p>All inputs share a consistent focus style:</p>
+<h2 id="what-this-template-is">What This Template Is</h2>
+<p>This template is designed to be:</p>
 <ul>
-<li>Border color changes to <code>--input-focus</code></li>
-<li>A subtle box-shadow ring appears (2px, 75% transparent)</li>
-<li>No outline (replaced by box-shadow for consistency)</li>
+<li>A fast starting point for new projects</li>
+<li>A shared foundation for teams</li>
+<li>A reliable source of context for AI-assisted coding tools</li>
+<li>Framework-agnostic and long-lived</li>
 </ul>
-<p>This is accessibility-safe and keyboard-visible.</p>
+<p>This is <strong>not</strong> a finished website or app.<br>It is a <strong>baseline system</strong> that can be used across many types of projects.</p>
 <hr>
-<h2 id="textarea">Textarea</h2>
-<p>Textareas have a minimum height and allow vertical resizing:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-t9on8x5nk" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-t9on8x5nk" class="language-html">&lt;label for=&quot;message&quot;&gt;Message&lt;/label&gt;
-&lt;textarea id=&quot;message&quot; placeholder=&quot;Enter your message...&quot;&gt;&lt;/textarea&gt;
-</code></pre>
-      </div>
-    
-<p><strong>Properties:</strong> <code>min-height: 120px</code>, <code>resize: vertical</code>.</p>
+<h2 id="what-this-template-is-for">What This Template Is For</h2>
+<p>This template is ideal for:</p>
+<ul>
+<li>Marketing websites</li>
+<li>Editorial and content-led sites</li>
+<li>Design systems and style guides</li>
+<li>Webflow exports or hand-coded sites</li>
+<li>Front-end foundations for larger apps</li>
+<li>Prototypes that may later evolve into products</li>
+</ul>
+<p>It provides:</p>
+<ul>
+<li>A complete <strong>design system</strong> (tokens, layout, typography, utilities)</li>
+<li>Clear <strong>layout and spacing rules</strong></li>
+<li>Reusable <strong>UI patterns</strong></li>
+<li>Consistent <strong>CSS architecture</strong></li>
+<li>Documented <strong>best practices</strong> for usage</li>
+</ul>
 <hr>
-<h2 id="select">Select</h2>
-<p>Selects use a custom dropdown arrow via an inline SVG background:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-3i3flpqxw" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-3i3flpqxw" class="language-html">&lt;label for=&quot;country&quot;&gt;Country&lt;/label&gt;
-&lt;select id=&quot;country&quot;&gt;
-  &lt;option value=&quot;&quot; disabled selected&gt;Choose a country&lt;/option&gt;
-  &lt;option value=&quot;nz&quot;&gt;New Zealand&lt;/option&gt;
-  &lt;option value=&quot;au&quot;&gt;Australia&lt;/option&gt;
-&lt;/select&gt;
-</code></pre>
-      </div>
-    
-<p><strong>Properties:</strong> <code>appearance: none</code>, custom caret, right padding for arrow space.</p>
+<h2 id="what-this-template-is-not">What This Template Is NOT</h2>
+<p>This template intentionally does <strong>not</strong>:</p>
+<ul>
+<li>Define application architecture (state, routing, data)</li>
+<li>Enforce a JavaScript framework (React, Next, Vue, etc.)</li>
+<li>Include backend logic or APIs</li>
+<li>Solve product-specific business logic</li>
+</ul>
+<p>Those concerns belong <strong>above</strong> this layer.</p>
 <hr>
-<h2 id="disabled-state">Disabled State</h2>
-<p>Add the <code>disabled</code> attribute to any input, textarea, or select:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-a9r56iyhu" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-a9r56iyhu" class="language-html">&lt;input type=&quot;text&quot; value=&quot;Cannot edit&quot; disabled&gt;
-</code></pre>
-      </div>
-    
-<p><strong>Properties:</strong> <code>--input-disabled-bg</code> background, <code>--input-disabled-text</code> color, <code>cursor: not-allowed</code>.</p>
+<h2 id="how-this-template-works">How This Template Works</h2>
+<p>This template works in:</p>
+<ul>
+<li>Vanilla HTML / CSS / JS projects</li>
+<li>React and Next.js applications</li>
+<li>Node-powered frontends</li>
+<li>Design system libraries</li>
+<li>Component-driven architectures</li>
+</ul>
+<p><strong>Key Principle:</strong> HTML, CSS, and design rules do not disappear in advanced stacks — they are rendered by them. In frameworks, components <em>consume</em> this system rather than replace it.</p>
 <hr>
-<h2 id="checkbox-amp-radio">Checkbox &amp; Radio</h2>
-<p>Checkboxes and radios use the native browser rendering with <code>accent-color</code> for brand alignment:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-yb2c982rf" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-yb2c982rf" class="language-html">&lt;div class=&quot;form-check&quot;&gt;
-  &lt;input type=&quot;checkbox&quot; id=&quot;terms&quot;&gt;
-  &lt;label for=&quot;terms&quot;&gt;I agree to the terms&lt;/label&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<p><strong>Properties:</strong> consistent sizing via <code>width</code>/<code>height</code> tokens, <code>accent-color: var(--input-focus)</code>.</p>
+<h2 id="how-to-use-this-template">How to Use This Template</h2>
+<ol>
+<li>Clone the repository</li>
+<li>Follow the <a href="setup.html">Setup guide</a> to customize brand tokens, fonts, and logo</li>
+<li>Use the style guide to understand available patterns</li>
+<li>Build pages using the documented layout structure</li>
+<li>Add project-specific logic on top</li>
+</ol>
+<p>You should be able to start building <strong>immediately</strong> without reorganising the system.</p>
 <hr>
-<h2 id="layout-patterns">Layout Patterns</h2>
-<h3 id="form-group">Form Group</h3>
-<p>Use <code>.form-group</code> to wrap a label + input pair with consistent bottom spacing:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-6f4n5z6uq" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-6f4n5z6uq" class="language-html">&lt;div class=&quot;form-group&quot;&gt;
-  &lt;label for=&quot;name&quot;&gt;Name&lt;/label&gt;
-  &lt;input type=&quot;text&quot; id=&quot;name&quot;&gt;
-&lt;/div&gt;
-&lt;div class=&quot;form-group&quot;&gt;
-  &lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;
-  &lt;input type=&quot;email&quot; id=&quot;email&quot;&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3 id="form-check">Form Check</h3>
-<p>Use <code>.form-check</code> for inline checkbox/radio + label pairs:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-5pb2wamjr" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-5pb2wamjr" class="language-html">&lt;div class=&quot;form-check&quot;&gt;
-  &lt;input type=&quot;checkbox&quot; id=&quot;opt-in&quot;&gt;
-  &lt;label for=&quot;opt-in&quot;&gt;Subscribe to newsletter&lt;/label&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<p><strong>Properties:</strong> <code>display: flex</code>, <code>align-items: center</code>, <code>gap</code> for spacing. The label inside <code>.form-check</code> is inline with regular weight.</p>
-<h3 id="fieldset-amp-legend">Fieldset &amp; Legend</h3>
-<p>Use <code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code> to group related form controls:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-bopz8xjr5" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-bopz8xjr5" class="language-html">&lt;fieldset&gt;
-  &lt;legend&gt;Contact details&lt;/legend&gt;
-  &lt;div class=&quot;form-group&quot;&gt;
-    &lt;label for=&quot;phone&quot;&gt;Phone&lt;/label&gt;
-    &lt;input type=&quot;tel&quot; id=&quot;phone&quot;&gt;
-  &lt;/div&gt;
-&lt;/fieldset&gt;
-</code></pre>
-      </div>
-    
+<h2 id="guiding-rule">Guiding Rule</h2>
+<p>If you&#39;re unsure where something belongs, ask:</p>
+<blockquote>
+<p>&quot;Is this a <strong>UI rule</strong> or an <strong>application concern</strong>?&quot;</p>
+</blockquote>
+<ul>
+<li>UI rules belong <strong>here</strong></li>
+<li>Application concerns belong <strong>outside this template</strong></li>
+</ul>
 <hr>
-<h2 id="rules">Rules</h2>
-<table>
-<thead>
-<tr>
-<th>Do</th>
-<th>Don&#39;t</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Use <code>&lt;label&gt;</code> with <code>for</code> attribute</td>
-<td>Use placeholder as a label replacement</td>
-</tr>
-<tr>
-<td>Use <code>.form-group</code> for spacing</td>
-<td>Add margins directly to inputs</td>
-</tr>
-<tr>
-<td>Use <code>.form-check</code> for checkbox/radio pairs</td>
-<td>Float labels next to checkboxes manually</td>
-</tr>
-<tr>
-<td>Use semantic tokens for customization</td>
-<td>Hardcode colors on individual inputs</td>
-</tr>
-<tr>
-<td>Use <code>&lt;fieldset&gt;</code> for logical grouping</td>
-<td>Use <code>&lt;div&gt;</code> with borders to fake fieldsets</td>
-</tr>
-<tr>
-<td>Keep inputs full-width by default</td>
-<td>Set fixed widths unless layout requires it</td>
-</tr>
-</tbody></table>
+<h2 id="why-this-exists">Why This Exists</h2>
+<p>This template exists to:</p>
+<ul>
+<li>Reduce setup time</li>
+<li>Eliminate inconsistency</li>
+<li>Prevent reinvention</li>
+<li>Improve collaboration</li>
+<li>Scale from simple sites to complex products</li>
+</ul>
+<p>It is meant to evolve — but always from a <strong>clear, shared foundation</strong>.</p>
 
                     </article>
                 </main>
@@ -406,14 +255,14 @@
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#form-tokens" class="toc-link">Form Tokens</a></li><li class="toc-item toc-level-2"><a href="#labels" class="toc-link">Labels</a></li><li class="toc-item toc-level-2"><a href="#text-inputs" class="toc-link">Text Inputs</a></li><li class="toc-item toc-level-2"><a href="#focus-state" class="toc-link">Focus State</a></li><li class="toc-item toc-level-2"><a href="#textarea" class="toc-link">Textarea</a></li><li class="toc-item toc-level-2"><a href="#select" class="toc-link">Select</a></li><li class="toc-item toc-level-2"><a href="#disabled-state" class="toc-link">Disabled State</a></li><li class="toc-item toc-level-2"><a href="#checkbox-amp-radio" class="toc-link">Checkbox &amp; Radio</a></li><li class="toc-item toc-level-2"><a href="#layout-patterns" class="toc-link">Layout Patterns</a></li><li class="toc-item toc-level-2"><a href="#rules" class="toc-link">Rules</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#what-this-template-is" class="toc-link">What This Template Is</a></li><li class="toc-item toc-level-2"><a href="#what-this-template-is-for" class="toc-link">What This Template Is For</a></li><li class="toc-item toc-level-2"><a href="#what-this-template-is-not" class="toc-link">What This Template Is NOT</a></li><li class="toc-item toc-level-2"><a href="#how-this-template-works" class="toc-link">How This Template Works</a></li><li class="toc-item toc-level-2"><a href="#how-to-use-this-template" class="toc-link">How to Use This Template</a></li><li class="toc-item toc-level-2"><a href="#guiding-rule" class="toc-link">Guiding Rule</a></li><li class="toc-item toc-level-2"><a href="#why-this-exists" class="toc-link">Why This Exists</a></li></ul></nav></div>
     </aside>
             </div>
             
             <!-- Footer -->
             <footer class="docs-footer">
                 <div class="docs-footer-inner padding-global">
-                    <p class="docs-footer-text">© 2025 By Default</p>
+                    <p class="docs-footer-text">© 2026 By Default BrandOS</p>
                 </div>
             </footer>
         </div>

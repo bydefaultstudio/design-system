@@ -12,16 +12,29 @@ Do not add new top-level folders without updating this file.
 
 ## Root Level
 
-- `index.html` → Welcome page (replace with project homepage)
+- `index.html` → Generated docs hub (homepage)
+- `*.html` → Generated documentation pages (flat at root)
 - `README.md` → Project overview and getting started
 - `PROJECT_BRIEF.md` → Project brief and requirements
 - `PROJECT_PROGRESS.md` → Progress tracker for ongoing work
 - `CLAUDE.md` → Claude Code development rules (authoritative)
+- `assets/` → All project assets (CSS, fonts, icons, images, video)
 - `design-system/` → Design system framework (shared across projects)
 - `brand-book/` → Brand identity tokens (customised per project)
 - `templates/` → Component and page templates
-- `docs/` → Documentation files and generator
-- `src/` → Source files
+- `docs/` → Documentation markdown source and generator
+- `src/` → Source files (pages, JS)
+
+## assets/
+
+Single source of truth for all assets. No duplication.
+
+- `css/style.css` → Site layout and component styles
+- `css/markdown.css` → Markdown rendering styles (code blocks, tables, syntax highlighting)
+- `fonts/` → Web fonts
+- `icons/` → Favicons and app icons
+- `images/` → Logos, Open Graph images, general images
+- `video/` → Video assets
 
 ## design-system/
 
@@ -39,15 +52,6 @@ Brand identity tokens. Customise this per project. The design system reads these
 
 ## src/
 
-### src/assets/
-- `fonts/` → Web fonts
-- `icons/` → Favicons and app icons
-- `images/` → General image assets and Open Graph images
-- `video/` → Video assets
-
-### src/css/
-- `style.css` → Project-specific styles (sits on top of the design system)
-
 ### src/js/
 - JavaScript modules and scripts
 
@@ -62,13 +66,23 @@ Brand identity tokens. Customise this per project. The design system reads these
 
 ## docs/
 
-- Markdown documentation files
+- Markdown documentation files (source of truth for generated HTML)
 - `docs.config.js` → Project-specific doc settings (fonts, footer, description) — stays when generator is upgraded
 - `generator/` → Documentation site engine (replaceable — drop in a new version to upgrade)
+  - `template.html` → HTML template used for generation
+  - `generate-docs.js` → Generator script (outputs HTML to project root)
   - `VERSION` → Current engine version
-  - `assets/` → Engine CSS (`docs.css`, `markdown.css`) — copied to `site/assets/` on generation
-- `site/` → Generated HTML documentation
-  - `assets/images/` → Project-specific logo and favicons — not overwritten by the generator
+
+## CSS Loading Order
+
+The generated HTML loads CSS in this order:
+
+1. `design-system/design-system.css` → Framework tokens, utilities, layout primitives
+2. `brand-book/brand-book.css` → Brand token overrides (fonts, colours)
+3. `assets/css/markdown.css` → Markdown content rendering
+4. `assets/css/style.css` → Site layout and components
+
+New site-specific CSS goes in `assets/css/style.css`.
 
 ## Notes
 
@@ -76,6 +90,6 @@ Empty folders are tracked using `.gitkeep` to preserve structure in the template
 
 ### Favicons
 
-Favicons live in `src/assets/icons/`.
+Favicons live in `assets/icons/`.
 
 They are referenced directly in the HTML `<head>` and are treated as brand assets, not part of the design system.

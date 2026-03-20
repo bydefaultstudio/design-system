@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Button - Documentation</title>
-    <meta name="description" content="How to use button styles and modifiers in the design system.">
+    <title>JavaScript - Documentation</title>
+    <meta name="description" content="Guide defining how JavaScript should be structured and organized.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
     
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="design-system/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../brand-book/brand-book.css">
+    <link rel="stylesheet" href="brand-book/brand-book.css">
     
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,10 +22,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
        
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="assets/markdown.css">
-    
-    <!-- Docs-specific styles (additions) -->
-    <link rel="stylesheet" href="assets/docs.css">
+    <link rel="stylesheet" href="assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -61,7 +61,7 @@
     <ul class="nav-list nav-home">
       <li><a href="index.html" class="nav-link ">Home</a></li>
     </ul>
-  <details class="nav-section" open>
+  <details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Design System</span>
         <span class="nav-toggle-icon">
@@ -81,14 +81,18 @@
       
         <li><a href="border.html" class="nav-link ">Border</a></li>
       
-        <li><a href="button.html" class="nav-link nav-link-active">Button</a></li>
+        <li><a href="button.html" class="nav-link ">Button</a></li>
       
         <li><a href="callout.html" class="nav-link ">Callout</a></li>
       
         <li><a href="form.html" class="nav-link ">Form</a></li>
       
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
+      
       </ul>
-    </details><details class="nav-section">
+    </details><details class="nav-section" open>
       <summary class="nav-section-toggle">
         <span>Code</span>
         <span class="nav-toggle-icon">
@@ -98,7 +102,7 @@
         </span>
       </summary>
       <ul class="nav-list">
-        <li><a href="js-code-structure.html" class="nav-link ">JavaScript</a></li>
+        <li><a href="js-code-structure.html" class="nav-link nav-link-active">JavaScript</a></li>
       
         <li><a href="css-code-struture.html" class="nav-link ">CSS</a></li>
       
@@ -148,9 +152,9 @@
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
       <div class="container-medium">
-        <h1>Button</h1>
-        <p class="page-subtitle">Button component and usage guidelines</p>
-        <a href="../button.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <h1>JavaScript</h1>
+        <p class="page-subtitle">JavaScript coding standards and organization guidelines</p>
+        <a href="docs/js-code-structure.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
             
@@ -162,180 +166,174 @@
                         <blockquote>
 <p>Claude: Treat this document as authoritative.</p>
 </blockquote>
-<p>Buttons are interactive elements used to trigger actions.<br>They size to their content by default and should communicate <strong>clear intent and hierarchy</strong>.</p>
+<blockquote>
+<p>Claude: Follow these rules when writing or modifying JavaScript.</p>
+</blockquote>
+<h2 id="overview">Overview</h2>
+<p>This structure ensures readable, modular, and maintainable JavaScript with clear organization.</p>
 <hr>
-<h2 id="base-button">Base Button</h2>
-<p><code>.button</code> (or the <code>button</code> element) is the default and most commonly used button.</p>
-<p>Use this when you want to highlight a <strong>primary action</strong>.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Primary calls to action</li>
-<li>Form submissions</li>
-<li>Key user decisions</li>
-</ul>
-<h3 id="default-styling">Default Styling</h3>
-<ul>
-<li><strong>Font:</strong> Primary font, <code>var(--button-font-size)</code></li>
-<li><strong>Background:</strong> <code>var(--button-primary)</code></li>
-<li><strong>Text color:</strong> <code>var(--button-text)</code></li>
-<li><strong>Border:</strong> <code>var(--border-m)</code> solid <code>var(--button-primary)</code></li>
-</ul>
+<h2 id="file-structure">File Structure</h2>
+<p>Every JavaScript file should follow this organizational pattern:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-bvqrjo4we" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-xel3w50xm" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-bvqrjo4we" class="language-html">&lt;button class=&quot;button&quot;&gt;Primary Action&lt;/button&gt;
+        <pre><code id="code-xel3w50xm" class="language-js">/**
+ * Script Purpose: [Brief description]
+ * Author: [Your Name]
+ * Created: [Date]
+ * Version: [Latest Version]
+ * Last Updated: [Date]
+ */
+
+console.log(&quot;Script Name v1.0.0&quot;);
+
+//
+//------- Utility Functions -------//
+//
+
+// Function Name
+function utilityFunction() {
+  // ... implementation
+}
+
+//
+//------- Main Functions -------//
+//
+
+// Initialize Component
+function initComponent() {
+  // ... implementation
+}
+
+//
+//------- Event Listeners -------//
+//
+
+// Setup Event Listeners
+function setupEventListeners() {
+  // ... implementation
+}
+
+//
+//------- Initialize -------//
+//
+
+document.addEventListener(&quot;DOMContentLoaded&quot;, () =&gt; {
+  initComponent();
+  setupEventListeners();
+});
 </code></pre>
       </div>
     
 <hr>
-<h2 id="outline-button">Outline Button</h2>
-<p><code>.is-outline</code> removes the filled background and uses a border instead.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Secondary actions</li>
-<li>Actions that should not visually compete with the primary CTA</li>
-<li>Buttons placed near strong visual content</li>
-</ul>
+<h2 id="section-organization">Section Organization</h2>
+<ol>
+<li><strong>File Header</strong> - Comment block with purpose, author, dates, version</li>
+<li><strong>Console Log</strong> - ONE <code>console.log()</code> at the top to confirm script loaded</li>
+<li><strong>Utility Functions</strong> - Reusable helper functions grouped together</li>
+<li><strong>Main Functions</strong> - Primary functionality grouped together</li>
+<li><strong>Event Listeners</strong> - Event handling functions grouped together</li>
+<li><strong>Initialize</strong> - All setup calls within <code>DOMContentLoaded</code> listener at the end</li>
+</ol>
+<hr>
+<h2 id="section-dividers">Section Dividers</h2>
+<p>Use clear headers when grouping similar functions:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-wiu1f2vqb" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-sdt5x13g0" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-wiu1f2vqb" class="language-html">&lt;button class=&quot;button is-outline&quot;&gt;Secondary Action&lt;/button&gt;
+        <pre><code id="code-sdt5x13g0" class="language-js">//
+//------- Section Name -------//
+//
+</code></pre>
+      </div>
+    
+<p>For standalone functions, use simple comments:</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-8ns2cuzmg" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-8ns2cuzmg" class="language-js">// Function Name
+function doSomething() {
+  // ... implementation
+}
 </code></pre>
       </div>
     
 <hr>
-<h2 id="faded-button">Faded Button</h2>
-<p><code>.is-faded</code> applies a subtle background using <code>var(--button-faded)</code>.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Low-priority actions</li>
-<li>Passive or optional interactions</li>
-<li>UI controls that should feel lightweight</li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-35l0yhvie" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-35l0yhvie" class="language-html">&lt;button class=&quot;button is-faded&quot;&gt;Optional Action&lt;/button&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="outline-faded">Outline + Faded</h2>
-<p><code>.is-outline.is-faded</code> combines both modifiers.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Tertiary actions</li>
-<li>Utility controls</li>
-<li>Actions that should be visible but de-emphasised</li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-y793yj4i8" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-y793yj4i8" class="language-html">&lt;button class=&quot;button is-outline is-faded&quot;&gt;Tertiary Action&lt;/button&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="small-button">Small Button</h2>
-<p><code>.is-small</code> reduces font size and padding.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Dense UI areas</li>
-<li>Tables, cards, or compact layouts</li>
-<li>Secondary actions inside components</li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-uncp1rwad" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-uncp1rwad" class="language-html">&lt;button class=&quot;button is-small&quot;&gt;Small Action&lt;/button&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="icon-button">Icon Button</h2>
-<p><code>.is-icon</code> creates a circular button designed for icons only.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Icon-only actions</li>
-<li>Toolbar controls</li>
-<li>Repeated UI actions (close, add, expand)</li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-uj6dhljn3" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-uj6dhljn3" class="language-html">&lt;button class=&quot;button is-icon&quot;&gt;
-  &lt;div class=&quot;icn-svg&quot;&gt;
-    &lt;!-- SVG icon --&gt;
-  &lt;/div&gt;
-&lt;/button&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="disabled-button">Disabled Button</h2>
-<p><code>:disabled</code> or <code>.is-disabled</code> reduces opacity and prevents interaction.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Actions that are temporarily unavailable</li>
-<li>Form submissions when validation is incomplete</li>
-<li>Controls that require a prerequisite action</li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-mzjmz31v0" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-mzjmz31v0" class="language-html">&lt;button class=&quot;button&quot; disabled&gt;Disabled Action&lt;/button&gt;
-&lt;button class=&quot;button is-outline&quot; disabled&gt;Disabled Outline&lt;/button&gt;
-</code></pre>
-      </div>
-    
-<p><strong>Styling:</strong> <code>opacity: 0.4</code>, <code>cursor: not-allowed</code>, <code>pointer-events: none</code>.</p>
-<hr>
-<h2 id="combining-modifiers">Combining Modifiers</h2>
-<p>Button modifiers can be combined to match intent and context.</p>
-<h3 id="common-combinations">Common combinations</h3>
+<h2 id="naming-conventions">Naming Conventions</h2>
 <table>
 <thead>
 <tr>
-<th>Combination</th>
-<th>Use case</th>
+<th>Type</th>
+<th>Example</th>
+<th>Rule</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>.is-outline.is-faded</code></td>
-<td>Tertiary or utility actions</td>
+<td>Functions</td>
+<td><code>initSlider()</code>, <code>handleClick()</code></td>
+<td>Use <strong>lower camelCase</strong>, short &amp; descriptive</td>
 </tr>
 <tr>
-<td><code>.is-small.is-outline</code></td>
-<td>Compact secondary actions</td>
+<td>Variables</td>
+<td><code>mainElement</code>, <code>scrollPos</code></td>
+<td>Contextual and readable</td>
 </tr>
 <tr>
-<td><code>.is-small.is-faded</code></td>
-<td>Low-priority compact actions</td>
+<td>File Names</td>
+<td><code>slider.js</code>, <code>utils.js</code></td>
+<td>Use lowercase kebab-case</td>
+</tr>
+<tr>
+<td>Constants</td>
+<td><code>MAX_ITEMS</code>, <code>API_URL</code></td>
+<td>Use UPPER_SNAKE_CASE</td>
 </tr>
 </tbody></table>
 <hr>
-<h2 id="usage-rules">Usage Rules</h2>
+<h2 id="initialization-pattern">Initialization Pattern</h2>
+<ol>
+<li>Define <strong>utility functions</strong> first</li>
+<li>Define <strong>main functions</strong> grouped by section</li>
+<li>Define <strong>event listeners</strong> separately</li>
+<li>Call everything within a single <code>DOMContentLoaded</code> listener <strong>at the end</strong></li>
+</ol>
+<hr>
+<h2 id="console-logging">Console Logging</h2>
+<p><strong>Each script should include ONE <code>console.log()</code> at the top</strong> to confirm the script has loaded. Don&#39;t add excessive console logs throughout your code.</p>
+<hr>
+<h2 id="rules-to-follow">Rules to Follow</h2>
+<h3 id="organization">Organization</h3>
 <ul>
-<li>Buttons should <strong>never stretch full width by default</strong></li>
-<li>Use one clear primary button per section when possible</li>
-<li>Use outline or faded styles to reduce visual competition</li>
-<li>Use icon buttons <strong>only</strong> when the icon meaning is clear</li>
+<li>✅ Group related functions together</li>
+<li>✅ Use section dividers for major groupings</li>
+<li>✅ Place initialization at the end</li>
+<li>✅ Keep utility functions separate from main functions</li>
 </ul>
-<p>If a button feels too prominent or too quiet, change the modifier — not the base styles.</p>
+<h3 id="commenting">Commenting</h3>
+<ul>
+<li>✅ Include file header with metadata</li>
+<li>✅ Comment each function with its purpose</li>
+<li>✅ Use section dividers for major groupings</li>
+</ul>
+<h3 id="code-quality">Code Quality</h3>
+<ul>
+<li>✅ Use descriptive function names</li>
+<li>✅ Follow naming conventions consistently</li>
+<li>✅ Place initialization in <code>DOMContentLoaded</code> listener</li>
+</ul>
+<h3 id="what-to-avoid">What to Avoid</h3>
+<ul>
+<li>❌ Scattering related functions across the file</li>
+<li>❌ Mixing utility functions with main functions</li>
+<li>❌ Multiple initialization points</li>
+<li>❌ Excessive console logging</li>
+</ul>
 
                     </article>
                 </main>
@@ -343,14 +341,14 @@
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#base-button" class="toc-link">Base Button</a></li><li class="toc-item toc-level-2"><a href="#outline-button" class="toc-link">Outline Button</a></li><li class="toc-item toc-level-2"><a href="#faded-button" class="toc-link">Faded Button</a></li><li class="toc-item toc-level-2"><a href="#outline-faded" class="toc-link">Outline + Faded</a></li><li class="toc-item toc-level-2"><a href="#small-button" class="toc-link">Small Button</a></li><li class="toc-item toc-level-2"><a href="#icon-button" class="toc-link">Icon Button</a></li><li class="toc-item toc-level-2"><a href="#disabled-button" class="toc-link">Disabled Button</a></li><li class="toc-item toc-level-2"><a href="#combining-modifiers" class="toc-link">Combining Modifiers</a></li><li class="toc-item toc-level-2"><a href="#usage-rules" class="toc-link">Usage Rules</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#overview" class="toc-link">Overview</a></li><li class="toc-item toc-level-2"><a href="#file-structure" class="toc-link">File Structure</a></li><li class="toc-item toc-level-2"><a href="#section-organization" class="toc-link">Section Organization</a></li><li class="toc-item toc-level-2"><a href="#section-dividers" class="toc-link">Section Dividers</a></li><li class="toc-item toc-level-2"><a href="#naming-conventions" class="toc-link">Naming Conventions</a></li><li class="toc-item toc-level-2"><a href="#initialization-pattern" class="toc-link">Initialization Pattern</a></li><li class="toc-item toc-level-2"><a href="#console-logging" class="toc-link">Console Logging</a></li><li class="toc-item toc-level-2"><a href="#rules-to-follow" class="toc-link">Rules to Follow</a></li></ul></nav></div>
     </aside>
             </div>
             
             <!-- Footer -->
             <footer class="docs-footer">
                 <div class="docs-footer-inner padding-global">
-                    <p class="docs-footer-text">© 2025 By Default</p>
+                    <p class="docs-footer-text">© 2026 By Default BrandOS</p>
                 </div>
             </footer>
         </div>

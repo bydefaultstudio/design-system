@@ -4,14 +4,14 @@ A minimal, customizable documentation website generator with your own design sys
 
 ## Features
 
-- ✅ Reads markdown files from `docs/` folder
-- ✅ Generates HTML files to `docs/site/` folder
-- ✅ Uses your own design system (no external CSS frameworks)
-- ✅ Minimal dependencies (Node.js + marked)
-- ✅ Auto-watches for changes during development
-- ✅ Table of contents generation
-- ✅ Code block copy buttons
-- ✅ Responsive design ready
+- Reads markdown files from `docs/` folder
+- Generates HTML files to the project root
+- Uses your own design system (no external CSS frameworks)
+- Minimal dependencies (Node.js + marked)
+- Auto-watches for changes during development
+- Table of contents generation
+- Code block copy buttons
+- Responsive design ready
 
 ## Quick Start
 
@@ -45,7 +45,7 @@ Your content here...
 npm run docgen
 ```
 
-This creates all HTML files in `docs/site/`.
+This creates all HTML files in the project root.
 
 ### 4. View Locally
 
@@ -78,30 +78,32 @@ npm run docfull
 ```
 docs/
 ├── *.md                    # Source markdown files (you edit these)
-├── site/                   # Generated HTML files (auto-generated)
-│   ├── index.html
-│   ├── *.html
-│   └── assets/             # Copied assets
-│       └── docs.css
+├── docs.config.js          # Project-specific settings
 │
 └── generator/              # Generator tools
-    ├── assets/             # Source assets (copied to docs/site/assets/)
-    │   └── docs.css
-    ├── generate-docs.js    # Generator script
+    ├── generate-docs.js    # Generator script (outputs to project root)
     ├── watch-docs.js       # File watcher
     ├── template.html       # HTML template
     ├── package.json        # Dependencies
     └── README.md
+
+assets/                     # Site assets (at project root)
+├── css/
+│   ├── style.css           # Site layout and component styles
+│   └── markdown.css        # Markdown rendering styles
+├── fonts/
+├── icons/
+├── images/
+└── video/
 ```
 
 ## Customization
 
 ### Using Your Own Design System
 
-1. **Design System CSS**: The template links to `../../design-system/design-system.css` from generated pages (configured in `docs/docs.config.js`)
-2. **Docs CSS**: Update `assets/docs.css` for docs-specific styles
+1. **Design System CSS**: The template links to `design-system/design-system.css` from generated pages (configured in `docs/docs.config.js`)
+2. **Site CSS**: Update `assets/css/style.css` for site-specific styles
 3. **Template**: Modify `template.html` to use your component classes
-4. **Add Assets**: Place images, fonts, etc. in `assets/` folder
 
 ### Frontmatter Fields
 
@@ -129,12 +131,12 @@ Add more sections as needed in `generate-docs.js`.
 
 ## Deployment
 
-The generated site is static HTML. Deploy the `docs/site/` folder to:
+The generated site is static HTML. Deploy the project root to:
 
-- **GitHub Pages**: Push `docs/site/` to `gh-pages` branch
-- **Netlify**: Deploy `docs/site/` folder
-- **Vercel**: Deploy `docs/site/` folder
-- **Any static hosting**: Upload `docs/site/` contents
+- **GitHub Pages**: Push to `gh-pages` branch
+- **Netlify**: Deploy the project root
+- **Vercel**: Deploy the project root
+- **Any static hosting**: Upload the root contents
 
 ## Dependencies
 
@@ -144,4 +146,3 @@ The generated site is static HTML. Deploy the `docs/site/` folder to:
 ## License
 
 MIT
-

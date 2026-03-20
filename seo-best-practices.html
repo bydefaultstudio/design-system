@@ -7,14 +7,14 @@
     <meta name="description" content="Complete guide to SEO meta tags, Open Graph, X Cards, and structured data.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
     
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="design-system/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../brand-book/brand-book.css">
+    <link rel="stylesheet" href="brand-book/brand-book.css">
     
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,10 +22,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
        
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="assets/markdown.css">
-    
-    <!-- Docs-specific styles (additions) -->
-    <link rel="stylesheet" href="assets/docs.css">
+    <link rel="stylesheet" href="assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -86,6 +86,10 @@
         <li><a href="callout.html" class="nav-link ">Callout</a></li>
       
         <li><a href="form.html" class="nav-link ">Form</a></li>
+      
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
       
       </ul>
     </details><details class="nav-section">
@@ -150,7 +154,7 @@
       <div class="container-medium">
         <h1>SEO</h1>
         <p class="page-subtitle">SEO meta tags and social sharing guidelines</p>
-        <a href="../seo-best-practices.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <a href="docs/seo-best-practices.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
             
@@ -165,10 +169,10 @@
 <p>Every page must include these essential meta tags:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-rvpzwy8em" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-je2jmmzaa" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-rvpzwy8em" class="language-html">&lt;meta charset=&quot;UTF-8&quot; /&gt;
+        <pre><code id="code-je2jmmzaa" class="language-html">&lt;meta charset=&quot;UTF-8&quot; /&gt;
 &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
 &lt;title&gt;Page Title - Site Name&lt;/title&gt;
 &lt;meta name=&quot;description&quot; content=&quot;A concise, compelling description of the page (150-160 characters).&quot; /&gt;
@@ -195,10 +199,10 @@
 <p><strong>Examples:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-0tiup7t3b" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-boz1w6xg3" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-0tiup7t3b" class="language-html">&lt;!-- Good --&gt;
+        <pre><code id="code-boz1w6xg3" class="language-html">&lt;!-- Good --&gt;
 &lt;title&gt;By Default - Brand Innovation Studio&lt;/title&gt;
 &lt;title&gt;About Us - By Default&lt;/title&gt;
 
@@ -221,10 +225,10 @@
 <p><strong>Examples:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-9wiuufy47" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-ggnafcdov" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-9wiuufy47" class="language-html">&lt;!-- Good --&gt;
+        <pre><code id="code-ggnafcdov" class="language-html">&lt;!-- Good --&gt;
 &lt;meta name=&quot;description&quot; content=&quot;Professional web design services for modern businesses. Custom solutions that drive results. Get started today.&quot; /&gt;
 
 &lt;!-- Too long (will be truncated) --&gt;
@@ -237,10 +241,10 @@
 <p>Prevents duplicate content issues by specifying the preferred version of a page.</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-iqoy68ri6" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-oten8h9e2" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-iqoy68ri6" class="language-html">&lt;link rel=&quot;canonical&quot; href=&quot;https://yoursite.com/page/&quot; /&gt;
+        <pre><code id="code-oten8h9e2" class="language-html">&lt;link rel=&quot;canonical&quot; href=&quot;https://yoursite.com/page/&quot; /&gt;
 </code></pre>
       </div>
     
@@ -256,10 +260,10 @@
 <p>Controls how search engines index and follow links on a page.</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-nkhu5clv6" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-172wqedwz" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-nkhu5clv6" class="language-html">&lt;!-- Default: allow indexing --&gt;
+        <pre><code id="code-172wqedwz" class="language-html">&lt;!-- Default: allow indexing --&gt;
 &lt;meta name=&quot;robots&quot; content=&quot;index, follow&quot; /&gt;
 
 &lt;!-- Prevent indexing --&gt;
@@ -282,16 +286,16 @@
 <p>Open Graph tags control how content appears when shared on Facebook, LinkedIn, and other social platforms.</p>
 <p><strong>Where to save images:</strong></p>
 <ul>
-<li>Save Open Graph images in <code>src/assets/images/</code></li>
+<li>Save Open Graph images in <code>assets/images/</code></li>
 <li>Use descriptive filenames (e.g., <code>og-default.jpg</code>, <code>og-homepage.jpg</code>)</li>
 </ul>
 <h3 id="required-open-graph-tags">Required Open Graph Tags</h3>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-pn5dicfw6" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-ea82ffwiq" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-pn5dicfw6" class="language-html">&lt;meta property=&quot;og:type&quot; content=&quot;website&quot; /&gt;
+        <pre><code id="code-ea82ffwiq" class="language-html">&lt;meta property=&quot;og:type&quot; content=&quot;website&quot; /&gt;
 &lt;meta property=&quot;og:url&quot; content=&quot;https://yoursite.com/page/&quot; /&gt;
 &lt;meta property=&quot;og:title&quot; content=&quot;Page Title - Site Name&quot; /&gt;
 &lt;meta property=&quot;og:description&quot; content=&quot;A concise, compelling description of the page.&quot; /&gt;
@@ -302,10 +306,10 @@
 <h3 id="recommended-additional-tags">Recommended Additional Tags</h3>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-y8flgjtzo" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-luxuoofyt" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-y8flgjtzo" class="language-html">&lt;meta property=&quot;og:image:width&quot; content=&quot;1200&quot; /&gt;
+        <pre><code id="code-luxuoofyt" class="language-html">&lt;meta property=&quot;og:image:width&quot; content=&quot;1200&quot; /&gt;
 &lt;meta property=&quot;og:image:height&quot; content=&quot;630&quot; /&gt;
 &lt;meta property=&quot;og:image:alt&quot; content=&quot;Descriptive alt text for the image&quot; /&gt;
 &lt;meta property=&quot;og:site_name&quot; content=&quot;Site Name&quot; /&gt;
@@ -334,10 +338,10 @@
 <h3 id="summary-large-image-card">Summary Large Image Card</h3>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-xeqk7hcy1" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-w5ie6qjgs" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-xeqk7hcy1" class="language-html">&lt;meta name=&quot;twitter:card&quot; content=&quot;summary_large_image&quot; /&gt;
+        <pre><code id="code-w5ie6qjgs" class="language-html">&lt;meta name=&quot;twitter:card&quot; content=&quot;summary_large_image&quot; /&gt;
 &lt;meta name=&quot;twitter:url&quot; content=&quot;https://yoursite.com/page/&quot; /&gt;
 &lt;meta name=&quot;twitter:title&quot; content=&quot;Page Title - Site Name&quot; /&gt;
 &lt;meta name=&quot;twitter:description&quot; content=&quot;A concise, compelling description of the page.&quot; /&gt;
@@ -349,10 +353,10 @@
 <h3 id="optional-x-tags">Optional X Tags</h3>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-2mbu3c1bc" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-bku34wj8g" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-2mbu3c1bc" class="language-html">&lt;meta name=&quot;twitter:site&quot; content=&quot;@yourhandle&quot; /&gt;
+        <pre><code id="code-bku34wj8g" class="language-html">&lt;meta name=&quot;twitter:site&quot; content=&quot;@yourhandle&quot; /&gt;
 &lt;meta name=&quot;twitter:creator&quot; content=&quot;@yourhandle&quot; /&gt;
 </code></pre>
       </div>
@@ -373,10 +377,10 @@
 <p>Sets the theme color for mobile browsers (address bar, etc.).</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-fm7ux8epf" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-vktoso9by" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-fm7ux8epf" class="language-html">&lt;meta name=&quot;theme-color&quot; content=&quot;#3485cd&quot; /&gt;
+        <pre><code id="code-vktoso9by" class="language-html">&lt;meta name=&quot;theme-color&quot; content=&quot;#3485cd&quot; /&gt;
 </code></pre>
       </div>
     
@@ -387,10 +391,10 @@
 <h3 id="basic-webpage-schema">Basic WebPage Schema</h3>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-1o40rcbxy" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-jwd6zdmw6" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-1o40rcbxy" class="language-html">&lt;script type=&quot;application/ld+json&quot;&gt;
+        <pre><code id="code-jwd6zdmw6" class="language-html">&lt;script type=&quot;application/ld+json&quot;&gt;
 {
   &quot;@context&quot;: &quot;https://schema.org&quot;,
   &quot;@type&quot;: &quot;WebPage&quot;,
@@ -406,10 +410,10 @@
 <h3 id="organization-schema">Organization Schema</h3>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-ljt2f1vyu" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-tfs01ylt2" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-ljt2f1vyu" class="language-html">&lt;script type=&quot;application/ld+json&quot;&gt;
+        <pre><code id="code-tfs01ylt2" class="language-html">&lt;script type=&quot;application/ld+json&quot;&gt;
 {
   &quot;@context&quot;: &quot;https://schema.org&quot;,
   &quot;@type&quot;: &quot;Organization&quot;,
@@ -535,7 +539,7 @@
             <!-- Footer -->
             <footer class="docs-footer">
                 <div class="docs-footer-inner padding-global">
-                    <p class="docs-footer-text">© 2025 By Default</p>
+                    <p class="docs-footer-text">© 2026 By Default BrandOS</p>
                 </div>
             </footer>
         </div>

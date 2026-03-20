@@ -14,15 +14,15 @@ This project includes:
 ## Getting Started
 
 1. Review `PROJECT_BRIEF.md` for project goals and requirements
-2. Follow the [Setup guide](docs/site/setup.html) to customize brand colors, fonts, and logo
-3. Explore the [Documentation](docs/site/index.html) for design system details
+2. Follow the [Setup guide](setup.html) to customize brand colors, fonts, and logo
+3. Explore the [Documentation](index.html) for design system details
 4. Check the [Design System Styleguide](design-system/index.html) to see available patterns
 5. Check the [Brand Book](brand-book/index.html) to see the current brand identity
 6. Start building pages inside `/src`
 
 ## Documentation
 
-Complete documentation is available in the [Documentation site](docs/site/index.html), including:
+Complete documentation is available in the [Documentation hub](index.html), including:
 
 - **Design System** — Color, typography, spacing, borders, components
 - **Code Structure** — CSS and JavaScript organization patterns
