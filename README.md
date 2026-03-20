@@ -1,4 +1,4 @@
-# [Your Project Name]
+# By Default BrandOS
 
 This project uses a structured design system and layout architecture for building consistent, maintainable front-end experiences.
 

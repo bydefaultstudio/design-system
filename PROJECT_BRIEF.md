@@ -1,56 +1,48 @@
-# Project Brief
-
-> **Note:** Replace all bracketed placeholders `[like this]` with your project-specific details.  
-> Remove example text once replaced.
+# By Default BrandOS
 
 ---
 
 ## 1. Project Summary
 
-**In one sentence:**  
-[Example: A marketing website to launch Product X and drive early sign-ups.]
+**In one sentence:**
+A design and brand systems hub that serves as the internal single source of truth for By Default's brand identity and design tokens.
 
 ---
 
 ## 2. Problem & Opportunity
 
-**Problem**  
-[Example: Users struggle to understand the product value within the first 10 seconds.]
+**Problem**
+Brand and design assets are scattered across tools and documents, making it difficult for the internal team to maintain consistency across projects.
 
-**Opportunity**  
-[Example: A clear, focused website could improve sign-up conversion and brand clarity.]
+**Opportunity**
+A centralized, multi-page hub can unify brand guidelines, design tokens, and system documentation — ensuring every project starts from the same foundation.
 
 ---
 
 ## 3. Goals
 
 **Primary goals**
-- [Example: Clearly communicate the product value proposition]
-- [Example: Drive newsletter or waitlist sign-ups]
+- Centralize all brand assets and design tokens in one place
+- Speed up design-to-dev handoff with a living reference
+- Enforce consistency across all By Default projects
 
 **Secondary goals**
-- [Example: Improve brand perception]
-- [Example: Support future content or product launches]
+- Serve as onboarding material for new team members
+- Provide a demonstrable showcase of the design system in action
 
 ---
 
 ## 4. Non-Goals (Out of Scope)
 
-[Example: This project will not include a logged-in dashboard or user accounts.]
-
-- [Example: No mobile app build]
-- [Example: No e-commerce functionality]
-- [Example: No complex animations in phase one]
+- No e-commerce or payment functionality
+- No external-facing user accounts or authentication
 
 ---
 
 ## 5. Audience
 
-**Primary audience**  
-[Example: Founders and early adopters in the fintech space]
-
-**Secondary audience (if any)**  
-[Example: Investors and potential partners]
+**Primary audience**
+Internal team — designers, developers, and stakeholders at By Default
 
 ---
 
@@ -58,47 +50,47 @@
 
 How will we know this worked?
 
-- [Example: Increase sign-up conversion rate]
-- [Example: Positive qualitative feedback on clarity and usability]
-- [Example: Stakeholder approval]
+- Team members use the hub as the go-to reference for brand and design decisions
+- Reduced inconsistencies across projects
+- Faster onboarding for new team members
 
 ---
 
 ## 7. Constraints & Requirements
 
-**Timeline**  
-[Example: 4 weeks from kickoff to launch]
+**Timeline**
+1–2 weeks from kickoff to initial launch
 
-**Platforms**  
-[Example: Responsive web only]
+**Platforms**
+Fully responsive (desktop, tablet, mobile)
 
-**Technical constraints**  
-[Example: Must be built with the existing design system and static HTML/CSS]
+**Technical constraints**
+Built with the existing design system and static HTML/CSS/JS
 
-**Accessibility**  
-[Example: WCAG 2.1 AA compliance]
+**Accessibility**
+WCAG 2.1 AA compliance
 
-**Performance**  
-[Example: Lighthouse score 90+]
+**Performance**
+Lighthouse score 90+
 
 ---
 
 ## 8. Design & Build Notes
 
-**Design system**  
-[Example: Use the shared design system with brand-specific color overrides]
+**Design system**
+Use the shared design system with brand-specific color overrides in `brand-book/brand-book.css`
 
-**Content**  
-[Example: Copy provided by client, images to be sourced during build]
+**Content**
+Content will be created during the build
 
-**Known risks**  
-[Example: Content may change late in the project]
+**Brand identity**
+Work in progress — brand tokens (fonts, colors) are partially defined and will be refined during the build
+
+**Known risks**
+None known at this time
 
 ---
 
 ## 9. Open Questions
 
-[List anything that still needs clarification.]
-
-- [Example: Final headline copy?]
-- [Example: Legal or compliance requirements?]
+- Final brand tokens (fonts, colors) to be confirmed during build
