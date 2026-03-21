@@ -225,13 +225,16 @@
     content: "";
   }
   
+  .markdown-body .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .markdown-body table {
     border-spacing: 0;
     border-collapse: collapse;
-    display: block;
-    width: max-content;
-    max-width: 100%;
-    overflow: auto;
+    width: 100%;
+    min-width: 480px;
     font-variant: tabular-nums;
   }
 
@@ -556,7 +559,7 @@
     margin-bottom: var(--space-l);
   }
 
-  .markdown-body table {
+  .markdown-body .table-scroll {
     margin: var(--space-xl) 0;
   }
   

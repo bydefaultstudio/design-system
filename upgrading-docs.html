@@ -171,7 +171,7 @@
 <p>The doc site is split into two parts: <strong>content</strong> (your markdown files) and the <strong>engine</strong> (the generator that turns them into HTML). They are kept separate so you can upgrade the engine — better mobile nav, new sidebar, restyled layout — without ever touching your content.</p>
 <hr>
 <h2 id="what-stays-per-project-never-touch-these">What Stays Per-Project (Never Touch These)</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>File/Folder</th>
@@ -190,7 +190,7 @@
 <td><code>assets/images/</code> and <code>assets/icons/</code></td>
 <td>Logo (<code>logo.svg</code>) and favicons</td>
 </tr>
-</tbody></table>
+</tbody></table></div>
 <hr>
 <h2 id="what-gets-replaced-on-upgrade">What Gets Replaced on Upgrade</h2>
 <p>Everything inside <code>docs/generator/</code> is the engine. Replace this folder to upgrade.</p>
@@ -205,10 +205,10 @@
 </ol>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-6ojw3uogu" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-ttvllgzm7" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-6ojw3uogu" class="language-bash">cd docs/generator
+        <pre><code id="code-ttvllgzm7" class="language-bash">cd docs/generator
 npm install
 npm run docgen
 </code></pre>
@@ -222,10 +222,10 @@ npm run docgen
 <p>Edit <code>docs/docs.config.js</code> in the project:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-1srynfh24" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-vma76bwa9" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-1srynfh24" class="language-js">module.exports = {
+        <pre><code id="code-vma76bwa9" class="language-js">module.exports = {
   // Path to design system CSS, relative from project root
   designSystemPath: &#39;../../design-system/design-system.css&#39;,
 
@@ -265,10 +265,10 @@ npm run docgen
 <p>Run these from inside <code>docs/generator/</code>:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-60qhez97i" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-smjt6mm7m" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-60qhez97i" class="language-bash">npm run docgen     # Generate HTML from markdown
+        <pre><code id="code-smjt6mm7m" class="language-bash">npm run docgen     # Generate HTML from markdown
 npm run serve      # View locally in browser
 npm run docwatch   # Auto-regenerate on markdown changes
 npm run docfull    # Generate + serve + watch (all at once)

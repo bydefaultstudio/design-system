@@ -119,6 +119,10 @@ function markdownToHtml(markdown) {
     return match;
   });
 
+  // Wrap tables in a scroll container for horizontal scrolling on mobile
+  html = html.replace(/<table>/g, '<div class="table-scroll"><table>');
+  html = html.replace(/<\/table>/g, '</table></div>');
+
   // Add copy buttons to code blocks
   html = html.replace(/<pre><code([^>]*)>([\s\S]*?)<\/code><\/pre>/g, (match, attributes, code) => {
     const codeId = 'code-' + Math.random().toString(36).substr(2, 9);
