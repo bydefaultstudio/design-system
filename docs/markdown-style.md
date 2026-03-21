@@ -225,22 +225,22 @@ Some text to show that the reference links can follow later.
 
 Here's the ByDefault favicon (hover to see the title text):
 
-Inline-style: ![ByDefault Favicon](../../src/assets/icons/favicon.svg "ByDefault Studio Favicon")
+Inline-style: ![ByDefault Favicon](assets/icons/favicon.svg "ByDefault Studio Favicon")
 
 Reference-style:
 ![ByDefault Logo][logo]
 
-[logo]: ../../src/assets/icons/favicon.svg "ByDefault Studio Logo"
+[logo]: assets/icons/favicon.svg "ByDefault Studio Logo"
 
 ```markdown
 Here's the ByDefault favicon (hover to see the title text):
 
-Inline-style: ![ByDefault Favicon](../../src/assets/icons/favicon.svg "ByDefault Studio Favicon")
+Inline-style: ![ByDefault Favicon](assets/icons/favicon.svg "ByDefault Studio Favicon")
 
 Reference-style:
 ![ByDefault Logo][logo]
 
-[logo]: ../../src/assets/icons/favicon.svg "ByDefault Studio Logo"
+[logo]: assets/icons/favicon.svg "ByDefault Studio Logo"
 ```
 
 ---
@@ -253,10 +253,10 @@ Since the documentation generator allows HTML, you can use HTML directly in mark
 
 You can use HTML `<img>` tags to add design system classes:
 
-<img src="../../src/assets/images/og-default.jpg" alt="Example image" class="border border-secondary padding-m max-width-full">
+<img src="assets/images/og-default.jpg" alt="Example image" class="border border-secondary padding-m max-width-full">
 
 ```markdown
-<img src="../../src/assets/images/og-default.jpg" alt="Example image" class="border border-secondary padding-m max-width-full">
+<img src="assets/images/og-default.jpg" alt="Example image" class="border border-secondary padding-m max-width-full">
 ```
 
 ### HTML Blocks

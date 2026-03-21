@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Callout - Documentation</title>
-    <meta name="description" content="How to use callout styles and semantic variants in the design system.">
+    <title>Template - Documentation</title>
+    <meta name="description" content="Explains the purpose, scope, and intended usage of this project template.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
     
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="design-system/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../brand-book/brand-book.css">
+    <link rel="stylesheet" href="brand-book/brand-book.css">
     
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
        
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="assets/markdown.css">
-    
-    <!-- Docs-specific styles (additions) -->
-    <link rel="stylesheet" href="assets/docs.css">
+    <link rel="stylesheet" href="assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -61,7 +61,7 @@
     <ul class="nav-list nav-home">
       <li><a href="index.html" class="nav-link ">Home</a></li>
     </ul>
-  <details class="nav-section" open>
+  <details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Design System</span>
         <span class="nav-toggle-icon">
@@ -83,9 +83,15 @@
       
         <li><a href="button.html" class="nav-link ">Button</a></li>
       
-        <li><a href="callout.html" class="nav-link nav-link-active">Callout</a></li>
+        <li><a href="callout.html" class="nav-link ">Callout</a></li>
+      
+        <li><a href="disclosure.html" class="nav-link ">Disclosure</a></li>
       
         <li><a href="form.html" class="nav-link ">Form</a></li>
+      
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
       
       </ul>
     </details><details class="nav-section">
@@ -120,7 +126,7 @@
         <li><a href="markdown-style.html" class="nav-link ">Markdown</a></li>
       
       </ul>
-    </details><details class="nav-section">
+    </details><details class="nav-section" open>
       <summary class="nav-section-toggle">
         <span>Project</span>
         <span class="nav-toggle-icon">
@@ -132,7 +138,7 @@
       <ul class="nav-list">
         <li><a href="setup.html" class="nav-link ">Setup</a></li>
       
-        <li><a href="template.html" class="nav-link ">Template</a></li>
+        <li><a href="template.html" class="nav-link nav-link-active">Template</a></li>
       
         <li><a href="folder-structure.html" class="nav-link ">Folders</a></li>
       
@@ -148,9 +154,9 @@
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
       <div class="container-medium">
-        <h1>Callout</h1>
-        <p class="page-subtitle">Callout and alert component guidelines</p>
-        <a href="../callout.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <h1>Template</h1>
+        <p class="page-subtitle">What this template is and how to use it</p>
+        <a href="docs/template.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
             
@@ -162,196 +168,88 @@
                         <blockquote>
 <p>Claude: Treat this document as authoritative.</p>
 </blockquote>
-<p>Callouts are used to <strong>highlight important information</strong> within content. They draw attention to notes, tips, warnings, and other contextual messages.</p>
+<p>This repository is a <strong>UI system starter template</strong> for building consistent, scalable front-end experiences using <strong>HTML, CSS, and JavaScript</strong>.</p>
 <hr>
-<h2 id="core-principles">Core Principles</h2>
+<h2 id="what-this-template-is">What This Template Is</h2>
+<p>This template is designed to be:</p>
 <ul>
-<li>Callouts use a <strong>base + variant</strong> pattern (like buttons and borders)</li>
-<li>The base <code>.callout</code> class provides structure and neutral styling</li>
-<li>Variant classes add semantic color via left border and background tint</li>
-<li>All colors are controlled by semantic tokens that can be customized per project</li>
+<li>A fast starting point for new projects</li>
+<li>A shared foundation for teams</li>
+<li>A reliable source of context for AI-assisted coding tools</li>
+<li>Framework-agnostic and long-lived</li>
+</ul>
+<p>This is <strong>not</strong> a finished website or app.<br>It is a <strong>baseline system</strong> that can be used across many types of projects.</p>
+<hr>
+<h2 id="what-this-template-is-for">What This Template Is For</h2>
+<p>This template is ideal for:</p>
+<ul>
+<li>Marketing websites</li>
+<li>Editorial and content-led sites</li>
+<li>Design systems and style guides</li>
+<li>Webflow exports or hand-coded sites</li>
+<li>Front-end foundations for larger apps</li>
+<li>Prototypes that may later evolve into products</li>
+</ul>
+<p>It provides:</p>
+<ul>
+<li>A complete <strong>design system</strong> (tokens, layout, typography, utilities)</li>
+<li>Clear <strong>layout and spacing rules</strong></li>
+<li>Reusable <strong>UI patterns</strong></li>
+<li>Consistent <strong>CSS architecture</strong></li>
+<li>Documented <strong>best practices</strong> for usage</li>
 </ul>
 <hr>
-<h2 id="status-color-tokens">Status Color Tokens</h2>
-<p>Callout variants are powered by status color tokens defined in <code>:root</code>. These are project-customizable primitives:</p>
-<table>
-<thead>
-<tr>
-<th>Token</th>
-<th>Default</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>--status-info</code></td>
-<td><code>var(--brand-accent)</code></td>
-<td>Informational, notes</td>
-</tr>
-<tr>
-<td><code>--status-success</code></td>
-<td><code>#1a7f37</code></td>
-<td>Tips, positive feedback</td>
-</tr>
-<tr>
-<td><code>--status-warning</code></td>
-<td><code>#9a6700</code></td>
-<td>Warnings, attention needed</td>
-</tr>
-<tr>
-<td><code>--status-danger</code></td>
-<td><code>#cf222e</code></td>
-<td>Caution, destructive actions</td>
-</tr>
-<tr>
-<td><code>--status-accent</code></td>
-<td><code>#8250df</code></td>
-<td>Important, emphasis</td>
-</tr>
-</tbody></table>
-<p>Each status color generates two semantic tokens:</p>
+<h2 id="what-this-template-is-not">What This Template Is NOT</h2>
+<p>This template intentionally does <strong>not</strong>:</p>
 <ul>
-<li><code>--callout-{type}</code> — the border/title color</li>
-<li><code>--callout-{type}-bg</code> — a 10% tint for the background</li>
+<li>Define application architecture (state, routing, data)</li>
+<li>Enforce a JavaScript framework (React, Next, Vue, etc.)</li>
+<li>Include backend logic or APIs</li>
+<li>Solve product-specific business logic</li>
+</ul>
+<p>Those concerns belong <strong>above</strong> this layer.</p>
+<hr>
+<h2 id="how-this-template-works">How This Template Works</h2>
+<p>This template works in:</p>
+<ul>
+<li>Vanilla HTML / CSS / JS projects</li>
+<li>React and Next.js applications</li>
+<li>Node-powered frontends</li>
+<li>Design system libraries</li>
+<li>Component-driven architectures</li>
+</ul>
+<p><strong>Key Principle:</strong> HTML, CSS, and design rules do not disappear in advanced stacks — they are rendered by them. In frameworks, components <em>consume</em> this system rather than replace it.</p>
+<hr>
+<h2 id="how-to-use-this-template">How to Use This Template</h2>
+<ol>
+<li>Clone the repository</li>
+<li>Follow the <a href="setup.html">Setup guide</a> to customize brand tokens, fonts, and logo</li>
+<li>Use the style guide to understand available patterns</li>
+<li>Build pages using the documented layout structure</li>
+<li>Add project-specific logic on top</li>
+</ol>
+<p>You should be able to start building <strong>immediately</strong> without reorganising the system.</p>
+<hr>
+<h2 id="guiding-rule">Guiding Rule</h2>
+<p>If you&#39;re unsure where something belongs, ask:</p>
+<blockquote>
+<p>&quot;Is this a <strong>UI rule</strong> or an <strong>application concern</strong>?&quot;</p>
+</blockquote>
+<ul>
+<li>UI rules belong <strong>here</strong></li>
+<li>Application concerns belong <strong>outside this template</strong></li>
 </ul>
 <hr>
-<h2 id="base-callout">Base Callout</h2>
-<p>The <code>.callout</code> class provides the structural foundation:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-tepshmmja" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-tepshmmja" class="language-html">&lt;div class=&quot;callout&quot;&gt;
-  &lt;p&gt;General-purpose highlighted content.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<p><strong>Structural properties:</strong></p>
+<h2 id="why-this-exists">Why This Exists</h2>
+<p>This template exists to:</p>
 <ul>
-<li>Left border using <code>--border-l</code> width (4px)</li>
-<li>Padding using spacing tokens</li>
-<li>Neutral background (<code>--background-faded</code>)</li>
-<li>First/last child margin normalization</li>
+<li>Reduce setup time</li>
+<li>Eliminate inconsistency</li>
+<li>Prevent reinvention</li>
+<li>Improve collaboration</li>
+<li>Scale from simple sites to complex products</li>
 </ul>
-<hr>
-<h2 id="callout-title">Callout Title</h2>
-<p>Use <code>.callout-title</code> inside any callout for a styled heading:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-0qaxxxir1" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-0qaxxxir1" class="language-html">&lt;div class=&quot;callout callout-note&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Note&lt;/div&gt;
-  &lt;p&gt;Content here.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<p>The title inherits the variant&#39;s accent color automatically.</p>
-<hr>
-<h2 id="variants">Variants</h2>
-<h3>Note (<code>.callout-note</code>)</h3>
-<p>For useful information users should know, even when skimming.</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-otvyarzj1" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-otvyarzj1" class="language-html">&lt;div class=&quot;callout callout-note&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Note&lt;/div&gt;
-  &lt;p&gt;Useful information that users should know.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3>Tip (<code>.callout-tip</code>)</h3>
-<p>For helpful advice on doing things better or more easily.</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-msjpu3zpg" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-msjpu3zpg" class="language-html">&lt;div class=&quot;callout callout-tip&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Tip&lt;/div&gt;
-  &lt;p&gt;Helpful advice for doing things better.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3>Warning (<code>.callout-warning</code>)</h3>
-<p>For urgent information that needs immediate attention.</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-qbxccctmt" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-qbxccctmt" class="language-html">&lt;div class=&quot;callout callout-warning&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Warning&lt;/div&gt;
-  &lt;p&gt;Urgent information to avoid problems.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3>Caution (<code>.callout-caution</code>)</h3>
-<p>For advising about risks or negative outcomes.</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-8kiddyp75" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-8kiddyp75" class="language-html">&lt;div class=&quot;callout callout-caution&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Caution&lt;/div&gt;
-  &lt;p&gt;Risks or negative outcomes of certain actions.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3>Important (<code>.callout-important</code>)</h3>
-<p>For key information users need to achieve their goal.</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-s96kpfq3j" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-s96kpfq3j" class="language-html">&lt;div class=&quot;callout callout-important&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Important&lt;/div&gt;
-  &lt;p&gt;Key information users need to know.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="rules">Rules</h2>
-<table>
-<thead>
-<tr>
-<th>Do</th>
-<th>Don&#39;t</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Use semantic variants for meaning</td>
-<td>Use color to decorate without purpose</td>
-</tr>
-<tr>
-<td>Keep callout content concise</td>
-<td>Put entire sections inside callouts</td>
-</tr>
-<tr>
-<td>Use <code>.callout-title</code> for labeling</td>
-<td>Use headings (h1–h6) inside callouts</td>
-</tr>
-<tr>
-<td>Customize <code>--status-*</code> tokens per project</td>
-<td>Hardcode colors on individual callouts</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="relationship-to-markdown-alerts">Relationship to Markdown Alerts</h2>
-<p>The <code>.markdown-body</code> CSS includes GitHub-style alerts (<code>.markdown-alert-note</code>, etc.) with their own color tokens. These are scoped to rendered markdown content only.</p>
-<p>The design system callouts (<code>.callout</code>) are the <strong>global, project-wide</strong> equivalent. When building pages, always use <code>.callout</code> — not the markdown alert classes.</p>
+<p>It is meant to evolve — but always from a <strong>clear, shared foundation</strong>.</p>
 
                     </article>
                 </main>
@@ -359,14 +257,31 @@
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#core-principles" class="toc-link">Core Principles</a></li><li class="toc-item toc-level-2"><a href="#status-color-tokens" class="toc-link">Status Color Tokens</a></li><li class="toc-item toc-level-2"><a href="#base-callout" class="toc-link">Base Callout</a></li><li class="toc-item toc-level-2"><a href="#callout-title" class="toc-link">Callout Title</a></li><li class="toc-item toc-level-2"><a href="#variants" class="toc-link">Variants</a></li><li class="toc-item toc-level-2"><a href="#rules" class="toc-link">Rules</a></li><li class="toc-item toc-level-2"><a href="#relationship-to-markdown-alerts" class="toc-link">Relationship to Markdown Alerts</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#what-this-template-is" class="toc-link">What This Template Is</a></li><li class="toc-item toc-level-2"><a href="#what-this-template-is-for" class="toc-link">What This Template Is For</a></li><li class="toc-item toc-level-2"><a href="#what-this-template-is-not" class="toc-link">What This Template Is NOT</a></li><li class="toc-item toc-level-2"><a href="#how-this-template-works" class="toc-link">How This Template Works</a></li><li class="toc-item toc-level-2"><a href="#how-to-use-this-template" class="toc-link">How to Use This Template</a></li><li class="toc-item toc-level-2"><a href="#guiding-rule" class="toc-link">Guiding Rule</a></li><li class="toc-item toc-level-2"><a href="#why-this-exists" class="toc-link">Why This Exists</a></li></ul></nav></div>
     </aside>
             </div>
             
+            <!-- Page Navigation (Previous / Next) -->
+            <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="setup.html" class="page-nav-link page-nav-prev" rel="prev">
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <span class="page-nav-title">Setup</span>
+      </span>
+    </a><a href="folder-structure.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <span class="page-nav-title">Folders</span>
+      </span>
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a></div></nav>
+
             <!-- Footer -->
             <footer class="docs-footer">
                 <div class="docs-footer-inner padding-global">
-                    <p class="docs-footer-text">© 2025 By Default</p>
+                    <p class="docs-footer-text">© 2026 By Default BrandOS</p>
                 </div>
             </footer>
         </div>
@@ -417,7 +332,6 @@
             
             function initSidebarToggle() {
                 var SIDEBAR_KEY = 'docs-sidebar-collapsed';
-                var MOBILE_NAV_KEY = 'docs-mobile-nav-open';
                 var container = document.querySelector('.docs-container');
                 var sidebarToggle = document.querySelector('.docs-sidebar-toggle');
                 var mobileToggle = document.querySelector('.docs-mobile-toggle');
@@ -428,12 +342,6 @@
                 if (localStorage.getItem(SIDEBAR_KEY) === 'true') {
                     container.classList.add('sidebar-collapsed');
                     if (sidebarToggle) sidebarToggle.setAttribute('aria-label', 'Expand sidebar');
-                }
-
-                // Restore mobile nav state
-                if (localStorage.getItem(MOBILE_NAV_KEY) === 'true') {
-                    container.classList.add('mobile-nav-open');
-                    if (mobileToggle) mobileToggle.setAttribute('aria-label', 'Close navigation');
                 }
 
                 if (sidebarToggle) {
@@ -447,7 +355,6 @@
                 if (mobileToggle) {
                     mobileToggle.addEventListener('click', function onMobileToggle() {
                         var isOpen = container.classList.toggle('mobile-nav-open');
-                        localStorage.setItem(MOBILE_NAV_KEY, isOpen);
                         mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
                     });
                 }

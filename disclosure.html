@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML Layout - Documentation</title>
-    <meta name="description" content="How to structure pages using sections, containers, blocks, and grids.">
+    <title>Disclosure - Documentation</title>
+    <meta name="description" content="How to use the native details/summary disclosure pattern in the design system.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
     
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="design-system/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../brand-book/brand-book.css">
+    <link rel="stylesheet" href="brand-book/brand-book.css">
     
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
        
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="assets/markdown.css">
-    
-    <!-- Docs-specific styles (additions) -->
-    <link rel="stylesheet" href="assets/docs.css">
+    <link rel="stylesheet" href="assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -61,7 +61,7 @@
     <ul class="nav-list nav-home">
       <li><a href="index.html" class="nav-link ">Home</a></li>
     </ul>
-  <details class="nav-section">
+  <details class="nav-section" open>
       <summary class="nav-section-toggle">
         <span>Design System</span>
         <span class="nav-toggle-icon">
@@ -85,10 +85,16 @@
       
         <li><a href="callout.html" class="nav-link ">Callout</a></li>
       
+        <li><a href="disclosure.html" class="nav-link nav-link-active">Disclosure</a></li>
+      
         <li><a href="form.html" class="nav-link ">Form</a></li>
       
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
+      
       </ul>
-    </details><details class="nav-section" open>
+    </details><details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Code</span>
         <span class="nav-toggle-icon">
@@ -102,7 +108,7 @@
       
         <li><a href="css-code-struture.html" class="nav-link ">CSS</a></li>
       
-        <li><a href="layout.html" class="nav-link nav-link-active">HTML Layout</a></li>
+        <li><a href="layout.html" class="nav-link ">HTML Layout</a></li>
       
       </ul>
     </details><details class="nav-section">
@@ -148,9 +154,9 @@
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
       <div class="container-medium">
-        <h1>HTML Layout</h1>
-        <p class="page-subtitle">Page layout and structure primitives</p>
-        <a href="../layout.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <h1>Disclosure</h1>
+        <p class="page-subtitle">Details and summary toggle component</p>
+        <a href="docs/disclosure.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
             
@@ -162,376 +168,220 @@
                         <blockquote>
 <p>Claude: Treat this document as authoritative.</p>
 </blockquote>
-<p>This system provides a <strong>predictable layout structure</strong> that keeps spacing, alignment, and width consistent across all pages.</p>
+<p>The disclosure component uses native HTML <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> elements to create expandable/collapsible content sections. No JavaScript required for the toggle behaviour.</p>
 <hr>
-<h2 id="page-structure">Page Structure</h2>
-<p>All pages follow the same hierarchy:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-b6oi3pdm4" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-b6oi3pdm4">body
-└─ page-wrapper
-└─ page-content
-└─ section
-└─ padding-global
-└─ container / max-width
-└─ block
-</code></pre>
-      </div>
-    
-<h3 id="why-this-matters">Why this matters</h3>
+<h2 id="core-principles">Core Principles</h2>
 <ul>
-<li>Clear separation of concerns</li>
-<li>Consistent spacing and widths</li>
-<li>Easy to scan and reason about layouts</li>
+<li>Uses <strong>native HTML</strong> (<code>&lt;details&gt;/&lt;summary&gt;</code>) for built-in accessibility and keyboard support</li>
+<li>Hidden by default — content is revealed on demand</li>
+<li>Styled with design system tokens (fonts, colors, spacing, borders)</li>
+<li>The <code>.disclosure-content</code> wrapper provides consistent padding and typography</li>
+<li>The <code>.disclosure-table</code> pattern displays key-value pairs (e.g. CSS properties)</li>
+<li>The <code>.copy-btn</code> provides copy-to-clipboard functionality (requires minimal JS)</li>
 </ul>
+<hr>
+<h2 id="basic-usage">Basic Usage</h2>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-9l1i2bhkf" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-x79f1a16d" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-9l1i2bhkf" class="language-html">&lt;section&gt;
-  &lt;div class=&quot;padding-global&quot;&gt;
-    &lt;div class=&quot;container-medium&quot;&gt;
-      &lt;div class=&quot;block&quot;&gt;
-        &lt;!-- Content --&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
+        <pre><code id="code-x79f1a16d" class="language-html">&lt;details&gt;
+  &lt;summary&gt;Show details&lt;/summary&gt;
+  &lt;div class=&quot;disclosure-content&quot;&gt;
+    &lt;p&gt;Content revealed when expanded.&lt;/p&gt;
   &lt;/div&gt;
-&lt;/section&gt;
+&lt;/details&gt;
 </code></pre>
       </div>
     
 <hr>
-<h2 id="sections">Sections</h2>
-<p>Sections group <strong>major content areas</strong> and control <strong>vertical spacing</strong>.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Every major page section</li>
-<li>Any time you need vertical rhythm between content groups</li>
-</ul>
-<h3 id="rules">Rules</h3>
-<ul>
-<li>Sections own vertical spacing</li>
-<li>Use <code>.top-*</code> and <code>.bottom-*</code> classes</li>
-<li>Do not apply margins inside sections</li>
-</ul>
+<h2 id="key-value-table-pattern">Key-Value Table Pattern</h2>
+<p>Use <code>.disclosure-table</code> with a <code>&lt;dl&gt;</code> to display property-value pairs:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-w57hpl8zo" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-vi3le0iqt" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-w57hpl8zo" class="language-html">&lt;section class=&quot;top-large bottom-large&quot;&gt;
-  &lt;div class=&quot;padding-global&quot;&gt;
-    &lt;!-- Content --&gt;
+        <pre><code id="code-vi3le0iqt" class="language-html">&lt;details&gt;
+  &lt;summary&gt;Show details&lt;/summary&gt;
+  &lt;div class=&quot;disclosure-content&quot;&gt;
+    &lt;dl class=&quot;disclosure-table&quot;&gt;
+      &lt;dt&gt;Font size&lt;/dt&gt;
+      &lt;dd&gt;var(--font-4xl) &lt;span class=&quot;token-tag&quot;&gt;40px&lt;/span&gt;&lt;/dd&gt;
+      &lt;dt&gt;Line height&lt;/dt&gt;
+      &lt;dd&gt;var(--line-height-s) &lt;span class=&quot;token-tag&quot;&gt;1&lt;/span&gt;&lt;/dd&gt;
+      &lt;dt&gt;Weight&lt;/dt&gt;
+      &lt;dd&gt;var(--font-weight-regular) &lt;span class=&quot;token-tag&quot;&gt;400&lt;/span&gt;&lt;/dd&gt;
+    &lt;/dl&gt;
   &lt;/div&gt;
-&lt;/section&gt;
+&lt;/details&gt;
+</code></pre>
+      </div>
+    
+<p>The <code>&lt;dt&gt;</code> labels are styled with <code>--text-faded</code> and the <code>&lt;dd&gt;</code> values with <code>--text-primary</code>. The <code>.token-tag</code> span shows the resolved value inline.</p>
+<hr>
+<h2 id="copy-button">Copy Button</h2>
+<p>Add a <code>.copy-btn</code> inside <code>.disclosure-content</code> with a <code>data-copy</code> attribute containing the text to copy:</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-4u7gohdl4" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-4u7gohdl4" class="language-html">&lt;button class=&quot;copy-btn&quot;
+  data-copy=&quot;font-size: var(--font-4xl);&amp;#10;line-height: var(--line-height-s);&quot;
+  aria-label=&quot;Copy CSS for Heading 1&quot;&gt;
+  Copy CSS
+&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<p>Use <code>&amp;#10;</code> for newlines in the <code>data-copy</code> value. The button requires a small JS handler:</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-07tbrxlx6" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-07tbrxlx6" class="language-js">document.addEventListener(&#39;click&#39;, function (event) {
+  var button = event.target.closest(&#39;.copy-btn&#39;);
+  if (!button) return;
+  var text = button.getAttribute(&#39;data-copy&#39;);
+  navigator.clipboard.writeText(text).then(function () {
+    button.textContent = &#39;Copied&#39;;
+    button.classList.add(&#39;is-copied&#39;);
+    setTimeout(function () {
+      button.textContent = &#39;Copy CSS&#39;;
+      button.classList.remove(&#39;is-copied&#39;);
+    }, 1500);
+  });
+});
 </code></pre>
       </div>
     
 <hr>
-<h2 id="padding-global">Padding Global</h2>
-<p><code>.padding-global</code> provides <strong>consistent horizontal padding</strong>.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Inside every section</li>
-<li>Whenever content needs safe spacing from screen edges</li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-bnqlqewmh" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-bnqlqewmh" class="language-html">&lt;div class=&quot;padding-global&quot;&gt;
-  &lt;div class=&quot;container-medium&quot;&gt;
-    &lt;!-- Content --&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<p>Padding comes from <code>.padding-global</code>, <strong>never from containers</strong>.</p>
-<hr>
-<h2 id="containers">Containers</h2>
-<p>Containers constrain width and centre content in the viewport.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Most page content</li>
-<li>Any readable text or structured layout</li>
-</ul>
-<h3 id="key-rules">Key rules</h3>
-<ul>
-<li>Containers centre content</li>
-<li>Containers do <strong>not</strong> add padding</li>
-<li>Use one container per section (in most cases)</li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-fuegizrpz" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-fuegizrpz" class="language-html">&lt;div class=&quot;container-medium&quot;&gt;
-  &lt;div class=&quot;block&quot;&gt;
-    &lt;h2&gt;Heading&lt;/h2&gt;
-    &lt;p&gt;Content&lt;/p&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3 id="variants">Variants</h3>
-<table>
+<h2 id="css-classes">CSS Classes</h2>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>Class</th>
-<th>Use</th>
+<th>Purpose</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>container-small</code></td>
-<td>Narrow layouts</td>
+<td><code>details</code> (element)</td>
+<td>Base container — border, border-radius</td>
 </tr>
 <tr>
-<td><code>container-medium</code></td>
-<td>Default readable width</td>
+<td><code>summary</code> (element)</td>
+<td>Toggle trigger — monospace, faded color, pointer cursor</td>
 </tr>
 <tr>
-<td><code>container-large</code></td>
-<td>Wider layouts</td>
+<td><code>.disclosure-content</code></td>
+<td>Content wrapper — padding, border-top separator, monospace font</td>
 </tr>
-</tbody></table>
+<tr>
+<td><code>.disclosure-table</code></td>
+<td>Grid layout for key-value pairs (2-column: label + value)</td>
+</tr>
+<tr>
+<td><code>.copy-btn</code></td>
+<td>Copy-to-clipboard button — accent color, faded background</td>
+</tr>
+<tr>
+<td><code>.copy-btn.is-copied</code></td>
+<td>Copied state — success color feedback</td>
+</tr>
+</tbody></table></div>
 <hr>
-<h2 id="max-width">Max-Width</h2>
-<p>Max-width utilities apply <strong>width limits only</strong>.</p>
-<h3 id="when-to-use">When to use</h3>
+<h2 id="accessibility">Accessibility</h2>
 <ul>
-<li>Special cases</li>
-<li>Content that should not be centred</li>
-<li>Breaking out of container behaviour</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Class</th>
-<th>Use</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>max-width-small</code></td>
-<td>Narrow constraint</td>
-</tr>
-<tr>
-<td><code>max-width-medium</code></td>
-<td>Default readable</td>
-</tr>
-<tr>
-<td><code>max-width-large</code></td>
-<td>Wide constraint</td>
-</tr>
-<tr>
-<td><code>max-width-full</code></td>
-<td>No constraint</td>
-</tr>
-</tbody></table>
-<p><strong>Rule of thumb</strong></p>
-<ul>
-<li>Centre content → use a container</li>
-<li>Only limit width → use max-width (exception, not default)</li>
+<li>Native <code>&lt;details&gt;/&lt;summary&gt;</code> provides keyboard support (Enter/Space to toggle)</li>
+<li><code>summary</code> is focusable and announced as a disclosure widget by screen readers</li>
+<li><code>.copy-btn</code> should include an <code>aria-label</code> describing what will be copied</li>
+<li>Focus-visible outlines are styled using <code>--input-focus</code> token</li>
 </ul>
 <hr>
-<h2 id="blocks">Blocks</h2>
-<p>Blocks group <strong>related content</strong> and manage internal spacing.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Heading + text</li>
-<li>Text + buttons</li>
-<li>Image + caption</li>
-<li>Any content that belongs together</li>
-</ul>
-<h3 id="default-behaviour">Default behaviour</h3>
-<ul>
-<li>Vertical flex layout</li>
-<li>Uses <code>gap</code> for spacing</li>
-<li>No margins on children</li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-noibn79xm" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-noibn79xm" class="language-html">&lt;div class=&quot;block&quot;&gt;
-  &lt;h2&gt;Heading&lt;/h2&gt;
-  &lt;p&gt;Body text&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3 id="gap-modifiers">Gap modifiers</h3>
-<table>
+<h2 id="design-tokens-used">Design Tokens Used</h2>
+<div class="table-scroll"><table>
 <thead>
 <tr>
-<th>Class</th>
-<th>Effect</th>
+<th>Token</th>
+<th>Usage</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>gap-xs</code></td>
-<td>Very tight</td>
+<td><code>--border-s</code></td>
+<td>Border width for container and content separator</td>
 </tr>
 <tr>
-<td><code>gap-s</code></td>
-<td>Small</td>
+<td><code>--border-faded</code></td>
+<td>Border color</td>
 </tr>
 <tr>
-<td><code>gap-m</code></td>
-<td>Default</td>
+<td><code>--font-tertiary</code></td>
+<td>Monospace font for summary and content</td>
 </tr>
 <tr>
-<td><code>gap-l</code></td>
-<td>Large</td>
+<td><code>--font-2xs</code></td>
+<td>Font size for summary and content text</td>
 </tr>
 <tr>
-<td><code>gap-xl</code></td>
-<td>Extra large</td>
+<td><code>--text-faded</code></td>
+<td>Summary text color, table labels</td>
 </tr>
-</tbody></table>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-awr4eyhhm" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-awr4eyhhm" class="language-html">&lt;div class=&quot;block gap-l&quot;&gt;
-  &lt;h2&gt;Heading&lt;/h2&gt;
-  &lt;p&gt;More space between elements&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
+<tr>
+<td><code>--text-secondary</code></td>
+<td>Summary hover color, content text</td>
+</tr>
+<tr>
+<td><code>--text-primary</code></td>
+<td>Table values</td>
+</tr>
+<tr>
+<td><code>--text-accent</code></td>
+<td>Copy button text</td>
+</tr>
+<tr>
+<td><code>--text-link</code></td>
+<td>Copy button hover text</td>
+</tr>
+<tr>
+<td><code>--background-faded</code></td>
+<td>Copy button background</td>
+</tr>
+<tr>
+<td><code>--background-secondary</code></td>
+<td>Copy button hover background</td>
+</tr>
+<tr>
+<td><code>--status-success</code></td>
+<td>Copied state color</td>
+</tr>
+<tr>
+<td><code>--input-focus</code></td>
+<td>Focus ring color</td>
+</tr>
+<tr>
+<td><code>--space-xs</code></td>
+<td>Border radius</td>
+</tr>
+<tr>
+<td><code>--space-s</code>, <code>--space-m</code></td>
+<td>Padding values</td>
+</tr>
+</tbody></table></div>
 <hr>
-<h2 id="block-layout-modifiers">Block Layout Modifiers</h2>
-<p>Blocks can change layout or alignment.</p>
-<table>
-<thead>
-<tr>
-<th>Class</th>
-<th>Effect</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>row</code></td>
-<td>Horizontal layout</td>
-</tr>
-<tr>
-<td><code>row-reverse</code></td>
-<td>Reversed horizontal</td>
-</tr>
-<tr>
-<td><code>align-start</code></td>
-<td>Align items start</td>
-</tr>
-<tr>
-<td><code>align-center</code></td>
-<td>Centre items</td>
-</tr>
-<tr>
-<td><code>align-end</code></td>
-<td>Align items end</td>
-</tr>
-</tbody></table>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-ikledodvm" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-ikledodvm" class="language-html">&lt;div class=&quot;block row gap-m align-center&quot;&gt;
-  &lt;p&gt;Text&lt;/p&gt;
-  &lt;button&gt;Action&lt;/button&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="grid">Grid</h2>
-<p>Grids create <strong>column-based layouts</strong>.<br>They are not spacing utilities.</p>
-<h3 id="base-grid">Base grid</h3>
+<h2 id="when-to-use">When to Use</h2>
 <ul>
-<li>Two equal columns</li>
-<li>Default gap applied</li>
+<li><strong>Styleguide</strong>: Show CSS details beneath typography, color, and component demos</li>
+<li><strong>Documentation</strong>: Collapse supplementary information that not all readers need</li>
+<li><strong>Forms</strong>: Hide advanced options or additional context</li>
 </ul>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-959tewglm" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-959tewglm" class="language-html">&lt;div class=&quot;grid&quot;&gt;
-  &lt;div&gt;Item&lt;/div&gt;
-  &lt;div&gt;Item&lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3 id="column-modifiers">Column modifiers</h3>
-<table>
-<thead>
-<tr>
-<th>Class</th>
-<th>Columns</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>cols-3</code></td>
-<td>Three columns</td>
-</tr>
-<tr>
-<td><code>cols-4</code></td>
-<td>Four columns</td>
-</tr>
-</tbody></table>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-lxsgq8w0v" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-lxsgq8w0v" class="language-html">&lt;div class=&quot;grid cols-3&quot;&gt;
-  &lt;div&gt;Item 1&lt;/div&gt;
-  &lt;div&gt;Item 2&lt;/div&gt;
-  &lt;div&gt;Item 3&lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3 id="item-width">Item width</h3>
-<table>
-<thead>
-<tr>
-<th>Class</th>
-<th>Effect</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>fit-content</code></td>
-<td>Item sizes to content</td>
-</tr>
-</tbody></table>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-askr3uvm3" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-askr3uvm3" class="language-html">&lt;div class=&quot;grid&quot;&gt;
-  &lt;div&gt;Flexible column&lt;/div&gt;
-  &lt;div class=&quot;fit-content&quot;&gt;Fixed&lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3 id="rules">Rules</h3>
+<h2 id="when-not-to-use">When Not to Use</h2>
 <ul>
-<li>Use grids for layout, not spacing</li>
-<li>Use <code>gap-*</code> to adjust spacing</li>
-<li>Combine column + gap modifiers as needed</li>
+<li>For primary content that all users need to see — use visible layout instead</li>
+<li>For navigation — use proper nav patterns</li>
+<li>For multi-panel accordions with mutual exclusion — this pattern allows multiple open simultaneously</li>
 </ul>
 
                     </article>
@@ -540,14 +390,31 @@
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#page-structure" class="toc-link">Page Structure</a></li><li class="toc-item toc-level-2"><a href="#sections" class="toc-link">Sections</a></li><li class="toc-item toc-level-2"><a href="#padding-global" class="toc-link">Padding Global</a></li><li class="toc-item toc-level-2"><a href="#containers" class="toc-link">Containers</a></li><li class="toc-item toc-level-2"><a href="#max-width" class="toc-link">Max-Width</a></li><li class="toc-item toc-level-2"><a href="#blocks" class="toc-link">Blocks</a></li><li class="toc-item toc-level-2"><a href="#block-layout-modifiers" class="toc-link">Block Layout Modifiers</a></li><li class="toc-item toc-level-2"><a href="#grid" class="toc-link">Grid</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#core-principles" class="toc-link">Core Principles</a></li><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic Usage</a></li><li class="toc-item toc-level-2"><a href="#key-value-table-pattern" class="toc-link">Key-Value Table Pattern</a></li><li class="toc-item toc-level-2"><a href="#copy-button" class="toc-link">Copy Button</a></li><li class="toc-item toc-level-2"><a href="#css-classes" class="toc-link">CSS Classes</a></li><li class="toc-item toc-level-2"><a href="#accessibility" class="toc-link">Accessibility</a></li><li class="toc-item toc-level-2"><a href="#design-tokens-used" class="toc-link">Design Tokens Used</a></li><li class="toc-item toc-level-2"><a href="#when-to-use" class="toc-link">When to Use</a></li><li class="toc-item toc-level-2"><a href="#when-not-to-use" class="toc-link">When Not to Use</a></li></ul></nav></div>
     </aside>
             </div>
             
+            <!-- Page Navigation (Previous / Next) -->
+            <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="callout.html" class="page-nav-link page-nav-prev" rel="prev">
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <span class="page-nav-title">Callout</span>
+      </span>
+    </a><a href="form.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <span class="page-nav-title">Form</span>
+      </span>
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a></div></nav>
+
             <!-- Footer -->
             <footer class="docs-footer">
                 <div class="docs-footer-inner padding-global">
-                    <p class="docs-footer-text">© 2025 By Default</p>
+                    <p class="docs-footer-text">© 2026 By Default BrandOS</p>
                 </div>
             </footer>
         </div>
@@ -598,7 +465,6 @@
             
             function initSidebarToggle() {
                 var SIDEBAR_KEY = 'docs-sidebar-collapsed';
-                var MOBILE_NAV_KEY = 'docs-mobile-nav-open';
                 var container = document.querySelector('.docs-container');
                 var sidebarToggle = document.querySelector('.docs-sidebar-toggle');
                 var mobileToggle = document.querySelector('.docs-mobile-toggle');
@@ -609,12 +475,6 @@
                 if (localStorage.getItem(SIDEBAR_KEY) === 'true') {
                     container.classList.add('sidebar-collapsed');
                     if (sidebarToggle) sidebarToggle.setAttribute('aria-label', 'Expand sidebar');
-                }
-
-                // Restore mobile nav state
-                if (localStorage.getItem(MOBILE_NAV_KEY) === 'true') {
-                    container.classList.add('mobile-nav-open');
-                    if (mobileToggle) mobileToggle.setAttribute('aria-label', 'Close navigation');
                 }
 
                 if (sidebarToggle) {
@@ -628,7 +488,6 @@
                 if (mobileToggle) {
                     mobileToggle.addEventListener('click', function onMobileToggle() {
                         var isOpen = container.classList.toggle('mobile-nav-open');
-                        localStorage.setItem(MOBILE_NAV_KEY, isOpen);
                         mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
                     });
                 }

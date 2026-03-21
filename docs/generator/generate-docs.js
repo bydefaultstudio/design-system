@@ -6,15 +6,14 @@ const { marked } = require('marked');
 
 // Configuration
 const DOCS_DIR = path.join(__dirname, '..');  // ../ (docs/)
-const OUTPUT_DIR = path.join(__dirname, '..', 'site');  // ../site/
+const OUTPUT_DIR = path.join(__dirname, '..', '..');  // ../../ (project root)
 const TEMPLATE_FILE = path.join(__dirname, 'template.html');
-const ASSETS_SOURCE = path.join(__dirname, 'assets');
 
 // Load project config (docs/docs.config.js) with fallback defaults
 const configPath = path.join(DOCS_DIR, 'docs.config.js');
 const userConfig = fs.existsSync(configPath) ? require(configPath) : {};
 const PROJECT_CONFIG = {
-  designSystemPath: userConfig.designSystemPath || '../../design-system/design-system.css',
+  designSystemPath: userConfig.designSystemPath || 'design-system/design-system.css',
   brandCssPath: userConfig.brandCssPath || null,
   googleFontsUrl: userConfig.googleFontsUrl !== undefined ? userConfig.googleFontsUrl : null,
   footerText: userConfig.footerText || '',
@@ -119,6 +118,10 @@ function markdownToHtml(markdown) {
     }
     return match;
   });
+
+  // Wrap tables in a scroll container for horizontal scrolling on mobile
+  html = html.replace(/<table>/g, '<div class="table-scroll"><table>');
+  html = html.replace(/<\/table>/g, '</table></div>');
 
   // Add copy buttons to code blocks
   html = html.replace(/<pre><code([^>]*)>([\s\S]*?)<\/code><\/pre>/g, (match, attributes, code) => {
@@ -229,12 +232,26 @@ function generateNavigation(filesBySection, currentPage = null) {
     for (const file of files) {
       const isActive = currentPage && currentPage.filename === file.filename;
       const activeClass = isActive ? 'nav-link-active' : '';
-      
+
       navigation += `
         <li><a href="${file.htmlPath}" class="nav-link ${activeClass}">${file.title}</a></li>
       `;
     }
-    
+
+    // Add Styleguide link inside the Design System section
+    if (section === 'Design System') {
+      navigation += `
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      `;
+    }
+
+    // Add Brand Book link inside the Brand section (or Design System if no Brand section)
+    if (section === 'Brand' || (section === 'Design System' && !filesBySection['Brand'])) {
+      navigation += `
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
+      `;
+    }
+
     navigation += `
       </ul>
     </details>`;
@@ -306,13 +323,92 @@ function generateIndexPage(template, navigation, filesBySection) {
     .replace('{{DESIGN_SYSTEM_PATH}}', PROJECT_CONFIG.designSystemPath)
     .replace('{{BRAND_CSS}}', BRAND_CSS_HTML)
     .replace('{{GOOGLE_FONTS}}', GOOGLE_FONTS_HTML)
+    .replace('{{PAGE_NAV}}', '')
     .replace('{{FOOTER_TEXT}}', PROJECT_CONFIG.footerText);
+}
+
+/**
+ * Build a flat ordered list of all pages following the nav order
+ */
+function buildPageOrder(filesBySection) {
+  const sectionOrder = ['Design System', 'Code', 'Content', 'Project'];
+  const sortedSections = Object.keys(filesBySection).sort((a, b) => {
+    const indexA = sectionOrder.indexOf(a);
+    const indexB = sectionOrder.indexOf(b);
+    if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+    if (indexA !== -1) return -1;
+    if (indexB !== -1) return 1;
+    return a.localeCompare(b);
+  });
+
+  const ordered = [];
+  for (const section of sortedSections) {
+    const files = [...filesBySection[section]].sort((a, b) => {
+      const orderA = a.frontmatter.order || 999;
+      const orderB = b.frontmatter.order || 999;
+      if (orderA !== orderB) return orderA - orderB;
+      return a.title.localeCompare(b.title);
+    });
+    for (const file of files) {
+      ordered.push(file);
+    }
+  }
+  return ordered;
+}
+
+/**
+ * Generate prev/next navigation HTML for a page
+ */
+function generatePageNav(file, pageOrder) {
+  const index = pageOrder.findIndex(p => p.filename === file.filename);
+  if (index === -1) return '';
+
+  const prev = index > 0 ? pageOrder[index - 1] : null;
+  const next = index < pageOrder.length - 1 ? pageOrder[index + 1] : null;
+
+  if (!prev && !next) return '';
+
+  const arrowLeft = `<svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const arrowRight = `<svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+  let html = '<nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global">';
+
+  if (prev) {
+    const sectionLabel = prev.section !== file.section ? `<span class="page-nav-section">${prev.section}</span>` : '';
+    html += `<a href="${prev.htmlPath}" class="page-nav-link page-nav-prev" rel="prev">
+      ${arrowLeft}
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        ${sectionLabel}
+        <span class="page-nav-title">${prev.title}</span>
+      </span>
+    </a>`;
+  } else {
+    html += '<span class="page-nav-link page-nav-placeholder"></span>';
+  }
+
+  if (next) {
+    const sectionLabel = next.section !== file.section ? `<span class="page-nav-section">${next.section}</span>` : '';
+    html += `<a href="${next.htmlPath}" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        ${sectionLabel}
+        <span class="page-nav-title">${next.title}</span>
+      </span>
+      ${arrowRight}
+    </a>`;
+  } else {
+    html += '<span class="page-nav-link page-nav-placeholder"></span>';
+  }
+
+  html += '</div></nav>';
+  return html;
 }
 
 /**
  * Generate page HTML
  */
-function generatePage(file, template, navigation) {
+function generatePage(file, template, navigation, pageOrder) {
   const { frontmatter, content } = file;
   const htmlContent = markdownToHtml(content);
   const tableOfContents = generateTableOfContents(htmlContent);
@@ -324,7 +420,7 @@ function generatePage(file, template, navigation) {
       <div class="container-medium">
         <h1>${frontmatter.title}</h1>
         ${frontmatter.subtitle ? `<p class="page-subtitle">${frontmatter.subtitle}</p>` : ''}
-        <a href="../${file.markdownPath}" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <a href="docs/${file.markdownPath}" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>`;
   }
@@ -343,34 +439,8 @@ function generatePage(file, template, navigation) {
     .replace('{{DESIGN_SYSTEM_PATH}}', PROJECT_CONFIG.designSystemPath)
     .replace('{{BRAND_CSS}}', BRAND_CSS_HTML)
     .replace('{{GOOGLE_FONTS}}', GOOGLE_FONTS_HTML)
+    .replace('{{PAGE_NAV}}', generatePageNav(file, pageOrder))
     .replace('{{FOOTER_TEXT}}', PROJECT_CONFIG.footerText);
-}
-
-/**
- * Copy assets to output directory
- */
-function copyAssets() {
-  const assetsDest = path.join(OUTPUT_DIR, 'assets');
-  
-  if (fs.existsSync(ASSETS_SOURCE)) {
-    // Create assets directory if it doesn't exist
-    if (!fs.existsSync(assetsDest)) {
-      fs.mkdirSync(assetsDest, { recursive: true });
-    }
-    
-    // Copy all files from assets to output
-    const files = fs.readdirSync(ASSETS_SOURCE);
-    files.forEach(file => {
-      const sourcePath = path.join(ASSETS_SOURCE, file);
-      const destPath = path.join(assetsDest, file);
-      
-      if (fs.statSync(sourcePath).isFile()) {
-        fs.copyFileSync(sourcePath, destPath);
-      }
-    });
-    
-    console.log('✅ Assets copied');
-  }
 }
 
 /**
@@ -378,12 +448,7 @@ function copyAssets() {
  */
 async function generateDocs() {
   console.log('🚀 Starting documentation generation...');
-  
-  // Create output directory if it doesn't exist
-  if (!fs.existsSync(OUTPUT_DIR)) {
-    fs.mkdirSync(OUTPUT_DIR, { recursive: true });
-  }
-  
+
   // Load template
   const template = fs.readFileSync(TEMPLATE_FILE, 'utf8');
   console.log('✅ Template loaded');
@@ -438,9 +503,6 @@ async function generateDocs() {
   
   console.log(`📂 Found sections: ${Object.keys(filesBySection).join(', ')}`);
   
-  // Copy engine assets (docs.css, markdown.css) to output directory
-  copyAssets();
-  
   // Generate index.html
   const indexPage = { filename: 'index' };
   const navigation = generateNavigation(filesBySection, indexPage);
@@ -448,10 +510,13 @@ async function generateDocs() {
   fs.writeFileSync(path.join(OUTPUT_DIR, 'index.html'), indexContent);
   console.log('📄 Generated: index.html');
   
+  // Build ordered page list for prev/next navigation
+  const pageOrder = buildPageOrder(filesBySection);
+
   // Generate HTML for each file
   for (const file of allFiles) {
     const navigation = generateNavigation(filesBySection, file);
-    const pageContent = generatePage(file, template, navigation);
+    const pageContent = generatePage(file, template, navigation, pageOrder);
     const outputPath = path.join(OUTPUT_DIR, file.htmlPath);
     
     fs.writeFileSync(outputPath, pageContent);

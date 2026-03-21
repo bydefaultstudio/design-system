@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Typography - Documentation</title>
-    <meta name="description" content="Complete reference for typography tokens including font scale, line height, font weight, and letter spacing.">
+    <title>HTML Layout - Documentation</title>
+    <meta name="description" content="How to structure pages using sections, containers, blocks, and grids.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
     
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="design-system/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../brand-book/brand-book.css">
+    <link rel="stylesheet" href="brand-book/brand-book.css">
     
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
        
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="assets/markdown.css">
-    
-    <!-- Docs-specific styles (additions) -->
-    <link rel="stylesheet" href="assets/docs.css">
+    <link rel="stylesheet" href="assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -61,7 +61,7 @@
     <ul class="nav-list nav-home">
       <li><a href="index.html" class="nav-link ">Home</a></li>
     </ul>
-  <details class="nav-section" open>
+  <details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Design System</span>
         <span class="nav-toggle-icon">
@@ -75,7 +75,7 @@
       
         <li><a href="color.html" class="nav-link ">Color</a></li>
       
-        <li><a href="typography.html" class="nav-link nav-link-active">Typography</a></li>
+        <li><a href="typography.html" class="nav-link ">Typography</a></li>
       
         <li><a href="spacing.html" class="nav-link ">Spacing</a></li>
       
@@ -85,10 +85,16 @@
       
         <li><a href="callout.html" class="nav-link ">Callout</a></li>
       
+        <li><a href="disclosure.html" class="nav-link ">Disclosure</a></li>
+      
         <li><a href="form.html" class="nav-link ">Form</a></li>
       
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
+      
       </ul>
-    </details><details class="nav-section">
+    </details><details class="nav-section" open>
       <summary class="nav-section-toggle">
         <span>Code</span>
         <span class="nav-toggle-icon">
@@ -102,7 +108,7 @@
       
         <li><a href="css-code-struture.html" class="nav-link ">CSS</a></li>
       
-        <li><a href="layout.html" class="nav-link ">HTML Layout</a></li>
+        <li><a href="layout.html" class="nav-link nav-link-active">HTML Layout</a></li>
       
       </ul>
     </details><details class="nav-section">
@@ -148,9 +154,9 @@
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
       <div class="container-medium">
-        <h1>Typography</h1>
-        <p class="page-subtitle">Typography tokens and text components</p>
-        <a href="../typography.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <h1>HTML Layout</h1>
+        <p class="page-subtitle">Page layout and structure primitives</p>
+        <a href="docs/layout.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
             
@@ -162,249 +168,377 @@
                         <blockquote>
 <p>Claude: Treat this document as authoritative.</p>
 </blockquote>
-<p>Typography tokens provide a <strong>consistent, modular system</strong> for all text across the products. They are designed for <strong>clarity, readability, and hierarchy</strong>, while remaining flexible across devices.</p>
-<h2 id="font-size">Font Size</h2>
-<p>Font size tokens define the typographic scale for all text elements. They scale responsively between desktop and mobile devices to ensure optimal readability across screen sizes.</p>
-<table>
-<thead>
-<tr>
-<th>Token</th>
-<th>Desktop</th>
-<th>Mobile</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>--font-2xs</code></td>
-<td>12px</td>
-<td>12px</td>
-</tr>
-<tr>
-<td><code>--font-xs</code></td>
-<td>14px</td>
-<td>12px</td>
-</tr>
-<tr>
-<td><code>--font-s</code></td>
-<td>16px</td>
-<td>14px</td>
-</tr>
-<tr>
-<td><code>--font-m</code></td>
-<td>18px</td>
-<td>16px</td>
-</tr>
-<tr>
-<td><code>--font-l</code></td>
-<td>22px</td>
-<td>18px</td>
-</tr>
-<tr>
-<td><code>--font-xl</code></td>
-<td>28px</td>
-<td>20px</td>
-</tr>
-<tr>
-<td><code>--font-2xl</code></td>
-<td>32px</td>
-<td>22px</td>
-</tr>
-<tr>
-<td><code>--font-3xl</code></td>
-<td>40px</td>
-<td>28px</td>
-</tr>
-<tr>
-<td><code>--font-4xl</code></td>
-<td>48px</td>
-<td>32px</td>
-</tr>
-<tr>
-<td><code>--font-5xl</code></td>
-<td>55px</td>
-<td>40px</td>
-</tr>
-<tr>
-<td><code>--font-6xl</code></td>
-<td>64px</td>
-<td>48px</td>
-</tr>
-</tbody></table>
-<p><strong>Usage:</strong></p>
+<p>This system provides a <strong>predictable layout structure</strong> that keeps spacing, alignment, and width consistent across all pages.</p>
+<hr>
+<h2 id="page-structure">Page Structure</h2>
+<p>All pages follow the same hierarchy:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-r8y707brm" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-lmm0wa4oi" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-r8y707brm" class="language-css">h1 {
-  font-size: var(--font-3xl);
-}
+        <pre><code id="code-lmm0wa4oi">body
+└─ page-wrapper
+└─ page-content
+└─ section
+└─ padding-global
+└─ container / max-width
+└─ block
+</code></pre>
+      </div>
+    
+<h3 id="why-this-matters">Why this matters</h3>
+<ul>
+<li>Clear separation of concerns</li>
+<li>Consistent spacing and widths</li>
+<li>Easy to scan and reason about layouts</li>
+</ul>
 
-p {
-  font-size: var(--font-m);
-}
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-2mjx0kh8f" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-2mjx0kh8f" class="language-html">&lt;section&gt;
+  &lt;div class=&quot;padding-global&quot;&gt;
+    &lt;div class=&quot;container-medium&quot;&gt;
+      &lt;div class=&quot;block&quot;&gt;
+        &lt;!-- Content --&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
 </code></pre>
       </div>
     
 <hr>
-<h2 id="line-height">Line Height</h2>
-<p>Line height tokens control the vertical rhythm of text, ensuring consistent spacing between lines. They help establish visual hierarchy and improve readability.</p>
-<table>
-<thead>
-<tr>
-<th>Token</th>
-<th>Value</th>
-<th>Usage</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>--line-height-s</code></td>
-<td>1</td>
-<td>Tight line height for headings (H1, H2)</td>
-</tr>
-<tr>
-<td><code>--line-height-m</code></td>
-<td>1.2</td>
-<td>Medium line height for subheadings (H3, H4)</td>
-</tr>
-<tr>
-<td><code>--line-height-l</code></td>
-<td>1.4</td>
-<td>Loose line height for body text and paragraphs</td>
-</tr>
-<tr>
-<td><code>--line-height-xl</code></td>
-<td>1.6</td>
-<td>Extra loose line height</td>
-</tr>
-<tr>
-<td><code>--line-height-2xl</code></td>
-<td>1.8</td>
-<td>Maximum line height for spacious text</td>
-</tr>
-</tbody></table>
-<p><strong>Usage:</strong></p>
+<h2 id="sections">Sections</h2>
+<p>Sections group <strong>major content areas</strong> and control <strong>vertical spacing</strong>.</p>
+<h3 id="when-to-use">When to use</h3>
+<ul>
+<li>Every major page section</li>
+<li>Any time you need vertical rhythm between content groups</li>
+</ul>
+<h3 id="rules">Rules</h3>
+<ul>
+<li>Sections own vertical spacing</li>
+<li>Use <code>.top-*</code> and <code>.bottom-*</code> classes</li>
+<li>Do not apply margins inside sections</li>
+</ul>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-rx8pv4u4b" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-ym2q4e95f" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-rx8pv4u4b" class="language-css">h1 {
-  line-height: var(--line-height-s);
-}
-
-p {
-  line-height: var(--line-height-l);
-}
+        <pre><code id="code-ym2q4e95f" class="language-html">&lt;section class=&quot;top-large bottom-large&quot;&gt;
+  &lt;div class=&quot;padding-global&quot;&gt;
+    &lt;!-- Content --&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
 </code></pre>
       </div>
     
 <hr>
-<h2 id="font-weight">Font Weight</h2>
-<p>Font weight tokens provide a consistent scale for text emphasis and hierarchy. They enable precise control over typographic weight across the design system.</p>
-<table>
+<h2 id="padding-global">Padding Global</h2>
+<p><code>.padding-global</code> provides <strong>consistent horizontal padding</strong>.</p>
+<h3 id="when-to-use">When to use</h3>
+<ul>
+<li>Inside every section</li>
+<li>Whenever content needs safe spacing from screen edges</li>
+</ul>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-4fgzatcl4" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-4fgzatcl4" class="language-html">&lt;div class=&quot;padding-global&quot;&gt;
+  &lt;div class=&quot;container-medium&quot;&gt;
+    &lt;!-- Content --&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<p>Padding comes from <code>.padding-global</code>, <strong>never from containers</strong>.</p>
+<hr>
+<h2 id="containers">Containers</h2>
+<p>Containers constrain width and centre content in the viewport.</p>
+<h3 id="when-to-use">When to use</h3>
+<ul>
+<li>Most page content</li>
+<li>Any readable text or structured layout</li>
+</ul>
+<h3 id="key-rules">Key rules</h3>
+<ul>
+<li>Containers centre content</li>
+<li>Containers do <strong>not</strong> add padding</li>
+<li>Use one container per section (in most cases)</li>
+</ul>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-yxypm6ant" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-yxypm6ant" class="language-html">&lt;div class=&quot;container-medium&quot;&gt;
+  &lt;div class=&quot;block&quot;&gt;
+    &lt;h2&gt;Heading&lt;/h2&gt;
+    &lt;p&gt;Content&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="variants">Variants</h3>
+<div class="table-scroll"><table>
 <thead>
 <tr>
-<th>Token</th>
-<th>Value</th>
-<th>Description</th>
+<th>Class</th>
+<th>Use</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--font-weight-light</code></td>
-<td>300</td>
-<td>Light weight</td>
+<td><code>container-small</code></td>
+<td>Narrow layouts</td>
 </tr>
 <tr>
-<td><code>--font-weight-regular</code></td>
-<td>400</td>
-<td>Regular/normal weight</td>
+<td><code>container-medium</code></td>
+<td>Default readable width</td>
 </tr>
 <tr>
-<td><code>--font-weight-medium</code></td>
-<td>500</td>
-<td>Medium weight</td>
+<td><code>container-large</code></td>
+<td>Wider layouts</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="max-width">Max-Width</h2>
+<p>Max-width utilities apply <strong>width limits only</strong>.</p>
+<h3 id="when-to-use">When to use</h3>
+<ul>
+<li>Special cases</li>
+<li>Content that should not be centred</li>
+<li>Breaking out of container behaviour</li>
+</ul>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>max-width-small</code></td>
+<td>Narrow constraint</td>
 </tr>
 <tr>
-<td><code>--font-weight-semi-bold</code></td>
-<td>600</td>
-<td>Semi-bold weight</td>
+<td><code>max-width-medium</code></td>
+<td>Default readable</td>
 </tr>
 <tr>
-<td><code>--font-weight-bold</code></td>
-<td>700</td>
-<td>Bold weight</td>
+<td><code>max-width-large</code></td>
+<td>Wide constraint</td>
 </tr>
 <tr>
-<td><code>--font-weight-extra-bold</code></td>
-<td>800</td>
-<td>Extra-bold weight</td>
+<td><code>max-width-full</code></td>
+<td>No constraint</td>
 </tr>
-<tr>
-<td><code>--font-weight-black</code></td>
-<td>900</td>
-<td>Black/heavy weight</td>
-</tr>
-</tbody></table>
-<p><strong>Usage:</strong></p>
+</tbody></table></div>
+<p><strong>Rule of thumb</strong></p>
+<ul>
+<li>Centre content → use a container</li>
+<li>Only limit width → use max-width (exception, not default)</li>
+</ul>
+<hr>
+<h2 id="blocks">Blocks</h2>
+<p>Blocks group <strong>related content</strong> and manage internal spacing.</p>
+<h3 id="when-to-use">When to use</h3>
+<ul>
+<li>Heading + text</li>
+<li>Text + buttons</li>
+<li>Image + caption</li>
+<li>Any content that belongs together</li>
+</ul>
+<h3 id="default-behaviour">Default behaviour</h3>
+<ul>
+<li>Vertical flex layout</li>
+<li>Uses <code>gap</code> for spacing</li>
+<li>No margins on children</li>
+</ul>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-rssln3zhd" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-u4snikjqo" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-rssln3zhd" class="language-css">body {
-  font-weight: var(--font-weight-regular);
-}
+        <pre><code id="code-u4snikjqo" class="language-html">&lt;div class=&quot;block&quot;&gt;
+  &lt;h2&gt;Heading&lt;/h2&gt;
+  &lt;p&gt;Body text&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="gap-modifiers">Gap modifiers</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>gap-xs</code></td>
+<td>Very tight</td>
+</tr>
+<tr>
+<td><code>gap-s</code></td>
+<td>Small</td>
+</tr>
+<tr>
+<td><code>gap-m</code></td>
+<td>Default</td>
+</tr>
+<tr>
+<td><code>gap-l</code></td>
+<td>Large</td>
+</tr>
+<tr>
+<td><code>gap-xl</code></td>
+<td>Extra large</td>
+</tr>
+</tbody></table></div>
 
-h1 {
-  font-weight: var(--font-weight-bold);
-}
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-wa2qzyy1q" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-wa2qzyy1q" class="language-html">&lt;div class=&quot;block gap-l&quot;&gt;
+  &lt;h2&gt;Heading&lt;/h2&gt;
+  &lt;p&gt;More space between elements&lt;/p&gt;
+&lt;/div&gt;
 </code></pre>
       </div>
     
 <hr>
-<h2 id="letter-spacing">Letter Spacing</h2>
-<p>Letter spacing tokens control the horizontal spacing between characters. They use em-based values for proportional scaling with font size, ensuring consistent spacing regardless of the font size used.</p>
-<table>
+<h2 id="block-layout-modifiers">Block Layout Modifiers</h2>
+<p>Blocks can change layout or alignment.</p>
+<div class="table-scroll"><table>
 <thead>
 <tr>
-<th>Token</th>
-<th>Value</th>
-<th>Description</th>
+<th>Class</th>
+<th>Effect</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--letter-spacing-s</code></td>
-<td>0.03em</td>
-<td>Small letter spacing</td>
+<td><code>row</code></td>
+<td>Horizontal layout</td>
 </tr>
 <tr>
-<td><code>--letter-spacing-m</code></td>
-<td>0.06em</td>
-<td>Medium letter spacing</td>
+<td><code>row-reverse</code></td>
+<td>Reversed horizontal</td>
 </tr>
 <tr>
-<td><code>--letter-spacing-l</code></td>
-<td>0.08em</td>
-<td>Large letter spacing</td>
+<td><code>align-start</code></td>
+<td>Align items start</td>
 </tr>
 <tr>
-<td><code>--letter-spacing-xl</code></td>
-<td>0.11em</td>
-<td>Extra large letter spacing</td>
+<td><code>align-center</code></td>
+<td>Centre items</td>
 </tr>
-</tbody></table>
-<p><strong>Usage:</strong></p>
+<tr>
+<td><code>align-end</code></td>
+<td>Align items end</td>
+</tr>
+</tbody></table></div>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-dej3lmohf" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-7h0nmxknr" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-dej3lmohf" class="language-css">.eyebrow {
-  letter-spacing: var(--letter-spacing-m);
-}
+        <pre><code id="code-7h0nmxknr" class="language-html">&lt;div class=&quot;block row gap-m align-center&quot;&gt;
+  &lt;p&gt;Text&lt;/p&gt;
+  &lt;button&gt;Action&lt;/button&gt;
+&lt;/div&gt;
 </code></pre>
       </div>
     
+<hr>
+<h2 id="grid">Grid</h2>
+<p>Grids create <strong>column-based layouts</strong>.<br>They are not spacing utilities.</p>
+<h3 id="base-grid">Base grid</h3>
+<ul>
+<li>Two equal columns</li>
+<li>Default gap applied</li>
+</ul>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-4ulb71p4e" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-4ulb71p4e" class="language-html">&lt;div class=&quot;grid&quot;&gt;
+  &lt;div&gt;Item&lt;/div&gt;
+  &lt;div&gt;Item&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="column-modifiers">Column modifiers</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Columns</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>cols-3</code></td>
+<td>Three columns</td>
+</tr>
+<tr>
+<td><code>cols-4</code></td>
+<td>Four columns</td>
+</tr>
+</tbody></table></div>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-50il3uvpv" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-50il3uvpv" class="language-html">&lt;div class=&quot;grid cols-3&quot;&gt;
+  &lt;div&gt;Item 1&lt;/div&gt;
+  &lt;div&gt;Item 2&lt;/div&gt;
+  &lt;div&gt;Item 3&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="item-width">Item width</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>fit-content</code></td>
+<td>Item sizes to content</td>
+</tr>
+</tbody></table></div>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-fvu59ecpx" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-fvu59ecpx" class="language-html">&lt;div class=&quot;grid&quot;&gt;
+  &lt;div&gt;Flexible column&lt;/div&gt;
+  &lt;div class=&quot;fit-content&quot;&gt;Fixed&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="rules">Rules</h3>
+<ul>
+<li>Use grids for layout, not spacing</li>
+<li>Use <code>gap-*</code> to adjust spacing</li>
+<li>Combine column + gap modifiers as needed</li>
+</ul>
 
                     </article>
                 </main>
@@ -412,14 +546,31 @@ h1 {
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#font-size" class="toc-link">Font Size</a></li><li class="toc-item toc-level-2"><a href="#line-height" class="toc-link">Line Height</a></li><li class="toc-item toc-level-2"><a href="#font-weight" class="toc-link">Font Weight</a></li><li class="toc-item toc-level-2"><a href="#letter-spacing" class="toc-link">Letter Spacing</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#page-structure" class="toc-link">Page Structure</a></li><li class="toc-item toc-level-2"><a href="#sections" class="toc-link">Sections</a></li><li class="toc-item toc-level-2"><a href="#padding-global" class="toc-link">Padding Global</a></li><li class="toc-item toc-level-2"><a href="#containers" class="toc-link">Containers</a></li><li class="toc-item toc-level-2"><a href="#max-width" class="toc-link">Max-Width</a></li><li class="toc-item toc-level-2"><a href="#blocks" class="toc-link">Blocks</a></li><li class="toc-item toc-level-2"><a href="#block-layout-modifiers" class="toc-link">Block Layout Modifiers</a></li><li class="toc-item toc-level-2"><a href="#grid" class="toc-link">Grid</a></li></ul></nav></div>
     </aside>
             </div>
             
+            <!-- Page Navigation (Previous / Next) -->
+            <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="css-code-struture.html" class="page-nav-link page-nav-prev" rel="prev">
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <span class="page-nav-title">CSS</span>
+      </span>
+    </a><a href="seo-best-practices.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        <span class="page-nav-section">Content</span>
+        <span class="page-nav-title">SEO</span>
+      </span>
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a></div></nav>
+
             <!-- Footer -->
             <footer class="docs-footer">
                 <div class="docs-footer-inner padding-global">
-                    <p class="docs-footer-text">© 2025 By Default</p>
+                    <p class="docs-footer-text">© 2026 By Default BrandOS</p>
                 </div>
             </footer>
         </div>
@@ -470,7 +621,6 @@ h1 {
             
             function initSidebarToggle() {
                 var SIDEBAR_KEY = 'docs-sidebar-collapsed';
-                var MOBILE_NAV_KEY = 'docs-mobile-nav-open';
                 var container = document.querySelector('.docs-container');
                 var sidebarToggle = document.querySelector('.docs-sidebar-toggle');
                 var mobileToggle = document.querySelector('.docs-mobile-toggle');
@@ -481,12 +631,6 @@ h1 {
                 if (localStorage.getItem(SIDEBAR_KEY) === 'true') {
                     container.classList.add('sidebar-collapsed');
                     if (sidebarToggle) sidebarToggle.setAttribute('aria-label', 'Expand sidebar');
-                }
-
-                // Restore mobile nav state
-                if (localStorage.getItem(MOBILE_NAV_KEY) === 'true') {
-                    container.classList.add('mobile-nav-open');
-                    if (mobileToggle) mobileToggle.setAttribute('aria-label', 'Close navigation');
                 }
 
                 if (sidebarToggle) {
@@ -500,7 +644,6 @@ h1 {
                 if (mobileToggle) {
                     mobileToggle.addEventListener('click', function onMobileToggle() {
                         var isOpen = container.classList.toggle('mobile-nav-open');
-                        localStorage.setItem(MOBILE_NAV_KEY, isOpen);
                         mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
                     });
                 }

@@ -18,7 +18,7 @@ The doc site is split into two parts: **content** (your markdown files) and the 
 | --- | --- |
 | `docs/*.md` | All documentation content |
 | `docs/docs.config.js` | Design system path, brand book path, fonts, footer text, index description |
-| `docs/site/assets/images/` | Logo (`logo.svg`) and favicons |
+| `assets/images/` and `assets/icons/` | Logo (`logo.svg`) and favicons |
 
 ---
 
@@ -53,10 +53,10 @@ Edit `docs/docs.config.js` in the project:
 
 ```js
 module.exports = {
-  // Path to design system CSS, relative from docs/site/
+  // Path to design system CSS, relative from project root
   designSystemPath: '../../design-system/design-system.css',
 
-  // Path to brand book CSS, relative from docs/site/
+  // Path to brand book CSS, relative from project root
   // Set to null to use framework defaults only
   brandCssPath: '../../brand-book/brand-book.css',
 
@@ -71,8 +71,8 @@ module.exports = {
 };
 ```
 
-Replace the logo by swapping `docs/site/assets/images/logo.svg`.
-Replace favicons by swapping `docs/site/assets/images/favicon.svg` and `favicon.ico`.
+Replace the logo by swapping `assets/images/logo.svg`.
+Replace favicons by swapping `assets/icons/favicon.svg` and `assets/icons/favicon.ico`.
 
 ---
 

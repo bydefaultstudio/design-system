@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spacing - Documentation</title>
-    <meta name="description" content="Complete reference for spacing tokens including units, space tokens, section spacing, and border tokens.">
+    <title>JavaScript - Documentation</title>
+    <meta name="description" content="Guide defining how JavaScript should be structured and organized.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
     
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="design-system/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../brand-book/brand-book.css">
+    <link rel="stylesheet" href="brand-book/brand-book.css">
     
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
        
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="assets/markdown.css">
-    
-    <!-- Docs-specific styles (additions) -->
-    <link rel="stylesheet" href="assets/docs.css">
+    <link rel="stylesheet" href="assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -61,7 +61,7 @@
     <ul class="nav-list nav-home">
       <li><a href="index.html" class="nav-link ">Home</a></li>
     </ul>
-  <details class="nav-section" open>
+  <details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Design System</span>
         <span class="nav-toggle-icon">
@@ -77,7 +77,7 @@
       
         <li><a href="typography.html" class="nav-link ">Typography</a></li>
       
-        <li><a href="spacing.html" class="nav-link nav-link-active">Spacing</a></li>
+        <li><a href="spacing.html" class="nav-link ">Spacing</a></li>
       
         <li><a href="border.html" class="nav-link ">Border</a></li>
       
@@ -85,10 +85,16 @@
       
         <li><a href="callout.html" class="nav-link ">Callout</a></li>
       
+        <li><a href="disclosure.html" class="nav-link ">Disclosure</a></li>
+      
         <li><a href="form.html" class="nav-link ">Form</a></li>
       
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
+      
       </ul>
-    </details><details class="nav-section">
+    </details><details class="nav-section" open>
       <summary class="nav-section-toggle">
         <span>Code</span>
         <span class="nav-toggle-icon">
@@ -98,7 +104,7 @@
         </span>
       </summary>
       <ul class="nav-list">
-        <li><a href="js-code-structure.html" class="nav-link ">JavaScript</a></li>
+        <li><a href="js-code-structure.html" class="nav-link nav-link-active">JavaScript</a></li>
       
         <li><a href="css-code-struture.html" class="nav-link ">CSS</a></li>
       
@@ -148,9 +154,9 @@
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
       <div class="container-medium">
-        <h1>Spacing</h1>
-        <p class="page-subtitle">Spacing tokens and units</p>
-        <a href="../spacing.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <h1>JavaScript</h1>
+        <p class="page-subtitle">JavaScript coding standards and organization guidelines</p>
+        <a href="docs/js-code-structure.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
             
@@ -162,306 +168,174 @@
                         <blockquote>
 <p>Claude: Treat this document as authoritative.</p>
 </blockquote>
-<p>Spacing tokens define <strong>distance</strong>, not intent. They are reused for gaps, padding, and margins depending on context.</p>
-<h2 id="unit-tokens">Unit Tokens</h2>
-<p>Units act as the basic measure for spacing, typography, and layout tokens.</p>
-<p>They represent neutral values and best used in <strong>semantic tokens and utility classes</strong>, rather than applied directly in layouts or components. Using units in this way ensures spacing and sizing stay consistent, predictable, and easy to update across the system without creating individual values.</p>
-<table>
-<thead>
-<tr>
-<th>Unit</th>
-<th>px</th>
-<th>rem</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>none</code></td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>2xs</code></td>
-<td>2</td>
-<td>0.125</td>
-</tr>
-<tr>
-<td><code>xs</code></td>
-<td>4</td>
-<td>0.25</td>
-</tr>
-<tr>
-<td><code>s</code></td>
-<td>8</td>
-<td>0.5</td>
-</tr>
-<tr>
-<td><code>m</code></td>
-<td>12</td>
-<td>0.75</td>
-</tr>
-<tr>
-<td><code>l</code></td>
-<td>16</td>
-<td>1</td>
-</tr>
-<tr>
-<td><code>xl</code></td>
-<td>24</td>
-<td>1.5</td>
-</tr>
-<tr>
-<td><code>2xl</code></td>
-<td>32</td>
-<td>2</td>
-</tr>
-<tr>
-<td><code>3xl</code></td>
-<td>40</td>
-<td>2.5</td>
-</tr>
-<tr>
-<td><code>4xl</code></td>
-<td>48</td>
-<td>3</td>
-</tr>
-<tr>
-<td><code>5xl</code></td>
-<td>56</td>
-<td>3.5</td>
-</tr>
-<tr>
-<td><code>6xl</code></td>
-<td>64</td>
-<td>4</td>
-</tr>
-<tr>
-<td><code>7xl</code></td>
-<td>72</td>
-<td>4.5</td>
-</tr>
-<tr>
-<td><code>8xl</code></td>
-<td>80</td>
-<td>5</td>
-</tr>
-<tr>
-<td><code>9xl</code></td>
-<td>88</td>
-<td>5.5</td>
-</tr>
-<tr>
-<td><code>10xl</code></td>
-<td>96</td>
-<td>6</td>
-</tr>
-<tr>
-<td><code>11xl</code></td>
-<td>104</td>
-<td>6.5</td>
-</tr>
-<tr>
-<td><code>12xl</code></td>
-<td>112</td>
-<td>7</td>
-</tr>
-<tr>
-<td><code>13xl</code></td>
-<td>120</td>
-<td>7.5</td>
-</tr>
-<tr>
-<td><code>14xl</code></td>
-<td>160</td>
-<td>10</td>
-</tr>
-</tbody></table>
-<p><strong>Usage:</strong></p>
+<blockquote>
+<p>Claude: Follow these rules when writing or modifying JavaScript.</p>
+</blockquote>
+<h2 id="overview">Overview</h2>
+<p>This structure ensures readable, modular, and maintainable JavaScript with clear organization.</p>
+<hr>
+<h2 id="file-structure">File Structure</h2>
+<p>Every JavaScript file should follow this organizational pattern:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-pgukfk40m" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-6xwl8fvxr" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-pgukfk40m" class="language-css">:root {
-  --space-m: var(--m);
-  --space-l: var(--l);
+        <pre><code id="code-6xwl8fvxr" class="language-js">/**
+ * Script Purpose: [Brief description]
+ * Author: [Your Name]
+ * Created: [Date]
+ * Version: [Latest Version]
+ * Last Updated: [Date]
+ */
+
+console.log(&quot;Script Name v1.0.0&quot;);
+
+//
+//------- Utility Functions -------//
+//
+
+// Function Name
+function utilityFunction() {
+  // ... implementation
+}
+
+//
+//------- Main Functions -------//
+//
+
+// Initialize Component
+function initComponent() {
+  // ... implementation
+}
+
+//
+//------- Event Listeners -------//
+//
+
+// Setup Event Listeners
+function setupEventListeners() {
+  // ... implementation
+}
+
+//
+//------- Initialize -------//
+//
+
+document.addEventListener(&quot;DOMContentLoaded&quot;, () =&gt; {
+  initComponent();
+  setupEventListeners();
+});
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="section-organization">Section Organization</h2>
+<ol>
+<li><strong>File Header</strong> - Comment block with purpose, author, dates, version</li>
+<li><strong>Console Log</strong> - ONE <code>console.log()</code> at the top to confirm script loaded</li>
+<li><strong>Utility Functions</strong> - Reusable helper functions grouped together</li>
+<li><strong>Main Functions</strong> - Primary functionality grouped together</li>
+<li><strong>Event Listeners</strong> - Event handling functions grouped together</li>
+<li><strong>Initialize</strong> - All setup calls within <code>DOMContentLoaded</code> listener at the end</li>
+</ol>
+<hr>
+<h2 id="section-dividers">Section Dividers</h2>
+<p>Use clear headers when grouping similar functions:</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-ych2yh9qe" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-ych2yh9qe" class="language-js">//
+//------- Section Name -------//
+//
+</code></pre>
+      </div>
+    
+<p>For standalone functions, use simple comments:</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-k1o9jtrp8" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-k1o9jtrp8" class="language-js">// Function Name
+function doSomething() {
+  // ... implementation
 }
 </code></pre>
       </div>
     
 <hr>
-<h2 id="space-tokens">Space Tokens</h2>
-<p>Space tokens provide responsive spacing values that scale between desktop and mobile devices. They are used for gaps, padding, and margins to maintain consistent spacing throughout the interface.</p>
-<table>
+<h2 id="naming-conventions">Naming Conventions</h2>
+<div class="table-scroll"><table>
 <thead>
 <tr>
-<th>Token</th>
-<th>Desktop</th>
-<th>Mobile</th>
+<th>Type</th>
+<th>Example</th>
+<th>Rule</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--space-xs</code></td>
-<td><code>XS</code></td>
-<td><code>XS</code></td>
+<td>Functions</td>
+<td><code>initSlider()</code>, <code>handleClick()</code></td>
+<td>Use <strong>lower camelCase</strong>, short &amp; descriptive</td>
 </tr>
 <tr>
-<td><code>--space-s</code></td>
-<td><code>S</code></td>
-<td><code>XS</code></td>
+<td>Variables</td>
+<td><code>mainElement</code>, <code>scrollPos</code></td>
+<td>Contextual and readable</td>
 </tr>
 <tr>
-<td><code>--space-m</code></td>
-<td><code>M</code></td>
-<td><code>S</code></td>
+<td>File Names</td>
+<td><code>slider.js</code>, <code>utils.js</code></td>
+<td>Use lowercase kebab-case</td>
 </tr>
 <tr>
-<td><code>--space-l</code></td>
-<td><code>L</code></td>
-<td><code>M</code></td>
+<td>Constants</td>
+<td><code>MAX_ITEMS</code>, <code>API_URL</code></td>
+<td>Use UPPER_SNAKE_CASE</td>
 </tr>
-<tr>
-<td><code>--space-xl</code></td>
-<td><code>XL</code></td>
-<td><code>L</code></td>
-</tr>
-<tr>
-<td><code>--space-2xl</code></td>
-<td><code>2XL</code></td>
-<td><code>XL</code></td>
-</tr>
-<tr>
-<td><code>--space-3xl</code></td>
-<td><code>3XL</code></td>
-<td><code>2XL</code></td>
-</tr>
-<tr>
-<td><code>--space-4xl</code></td>
-<td><code>4XL</code></td>
-<td><code>2XL</code></td>
-</tr>
-<tr>
-<td><code>--space-6xl</code></td>
-<td><code>6XL</code></td>
-<td><code>4XL</code></td>
-</tr>
-</tbody></table>
-<p><strong>Usage:</strong></p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-d4f0xv6a5" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-d4f0xv6a5" class="language-css">.card {
-  padding: var(--space-m);
-  margin-bottom: var(--space-l);
-}
-</code></pre>
-      </div>
-    
+</tbody></table></div>
 <hr>
-<h2 id="padding">Padding</h2>
-<p>Padding utilities apply internal padding to elements. These are convenience utilities for quick spacing adjustments.</p>
-<table>
-<thead>
-<tr>
-<th>Class</th>
-<th>Spacing</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>.padding-s</code></td>
-<td><code>var(--space-s)</code></td>
-</tr>
-<tr>
-<td><code>.padding-m</code></td>
-<td><code>var(--space-m)</code></td>
-</tr>
-<tr>
-<td><code>.padding-l</code></td>
-<td><code>var(--space-l)</code></td>
-</tr>
-<tr>
-<td><code>.padding-xl</code></td>
-<td><code>var(--space-xl)</code></td>
-</tr>
-<tr>
-<td><code>.padding-2xl</code></td>
-<td><code>var(--space-2xl)</code></td>
-</tr>
-<tr>
-<td><code>.padding-3xl</code></td>
-<td><code>var(--space-3xl)</code></td>
-</tr>
-</tbody></table>
-<p><strong>Usage</strong></p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-0pvceg4bj" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-0pvceg4bj" class="language-html">&lt;div class=&quot;padding-m&quot;&gt;
-  &lt;!-- Content with medium padding on all sides --&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<p><strong>Important</strong></p>
+<h2 id="initialization-pattern">Initialization Pattern</h2>
+<ol>
+<li>Define <strong>utility functions</strong> first</li>
+<li>Define <strong>main functions</strong> grouped by section</li>
+<li>Define <strong>event listeners</strong> separately</li>
+<li>Call everything within a single <code>DOMContentLoaded</code> listener <strong>at the end</strong></li>
+</ol>
+<hr>
+<h2 id="console-logging">Console Logging</h2>
+<p><strong>Each script should include ONE <code>console.log()</code> at the top</strong> to confirm the script has loaded. Don&#39;t add excessive console logs throughout your code.</p>
+<hr>
+<h2 id="rules-to-follow">Rules to Follow</h2>
+<h3 id="organization">Organization</h3>
 <ul>
-<li>These utilities apply internal padding only (all sides).</li>
-<li>They are convenience utilities for quick spacing adjustments.</li>
-<li>They do not replace section spacing or layout primitives.</li>
-<li>For section-level spacing, use section spacing combo classes (see Layout).</li>
-<li>For component-level spacing, prefer blocks with gap modifiers.</li>
+<li>✅ Group related functions together</li>
+<li>✅ Use section dividers for major groupings</li>
+<li>✅ Place initialization at the end</li>
+<li>✅ Keep utility functions separate from main functions</li>
 </ul>
-<hr>
-<h2 id="section-spacing">Section Spacing</h2>
-<p>Section spacing tokens control the <strong>vertical rhythm between sections</strong>. They scale responsively between desktop and mobile.</p>
-<table>
-<thead>
-<tr>
-<th>Token</th>
-<th>Desktop</th>
-<th>Mobile</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>--section-xs</code></td>
-<td>XL</td>
-<td>L</td>
-</tr>
-<tr>
-<td><code>--section-s</code></td>
-<td>2XL</td>
-<td>XL</td>
-</tr>
-<tr>
-<td><code>--section-m</code></td>
-<td>6XL</td>
-<td>2XL</td>
-</tr>
-<tr>
-<td><code>--section-l</code></td>
-<td>10XL</td>
-<td>5XL</td>
-</tr>
-<tr>
-<td><code>--section-xl</code></td>
-<td>14XL</td>
-<td>8XL</td>
-</tr>
-</tbody></table>
-<p><strong>Usage:</strong></p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-cjfthdtrw" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-cjfthdtrw" class="language-css">.top-small {
-  padding-top: var(--section-s);
-}
-</code></pre>
-      </div>
-    
+<h3 id="commenting">Commenting</h3>
+<ul>
+<li>✅ Include file header with metadata</li>
+<li>✅ Comment each function with its purpose</li>
+<li>✅ Use section dividers for major groupings</li>
+</ul>
+<h3 id="code-quality">Code Quality</h3>
+<ul>
+<li>✅ Use descriptive function names</li>
+<li>✅ Follow naming conventions consistently</li>
+<li>✅ Place initialization in <code>DOMContentLoaded</code> listener</li>
+</ul>
+<h3 id="what-to-avoid">What to Avoid</h3>
+<ul>
+<li>❌ Scattering related functions across the file</li>
+<li>❌ Mixing utility functions with main functions</li>
+<li>❌ Multiple initialization points</li>
+<li>❌ Excessive console logging</li>
+</ul>
 
                     </article>
                 </main>
@@ -469,14 +343,31 @@
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#unit-tokens" class="toc-link">Unit Tokens</a></li><li class="toc-item toc-level-2"><a href="#space-tokens" class="toc-link">Space Tokens</a></li><li class="toc-item toc-level-2"><a href="#padding" class="toc-link">Padding</a></li><li class="toc-item toc-level-2"><a href="#section-spacing" class="toc-link">Section Spacing</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#overview" class="toc-link">Overview</a></li><li class="toc-item toc-level-2"><a href="#file-structure" class="toc-link">File Structure</a></li><li class="toc-item toc-level-2"><a href="#section-organization" class="toc-link">Section Organization</a></li><li class="toc-item toc-level-2"><a href="#section-dividers" class="toc-link">Section Dividers</a></li><li class="toc-item toc-level-2"><a href="#naming-conventions" class="toc-link">Naming Conventions</a></li><li class="toc-item toc-level-2"><a href="#initialization-pattern" class="toc-link">Initialization Pattern</a></li><li class="toc-item toc-level-2"><a href="#console-logging" class="toc-link">Console Logging</a></li><li class="toc-item toc-level-2"><a href="#rules-to-follow" class="toc-link">Rules to Follow</a></li></ul></nav></div>
     </aside>
             </div>
             
+            <!-- Page Navigation (Previous / Next) -->
+            <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="form.html" class="page-nav-link page-nav-prev" rel="prev">
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        <span class="page-nav-section">Design System</span>
+        <span class="page-nav-title">Form</span>
+      </span>
+    </a><a href="css-code-struture.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <span class="page-nav-title">CSS</span>
+      </span>
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a></div></nav>
+
             <!-- Footer -->
             <footer class="docs-footer">
                 <div class="docs-footer-inner padding-global">
-                    <p class="docs-footer-text">© 2025 By Default</p>
+                    <p class="docs-footer-text">© 2026 By Default BrandOS</p>
                 </div>
             </footer>
         </div>
@@ -527,7 +418,6 @@
             
             function initSidebarToggle() {
                 var SIDEBAR_KEY = 'docs-sidebar-collapsed';
-                var MOBILE_NAV_KEY = 'docs-mobile-nav-open';
                 var container = document.querySelector('.docs-container');
                 var sidebarToggle = document.querySelector('.docs-sidebar-toggle');
                 var mobileToggle = document.querySelector('.docs-mobile-toggle');
@@ -538,12 +428,6 @@
                 if (localStorage.getItem(SIDEBAR_KEY) === 'true') {
                     container.classList.add('sidebar-collapsed');
                     if (sidebarToggle) sidebarToggle.setAttribute('aria-label', 'Expand sidebar');
-                }
-
-                // Restore mobile nav state
-                if (localStorage.getItem(MOBILE_NAV_KEY) === 'true') {
-                    container.classList.add('mobile-nav-open');
-                    if (mobileToggle) mobileToggle.setAttribute('aria-label', 'Close navigation');
                 }
 
                 if (sidebarToggle) {
@@ -557,7 +441,6 @@
                 if (mobileToggle) {
                     mobileToggle.addEventListener('click', function onMobileToggle() {
                         var isOpen = container.classList.toggle('mobile-nav-open');
-                        localStorage.setItem(MOBILE_NAV_KEY, isOpen);
                         mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
                     });
                 }

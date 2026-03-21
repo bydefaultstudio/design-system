@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Setup - Documentation</title>
-    <meta name="description" content="Guide to customizing this project template for your new project.">
+    <title>Button - Documentation</title>
+    <meta name="description" content="How to use button styles and modifiers in the design system.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
     
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="design-system/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../brand-book/brand-book.css">
+    <link rel="stylesheet" href="brand-book/brand-book.css">
     
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
        
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="assets/markdown.css">
-    
-    <!-- Docs-specific styles (additions) -->
-    <link rel="stylesheet" href="assets/docs.css">
+    <link rel="stylesheet" href="assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -61,7 +61,7 @@
     <ul class="nav-list nav-home">
       <li><a href="index.html" class="nav-link ">Home</a></li>
     </ul>
-  <details class="nav-section">
+  <details class="nav-section" open>
       <summary class="nav-section-toggle">
         <span>Design System</span>
         <span class="nav-toggle-icon">
@@ -81,11 +81,17 @@
       
         <li><a href="border.html" class="nav-link ">Border</a></li>
       
-        <li><a href="button.html" class="nav-link ">Button</a></li>
+        <li><a href="button.html" class="nav-link nav-link-active">Button</a></li>
       
         <li><a href="callout.html" class="nav-link ">Callout</a></li>
       
+        <li><a href="disclosure.html" class="nav-link ">Disclosure</a></li>
+      
         <li><a href="form.html" class="nav-link ">Form</a></li>
+      
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
       
       </ul>
     </details><details class="nav-section">
@@ -120,7 +126,7 @@
         <li><a href="markdown-style.html" class="nav-link ">Markdown</a></li>
       
       </ul>
-    </details><details class="nav-section" open>
+    </details><details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Project</span>
         <span class="nav-toggle-icon">
@@ -130,7 +136,7 @@
         </span>
       </summary>
       <ul class="nav-list">
-        <li><a href="setup.html" class="nav-link nav-link-active">Setup</a></li>
+        <li><a href="setup.html" class="nav-link ">Setup</a></li>
       
         <li><a href="template.html" class="nav-link ">Template</a></li>
       
@@ -148,9 +154,9 @@
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
       <div class="container-medium">
-        <h1>Setup</h1>
-        <p class="page-subtitle">Getting started with this template</p>
-        <a href="../setup.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <h1>Button</h1>
+        <p class="page-subtitle">Button component and usage guidelines</p>
+        <a href="docs/button.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
             
@@ -162,95 +168,180 @@
                         <blockquote>
 <p>Claude: Treat this document as authoritative.</p>
 </blockquote>
-<p>This template provides a solid foundation for new projects. Follow these steps to customize it for your project.</p>
+<p>Buttons are interactive elements used to trigger actions.<br>They size to their content by default and should communicate <strong>clear intent and hierarchy</strong>.</p>
 <hr>
-<h2 id="brand-colors">Brand Colors</h2>
-<p>Update brand colors in <code>brand-book/brand-book.css</code>.</p>
-<p>The brand book defines raw brand tokens using the <code>--brand-</code> prefix. The design system reads these via <code>var(--brand-*, fallback)</code> — if no brand book is loaded, sensible defaults apply.</p>
-<p><strong>What to change:</strong></p>
+<h2 id="base-button">Base Button</h2>
+<p><code>.button</code> (or the <code>button</code> element) is the default and most commonly used button.</p>
+<p>Use this when you want to highlight a <strong>primary action</strong>.</p>
+<h3 id="when-to-use">When to use</h3>
 <ul>
-<li><code>--brand-color-accent</code> — Your primary brand accent colour</li>
-<li><code>--brand-color-dark</code> — Your dark brand colour</li>
-<li><code>--brand-color-light</code> — Your light brand colour</li>
+<li>Primary calls to action</li>
+<li>Form submissions</li>
+<li>Key user decisions</li>
 </ul>
-<p><strong>Example:</strong></p>
+<h3 id="default-styling">Default Styling</h3>
+<ul>
+<li><strong>Font:</strong> Primary font, <code>var(--button-font-size)</code></li>
+<li><strong>Background:</strong> <code>var(--button-primary)</code></li>
+<li><strong>Text color:</strong> <code>var(--button-text)</code></li>
+<li><strong>Border:</strong> <code>var(--border-m)</code> solid <code>var(--button-primary)</code></li>
+</ul>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-2efwuvrac" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-phhqbqyc0" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-2efwuvrac" class="language-css">/* brand-book/brand-book.css */
-:root {
-  --brand-color-accent: #0066cc;
-  --brand-color-dark: #1a1a1a;
-  --brand-color-light: #f5f5f5;
-}
+        <pre><code id="code-phhqbqyc0" class="language-html">&lt;button class=&quot;button&quot;&gt;Primary Action&lt;/button&gt;
 </code></pre>
       </div>
     
-<p><strong>Note:</strong> The design system maps these into semantic tokens automatically. You do not need to touch <code>design-system/design-system.css</code> for brand colours.</p>
 <hr>
-<h2 id="fonts">Fonts</h2>
-<p>Update font families in <code>brand-book/brand-book.css</code>.</p>
-<p><strong>What to change:</strong></p>
+<h2 id="outline-button">Outline Button</h2>
+<p><code>.is-outline</code> removes the filled background and uses a border instead.</p>
+<h3 id="when-to-use">When to use</h3>
 <ul>
-<li><code>--brand-font-primary</code> — Your primary font family</li>
-<li><code>--brand-font-secondary</code> — Your secondary font family (if used)</li>
-<li><code>--brand-font-tertiary</code> — Your monospace font (if used)</li>
+<li>Secondary actions</li>
+<li>Actions that should not visually compete with the primary CTA</li>
+<li>Buttons placed near strong visual content</li>
 </ul>
-<p><strong>Also update:</strong></p>
-<ul>
-<li>Google Fonts link in <code>docs/docs.config.js</code> (if using Google Fonts)</li>
-<li>Google Fonts link in <code>design-system/index.html</code> (if using Google Fonts)</li>
-<li>Google Fonts link in <code>brand-book/index.html</code> (if using Google Fonts)</li>
-</ul>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-lvxgped0v" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-lvxgped0v" class="language-html">&lt;button class=&quot;button is-outline&quot;&gt;Secondary Action&lt;/button&gt;
+</code></pre>
+      </div>
+    
 <hr>
-<h2 id="logo">Logo</h2>
-<p>Replace the logo image:</p>
+<h2 id="faded-button">Faded Button</h2>
+<p><code>.is-faded</code> applies a subtle background using <code>var(--button-faded)</code>.</p>
+<h3 id="when-to-use">When to use</h3>
 <ul>
-<li><code>docs/site/assets/images/logo.svg</code> - Documentation site logo</li>
+<li>Low-priority actions</li>
+<li>Passive or optional interactions</li>
+<li>UI controls that should feel lightweight</li>
 </ul>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-cprvu05fc" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-cprvu05fc" class="language-html">&lt;button class=&quot;button is-faded&quot;&gt;Optional Action&lt;/button&gt;
+</code></pre>
+      </div>
+    
 <hr>
-<h2 id="project-brief">Project Brief</h2>
-<p>Fill in <code>PROJECT_BRIEF.md</code> with your project details:</p>
+<h2 id="outline-faded">Outline + Faded</h2>
+<p><code>.is-outline.is-faded</code> combines both modifiers.</p>
+<h3 id="when-to-use">When to use</h3>
 <ul>
-<li>Replace all bracketed placeholders <code>[like this]</code> with actual content</li>
-<li>Define project goals, audience, and constraints</li>
+<li>Tertiary actions</li>
+<li>Utility controls</li>
+<li>Actions that should be visible but de-emphasised</li>
 </ul>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-tp85j7hiq" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-tp85j7hiq" class="language-html">&lt;button class=&quot;button is-outline is-faded&quot;&gt;Tertiary Action&lt;/button&gt;
+</code></pre>
+      </div>
+    
 <hr>
-<h2 id="meta-tags-amp-seo">Meta Tags &amp; SEO</h2>
-<p>Update SEO meta tags in <code>docs/generator/template.html</code>:</p>
+<h2 id="small-button">Small Button</h2>
+<p><code>.is-small</code> reduces font size and padding.</p>
+<h3 id="when-to-use">When to use</h3>
 <ul>
-<li>Update <code>&lt;title&gt;</code> template if needed</li>
-<li>Add Open Graph tags for social sharing</li>
-<li>Update favicon references if using custom favicons</li>
+<li>Dense UI areas</li>
+<li>Tables, cards, or compact layouts</li>
+<li>Secondary actions inside components</li>
 </ul>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-9a67ttvc2" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-9a67ttvc2" class="language-html">&lt;button class=&quot;button is-small&quot;&gt;Small Action&lt;/button&gt;
+</code></pre>
+      </div>
+    
 <hr>
-<h2 id="documentation">Documentation</h2>
-<p>The documentation is ready to use, but you may want to:</p>
+<h2 id="icon-button">Icon Button</h2>
+<p><code>.is-icon</code> creates a circular button designed for icons only.</p>
+<h3 id="when-to-use">When to use</h3>
 <ul>
-<li>Review and customize documentation content in <code>docs/</code> folder</li>
-<li>Update the index page description in <code>docs/generator/generate-docs.js</code></li>
-<li>Add or remove documentation pages as needed</li>
+<li>Icon-only actions</li>
+<li>Toolbar controls</li>
+<li>Repeated UI actions (close, add, expand)</li>
 </ul>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-o8jnvg3z6" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-o8jnvg3z6" class="language-html">&lt;button class=&quot;button is-icon&quot;&gt;
+  &lt;div class=&quot;icn-svg&quot;&gt;
+    &lt;!-- SVG icon --&gt;
+  &lt;/div&gt;
+&lt;/button&gt;
+</code></pre>
+      </div>
+    
 <hr>
-<h2 id="quick-checklist">Quick Checklist</h2>
+<h2 id="disabled-button">Disabled Button</h2>
+<p><code>:disabled</code> or <code>.is-disabled</code> reduces opacity and prevents interaction.</p>
+<h3 id="when-to-use">When to use</h3>
 <ul>
-<li><input disabled="" type="checkbox"> Update brand colors in <code>brand-book/brand-book.css</code></li>
-<li><input disabled="" type="checkbox"> Update font families in <code>brand-book/brand-book.css</code></li>
-<li><input disabled="" type="checkbox"> Replace logo in <code>docs/site/assets/images/logo.svg</code></li>
-<li><input disabled="" type="checkbox"> Fill in <code>PROJECT_BRIEF.md</code></li>
-<li><input disabled="" type="checkbox"> Update Google Fonts links (if applicable)</li>
-<li><input disabled="" type="checkbox"> Review and customize documentation</li>
+<li>Actions that are temporarily unavailable</li>
+<li>Form submissions when validation is incomplete</li>
+<li>Controls that require a prerequisite action</li>
 </ul>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-zxuxoniq9" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-zxuxoniq9" class="language-html">&lt;button class=&quot;button&quot; disabled&gt;Disabled Action&lt;/button&gt;
+&lt;button class=&quot;button is-outline&quot; disabled&gt;Disabled Outline&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<p><strong>Styling:</strong> <code>opacity: 0.4</code>, <code>cursor: not-allowed</code>, <code>pointer-events: none</code>.</p>
 <hr>
-<h2 id="next-steps">Next Steps</h2>
-<ol>
-<li>Start building your project in the <code>src/</code> directory</li>
-<li>Use the templates in <code>templates/</code> folder for new components</li>
-<li>Follow the coding standards in the documentation</li>
-<li>Keep documentation updated as you build</li>
-</ol>
+<h2 id="combining-modifiers">Combining Modifiers</h2>
+<p>Button modifiers can be combined to match intent and context.</p>
+<h3 id="common-combinations">Common combinations</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Combination</th>
+<th>Use case</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.is-outline.is-faded</code></td>
+<td>Tertiary or utility actions</td>
+</tr>
+<tr>
+<td><code>.is-small.is-outline</code></td>
+<td>Compact secondary actions</td>
+</tr>
+<tr>
+<td><code>.is-small.is-faded</code></td>
+<td>Low-priority compact actions</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="usage-rules">Usage Rules</h2>
+<ul>
+<li>Buttons should <strong>never stretch full width by default</strong></li>
+<li>Use one clear primary button per section when possible</li>
+<li>Use outline or faded styles to reduce visual competition</li>
+<li>Use icon buttons <strong>only</strong> when the icon meaning is clear</li>
+</ul>
+<p>If a button feels too prominent or too quiet, change the modifier — not the base styles.</p>
 
                     </article>
                 </main>
@@ -258,14 +349,31 @@
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#brand-colors" class="toc-link">Brand Colors</a></li><li class="toc-item toc-level-2"><a href="#fonts" class="toc-link">Fonts</a></li><li class="toc-item toc-level-2"><a href="#logo" class="toc-link">Logo</a></li><li class="toc-item toc-level-2"><a href="#project-brief" class="toc-link">Project Brief</a></li><li class="toc-item toc-level-2"><a href="#meta-tags-amp-seo" class="toc-link">Meta Tags &amp; SEO</a></li><li class="toc-item toc-level-2"><a href="#documentation" class="toc-link">Documentation</a></li><li class="toc-item toc-level-2"><a href="#quick-checklist" class="toc-link">Quick Checklist</a></li><li class="toc-item toc-level-2"><a href="#next-steps" class="toc-link">Next Steps</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#base-button" class="toc-link">Base Button</a></li><li class="toc-item toc-level-2"><a href="#outline-button" class="toc-link">Outline Button</a></li><li class="toc-item toc-level-2"><a href="#faded-button" class="toc-link">Faded Button</a></li><li class="toc-item toc-level-2"><a href="#outline-faded" class="toc-link">Outline + Faded</a></li><li class="toc-item toc-level-2"><a href="#small-button" class="toc-link">Small Button</a></li><li class="toc-item toc-level-2"><a href="#icon-button" class="toc-link">Icon Button</a></li><li class="toc-item toc-level-2"><a href="#disabled-button" class="toc-link">Disabled Button</a></li><li class="toc-item toc-level-2"><a href="#combining-modifiers" class="toc-link">Combining Modifiers</a></li><li class="toc-item toc-level-2"><a href="#usage-rules" class="toc-link">Usage Rules</a></li></ul></nav></div>
     </aside>
             </div>
             
+            <!-- Page Navigation (Previous / Next) -->
+            <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="border.html" class="page-nav-link page-nav-prev" rel="prev">
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <span class="page-nav-title">Border</span>
+      </span>
+    </a><a href="callout.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <span class="page-nav-title">Callout</span>
+      </span>
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a></div></nav>
+
             <!-- Footer -->
             <footer class="docs-footer">
                 <div class="docs-footer-inner padding-global">
-                    <p class="docs-footer-text">© 2025 By Default</p>
+                    <p class="docs-footer-text">© 2026 By Default BrandOS</p>
                 </div>
             </footer>
         </div>
@@ -316,7 +424,6 @@
             
             function initSidebarToggle() {
                 var SIDEBAR_KEY = 'docs-sidebar-collapsed';
-                var MOBILE_NAV_KEY = 'docs-mobile-nav-open';
                 var container = document.querySelector('.docs-container');
                 var sidebarToggle = document.querySelector('.docs-sidebar-toggle');
                 var mobileToggle = document.querySelector('.docs-mobile-toggle');
@@ -327,12 +434,6 @@
                 if (localStorage.getItem(SIDEBAR_KEY) === 'true') {
                     container.classList.add('sidebar-collapsed');
                     if (sidebarToggle) sidebarToggle.setAttribute('aria-label', 'Expand sidebar');
-                }
-
-                // Restore mobile nav state
-                if (localStorage.getItem(MOBILE_NAV_KEY) === 'true') {
-                    container.classList.add('mobile-nav-open');
-                    if (mobileToggle) mobileToggle.setAttribute('aria-label', 'Close navigation');
                 }
 
                 if (sidebarToggle) {
@@ -346,7 +447,6 @@
                 if (mobileToggle) {
                     mobileToggle.addEventListener('click', function onMobileToggle() {
                         var isOpen = container.classList.toggle('mobile-nav-open');
-                        localStorage.setItem(MOBILE_NAV_KEY, isOpen);
                         mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
                     });
                 }

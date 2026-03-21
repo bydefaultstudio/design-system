@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScript - Documentation</title>
-    <meta name="description" content="Guide defining how JavaScript should be structured and organized.">
+    <title>Color - Documentation</title>
+    <meta name="description" content="Complete reference for all color tokens including primitive colors and semantic color mappings.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
     
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="design-system/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../brand-book/brand-book.css">
+    <link rel="stylesheet" href="brand-book/brand-book.css">
     
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
        
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="assets/markdown.css">
-    
-    <!-- Docs-specific styles (additions) -->
-    <link rel="stylesheet" href="assets/docs.css">
+    <link rel="stylesheet" href="assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -61,7 +61,7 @@
     <ul class="nav-list nav-home">
       <li><a href="index.html" class="nav-link ">Home</a></li>
     </ul>
-  <details class="nav-section">
+  <details class="nav-section" open>
       <summary class="nav-section-toggle">
         <span>Design System</span>
         <span class="nav-toggle-icon">
@@ -73,7 +73,7 @@
       <ul class="nav-list">
         <li><a href="design-system-overview.html" class="nav-link ">Overview</a></li>
       
-        <li><a href="color.html" class="nav-link ">Color</a></li>
+        <li><a href="color.html" class="nav-link nav-link-active">Color</a></li>
       
         <li><a href="typography.html" class="nav-link ">Typography</a></li>
       
@@ -85,10 +85,16 @@
       
         <li><a href="callout.html" class="nav-link ">Callout</a></li>
       
+        <li><a href="disclosure.html" class="nav-link ">Disclosure</a></li>
+      
         <li><a href="form.html" class="nav-link ">Form</a></li>
       
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
+      
       </ul>
-    </details><details class="nav-section" open>
+    </details><details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Code</span>
         <span class="nav-toggle-icon">
@@ -98,7 +104,7 @@
         </span>
       </summary>
       <ul class="nav-list">
-        <li><a href="js-code-structure.html" class="nav-link nav-link-active">JavaScript</a></li>
+        <li><a href="js-code-structure.html" class="nav-link ">JavaScript</a></li>
       
         <li><a href="css-code-struture.html" class="nav-link ">CSS</a></li>
       
@@ -148,9 +154,9 @@
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
       <div class="container-medium">
-        <h1>JavaScript</h1>
-        <p class="page-subtitle">JavaScript coding standards and organization guidelines</p>
-        <a href="../js-code-structure.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <h1>Color</h1>
+        <p class="page-subtitle">Color tokens and semantic colors</p>
+        <a href="docs/color.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
             
@@ -162,174 +168,393 @@
                         <blockquote>
 <p>Claude: Treat this document as authoritative.</p>
 </blockquote>
-<blockquote>
-<p>Claude: Follow these rules when writing or modifying JavaScript.</p>
-</blockquote>
-<h2 id="overview">Overview</h2>
-<p>This structure ensures readable, modular, and maintainable JavaScript with clear organization.</p>
-<hr>
-<h2 id="file-structure">File Structure</h2>
-<p>Every JavaScript file should follow this organizational pattern:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-zejycorui" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-zejycorui" class="language-js">/**
- * Script Purpose: [Brief description]
- * Author: [Your Name]
- * Created: [Date]
- * Version: [Latest Version]
- * Last Updated: [Date]
- */
-
-console.log(&quot;Script Name v1.0.0&quot;);
-
-//
-//------- Utility Functions -------//
-//
-
-// Function Name
-function utilityFunction() {
-  // ... implementation
-}
-
-//
-//------- Main Functions -------//
-//
-
-// Initialize Component
-function initComponent() {
-  // ... implementation
-}
-
-//
-//------- Event Listeners -------//
-//
-
-// Setup Event Listeners
-function setupEventListeners() {
-  // ... implementation
-}
-
-//
-//------- Initialize -------//
-//
-
-document.addEventListener(&quot;DOMContentLoaded&quot;, () =&gt; {
-  initComponent();
-  setupEventListeners();
-});
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="section-organization">Section Organization</h2>
-<ol>
-<li><strong>File Header</strong> - Comment block with purpose, author, dates, version</li>
-<li><strong>Console Log</strong> - ONE <code>console.log()</code> at the top to confirm script loaded</li>
-<li><strong>Utility Functions</strong> - Reusable helper functions grouped together</li>
-<li><strong>Main Functions</strong> - Primary functionality grouped together</li>
-<li><strong>Event Listeners</strong> - Event handling functions grouped together</li>
-<li><strong>Initialize</strong> - All setup calls within <code>DOMContentLoaded</code> listener at the end</li>
-</ol>
-<hr>
-<h2 id="section-dividers">Section Dividers</h2>
-<p>Use clear headers when grouping similar functions:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-q71mov1ks" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-q71mov1ks" class="language-js">//
-//------- Section Name -------//
-//
-</code></pre>
-      </div>
-    
-<p>For standalone functions, use simple comments:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-ict3vhylj" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-ict3vhylj" class="language-js">// Function Name
-function doSomething() {
-  // ... implementation
-}
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="naming-conventions">Naming Conventions</h2>
-<table>
+<p>Color tokens are the foundation of the design system&#39;s color system. They define the shared, reusable color values that power both design and code. By standardising these decisions in one place, tokens keep the experience consistent, reduce duplication, and make global updates safe and fast.</p>
+<h2 id="primitive-colors">Primitive Colors</h2>
+<p>Primitive colors are the raw color values used as building blocks for all other color tokens. They can be used directly in layouts or components, but it&#39;s <strong>preferred to use semantic tokens</strong> instead.</p>
+<h3 id="brand-colors">Brand Colors</h3>
+<p>Brand tokens are project-level overrides and may change per project. <strong>You can rename the token names</strong> to anything relating to your brand (e.g., <code>--brand-primary</code>, <code>--off-white</code>, <code>--charcoal</code>, <code>--hero-blue</code>, etc.). This personalizes the system and makes it more intuitive for your team.</p>
+<div class="table-scroll"><table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Example</th>
-<th>Rule</th>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>Functions</td>
-<td><code>initSlider()</code>, <code>handleClick()</code></td>
-<td>Use <strong>lower camelCase</strong>, short &amp; descriptive</td>
+<td><code>--brand-dark</code></td>
+<td>#brand-hex1</td>
+<td>Dark brand color</td>
 </tr>
 <tr>
-<td>Variables</td>
-<td><code>mainElement</code>, <code>scrollPos</code></td>
-<td>Contextual and readable</td>
+<td><code>--brand-light</code></td>
+<td>#brand-hex2</td>
+<td>Light brand color</td>
 </tr>
 <tr>
-<td>File Names</td>
-<td><code>slider.js</code>, <code>utils.js</code></td>
-<td>Use lowercase kebab-case</td>
+<td><code>--brand-accent</code></td>
+<td>#brand-hex3</td>
+<td>Accent brand color</td>
+</tr>
+</tbody></table></div>
+<p><strong>Usage:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-ihnhmpxot" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-ihnhmpxot" class="language-css">:root {
+  /* You can use default names or rename tokens to match your brand */
+  --brand-dark: #1a1a1a; /* Replace with your brand color */
+  
+  /* Or use custom names that make sense for your project */
+  --charcoal: #1a1a1a;
+  --off-white: #f5f5f5;
+  --hero-blue: #0066cc;
+}
+
+.div {
+  color: var(--brand-dark);
+  /* Or use your custom token name */
+  /* color: var(--charcoal); */
+}
+</code></pre>
+      </div>
+    
+<h3 id="black">Black</h3>
+<p>Black tokens provide true black and black with varying opacity levels for overlays, shadows, and faded text.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--black</code></td>
+<td>#000000</td>
+<td>True black</td>
 </tr>
 <tr>
-<td>Constants</td>
-<td><code>MAX_ITEMS</code>, <code>API_URL</code></td>
-<td>Use UPPER_SNAKE_CASE</td>
+<td><code>--black-alpha-5</code></td>
+<td>#0000000D</td>
+<td>5% opacity</td>
 </tr>
-</tbody></table>
+<tr>
+<td><code>--black-alpha-10</code></td>
+<td>#0000001A</td>
+<td>10% opacity</td>
+</tr>
+<tr>
+<td><code>--black-alpha-15</code></td>
+<td>#00000026</td>
+<td>15% opacity</td>
+</tr>
+<tr>
+<td><code>--black-alpha-20</code></td>
+<td>#00000033</td>
+<td>20% opacity</td>
+</tr>
+<tr>
+<td><code>--black-alpha-30</code></td>
+<td>#0000004D</td>
+<td>30% opacity</td>
+</tr>
+<tr>
+<td><code>--black-alpha-40</code></td>
+<td>#00000066</td>
+<td>40% opacity</td>
+</tr>
+<tr>
+<td><code>--black-alpha-50</code></td>
+<td>#00000080</td>
+<td>50% opacity</td>
+</tr>
+</tbody></table></div>
+<p><strong>Usage:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-gu3evvux2" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-gu3evvux2" class="language-css">.shadow {
+  box-shadow: 0 4px 6px var(--black-alpha-30);
+}
+</code></pre>
+      </div>
+    
+<h3 id="white">White</h3>
+<p>White tokens provide true white and white with varying opacity levels for overlays and backgrounds.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--white</code></td>
+<td>#FFFFFF</td>
+<td>True white</td>
+</tr>
+<tr>
+<td><code>--white-alpha-5</code></td>
+<td>#FFFFFF0D</td>
+<td>5% opacity</td>
+</tr>
+<tr>
+<td><code>--white-alpha-10</code></td>
+<td>#FFFFFF1A</td>
+<td>10% opacity</td>
+</tr>
+<tr>
+<td><code>--white-alpha-15</code></td>
+<td>#FFFFFF26</td>
+<td>15% opacity</td>
+</tr>
+<tr>
+<td><code>--white-alpha-20</code></td>
+<td>#FFFFFF33</td>
+<td>20% opacity</td>
+</tr>
+<tr>
+<td><code>--white-alpha-30</code></td>
+<td>#FFFFFF4D</td>
+<td>30% opacity</td>
+</tr>
+<tr>
+<td><code>--white-alpha-40</code></td>
+<td>#FFFFFF66</td>
+<td>40% opacity</td>
+</tr>
+<tr>
+<td><code>--white-alpha-50</code></td>
+<td>#FFFFFF80</td>
+<td>50% opacity</td>
+</tr>
+</tbody></table></div>
+<p><strong>Usage:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-t7q6sb4gc" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-t7q6sb4gc" class="language-css">.highlight {
+  background-color: var(--white-alpha-30);
+}
+</code></pre>
+      </div>
+    
+<h3 id="neutral-colors">Neutral Colors</h3>
+<p>Neutral colors provide a grayscale palette from light to dark for backgrounds, borders, and text.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--neutral-50</code></td>
+<td>#FFF7F1</td>
+</tr>
+<tr>
+<td><code>--neutral-100</code></td>
+<td>#E3E0DE</td>
+</tr>
+<tr>
+<td><code>--neutral-150</code></td>
+<td>#DDD6D1</td>
+</tr>
+<tr>
+<td><code>--neutral-200</code></td>
+<td>#CECCCA</td>
+</tr>
+<tr>
+<td><code>--neutral-300</code></td>
+<td>#BAB8B6</td>
+</tr>
+<tr>
+<td><code>--neutral-400</code></td>
+<td>#A5A4A2</td>
+</tr>
+<tr>
+<td><code>--neutral-500</code></td>
+<td>#918F8E</td>
+</tr>
+<tr>
+<td><code>--neutral-600</code></td>
+<td>#7D7B7B</td>
+</tr>
+<tr>
+<td><code>--neutral-700</code></td>
+<td>#686767</td>
+</tr>
+<tr>
+<td><code>--neutral-800</code></td>
+<td>#545353</td>
+</tr>
+<tr>
+<td><code>--neutral-900</code></td>
+<td>#3F3F3F</td>
+</tr>
+<tr>
+<td><code>--neutral-950</code></td>
+<td>#1D1C1B</td>
+</tr>
+<tr>
+<td><code>--neutral-990</code></td>
+<td>#0F0E0E</td>
+</tr>
+</tbody></table></div>
+<p><strong>Usage:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-5u7wlij0w" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-5u7wlij0w" class="language-css">.text {
+  color: var(--neutral-800);
+}
+</code></pre>
+      </div>
+    
 <hr>
-<h2 id="initialization-pattern">Initialization Pattern</h2>
-<ol>
-<li>Define <strong>utility functions</strong> first</li>
-<li>Define <strong>main functions</strong> grouped by section</li>
-<li>Define <strong>event listeners</strong> separately</li>
-<li>Call everything within a single <code>DOMContentLoaded</code> listener <strong>at the end</strong></li>
-</ol>
-<hr>
-<h2 id="console-logging">Console Logging</h2>
-<p><strong>Each script should include ONE <code>console.log()</code> at the top</strong> to confirm the script has loaded. Don&#39;t add excessive console logs throughout your code.</p>
-<hr>
-<h2 id="rules-to-follow">Rules to Follow</h2>
-<h3 id="organization">Organization</h3>
-<ul>
-<li>✅ Group related functions together</li>
-<li>✅ Use section dividers for major groupings</li>
-<li>✅ Place initialization at the end</li>
-<li>✅ Keep utility functions separate from main functions</li>
-</ul>
-<h3 id="commenting">Commenting</h3>
-<ul>
-<li>✅ Include file header with metadata</li>
-<li>✅ Comment each function with its purpose</li>
-<li>✅ Use section dividers for major groupings</li>
-</ul>
-<h3 id="code-quality">Code Quality</h3>
-<ul>
-<li>✅ Use descriptive function names</li>
-<li>✅ Follow naming conventions consistently</li>
-<li>✅ Place initialization in <code>DOMContentLoaded</code> listener</li>
-</ul>
-<h3 id="what-to-avoid">What to Avoid</h3>
-<ul>
-<li>❌ Scattering related functions across the file</li>
-<li>❌ Mixing utility functions with main functions</li>
-<li>❌ Multiple initialization points</li>
-<li>❌ Excessive console logging</li>
-</ul>
+<h2 id="semantic-colors">Semantic Colors</h2>
+<p>Semantic colors map primitive tokens to <strong>meaning and intent</strong>, giving context and purpose to how colors are used. This makes it easier to implement consistent styling across components and ensures colors are used appropriately throughout the interface.</p>
+<h3 id="text-colors">Text Colors</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th><strong>Name</strong></th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--text-primary</code></td>
+<td>↳<code>--brand-warm-black</code></td>
+<td>Primary text color</td>
+</tr>
+<tr>
+<td><code>--text-secondary</code></td>
+<td>↳<code>--brand-text-secondary</code></td>
+<td>Secondary text color</td>
+</tr>
+<tr>
+<td><code>--text-plain</code></td>
+<td>↳<code>--black</code></td>
+<td>True black text</td>
+</tr>
+<tr>
+<td><code>--text-faded</code></td>
+<td>↳<code>--black-alpha-50</code></td>
+<td>Faded text</td>
+</tr>
+<tr>
+<td><code>--text-accent</code></td>
+<td>↳<code>--brand-accent</code></td>
+<td>Accent text</td>
+</tr>
+<tr>
+<td><code>--text-link</code></td>
+<td>↳<code>--brand-accent</code></td>
+<td>Link text color</td>
+</tr>
+</tbody></table></div>
+<p><strong>Usage:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-wxdlb541i" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-wxdlb541i" class="language-css">h1 {
+  color: var(--text-primary);
+}
+</code></pre>
+      </div>
+    
+<h3 id="background-colors">Background Colors</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th><strong>Name</strong></th>
+<th><strong>Value</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--background-primary</code></td>
+<td>↳<code>--brand-light</code></td>
+<td>Default background</td>
+</tr>
+<tr>
+<td><code>--background-secondary</code></td>
+<td>↳<code>--brand-warm-white</code></td>
+<td>Secondary background</td>
+</tr>
+<tr>
+<td><code>--background-plain</code></td>
+<td>↳<code>--white</code></td>
+<td>True white background</td>
+</tr>
+<tr>
+<td><code>--background-faded</code></td>
+<td>↳<code>--black-alpha-5</code></td>
+<td>Faded background overlay</td>
+</tr>
+</tbody></table></div>
+<p><strong>Usage:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-bnpq806ln" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-bnpq806ln" class="language-css">.card {
+  background-color: var(--background-plain);
+}
+</code></pre>
+      </div>
+    
+<h3 id="border-colors">Border Colors</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th><strong>Name</strong></th>
+<th><strong>Value</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--border-primary</code></td>
+<td>↳<code>--brand-border-primary</code></td>
+<td>Default border</td>
+</tr>
+<tr>
+<td><code>--border-secondary</code></td>
+<td>↳<code>--brand-border-secondary</code></td>
+<td>Second border</td>
+</tr>
+<tr>
+<td><code>--border-faded</code></td>
+<td>↳<code>--black-alpha-15</code></td>
+<td>Faded border</td>
+</tr>
+</tbody></table></div>
+<p><strong>Usage:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-m13n4kj32" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-m13n4kj32" class="language-css">.card {
+  border-color: var(--border-primary);
+}
+</code></pre>
+      </div>
+    
 
                     </article>
                 </main>
@@ -337,14 +562,31 @@ function doSomething() {
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#overview" class="toc-link">Overview</a></li><li class="toc-item toc-level-2"><a href="#file-structure" class="toc-link">File Structure</a></li><li class="toc-item toc-level-2"><a href="#section-organization" class="toc-link">Section Organization</a></li><li class="toc-item toc-level-2"><a href="#section-dividers" class="toc-link">Section Dividers</a></li><li class="toc-item toc-level-2"><a href="#naming-conventions" class="toc-link">Naming Conventions</a></li><li class="toc-item toc-level-2"><a href="#initialization-pattern" class="toc-link">Initialization Pattern</a></li><li class="toc-item toc-level-2"><a href="#console-logging" class="toc-link">Console Logging</a></li><li class="toc-item toc-level-2"><a href="#rules-to-follow" class="toc-link">Rules to Follow</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#primitive-colors" class="toc-link">Primitive Colors</a></li><li class="toc-item toc-level-2"><a href="#semantic-colors" class="toc-link">Semantic Colors</a></li></ul></nav></div>
     </aside>
             </div>
             
+            <!-- Page Navigation (Previous / Next) -->
+            <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="design-system-overview.html" class="page-nav-link page-nav-prev" rel="prev">
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <span class="page-nav-title">Overview</span>
+      </span>
+    </a><a href="typography.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <span class="page-nav-title">Typography</span>
+      </span>
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a></div></nav>
+
             <!-- Footer -->
             <footer class="docs-footer">
                 <div class="docs-footer-inner padding-global">
-                    <p class="docs-footer-text">© 2025 By Default</p>
+                    <p class="docs-footer-text">© 2026 By Default BrandOS</p>
                 </div>
             </footer>
         </div>
@@ -395,7 +637,6 @@ function doSomething() {
             
             function initSidebarToggle() {
                 var SIDEBAR_KEY = 'docs-sidebar-collapsed';
-                var MOBILE_NAV_KEY = 'docs-mobile-nav-open';
                 var container = document.querySelector('.docs-container');
                 var sidebarToggle = document.querySelector('.docs-sidebar-toggle');
                 var mobileToggle = document.querySelector('.docs-mobile-toggle');
@@ -406,12 +647,6 @@ function doSomething() {
                 if (localStorage.getItem(SIDEBAR_KEY) === 'true') {
                     container.classList.add('sidebar-collapsed');
                     if (sidebarToggle) sidebarToggle.setAttribute('aria-label', 'Expand sidebar');
-                }
-
-                // Restore mobile nav state
-                if (localStorage.getItem(MOBILE_NAV_KEY) === 'true') {
-                    container.classList.add('mobile-nav-open');
-                    if (mobileToggle) mobileToggle.setAttribute('aria-label', 'Close navigation');
                 }
 
                 if (sidebarToggle) {
@@ -425,7 +660,6 @@ function doSomething() {
                 if (mobileToggle) {
                     mobileToggle.addEventListener('click', function onMobileToggle() {
                         var isOpen = container.classList.toggle('mobile-nav-open');
-                        localStorage.setItem(MOBILE_NAV_KEY, isOpen);
                         mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
                     });
                 }

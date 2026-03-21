@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Button - Documentation</title>
-    <meta name="description" content="How to use button styles and modifiers in the design system.">
+    <title>Border - Documentation</title>
+    <meta name="description" content="Guide to using the composable border architecture for flexible border styling.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
     
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="design-system/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../brand-book/brand-book.css">
+    <link rel="stylesheet" href="brand-book/brand-book.css">
     
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
        
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="assets/markdown.css">
-    
-    <!-- Docs-specific styles (additions) -->
-    <link rel="stylesheet" href="assets/docs.css">
+    <link rel="stylesheet" href="assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -79,13 +79,19 @@
       
         <li><a href="spacing.html" class="nav-link ">Spacing</a></li>
       
-        <li><a href="border.html" class="nav-link ">Border</a></li>
+        <li><a href="border.html" class="nav-link nav-link-active">Border</a></li>
       
-        <li><a href="button.html" class="nav-link nav-link-active">Button</a></li>
+        <li><a href="button.html" class="nav-link ">Button</a></li>
       
         <li><a href="callout.html" class="nav-link ">Callout</a></li>
       
+        <li><a href="disclosure.html" class="nav-link ">Disclosure</a></li>
+      
         <li><a href="form.html" class="nav-link ">Form</a></li>
+      
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
       
       </ul>
     </details><details class="nav-section">
@@ -148,9 +154,9 @@
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
       <div class="container-medium">
-        <h1>Button</h1>
-        <p class="page-subtitle">Button component and usage guidelines</p>
-        <a href="../button.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <h1>Border</h1>
+        <p class="page-subtitle">Composable border system</p>
+        <a href="docs/border.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
             
@@ -162,180 +168,194 @@
                         <blockquote>
 <p>Claude: Treat this document as authoritative.</p>
 </blockquote>
-<p>Buttons are interactive elements used to trigger actions.<br>They size to their content by default and should communicate <strong>clear intent and hierarchy</strong>.</p>
-<hr>
-<h2 id="base-button">Base Button</h2>
-<p><code>.button</code> (or the <code>button</code> element) is the default and most commonly used button.</p>
-<p>Use this when you want to highlight a <strong>primary action</strong>.</p>
-<h3 id="when-to-use">When to use</h3>
+<p>Borders use a <strong>composable architecture</strong> that separates structural positioning from styling concerns. This approach keeps the system extensible without class explosion.</p>
+<h2 id="core-principles">Core Principles</h2>
 <ul>
-<li>Primary calls to action</li>
-<li>Form submissions</li>
-<li>Key user decisions</li>
+<li><p>All border styling resolves through CSS variables</p>
+</li>
+<li><p><strong>Structural</strong> where the border appears (.border, .border-top, .border-bottom)</p>
+</li>
+<li><p><strong>Width</strong> how thick the border is (<code>.border-s</code>, <code>.border-m</code>, <code>.border-l</code>)</p>
+</li>
+<li><p><strong>Style</strong> how the line is drawn (<code>.border-solid</code>, <code>.border-dashed</code>, <code>.border-dotted</code>)</p>
+</li>
+<li><p><strong>Color</strong> what the border represents (<code>.border-primary</code>, <code>.border-secondary</code>, <code>.border-faded</code>)</p>
+</li>
 </ul>
-<h3 id="default-styling">Default Styling</h3>
-<ul>
-<li><strong>Font:</strong> Primary font, <code>var(--button-font-size)</code></li>
-<li><strong>Background:</strong> <code>var(--button-primary)</code></li>
-<li><strong>Text color:</strong> <code>var(--button-text)</code></li>
-<li><strong>Border:</strong> <code>var(--border-m)</code> solid <code>var(--button-primary)</code></li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-bvqrjo4we" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-bvqrjo4we" class="language-html">&lt;button class=&quot;button&quot;&gt;Primary Action&lt;/button&gt;
-</code></pre>
-      </div>
-    
+<p>All border styles resolve through CSS variables to keep behaviour consistent across the system.<br>Do not create combined classes like <code>.border-top-m</code> or hardcode border values inside structural classes.</p>
 <hr>
-<h2 id="outline-button">Outline Button</h2>
-<p><code>.is-outline</code> removes the filled background and uses a border instead.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Secondary actions</li>
-<li>Actions that should not visually compete with the primary CTA</li>
-<li>Buttons placed near strong visual content</li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-wiu1f2vqb" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-wiu1f2vqb" class="language-html">&lt;button class=&quot;button is-outline&quot;&gt;Secondary Action&lt;/button&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="faded-button">Faded Button</h2>
-<p><code>.is-faded</code> applies a subtle background using <code>var(--button-faded)</code>.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Low-priority actions</li>
-<li>Passive or optional interactions</li>
-<li>UI controls that should feel lightweight</li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-35l0yhvie" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-35l0yhvie" class="language-html">&lt;button class=&quot;button is-faded&quot;&gt;Optional Action&lt;/button&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="outline-faded">Outline + Faded</h2>
-<p><code>.is-outline.is-faded</code> combines both modifiers.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Tertiary actions</li>
-<li>Utility controls</li>
-<li>Actions that should be visible but de-emphasised</li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-y793yj4i8" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-y793yj4i8" class="language-html">&lt;button class=&quot;button is-outline is-faded&quot;&gt;Tertiary Action&lt;/button&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="small-button">Small Button</h2>
-<p><code>.is-small</code> reduces font size and padding.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Dense UI areas</li>
-<li>Tables, cards, or compact layouts</li>
-<li>Secondary actions inside components</li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-uncp1rwad" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-uncp1rwad" class="language-html">&lt;button class=&quot;button is-small&quot;&gt;Small Action&lt;/button&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="icon-button">Icon Button</h2>
-<p><code>.is-icon</code> creates a circular button designed for icons only.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Icon-only actions</li>
-<li>Toolbar controls</li>
-<li>Repeated UI actions (close, add, expand)</li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-uj6dhljn3" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-uj6dhljn3" class="language-html">&lt;button class=&quot;button is-icon&quot;&gt;
-  &lt;div class=&quot;icn-svg&quot;&gt;
-    &lt;!-- SVG icon --&gt;
-  &lt;/div&gt;
-&lt;/button&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="disabled-button">Disabled Button</h2>
-<p><code>:disabled</code> or <code>.is-disabled</code> reduces opacity and prevents interaction.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Actions that are temporarily unavailable</li>
-<li>Form submissions when validation is incomplete</li>
-<li>Controls that require a prerequisite action</li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-mzjmz31v0" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-mzjmz31v0" class="language-html">&lt;button class=&quot;button&quot; disabled&gt;Disabled Action&lt;/button&gt;
-&lt;button class=&quot;button is-outline&quot; disabled&gt;Disabled Outline&lt;/button&gt;
-</code></pre>
-      </div>
-    
-<p><strong>Styling:</strong> <code>opacity: 0.4</code>, <code>cursor: not-allowed</code>, <code>pointer-events: none</code>.</p>
-<hr>
-<h2 id="combining-modifiers">Combining Modifiers</h2>
-<p>Button modifiers can be combined to match intent and context.</p>
-<h3 id="common-combinations">Common combinations</h3>
-<table>
+<h2 id="border-structure">Border Structure</h2>
+<p>Structural classes define <strong>where</strong> the border appears, not how it looks.</p>
+<div class="table-scroll"><table>
 <thead>
 <tr>
-<th>Combination</th>
-<th>Use case</th>
+<th>Class</th>
+<th>Effect</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>.is-outline.is-faded</code></td>
-<td>Tertiary or utility actions</td>
+<td><code>.border</code></td>
+<td>Border on all sides</td>
 </tr>
 <tr>
-<td><code>.is-small.is-outline</code></td>
-<td>Compact secondary actions</td>
+<td><code>.border-top</code></td>
+<td>Border on top only</td>
 </tr>
 <tr>
-<td><code>.is-small.is-faded</code></td>
-<td>Low-priority compact actions</td>
+<td><code>.border-bottom</code></td>
+<td>Border on bottom only</td>
 </tr>
-</tbody></table>
+<tr>
+<td><code>.border-left</code></td>
+<td>Border on left only</td>
+</tr>
+<tr>
+<td><code>.border-right</code></td>
+<td>Border on right only</td>
+</tr>
+</tbody></table></div>
+<h4 id="example">Example</h4>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-2hq330u0s" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-2hq330u0s" class="language-html">&lt;section class=&quot;border-bottom&quot;&gt;
+  &lt;!-- Content with bottom border --&gt;
+&lt;/section&gt;
+</code></pre>
+      </div>
+    
 <hr>
-<h2 id="usage-rules">Usage Rules</h2>
+<h2 id="border-width">Border Width</h2>
+<p>Width combo classes modify the border thickness.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Width</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.border-s</code></td>
+<td>1px</td>
+<td>Small border (default)</td>
+</tr>
+<tr>
+<td><code>.border-m</code></td>
+<td>2px</td>
+<td>Medium border</td>
+</tr>
+<tr>
+<td><code>.border-l</code></td>
+<td>4px</td>
+<td>Large border</td>
+</tr>
+</tbody></table></div>
+<h4 id="example">Example</h4>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-g3lj17d5o" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-g3lj17d5o" class="language-html">&lt;div class=&quot;border border-m&quot;&gt;
+  &lt;!-- Content with medium border on all sides --&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="border-style">Border Style</h2>
+<p>Style combo classes modify the border appearance.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Style</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.border-solid</code></td>
+<td>solid</td>
+<td>Solid border (default)</td>
+</tr>
+<tr>
+<td><code>.border-dashed</code></td>
+<td>dashed</td>
+<td>Dashed border</td>
+</tr>
+<tr>
+<td><code>.border-dotted</code></td>
+<td>dotted</td>
+<td>Dotted border</td>
+</tr>
+</tbody></table></div>
+<h4 id="example">Example</h4>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-b5oqlbrtm" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-b5oqlbrtm" class="language-html">&lt;div class=&quot;border border-dashed&quot;&gt;
+  &lt;!-- Content with dashed border --&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="boder-color">Boder Color</h2>
+<p>Color combo classes modify the border color using semantic tokens.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Color</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.border-primary</code></td>
+<td><code>var(--border-primary)</code></td>
+<td>Strong border (default)</td>
+</tr>
+<tr>
+<td><code>.border-secondary</code></td>
+<td><code>var(--border-secondary)</code></td>
+<td>Secondary color border</td>
+</tr>
+<tr>
+<td><code>.border-faded</code></td>
+<td><code>var(--border-faded)</code></td>
+<td>Faded border</td>
+</tr>
+</tbody></table></div>
+<h4 id="example">Example</h4>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-zefj0ztnh" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-zefj0ztnh" class="language-html">&lt;div class=&quot;border border-secondary&quot;&gt;
+  &lt;!-- Content with subtle border --&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="limitations">Limitations</h2>
+<p>Native CSS dashed/dotted borders do not support adjustable dash spacing. This system intentionally avoids SVG or background-based borders to maintain simplicity and performance.</p>
+<hr>
+<h2 id="rules">Rules</h2>
 <ul>
-<li>Buttons should <strong>never stretch full width by default</strong></li>
-<li>Use one clear primary button per section when possible</li>
-<li>Use outline or faded styles to reduce visual competition</li>
-<li>Use icon buttons <strong>only</strong> when the icon meaning is clear</li>
+<li>Use the smallest possible number of classes</li>
+<li>Prefer semantic color tokens</li>
+<li>Keep the system extensible without class explosion</li>
+<li>Structural classes define position only</li>
+<li>Combo classes modify one concern each</li>
+<li>All styling resolves through CSS variables</li>
 </ul>
-<p>If a button feels too prominent or too quiet, change the modifier — not the base styles.</p>
 
                     </article>
                 </main>
@@ -343,14 +363,31 @@
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#base-button" class="toc-link">Base Button</a></li><li class="toc-item toc-level-2"><a href="#outline-button" class="toc-link">Outline Button</a></li><li class="toc-item toc-level-2"><a href="#faded-button" class="toc-link">Faded Button</a></li><li class="toc-item toc-level-2"><a href="#outline-faded" class="toc-link">Outline + Faded</a></li><li class="toc-item toc-level-2"><a href="#small-button" class="toc-link">Small Button</a></li><li class="toc-item toc-level-2"><a href="#icon-button" class="toc-link">Icon Button</a></li><li class="toc-item toc-level-2"><a href="#disabled-button" class="toc-link">Disabled Button</a></li><li class="toc-item toc-level-2"><a href="#combining-modifiers" class="toc-link">Combining Modifiers</a></li><li class="toc-item toc-level-2"><a href="#usage-rules" class="toc-link">Usage Rules</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#core-principles" class="toc-link">Core Principles</a></li><li class="toc-item toc-level-2"><a href="#border-structure" class="toc-link">Border Structure</a></li><li class="toc-item toc-level-2"><a href="#border-width" class="toc-link">Border Width</a></li><li class="toc-item toc-level-2"><a href="#border-style" class="toc-link">Border Style</a></li><li class="toc-item toc-level-2"><a href="#boder-color" class="toc-link">Boder Color</a></li><li class="toc-item toc-level-2"><a href="#limitations" class="toc-link">Limitations</a></li><li class="toc-item toc-level-2"><a href="#rules" class="toc-link">Rules</a></li></ul></nav></div>
     </aside>
             </div>
             
+            <!-- Page Navigation (Previous / Next) -->
+            <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="spacing.html" class="page-nav-link page-nav-prev" rel="prev">
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <span class="page-nav-title">Spacing</span>
+      </span>
+    </a><a href="button.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <span class="page-nav-title">Button</span>
+      </span>
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a></div></nav>
+
             <!-- Footer -->
             <footer class="docs-footer">
                 <div class="docs-footer-inner padding-global">
-                    <p class="docs-footer-text">© 2025 By Default</p>
+                    <p class="docs-footer-text">© 2026 By Default BrandOS</p>
                 </div>
             </footer>
         </div>
@@ -401,7 +438,6 @@
             
             function initSidebarToggle() {
                 var SIDEBAR_KEY = 'docs-sidebar-collapsed';
-                var MOBILE_NAV_KEY = 'docs-mobile-nav-open';
                 var container = document.querySelector('.docs-container');
                 var sidebarToggle = document.querySelector('.docs-sidebar-toggle');
                 var mobileToggle = document.querySelector('.docs-mobile-toggle');
@@ -412,12 +448,6 @@
                 if (localStorage.getItem(SIDEBAR_KEY) === 'true') {
                     container.classList.add('sidebar-collapsed');
                     if (sidebarToggle) sidebarToggle.setAttribute('aria-label', 'Expand sidebar');
-                }
-
-                // Restore mobile nav state
-                if (localStorage.getItem(MOBILE_NAV_KEY) === 'true') {
-                    container.classList.add('mobile-nav-open');
-                    if (mobileToggle) mobileToggle.setAttribute('aria-label', 'Close navigation');
                 }
 
                 if (sidebarToggle) {
@@ -431,7 +461,6 @@
                 if (mobileToggle) {
                     mobileToggle.addEventListener('click', function onMobileToggle() {
                         var isOpen = container.classList.toggle('mobile-nav-open');
-                        localStorage.setItem(MOBILE_NAV_KEY, isOpen);
                         mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
                     });
                 }

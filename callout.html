@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form - Documentation</title>
-    <meta name="description" content="How to use form elements, labels, inputs, and layout patterns in the design system.">
+    <title>Callout - Documentation</title>
+    <meta name="description" content="How to use callout styles and semantic variants in the design system.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
     
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="design-system/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../brand-book/brand-book.css">
+    <link rel="stylesheet" href="brand-book/brand-book.css">
     
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
        
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="assets/markdown.css">
-    
-    <!-- Docs-specific styles (additions) -->
-    <link rel="stylesheet" href="assets/docs.css">
+    <link rel="stylesheet" href="assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -83,9 +83,15 @@
       
         <li><a href="button.html" class="nav-link ">Button</a></li>
       
-        <li><a href="callout.html" class="nav-link ">Callout</a></li>
+        <li><a href="callout.html" class="nav-link nav-link-active">Callout</a></li>
       
-        <li><a href="form.html" class="nav-link nav-link-active">Form</a></li>
+        <li><a href="disclosure.html" class="nav-link ">Disclosure</a></li>
+      
+        <li><a href="form.html" class="nav-link ">Form</a></li>
+      
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
       
       </ul>
     </details><details class="nav-section">
@@ -148,9 +154,9 @@
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
       <div class="container-medium">
-        <h1>Form</h1>
-        <p class="page-subtitle">Form element styling and patterns</p>
-        <a href="../form.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <h1>Callout</h1>
+        <p class="page-subtitle">Callout and alert component guidelines</p>
+        <a href="docs/callout.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
             
@@ -162,11 +168,19 @@
                         <blockquote>
 <p>Claude: Treat this document as authoritative.</p>
 </blockquote>
-<p>Form elements are styled globally using semantic tokens. All text inputs, textareas, selects, checkboxes, and radios share <strong>consistent sizing, focus states, and disabled styling</strong>.</p>
+<p>Callouts are used to <strong>highlight important information</strong> within content. They draw attention to notes, tips, warnings, and other contextual messages.</p>
 <hr>
-<h2 id="form-tokens">Form Tokens</h2>
-<p>All form styling is controlled by semantic tokens in <code>:root</code>:</p>
-<table>
+<h2 id="core-principles">Core Principles</h2>
+<ul>
+<li>Callouts use a <strong>base + variant</strong> pattern (like buttons and borders)</li>
+<li>The base <code>.callout</code> class provides structure and neutral styling</li>
+<li>Variant classes add semantic color via left border and background tint</li>
+<li>All colors are controlled by semantic tokens that can be customized per project</li>
+</ul>
+<hr>
+<h2 id="status-color-tokens">Status Color Tokens</h2>
+<p>Callout variants are powered by status color tokens defined in <code>:root</code>. These are project-customizable primitives:</p>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>Token</th>
@@ -175,199 +189,148 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--input-border</code></td>
-<td><code>var(--border-secondary)</code></td>
-<td>Default border color</td>
-</tr>
-<tr>
-<td><code>--input-background</code></td>
-<td><code>var(--background-primary)</code></td>
-<td>Input background</td>
-</tr>
-<tr>
-<td><code>--input-text</code></td>
-<td><code>var(--text-plain)</code></td>
-<td>Input text color</td>
-</tr>
-<tr>
-<td><code>--input-placeholder</code></td>
-<td><code>var(--text-faded)</code></td>
-<td>Placeholder text color</td>
-</tr>
-<tr>
-<td><code>--input-focus</code></td>
+<td><code>--status-info</code></td>
 <td><code>var(--brand-accent)</code></td>
-<td>Focus border and ring color</td>
+<td>Informational, notes</td>
 </tr>
 <tr>
-<td><code>--input-disabled-bg</code></td>
-<td><code>var(--background-faded)</code></td>
-<td>Disabled background</td>
+<td><code>--status-success</code></td>
+<td><code>#1a7f37</code></td>
+<td>Tips, positive feedback</td>
 </tr>
 <tr>
-<td><code>--input-disabled-text</code></td>
-<td><code>var(--text-faded)</code></td>
-<td>Disabled text color</td>
+<td><code>--status-warning</code></td>
+<td><code>#9a6700</code></td>
+<td>Warnings, attention needed</td>
 </tr>
-</tbody></table>
-<hr>
-<h2 id="labels">Labels</h2>
-<p>Labels are styled as block elements with medium weight:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-aia4pk1bo" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-aia4pk1bo" class="language-html">&lt;label for=&quot;name&quot;&gt;Full name&lt;/label&gt;
-&lt;input type=&quot;text&quot; id=&quot;name&quot; placeholder=&quot;Enter your name&quot;&gt;
-</code></pre>
-      </div>
-    
-<p><strong>Properties:</strong> <code>display: block</code>, <code>font-size: var(--font-s)</code>, <code>font-weight: var(--font-weight-medium)</code>, bottom margin for spacing from the input.</p>
-<hr>
-<h2 id="text-inputs">Text Inputs</h2>
-<p>All standard text input types are styled globally:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-ngk9tfcpb" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-ngk9tfcpb" class="language-html">&lt;input type=&quot;text&quot; placeholder=&quot;Text&quot;&gt;
-&lt;input type=&quot;email&quot; placeholder=&quot;Email&quot;&gt;
-&lt;input type=&quot;password&quot; placeholder=&quot;Password&quot;&gt;
-&lt;input type=&quot;number&quot; placeholder=&quot;Number&quot;&gt;
-&lt;input type=&quot;search&quot; placeholder=&quot;Search&quot;&gt;
-&lt;input type=&quot;url&quot; placeholder=&quot;URL&quot;&gt;
-&lt;input type=&quot;tel&quot; placeholder=&quot;Phone&quot;&gt;
-</code></pre>
-      </div>
-    
-<p><strong>Properties:</strong> full width, consistent padding, border from <code>--input-border</code>, smooth focus transition.</p>
-<hr>
-<h2 id="focus-state">Focus State</h2>
-<p>All inputs share a consistent focus style:</p>
+<tr>
+<td><code>--status-danger</code></td>
+<td><code>#cf222e</code></td>
+<td>Caution, destructive actions</td>
+</tr>
+<tr>
+<td><code>--status-accent</code></td>
+<td><code>#8250df</code></td>
+<td>Important, emphasis</td>
+</tr>
+</tbody></table></div>
+<p>Each status color generates two semantic tokens:</p>
 <ul>
-<li>Border color changes to <code>--input-focus</code></li>
-<li>A subtle box-shadow ring appears (2px, 75% transparent)</li>
-<li>No outline (replaced by box-shadow for consistency)</li>
+<li><code>--callout-{type}</code> — the border/title color</li>
+<li><code>--callout-{type}-bg</code> — a 10% tint for the background</li>
 </ul>
-<p>This is accessibility-safe and keyboard-visible.</p>
 <hr>
-<h2 id="textarea">Textarea</h2>
-<p>Textareas have a minimum height and allow vertical resizing:</p>
+<h2 id="base-callout">Base Callout</h2>
+<p>The <code>.callout</code> class provides the structural foundation:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-t9on8x5nk" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-2ojyscc9g" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-t9on8x5nk" class="language-html">&lt;label for=&quot;message&quot;&gt;Message&lt;/label&gt;
-&lt;textarea id=&quot;message&quot; placeholder=&quot;Enter your message...&quot;&gt;&lt;/textarea&gt;
-</code></pre>
-      </div>
-    
-<p><strong>Properties:</strong> <code>min-height: 120px</code>, <code>resize: vertical</code>.</p>
-<hr>
-<h2 id="select">Select</h2>
-<p>Selects use a custom dropdown arrow via an inline SVG background:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-3i3flpqxw" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-3i3flpqxw" class="language-html">&lt;label for=&quot;country&quot;&gt;Country&lt;/label&gt;
-&lt;select id=&quot;country&quot;&gt;
-  &lt;option value=&quot;&quot; disabled selected&gt;Choose a country&lt;/option&gt;
-  &lt;option value=&quot;nz&quot;&gt;New Zealand&lt;/option&gt;
-  &lt;option value=&quot;au&quot;&gt;Australia&lt;/option&gt;
-&lt;/select&gt;
-</code></pre>
-      </div>
-    
-<p><strong>Properties:</strong> <code>appearance: none</code>, custom caret, right padding for arrow space.</p>
-<hr>
-<h2 id="disabled-state">Disabled State</h2>
-<p>Add the <code>disabled</code> attribute to any input, textarea, or select:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-a9r56iyhu" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-a9r56iyhu" class="language-html">&lt;input type=&quot;text&quot; value=&quot;Cannot edit&quot; disabled&gt;
-</code></pre>
-      </div>
-    
-<p><strong>Properties:</strong> <code>--input-disabled-bg</code> background, <code>--input-disabled-text</code> color, <code>cursor: not-allowed</code>.</p>
-<hr>
-<h2 id="checkbox-amp-radio">Checkbox &amp; Radio</h2>
-<p>Checkboxes and radios use the native browser rendering with <code>accent-color</code> for brand alignment:</p>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-yb2c982rf" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-yb2c982rf" class="language-html">&lt;div class=&quot;form-check&quot;&gt;
-  &lt;input type=&quot;checkbox&quot; id=&quot;terms&quot;&gt;
-  &lt;label for=&quot;terms&quot;&gt;I agree to the terms&lt;/label&gt;
+        <pre><code id="code-2ojyscc9g" class="language-html">&lt;div class=&quot;callout&quot;&gt;
+  &lt;p&gt;General-purpose highlighted content.&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
       </div>
     
-<p><strong>Properties:</strong> consistent sizing via <code>width</code>/<code>height</code> tokens, <code>accent-color: var(--input-focus)</code>.</p>
+<p><strong>Structural properties:</strong></p>
+<ul>
+<li>Left border using <code>--border-l</code> width (4px)</li>
+<li>Padding using spacing tokens</li>
+<li>Neutral background (<code>--background-faded</code>)</li>
+<li>First/last child margin normalization</li>
+</ul>
 <hr>
-<h2 id="layout-patterns">Layout Patterns</h2>
-<h3 id="form-group">Form Group</h3>
-<p>Use <code>.form-group</code> to wrap a label + input pair with consistent bottom spacing:</p>
+<h2 id="callout-title">Callout Title</h2>
+<p>Use <code>.callout-title</code> inside any callout for a styled heading:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-6f4n5z6uq" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-qkn50j3xi" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-6f4n5z6uq" class="language-html">&lt;div class=&quot;form-group&quot;&gt;
-  &lt;label for=&quot;name&quot;&gt;Name&lt;/label&gt;
-  &lt;input type=&quot;text&quot; id=&quot;name&quot;&gt;
-&lt;/div&gt;
-&lt;div class=&quot;form-group&quot;&gt;
-  &lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;
-  &lt;input type=&quot;email&quot; id=&quot;email&quot;&gt;
+        <pre><code id="code-qkn50j3xi" class="language-html">&lt;div class=&quot;callout callout-note&quot;&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Note&lt;/div&gt;
+  &lt;p&gt;Content here.&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
       </div>
     
-<h3 id="form-check">Form Check</h3>
-<p>Use <code>.form-check</code> for inline checkbox/radio + label pairs:</p>
+<p>The title inherits the variant&#39;s accent color automatically.</p>
+<hr>
+<h2 id="variants">Variants</h2>
+<h3>Note (<code>.callout-note</code>)</h3>
+<p>For useful information users should know, even when skimming.</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-5pb2wamjr" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-t4mr39o9p" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-5pb2wamjr" class="language-html">&lt;div class=&quot;form-check&quot;&gt;
-  &lt;input type=&quot;checkbox&quot; id=&quot;opt-in&quot;&gt;
-  &lt;label for=&quot;opt-in&quot;&gt;Subscribe to newsletter&lt;/label&gt;
+        <pre><code id="code-t4mr39o9p" class="language-html">&lt;div class=&quot;callout callout-note&quot;&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Note&lt;/div&gt;
+  &lt;p&gt;Useful information that users should know.&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
       </div>
     
-<p><strong>Properties:</strong> <code>display: flex</code>, <code>align-items: center</code>, <code>gap</code> for spacing. The label inside <code>.form-check</code> is inline with regular weight.</p>
-<h3 id="fieldset-amp-legend">Fieldset &amp; Legend</h3>
-<p>Use <code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code> to group related form controls:</p>
+<h3>Tip (<code>.callout-tip</code>)</h3>
+<p>For helpful advice on doing things better or more easily.</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-bopz8xjr5" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-xp6ogx3h4" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-bopz8xjr5" class="language-html">&lt;fieldset&gt;
-  &lt;legend&gt;Contact details&lt;/legend&gt;
-  &lt;div class=&quot;form-group&quot;&gt;
-    &lt;label for=&quot;phone&quot;&gt;Phone&lt;/label&gt;
-    &lt;input type=&quot;tel&quot; id=&quot;phone&quot;&gt;
-  &lt;/div&gt;
-&lt;/fieldset&gt;
+        <pre><code id="code-xp6ogx3h4" class="language-html">&lt;div class=&quot;callout callout-tip&quot;&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Tip&lt;/div&gt;
+  &lt;p&gt;Helpful advice for doing things better.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3>Warning (<code>.callout-warning</code>)</h3>
+<p>For urgent information that needs immediate attention.</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-xk6zm23ek" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-xk6zm23ek" class="language-html">&lt;div class=&quot;callout callout-warning&quot;&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Warning&lt;/div&gt;
+  &lt;p&gt;Urgent information to avoid problems.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3>Caution (<code>.callout-caution</code>)</h3>
+<p>For advising about risks or negative outcomes.</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-wg29z01if" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-wg29z01if" class="language-html">&lt;div class=&quot;callout callout-caution&quot;&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Caution&lt;/div&gt;
+  &lt;p&gt;Risks or negative outcomes of certain actions.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3>Important (<code>.callout-important</code>)</h3>
+<p>For key information users need to achieve their goal.</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-9ujfi2c8e" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-9ujfi2c8e" class="language-html">&lt;div class=&quot;callout callout-important&quot;&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Important&lt;/div&gt;
+  &lt;p&gt;Key information users need to know.&lt;/p&gt;
+&lt;/div&gt;
 </code></pre>
       </div>
     
 <hr>
 <h2 id="rules">Rules</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>Do</th>
@@ -375,30 +338,26 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>Use <code>&lt;label&gt;</code> with <code>for</code> attribute</td>
-<td>Use placeholder as a label replacement</td>
+<td>Use semantic variants for meaning</td>
+<td>Use color to decorate without purpose</td>
 </tr>
 <tr>
-<td>Use <code>.form-group</code> for spacing</td>
-<td>Add margins directly to inputs</td>
+<td>Keep callout content concise</td>
+<td>Put entire sections inside callouts</td>
 </tr>
 <tr>
-<td>Use <code>.form-check</code> for checkbox/radio pairs</td>
-<td>Float labels next to checkboxes manually</td>
+<td>Use <code>.callout-title</code> for labeling</td>
+<td>Use headings (h1–h6) inside callouts</td>
 </tr>
 <tr>
-<td>Use semantic tokens for customization</td>
-<td>Hardcode colors on individual inputs</td>
+<td>Customize <code>--status-*</code> tokens per project</td>
+<td>Hardcode colors on individual callouts</td>
 </tr>
-<tr>
-<td>Use <code>&lt;fieldset&gt;</code> for logical grouping</td>
-<td>Use <code>&lt;div&gt;</code> with borders to fake fieldsets</td>
-</tr>
-<tr>
-<td>Keep inputs full-width by default</td>
-<td>Set fixed widths unless layout requires it</td>
-</tr>
-</tbody></table>
+</tbody></table></div>
+<hr>
+<h2 id="relationship-to-markdown-alerts">Relationship to Markdown Alerts</h2>
+<p>The <code>.markdown-body</code> CSS includes GitHub-style alerts (<code>.markdown-alert-note</code>, etc.) with their own color tokens. These are scoped to rendered markdown content only.</p>
+<p>The design system callouts (<code>.callout</code>) are the <strong>global, project-wide</strong> equivalent. When building pages, always use <code>.callout</code> — not the markdown alert classes.</p>
 
                     </article>
                 </main>
@@ -406,14 +365,31 @@
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#form-tokens" class="toc-link">Form Tokens</a></li><li class="toc-item toc-level-2"><a href="#labels" class="toc-link">Labels</a></li><li class="toc-item toc-level-2"><a href="#text-inputs" class="toc-link">Text Inputs</a></li><li class="toc-item toc-level-2"><a href="#focus-state" class="toc-link">Focus State</a></li><li class="toc-item toc-level-2"><a href="#textarea" class="toc-link">Textarea</a></li><li class="toc-item toc-level-2"><a href="#select" class="toc-link">Select</a></li><li class="toc-item toc-level-2"><a href="#disabled-state" class="toc-link">Disabled State</a></li><li class="toc-item toc-level-2"><a href="#checkbox-amp-radio" class="toc-link">Checkbox &amp; Radio</a></li><li class="toc-item toc-level-2"><a href="#layout-patterns" class="toc-link">Layout Patterns</a></li><li class="toc-item toc-level-2"><a href="#rules" class="toc-link">Rules</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#core-principles" class="toc-link">Core Principles</a></li><li class="toc-item toc-level-2"><a href="#status-color-tokens" class="toc-link">Status Color Tokens</a></li><li class="toc-item toc-level-2"><a href="#base-callout" class="toc-link">Base Callout</a></li><li class="toc-item toc-level-2"><a href="#callout-title" class="toc-link">Callout Title</a></li><li class="toc-item toc-level-2"><a href="#variants" class="toc-link">Variants</a></li><li class="toc-item toc-level-2"><a href="#rules" class="toc-link">Rules</a></li><li class="toc-item toc-level-2"><a href="#relationship-to-markdown-alerts" class="toc-link">Relationship to Markdown Alerts</a></li></ul></nav></div>
     </aside>
             </div>
             
+            <!-- Page Navigation (Previous / Next) -->
+            <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="button.html" class="page-nav-link page-nav-prev" rel="prev">
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <span class="page-nav-title">Button</span>
+      </span>
+    </a><a href="disclosure.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <span class="page-nav-title">Disclosure</span>
+      </span>
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a></div></nav>
+
             <!-- Footer -->
             <footer class="docs-footer">
                 <div class="docs-footer-inner padding-global">
-                    <p class="docs-footer-text">© 2025 By Default</p>
+                    <p class="docs-footer-text">© 2026 By Default BrandOS</p>
                 </div>
             </footer>
         </div>
@@ -464,7 +440,6 @@
             
             function initSidebarToggle() {
                 var SIDEBAR_KEY = 'docs-sidebar-collapsed';
-                var MOBILE_NAV_KEY = 'docs-mobile-nav-open';
                 var container = document.querySelector('.docs-container');
                 var sidebarToggle = document.querySelector('.docs-sidebar-toggle');
                 var mobileToggle = document.querySelector('.docs-mobile-toggle');
@@ -475,12 +450,6 @@
                 if (localStorage.getItem(SIDEBAR_KEY) === 'true') {
                     container.classList.add('sidebar-collapsed');
                     if (sidebarToggle) sidebarToggle.setAttribute('aria-label', 'Expand sidebar');
-                }
-
-                // Restore mobile nav state
-                if (localStorage.getItem(MOBILE_NAV_KEY) === 'true') {
-                    container.classList.add('mobile-nav-open');
-                    if (mobileToggle) mobileToggle.setAttribute('aria-label', 'Close navigation');
                 }
 
                 if (sidebarToggle) {
@@ -494,7 +463,6 @@
                 if (mobileToggle) {
                     mobileToggle.addEventListener('click', function onMobileToggle() {
                         var isOpen = container.classList.toggle('mobile-nav-open');
-                        localStorage.setItem(MOBILE_NAV_KEY, isOpen);
                         mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
                     });
                 }

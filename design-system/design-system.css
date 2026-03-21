@@ -25,9 +25,19 @@
   --font-tertiary: var(--brand-font-tertiary, monospace);
 
   /* -- Brand colours (from brand book) -- */
-  --brand-dark: var(--brand-color-dark, #333333);
-  --brand-light: var(--brand-color-light, #f7f7f7);
-  --brand-accent: var(--brand-color-accent, #3485cd);
+  --brand-dark: var(--brand-color-dark, #221f1c);
+  --brand-light: var(--brand-color-light, #fff7f1);
+  --brand-accent: var(--brand-color-accent, #167255);
+
+  /* -- Extended brand colours (from brand book) -- */
+  --brand-off-white: var(--brand-color-off-white, #fff7f1);
+  --brand-warm-white: var(--brand-color-warm-white, #f5ebe3);
+  --brand-warm-black: var(--brand-color-warm-black, #18100b);
+  --brand-off-black: var(--brand-color-off-black, #0f0e0e);
+  --brand-text-secondary: var(--brand-color-text-secondary, #4a4846);
+  --brand-border-primary: var(--brand-color-border-primary, #615d5b);
+  --brand-border-secondary: var(--brand-color-border-secondary, #bbb5b1);
+  --brand-checkbox: var(--brand-color-checkbox, #e8e1dc);
 
   /* -- Base font sizes -- */
   --font-2xs: 12px;
@@ -35,21 +45,21 @@
   --font-s: 16px;
   --font-m: 18px;
   --font-l: 22px;
-  --font-xl: 24px;
-  --font-2xl: 28px;
-  --font-3xl: 32px;
-  --font-4xl: 40px;
-  --font-5xl: 48px;
-  --font-6xl: 55px;
-  --font-7xl: 64px;
+  --font-xl: 28px;
+  --font-2xl: 32px;
+  --font-3xl: 40px;
+  --font-4xl: 48px;
+  --font-5xl: 55px;
+  --font-6xl: 64px;
+  --font-7xl: 72px;
 
   /* -- UI font sizes -- */
-  --button-font-size: var(--font-xs);
+  --button-font-size: 20px;
   --button-font-size-small: var(--font-2xs);
 
   /* -- Line height tokens -- */
   --line-height-s: 1;
-  --line-height-m: 1.2;
+  --line-height-m: 1.3;
   --line-height-l: 1.4;
   --line-height-xl: 1.6;
   --line-height-2xl: 1.8;
@@ -74,18 +84,19 @@
 
 :root {
   /* -- Neutrals -- */
-  --neutral-50: #f7f7f7;
-  --neutral-100: #efefef;
-  --neutral-150: #e7e7e7;
-  --neutral-200: #dedede;
-  --neutral-300: #cccccc;
-  --neutral-400: #aaaaaa;
-  --neutral-500: #8c8c8c;
-  --neutral-600: #666666;
-  --neutral-700: #4d4d4d;
-  --neutral-800: #333333;
-  --neutral-900: #111111;
-  --neutral-950: #0a0a0a;
+  --neutral-50: #fff7f1;
+  --neutral-100: #e3e0de;
+  --neutral-150: #ddd6d1;
+  --neutral-200: #ceccca;
+  --neutral-300: #bab8b6;
+  --neutral-400: #a5a4a2;
+  --neutral-500: #918f8e;
+  --neutral-600: #7d7b7b;
+  --neutral-700: #686767;
+  --neutral-800: #545353;
+  --neutral-900: #3f3f3f;
+  --neutral-950: #1d1c1b;
+  --neutral-990: #0f0e0e;
 
   /* -- Black & White Alpha Tokens -- */
   --black: #000000;
@@ -109,25 +120,27 @@
   --transparent: transparent;
 
   /* -- Semantic colours -- */
-  --text-primary: var(--brand-dark);
-  --text-secondary: var(--neutral-600);
+  --text-primary: var(--brand-warm-black);
+  --text-secondary: var(--brand-text-secondary);
   --text-plain: var(--black);
   --text-faded: var(--black-alpha-50);
   --text-accent: var(--brand-accent);
   --text-link: var(--brand-accent);
 
-  --background-primary: var(--white);
-  --background-secondary: var(--neutral-50);
+  --background-primary: var(--brand-light);
+  --background-secondary: var(--brand-warm-white);
   --background-plain: var(--white);
   --background-faded: var(--black-alpha-5);
 
-  --border-primary: var(--black);
-  --border-secondary: var(--neutral-300);
+  --border-primary: var(--brand-border-primary);
+  --border-secondary: var(--brand-border-secondary);
   --border-faded: var(--black-alpha-15);
 
-  --button-primary: var(--text-link);
-  --button-text: var(--white);
-  --button-faded: color-mix(in srgb, var(--button-primary), transparent 80%);
+  --button-primary: var(--brand-off-black);
+  --button-text: var(--brand-light);
+  --button-secondary: var(--black);
+  --button-secondary-text: var(--brand-light);
+  --button-faded: var(--black-alpha-15);
 
   /* -- Status colours (from brand book or defaults) -- */
   --status-info: var(--brand-color-info, var(--brand-accent));
@@ -150,12 +163,14 @@
 
   /* -- Form semantic tokens -- */
   --input-border: var(--border-secondary);
-  --input-background: var(--background-primary);
+  --input-background: var(--black-alpha-10);
   --input-text: var(--text-plain);
   --input-placeholder: var(--text-faded);
   --input-focus: var(--brand-accent);
   --input-disabled-bg: var(--background-faded);
   --input-disabled-text: var(--text-faded);
+  --checkbox-background: var(--brand-checkbox);
+  --checkbox-selected: var(--brand-accent);
 
 }
 
@@ -242,7 +257,9 @@
   --border-style: solid;
   --border-color: var(--border-primary);
 
-
+  /* -- Border radius tokens -- */
+  --radius-s: 10px;
+  --radius-pill: 999px;
 }
 
 /* ------ 4. BASE STYLES ------ */
@@ -277,33 +294,33 @@ body {
 
 /* -- Headings -- */
 h1 {
-  font-size: var(--font-4xl);
+  font-size: var(--font-6xl);
   line-height: var(--line-height-s);
 }
 
 h2 {
-  font-size: var(--font-2xl);
+  font-size: var(--font-5xl);
   line-height: var(--line-height-s);
 }
 
 h3 {
-  font-size: var(--font-xl);
-  line-height: var(--line-height-m);
+  font-size: var(--font-4xl);
+  line-height: 1.1;
 }
 
 h4 {
-  font-size: var(--font-l);
-  line-height: var(--line-height-m);
+  font-size: var(--font-3xl);
+  line-height: 1.1;
 }
 
 h5 {
-  font-size: var(--font-m);
-  line-height: var(--line-height-m);
+  font-size: var(--font-2xl);
+  line-height: var(--line-height-s);
 }
 
 h6 {
-  font-size: var(--font-s);
-  line-height: var(--line-height-m);
+  font-size: var(--font-l);
+  line-height: var(--line-height-l);
 }
 
 h1,
@@ -312,7 +329,8 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: var(--font-weight-semi-bold);
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-regular);
   margin-top: var(--space-xl);
   margin-bottom: var(--space-l);
 }
@@ -768,7 +786,7 @@ section {
 /* -- Eyebrow text -- */
 .eyebrow {
   font-family: var(--font-primary);
-  font-size: var(--font-s);
+  font-size: var(--font-xs);
   line-height: var(--line-height-m);
   font-weight: var(--font-weight-extra-bold);
   letter-spacing: var(--letter-spacing-xl);
@@ -781,10 +799,10 @@ section {
 button {
   font-family: var(--font-primary);
   font-size: var(--button-font-size);
-  line-height: var(--line-height-s);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: var(--letter-spacing-s);
-  text-transform: uppercase;
+  line-height: var(--line-height-m);
+  font-weight: var(--font-weight-semi-bold);
+  letter-spacing: 0;
+  text-transform: none;
   text-align: center;
   justify-content: center;
   align-items: center;
@@ -879,6 +897,15 @@ button {
 .type-demo > h6 {
   margin-top: var(--space-none);
   margin-bottom: var(--space-xl);
+}
+
+.type-demo > details {
+  margin-bottom: var(--space-2xl);
+}
+
+.type-demo > details .token-tag {
+  margin-bottom: var(--space-none);
+  padding: var(--space-none) var(--space-2xs);
 }
 
 .button-demo > button {
@@ -1107,7 +1134,103 @@ input[type="radio"] {
   margin-bottom: var(--space-l);
 }
 
-/* ------ 13. FUTURE COMPONENTS ------ */
+/* ------ 13. DISCLOSURE (details / summary) ------ */
+
+/* -- Base disclosure -- */
+details {
+  border: var(--border-s) solid var(--border-faded);
+  border-radius: var(--space-xs);
+}
+
+summary {
+  font-family: var(--font-tertiary);
+  font-size: var(--font-2xs);
+  color: var(--text-faded);
+  padding: var(--space-s) var(--space-m);
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary::before {
+  content: "▸ ";
+}
+
+details[open] > summary::before {
+  content: "▾ ";
+}
+
+summary:hover {
+  color: var(--text-secondary);
+}
+
+summary:focus-visible {
+  outline: 2px solid var(--input-focus);
+  outline-offset: -2px;
+}
+
+/* -- Disclosure content -- */
+details .disclosure-content {
+  padding: var(--space-s) var(--space-m) var(--space-m);
+  font-family: var(--font-tertiary);
+  font-size: var(--font-2xs);
+  line-height: var(--line-height-xl);
+  color: var(--text-secondary);
+  border-top: var(--border-s) solid var(--border-faded);
+}
+
+/* -- Disclosure table (key-value pairs) -- */
+.disclosure-table {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-2xs) var(--space-l);
+  align-items: baseline;
+}
+
+.disclosure-table dt {
+  color: var(--text-faded);
+  white-space: nowrap;
+}
+
+.disclosure-table dd {
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* -- Copy button -- */
+.copy-btn {
+  font-family: var(--font-tertiary);
+  font-size: var(--font-2xs);
+  color: var(--text-accent);
+  background: var(--background-faded);
+  border: var(--border-s) solid var(--border-faded);
+  border-radius: var(--space-xs);
+  padding: var(--space-2xs) var(--space-s);
+  cursor: pointer;
+  margin-top: var(--space-s);
+  transition: all 0.15s ease-in-out;
+}
+
+.copy-btn:hover {
+  background: var(--background-secondary);
+  color: var(--text-link);
+}
+
+.copy-btn:focus-visible {
+  outline: 2px solid var(--input-focus);
+  outline-offset: 2px;
+}
+
+.copy-btn.is-copied {
+  color: var(--status-success);
+  border-color: var(--status-success);
+}
+
+/* ------ 14. FUTURE COMPONENTS ------ */
 
 /*
  * The following elements are candidates for future design system styling.
@@ -1126,9 +1249,7 @@ input[type="radio"] {
  * -- Highlighted text --
  * - mark element
  *
- * -- Disclosure --
- * - details / summary elements
- * - Styled accordion pattern
+ * -- Disclosure -- IMPLEMENTED (see section 13a below)
  *
  * -- Media captions --
  * - figure / figcaption elements
@@ -1181,13 +1302,13 @@ input[type="radio"] {
     --font-xs: 12px;
     --font-s: 14px;
     --font-m: 16px;
-    --font-l: 18px;
-    --font-xl: 20px;
-    --font-2xl: 22px;
-    --font-3xl: 28px;
-    --font-4xl: 32px;
-    --font-5xl: 40px;
-    --font-6xl: 48px;
+    --font-l: 17px;
+    --font-xl: 18px;
+    --font-2xl: 20px;
+    --font-3xl: 24px;
+    --font-4xl: 28px;
+    --font-5xl: 34px;
+    --font-6xl: 40px;
 
     /* -- Mobile section spacing -- */
     --section-xs: var(--space-l);

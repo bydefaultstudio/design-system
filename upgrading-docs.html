@@ -7,25 +7,25 @@
     <meta name="description" content="Guide to upgrading the documentation engine without affecting project content.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
     
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="design-system/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../brand-book/brand-book.css">
+    <link rel="stylesheet" href="brand-book/brand-book.css">
     
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
        
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="assets/markdown.css">
-    
-    <!-- Docs-specific styles (additions) -->
-    <link rel="stylesheet" href="assets/docs.css">
+    <link rel="stylesheet" href="assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -85,7 +85,13 @@
       
         <li><a href="callout.html" class="nav-link ">Callout</a></li>
       
+        <li><a href="disclosure.html" class="nav-link ">Disclosure</a></li>
+      
         <li><a href="form.html" class="nav-link ">Form</a></li>
+      
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
       
       </ul>
     </details><details class="nav-section">
@@ -150,7 +156,7 @@
       <div class="container-medium">
         <h1>Upgrading the Docs Engine</h1>
         <p class="page-subtitle">How to update the doc site across projects</p>
-        <a href="../upgrading-docs.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <a href="docs/upgrading-docs.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
             
@@ -165,7 +171,7 @@
 <p>The doc site is split into two parts: <strong>content</strong> (your markdown files) and the <strong>engine</strong> (the generator that turns them into HTML). They are kept separate so you can upgrade the engine — better mobile nav, new sidebar, restyled layout — without ever touching your content.</p>
 <hr>
 <h2 id="what-stays-per-project-never-touch-these">What Stays Per-Project (Never Touch These)</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>File/Folder</th>
@@ -181,10 +187,10 @@
 <td>Design system path, brand book path, fonts, footer text, index description</td>
 </tr>
 <tr>
-<td><code>docs/site/assets/images/</code></td>
+<td><code>assets/images/</code> and <code>assets/icons/</code></td>
 <td>Logo (<code>logo.svg</code>) and favicons</td>
 </tr>
-</tbody></table>
+</tbody></table></div>
 <hr>
 <h2 id="what-gets-replaced-on-upgrade">What Gets Replaced on Upgrade</h2>
 <p>Everything inside <code>docs/generator/</code> is the engine. Replace this folder to upgrade.</p>
@@ -199,10 +205,10 @@
 </ol>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-tl2tpmw1g" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-r0sejkzwp" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-tl2tpmw1g" class="language-bash">cd docs/generator
+        <pre><code id="code-r0sejkzwp" class="language-bash">cd docs/generator
 npm install
 npm run docgen
 </code></pre>
@@ -216,14 +222,14 @@ npm run docgen
 <p>Edit <code>docs/docs.config.js</code> in the project:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-qgt36njie" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-ack97yzs2" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-qgt36njie" class="language-js">module.exports = {
-  // Path to design system CSS, relative from docs/site/
+        <pre><code id="code-ack97yzs2" class="language-js">module.exports = {
+  // Path to design system CSS, relative from project root
   designSystemPath: &#39;../../design-system/design-system.css&#39;,
 
-  // Path to brand book CSS, relative from docs/site/
+  // Path to brand book CSS, relative from project root
   // Set to null to use framework defaults only
   brandCssPath: &#39;../../brand-book/brand-book.css&#39;,
 
@@ -239,7 +245,7 @@ npm run docgen
 </code></pre>
       </div>
     
-<p>Replace the logo by swapping <code>docs/site/assets/images/logo.svg</code>.<br>Replace favicons by swapping <code>docs/site/assets/images/favicon.svg</code> and <code>favicon.ico</code>.</p>
+<p>Replace the logo by swapping <code>assets/images/logo.svg</code>.<br>Replace favicons by swapping <code>assets/icons/favicon.svg</code> and <code>assets/icons/favicon.ico</code>.</p>
 <hr>
 <h2 id="design-system-css-convention">Design System CSS Convention</h2>
 <p>The design system CSS lives at <code>design-system/design-system.css</code>. The brand book lives at <code>brand-book/brand-book.css</code>. Both paths are referenced in <code>docs/docs.config.js</code> and used by every generated doc page.</p>
@@ -259,10 +265,10 @@ npm run docgen
 <p>Run these from inside <code>docs/generator/</code>:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-g3bzulf6w" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-59a3t8dpx" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-g3bzulf6w" class="language-bash">npm run docgen     # Generate HTML from markdown
+        <pre><code id="code-59a3t8dpx" class="language-bash">npm run docgen     # Generate HTML from markdown
 npm run serve      # View locally in browser
 npm run docwatch   # Auto-regenerate on markdown changes
 npm run docfull    # Generate + serve + watch (all at once)
@@ -283,10 +289,20 @@ npm run docfull    # Generate + serve + watch (all at once)
     </aside>
             </div>
             
+            <!-- Page Navigation (Previous / Next) -->
+            <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="folder-structure.html" class="page-nav-link page-nav-prev" rel="prev">
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <span class="page-nav-title">Folders</span>
+      </span>
+    </a><span class="page-nav-link page-nav-placeholder"></span></div></nav>
+
             <!-- Footer -->
             <footer class="docs-footer">
                 <div class="docs-footer-inner padding-global">
-                    <p class="docs-footer-text">© 2025 By Default</p>
+                    <p class="docs-footer-text">© 2026 By Default BrandOS</p>
                 </div>
             </footer>
         </div>
@@ -337,7 +353,6 @@ npm run docfull    # Generate + serve + watch (all at once)
             
             function initSidebarToggle() {
                 var SIDEBAR_KEY = 'docs-sidebar-collapsed';
-                var MOBILE_NAV_KEY = 'docs-mobile-nav-open';
                 var container = document.querySelector('.docs-container');
                 var sidebarToggle = document.querySelector('.docs-sidebar-toggle');
                 var mobileToggle = document.querySelector('.docs-mobile-toggle');
@@ -348,12 +363,6 @@ npm run docfull    # Generate + serve + watch (all at once)
                 if (localStorage.getItem(SIDEBAR_KEY) === 'true') {
                     container.classList.add('sidebar-collapsed');
                     if (sidebarToggle) sidebarToggle.setAttribute('aria-label', 'Expand sidebar');
-                }
-
-                // Restore mobile nav state
-                if (localStorage.getItem(MOBILE_NAV_KEY) === 'true') {
-                    container.classList.add('mobile-nav-open');
-                    if (mobileToggle) mobileToggle.setAttribute('aria-label', 'Close navigation');
                 }
 
                 if (sidebarToggle) {
@@ -367,7 +376,6 @@ npm run docfull    # Generate + serve + watch (all at once)
                 if (mobileToggle) {
                     mobileToggle.addEventListener('click', function onMobileToggle() {
                         var isOpen = container.classList.toggle('mobile-nav-open');
-                        localStorage.setItem(MOBILE_NAV_KEY, isOpen);
                         mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
                     });
                 }

@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Border - Documentation</title>
-    <meta name="description" content="Guide to using the composable border architecture for flexible border styling.">
+    <title>Folders - Documentation</title>
+    <meta name="description" content="Guide defining where files live and why in the project structure.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
     
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="design-system/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../brand-book/brand-book.css">
+    <link rel="stylesheet" href="brand-book/brand-book.css">
     
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
        
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="assets/markdown.css">
-    
-    <!-- Docs-specific styles (additions) -->
-    <link rel="stylesheet" href="assets/docs.css">
+    <link rel="stylesheet" href="assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -61,7 +61,7 @@
     <ul class="nav-list nav-home">
       <li><a href="index.html" class="nav-link ">Home</a></li>
     </ul>
-  <details class="nav-section" open>
+  <details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Design System</span>
         <span class="nav-toggle-icon">
@@ -79,13 +79,19 @@
       
         <li><a href="spacing.html" class="nav-link ">Spacing</a></li>
       
-        <li><a href="border.html" class="nav-link nav-link-active">Border</a></li>
+        <li><a href="border.html" class="nav-link ">Border</a></li>
       
         <li><a href="button.html" class="nav-link ">Button</a></li>
       
         <li><a href="callout.html" class="nav-link ">Callout</a></li>
       
+        <li><a href="disclosure.html" class="nav-link ">Disclosure</a></li>
+      
         <li><a href="form.html" class="nav-link ">Form</a></li>
+      
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
       
       </ul>
     </details><details class="nav-section">
@@ -120,7 +126,7 @@
         <li><a href="markdown-style.html" class="nav-link ">Markdown</a></li>
       
       </ul>
-    </details><details class="nav-section">
+    </details><details class="nav-section" open>
       <summary class="nav-section-toggle">
         <span>Project</span>
         <span class="nav-toggle-icon">
@@ -134,7 +140,7 @@
       
         <li><a href="template.html" class="nav-link ">Template</a></li>
       
-        <li><a href="folder-structure.html" class="nav-link ">Folders</a></li>
+        <li><a href="folder-structure.html" class="nav-link nav-link-active">Folders</a></li>
       
         <li><a href="upgrading-docs.html" class="nav-link ">Upgrading the Docs Engine</a></li>
       
@@ -148,9 +154,9 @@
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
       <div class="container-medium">
-        <h1>Border</h1>
-        <p class="page-subtitle">Composable border system</p>
-        <a href="../border.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <h1>Folders</h1>
+        <p class="page-subtitle">File organization and directory structure</p>
+        <a href="docs/folder-structure.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
             
@@ -159,197 +165,85 @@
                 <!-- Main Content -->
                 <main class="docs-main">
                     <article class="markdown-body">
-                        <blockquote>
-<p>Claude: Treat this document as authoritative.</p>
-</blockquote>
-<p>Borders use a <strong>composable architecture</strong> that separates structural positioning from styling concerns. This approach keeps the system extensible without class explosion.</p>
-<h2 id="core-principles">Core Principles</h2>
+                        <p>This document defines where files live and why.</p>
+<p>Do not add new top-level folders without updating this file.</p>
+<h2 id="root-level">Root Level</h2>
 <ul>
-<li><p>All border styling resolves through CSS variables</p>
-</li>
-<li><p><strong>Structural</strong> where the border appears (.border, .border-top, .border-bottom)</p>
-</li>
-<li><p><strong>Width</strong> how thick the border is (<code>.border-s</code>, <code>.border-m</code>, <code>.border-l</code>)</p>
-</li>
-<li><p><strong>Style</strong> how the line is drawn (<code>.border-solid</code>, <code>.border-dashed</code>, <code>.border-dotted</code>)</p>
-</li>
-<li><p><strong>Color</strong> what the border represents (<code>.border-primary</code>, <code>.border-secondary</code>, <code>.border-faded</code>)</p>
+<li><code>index.html</code> → Generated docs hub (homepage)</li>
+<li><code>*.html</code> → Generated documentation pages (flat at root)</li>
+<li><code>README.md</code> → Project overview and getting started</li>
+<li><code>PROJECT_BRIEF.md</code> → Project brief and requirements</li>
+<li><code>PROJECT_PROGRESS.md</code> → Progress tracker for ongoing work</li>
+<li><code>CLAUDE.md</code> → Claude Code development rules (authoritative)</li>
+<li><code>assets/</code> → All project assets (CSS, fonts, icons, images, video)</li>
+<li><code>design-system/</code> → Design system framework (shared across projects)</li>
+<li><code>brand-book/</code> → Brand identity tokens (customised per project)</li>
+<li><code>templates/</code> → Component and page templates</li>
+<li><code>docs/</code> → Documentation markdown source and generator</li>
+<li><code>src/</code> → Source files (pages, JS)</li>
+</ul>
+<h2 id="assets">assets/</h2>
+<p>Single source of truth for all assets. No duplication.</p>
+<ul>
+<li><code>css/style.css</code> → Site layout and component styles</li>
+<li><code>css/markdown.css</code> → Markdown rendering styles (code blocks, tables, syntax highlighting)</li>
+<li><code>fonts/</code> → Web fonts</li>
+<li><code>icons/</code> → Favicons and app icons</li>
+<li><code>images/</code> → Logos, Open Graph images, general images</li>
+<li><code>video/</code> → Video assets</li>
+</ul>
+<h2 id="design-system">design-system/</h2>
+<p>The design system framework. Contains all utility classes, layout primitives, components, and default tokens.</p>
+<ul>
+<li><code>design-system.css</code> → Core design system stylesheet</li>
+<li><code>index.html</code> → Styleguide preview (renders with default tokens)</li>
+</ul>
+<h2 id="brand-book">brand-book/</h2>
+<p>Brand identity tokens. Customise this per project. The design system reads these tokens via <code>var(--brand-*, fallback)</code>.</p>
+<ul>
+<li><code>brand-book.css</code> → Brand tokens (fonts, colours)</li>
+<li><code>index.html</code> → Brand preview page (logo, palette, typography, icons)</li>
+</ul>
+<h2 id="src">src/</h2>
+<h3 id="srcjs">src/js/</h3>
+<ul>
+<li>JavaScript modules and scripts</li>
+</ul>
+<h3 id="srcpages">src/pages/</h3>
+<ul>
+<li>HTML page files</li>
+</ul>
+<h2 id="templates">templates/</h2>
+<ul>
+<li><code>component-template.js</code> → JavaScript component template</li>
+<li><code>component-template.css</code> → CSS component template</li>
+<li><code>page-template.html</code> → HTML page template</li>
+</ul>
+<h2 id="docs">docs/</h2>
+<ul>
+<li>Markdown documentation files (source of truth for generated HTML)</li>
+<li><code>docs.config.js</code> → Project-specific doc settings (fonts, footer, description) — stays when generator is upgraded</li>
+<li><code>generator/</code> → Documentation site engine (replaceable — drop in a new version to upgrade)<ul>
+<li><code>template.html</code> → HTML template used for generation</li>
+<li><code>generate-docs.js</code> → Generator script (outputs HTML to project root)</li>
+<li><code>VERSION</code> → Current engine version</li>
+</ul>
 </li>
 </ul>
-<p>All border styles resolve through CSS variables to keep behaviour consistent across the system.<br>Do not create combined classes like <code>.border-top-m</code> or hardcode border values inside structural classes.</p>
-<hr>
-<h2 id="border-structure">Border Structure</h2>
-<p>Structural classes define <strong>where</strong> the border appears, not how it looks.</p>
-<table>
-<thead>
-<tr>
-<th>Class</th>
-<th>Effect</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>.border</code></td>
-<td>Border on all sides</td>
-</tr>
-<tr>
-<td><code>.border-top</code></td>
-<td>Border on top only</td>
-</tr>
-<tr>
-<td><code>.border-bottom</code></td>
-<td>Border on bottom only</td>
-</tr>
-<tr>
-<td><code>.border-left</code></td>
-<td>Border on left only</td>
-</tr>
-<tr>
-<td><code>.border-right</code></td>
-<td>Border on right only</td>
-</tr>
-</tbody></table>
-<h4 id="example">Example</h4>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-ehuyax38f" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-ehuyax38f" class="language-html">&lt;section class=&quot;border-bottom&quot;&gt;
-  &lt;!-- Content with bottom border --&gt;
-&lt;/section&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="border-width">Border Width</h2>
-<p>Width combo classes modify the border thickness.</p>
-<table>
-<thead>
-<tr>
-<th>Class</th>
-<th>Width</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>.border-s</code></td>
-<td>1px</td>
-<td>Small border (default)</td>
-</tr>
-<tr>
-<td><code>.border-m</code></td>
-<td>2px</td>
-<td>Medium border</td>
-</tr>
-<tr>
-<td><code>.border-l</code></td>
-<td>4px</td>
-<td>Large border</td>
-</tr>
-</tbody></table>
-<h4 id="example">Example</h4>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-bqh0pzc6s" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-bqh0pzc6s" class="language-html">&lt;div class=&quot;border border-m&quot;&gt;
-  &lt;!-- Content with medium border on all sides --&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="border-style">Border Style</h2>
-<p>Style combo classes modify the border appearance.</p>
-<table>
-<thead>
-<tr>
-<th>Class</th>
-<th>Style</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>.border-solid</code></td>
-<td>solid</td>
-<td>Solid border (default)</td>
-</tr>
-<tr>
-<td><code>.border-dashed</code></td>
-<td>dashed</td>
-<td>Dashed border</td>
-</tr>
-<tr>
-<td><code>.border-dotted</code></td>
-<td>dotted</td>
-<td>Dotted border</td>
-</tr>
-</tbody></table>
-<h4 id="example">Example</h4>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-j3ntwydwa" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-j3ntwydwa" class="language-html">&lt;div class=&quot;border border-dashed&quot;&gt;
-  &lt;!-- Content with dashed border --&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="boder-color">Boder Color</h2>
-<p>Color combo classes modify the border color using semantic tokens.</p>
-<table>
-<thead>
-<tr>
-<th>Class</th>
-<th>Color</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>.border-primary</code></td>
-<td><code>var(--border-primary)</code></td>
-<td>Strong border (default)</td>
-</tr>
-<tr>
-<td><code>.border-secondary</code></td>
-<td><code>var(--border-secondary)</code></td>
-<td>Secondary color border</td>
-</tr>
-<tr>
-<td><code>.border-faded</code></td>
-<td><code>var(--border-faded)</code></td>
-<td>Faded border</td>
-</tr>
-</tbody></table>
-<h4 id="example">Example</h4>
-
-      <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-bhr93ra82" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
-        <pre><code id="code-bhr93ra82" class="language-html">&lt;div class=&quot;border border-secondary&quot;&gt;
-  &lt;!-- Content with subtle border --&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="limitations">Limitations</h2>
-<p>Native CSS dashed/dotted borders do not support adjustable dash spacing. This system intentionally avoids SVG or background-based borders to maintain simplicity and performance.</p>
-<hr>
-<h2 id="rules">Rules</h2>
-<ul>
-<li>Use the smallest possible number of classes</li>
-<li>Prefer semantic color tokens</li>
-<li>Keep the system extensible without class explosion</li>
-<li>Structural classes define position only</li>
-<li>Combo classes modify one concern each</li>
-<li>All styling resolves through CSS variables</li>
-</ul>
+<h2 id="css-loading-order">CSS Loading Order</h2>
+<p>The generated HTML loads CSS in this order:</p>
+<ol>
+<li><code>design-system/design-system.css</code> → Framework tokens, utilities, layout primitives</li>
+<li><code>brand-book/brand-book.css</code> → Brand token overrides (fonts, colours)</li>
+<li><code>assets/css/markdown.css</code> → Markdown content rendering</li>
+<li><code>assets/css/style.css</code> → Site layout and components</li>
+</ol>
+<p>New site-specific CSS goes in <code>assets/css/style.css</code>.</p>
+<h2 id="notes">Notes</h2>
+<p>Empty folders are tracked using <code>.gitkeep</code> to preserve structure in the template.</p>
+<h3 id="favicons">Favicons</h3>
+<p>Favicons live in <code>assets/icons/</code>.</p>
+<p>They are referenced directly in the HTML <code>&lt;head&gt;</code> and are treated as brand assets, not part of the design system.</p>
 
                     </article>
                 </main>
@@ -357,14 +251,31 @@
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#core-principles" class="toc-link">Core Principles</a></li><li class="toc-item toc-level-2"><a href="#border-structure" class="toc-link">Border Structure</a></li><li class="toc-item toc-level-2"><a href="#border-width" class="toc-link">Border Width</a></li><li class="toc-item toc-level-2"><a href="#border-style" class="toc-link">Border Style</a></li><li class="toc-item toc-level-2"><a href="#boder-color" class="toc-link">Boder Color</a></li><li class="toc-item toc-level-2"><a href="#limitations" class="toc-link">Limitations</a></li><li class="toc-item toc-level-2"><a href="#rules" class="toc-link">Rules</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#root-level" class="toc-link">Root Level</a></li><li class="toc-item toc-level-2"><a href="#assets" class="toc-link">assets/</a></li><li class="toc-item toc-level-2"><a href="#design-system" class="toc-link">design-system/</a></li><li class="toc-item toc-level-2"><a href="#brand-book" class="toc-link">brand-book/</a></li><li class="toc-item toc-level-2"><a href="#src" class="toc-link">src/</a></li><li class="toc-item toc-level-2"><a href="#templates" class="toc-link">templates/</a></li><li class="toc-item toc-level-2"><a href="#docs" class="toc-link">docs/</a></li><li class="toc-item toc-level-2"><a href="#css-loading-order" class="toc-link">CSS Loading Order</a></li><li class="toc-item toc-level-2"><a href="#notes" class="toc-link">Notes</a></li></ul></nav></div>
     </aside>
             </div>
             
+            <!-- Page Navigation (Previous / Next) -->
+            <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="template.html" class="page-nav-link page-nav-prev" rel="prev">
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <span class="page-nav-title">Template</span>
+      </span>
+    </a><a href="upgrading-docs.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <span class="page-nav-title">Upgrading the Docs Engine</span>
+      </span>
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a></div></nav>
+
             <!-- Footer -->
             <footer class="docs-footer">
                 <div class="docs-footer-inner padding-global">
-                    <p class="docs-footer-text">© 2025 By Default</p>
+                    <p class="docs-footer-text">© 2026 By Default BrandOS</p>
                 </div>
             </footer>
         </div>
@@ -415,7 +326,6 @@
             
             function initSidebarToggle() {
                 var SIDEBAR_KEY = 'docs-sidebar-collapsed';
-                var MOBILE_NAV_KEY = 'docs-mobile-nav-open';
                 var container = document.querySelector('.docs-container');
                 var sidebarToggle = document.querySelector('.docs-sidebar-toggle');
                 var mobileToggle = document.querySelector('.docs-mobile-toggle');
@@ -426,12 +336,6 @@
                 if (localStorage.getItem(SIDEBAR_KEY) === 'true') {
                     container.classList.add('sidebar-collapsed');
                     if (sidebarToggle) sidebarToggle.setAttribute('aria-label', 'Expand sidebar');
-                }
-
-                // Restore mobile nav state
-                if (localStorage.getItem(MOBILE_NAV_KEY) === 'true') {
-                    container.classList.add('mobile-nav-open');
-                    if (mobileToggle) mobileToggle.setAttribute('aria-label', 'Close navigation');
                 }
 
                 if (sidebarToggle) {
@@ -445,7 +349,6 @@
                 if (mobileToggle) {
                     mobileToggle.addEventListener('click', function onMobileToggle() {
                         var isOpen = container.classList.toggle('mobile-nav-open');
-                        localStorage.setItem(MOBILE_NAV_KEY, isOpen);
                         mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
                     });
                 }

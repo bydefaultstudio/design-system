@@ -7,25 +7,25 @@
     <meta name="description" content="Guide defining how CSS should be structured, organized, and commented for maintainability.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
     
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="design-system/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../../brand-book/brand-book.css">
+    <link rel="stylesheet" href="brand-book/brand-book.css">
     
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
        
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="assets/markdown.css">
-    
-    <!-- Docs-specific styles (additions) -->
-    <link rel="stylesheet" href="assets/docs.css">
+    <link rel="stylesheet" href="assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -85,7 +85,13 @@
       
         <li><a href="callout.html" class="nav-link ">Callout</a></li>
       
+        <li><a href="disclosure.html" class="nav-link ">Disclosure</a></li>
+      
         <li><a href="form.html" class="nav-link ">Form</a></li>
+      
+        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+      
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
       
       </ul>
     </details><details class="nav-section" open>
@@ -150,7 +156,7 @@
       <div class="container-medium">
         <h1>CSS</h1>
         <p class="page-subtitle">CSS coding standards, organization, and commenting guidelines</p>
-        <a href="../css-code-struture.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <a href="docs/css-code-struture.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
             
@@ -188,10 +194,10 @@
 <p><strong>Example - Typography Grouping:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-zm0slac5r" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-cwf86dyba" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-zm0slac5r" class="language-css">/* -- Headings -- */
+        <pre><code id="code-cwf86dyba" class="language-css">/* -- Headings -- */
 h1 {
   font-size: var(--font-3xl);
   line-height: var(--line-height-s);
@@ -209,10 +215,10 @@ h2 {
 <p><strong>Example - Component Grouping:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-w9qw0y7h8" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-6ex7j1syr" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-w9qw0y7h8" class="language-css">/* -- Button -- */
+        <pre><code id="code-6ex7j1syr" class="language-css">/* -- Button -- */
 .button, button {
   padding: var(--space-s) var(--space-m);
   background: var(--background-primary);
@@ -234,10 +240,10 @@ h2 {
 <p><strong>Example - Token Grouping:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-placeo9ru" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-5kw8inqp7" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-placeo9ru" class="language-css">:root {
+        <pre><code id="code-5kw8inqp7" class="language-css">:root {
   /* -- Unit tokens -- */
   --unit-s: 0.5rem;    /* 8px */
   --unit-m: 1rem;      /* 16px */
@@ -272,10 +278,10 @@ h2 {
 <p><strong>Example:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-lve846y1a" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-009wlyu7n" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-lve846y1a" class="language-css">/* -- Card -- */
+        <pre><code id="code-009wlyu7n" class="language-css">/* -- Card -- */
 .card {
   padding: var(--space-m);
   background: var(--background-primary);
@@ -304,10 +310,10 @@ h2 {
 <p><strong>Example:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-tw6taizqi" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-g0qkp9ts6" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-tw6taizqi" class="language-css">.button {
+        <pre><code id="code-g0qkp9ts6" class="language-css">.button {
   /* Layout */
   display: inline-flex;
   
@@ -334,10 +340,10 @@ h2 {
 <p><strong>Format</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-otp7jok9y" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-0kvi7eyw1" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-otp7jok9y" class="language-css">/* ------ Section Title ------ */
+        <pre><code id="code-0kvi7eyw1" class="language-css">/* ------ Section Title ------ */
 </code></pre>
       </div>
     
@@ -351,10 +357,10 @@ h2 {
 <p><strong>Example</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-u65a6vlpf" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-opb1p1lpc" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-u65a6vlpf" class="language-css">/* ------ BASE STYLES ------ */
+        <pre><code id="code-opb1p1lpc" class="language-css">/* ------ BASE STYLES ------ */
 
 body {
   /* ... */
@@ -368,10 +374,10 @@ body {
 <p><strong>Format</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-6qo6s0hj2" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-y9unfa234" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-6qo6s0hj2" class="language-css">/* -- Subsection name -- */
+        <pre><code id="code-y9unfa234" class="language-css">/* -- Subsection name -- */
 </code></pre>
       </div>
     
@@ -385,10 +391,10 @@ body {
 <p><strong>Example</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-ho27ni2ib" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-44jidn658" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-ho27ni2ib" class="language-css">/* -- Headings -- */
+        <pre><code id="code-44jidn658" class="language-css">/* -- Headings -- */
 h1 {
   /* ... */
 }
@@ -404,10 +410,10 @@ h2 {
 <p><strong>Format</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-3m5x4h9oh" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-jyjbzedmv" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-3m5x4h9oh" class="language-css">/* Short clarification */
+        <pre><code id="code-jyjbzedmv" class="language-css">/* Short clarification */
 </code></pre>
       </div>
     
@@ -420,10 +426,10 @@ h2 {
 <p><strong>Example</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-z6agantn1" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-h35ed4950" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-z6agantn1" class="language-css">--unit-xs: 0.25rem; /* 4px */
+        <pre><code id="code-h35ed4950" class="language-css">--unit-xs: 0.25rem; /* 4px */
 </code></pre>
       </div>
     
@@ -447,10 +453,10 @@ h2 {
 <p><strong>Example:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-26w73u240" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-nimglkqja" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-26w73u240" class="language-css">/* ------ RESPONSIVE ------ */
+        <pre><code id="code-nimglkqja" class="language-css">/* ------ RESPONSIVE ------ */
 
 /* Mobile */
 @media (max-width: 768px) {
@@ -476,10 +482,10 @@ h2 {
 <p><strong>Example:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-l4zmu6pi5" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-8cmit948c" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-l4zmu6pi5" class="language-css">/* ------ RESPONSIVE ------ */
+        <pre><code id="code-8cmit948c" class="language-css">/* ------ RESPONSIVE ------ */
 
 /* Mobile */
 @media (max-width: 768px) {
@@ -540,7 +546,7 @@ h2 {
 </ul>
 <hr>
 <h2 id="quick-reference">Quick Reference</h2>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
 <th>Task</th>
@@ -571,7 +577,7 @@ h2 {
 <td>Add state to component</td>
 <td>Place immediately after base class, before modifiers</td>
 </tr>
-</tbody></table>
+</tbody></table></div>
 
                     </article>
                 </main>
@@ -583,10 +589,27 @@ h2 {
     </aside>
             </div>
             
+            <!-- Page Navigation (Previous / Next) -->
+            <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="js-code-structure.html" class="page-nav-link page-nav-prev" rel="prev">
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <span class="page-nav-title">JavaScript</span>
+      </span>
+    </a><a href="layout.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <span class="page-nav-title">HTML Layout</span>
+      </span>
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a></div></nav>
+
             <!-- Footer -->
             <footer class="docs-footer">
                 <div class="docs-footer-inner padding-global">
-                    <p class="docs-footer-text">© 2025 By Default</p>
+                    <p class="docs-footer-text">© 2026 By Default BrandOS</p>
                 </div>
             </footer>
         </div>
@@ -637,7 +660,6 @@ h2 {
             
             function initSidebarToggle() {
                 var SIDEBAR_KEY = 'docs-sidebar-collapsed';
-                var MOBILE_NAV_KEY = 'docs-mobile-nav-open';
                 var container = document.querySelector('.docs-container');
                 var sidebarToggle = document.querySelector('.docs-sidebar-toggle');
                 var mobileToggle = document.querySelector('.docs-mobile-toggle');
@@ -648,12 +670,6 @@ h2 {
                 if (localStorage.getItem(SIDEBAR_KEY) === 'true') {
                     container.classList.add('sidebar-collapsed');
                     if (sidebarToggle) sidebarToggle.setAttribute('aria-label', 'Expand sidebar');
-                }
-
-                // Restore mobile nav state
-                if (localStorage.getItem(MOBILE_NAV_KEY) === 'true') {
-                    container.classList.add('mobile-nav-open');
-                    if (mobileToggle) mobileToggle.setAttribute('aria-label', 'Close navigation');
                 }
 
                 if (sidebarToggle) {
@@ -667,7 +683,6 @@ h2 {
                 if (mobileToggle) {
                     mobileToggle.addEventListener('click', function onMobileToggle() {
                         var isOpen = container.classList.toggle('mobile-nav-open');
-                        localStorage.setItem(MOBILE_NAV_KEY, isOpen);
                         mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
                     });
                 }

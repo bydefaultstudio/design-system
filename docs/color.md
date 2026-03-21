@@ -96,18 +96,19 @@ Neutral colors provide a grayscale palette from light to dark for backgrounds, b
 
 | Token | Value |
 | --- | --- |
-| `--neutral-50` | #F7F7F7 |
-| `--neutral-100` | #EFEFEF |
-| `--neutral-150` | #E7E7E7 |
-| `--neutral-200` | #DEDEDE |
-| `--neutral-300` | #CCCCCC |
-| `--neutral-400` | #AAAAAA |
-| `--neutral-500` | #8C8C8C |
-| `--neutral-600` | #666666 |
-| `--neutral-700` | #4D4D4D |
-| `--neutral-800` | #333333 |
-| `--neutral-900` | #111111 |
-| `--neutral-950` | #0A0A0A |
+| `--neutral-50` | #FFF7F1 |
+| `--neutral-100` | #E3E0DE |
+| `--neutral-150` | #DDD6D1 |
+| `--neutral-200` | #CECCCA |
+| `--neutral-300` | #BAB8B6 |
+| `--neutral-400` | #A5A4A2 |
+| `--neutral-500` | #918F8E |
+| `--neutral-600` | #7D7B7B |
+| `--neutral-700` | #686767 |
+| `--neutral-800` | #545353 |
+| `--neutral-900` | #3F3F3F |
+| `--neutral-950` | #1D1C1B |
+| `--neutral-990` | #0F0E0E |
 
 **Usage:**
 
@@ -127,8 +128,8 @@ Semantic colors map primitive tokens to **meaning and intent**, giving context a
 
 | **Name** | Value | Description |
 | --- | --- | --- |
-| `--text-primary` | ↳`--brand-dark` | Primary text color |
-| `--text-secondary` | ↳`--neutral-600` | Secondary text color |
+| `--text-primary` | ↳`--brand-warm-black` | Primary text color |
+| `--text-secondary` | ↳`--brand-text-secondary` | Secondary text color |
 | `--text-plain` | ↳`--black` | True black text |
 | `--text-faded` | ↳`--black-alpha-50` | Faded text |
 | `--text-accent` | ↳`--brand-accent` | Accent text |
@@ -146,8 +147,8 @@ h1 {
 
 | **Name** | **Value** | **Description** |
 | --- | --- | --- |
-| `--background-primary` | ↳`--neutral-50` | Default background |
-| `--background-secondary` | ↳`--neutral-150` | Secondary background |
+| `--background-primary` | ↳`--brand-light` | Default background |
+| `--background-secondary` | ↳`--brand-warm-white` | Secondary background |
 | `--background-plain` | ↳`--white` | True white background |
 | `--background-faded` | ↳`--black-alpha-5` | Faded background overlay |
 
@@ -163,8 +164,8 @@ h1 {
 
 | **Name** | **Value** | **Description** |
 | --- | --- | --- |
-| `--border-primary` | ↳`--black` | Default border|
-| `--border-secondary` | ↳`--neutral-300` | Second border |
+| `--border-primary` | ↳`--brand-border-primary` | Default border|
+| `--border-secondary` | ↳`--brand-border-secondary` | Second border |
 | `--border-faded` | ↳`--black-alpha-15` | Faded border |
 
 **Usage:**
