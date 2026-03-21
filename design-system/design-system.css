@@ -882,6 +882,15 @@ button {
   margin-bottom: var(--space-xl);
 }
 
+.type-demo > details {
+  margin-bottom: var(--space-2xl);
+}
+
+.type-demo > details .token-tag {
+  margin-bottom: var(--space-none);
+  padding: var(--space-none) var(--space-2xs);
+}
+
 .button-demo > button {
   margin-top: var(--space-none);
   margin-bottom: var(--space-l);
@@ -1108,7 +1117,103 @@ input[type="radio"] {
   margin-bottom: var(--space-l);
 }
 
-/* ------ 13. FUTURE COMPONENTS ------ */
+/* ------ 13. DISCLOSURE (details / summary) ------ */
+
+/* -- Base disclosure -- */
+details {
+  border: var(--border-s) solid var(--border-faded);
+  border-radius: var(--space-xs);
+}
+
+summary {
+  font-family: var(--font-tertiary);
+  font-size: var(--font-2xs);
+  color: var(--text-faded);
+  padding: var(--space-s) var(--space-m);
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary::before {
+  content: "▸ ";
+}
+
+details[open] > summary::before {
+  content: "▾ ";
+}
+
+summary:hover {
+  color: var(--text-secondary);
+}
+
+summary:focus-visible {
+  outline: 2px solid var(--input-focus);
+  outline-offset: -2px;
+}
+
+/* -- Disclosure content -- */
+details .disclosure-content {
+  padding: var(--space-s) var(--space-m) var(--space-m);
+  font-family: var(--font-tertiary);
+  font-size: var(--font-2xs);
+  line-height: var(--line-height-xl);
+  color: var(--text-secondary);
+  border-top: var(--border-s) solid var(--border-faded);
+}
+
+/* -- Disclosure table (key-value pairs) -- */
+.disclosure-table {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-2xs) var(--space-l);
+  align-items: baseline;
+}
+
+.disclosure-table dt {
+  color: var(--text-faded);
+  white-space: nowrap;
+}
+
+.disclosure-table dd {
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* -- Copy button -- */
+.copy-btn {
+  font-family: var(--font-tertiary);
+  font-size: var(--font-2xs);
+  color: var(--text-accent);
+  background: var(--background-faded);
+  border: var(--border-s) solid var(--border-faded);
+  border-radius: var(--space-xs);
+  padding: var(--space-2xs) var(--space-s);
+  cursor: pointer;
+  margin-top: var(--space-s);
+  transition: all 0.15s ease-in-out;
+}
+
+.copy-btn:hover {
+  background: var(--background-secondary);
+  color: var(--text-link);
+}
+
+.copy-btn:focus-visible {
+  outline: 2px solid var(--input-focus);
+  outline-offset: 2px;
+}
+
+.copy-btn.is-copied {
+  color: var(--status-success);
+  border-color: var(--status-success);
+}
+
+/* ------ 14. FUTURE COMPONENTS ------ */
 
 /*
  * The following elements are candidates for future design system styling.
@@ -1127,9 +1232,7 @@ input[type="radio"] {
  * -- Highlighted text --
  * - mark element
  *
- * -- Disclosure --
- * - details / summary elements
- * - Styled accordion pattern
+ * -- Disclosure -- IMPLEMENTED (see section 13a below)
  *
  * -- Media captions --
  * - figure / figcaption elements

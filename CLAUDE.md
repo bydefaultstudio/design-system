@@ -25,9 +25,10 @@ Before generating or modifying code, treat the following files as authoritative:
 7. `docs/spacing.md` — spacing tokens and usage
 8. `docs/border.md` — border strategy and composable classes
 9. `docs/button.md` — button component usage
-10. `docs/seo-best-practices.md` — SEO meta tags and social sharing
-11. `docs/folder-structure.md` — file organization rules
-12. `docs/setup.md` — project setup and customization
+10. `docs/disclosure.md` — details/summary disclosure component
+11. `docs/seo-best-practices.md` — SEO meta tags and social sharing
+12. `docs/folder-structure.md` — file organization rules
+13. `docs/setup.md` — project setup and customization
 
 If any instruction conflicts with these documents, **the documents take precedence**.
 
