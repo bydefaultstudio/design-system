@@ -20,16 +20,16 @@ This table shows the complete token set applied to each text element in the desi
 
 | Element | Font Size | Line Height | Weight | Family | Extra |
 | --- | --- | --- | --- | --- | --- |
-| **h1** | `--font-4xl` (40px) | `--line-height-s` (1) | `--font-weight-regular` (400) | `--font-secondary` | — |
-| **h2** | `--font-2xl` (28px) | `--line-height-s` (1) | `--font-weight-regular` (400) | `--font-secondary` | — |
-| **h3** | `--font-xl` (24px) | `--line-height-m` (1.2) | `--font-weight-regular` (400) | `--font-secondary` | — |
-| **h4** | `--font-l` (22px) | `--line-height-m` (1.2) | `--font-weight-regular` (400) | `--font-secondary` | — |
-| **h5** | `--font-m` (18px) | `--line-height-m` (1.2) | `--font-weight-regular` (400) | `--font-secondary` | — |
-| **h6** | `--font-s` (16px) | `--line-height-m` (1.2) | `--font-weight-regular` (400) | `--font-secondary` | — |
+| **h1** | `--font-6xl` (64px) | `--line-height-s` (1) | `--font-weight-regular` (400) | `--font-secondary` | — |
+| **h2** | `--font-5xl` (55px) | `--line-height-s` (1) | `--font-weight-regular` (400) | `--font-secondary` | — |
+| **h3** | `--font-4xl` (48px) | `1.1` | `--font-weight-regular` (400) | `--font-secondary` | — |
+| **h4** | `--font-3xl` (40px) | `1.1` | `--font-weight-regular` (400) | `--font-secondary` | — |
+| **h5** | `--font-2xl` (32px) | `--line-height-s` (1) | `--font-weight-regular` (400) | `--font-secondary` | — |
+| **h6** | `--font-l` (22px) | `--line-height-l` (1.4) | `--font-weight-regular` (400) | `--font-secondary` | — |
 | **body / p** | `--font-m` (18px) | `--line-height-l` (1.4) | `--font-weight-regular` (400) | `--font-primary` | — |
 | **.text-size-small** | `--font-s` (16px) | `--line-height-xl` (1.6) | `--font-weight-regular` (400) | `--font-primary` | — |
 | **.text-size-xsmall** | `--font-xs` (14px) | `--line-height-xl` (1.6) | `--font-weight-regular` (400) | `--font-primary` | — |
-| **.eyebrow** | `--font-s` (16px) | `--line-height-m` (1.2) | `--font-weight-extra-bold` (800) | `--font-primary` | `letter-spacing: --letter-spacing-xl` · `text-transform: uppercase` |
+| **.eyebrow** | `--font-xs` (14px) | `--line-height-m` (1.3) | `--font-weight-extra-bold` (800) | `--font-primary` | `letter-spacing: --letter-spacing-xl` · `text-transform: uppercase` |
 | **blockquote** | inherits body | inherits body | inherits body | `--font-secondary` | `border-left` · `padding-left` |
 
 > All headings (h1–h6) share `margin-top: --space-xl` and `margin-bottom: --space-l`. Body text color is `--text-primary` for all elements.
@@ -75,7 +75,7 @@ Line height tokens control the vertical rhythm of text, ensuring consistent spac
 | Token | Value | Usage |
 | --- | --- | --- |
 | `--line-height-s` | 1 | Tight line height for headings (H1, H2) |
-| `--line-height-m` | 1.2 | Medium line height for subheadings (H3, H4) |
+| `--line-height-m` | 1.3 | Medium line height for subheadings and UI elements |
 | `--line-height-l` | 1.4 | Loose line height for body text and paragraphs |
 | `--line-height-xl` | 1.6 | Extra loose line height |
 | `--line-height-2xl` | 1.8 | Maximum line height for spacious text |
