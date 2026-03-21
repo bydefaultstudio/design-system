@@ -10,6 +10,32 @@ order: 3
 
 Typography tokens provide a **consistent, modular system** for all text across the products. They are designed for **clarity, readability, and hierarchy**, while remaining flexible across devices.
 
+The system uses three font families — a primary sans-serif for body and UI, a secondary serif for headings, and a tertiary monospace for code and labels. Each text element is composed from a deliberate combination of size, weight, line height, and spacing tokens. This means you never set raw CSS values for text — you always reference a token.
+
+---
+
+## Element Reference
+
+This table shows the complete token set applied to each text element in the design system. Use it as a quick lookup when building or reviewing layouts.
+
+| Element | Font Size | Line Height | Weight | Family | Extra |
+| --- | --- | --- | --- | --- | --- |
+| **h1** | `--font-4xl` (40px) | `--line-height-s` (1) | `--font-weight-regular` (400) | `--font-secondary` | — |
+| **h2** | `--font-2xl` (28px) | `--line-height-s` (1) | `--font-weight-regular` (400) | `--font-secondary` | — |
+| **h3** | `--font-xl` (24px) | `--line-height-m` (1.2) | `--font-weight-regular` (400) | `--font-secondary` | — |
+| **h4** | `--font-l` (22px) | `--line-height-m` (1.2) | `--font-weight-regular` (400) | `--font-secondary` | — |
+| **h5** | `--font-m` (18px) | `--line-height-m` (1.2) | `--font-weight-regular` (400) | `--font-secondary` | — |
+| **h6** | `--font-s` (16px) | `--line-height-m` (1.2) | `--font-weight-regular` (400) | `--font-secondary` | — |
+| **body / p** | `--font-m` (18px) | `--line-height-l` (1.4) | `--font-weight-regular` (400) | `--font-primary` | — |
+| **.text-size-small** | `--font-s` (16px) | `--line-height-xl` (1.6) | `--font-weight-regular` (400) | `--font-primary` | — |
+| **.text-size-xsmall** | `--font-xs` (14px) | `--line-height-xl` (1.6) | `--font-weight-regular` (400) | `--font-primary` | — |
+| **.eyebrow** | `--font-s` (16px) | `--line-height-m` (1.2) | `--font-weight-extra-bold` (800) | `--font-primary` | `letter-spacing: --letter-spacing-xl` · `text-transform: uppercase` |
+| **blockquote** | inherits body | inherits body | inherits body | `--font-secondary` | `border-left` · `padding-left` |
+
+> All headings (h1–h6) share `margin-top: --space-xl` and `margin-bottom: --space-l`. Body text color is `--text-primary` for all elements.
+
+---
+
 ## Font Size
 
 Font size tokens define the typographic scale for all text elements. They scale responsively between desktop and mobile devices to ensure optimal readability across screen sizes.

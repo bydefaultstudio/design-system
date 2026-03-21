@@ -169,6 +169,114 @@
 <p>Claude: Treat this document as authoritative.</p>
 </blockquote>
 <p>Typography tokens provide a <strong>consistent, modular system</strong> for all text across the products. They are designed for <strong>clarity, readability, and hierarchy</strong>, while remaining flexible across devices.</p>
+<p>The system uses three font families — a primary sans-serif for body and UI, a secondary serif for headings, and a tertiary monospace for code and labels. Each text element is composed from a deliberate combination of size, weight, line height, and spacing tokens. This means you never set raw CSS values for text — you always reference a token.</p>
+<hr>
+<h2 id="element-reference">Element Reference</h2>
+<p>This table shows the complete token set applied to each text element in the design system. Use it as a quick lookup when building or reviewing layouts.</p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Font Size</th>
+<th>Line Height</th>
+<th>Weight</th>
+<th>Family</th>
+<th>Extra</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>h1</strong></td>
+<td><code>--font-4xl</code> (40px)</td>
+<td><code>--line-height-s</code> (1)</td>
+<td><code>--font-weight-regular</code> (400)</td>
+<td><code>--font-secondary</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>h2</strong></td>
+<td><code>--font-2xl</code> (28px)</td>
+<td><code>--line-height-s</code> (1)</td>
+<td><code>--font-weight-regular</code> (400)</td>
+<td><code>--font-secondary</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>h3</strong></td>
+<td><code>--font-xl</code> (24px)</td>
+<td><code>--line-height-m</code> (1.2)</td>
+<td><code>--font-weight-regular</code> (400)</td>
+<td><code>--font-secondary</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>h4</strong></td>
+<td><code>--font-l</code> (22px)</td>
+<td><code>--line-height-m</code> (1.2)</td>
+<td><code>--font-weight-regular</code> (400)</td>
+<td><code>--font-secondary</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>h5</strong></td>
+<td><code>--font-m</code> (18px)</td>
+<td><code>--line-height-m</code> (1.2)</td>
+<td><code>--font-weight-regular</code> (400)</td>
+<td><code>--font-secondary</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>h6</strong></td>
+<td><code>--font-s</code> (16px)</td>
+<td><code>--line-height-m</code> (1.2)</td>
+<td><code>--font-weight-regular</code> (400)</td>
+<td><code>--font-secondary</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>body / p</strong></td>
+<td><code>--font-m</code> (18px)</td>
+<td><code>--line-height-l</code> (1.4)</td>
+<td><code>--font-weight-regular</code> (400)</td>
+<td><code>--font-primary</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>.text-size-small</strong></td>
+<td><code>--font-s</code> (16px)</td>
+<td><code>--line-height-xl</code> (1.6)</td>
+<td><code>--font-weight-regular</code> (400)</td>
+<td><code>--font-primary</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>.text-size-xsmall</strong></td>
+<td><code>--font-xs</code> (14px)</td>
+<td><code>--line-height-xl</code> (1.6)</td>
+<td><code>--font-weight-regular</code> (400)</td>
+<td><code>--font-primary</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>.eyebrow</strong></td>
+<td><code>--font-s</code> (16px)</td>
+<td><code>--line-height-m</code> (1.2)</td>
+<td><code>--font-weight-extra-bold</code> (800)</td>
+<td><code>--font-primary</code></td>
+<td><code>letter-spacing: --letter-spacing-xl</code> · <code>text-transform: uppercase</code></td>
+</tr>
+<tr>
+<td><strong>blockquote</strong></td>
+<td>inherits body</td>
+<td>inherits body</td>
+<td>inherits body</td>
+<td><code>--font-secondary</code></td>
+<td><code>border-left</code> · <code>padding-left</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>All headings (h1–h6) share <code>margin-top: --space-xl</code> and <code>margin-bottom: --space-l</code>. Body text color is <code>--text-primary</code> for all elements.</p>
+</blockquote>
+<hr>
 <h2 id="font-size">Font Size</h2>
 <p>Font size tokens define the typographic scale for all text elements. They scale responsively between desktop and mobile devices to ensure optimal readability across screen sizes.</p>
 <table>
@@ -238,10 +346,10 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-e5tcx518n" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-kj8wguo6n" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-e5tcx518n" class="language-css">h1 {
+        <pre><code id="code-kj8wguo6n" class="language-css">h1 {
   font-size: var(--font-3xl);
 }
 
@@ -291,10 +399,10 @@ p {
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-9ywseyiic" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-mop2l80eg" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-9ywseyiic" class="language-css">h1 {
+        <pre><code id="code-mop2l80eg" class="language-css">h1 {
   line-height: var(--line-height-s);
 }
 
@@ -354,10 +462,10 @@ p {
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-uj67vzbf7" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-03hvy9tmx" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-uj67vzbf7" class="language-css">body {
+        <pre><code id="code-03hvy9tmx" class="language-css">body {
   font-weight: var(--font-weight-regular);
 }
 
@@ -402,10 +510,10 @@ h1 {
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-q1gtcozfp" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-xxmpr7f7x" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-q1gtcozfp" class="language-css">.eyebrow {
+        <pre><code id="code-xxmpr7f7x" class="language-css">.eyebrow {
   letter-spacing: var(--letter-spacing-m);
 }
 </code></pre>
@@ -418,7 +526,7 @@ h1 {
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#font-size" class="toc-link">Font Size</a></li><li class="toc-item toc-level-2"><a href="#line-height" class="toc-link">Line Height</a></li><li class="toc-item toc-level-2"><a href="#font-weight" class="toc-link">Font Weight</a></li><li class="toc-item toc-level-2"><a href="#letter-spacing" class="toc-link">Letter Spacing</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#element-reference" class="toc-link">Element Reference</a></li><li class="toc-item toc-level-2"><a href="#font-size" class="toc-link">Font Size</a></li><li class="toc-item toc-level-2"><a href="#line-height" class="toc-link">Line Height</a></li><li class="toc-item toc-level-2"><a href="#font-weight" class="toc-link">Font Weight</a></li><li class="toc-item toc-level-2"><a href="#letter-spacing" class="toc-link">Letter Spacing</a></li></ul></nav></div>
     </aside>
             </div>
             
