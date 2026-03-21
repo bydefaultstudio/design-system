@@ -1138,12 +1138,14 @@ input[type="radio"] {
 
 /* -- Base disclosure -- */
 details {
-  border: var(--border-s) solid var(--border-faded);
   border-radius: var(--space-xs);
 }
 
 summary {
-  font-family: var(--font-tertiary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-primary);
   font-size: var(--font-2xs);
   color: var(--text-faded);
   padding: var(--space-s) var(--space-m);
@@ -1156,12 +1158,20 @@ summary::-webkit-details-marker {
   display: none;
 }
 
-summary::before {
-  content: "▸ ";
+summary::after {
+  content: "";
+  width: 0.5em;
+  height: 0.5em;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+  margin-left: var(--space-s);
 }
 
-details[open] > summary::before {
-  content: "▾ ";
+details[open] > summary::after {
+  transform: rotate(-135deg);
 }
 
 summary:hover {
@@ -1180,7 +1190,8 @@ details .disclosure-content {
   font-size: var(--font-2xs);
   line-height: var(--line-height-xl);
   color: var(--text-secondary);
-  border-top: var(--border-s) solid var(--border-faded);
+  background-color: var(--background-faded);
+  border-radius: var(--space-xs);
 }
 
 /* -- Disclosure table (key-value pairs) -- */
