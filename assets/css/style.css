@@ -605,24 +605,38 @@ html {
     display: none;
   }
 
+  /* Mobile: Home link separator */
+  .nav-home {
+    margin-bottom: 0;
+    padding-bottom: var(--space-s);
+    border-bottom: var(--border-s) solid var(--border-secondary);
+  }
+
   /* Mobile: Collapsible nav sections */
   .nav-section {
-    margin-bottom: var(--space-m);
-    padding: var(--space-s) var(--space-m);
-    background: var(--background-plain);
-    border: var(--border-s) solid var(--border-secondary);
-    border-radius: 4px;
-    transition: background-color 0.2s;
+    margin-bottom: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    border-bottom: var(--border-s) solid var(--border-secondary);
+    border-radius: 0;
+    transition: none;
+  }
+
+  .nav-section:last-of-type {
+    border-bottom: none;
   }
 
   .nav-section:hover {
-    background: var(--background-secondary);
+    background: none;
   }
 
   /* Toggle takes full width */
   .nav-section-toggle {
     width: 100%;
     margin-bottom: 0;
+    padding: var(--space-m) 0;
+    font-size: var(--font-xs);
   }
 
   /* Show/hide nav-list based on details open state */
@@ -632,12 +646,28 @@ html {
 
   .nav-section[open] .nav-list {
     display: block;
-    margin-top: var(--space-s);
+    margin-top: 0;
+    padding-bottom: var(--space-s);
+  }
+
+  /* Child links: full-width rows with bottom borders */
+  .nav-list li {
+    margin-top: 0;
   }
 
   .nav-link {
-    padding: var(--space-xs) 0;
+    padding: var(--space-s) var(--space-m);
     white-space: normal;
+    border-bottom: var(--border-s) solid var(--border-faded);
+    transition: color 0.2s;
+  }
+
+  .nav-list li:last-child .nav-link {
+    border-bottom: none;
+  }
+
+  .nav-link:hover {
+    color: var(--text-link);
   }
 
   /* Make grid single column on mobile */
