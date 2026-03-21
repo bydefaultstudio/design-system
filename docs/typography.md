@@ -45,11 +45,11 @@ Font size tokens define the typographic scale for all text elements. They scale 
 | `--font-2xs` | 12px | 12px |
 | `--font-xs` | 14px | 12px |
 | `--font-s` | 16px | 14px |
-| `--font-m` | 18px | 16px |
-| `--font-l` | 22px | 17px |
-| `--font-xl` | 28px | 18px |
-| `--font-2xl` | 32px | 20px |
-| `--font-3xl` | 40px | 24px |
+| `--font-m` | 18px | 17px |
+| `--font-l` | 22px | 19px |
+| `--font-xl` | 28px | 21px |
+| `--font-2xl` | 32px | 23px |
+| `--font-3xl` | 40px | 26px |
 | `--font-4xl` | 48px | 28px |
 | `--font-5xl` | 55px | 34px |
 | `--font-6xl` | 64px | 40px |
