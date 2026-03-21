@@ -233,15 +233,14 @@
   .markdown-body table {
     border-spacing: 0;
     border-collapse: collapse;
-    width: 100%;
-    min-width: 480px;
+    min-width: 100%;
+    width: max-content;
     font-variant: tabular-nums;
   }
 
 
   .markdown-body thead {
-    background-color: var(--background-faded);
-
+    background-color: transparent;
   }
   
   .markdown-body td,
@@ -564,26 +563,26 @@
   }
   
   .markdown-body table th {
-    font-weight: var(--font-weight-semi-bold);
+    font-weight: var(--font-weight-bold);
   }
   
   .markdown-body table th,
   .markdown-body table td {
     padding: var(--space-m) var(--space-l);
-    border: var(--border-s) solid var(--border-secondary);
+    border: none;
   }
   
   .markdown-body table td>:last-child {
     margin-bottom: 0;
   }
   
-  .markdown-body table tr {
-    /* background-color: var(--white-alpha-50); */
-    border-top: var(--border-s) solid var(--border-faded);
+  .markdown-body table thead tr {
+    border-top: var(--border-s) solid var(--border-secondary);
+    border-bottom: var(--border-s) solid var(--border-secondary);
   }
-  
-  .markdown-body table tr:nth-child(2n) {
-    /* background-color: var(--background-faded); */
+
+  .markdown-body table tbody tr {
+    border-bottom: var(--border-s) solid var(--border-faded);
   }
   
   .markdown-body table img {
