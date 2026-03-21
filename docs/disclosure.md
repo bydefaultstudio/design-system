@@ -65,7 +65,7 @@ The `<dt>` labels are styled with `--text-faded` and the `<dd>` values with `--t
 Add a `.copy-btn` inside `.disclosure-content` with a `data-copy` attribute containing the text to copy:
 
 ```html
-<button class="copy-btn"
+<button class="button is-small is-faded copy-btn"
   data-copy="font-size: var(--font-4xl);&#10;line-height: var(--line-height-s);"
   aria-label="Copy CSS for Heading 1">
   Copy CSS
@@ -100,7 +100,7 @@ document.addEventListener('click', function (event) {
 | `summary` (element) | Toggle trigger — monospace, faded color, pointer cursor |
 | `.disclosure-content` | Content wrapper — padding, border-top separator, monospace font |
 | `.disclosure-table` | Grid layout for key-value pairs (2-column: label + value) |
-| `.copy-btn` | Copy-to-clipboard button — accent color, faded background |
+| `.button.is-small.is-faded.copy-btn` | Copy-to-clipboard button — uses design system button with copy state |
 | `.copy-btn.is-copied` | Copied state — success color feedback |
 
 ---
