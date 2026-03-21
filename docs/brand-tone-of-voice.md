@@ -6,8 +6,6 @@ section: "Brand Book"
 order: 7
 ---
 
-# Tone of Voice
-
 ## One-screen cheat sheet (use this when you're writing)
 
 ### Brand voice (always true)

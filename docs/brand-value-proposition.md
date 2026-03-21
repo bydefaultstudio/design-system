@@ -6,6 +6,4 @@ section: "Brand Book"
 order: 5
 ---
 
-# Value Proposition
-
 We design culturally forward and strategically led digital brands and interactive experiences for publishers and brands.

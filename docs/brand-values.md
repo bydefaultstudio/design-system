@@ -6,8 +6,6 @@ section: "Brand Book"
 order: 2
 ---
 
-# Brand Values
-
 ## Alternative
 
 We don't follow the industry's default settings.
