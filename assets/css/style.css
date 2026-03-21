@@ -83,6 +83,111 @@ html {
 }
 
 
+/* ------ 2B. PAGE NAVIGATION (PREV / NEXT) ------ */
+
+.page-nav {
+  border-top: var(--border-s) solid var(--border-secondary);
+  margin-top: var(--space-3xl);
+}
+
+.page-nav-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-l);
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-2xl);
+}
+
+.page-nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  padding: var(--space-l) var(--space-xl);
+  border: var(--border-s) solid var(--border-faded);
+  border-radius: var(--radius-m);
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.page-nav-link:hover {
+  border-color: var(--border-primary);
+  background-color: var(--background-faded);
+}
+
+.page-nav-placeholder {
+  border: none;
+}
+
+.page-nav-next {
+  flex-direction: row-reverse;
+  text-align: right;
+  margin-left: auto;
+}
+
+.page-nav-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  min-width: 0;
+}
+
+.page-nav-label {
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-regular);
+}
+
+.page-nav-section {
+  font-size: var(--font-2xs);
+  color: var(--text-faded);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: var(--font-weight-medium);
+}
+
+.page-nav-title {
+  font-size: var(--font-m);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.page-nav-arrow {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  transition: color 0.15s ease;
+}
+
+.page-nav-link:hover .page-nav-arrow {
+  color: var(--text-primary);
+}
+
+/* -- Page nav responsive -- */
+
+@media (max-width: 768px) {
+  .page-nav-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .page-nav-next {
+    flex-direction: row;
+    text-align: left;
+    margin-left: 0;
+  }
+
+  .page-nav-title {
+    font-size: var(--font-s);
+  }
+}
+
+
 /* ------ 3. DOCS SIDEBAR ------ */
 
 /* position: sticky keeps the sidebar fixed in the viewport while
