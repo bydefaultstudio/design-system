@@ -6,8 +6,6 @@ section: "Brand Book"
 order: 6
 ---
 
-# Brand Personality
-
 ## Our Brand Archetype
 
 **The Creator**

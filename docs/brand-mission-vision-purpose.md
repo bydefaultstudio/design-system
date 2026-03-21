@@ -6,8 +6,6 @@ section: "Brand Book"
 order: 1
 ---
 
-# Mission, Vision & Purpose
-
 ## Mission
 
 **What do we do to achieve our ambition?**

@@ -6,8 +6,6 @@ section: "Brand Book"
 order: 3
 ---
 
-# Origin Story
-
 We started with a mission to create a workplace that works for our brains — not one that boxes us in.
 
 Both our co-founders are neurodivergent and are building a creative workplace that's neuro-affirmative and supportive. We have an in-house ADHD practitioner who helps creatives unlock their gifts or find strategies to organise and communicate their thinking.

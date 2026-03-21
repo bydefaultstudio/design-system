@@ -6,8 +6,6 @@ section: "Brand Book"
 order: 4
 ---
 
-# Positioning
-
 We think differently by default.
 
 By Default is the first-of-its-kind, neurodivergent-led digital agency redefining what creative thinking and doing looks like.
