@@ -86,6 +86,45 @@ The documentation is ready to use, but you may want to:
 
 ---
 
+## Cloud Development (GitHub Codespaces)
+
+This project includes a Dev Container configuration for cloud-based development using GitHub Codespaces. This lets you develop from any device — including a phone browser — without local setup.
+
+### Opening in Codespaces
+
+1. Go to the GitHub repository
+2. Click the green **Code** button → **Codespaces** tab → **Create codespace on main**
+3. The container builds automatically, installs docs dependencies, and opens VS Code in the browser
+
+### Connecting VS Code Desktop
+
+1. Install the [GitHub Codespaces extension](https://marketplace.visualstudio.com/items?itemName=GitHub.codespaces) in VS Code
+2. Open the Command Palette → **Codespaces: Connect to Codespace**
+3. Select your running codespace
+
+### Mobile Access
+
+Open your codespace from [github.com/codespaces](https://github.com/codespaces) on any mobile browser. The full VS Code editor runs in the browser.
+
+### Port Forwarding
+
+Two ports are forwarded automatically:
+
+| Port | Service | Purpose |
+|------|---------|---------|
+| 5501 | Live Server | HTML page preview (opens automatically) |
+| 8080 | Docs Server | Documentation site preview (`npm run serve` from `docs/generator/`) |
+
+When Live Server starts, the browser preview opens automatically. For the docs server, run:
+
+```bash
+cd docs/generator && npm run serve
+```
+
+The forwarded URL appears in the **Ports** tab of the VS Code terminal panel.
+
+---
+
 ## Quick Checklist
 
 - [ ] Update brand colors in `brand-book/brand-book.css`
@@ -94,6 +133,7 @@ The documentation is ready to use, but you may want to:
 - [ ] Fill in `PROJECT_BRIEF.md`
 - [ ] Update Google Fonts links (if applicable)
 - [ ] Review and customize documentation
+- [ ] (Optional) Open in GitHub Codespaces for cloud development
 
 ---
 

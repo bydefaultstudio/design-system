@@ -40,7 +40,8 @@ The core restructure: split the monolithic `src/css/design-system.css` into two 
 - [x] Regenerate docs after all md updates
 - [x] Add smooth scroll for anchor links in docs site (already existed in docs.css)
 - [ ] Commit all changes and push to GitHub
-- [ ] Set up VS Code Live Server to serve from project root (`.vscode/settings.json`)
+- [x] Set up VS Code Live Server to serve from project root (`.vscode/settings.json`)
+- [x] Set up GitHub Codespaces / Dev Container configuration (`.devcontainer/devcontainer.json`)
 
 ---
 

@@ -182,10 +182,10 @@
 <p><strong>Example:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-x7a3aegyo" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-ewizxokkx" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-x7a3aegyo" class="language-css">/* brand-book/brand-book.css */
+        <pre><code id="code-ewizxokkx" class="language-css">/* brand-book/brand-book.css */
 :root {
   --brand-color-accent: #0066cc;
   --brand-color-dark: #1a1a1a;
@@ -240,6 +240,55 @@
 <li>Add or remove documentation pages as needed</li>
 </ul>
 <hr>
+<h2 id="cloud-development-github-codespaces">Cloud Development (GitHub Codespaces)</h2>
+<p>This project includes a Dev Container configuration for cloud-based development using GitHub Codespaces. This lets you develop from any device — including a phone browser — without local setup.</p>
+<h3 id="opening-in-codespaces">Opening in Codespaces</h3>
+<ol>
+<li>Go to the GitHub repository</li>
+<li>Click the green <strong>Code</strong> button → <strong>Codespaces</strong> tab → <strong>Create codespace on main</strong></li>
+<li>The container builds automatically, installs docs dependencies, and opens VS Code in the browser</li>
+</ol>
+<h3 id="connecting-vs-code-desktop">Connecting VS Code Desktop</h3>
+<ol>
+<li>Install the <a href="https://marketplace.visualstudio.com/items?itemName=GitHub.codespaces" target="_blank" rel="noopener noreferrer">GitHub Codespaces extension</a> in VS Code</li>
+<li>Open the Command Palette → <strong>Codespaces: Connect to Codespace</strong></li>
+<li>Select your running codespace</li>
+</ol>
+<h3 id="mobile-access">Mobile Access</h3>
+<p>Open your codespace from <a href="https://github.com/codespaces" target="_blank" rel="noopener noreferrer">github.com/codespaces</a> on any mobile browser. The full VS Code editor runs in the browser.</p>
+<h3 id="port-forwarding">Port Forwarding</h3>
+<p>Two ports are forwarded automatically:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Service</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>5501</td>
+<td>Live Server</td>
+<td>HTML page preview (opens automatically)</td>
+</tr>
+<tr>
+<td>8080</td>
+<td>Docs Server</td>
+<td>Documentation site preview (<code>npm run serve</code> from <code>docs/generator/</code>)</td>
+</tr>
+</tbody></table></div>
+<p>When Live Server starts, the browser preview opens automatically. For the docs server, run:</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-28irg6p6l" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-28irg6p6l" class="language-bash">cd docs/generator &amp;&amp; npm run serve
+</code></pre>
+      </div>
+    
+<p>The forwarded URL appears in the <strong>Ports</strong> tab of the VS Code terminal panel.</p>
+<hr>
 <h2 id="quick-checklist">Quick Checklist</h2>
 <ul>
 <li><input disabled="" type="checkbox"> Update brand colors in <code>brand-book/brand-book.css</code></li>
@@ -248,6 +297,7 @@
 <li><input disabled="" type="checkbox"> Fill in <code>PROJECT_BRIEF.md</code></li>
 <li><input disabled="" type="checkbox"> Update Google Fonts links (if applicable)</li>
 <li><input disabled="" type="checkbox"> Review and customize documentation</li>
+<li><input disabled="" type="checkbox"> (Optional) Open in GitHub Codespaces for cloud development</li>
 </ul>
 <hr>
 <h2 id="next-steps">Next Steps</h2>
@@ -264,7 +314,7 @@
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#brand-colors" class="toc-link">Brand Colors</a></li><li class="toc-item toc-level-2"><a href="#fonts" class="toc-link">Fonts</a></li><li class="toc-item toc-level-2"><a href="#logo" class="toc-link">Logo</a></li><li class="toc-item toc-level-2"><a href="#project-brief" class="toc-link">Project Brief</a></li><li class="toc-item toc-level-2"><a href="#meta-tags-amp-seo" class="toc-link">Meta Tags &amp; SEO</a></li><li class="toc-item toc-level-2"><a href="#documentation" class="toc-link">Documentation</a></li><li class="toc-item toc-level-2"><a href="#quick-checklist" class="toc-link">Quick Checklist</a></li><li class="toc-item toc-level-2"><a href="#next-steps" class="toc-link">Next Steps</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#brand-colors" class="toc-link">Brand Colors</a></li><li class="toc-item toc-level-2"><a href="#fonts" class="toc-link">Fonts</a></li><li class="toc-item toc-level-2"><a href="#logo" class="toc-link">Logo</a></li><li class="toc-item toc-level-2"><a href="#project-brief" class="toc-link">Project Brief</a></li><li class="toc-item toc-level-2"><a href="#meta-tags-amp-seo" class="toc-link">Meta Tags &amp; SEO</a></li><li class="toc-item toc-level-2"><a href="#documentation" class="toc-link">Documentation</a></li><li class="toc-item toc-level-2"><a href="#cloud-development-github-codespaces" class="toc-link">Cloud Development (GitHub Codespaces)</a></li><li class="toc-item toc-level-2"><a href="#quick-checklist" class="toc-link">Quick Checklist</a></li><li class="toc-item toc-level-2"><a href="#next-steps" class="toc-link">Next Steps</a></li></ul></nav></div>
     </aside>
             </div>
             

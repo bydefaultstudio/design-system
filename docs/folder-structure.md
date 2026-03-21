@@ -24,6 +24,7 @@ Do not add new top-level folders without updating this file.
 - `templates/` → Component and page templates
 - `docs/` → Documentation markdown source and generator
 - `src/` → Source files (pages, JS)
+- `.devcontainer/` → Dev Container config for GitHub Codespaces
 
 ## assets/
 
