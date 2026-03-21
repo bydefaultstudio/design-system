@@ -13,7 +13,7 @@ module.exports = {
   brandCssPath: 'brand-book/brand-book.css',
 
   // Google Fonts URL — set to null to disable
-  googleFontsUrl: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap',
+  googleFontsUrl: 'https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap',
 
   // Footer text
   footerText: '© 2026 By Default BrandOS',
