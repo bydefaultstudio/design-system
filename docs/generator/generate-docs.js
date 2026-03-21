@@ -190,7 +190,7 @@ function generateNavigation(filesBySection, currentPage = null) {
   `;
   
   // Sort sections in custom order
-  const sectionOrder = ['Design System', 'Code', 'Content', 'Project'];
+  const sectionOrder = ['Brand Book', 'Design System', 'Code', 'Content', 'Project'];
   const sortedSections = Object.keys(filesBySection).sort((a, b) => {
     const indexA = sectionOrder.indexOf(a);
     const indexB = sectionOrder.indexOf(b);
@@ -245,10 +245,10 @@ function generateNavigation(filesBySection, currentPage = null) {
       `;
     }
 
-    // Add Brand Book link inside the Brand section (or Design System if no Brand section)
-    if (section === 'Brand' || (section === 'Design System' && !filesBySection['Brand'])) {
+    // Add Brand Book Preview link inside the Brand Book section
+    if (section === 'Brand Book') {
       navigation += `
-        <li><a href="brand-book/index.html" class="nav-link">Brand Book</a></li>
+        <li><a href="brand-book/index.html" class="nav-link">Brand Book Preview</a></li>
       `;
     }
 
@@ -266,7 +266,7 @@ function generateNavigation(filesBySection, currentPage = null) {
 function generateIndexPage(template, navigation, filesBySection) {
   let cards = '';
   
-  const sectionOrder = ['Design System', 'Code', 'Content', 'Project'];
+  const sectionOrder = ['Brand Book', 'Design System', 'Code', 'Content', 'Project'];
   const sortedSections = Object.keys(filesBySection).sort((a, b) => {
     const indexA = sectionOrder.indexOf(a);
     const indexB = sectionOrder.indexOf(b);
@@ -275,21 +275,21 @@ function generateIndexPage(template, navigation, filesBySection) {
     if (indexB !== -1) return 1;
     return a.localeCompare(b);
   });
-  
+
   for (const section of sortedSections) {
     const files = filesBySection[section];
-    
+
     files.sort((a, b) => {
       const orderA = a.frontmatter.order || 999;
       const orderB = b.frontmatter.order || 999;
       if (orderA !== orderB) return orderA - orderB;
       return a.title.localeCompare(b.title);
     });
-    
+
     cards += `<div class="docs-section">
       <h2 class="eyebrow">${section}</h2>
       <div class="grid cols-3 gap-xl">`;
-    
+
     for (const file of files) {
       cards += `
         <a href="${file.htmlPath}" class="docs-card">
@@ -298,7 +298,17 @@ function generateIndexPage(template, navigation, filesBySection) {
         </a>
       `;
     }
-    
+
+    // Add Brand Book Preview card at the end of the Brand Book section
+    if (section === 'Brand Book') {
+      cards += `
+        <a href="brand-book/index.html" class="docs-card">
+          <h3 class="docs-card-title">Brand Book Preview</h3>
+          <p class="docs-card-subtitle">Visual brand identity — logo, palette, typography, and icons</p>
+        </a>
+      `;
+    }
+
     cards += `
       </div>
     </div>`;
@@ -331,7 +341,7 @@ function generateIndexPage(template, navigation, filesBySection) {
  * Build a flat ordered list of all pages following the nav order
  */
 function buildPageOrder(filesBySection) {
-  const sectionOrder = ['Design System', 'Code', 'Content', 'Project'];
+  const sectionOrder = ['Brand Book', 'Design System', 'Code', 'Content', 'Project'];
   const sortedSections = Object.keys(filesBySection).sort((a, b) => {
     const indexA = sectionOrder.indexOf(a);
     const indexB = sectionOrder.indexOf(b);
