@@ -55,7 +55,7 @@ All standard text input types are styled globally:
 <input type="tel" placeholder="Phone">
 ```
 
-**Properties:** full width, consistent padding, border from `--input-border`, smooth focus transition.
+**Properties:** full width, `font-size: var(--font-m)` (matches body text), `padding: var(--space-m) var(--space-l)`, border from `--input-border`, smooth focus transition.
 
 ---
 
