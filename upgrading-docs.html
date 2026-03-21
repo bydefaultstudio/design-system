@@ -203,10 +203,10 @@
 </ol>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-oshhbxhcw" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-iektlrjyx" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-oshhbxhcw" class="language-bash">cd docs/generator
+        <pre><code id="code-iektlrjyx" class="language-bash">cd docs/generator
 npm install
 npm run docgen
 </code></pre>
@@ -220,10 +220,10 @@ npm run docgen
 <p>Edit <code>docs/docs.config.js</code> in the project:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-2hfc9u4ic" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-jm4bsytc8" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-2hfc9u4ic" class="language-js">module.exports = {
+        <pre><code id="code-jm4bsytc8" class="language-js">module.exports = {
   // Path to design system CSS, relative from project root
   designSystemPath: &#39;../../design-system/design-system.css&#39;,
 
@@ -263,10 +263,10 @@ npm run docgen
 <p>Run these from inside <code>docs/generator/</code>:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-t0hp1t2xo" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-7lsxoclq2" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-t0hp1t2xo" class="language-bash">npm run docgen     # Generate HTML from markdown
+        <pre><code id="code-7lsxoclq2" class="language-bash">npm run docgen     # Generate HTML from markdown
 npm run serve      # View locally in browser
 npm run docwatch   # Auto-regenerate on markdown changes
 npm run docfull    # Generate + serve + watch (all at once)
@@ -341,7 +341,6 @@ npm run docfull    # Generate + serve + watch (all at once)
             
             function initSidebarToggle() {
                 var SIDEBAR_KEY = 'docs-sidebar-collapsed';
-                var MOBILE_NAV_KEY = 'docs-mobile-nav-open';
                 var container = document.querySelector('.docs-container');
                 var sidebarToggle = document.querySelector('.docs-sidebar-toggle');
                 var mobileToggle = document.querySelector('.docs-mobile-toggle');
@@ -352,12 +351,6 @@ npm run docfull    # Generate + serve + watch (all at once)
                 if (localStorage.getItem(SIDEBAR_KEY) === 'true') {
                     container.classList.add('sidebar-collapsed');
                     if (sidebarToggle) sidebarToggle.setAttribute('aria-label', 'Expand sidebar');
-                }
-
-                // Restore mobile nav state
-                if (localStorage.getItem(MOBILE_NAV_KEY) === 'true') {
-                    container.classList.add('mobile-nav-open');
-                    if (mobileToggle) mobileToggle.setAttribute('aria-label', 'Close navigation');
                 }
 
                 if (sidebarToggle) {
@@ -371,7 +364,6 @@ npm run docfull    # Generate + serve + watch (all at once)
                 if (mobileToggle) {
                     mobileToggle.addEventListener('click', function onMobileToggle() {
                         var isOpen = container.classList.toggle('mobile-nav-open');
-                        localStorage.setItem(MOBILE_NAV_KEY, isOpen);
                         mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
                     });
                 }

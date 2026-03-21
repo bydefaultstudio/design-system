@@ -176,10 +176,10 @@
 <p>Every JavaScript file should follow this organizational pattern:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-xel3w50xm" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-iqd57owl6" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-xel3w50xm" class="language-js">/**
+        <pre><code id="code-iqd57owl6" class="language-js">/**
  * Script Purpose: [Brief description]
  * Author: [Your Name]
  * Created: [Date]
@@ -242,10 +242,10 @@ document.addEventListener(&quot;DOMContentLoaded&quot;, () =&gt; {
 <p>Use clear headers when grouping similar functions:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-sdt5x13g0" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-wspblslol" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-sdt5x13g0" class="language-js">//
+        <pre><code id="code-wspblslol" class="language-js">//
 //------- Section Name -------//
 //
 </code></pre>
@@ -254,10 +254,10 @@ document.addEventListener(&quot;DOMContentLoaded&quot;, () =&gt; {
 <p>For standalone functions, use simple comments:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-8ns2cuzmg" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-3622m7jm5" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-8ns2cuzmg" class="language-js">// Function Name
+        <pre><code id="code-3622m7jm5" class="language-js">// Function Name
 function doSomething() {
   // ... implementation
 }
@@ -399,7 +399,6 @@ function doSomething() {
             
             function initSidebarToggle() {
                 var SIDEBAR_KEY = 'docs-sidebar-collapsed';
-                var MOBILE_NAV_KEY = 'docs-mobile-nav-open';
                 var container = document.querySelector('.docs-container');
                 var sidebarToggle = document.querySelector('.docs-sidebar-toggle');
                 var mobileToggle = document.querySelector('.docs-mobile-toggle');
@@ -410,12 +409,6 @@ function doSomething() {
                 if (localStorage.getItem(SIDEBAR_KEY) === 'true') {
                     container.classList.add('sidebar-collapsed');
                     if (sidebarToggle) sidebarToggle.setAttribute('aria-label', 'Expand sidebar');
-                }
-
-                // Restore mobile nav state
-                if (localStorage.getItem(MOBILE_NAV_KEY) === 'true') {
-                    container.classList.add('mobile-nav-open');
-                    if (mobileToggle) mobileToggle.setAttribute('aria-label', 'Close navigation');
                 }
 
                 if (sidebarToggle) {
@@ -429,7 +422,6 @@ function doSomething() {
                 if (mobileToggle) {
                     mobileToggle.addEventListener('click', function onMobileToggle() {
                         var isOpen = container.classList.toggle('mobile-nav-open');
-                        localStorage.setItem(MOBILE_NAV_KEY, isOpen);
                         mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
                     });
                 }

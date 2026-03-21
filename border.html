@@ -215,10 +215,10 @@
 <h4 id="example">Example</h4>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-e6ue0twyg" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-d13m8nok3" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-e6ue0twyg" class="language-html">&lt;section class=&quot;border-bottom&quot;&gt;
+        <pre><code id="code-d13m8nok3" class="language-html">&lt;section class=&quot;border-bottom&quot;&gt;
   &lt;!-- Content with bottom border --&gt;
 &lt;/section&gt;
 </code></pre>
@@ -254,10 +254,10 @@
 <h4 id="example">Example</h4>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-tdyhnnzlz" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-hryuppn3j" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-tdyhnnzlz" class="language-html">&lt;div class=&quot;border border-m&quot;&gt;
+        <pre><code id="code-hryuppn3j" class="language-html">&lt;div class=&quot;border border-m&quot;&gt;
   &lt;!-- Content with medium border on all sides --&gt;
 &lt;/div&gt;
 </code></pre>
@@ -293,10 +293,10 @@
 <h4 id="example">Example</h4>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-knb5jpe4b" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-dy6yis5ze" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-knb5jpe4b" class="language-html">&lt;div class=&quot;border border-dashed&quot;&gt;
+        <pre><code id="code-dy6yis5ze" class="language-html">&lt;div class=&quot;border border-dashed&quot;&gt;
   &lt;!-- Content with dashed border --&gt;
 &lt;/div&gt;
 </code></pre>
@@ -332,10 +332,10 @@
 <h4 id="example">Example</h4>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-g0op75rmc" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-r5yuhujv6" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-g0op75rmc" class="language-html">&lt;div class=&quot;border border-secondary&quot;&gt;
+        <pre><code id="code-r5yuhujv6" class="language-html">&lt;div class=&quot;border border-secondary&quot;&gt;
   &lt;!-- Content with subtle border --&gt;
 &lt;/div&gt;
 </code></pre>
@@ -419,7 +419,6 @@
             
             function initSidebarToggle() {
                 var SIDEBAR_KEY = 'docs-sidebar-collapsed';
-                var MOBILE_NAV_KEY = 'docs-mobile-nav-open';
                 var container = document.querySelector('.docs-container');
                 var sidebarToggle = document.querySelector('.docs-sidebar-toggle');
                 var mobileToggle = document.querySelector('.docs-mobile-toggle');
@@ -430,12 +429,6 @@
                 if (localStorage.getItem(SIDEBAR_KEY) === 'true') {
                     container.classList.add('sidebar-collapsed');
                     if (sidebarToggle) sidebarToggle.setAttribute('aria-label', 'Expand sidebar');
-                }
-
-                // Restore mobile nav state
-                if (localStorage.getItem(MOBILE_NAV_KEY) === 'true') {
-                    container.classList.add('mobile-nav-open');
-                    if (mobileToggle) mobileToggle.setAttribute('aria-label', 'Close navigation');
                 }
 
                 if (sidebarToggle) {
@@ -449,7 +442,6 @@
                 if (mobileToggle) {
                     mobileToggle.addEventListener('click', function onMobileToggle() {
                         var isOpen = container.classList.toggle('mobile-nav-open');
-                        localStorage.setItem(MOBILE_NAV_KEY, isOpen);
                         mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
                     });
                 }

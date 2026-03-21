@@ -313,7 +313,6 @@
             
             function initSidebarToggle() {
                 var SIDEBAR_KEY = 'docs-sidebar-collapsed';
-                var MOBILE_NAV_KEY = 'docs-mobile-nav-open';
                 var container = document.querySelector('.docs-container');
                 var sidebarToggle = document.querySelector('.docs-sidebar-toggle');
                 var mobileToggle = document.querySelector('.docs-mobile-toggle');
@@ -324,12 +323,6 @@
                 if (localStorage.getItem(SIDEBAR_KEY) === 'true') {
                     container.classList.add('sidebar-collapsed');
                     if (sidebarToggle) sidebarToggle.setAttribute('aria-label', 'Expand sidebar');
-                }
-
-                // Restore mobile nav state
-                if (localStorage.getItem(MOBILE_NAV_KEY) === 'true') {
-                    container.classList.add('mobile-nav-open');
-                    if (mobileToggle) mobileToggle.setAttribute('aria-label', 'Close navigation');
                 }
 
                 if (sidebarToggle) {
@@ -343,7 +336,6 @@
                 if (mobileToggle) {
                     mobileToggle.addEventListener('click', function onMobileToggle() {
                         var isOpen = container.classList.toggle('mobile-nav-open');
-                        localStorage.setItem(MOBILE_NAV_KEY, isOpen);
                         mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
                     });
                 }

@@ -236,10 +236,10 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-psv3bqikn" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-nzhl3gti4" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-psv3bqikn" class="language-css">h1 {
+        <pre><code id="code-nzhl3gti4" class="language-css">h1 {
   font-size: var(--font-3xl);
 }
 
@@ -289,10 +289,10 @@ p {
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-z5dnn40r5" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-lhnacs2uy" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-z5dnn40r5" class="language-css">h1 {
+        <pre><code id="code-lhnacs2uy" class="language-css">h1 {
   line-height: var(--line-height-s);
 }
 
@@ -352,10 +352,10 @@ p {
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-30htnu6rm" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-ssc8g2r8s" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-30htnu6rm" class="language-css">body {
+        <pre><code id="code-ssc8g2r8s" class="language-css">body {
   font-weight: var(--font-weight-regular);
 }
 
@@ -400,10 +400,10 @@ h1 {
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-ev8d9nz7t" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-7ukcwtvbn" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-ev8d9nz7t" class="language-css">.eyebrow {
+        <pre><code id="code-7ukcwtvbn" class="language-css">.eyebrow {
   letter-spacing: var(--letter-spacing-m);
 }
 </code></pre>
@@ -474,7 +474,6 @@ h1 {
             
             function initSidebarToggle() {
                 var SIDEBAR_KEY = 'docs-sidebar-collapsed';
-                var MOBILE_NAV_KEY = 'docs-mobile-nav-open';
                 var container = document.querySelector('.docs-container');
                 var sidebarToggle = document.querySelector('.docs-sidebar-toggle');
                 var mobileToggle = document.querySelector('.docs-mobile-toggle');
@@ -485,12 +484,6 @@ h1 {
                 if (localStorage.getItem(SIDEBAR_KEY) === 'true') {
                     container.classList.add('sidebar-collapsed');
                     if (sidebarToggle) sidebarToggle.setAttribute('aria-label', 'Expand sidebar');
-                }
-
-                // Restore mobile nav state
-                if (localStorage.getItem(MOBILE_NAV_KEY) === 'true') {
-                    container.classList.add('mobile-nav-open');
-                    if (mobileToggle) mobileToggle.setAttribute('aria-label', 'Close navigation');
                 }
 
                 if (sidebarToggle) {
@@ -504,7 +497,6 @@ h1 {
                 if (mobileToggle) {
                     mobileToggle.addEventListener('click', function onMobileToggle() {
                         var isOpen = container.classList.toggle('mobile-nav-open');
-                        localStorage.setItem(MOBILE_NAV_KEY, isOpen);
                         mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
                     });
                 }

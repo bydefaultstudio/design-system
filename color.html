@@ -198,10 +198,10 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-0yyisubok" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-nmgytxdiy" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-0yyisubok" class="language-css">:root {
+        <pre><code id="code-nmgytxdiy" class="language-css">:root {
   /* You can use default names or rename tokens to match your brand */
   --brand-dark: #1a1a1a; /* Replace with your brand color */
   
@@ -273,10 +273,10 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-ud0g8wuyh" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-pttpq8pna" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-ud0g8wuyh" class="language-css">.shadow {
+        <pre><code id="code-pttpq8pna" class="language-css">.shadow {
   box-shadow: 0 4px 6px var(--black-alpha-30);
 }
 </code></pre>
@@ -336,10 +336,10 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-5fhm58uxq" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-zaccoh9lz" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-5fhm58uxq" class="language-css">.highlight {
+        <pre><code id="code-zaccoh9lz" class="language-css">.highlight {
   background-color: var(--white-alpha-30);
 }
 </code></pre>
@@ -406,10 +406,10 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-51oej0lmu" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-q6pldpcmm" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-51oej0lmu" class="language-css">.text {
+        <pre><code id="code-q6pldpcmm" class="language-css">.text {
   color: var(--neutral-800);
 }
 </code></pre>
@@ -461,10 +461,10 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-jmm9snwrg" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-50i8builr" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-jmm9snwrg" class="language-css">h1 {
+        <pre><code id="code-50i8builr" class="language-css">h1 {
   color: var(--text-primary);
 }
 </code></pre>
@@ -503,10 +503,10 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-44r1kpnej" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-rz0enghny" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-44r1kpnej" class="language-css">.card {
+        <pre><code id="code-rz0enghny" class="language-css">.card {
   background-color: var(--background-plain);
 }
 </code></pre>
@@ -540,10 +540,10 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-vy7hs7zux" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-nf2z0du69" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-vy7hs7zux" class="language-css">.card {
+        <pre><code id="code-nf2z0du69" class="language-css">.card {
   border-color: var(--border-primary);
 }
 </code></pre>
@@ -614,7 +614,6 @@
             
             function initSidebarToggle() {
                 var SIDEBAR_KEY = 'docs-sidebar-collapsed';
-                var MOBILE_NAV_KEY = 'docs-mobile-nav-open';
                 var container = document.querySelector('.docs-container');
                 var sidebarToggle = document.querySelector('.docs-sidebar-toggle');
                 var mobileToggle = document.querySelector('.docs-mobile-toggle');
@@ -625,12 +624,6 @@
                 if (localStorage.getItem(SIDEBAR_KEY) === 'true') {
                     container.classList.add('sidebar-collapsed');
                     if (sidebarToggle) sidebarToggle.setAttribute('aria-label', 'Expand sidebar');
-                }
-
-                // Restore mobile nav state
-                if (localStorage.getItem(MOBILE_NAV_KEY) === 'true') {
-                    container.classList.add('mobile-nav-open');
-                    if (mobileToggle) mobileToggle.setAttribute('aria-label', 'Close navigation');
                 }
 
                 if (sidebarToggle) {
@@ -644,7 +637,6 @@
                 if (mobileToggle) {
                     mobileToggle.addEventListener('click', function onMobileToggle() {
                         var isOpen = container.classList.toggle('mobile-nav-open');
-                        localStorage.setItem(MOBILE_NAV_KEY, isOpen);
                         mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
                     });
                 }
