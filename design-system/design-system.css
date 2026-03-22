@@ -602,12 +602,33 @@ section {
   align-items: flex-end;
 }
 
-.color-block {
+/* -- Color table (styleguide) -- */
+.color-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.color-table th {
+  text-align: left;
+  font-weight: var(--font-weight-semi-bold);
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
+  padding: var(--space-s) var(--space-m);
+  border-bottom: var(--border-s) solid var(--border-secondary);
+}
+
+.color-table td {
+  padding: var(--space-m);
+  border-bottom: var(--border-s) solid var(--border-faded);
+  vertical-align: middle;
+  font-size: var(--font-s);
+}
+
+.color-swatch {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--space-2xs);
   border: var(--border-s) solid var(--border-faded);
-  aspect-ratio: 1/1;
-  height: 100%;
-  width: fit-content;
-  max-height: 100px;
 }
 
 /* ------ 7. GRID ------ */
