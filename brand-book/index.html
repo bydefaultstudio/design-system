@@ -75,37 +75,30 @@
 
               <span class="token-tag">Brand Colours</span>
               <div class="grid cols-3 gap-m">
-                <div class="block gap-xs">
-                  <div class="color-block" style="background-color: var(--brand-color-accent); max-height: none; width: 100%; aspect-ratio: auto; height: 120px;"></div>
-                  <span class="token-tag">--brand-color-accent</span>
+                <div class="color-list border border-faded" style="border-radius: var(--space-xs);">
+                  <div class="color-row" style="background-color: var(--brand-color-accent); min-height: 120px;" data-token="--brand-color-accent"><span class="color-row-name">brand-color-accent</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="rgb" aria-label="Copy RGB value">RGB</button></span></div>
                 </div>
-                <div class="block gap-xs">
-                  <div class="color-block" style="background-color: var(--brand-color-dark); max-height: none; width: 100%; aspect-ratio: auto; height: 120px;"></div>
-                  <span class="token-tag">--brand-color-dark</span>
+                <div class="color-list border border-faded" style="border-radius: var(--space-xs);">
+                  <div class="color-row" style="background-color: var(--brand-color-dark); min-height: 120px;" data-token="--brand-color-dark"><span class="color-row-name">brand-color-dark</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="rgb" aria-label="Copy RGB value">RGB</button></span></div>
                 </div>
-                <div class="block gap-xs">
-                  <div class="color-block" style="background-color: var(--brand-color-light); max-height: none; width: 100%; aspect-ratio: auto; height: 120px;"></div>
-                  <span class="token-tag">--brand-color-light</span>
+                <div class="color-list border border-faded" style="border-radius: var(--space-xs);">
+                  <div class="color-row" style="background-color: var(--brand-color-light); min-height: 120px;" data-token="--brand-color-light"><span class="color-row-name">brand-color-light</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="rgb" aria-label="Copy RGB value">RGB</button></span></div>
                 </div>
               </div>
 
               <span class="token-tag">Semantic Usage (via Design System)</span>
               <div class="grid cols-4 gap-m">
-                <div class="block gap-xs">
-                  <div class="color-block" style="background-color: var(--text-primary); max-height: none; width: 100%; aspect-ratio: auto; height: 60px;"></div>
-                  <span class="token-tag">--text-primary</span>
+                <div class="color-list border border-faded" style="border-radius: var(--space-xs);">
+                  <div class="color-row" style="background-color: var(--text-primary); min-height: 60px;" data-token="--text-primary"><span class="color-row-name">text-primary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="rgb" aria-label="Copy RGB value">RGB</button></span></div>
                 </div>
-                <div class="block gap-xs">
-                  <div class="color-block" style="background-color: var(--text-link); max-height: none; width: 100%; aspect-ratio: auto; height: 60px;"></div>
-                  <span class="token-tag">--text-link</span>
+                <div class="color-list border border-faded" style="border-radius: var(--space-xs);">
+                  <div class="color-row" style="background-color: var(--text-link); min-height: 60px;" data-token="--text-link"><span class="color-row-name">text-link</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="rgb" aria-label="Copy RGB value">RGB</button></span></div>
                 </div>
-                <div class="block gap-xs">
-                  <div class="color-block" style="background-color: var(--background-secondary); max-height: none; width: 100%; aspect-ratio: auto; height: 60px;"></div>
-                  <span class="token-tag">--background-secondary</span>
+                <div class="color-list border border-faded" style="border-radius: var(--space-xs);">
+                  <div class="color-row" style="background-color: var(--background-secondary); min-height: 60px;" data-token="--background-secondary"><span class="color-row-name">background-secondary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="rgb" aria-label="Copy RGB value">RGB</button></span></div>
                 </div>
-                <div class="block gap-xs">
-                  <div class="color-block" style="background-color: var(--button-primary); max-height: none; width: 100%; aspect-ratio: auto; height: 60px;"></div>
-                  <span class="token-tag">--button-primary</span>
+                <div class="color-list border border-faded" style="border-radius: var(--space-xs);">
+                  <div class="color-row" style="background-color: var(--button-primary); min-height: 60px;" data-token="--button-primary"><span class="color-row-name">button-primary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="rgb" aria-label="Copy RGB value">RGB</button></span></div>
                 </div>
               </div>
             </div>
@@ -184,6 +177,84 @@
 
     </div>
   </div>
+
+  <script>
+    /* Color palette: parse RGB, convert, copy, and set text contrast */
+    function parseRgb(color) {
+      var match = color.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*([\d.]+))?\s*\)/);
+      if (!match) return null;
+      return {
+        r: parseInt(match[1], 10),
+        g: parseInt(match[2], 10),
+        b: parseInt(match[3], 10),
+        a: match[4] !== undefined ? parseFloat(match[4]) : 1
+      };
+    }
+
+    function rgbToHex(c) {
+      var hex = '#' + ((1 << 24) + (c.r << 16) + (c.g << 8) + c.b).toString(16).slice(1);
+      if (c.a < 1) {
+        hex += Math.round(c.a * 255).toString(16).padStart(2, '0');
+      }
+      return hex;
+    }
+
+    function rgbToString(c) {
+      if (c.a < 1) return 'rgba(' + c.r + ', ' + c.g + ', ' + c.b + ', ' + c.a + ')';
+      return 'rgb(' + c.r + ', ' + c.g + ', ' + c.b + ')';
+    }
+
+    function luminance(r, g, b) {
+      var a = [r, g, b].map(function (v) {
+        v /= 255;
+        return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+      });
+      return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+    }
+
+    function handleColorCopyClick(event) {
+      var btn = event.target.closest('.color-copy-btn');
+      if (!btn) return;
+
+      var row = btn.closest('.color-row');
+      var token = row.getAttribute('data-token');
+      var computed = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
+      var rgb = parseRgb(computed);
+      if (!rgb) return;
+
+      var format = btn.getAttribute('data-format');
+      var text = format === 'hex' ? rgbToHex(rgb) : rgbToString(rgb);
+      var originalText = btn.textContent;
+
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = text;
+        setTimeout(function () {
+          btn.textContent = originalText;
+        }, 1500);
+      });
+    }
+
+    document.addEventListener('click', handleColorCopyClick);
+
+    /* Set text color for contrast on each color row */
+    function initColorRowContrast() {
+      var rows = document.querySelectorAll('.color-row');
+      var styles = getComputedStyle(document.documentElement);
+
+      rows.forEach(function (row) {
+        var token = row.getAttribute('data-token');
+        var computed = styles.getPropertyValue(token).trim();
+        var rgb = parseRgb(computed);
+        if (!rgb) return;
+
+        var lum = luminance(rgb.r, rgb.g, rgb.b);
+        var isDark = lum < 0.4;
+        row.style.color = isDark ? '#ffffff' : '#000000';
+      });
+    }
+
+    initColorRowContrast();
+  </script>
 
 </body>
 
