@@ -6,10 +6,6 @@ section: "Code"
 order: 2
 ---
 
-> Claude: Treat this document as authoritative.
-
-> Claude: Follow these rules when writing or modifying JavaScript.
-
 ## Overview
 
 This structure ensures readable, modular, and maintainable JavaScript with clear organization.

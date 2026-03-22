@@ -6,10 +6,6 @@ section: "Code"
 order: 3
 ---
 
-> Claude: Treat this document as authoritative.
-
-> Claude: Follow these rules when writing or modifying CSS.
-
 ## Overview
 
 This guide ensures:
