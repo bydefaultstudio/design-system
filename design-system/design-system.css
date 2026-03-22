@@ -602,33 +602,46 @@ section {
   align-items: flex-end;
 }
 
-/* -- Color table (styleguide) -- */
-.color-table {
-  width: 100%;
-  border-collapse: collapse;
+/* -- Color palette (styleguide) -- */
+.color-list {
+  overflow: hidden;
 }
 
-.color-table th {
-  text-align: left;
-  font-weight: var(--font-weight-semi-bold);
-  font-size: var(--font-xs);
-  color: var(--text-secondary);
-  padding: var(--space-s) var(--space-m);
-  border-bottom: var(--border-s) solid var(--border-secondary);
-}
-
-.color-table td {
-  padding: var(--space-m);
-  border-bottom: var(--border-s) solid var(--border-faded);
-  vertical-align: middle;
+.color-row {
+  display: flex;
+  align-items: center;
+  padding: var(--space-m) var(--space-l);
   font-size: var(--font-s);
+  font-weight: var(--font-weight-medium);
+  cursor: default;
+  position: relative;
 }
 
-.color-swatch {
-  width: 40px;
-  height: 40px;
+.color-row-name {
+  pointer-events: none;
+}
+
+.color-row-actions {
+  display: none;
+  gap: var(--space-s);
+  margin-left: auto;
+}
+
+.color-row:hover .color-row-actions,
+.color-row:focus-within .color-row-actions {
+  display: flex;
+}
+
+.color-copy-btn {
+  background: none;
+  border: none;
+  font-size: var(--font-xs);
+  font-weight: var(--font-weight-semi-bold);
+  cursor: pointer;
+  padding: var(--space-2xs) var(--space-s);
   border-radius: var(--space-2xs);
-  border: var(--border-s) solid var(--border-faded);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 /* ------ 7. GRID ------ */
