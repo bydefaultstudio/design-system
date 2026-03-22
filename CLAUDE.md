@@ -36,7 +36,13 @@ Use Explore sub-agents to read multiple docs files in parallel before starting w
 
 ---
 
-## 2. Global Rules (Do Not Break)
+## 2. Git Push Policy
+
+**Never push to remote without explicit user approval.** After committing, always ask the user before running `git push`. This applies to all branches, every time — no exceptions.
+
+---
+
+## 3. Global Rules (Do Not Break)
 
 - Do not invent new patterns
 - Do not introduce new class naming conventions
@@ -53,7 +59,7 @@ If something cannot be implemented cleanly using existing patterns, **pause and 
 
 ---
 
-## 3. Quick Reference
+## 4. Quick Reference
 
 ### Layout Hierarchy
 See `docs/layout.md` for complete details.
@@ -110,7 +116,7 @@ See `docs/button.md` for button usage and modifiers.
 
 ---
 
-## 4. HTML Rules
+## 5. HTML Rules
 
 ### Page Template
 - Always use `templates/page-template.html` as the base
@@ -132,7 +138,7 @@ Every page must include:
 
 ---
 
-## 5. File Organization
+## 6. File Organization
 
 See `docs/folder-structure.md` for complete directory structure.
 
@@ -147,7 +153,7 @@ See `docs/folder-structure.md` for complete directory structure.
 
 ---
 
-## 6. Documentation Discipline
+## 7. Documentation Discipline
 
 If you:
 - introduce a new pattern
@@ -168,7 +174,7 @@ cd docs/generator && npm run docgen
 
 ---
 
-## 7. Styleguide Rules
+## 8. Styleguide Rules
 
 The styleguide (`design-system/index.html`) is:
 - A demonstrative reference only
@@ -182,7 +188,7 @@ Do not infer behavior from styleguide or brand book HTML; always refer to the CS
 
 ---
 
-## 8. When Unsure
+## 9. When Unsure
 
 If instructions are ambiguous:
 - Ask a clarifying question
@@ -194,7 +200,7 @@ Never optimise prematurely.
 
 ---
 
-## 9. Common Mistakes to Avoid
+## 10. Common Mistakes to Avoid
 
 - Using primitive tokens directly in layouts
 - Adding margins inside blocks
@@ -208,7 +214,7 @@ Never optimise prematurely.
 
 ---
 
-## 10. Testing Checklist
+## 11. Testing Checklist
 
 Before considering code complete:
 - [ ] Uses existing design system patterns
@@ -222,7 +228,7 @@ Before considering code complete:
 
 ---
 
-## 11. Core Principles
+## 12. Core Principles
 
 These govern every decision — design system or otherwise.
 
@@ -233,7 +239,7 @@ These govern every decision — design system or otherwise.
 
 ---
 
-## 12. Project Onboarding (First Thing)
+## 13. Project Onboarding (First Thing)
 
 When this template is used for a new project, the **very first task** is to fill in the project brief. Before writing any code, use the `AskUserQuestion` tool to gather project details and populate `PROJECT_BRIEF.md`.
 
@@ -272,7 +278,7 @@ This must happen before any other work begins.
 
 ---
 
-## 13. Claude Code — Workflow & Tools
+## 14. Claude Code — Workflow & Tools
 
 This section defines how to use Claude Code's native capabilities when working in this project.
 
