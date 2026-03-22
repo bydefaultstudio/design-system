@@ -24,6 +24,7 @@ Do not add new top-level folders without updating this file.
 - `templates/` → Component and page templates
 - `docs/` → Documentation markdown source and generator
 - `src/` → Source files (pages, JS)
+- `svg-cleaner/` → SVG optimisation tool (CLI + browser UI)
 
 ## assets/
 
@@ -45,7 +46,7 @@ The design system framework. Contains all utility classes, layout primitives, co
 
 ## brand-book/
 
-Brand identity tokens. Customise this per project. The design system reads these tokens via `var(--brand-*, fallback)`.
+Brand identity tokens. Customise this per project. The design system reads these tokens directly.
 
 - `brand-book.css` → Brand tokens (fonts, colours)
 - `index.html` → Brand preview page (logo, palette, typography, icons)
@@ -83,6 +84,13 @@ The generated HTML loads CSS in this order:
 4. `assets/css/style.css` → Site layout and components
 
 New site-specific CSS goes in `assets/css/style.css`.
+
+## svg-cleaner/
+
+SVG optimisation tool for cleaning raw SVGs before adding them to the design system.
+
+- `svg-clean.js` → CLI tool (pipe SVG via stdin, get cleaned output)
+- `index.html` → Browser-based SVG cleaner UI
 
 ## Notes
 

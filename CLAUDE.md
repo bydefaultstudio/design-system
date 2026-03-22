@@ -79,7 +79,7 @@ See `docs/color.md`, `docs/typography.md`, `docs/spacing.md` for complete token 
 
 **Critical rules:**
 - Use semantic tokens, not primitives
-- Primitive tokens (e.g., `--brand-accent`, `--neutral-800`) must never be used directly
+- Primitive tokens (e.g., `--green`, `--neutral-800`) must never be used directly
 - Semantic tokens (e.g., `--text-primary`, `--background-faded`) are always preferred
 
 ### CSS Structure
@@ -87,7 +87,7 @@ See `docs/css-code-struture.md` for complete organization guidelines.
 
 **Critical rules:**
 - Design system CSS (`design-system/design-system.css`) is the single source of truth
-- Brand tokens live in `brand-book/brand-book.css` — the DS reads them via `var(--brand-*, fallback)`
+- Brand tokens live in `brand-book/brand-book.css` — the DS reads them directly
 - Follow the CSS commenting hierarchy (major sections, subsections, inline)
 - All tokens must be defined in `:root` before use
 - Never hardcode values that should use tokens
@@ -358,3 +358,37 @@ The following MCP tools are available for this project:
 **Slack** — for team communication:
 - `slack_send_message`, `slack_read_channel`
 - Use only when explicitly asked to send or read Slack messages
+
+---
+
+## 15. SVG Processing
+
+Use `svg-cleaner/svg-clean.js` to clean SVGs before adding them to the project. The tool reads from stdin and writes to stdout (or a file with `-o`).
+
+### What it does (always)
+- Strips `xmlns` and `xmlns:xlink` from root `<svg>`
+
+### Optional flags
+- `--current-color` — sets all `<path>` fill attributes to `currentColor`
+- `--size` — removes width/height, adds `width="100%" height="100%"`
+- `--strip-comments` — removes XML/HTML comments
+- `--minify` — collapses to single-line output
+
+### Standard workflow
+
+When a user pastes SVG code in the chat, clean it and save it:
+
+```bash
+node svg-cleaner/svg-clean.js --current-color --strip-comments -o assets/images/filename.svg <<'SVGEOF'
+<svg>...pasted code...</svg>
+SVGEOF
+```
+
+Use heredoc syntax (`<<'SVGEOF'`) to avoid shell escaping issues with quotes in SVG attributes.
+
+### File locations
+- `assets/icons/` — favicons and app icons
+- `assets/images/` — logos, illustrations, and general SVGs
+
+### Browser UI
+`svg-cleaner/index.html` provides a visual SVG cleaner — open it in a browser for manual paste-and-copy workflows.

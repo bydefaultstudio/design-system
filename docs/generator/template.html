@@ -104,28 +104,40 @@
                 });
             }
             
+            function copyToClipboard(text) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    return navigator.clipboard.writeText(text);
+                }
+                var textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                return Promise.resolve();
+            }
+
             function initClipboard() {
                 const buttons = document.querySelectorAll('.copy-code-btn');
-                
+
                 buttons.forEach(button => {
                     button.addEventListener('click', function() {
                         const targetId = this.getAttribute('data-clipboard-target');
                         const codeElement = document.querySelector(targetId);
-                        
+
                         if (codeElement) {
                             const text = codeElement.textContent;
-                            
-                            // Use modern clipboard API
-                            navigator.clipboard.writeText(text).then(() => {
-                                const textSpan = this.querySelector('.copy-text');
+                            const textSpan = this.querySelector('.copy-text');
+
+                            copyToClipboard(text).then(() => {
                                 if (textSpan) {
                                     textSpan.textContent = 'Copied!';
                                     setTimeout(() => {
                                         textSpan.textContent = 'Copy';
                                     }, 1500);
                                 }
-                            }).catch(err => {
-                                console.error('Copy failed:', err);
                             });
                         }
                     });

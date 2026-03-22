@@ -14,24 +14,24 @@ This template provides a solid foundation for new projects. Follow these steps t
 
 Update brand colors in `brand-book/brand-book.css`.
 
-The brand book defines raw brand tokens using the `--brand-` prefix. The design system reads these via `var(--brand-*, fallback)` — if no brand book is loaded, sensible defaults apply.
+The brand book defines colour and font tokens. The design system reads these directly.
 
 **What to change:**
-- `--brand-color-accent` — Your primary brand accent colour
-- `--brand-color-dark` — Your dark brand colour
-- `--brand-color-light` — Your light brand colour
+- `--off-white`, `--warm-black`, etc. — Your palette colours
+- `--green`, `--red`, `--blue`, etc. — Your accent colours
+- `--font-primary`, `--font-secondary`, `--font-tertiary` — Your fonts
 
 **Example:**
 ```css
 /* brand-book/brand-book.css */
 :root {
-  --brand-color-accent: #0066cc;
-  --brand-color-dark: #1a1a1a;
-  --brand-color-light: #f5f5f5;
+  --off-white: #fff7f1;
+  --warm-black: #221f1c;
+  --green: #167255;
 }
 ```
 
-**Note:** The design system maps these into semantic tokens automatically. You do not need to touch `design-system/design-system.css` for brand colours.
+**Note:** The design system reads these tokens directly. You do not need to touch `design-system/design-system.css` for brand colours.
 
 ---
 
@@ -40,9 +40,9 @@ The brand book defines raw brand tokens using the `--brand-` prefix. The design 
 Update font families in `brand-book/brand-book.css`.
 
 **What to change:**
-- `--brand-font-primary` — Your primary font family
-- `--brand-font-secondary` — Your secondary font family (if used)
-- `--brand-font-tertiary` — Your monospace font (if used)
+- `--font-primary` — Your primary font family
+- `--font-secondary` — Your secondary font family (if used)
+- `--font-tertiary` — Your monospace font (if used)
 
 **Also update:**
 - Google Fonts link in `docs/docs.config.js` (if using Google Fonts)

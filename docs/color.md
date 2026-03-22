@@ -14,20 +14,20 @@ Primitive colors are the raw color values used as building blocks for all other 
 
 ### Brand Colors
 
-Brand tokens are project-level overrides and may change per project. **You can rename the token names** to anything relating to your brand (e.g., `--brand-primary`, `--off-white`, `--charcoal`, `--hero-blue`, etc.). This personalizes the system and makes it more intuitive for your team.
+Brand tokens are project-level overrides and may change per project. **You can rename the token names** to anything relating to your brand (e.g., `--primary`, `--off-white`, `--charcoal`, `--hero-blue`, etc.). This personalizes the system and makes it more intuitive for your team.
 
 | Token | Value | Description |
 | --- | --- | --- |
-| `--brand-dark` | #brand-hex1 | Dark brand color |
-| `--brand-light` | #brand-hex2 | Light brand color |
-| `--brand-accent` | #brand-hex3 | Accent brand color |
+| `--warm-black` | #brand-hex1 | Dark brand color |
+| `--off-white` | #brand-hex2 | Light brand color |
+| `--green` | #brand-hex3 | Accent brand color |
 
 **Usage:**
 
 ```css
 :root {
   /* You can use default names or rename tokens to match your brand */
-  --brand-dark: #1a1a1a; /* Replace with your brand color */
+  --warm-black: #1a1a1a; /* Replace with your brand color */
   
   /* Or use custom names that make sense for your project */
   --charcoal: #1a1a1a;
@@ -36,7 +36,7 @@ Brand tokens are project-level overrides and may change per project. **You can r
 }
 
 .div {
-  color: var(--brand-dark);
+  color: var(--warm-black);
   /* Or use your custom token name */
   /* color: var(--charcoal); */
 }
@@ -126,12 +126,12 @@ Semantic colors map primitive tokens to **meaning and intent**, giving context a
 
 | **Name** | Value | Description |
 | --- | --- | --- |
-| `--text-primary` | ↳`--brand-warm-black` | Primary text color |
-| `--text-secondary` | ↳`--brand-text-secondary` | Secondary text color |
+| `--text-primary` | ↳`--warm-black` | Primary text color |
+| `--text-secondary` | ↳`--text-secondary-brand` | Secondary text color |
 | `--text-plain` | ↳`--black` | True black text |
 | `--text-faded` | ↳`--black-alpha-50` | Faded text |
-| `--text-accent` | ↳`--brand-accent` | Accent text |
-| `--text-link` | ↳`--brand-accent` | Link text color |
+| `--text-accent` | ↳`--green` | Accent text |
+| `--text-link` | ↳`--green` | Link text color |
 
 **Usage:**
 
@@ -145,8 +145,8 @@ h1 {
 
 | **Name** | **Value** | **Description** |
 | --- | --- | --- |
-| `--background-primary` | ↳`--brand-light` | Default background |
-| `--background-secondary` | ↳`--brand-warm-white` | Secondary background |
+| `--background-primary` | ↳`--off-white` | Default background |
+| `--background-secondary` | ↳`--warm-white` | Secondary background |
 | `--background-plain` | ↳`--white` | True white background |
 | `--background-faded` | ↳`--black-alpha-5` | Faded background overlay |
 
@@ -162,8 +162,8 @@ h1 {
 
 | **Name** | **Value** | **Description** |
 | --- | --- | --- |
-| `--border-primary` | ↳`--brand-border-primary` | Default border|
-| `--border-secondary` | ↳`--brand-border-secondary` | Second border |
+| `--border-primary` | ↳`--border-primary-brand` | Default border|
+| `--border-secondary` | ↳`--border-secondary-brand` | Second border |
 | `--border-faded` | ↳`--black-alpha-15` | Faded border |
 
 **Usage:**

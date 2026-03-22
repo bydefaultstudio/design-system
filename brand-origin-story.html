@@ -108,6 +108,8 @@
       
         <li><a href="border.html" class="nav-link ">Border</a></li>
       
+        <li><a href="iconography.html" class="nav-link ">Iconography</a></li>
+      
         <li><a href="button.html" class="nav-link ">Button</a></li>
       
         <li><a href="callout.html" class="nav-link ">Callout</a></li>
@@ -152,25 +154,18 @@
       
       </ul>
     </details><details class="nav-section">
-      <summary class="nav-section-toggle">
-        <span>Project</span>
-        <span class="nav-toggle-icon">
-          <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
-          </svg>
-        </span>
-      </summary>
-      <ul class="nav-list">
-        <li><a href="setup.html" class="nav-link ">Setup</a></li>
-      
-        <li><a href="template.html" class="nav-link ">Template</a></li>
-      
-        <li><a href="folder-structure.html" class="nav-link ">Folders</a></li>
-      
-        <li><a href="upgrading-docs.html" class="nav-link ">Upgrading the Docs Engine</a></li>
-      
-      </ul>
-    </details>
+    <summary class="nav-section-toggle">
+      <span>Tools</span>
+      <span class="nav-toggle-icon">
+        <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
+        </svg>
+      </span>
+    </summary>
+    <ul class="nav-list">
+      <li><a href="svg-cleaner/index.html" class="nav-link">SVG Cleaner</a></li>
+    </ul>
+  </details>
                 </div>
             </nav>
         </aside>
@@ -257,28 +252,40 @@
                 });
             }
             
+            function copyToClipboard(text) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    return navigator.clipboard.writeText(text);
+                }
+                var textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                return Promise.resolve();
+            }
+
             function initClipboard() {
                 const buttons = document.querySelectorAll('.copy-code-btn');
-                
+
                 buttons.forEach(button => {
                     button.addEventListener('click', function() {
                         const targetId = this.getAttribute('data-clipboard-target');
                         const codeElement = document.querySelector(targetId);
-                        
+
                         if (codeElement) {
                             const text = codeElement.textContent;
-                            
-                            // Use modern clipboard API
-                            navigator.clipboard.writeText(text).then(() => {
-                                const textSpan = this.querySelector('.copy-text');
+                            const textSpan = this.querySelector('.copy-text');
+
+                            copyToClipboard(text).then(() => {
                                 if (textSpan) {
                                     textSpan.textContent = 'Copied!';
                                     setTimeout(() => {
                                         textSpan.textContent = 'Copy';
                                     }, 1500);
                                 }
-                            }).catch(err => {
-                                console.error('Copy failed:', err);
                             });
                         }
                     });

@@ -108,6 +108,8 @@
       
         <li><a href="border.html" class="nav-link ">Border</a></li>
       
+        <li><a href="iconography.html" class="nav-link ">Iconography</a></li>
+      
         <li><a href="button.html" class="nav-link ">Button</a></li>
       
         <li><a href="callout.html" class="nav-link ">Callout</a></li>
@@ -151,26 +153,19 @@
         <li><a href="markdown-style.html" class="nav-link ">Markdown</a></li>
       
       </ul>
-    </details><details class="nav-section" open>
-      <summary class="nav-section-toggle">
-        <span>Project</span>
-        <span class="nav-toggle-icon">
-          <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
-          </svg>
-        </span>
-      </summary>
-      <ul class="nav-list">
-        <li><a href="setup.html" class="nav-link ">Setup</a></li>
-      
-        <li><a href="template.html" class="nav-link ">Template</a></li>
-      
-        <li><a href="folder-structure.html" class="nav-link ">Folders</a></li>
-      
-        <li><a href="upgrading-docs.html" class="nav-link nav-link-active">Upgrading the Docs Engine</a></li>
-      
-      </ul>
-    </details>
+    </details><details class="nav-section">
+    <summary class="nav-section-toggle">
+      <span>Tools</span>
+      <span class="nav-toggle-icon">
+        <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
+        </svg>
+      </span>
+    </summary>
+    <ul class="nav-list">
+      <li><a href="svg-cleaner/index.html" class="nav-link">SVG Cleaner</a></li>
+    </ul>
+  </details>
                 </div>
             </nav>
         </aside>
@@ -227,10 +222,10 @@
 </ol>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-1ut5rfc5x" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-i9wyuft91" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-1ut5rfc5x" class="language-bash">cd docs/generator
+        <pre><code id="code-i9wyuft91" class="language-bash">cd docs/generator
 npm install
 npm run docgen
 </code></pre>
@@ -244,10 +239,10 @@ npm run docgen
 <p>Edit <code>docs/docs.config.js</code> in the project:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-fcbekkaxz" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-d20pay9b2" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-fcbekkaxz" class="language-js">module.exports = {
+        <pre><code id="code-d20pay9b2" class="language-js">module.exports = {
   // Path to design system CSS, relative from project root
   designSystemPath: &#39;../../design-system/design-system.css&#39;,
 
@@ -287,10 +282,10 @@ npm run docgen
 <p>Run these from inside <code>docs/generator/</code>:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-3f5fi9ctb" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-7jvje2bur" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-3f5fi9ctb" class="language-bash">npm run docgen     # Generate HTML from markdown
+        <pre><code id="code-7jvje2bur" class="language-bash">npm run docgen     # Generate HTML from markdown
 npm run serve      # View locally in browser
 npm run docwatch   # Auto-regenerate on markdown changes
 npm run docfull    # Generate + serve + watch (all at once)
@@ -312,14 +307,7 @@ npm run docfull    # Generate + serve + watch (all at once)
             </div>
             
             <!-- Page Navigation (Previous / Next) -->
-            <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="folder-structure.html" class="page-nav-link page-nav-prev" rel="prev">
-      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span class="page-nav-text">
-        <span class="page-nav-label">Previous</span>
-        
-        <span class="page-nav-title">Folders</span>
-      </span>
-    </a><span class="page-nav-link page-nav-placeholder"></span></div></nav>
+            
 
             <!-- Footer -->
             <footer class="docs-footer">
@@ -345,28 +333,40 @@ npm run docfull    # Generate + serve + watch (all at once)
                 });
             }
             
+            function copyToClipboard(text) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    return navigator.clipboard.writeText(text);
+                }
+                var textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                return Promise.resolve();
+            }
+
             function initClipboard() {
                 const buttons = document.querySelectorAll('.copy-code-btn');
-                
+
                 buttons.forEach(button => {
                     button.addEventListener('click', function() {
                         const targetId = this.getAttribute('data-clipboard-target');
                         const codeElement = document.querySelector(targetId);
-                        
+
                         if (codeElement) {
                             const text = codeElement.textContent;
-                            
-                            // Use modern clipboard API
-                            navigator.clipboard.writeText(text).then(() => {
-                                const textSpan = this.querySelector('.copy-text');
+                            const textSpan = this.querySelector('.copy-text');
+
+                            copyToClipboard(text).then(() => {
                                 if (textSpan) {
                                     textSpan.textContent = 'Copied!';
                                     setTimeout(() => {
                                         textSpan.textContent = 'Copy';
                                     }, 1500);
                                 }
-                            }).catch(err => {
-                                console.error('Copy failed:', err);
                             });
                         }
                     });

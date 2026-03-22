@@ -108,6 +108,8 @@
       
         <li><a href="border.html" class="nav-link ">Border</a></li>
       
+        <li><a href="iconography.html" class="nav-link ">Iconography</a></li>
+      
         <li><a href="button.html" class="nav-link ">Button</a></li>
       
         <li><a href="callout.html" class="nav-link ">Callout</a></li>
@@ -152,25 +154,18 @@
       
       </ul>
     </details><details class="nav-section">
-      <summary class="nav-section-toggle">
-        <span>Project</span>
-        <span class="nav-toggle-icon">
-          <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
-          </svg>
-        </span>
-      </summary>
-      <ul class="nav-list">
-        <li><a href="setup.html" class="nav-link ">Setup</a></li>
-      
-        <li><a href="template.html" class="nav-link ">Template</a></li>
-      
-        <li><a href="folder-structure.html" class="nav-link ">Folders</a></li>
-      
-        <li><a href="upgrading-docs.html" class="nav-link ">Upgrading the Docs Engine</a></li>
-      
-      </ul>
-    </details>
+    <summary class="nav-section-toggle">
+      <span>Tools</span>
+      <span class="nav-toggle-icon">
+        <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
+        </svg>
+      </span>
+    </summary>
+    <ul class="nav-list">
+      <li><a href="svg-cleaner/index.html" class="nav-link">SVG Cleaner</a></li>
+    </ul>
+  </details>
                 </div>
             </nav>
         </aside>
@@ -205,10 +200,10 @@
 <h2 id="basic-usage">Basic Usage</h2>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-782jthffr" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-klu923rkx" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-782jthffr" class="language-html">&lt;details&gt;
+        <pre><code id="code-klu923rkx" class="language-html">&lt;details&gt;
   &lt;summary&gt;Show details&lt;/summary&gt;
   &lt;div class=&quot;disclosure-content&quot;&gt;
     &lt;p&gt;Content revealed when expanded.&lt;/p&gt;
@@ -222,10 +217,10 @@
 <p>Use <code>.disclosure-table</code> with a <code>&lt;dl&gt;</code> to display property-value pairs:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-zvst3cebb" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-99flyt15e" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-zvst3cebb" class="language-html">&lt;details&gt;
+        <pre><code id="code-99flyt15e" class="language-html">&lt;details&gt;
   &lt;summary&gt;Show details&lt;/summary&gt;
   &lt;div class=&quot;disclosure-content&quot;&gt;
     &lt;dl class=&quot;disclosure-table&quot;&gt;
@@ -247,10 +242,10 @@
 <p>Add a <code>.copy-btn</code> inside <code>.disclosure-content</code> with a <code>data-copy</code> attribute containing the text to copy:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-gckcnzvhz" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-mj4bbrwv2" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-gckcnzvhz" class="language-html">&lt;button class=&quot;button is-small is-faded copy-btn&quot;
+        <pre><code id="code-mj4bbrwv2" class="language-html">&lt;button class=&quot;button is-small is-faded copy-btn&quot;
   data-copy=&quot;font-size: var(--font-4xl);&amp;#10;line-height: var(--line-height-s);&quot;
   aria-label=&quot;Copy CSS for Heading 1&quot;&gt;
   Copy CSS
@@ -261,10 +256,10 @@
 <p>Use <code>&amp;#10;</code> for newlines in the <code>data-copy</code> value. The button requires a small JS handler:</p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-0fxxerdss" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-qcxuri0gt" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-0fxxerdss" class="language-js">document.addEventListener(&#39;click&#39;, function (event) {
+        <pre><code id="code-qcxuri0gt" class="language-js">document.addEventListener(&#39;click&#39;, function (event) {
   var button = event.target.closest(&#39;.copy-btn&#39;);
   if (!button) return;
   var text = button.getAttribute(&#39;data-copy&#39;);
@@ -457,28 +452,40 @@
                 });
             }
             
+            function copyToClipboard(text) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    return navigator.clipboard.writeText(text);
+                }
+                var textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                return Promise.resolve();
+            }
+
             function initClipboard() {
                 const buttons = document.querySelectorAll('.copy-code-btn');
-                
+
                 buttons.forEach(button => {
                     button.addEventListener('click', function() {
                         const targetId = this.getAttribute('data-clipboard-target');
                         const codeElement = document.querySelector(targetId);
-                        
+
                         if (codeElement) {
                             const text = codeElement.textContent;
-                            
-                            // Use modern clipboard API
-                            navigator.clipboard.writeText(text).then(() => {
-                                const textSpan = this.querySelector('.copy-text');
+                            const textSpan = this.querySelector('.copy-text');
+
+                            copyToClipboard(text).then(() => {
                                 if (textSpan) {
                                     textSpan.textContent = 'Copied!';
                                     setTimeout(() => {
                                         textSpan.textContent = 'Copy';
                                     }, 1500);
                                 }
-                            }).catch(err => {
-                                console.error('Copy failed:', err);
                             });
                         }
                     });

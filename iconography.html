@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Template - Documentation</title>
-    <meta name="description" content="Explains the purpose, scope, and intended usage of this project template.">
+    <title>Iconography - Documentation</title>
+    <meta name="description" content="How to use icons in the design system — SVG standards, wrapper classes, accessibility, and tooling.">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
@@ -88,7 +88,7 @@
         <li><a href="brand-book/index.html" class="nav-link">Brand Book Preview</a></li>
       
       </ul>
-    </details><details class="nav-section">
+    </details><details class="nav-section" open>
       <summary class="nav-section-toggle">
         <span>Design System</span>
         <span class="nav-toggle-icon">
@@ -107,6 +107,8 @@
         <li><a href="spacing.html" class="nav-link ">Spacing</a></li>
       
         <li><a href="border.html" class="nav-link ">Border</a></li>
+      
+        <li><a href="iconography.html" class="nav-link nav-link-active">Iconography</a></li>
       
         <li><a href="button.html" class="nav-link ">Button</a></li>
       
@@ -151,26 +153,19 @@
         <li><a href="markdown-style.html" class="nav-link ">Markdown</a></li>
       
       </ul>
-    </details><details class="nav-section" open>
-      <summary class="nav-section-toggle">
-        <span>Project</span>
-        <span class="nav-toggle-icon">
-          <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
-          </svg>
-        </span>
-      </summary>
-      <ul class="nav-list">
-        <li><a href="setup.html" class="nav-link ">Setup</a></li>
-      
-        <li><a href="template.html" class="nav-link nav-link-active">Template</a></li>
-      
-        <li><a href="folder-structure.html" class="nav-link ">Folders</a></li>
-      
-        <li><a href="upgrading-docs.html" class="nav-link ">Upgrading the Docs Engine</a></li>
-      
-      </ul>
-    </details>
+    </details><details class="nav-section">
+    <summary class="nav-section-toggle">
+      <span>Tools</span>
+      <span class="nav-toggle-icon">
+        <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
+        </svg>
+      </span>
+    </summary>
+    <ul class="nav-list">
+      <li><a href="svg-cleaner/index.html" class="nav-link">SVG Cleaner</a></li>
+    </ul>
+  </details>
                 </div>
             </nav>
         </aside>
@@ -179,9 +174,9 @@
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
       <div class="container-medium">
-        <h1>Template</h1>
-        <p class="page-subtitle">What this template is and how to use it</p>
-        <a href="docs/template.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <h1>Iconography</h1>
+        <p class="page-subtitle">Icon usage, sizing, and integration guidelines</p>
+        <a href="docs/iconography.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
             
@@ -190,88 +185,280 @@
                 <!-- Main Content -->
                 <main class="docs-main">
                     <article class="markdown-body">
-                        <p>This repository is a <strong>UI system starter template</strong> for building consistent, scalable front-end experiences using <strong>HTML, CSS, and JavaScript</strong>.</p>
+                        <p>Icons are inline SVG elements wrapped in a container class. They inherit colour from the surrounding text, maintain a fixed square aspect ratio, and are accessible by default.</p>
 <hr>
-<h2 id="what-this-template-is">What This Template Is</h2>
-<p>This template is designed to be:</p>
+<h2 id="principles">Principles</h2>
 <ul>
-<li>A fast starting point for new projects</li>
-<li>A shared foundation for teams</li>
-<li>A reliable source of context for AI-assisted coding tools</li>
-<li>Framework-agnostic and long-lived</li>
-</ul>
-<p>This is <strong>not</strong> a finished website or app.<br>It is a <strong>baseline system</strong> that can be used across many types of projects.</p>
-<hr>
-<h2 id="what-this-template-is-for">What This Template Is For</h2>
-<p>This template is ideal for:</p>
-<ul>
-<li>Marketing websites</li>
-<li>Editorial and content-led sites</li>
-<li>Design systems and style guides</li>
-<li>Webflow exports or hand-coded sites</li>
-<li>Front-end foundations for larger apps</li>
-<li>Prototypes that may later evolve into products</li>
-</ul>
-<p>It provides:</p>
-<ul>
-<li>A complete <strong>design system</strong> (tokens, layout, typography, utilities)</li>
-<li>Clear <strong>layout and spacing rules</strong></li>
-<li>Reusable <strong>UI patterns</strong></li>
-<li>Consistent <strong>CSS architecture</strong></li>
-<li>Documented <strong>best practices</strong> for usage</li>
+<li><strong>Inline SVG only</strong> — never use <code>&lt;img&gt;</code> tags for icons. Inline SVGs allow colour inheritance and eliminate extra HTTP requests.</li>
+<li><strong><code>currentColor</code> always</strong> — all icon <code>&lt;path&gt;</code> elements must use <code>fill=&quot;currentColor&quot;</code> so the icon inherits the parent&#39;s text colour. This keeps icons visually consistent across themes and contexts.</li>
+<li><strong>No <code>xmlns</code></strong> — strip <code>xmlns</code> and <code>xmlns:xlink</code> attributes from inline SVGs. They are only needed for standalone <code>.svg</code> files, not inline usage.</li>
+<li><strong>Square aspect ratio</strong> — icons are always 1:1. Use <code>viewBox</code> to define the coordinate system, not <code>width</code>/<code>height</code>.</li>
 </ul>
 <hr>
-<h2 id="what-this-template-is-not">What This Template Is NOT</h2>
-<p>This template intentionally does <strong>not</strong>:</p>
-<ul>
-<li>Define application architecture (state, routing, data)</li>
-<li>Enforce a JavaScript framework (React, Next, Vue, etc.)</li>
-<li>Include backend logic or APIs</li>
-<li>Solve product-specific business logic</li>
-</ul>
-<p>Those concerns belong <strong>above</strong> this layer.</p>
+<h2 id="icon-wrapper">Icon Wrapper</h2>
+<p>Use <code>.icn-svg</code> to wrap inline SVG icons. This class constrains the icon to a fixed size and enforces the square aspect ratio.</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-8s6dxvmsj" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-8s6dxvmsj" class="language-html">&lt;div class=&quot;icn-svg&quot; data-icon=&quot;arrow-right&quot;&gt;
+  &lt;svg viewBox=&quot;0 0 24 24&quot;&gt;
+    &lt;path d=&quot;M5 12h14M12 5l7 7-7 7&quot; fill=&quot;currentColor&quot;/&gt;
+  &lt;/svg&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="properties">Properties</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>width</code></td>
+<td><code>1.5rem</code></td>
+<td>Standard icon size</td>
+</tr>
+<tr>
+<td><code>height</code></td>
+<td><code>1.5rem</code></td>
+<td>Matches width for square</td>
+</tr>
+<tr>
+<td><code>display</code></td>
+<td><code>flex</code></td>
+<td>Enables centering</td>
+</tr>
+<tr>
+<td><code>justify-content</code></td>
+<td><code>center</code></td>
+<td>Horizontal centering</td>
+</tr>
+<tr>
+<td><code>align-items</code></td>
+<td><code>center</code></td>
+<td>Vertical centering</td>
+</tr>
+<tr>
+<td><code>aspect-ratio</code></td>
+<td><code>1 / 1</code></td>
+<td>Enforces square shape</td>
+</tr>
+</tbody></table></div>
+<h3><code>data-icon</code> attribute</h3>
+<p>Always include a <code>data-icon</code> attribute with a descriptive name. This makes icons identifiable in code — raw SVG paths are unreadable without it.</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-4njk1k030" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-4njk1k030" class="language-html">&lt;div class=&quot;icn-svg&quot; data-icon=&quot;chevron-down&quot;&gt;...&lt;/div&gt;
+&lt;div class=&quot;icn-svg&quot; data-icon=&quot;close&quot;&gt;...&lt;/div&gt;
+&lt;div class=&quot;icn-svg&quot; data-icon=&quot;search&quot;&gt;...&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<p>Use lowercase kebab-case for icon names (e.g. <code>arrow-right</code>, <code>chevron-down</code>, <code>external-link</code>).</p>
 <hr>
-<h2 id="how-this-template-works">How This Template Works</h2>
-<p>This template works in:</p>
-<ul>
-<li>Vanilla HTML / CSS / JS projects</li>
-<li>React and Next.js applications</li>
-<li>Node-powered frontends</li>
-<li>Design system libraries</li>
-<li>Component-driven architectures</li>
-</ul>
-<p><strong>Key Principle:</strong> HTML, CSS, and design rules do not disappear in advanced stacks — they are rendered by them. In frameworks, components <em>consume</em> this system rather than replace it.</p>
+<h2 id="icon-in-buttons">Icon in Buttons</h2>
+<p>For icon-only buttons, use <code>.is-icon</code> on the button and <code>.icn-svg</code> as the SVG wrapper.</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-bd2ufachj" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-bd2ufachj" class="language-html">&lt;button class=&quot;button is-icon&quot; aria-label=&quot;Close&quot;&gt;
+  &lt;div class=&quot;icn-svg&quot;&gt;
+    &lt;svg viewBox=&quot;0 0 24 24&quot;&gt;
+      &lt;path d=&quot;M18 6L6 18M6 6l12 12&quot; fill=&quot;currentColor&quot;/&gt;
+    &lt;/svg&gt;
+  &lt;/div&gt;
+&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<p>See the <a href="button.html">Button documentation</a> for full button modifier details.</p>
 <hr>
-<h2 id="how-to-use-this-template">How to Use This Template</h2>
-<ol>
-<li>Clone the repository</li>
-<li>Follow the <a href="setup.html">Setup guide</a> to customize brand tokens, fonts, and logo</li>
-<li>Use the style guide to understand available patterns</li>
-<li>Build pages using the documented layout structure</li>
-<li>Add project-specific logic on top</li>
-</ol>
-<p>You should be able to start building <strong>immediately</strong> without reorganising the system.</p>
+<h2 id="svg-requirements">SVG Requirements</h2>
+<p>Every icon SVG must follow these rules before being added to the codebase:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Required</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>fill=&quot;currentColor&quot;</code></td>
+<td>Yes</td>
+<td>Inherits text colour from parent</td>
+</tr>
+<tr>
+<td><code>viewBox</code> attribute</td>
+<td>Yes</td>
+<td><code>viewBox=&quot;0 0 24 24&quot;</code> defines the coordinate space</td>
+</tr>
+<tr>
+<td>No <code>xmlns</code></td>
+<td>Yes</td>
+<td>Strip <code>xmlns</code> and <code>xmlns:xlink</code> — not needed inline</td>
+</tr>
+<tr>
+<td>No <code>width</code>/<code>height</code></td>
+<td>Yes</td>
+<td>Size is controlled by the wrapper class, not the SVG</td>
+</tr>
+<tr>
+<td>No XML comments</td>
+<td>Recommended</td>
+<td>Remove <code>&lt;!-- ... --&gt;</code> comments for cleaner code</td>
+</tr>
+</tbody></table></div>
+<h3>Standard <code>viewBox</code></h3>
+<p>Use <code>0 0 24 24</code> as the default icon grid. If an icon uses a different coordinate system, preserve its original <code>viewBox</code> — do not rescale manually.</p>
 <hr>
-<h2 id="guiding-rule">Guiding Rule</h2>
-<p>If you&#39;re unsure where something belongs, ask:</p>
-<blockquote>
-<p>&quot;Is this a <strong>UI rule</strong> or an <strong>application concern</strong>?&quot;</p>
-</blockquote>
+<h2 id="accessibility">Accessibility</h2>
 <ul>
-<li>UI rules belong <strong>here</strong></li>
-<li>Application concerns belong <strong>outside this template</strong></li>
+<li><strong>Decorative icons</strong> — add <code>aria-hidden=&quot;true&quot;</code> to the SVG when the icon is purely visual and accompanied by text.</li>
+<li><strong>Meaningful icons</strong> — add <code>aria-label</code> to the parent element (e.g. the button) when the icon conveys meaning without visible text.</li>
+<li><strong>Icon buttons</strong> — always include <code>aria-label</code> on the <code>&lt;button&gt;</code> element.</li>
 </ul>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-f0ri9roan" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-f0ri9roan" class="language-html">&lt;!-- Decorative: icon next to text --&gt;
+&lt;div class=&quot;icn-svg&quot; data-icon=&quot;check&quot;&gt;
+  &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;
+    &lt;path d=&quot;M20 6L9 17l-5-5&quot; fill=&quot;currentColor&quot;/&gt;
+  &lt;/svg&gt;
+&lt;/div&gt;
+
+&lt;!-- Meaningful: icon button with no visible text --&gt;
+&lt;button class=&quot;button is-icon&quot; aria-label=&quot;Close menu&quot;&gt;
+  &lt;div class=&quot;icn-svg&quot;&gt;
+    &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;
+      &lt;path d=&quot;M18 6L6 18M6 6l12 12&quot; fill=&quot;currentColor&quot;/&gt;
+    &lt;/svg&gt;
+  &lt;/div&gt;
+&lt;/button&gt;
+</code></pre>
+      </div>
+    
 <hr>
-<h2 id="why-this-exists">Why This Exists</h2>
-<p>This template exists to:</p>
+<h2 id="colour">Colour</h2>
+<p>Icons inherit colour through <code>currentColor</code>. To change an icon&#39;s colour, change the text colour of its parent — never hardcode a fill value.</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-to55x15ov" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-to55x15ov" class="language-html">&lt;!-- Icon inherits the faded text colour --&gt;
+&lt;div class=&quot;text-faded&quot;&gt;
+  &lt;div class=&quot;icn-svg&quot; data-icon=&quot;info&quot;&gt;
+    &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;
+      &lt;path d=&quot;M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z&quot; fill=&quot;currentColor&quot;/&gt;
+    &lt;/svg&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="svg-cleaner-tool">SVG Cleaner Tool</h2>
+<p>Use the <a href="svg-cleaner/index.html">SVG Cleaner</a> to prepare icons before adding them to the codebase. The tool automates the required cleanup:</p>
 <ul>
-<li>Reduce setup time</li>
-<li>Eliminate inconsistency</li>
-<li>Prevent reinvention</li>
-<li>Improve collaboration</li>
-<li>Scale from simple sites to complex products</li>
+<li>Strips <code>xmlns</code> attributes</li>
+<li>Sets fills to <code>currentColor</code> (when enabled)</li>
+<li>Wraps in <code>.icn-svg</code> with <code>data-icon</code> attribute (when &quot;Icon&quot; is checked)</li>
+<li>Strips XML comments</li>
+<li>Optional minification</li>
 </ul>
-<p>It is meant to evolve — but always from a <strong>clear, shared foundation</strong>.</p>
+<p>For CLI usage:</p>
+
+      <div class="code-block-wrapper">
+        <button class="copy-code-btn" data-clipboard-target="#code-1h2dph1wk" type="button" aria-label="Copy code">
+          <span class="copy-text">Copy</span>
+        </button>
+        <pre><code id="code-1h2dph1wk" class="language-bash">echo &#39;&lt;svg&gt;...&lt;/svg&gt;&#39; | node svg-cleaner/svg-clean.js --current-color --icon --icon-name arrow-right --strip-comments
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="naming-conventions">Naming Conventions</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Convention</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Lowercase kebab-case</td>
+<td><code>arrow-right</code>, <code>chevron-down</code></td>
+</tr>
+<tr>
+<td>Describe the shape, not the function</td>
+<td><code>arrow-right</code> not <code>go-forward</code></td>
+</tr>
+<tr>
+<td>Use directional suffixes</td>
+<td><code>chevron-up</code>, <code>chevron-down</code>, <code>chevron-left</code></td>
+</tr>
+<tr>
+<td>Use common icon vocabulary</td>
+<td><code>close</code>, <code>search</code>, <code>menu</code>, <code>check</code>, <code>plus</code>, <code>minus</code></td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="rules">Rules</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Do</th>
+<th>Don&#39;t</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Use <code>fill=&quot;currentColor&quot;</code> on all paths</td>
+<td>Hardcode hex colours in SVG fills</td>
+</tr>
+<tr>
+<td>Use <code>.icn-svg</code> to wrap all icons</td>
+<td>Use <code>&lt;img&gt;</code> tags for icons</td>
+</tr>
+<tr>
+<td>Include <code>data-icon</code> with a descriptive name</td>
+<td>Leave icons unnamed</td>
+</tr>
+<tr>
+<td>Include <code>aria-hidden=&quot;true&quot;</code> on decorative icons</td>
+<td>Omit accessibility attributes</td>
+</tr>
+<tr>
+<td>Include <code>aria-label</code> on icon-only buttons</td>
+<td>Rely on the icon alone to convey meaning</td>
+</tr>
+<tr>
+<td>Use the SVG Cleaner to prepare icons</td>
+<td>Manually edit SVG attributes</td>
+</tr>
+<tr>
+<td>Strip <code>xmlns</code>, <code>width</code>, <code>height</code> from inline SVGs</td>
+<td>Keep attributes meant for standalone files</td>
+</tr>
+<tr>
+<td>Use <code>viewBox</code> for coordinate space</td>
+<td>Use <code>width</code>/<code>height</code> to size the SVG</td>
+</tr>
+</tbody></table></div>
 
                     </article>
                 </main>
@@ -279,23 +466,23 @@
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#what-this-template-is" class="toc-link">What This Template Is</a></li><li class="toc-item toc-level-2"><a href="#what-this-template-is-for" class="toc-link">What This Template Is For</a></li><li class="toc-item toc-level-2"><a href="#what-this-template-is-not" class="toc-link">What This Template Is NOT</a></li><li class="toc-item toc-level-2"><a href="#how-this-template-works" class="toc-link">How This Template Works</a></li><li class="toc-item toc-level-2"><a href="#how-to-use-this-template" class="toc-link">How to Use This Template</a></li><li class="toc-item toc-level-2"><a href="#guiding-rule" class="toc-link">Guiding Rule</a></li><li class="toc-item toc-level-2"><a href="#why-this-exists" class="toc-link">Why This Exists</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#principles" class="toc-link">Principles</a></li><li class="toc-item toc-level-2"><a href="#icon-wrapper" class="toc-link">Icon Wrapper</a></li><li class="toc-item toc-level-2"><a href="#icon-in-buttons" class="toc-link">Icon in Buttons</a></li><li class="toc-item toc-level-2"><a href="#svg-requirements" class="toc-link">SVG Requirements</a></li><li class="toc-item toc-level-2"><a href="#accessibility" class="toc-link">Accessibility</a></li><li class="toc-item toc-level-2"><a href="#colour" class="toc-link">Colour</a></li><li class="toc-item toc-level-2"><a href="#svg-cleaner-tool" class="toc-link">SVG Cleaner Tool</a></li><li class="toc-item toc-level-2"><a href="#naming-conventions" class="toc-link">Naming Conventions</a></li><li class="toc-item toc-level-2"><a href="#rules" class="toc-link">Rules</a></li></ul></nav></div>
     </aside>
             </div>
             
             <!-- Page Navigation (Previous / Next) -->
-            <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="setup.html" class="page-nav-link page-nav-prev" rel="prev">
+            <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="border.html" class="page-nav-link page-nav-prev" rel="prev">
       <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <span class="page-nav-text">
         <span class="page-nav-label">Previous</span>
         
-        <span class="page-nav-title">Setup</span>
+        <span class="page-nav-title">Border</span>
       </span>
-    </a><a href="folder-structure.html" class="page-nav-link page-nav-next" rel="next">
+    </a><a href="button.html" class="page-nav-link page-nav-next" rel="next">
       <span class="page-nav-text">
         <span class="page-nav-label">Next</span>
         
-        <span class="page-nav-title">Folders</span>
+        <span class="page-nav-title">Button</span>
       </span>
       <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a></div></nav>
@@ -324,28 +511,40 @@
                 });
             }
             
+            function copyToClipboard(text) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    return navigator.clipboard.writeText(text);
+                }
+                var textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                return Promise.resolve();
+            }
+
             function initClipboard() {
                 const buttons = document.querySelectorAll('.copy-code-btn');
-                
+
                 buttons.forEach(button => {
                     button.addEventListener('click', function() {
                         const targetId = this.getAttribute('data-clipboard-target');
                         const codeElement = document.querySelector(targetId);
-                        
+
                         if (codeElement) {
                             const text = codeElement.textContent;
-                            
-                            // Use modern clipboard API
-                            navigator.clipboard.writeText(text).then(() => {
-                                const textSpan = this.querySelector('.copy-text');
+                            const textSpan = this.querySelector('.copy-text');
+
+                            copyToClipboard(text).then(() => {
                                 if (textSpan) {
                                     textSpan.textContent = 'Copied!';
                                     setTimeout(() => {
                                         textSpan.textContent = 'Copy';
                                     }, 1500);
                                 }
-                            }).catch(err => {
-                                console.error('Copy failed:', err);
                             });
                         }
                     });

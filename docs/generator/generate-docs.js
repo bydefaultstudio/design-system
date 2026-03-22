@@ -189,17 +189,20 @@ function generateNavigation(filesBySection, currentPage = null) {
     </ul>
   `;
   
-  // Sort sections in custom order
-  const sectionOrder = ['Brand Book', 'Design System', 'Code', 'Content', 'Project'];
-  const sortedSections = Object.keys(filesBySection).sort((a, b) => {
-    const indexA = sectionOrder.indexOf(a);
-    const indexB = sectionOrder.indexOf(b);
-    if (indexA !== -1 && indexB !== -1) return indexA - indexB;
-    if (indexA !== -1) return -1;
-    if (indexB !== -1) return 1;
-    return a.localeCompare(b);
-  });
-  
+  // Sort sections in custom order (hidden sections are excluded from nav)
+  const sectionOrder = ['Brand Book', 'Design System', 'Code', 'Content', 'Tools'];
+  const hiddenSections = ['Project'];
+  const sortedSections = Object.keys(filesBySection)
+    .filter(s => !hiddenSections.includes(s))
+    .sort((a, b) => {
+      const indexA = sectionOrder.indexOf(a);
+      const indexB = sectionOrder.indexOf(b);
+      if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+      if (indexA !== -1) return -1;
+      if (indexB !== -1) return 1;
+      return a.localeCompare(b);
+    });
+
   for (const section of sortedSections) {
     const files = filesBySection[section];
     
@@ -256,7 +259,22 @@ function generateNavigation(filesBySection, currentPage = null) {
       </ul>
     </details>`;
   }
-  
+
+  // Add Tools section with hardcoded links (no markdown source)
+  navigation += `<details class="nav-section">
+    <summary class="nav-section-toggle">
+      <span>Tools</span>
+      <span class="nav-toggle-icon">
+        <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
+        </svg>
+      </span>
+    </summary>
+    <ul class="nav-list">
+      <li><a href="svg-cleaner/index.html" class="nav-link">SVG Cleaner</a></li>
+    </ul>
+  </details>`;
+
   return navigation;
 }
 
@@ -265,16 +283,19 @@ function generateNavigation(filesBySection, currentPage = null) {
  */
 function generateIndexPage(template, navigation, filesBySection) {
   let cards = '';
-  
-  const sectionOrder = ['Brand Book', 'Design System', 'Code', 'Content', 'Project'];
-  const sortedSections = Object.keys(filesBySection).sort((a, b) => {
-    const indexA = sectionOrder.indexOf(a);
-    const indexB = sectionOrder.indexOf(b);
-    if (indexA !== -1 && indexB !== -1) return indexA - indexB;
-    if (indexA !== -1) return -1;
-    if (indexB !== -1) return 1;
-    return a.localeCompare(b);
-  });
+
+  const sectionOrder = ['Brand Book', 'Design System', 'Code', 'Content', 'Tools'];
+  const hiddenSections = ['Project'];
+  const sortedSections = Object.keys(filesBySection)
+    .filter(s => !hiddenSections.includes(s))
+    .sort((a, b) => {
+      const indexA = sectionOrder.indexOf(a);
+      const indexB = sectionOrder.indexOf(b);
+      if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+      if (indexA !== -1) return -1;
+      if (indexB !== -1) return 1;
+      return a.localeCompare(b);
+    });
 
   for (const section of sortedSections) {
     const files = filesBySection[section];
@@ -309,11 +330,32 @@ function generateIndexPage(template, navigation, filesBySection) {
       `;
     }
 
+    // Add Styleguide card at the end of the Design System section
+    if (section === 'Design System') {
+      cards += `
+        <a href="design-system/index.html" class="docs-card">
+          <h3 class="docs-card-title">Styleguide</h3>
+          <p class="docs-card-subtitle">Live preview of all design system tokens and components</p>
+        </a>
+      `;
+    }
+
     cards += `
       </div>
     </div>`;
   }
-  
+
+  // Add Tools section with hardcoded cards (no markdown source)
+  cards += `<div class="docs-section">
+    <h2 class="eyebrow">Tools</h2>
+    <div class="grid cols-3 gap-xl">
+      <a href="svg-cleaner/index.html" class="docs-card">
+        <h3 class="docs-card-title">SVG Cleaner</h3>
+        <p class="docs-card-subtitle">Paste raw SVG code and get a cleaned, optimised version</p>
+      </a>
+    </div>
+  </div>`;
+
   const indexContent = `
     <div class="docs-hero">
       <h1 class="docs-hero-title">Documentation</h1>
@@ -341,8 +383,11 @@ function generateIndexPage(template, navigation, filesBySection) {
  * Build a flat ordered list of all pages following the nav order
  */
 function buildPageOrder(filesBySection) {
-  const sectionOrder = ['Brand Book', 'Design System', 'Code', 'Content', 'Project'];
-  const sortedSections = Object.keys(filesBySection).sort((a, b) => {
+  const sectionOrder = ['Brand Book', 'Design System', 'Code', 'Content', 'Tools'];
+  const hiddenSections = ['Project'];
+  const sortedSections = Object.keys(filesBySection)
+    .filter(s => !hiddenSections.includes(s))
+    .sort((a, b) => {
     const indexA = sectionOrder.indexOf(a);
     const indexB = sectionOrder.indexOf(b);
     if (indexA !== -1 && indexB !== -1) return indexA - indexB;

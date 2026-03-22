@@ -294,7 +294,7 @@ The ByDefault design system uses `CSS custom properties` for all design tokens. 
   
   /* Color tokens */
   --text-plain: var(--black);
-  --text-link: var(--brand-accent);
+  --text-link: var(--green);
   --background-plain: var(--white);
 }
 ```
@@ -332,7 +332,7 @@ Markdown code (shown as indented code block):
       
       /* Color tokens */
       --text-plain: var(--black);
-      --text-link: var(--brand-accent);
+      --text-link: var(--green);
       --background-plain: var(--white);
     }
     ```

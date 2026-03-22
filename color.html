@@ -108,6 +108,8 @@
       
         <li><a href="border.html" class="nav-link ">Border</a></li>
       
+        <li><a href="iconography.html" class="nav-link ">Iconography</a></li>
+      
         <li><a href="button.html" class="nav-link ">Button</a></li>
       
         <li><a href="callout.html" class="nav-link ">Callout</a></li>
@@ -152,25 +154,18 @@
       
       </ul>
     </details><details class="nav-section">
-      <summary class="nav-section-toggle">
-        <span>Project</span>
-        <span class="nav-toggle-icon">
-          <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
-          </svg>
-        </span>
-      </summary>
-      <ul class="nav-list">
-        <li><a href="setup.html" class="nav-link ">Setup</a></li>
-      
-        <li><a href="template.html" class="nav-link ">Template</a></li>
-      
-        <li><a href="folder-structure.html" class="nav-link ">Folders</a></li>
-      
-        <li><a href="upgrading-docs.html" class="nav-link ">Upgrading the Docs Engine</a></li>
-      
-      </ul>
-    </details>
+    <summary class="nav-section-toggle">
+      <span>Tools</span>
+      <span class="nav-toggle-icon">
+        <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
+        </svg>
+      </span>
+    </summary>
+    <ul class="nav-list">
+      <li><a href="svg-cleaner/index.html" class="nav-link">SVG Cleaner</a></li>
+    </ul>
+  </details>
                 </div>
             </nav>
         </aside>
@@ -194,7 +189,7 @@
 <h2 id="primitive-colors">Primitive Colors</h2>
 <p>Primitive colors are the raw color values used as building blocks for all other color tokens. They can be used directly in layouts or components, but it&#39;s <strong>preferred to use semantic tokens</strong> instead.</p>
 <h3 id="brand-colors">Brand Colors</h3>
-<p>Brand tokens are project-level overrides and may change per project. <strong>You can rename the token names</strong> to anything relating to your brand (e.g., <code>--brand-primary</code>, <code>--off-white</code>, <code>--charcoal</code>, <code>--hero-blue</code>, etc.). This personalizes the system and makes it more intuitive for your team.</p>
+<p>Brand tokens are project-level overrides and may change per project. <strong>You can rename the token names</strong> to anything relating to your brand (e.g., <code>--primary</code>, <code>--off-white</code>, <code>--charcoal</code>, <code>--hero-blue</code>, etc.). This personalizes the system and makes it more intuitive for your team.</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -204,17 +199,17 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--brand-dark</code></td>
+<td><code>--warm-black</code></td>
 <td>#brand-hex1</td>
 <td>Dark brand color</td>
 </tr>
 <tr>
-<td><code>--brand-light</code></td>
+<td><code>--off-white</code></td>
 <td>#brand-hex2</td>
 <td>Light brand color</td>
 </tr>
 <tr>
-<td><code>--brand-accent</code></td>
+<td><code>--green</code></td>
 <td>#brand-hex3</td>
 <td>Accent brand color</td>
 </tr>
@@ -222,12 +217,12 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-lfsj0h9qx" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-q5i4588wt" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-lfsj0h9qx" class="language-css">:root {
+        <pre><code id="code-q5i4588wt" class="language-css">:root {
   /* You can use default names or rename tokens to match your brand */
-  --brand-dark: #1a1a1a; /* Replace with your brand color */
+  --warm-black: #1a1a1a; /* Replace with your brand color */
   
   /* Or use custom names that make sense for your project */
   --charcoal: #1a1a1a;
@@ -236,7 +231,7 @@
 }
 
 .div {
-  color: var(--brand-dark);
+  color: var(--warm-black);
   /* Or use your custom token name */
   /* color: var(--charcoal); */
 }
@@ -297,10 +292,10 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-bwcchfx03" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-seiqyuy84" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-bwcchfx03" class="language-css">.shadow {
+        <pre><code id="code-seiqyuy84" class="language-css">.shadow {
   box-shadow: 0 4px 6px var(--black-alpha-30);
 }
 </code></pre>
@@ -360,10 +355,10 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-sq8u6pr2r" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-xeo3wds0a" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-sq8u6pr2r" class="language-css">.highlight {
+        <pre><code id="code-xeo3wds0a" class="language-css">.highlight {
   background-color: var(--white-alpha-30);
 }
 </code></pre>
@@ -434,10 +429,10 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-rkvle1aov" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-bfyt9wup0" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-rkvle1aov" class="language-css">.text {
+        <pre><code id="code-bfyt9wup0" class="language-css">.text {
   color: var(--neutral-800);
 }
 </code></pre>
@@ -457,12 +452,12 @@
 </thead>
 <tbody><tr>
 <td><code>--text-primary</code></td>
-<td>↳<code>--brand-warm-black</code></td>
+<td>↳<code>--warm-black</code></td>
 <td>Primary text color</td>
 </tr>
 <tr>
 <td><code>--text-secondary</code></td>
-<td>↳<code>--brand-text-secondary</code></td>
+<td>↳<code>--text-secondary-brand</code></td>
 <td>Secondary text color</td>
 </tr>
 <tr>
@@ -477,22 +472,22 @@
 </tr>
 <tr>
 <td><code>--text-accent</code></td>
-<td>↳<code>--brand-accent</code></td>
+<td>↳<code>--green</code></td>
 <td>Accent text</td>
 </tr>
 <tr>
 <td><code>--text-link</code></td>
-<td>↳<code>--brand-accent</code></td>
+<td>↳<code>--green</code></td>
 <td>Link text color</td>
 </tr>
 </tbody></table></div>
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-we7voivje" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-tenfcg1n0" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-we7voivje" class="language-css">h1 {
+        <pre><code id="code-tenfcg1n0" class="language-css">h1 {
   color: var(--text-primary);
 }
 </code></pre>
@@ -509,12 +504,12 @@
 </thead>
 <tbody><tr>
 <td><code>--background-primary</code></td>
-<td>↳<code>--brand-light</code></td>
+<td>↳<code>--off-white</code></td>
 <td>Default background</td>
 </tr>
 <tr>
 <td><code>--background-secondary</code></td>
-<td>↳<code>--brand-warm-white</code></td>
+<td>↳<code>--warm-white</code></td>
 <td>Secondary background</td>
 </tr>
 <tr>
@@ -531,10 +526,10 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-gctkyq7w0" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-v2h5dprug" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-gctkyq7w0" class="language-css">.card {
+        <pre><code id="code-v2h5dprug" class="language-css">.card {
   background-color: var(--background-plain);
 }
 </code></pre>
@@ -551,12 +546,12 @@
 </thead>
 <tbody><tr>
 <td><code>--border-primary</code></td>
-<td>↳<code>--brand-border-primary</code></td>
+<td>↳<code>--border-primary-brand</code></td>
 <td>Default border</td>
 </tr>
 <tr>
 <td><code>--border-secondary</code></td>
-<td>↳<code>--brand-border-secondary</code></td>
+<td>↳<code>--border-secondary-brand</code></td>
 <td>Second border</td>
 </tr>
 <tr>
@@ -568,10 +563,10 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#code-d8u6kfr5h" type="button" aria-label="Copy code">
+        <button class="copy-code-btn" data-clipboard-target="#code-6ykq4cqij" type="button" aria-label="Copy code">
           <span class="copy-text">Copy</span>
         </button>
-        <pre><code id="code-d8u6kfr5h" class="language-css">.card {
+        <pre><code id="code-6ykq4cqij" class="language-css">.card {
   border-color: var(--border-primary);
 }
 </code></pre>
@@ -629,28 +624,40 @@
                 });
             }
             
+            function copyToClipboard(text) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    return navigator.clipboard.writeText(text);
+                }
+                var textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                return Promise.resolve();
+            }
+
             function initClipboard() {
                 const buttons = document.querySelectorAll('.copy-code-btn');
-                
+
                 buttons.forEach(button => {
                     button.addEventListener('click', function() {
                         const targetId = this.getAttribute('data-clipboard-target');
                         const codeElement = document.querySelector(targetId);
-                        
+
                         if (codeElement) {
                             const text = codeElement.textContent;
-                            
-                            // Use modern clipboard API
-                            navigator.clipboard.writeText(text).then(() => {
-                                const textSpan = this.querySelector('.copy-text');
+                            const textSpan = this.querySelector('.copy-text');
+
+                            copyToClipboard(text).then(() => {
                                 if (textSpan) {
                                     textSpan.textContent = 'Copied!';
                                     setTimeout(() => {
                                         textSpan.textContent = 'Copy';
                                     }, 1500);
                                 }
-                            }).catch(err => {
-                                console.error('Copy failed:', err);
                             });
                         }
                     });

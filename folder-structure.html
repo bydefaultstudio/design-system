@@ -108,6 +108,8 @@
       
         <li><a href="border.html" class="nav-link ">Border</a></li>
       
+        <li><a href="iconography.html" class="nav-link ">Iconography</a></li>
+      
         <li><a href="button.html" class="nav-link ">Button</a></li>
       
         <li><a href="callout.html" class="nav-link ">Callout</a></li>
@@ -151,26 +153,19 @@
         <li><a href="markdown-style.html" class="nav-link ">Markdown</a></li>
       
       </ul>
-    </details><details class="nav-section" open>
-      <summary class="nav-section-toggle">
-        <span>Project</span>
-        <span class="nav-toggle-icon">
-          <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
-          </svg>
-        </span>
-      </summary>
-      <ul class="nav-list">
-        <li><a href="setup.html" class="nav-link ">Setup</a></li>
-      
-        <li><a href="template.html" class="nav-link ">Template</a></li>
-      
-        <li><a href="folder-structure.html" class="nav-link nav-link-active">Folders</a></li>
-      
-        <li><a href="upgrading-docs.html" class="nav-link ">Upgrading the Docs Engine</a></li>
-      
-      </ul>
-    </details>
+    </details><details class="nav-section">
+    <summary class="nav-section-toggle">
+      <span>Tools</span>
+      <span class="nav-toggle-icon">
+        <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
+        </svg>
+      </span>
+    </summary>
+    <ul class="nav-list">
+      <li><a href="svg-cleaner/index.html" class="nav-link">SVG Cleaner</a></li>
+    </ul>
+  </details>
                 </div>
             </nav>
         </aside>
@@ -206,6 +201,7 @@
 <li><code>templates/</code> → Component and page templates</li>
 <li><code>docs/</code> → Documentation markdown source and generator</li>
 <li><code>src/</code> → Source files (pages, JS)</li>
+<li><code>svg-cleaner/</code> → SVG optimisation tool (CLI + browser UI)</li>
 </ul>
 <h2 id="assets">assets/</h2>
 <p>Single source of truth for all assets. No duplication.</p>
@@ -224,7 +220,7 @@
 <li><code>index.html</code> → Styleguide preview (renders with default tokens)</li>
 </ul>
 <h2 id="brand-book">brand-book/</h2>
-<p>Brand identity tokens. Customise this per project. The design system reads these tokens via <code>var(--brand-*, fallback)</code>.</p>
+<p>Brand identity tokens. Customise this per project. The design system reads these tokens directly.</p>
 <ul>
 <li><code>brand-book.css</code> → Brand tokens (fonts, colours)</li>
 <li><code>index.html</code> → Brand preview page (logo, palette, typography, icons)</li>
@@ -264,6 +260,12 @@
 <li><code>assets/css/style.css</code> → Site layout and components</li>
 </ol>
 <p>New site-specific CSS goes in <code>assets/css/style.css</code>.</p>
+<h2 id="svg-cleaner">svg-cleaner/</h2>
+<p>SVG optimisation tool for cleaning raw SVGs before adding them to the design system.</p>
+<ul>
+<li><code>svg-clean.js</code> → CLI tool (pipe SVG via stdin, get cleaned output)</li>
+<li><code>index.html</code> → Browser-based SVG cleaner UI</li>
+</ul>
 <h2 id="notes">Notes</h2>
 <p>Empty folders are tracked using <code>.gitkeep</code> to preserve structure in the template.</p>
 <h3 id="favicons">Favicons</h3>
@@ -276,26 +278,12 @@
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#root-level" class="toc-link">Root Level</a></li><li class="toc-item toc-level-2"><a href="#assets" class="toc-link">assets/</a></li><li class="toc-item toc-level-2"><a href="#design-system" class="toc-link">design-system/</a></li><li class="toc-item toc-level-2"><a href="#brand-book" class="toc-link">brand-book/</a></li><li class="toc-item toc-level-2"><a href="#src" class="toc-link">src/</a></li><li class="toc-item toc-level-2"><a href="#templates" class="toc-link">templates/</a></li><li class="toc-item toc-level-2"><a href="#docs" class="toc-link">docs/</a></li><li class="toc-item toc-level-2"><a href="#css-loading-order" class="toc-link">CSS Loading Order</a></li><li class="toc-item toc-level-2"><a href="#notes" class="toc-link">Notes</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#root-level" class="toc-link">Root Level</a></li><li class="toc-item toc-level-2"><a href="#assets" class="toc-link">assets/</a></li><li class="toc-item toc-level-2"><a href="#design-system" class="toc-link">design-system/</a></li><li class="toc-item toc-level-2"><a href="#brand-book" class="toc-link">brand-book/</a></li><li class="toc-item toc-level-2"><a href="#src" class="toc-link">src/</a></li><li class="toc-item toc-level-2"><a href="#templates" class="toc-link">templates/</a></li><li class="toc-item toc-level-2"><a href="#docs" class="toc-link">docs/</a></li><li class="toc-item toc-level-2"><a href="#css-loading-order" class="toc-link">CSS Loading Order</a></li><li class="toc-item toc-level-2"><a href="#svg-cleaner" class="toc-link">svg-cleaner/</a></li><li class="toc-item toc-level-2"><a href="#notes" class="toc-link">Notes</a></li></ul></nav></div>
     </aside>
             </div>
             
             <!-- Page Navigation (Previous / Next) -->
-            <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="template.html" class="page-nav-link page-nav-prev" rel="prev">
-      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span class="page-nav-text">
-        <span class="page-nav-label">Previous</span>
-        
-        <span class="page-nav-title">Template</span>
-      </span>
-    </a><a href="upgrading-docs.html" class="page-nav-link page-nav-next" rel="next">
-      <span class="page-nav-text">
-        <span class="page-nav-label">Next</span>
-        
-        <span class="page-nav-title">Upgrading the Docs Engine</span>
-      </span>
-      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a></div></nav>
+            
 
             <!-- Footer -->
             <footer class="docs-footer">
@@ -321,28 +309,40 @@
                 });
             }
             
+            function copyToClipboard(text) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    return navigator.clipboard.writeText(text);
+                }
+                var textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                return Promise.resolve();
+            }
+
             function initClipboard() {
                 const buttons = document.querySelectorAll('.copy-code-btn');
-                
+
                 buttons.forEach(button => {
                     button.addEventListener('click', function() {
                         const targetId = this.getAttribute('data-clipboard-target');
                         const codeElement = document.querySelector(targetId);
-                        
+
                         if (codeElement) {
                             const text = codeElement.textContent;
-                            
-                            // Use modern clipboard API
-                            navigator.clipboard.writeText(text).then(() => {
-                                const textSpan = this.querySelector('.copy-text');
+                            const textSpan = this.querySelector('.copy-text');
+
+                            copyToClipboard(text).then(() => {
                                 if (textSpan) {
                                     textSpan.textContent = 'Copied!';
                                     setTimeout(() => {
                                         textSpan.textContent = 'Copy';
                                     }, 1500);
                                 }
-                            }).catch(err => {
-                                console.error('Copy failed:', err);
                             });
                         }
                     });

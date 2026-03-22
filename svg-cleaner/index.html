@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Essential -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SVG Cleaner</title>
+  <meta name="description" content="Paste raw SVG code and get a cleaned, optimised version ready for the design system." />
+
+  <!-- Robots -->
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Brand Book -->
+  <link rel="stylesheet" href="../brand-book/brand-book.css" />
+  <!-- Design System Framework -->
+  <link rel="stylesheet" href="../design-system/design-system.css" />
+
+  <!-- Google Fonts: Inclusive Sans (body) + JetBrains Mono (code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    #svg-input,
+    #svg-output {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: var(--font-s);
+      min-height: 200px;
+      resize: vertical;
+    }
+
+    #copy-btn {
+      transition: opacity 0.2s ease;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page-wrapper">
+    <div class="page-content">
+
+      <!-- Header -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-s">
+              <p class="eyebrow">Tools</p>
+              <h1>SVG Cleaner</h1>
+              <p class="text-size-small">Paste raw SVG code below. The cleaner strips <code>xmlns</code> and applies optional transformations.</p>
+              <p class="text-size-small"><a href="../index.html">Documentation</a></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tool -->
+      <section class="top-medium bottom-large">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-l">
+
+              <!-- Options -->
+              <div class="block gap-s">
+                <p class="eyebrow">Options</p>
+                <div class="block row gap-l">
+                  <div class="form-check">
+                    <input type="checkbox" id="opt-current-color" checked>
+                    <label for="opt-current-color">currentColor</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" id="opt-icon">
+                    <label for="opt-icon">Icon</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" id="opt-size">
+                    <label for="opt-size">Size 100%</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" id="opt-strip-comments" checked>
+                    <label for="opt-strip-comments">Strip Comments</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" id="opt-minify">
+                    <label for="opt-minify">Minify</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Icon Name (shown when Icon is checked) -->
+              <div id="icon-name-group" style="display: none;">
+                <input type="text" id="opt-icon-name" placeholder="Icon name (e.g. arrow-right)">
+              </div>
+
+              <!-- Input -->
+              <div class="block gap-s">
+                <label for="svg-input">Paste SVG Code</label>
+                <textarea id="svg-input" placeholder="<svg viewBox=&quot;0 0 24 24&quot;>&#10;  <path d=&quot;M12 2...&quot; fill=&quot;#000&quot;/>&#10;</svg>"></textarea>
+              </div>
+
+              <!-- Clean Button -->
+              <div>
+                <button class="button" id="clean-btn">Clean SVG</button>
+              </div>
+
+              <!-- Output -->
+              <div class="block gap-s">
+                <label for="svg-output">Cleaned SVG</label>
+                <textarea id="svg-output" readonly placeholder="Cleaned SVG will appear here..."></textarea>
+              </div>
+
+              <!-- Copy Button -->
+              <div>
+                <button class="button is-outline" id="copy-btn" disabled>Copy to Clipboard</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script>
+    /**
+     * Script Purpose: SVG Cleaner browser UI — inline processing logic
+     * Author: By Default Studio
+     * Created: 2026-03-22
+     * Version: 1.0.0
+     * Last Updated: 2026-03-22
+     */
+
+    console.log('SVG Cleaner UI v1.0.0');
+
+    //
+    //------- Utility Functions -------//
+    //
+
+    // Strip XML/HTML Comments
+    function stripComments(svg) {
+      return svg.replace(/<!--[\s\S]*?-->/g, '');
+    }
+
+    // Minify SVG to Single Line
+    function minifySVG(svg) {
+      return svg
+        .replace(/\n/g, '')
+        .replace(/\s{2,}/g, ' ')
+        .replace(/>\s+</g, '><')
+        .trim();
+    }
+
+    //
+    //------- Main Functions -------//
+    //
+
+    // Process SVG Code
+    function processSVG(svgCode, options) {
+      let processedCode = svgCode;
+
+      // Remove xmlns attributes (run twice for xmlns + xmlns:xlink)
+      processedCode = processedCode.replace(
+        /<svg([^>]*?)\s+xmlns(?::xlink)?="[^"]*"([^>]*?)>/g,
+        '<svg$1$2>'
+      );
+      processedCode = processedCode.replace(
+        /<svg([^>]*?)\s+xmlns(?::xlink)?="[^"]*"([^>]*?)>/g,
+        '<svg$1$2>'
+      );
+
+      // Tidy root <svg> attributes based on flags
+      processedCode = processedCode.replace(
+        /<svg([^>]*?)>/,
+        function (match, attributes) {
+          var newAttributes = attributes;
+
+          if (options.size) {
+            newAttributes = newAttributes
+              .replace(/\s+width="[^"]*"/gi, '')
+              .replace(/\s+height="[^"]*"/gi, '');
+            newAttributes += ' width="100%" height="100%"';
+          }
+
+          return '<svg' + newAttributes + '>';
+        }
+      );
+
+      // Process all <path> elements — set fill to currentColor (if enabled)
+      if (options.currentColor) {
+        processedCode = processedCode.replace(
+          /<path([^>]*?)>/g,
+          function (match, attributes) {
+            if (attributes.includes('fill=')) {
+              attributes = attributes.replace(/fill="[^"]*"/g, 'fill="currentColor"');
+            } else {
+              attributes += ' fill="currentColor"';
+            }
+
+            if (attributes.includes('style=')) {
+              attributes = attributes.replace(
+                /style="([^"]*?)"/g,
+                function (styleMatch, styleContent) {
+                  var newStyleContent = styleContent.replace(
+                    /fill\s*:\s*[^;]+/g,
+                    'fill: currentColor'
+                  );
+
+                  if (!styleContent.includes('fill:')) {
+                    return 'style="' + styleContent + '; fill: currentColor"';
+                  }
+
+                  return 'style="' + newStyleContent + '"';
+                }
+              );
+            }
+
+            return '<path' + attributes + '>';
+          }
+        );
+      }
+
+      // Strip comments if requested
+      if (options.stripComments) {
+        processedCode = stripComments(processedCode);
+      }
+
+      // Minify if requested
+      if (options.minify) {
+        processedCode = minifySVG(processedCode);
+      }
+
+      var result = processedCode.trim();
+
+      // Wrap in icon block if requested
+      if (options.icon) {
+        var dataAttr = options.iconName ? ' data-icon="' + options.iconName + '"' : '';
+        result = '<div class="icn-svg"' + dataAttr + '>\n  ' + result + '\n</div>';
+      }
+
+      return result;
+    }
+
+    // Handle Clean Button Click
+    function handleClean() {
+      var input = document.getElementById('svg-input').value;
+      var output = document.getElementById('svg-output');
+      var copyBtn = document.getElementById('copy-btn');
+
+      if (!input.trim()) {
+        output.value = '';
+        copyBtn.disabled = true;
+        return;
+      }
+
+      var options = {
+        currentColor: document.getElementById('opt-current-color').checked,
+        icon: document.getElementById('opt-icon').checked,
+        iconName: document.getElementById('opt-icon-name').value.trim() || null,
+        size: document.getElementById('opt-size').checked,
+        stripComments: document.getElementById('opt-strip-comments').checked,
+        minify: document.getElementById('opt-minify').checked,
+      };
+
+      output.value = processSVG(input, options);
+      copyBtn.disabled = false;
+    }
+
+    // Handle Copy Button Click
+    function handleCopy() {
+      var output = document.getElementById('svg-output');
+      var copyBtn = document.getElementById('copy-btn');
+
+      if (!output.value) return;
+
+      navigator.clipboard.writeText(output.value).then(function () {
+        var originalText = copyBtn.textContent;
+        copyBtn.textContent = 'Copied!';
+        setTimeout(function () {
+          copyBtn.textContent = originalText;
+        }, 1500);
+      });
+    }
+
+    //
+    //------- Event Listeners -------//
+    //
+
+    // Toggle Icon Name Input
+    function handleIconToggle() {
+      var iconNameGroup = document.getElementById('icon-name-group');
+      iconNameGroup.style.display = this.checked ? '' : 'none';
+      if (!this.checked) {
+        document.getElementById('opt-icon-name').value = '';
+      }
+    }
+
+    // Setup Event Listeners
+    function setupEventListeners() {
+      document.getElementById('clean-btn').addEventListener('click', handleClean);
+      document.getElementById('copy-btn').addEventListener('click', handleCopy);
+      document.getElementById('opt-icon').addEventListener('change', handleIconToggle);
+    }
+
+    //
+    //------- Initialize -------//
+    //
+
+    document.addEventListener('DOMContentLoaded', function () {
+      setupEventListeners();
+    });
+  </script>
+
+</body>
+
+</html>

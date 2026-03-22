@@ -25,7 +25,7 @@ Callout variants are powered by status color tokens defined in `:root`. These ar
 
 | Token | Default | Purpose |
 |---|---|---|
-| `--status-info` | `var(--brand-accent)` | Informational, notes |
+| `--status-info` | `var(--green)` | Informational, notes |
 | `--status-success` | `#1a7f37` | Tips, positive feedback |
 | `--status-warning` | `#9a6700` | Warnings, attention needed |
 | `--status-danger` | `#cf222e` | Caution, destructive actions |

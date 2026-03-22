@@ -20,7 +20,7 @@ All form styling is controlled by semantic tokens in `:root`:
 | `--input-background` | `var(--background-primary)` | Input background |
 | `--input-text` | `var(--text-plain)` | Input text color |
 | `--input-placeholder` | `var(--text-faded)` | Placeholder text color |
-| `--input-focus` | `var(--brand-accent)` | Focus border and ring color |
+| `--input-focus` | `var(--green)` | Focus border and ring color |
 | `--input-disabled-bg` | `var(--background-faded)` | Disabled background |
 | `--input-disabled-text` | `var(--text-faded)` | Disabled text color |
 

@@ -8,7 +8,7 @@
 
 /*
  * This section maps brand book tokens into the design system.
- * The brand book (brand-book/brand-book.css) defines --brand-* tokens.
+ * The brand book (brand-book/brand-book.css) defines palette and font tokens.
  * The DS reads them here with fallback defaults.
  *
  * If no brand book is loaded, the defaults below are used.
@@ -19,25 +19,7 @@
  */
 
 :root {
-  /* -- Fonts (from brand book) -- */
-  --font-primary: var(--brand-font-primary, "Inclusive Sans", sans-serif);
-  --font-secondary: var(--brand-font-secondary, "Georgia", serif);
-  --font-tertiary: var(--brand-font-tertiary, monospace);
-
-  /* -- Brand colours (from brand book) -- */
-  --brand-dark: var(--brand-color-dark, #221f1c);
-  --brand-light: var(--brand-color-light, #fff7f1);
-  --brand-accent: var(--brand-color-accent, #167255);
-
-  /* -- Extended brand colours (from brand book) -- */
-  --brand-off-white: var(--brand-color-off-white, #fff7f1);
-  --brand-warm-white: var(--brand-color-warm-white, #f5ebe3);
-  --brand-warm-black: var(--brand-color-warm-black, #18100b);
-  --brand-off-black: var(--brand-color-off-black, #0f0e0e);
-  --brand-text-secondary: var(--brand-color-text-secondary, #4a4846);
-  --brand-border-primary: var(--brand-color-border-primary, #615d5b);
-  --brand-border-secondary: var(--brand-color-border-secondary, #bbb5b1);
-  --brand-checkbox: var(--brand-color-checkbox, #e8e1dc);
+  /* -- Fonts & palette colours: defined in brand-book.css -- */
 
   /* -- Base font sizes -- */
   --font-2xs: 12px;
@@ -85,16 +67,16 @@
 :root {
   /* -- Neutrals -- */
   --neutral-50: #fff7f1;
-  --neutral-100: #e3e0de;
+  --neutral-100: #e8e1dc;
   --neutral-150: #ddd6d1;
-  --neutral-200: #ceccca;
-  --neutral-300: #bab8b6;
-  --neutral-400: #a5a4a2;
-  --neutral-500: #918f8e;
-  --neutral-600: #7d7b7b;
-  --neutral-700: #686767;
-  --neutral-800: #545353;
-  --neutral-900: #3f3f3f;
+  --neutral-200: #d2cbc6;
+  --neutral-300: #bbb5b1;
+  --neutral-400: #a59f9b;
+  --neutral-500: #8e8986;
+  --neutral-600: #777371;
+  --neutral-700: #615d5b;
+  --neutral-800: #4a4846;
+  --neutral-900: #343230;
   --neutral-950: #1d1c1b;
   --neutral-990: #0f0e0e;
 
@@ -120,34 +102,34 @@
   --transparent: transparent;
 
   /* -- Semantic colours -- */
-  --text-primary: var(--brand-warm-black);
-  --text-secondary: var(--brand-text-secondary);
+  --text-primary: var(--warm-black);
+  --text-secondary: var(--neutral-800);
   --text-plain: var(--black);
   --text-faded: var(--black-alpha-50);
-  --text-accent: var(--brand-accent);
-  --text-link: var(--brand-accent);
+  --text-accent: var(--green);
+  --text-link: var(--green);
 
-  --background-primary: var(--brand-light);
-  --background-secondary: var(--brand-warm-white);
+  --background-primary: var(--off-white);
+  --background-secondary: var(--warm-white);
   --background-plain: var(--white);
   --background-faded: var(--black-alpha-5);
 
-  --border-primary: var(--brand-border-primary);
-  --border-secondary: var(--brand-border-secondary);
+  --border-primary: var(--text-primary);
+  --border-secondary: var(--neutral-300);
   --border-faded: var(--black-alpha-15);
 
-  --button-primary: var(--brand-off-black);
-  --button-text: var(--brand-light);
+  --button-primary: var(--off-black);
+  --button-text: var(--off-white);
   --button-secondary: var(--black);
-  --button-secondary-text: var(--brand-light);
+  --button-secondary-text: var(--off-white);
   --button-faded: var(--black-alpha-15);
 
   /* -- Status colours (from brand book or defaults) -- */
-  --status-info: var(--brand-color-info, var(--brand-accent));
-  --status-success: var(--brand-color-success, #1a7f37);
-  --status-warning: var(--brand-color-warning, #9a6700);
-  --status-danger: var(--brand-color-danger, #cf222e);
-  --status-accent: var(--brand-color-accent-alt, #8250df);
+  --status-info: var(--green);
+  --status-success: #1a7f37;
+  --status-warning: #9a6700;
+  --status-danger: #cf222e;
+  --status-accent: #8250df;
 
   /* -- Callout semantic tokens -- */
   --callout-info: var(--status-info);
@@ -166,11 +148,11 @@
   --input-background: var(--black-alpha-10);
   --input-text: var(--text-plain);
   --input-placeholder: var(--text-faded);
-  --input-focus: var(--brand-accent);
+  --input-focus: var(--green);
   --input-disabled-bg: var(--background-faded);
   --input-disabled-text: var(--text-faded);
-  --checkbox-background: var(--brand-checkbox);
-  --checkbox-selected: var(--brand-accent);
+  --checkbox-background: var(--neutral-100);
+  --checkbox-selected: var(--green);
 
 }
 
@@ -299,22 +281,22 @@ h1 {
 }
 
 h2 {
-  font-size: var(--font-4xl);
+  font-size: var(--font-3xl);
   line-height: var(--line-height-s);
 }
 
 h3 {
-  font-size: var(--font-3xl);
-  line-height: 1.1;
-}
-
-h4 {
   font-size: var(--font-2xl);
   line-height: 1.1;
 }
 
-h5 {
+h4 {
   font-size: var(--font-xl);
+  line-height: 1.1;
+}
+
+h5 {
+  font-size: var(--font-l);
   line-height: var(--line-height-s);
 }
 
@@ -610,7 +592,7 @@ section {
 .color-row {
   display: flex;
   align-items: center;
-  padding: var(--space-m) var(--space-l);
+  padding: var(--space-2xl) var(--space-l);
   font-size: var(--font-s);
   font-weight: var(--font-weight-medium);
   cursor: default;
@@ -633,13 +615,13 @@ section {
 }
 
 .color-copy-btn {
+  color: inherit;
   background: none;
   border: none;
   font-size: var(--font-xs);
   font-weight: var(--font-weight-semi-bold);
   cursor: pointer;
   padding: var(--space-2xs) var(--space-s);
-  border-radius: var(--space-2xs);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -912,6 +894,7 @@ button {
   width: 1.5rem;
   height: 1.5rem;
   display: flex;
+  aspect-ratio: 1 / 1;
 }
 
 .button-group {
