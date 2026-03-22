@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.command' | grep -qE '^\\s*git\\s+commit\\b' && echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PostToolUse\",\"additionalContext\":\"IMPORTANT: A git commit just succeeded. You MUST now use AskUserQuestion to ask the user whether they want to push to the remote branch. Do not skip this step.\"}}' || true"
+          }
+        ]
+      }
+    ]
+  }
+}
