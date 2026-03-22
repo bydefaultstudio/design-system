@@ -305,7 +305,7 @@ html {
   padding: 0;
   font-weight: var(--font-weight-semi-bold);
   color: var(--text-faded);
-  font-size: var(--font-2xs);
+  font-size: var(--font-xs);
   cursor: pointer;
   list-style: none;
   user-select: none;
@@ -315,6 +315,11 @@ html {
 
 /* Remove default WebKit arrow */
 .nav-section-toggle::-webkit-details-marker {
+  display: none;
+}
+
+/* Override global disclosure chevron — nav uses its own SVG icon */
+.nav-section-toggle::after {
   display: none;
 }
 
@@ -363,7 +368,7 @@ html {
   color: var(--text-plain);
   text-decoration: none;
   transition: color 0.2s;
-  font-size: var(--font-s);
+  font-size: var(--font-m);
 }
 
 .nav-link:hover {
