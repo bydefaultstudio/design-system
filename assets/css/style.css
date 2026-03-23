@@ -258,14 +258,15 @@ html {
   background: var(--background-plain);
 }
 
-/* Rotate chevron 180deg when collapsed (now points right = "open") */
-.docs-sidebar-toggle svg {
-  transition: transform var(--sidebar-transition);
-}
+/* Sidebar toggle: swap between open/close icons */
+.sidebar-icon-close { display: none; }
+.sidebar-collapsed .sidebar-icon-open { display: none; }
+.sidebar-collapsed .sidebar-icon-close { display: flex; }
 
-.sidebar-collapsed .docs-sidebar-toggle svg {
-  transform: rotate(180deg);
-}
+/* Mobile toggle: swap between menu/close icons */
+.mobile-icon-close { display: none; }
+.mobile-nav-open .mobile-icon-open { display: none; }
+.mobile-nav-open .mobile-icon-close { display: flex; }
 
 /* Mobile toggle button — hidden on desktop */
 .docs-mobile-toggle {
