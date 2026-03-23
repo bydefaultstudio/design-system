@@ -225,7 +225,7 @@ function generateNavigation(filesBySection, currentPage = null) {
       <summary class="nav-section-toggle">
         <span>${sectionLabel}</span>
         <span class="nav-toggle-icon">
-          <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
             <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
           </svg>
         </span>
@@ -265,7 +265,7 @@ function generateNavigation(filesBySection, currentPage = null) {
     <summary class="nav-section-toggle">
       <span>Tools</span>
       <span class="nav-toggle-icon">
-        <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
           <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
         </svg>
       </span>
@@ -423,8 +423,8 @@ function generatePageNav(file, pageOrder) {
 
   if (!prev && !next) return '';
 
-  const arrowLeft = `<svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-  const arrowRight = `<svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const arrowLeft = `<svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const arrowRight = `<svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
   let html = '<nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global">';
 
