@@ -21,22 +21,22 @@
 :root {
   /* -- Fonts & palette colours: defined in brand-book.css -- */
 
-  /* -- Base font sizes -- */
-  --font-2xs: 12px;
-  --font-xs: 14px;
-  --font-s: 16px;
-  --font-m: 18px;
-  --font-l: 22px;
-  --font-xl: 28px;
-  --font-2xl: 32px;
-  --font-3xl: 40px;
-  --font-4xl: 48px;
-  --font-5xl: 55px;
-  --font-6xl: 64px;
-  --font-7xl: 72px;
+  /* -- Base font sizes (rem-based, scale with root font-size) -- */
+  --font-2xs: 0.75rem;
+  --font-xs: 0.875rem;
+  --font-s: 1rem;
+  --font-m: 1.125rem;
+  --font-l: 1.375rem;
+  --font-xl: 1.75rem;
+  --font-2xl: 2rem;
+  --font-3xl: 2.5rem;
+  --font-4xl: 3rem;
+  --font-5xl: 3.4375rem;
+  --font-6xl: 4rem;
+  --font-7xl: 4.5rem;
 
   /* -- UI font sizes -- */
-  --button-font-size: 20px;
+  --button-font-size: 1.25rem;
   --button-font-size-small: var(--font-2xs);
 
   /* -- Line height tokens -- */
@@ -250,6 +250,10 @@
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+html {
+  font-size: clamp(14px, 0.5rem + 1vw, 16px);
 }
 
 body {
@@ -1311,39 +1315,6 @@ details .disclosure-content {
 /* ------ 14. RESPONSIVE ------ */
 
 @media (max-width: 768px) {
-  :root {
-    /* -- Mobile font sizes -- */
-    --font-2xs: 12px;
-    --font-xs: 12px;
-    --font-s: 14px;
-    --font-m: 17px;
-    --font-l: 19px;
-    --font-xl: 21px;
-    --font-2xl: 23px;
-    --font-3xl: 26px;
-    --font-4xl: 28px;
-    --font-5xl: 34px;
-    --font-6xl: 40px;
-
-    /* -- Mobile section spacing -- */
-    --section-xs: var(--space-l);
-    --section-s: var(--space-xl);
-    --section-m: var(--space-2xl);
-    --section-l: var(--space-5xl);
-    --section-xl: var(--space-8xl);
-
-    /* -- Mobile responsive space tokens -- */
-    --space-xs: 0.25rem;
-    --space-s: 0.25rem;
-    --space-m: 0.5rem;
-    --space-l: 1rem;
-    --space-xl: 1rem;
-    --space-2xl: 1.5rem;
-    --space-3xl: 2rem;
-    --space-4xl: 2rem;
-    --space-6xl: 3rem;
-  }
-
   .grid {
     grid-template-columns: 1fr;
   }

@@ -18,16 +18,16 @@ This table shows the complete token set applied to each text element in the desi
 
 | Element | Font Size | Line Height | Weight | Family | Extra |
 | --- | --- | --- | --- | --- | --- |
-| **h1** | `--font-6xl` (64px) | `--line-height-s` (1) | `--font-weight-regular` (400) | `--font-secondary` | — |
-| **h2** | `--font-5xl` (55px) | `--line-height-s` (1) | `--font-weight-regular` (400) | `--font-secondary` | — |
-| **h3** | `--font-4xl` (48px) | `1.1` | `--font-weight-regular` (400) | `--font-secondary` | — |
-| **h4** | `--font-3xl` (40px) | `1.1` | `--font-weight-regular` (400) | `--font-secondary` | — |
-| **h5** | `--font-2xl` (32px) | `--line-height-s` (1) | `--font-weight-regular` (400) | `--font-secondary` | — |
-| **h6** | `--font-l` (22px) | `--line-height-l` (1.4) | `--font-weight-regular` (400) | `--font-secondary` | — |
-| **body / p** | `--font-m` (18px) | `--line-height-l` (1.4) | `--font-weight-regular` (400) | `--font-primary` | — |
-| **.text-size-small** | `--font-s` (16px) | `--line-height-xl` (1.6) | `--font-weight-regular` (400) | `--font-primary` | — |
-| **.text-size-xsmall** | `--font-xs` (14px) | `--line-height-xl` (1.6) | `--font-weight-regular` (400) | `--font-primary` | — |
-| **.eyebrow** | `--font-xs` (14px) | `--line-height-m` (1.3) | `--font-weight-extra-bold` (800) | `--font-primary` | `letter-spacing: --letter-spacing-xl` · `text-transform: uppercase` |
+| **h1** | `--font-6xl` (4rem) | `--line-height-s` (1) | `--font-weight-regular` (400) | `--font-secondary` | — |
+| **h2** | `--font-5xl` (3.4375rem) | `--line-height-s` (1) | `--font-weight-regular` (400) | `--font-secondary` | — |
+| **h3** | `--font-4xl` (3rem) | `1.1` | `--font-weight-regular` (400) | `--font-secondary` | — |
+| **h4** | `--font-3xl` (2.5rem) | `1.1` | `--font-weight-regular` (400) | `--font-secondary` | — |
+| **h5** | `--font-2xl` (2rem) | `--line-height-s` (1) | `--font-weight-regular` (400) | `--font-secondary` | — |
+| **h6** | `--font-l` (1.375rem) | `--line-height-l` (1.4) | `--font-weight-regular` (400) | `--font-secondary` | — |
+| **body / p** | `--font-m` (1.125rem) | `--line-height-l` (1.4) | `--font-weight-regular` (400) | `--font-primary` | — |
+| **.text-size-small** | `--font-s` (1rem) | `--line-height-xl` (1.6) | `--font-weight-regular` (400) | `--font-primary` | — |
+| **.text-size-xsmall** | `--font-xs` (0.875rem) | `--line-height-xl` (1.6) | `--font-weight-regular` (400) | `--font-primary` | — |
+| **.eyebrow** | `--font-xs` (0.875rem) | `--line-height-m` (1.3) | `--font-weight-extra-bold` (800) | `--font-primary` | `letter-spacing: --letter-spacing-xl` · `text-transform: uppercase` |
 | **blockquote** | inherits body | inherits body | inherits body | `--font-secondary` | `border-left` · `padding-left` |
 
 > All headings (h1–h6) share `margin-top: --space-xl` and `margin-bottom: --space-l`. Body text color is `--text-primary` for all elements.
@@ -36,21 +36,24 @@ This table shows the complete token set applied to each text element in the desi
 
 ## Font Size
 
-Font size tokens define the typographic scale for all text elements. They scale responsively between desktop and mobile devices to ensure optimal readability across screen sizes.
+Font size tokens define the typographic scale for all text elements. They use `rem` units and scale automatically via the root font-size — no per-token mobile overrides needed.
 
-| Token | Desktop | Mobile |
-| --- | --- | --- |
-| `--font-2xs` | 12px | 12px |
-| `--font-xs` | 14px | 12px |
-| `--font-s` | 16px | 14px |
-| `--font-m` | 18px | 17px |
-| `--font-l` | 22px | 19px |
-| `--font-xl` | 28px | 21px |
-| `--font-2xl` | 32px | 23px |
-| `--font-3xl` | 40px | 26px |
-| `--font-4xl` | 48px | 28px |
-| `--font-5xl` | 55px | 34px |
-| `--font-6xl` | 64px | 40px |
+The root font-size uses `clamp(14px, 0.5rem + 1vw, 16px)` for fluid scaling between 14px (small screens) and 16px (large screens). All `rem`-based tokens scale uniformly with it.
+
+| Token | Value (rem) | Desktop (16px root) | Mobile (14px root) |
+| --- | --- | --- | --- |
+| `--font-2xs` | 0.75rem | 12px | 10.5px |
+| `--font-xs` | 0.875rem | 14px | 12.25px |
+| `--font-s` | 1rem | 16px | 14px |
+| `--font-m` | 1.125rem | 18px | 15.75px |
+| `--font-l` | 1.375rem | 22px | 19.25px |
+| `--font-xl` | 1.75rem | 28px | 24.5px |
+| `--font-2xl` | 2rem | 32px | 28px |
+| `--font-3xl` | 2.5rem | 40px | 35px |
+| `--font-4xl` | 3rem | 48px | 42px |
+| `--font-5xl` | 3.4375rem | 55px | 48.125px |
+| `--font-6xl` | 4rem | 64px | 56px |
+| `--font-7xl` | 4.5rem | 72px | 63px |
 
 **Usage:**
 
