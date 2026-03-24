@@ -248,10 +248,10 @@ function generateNavigation(filesBySection, currentPage = null) {
       `;
     }
 
-    // Add Brand Book Preview link inside the Brand Book section
+    // Add Visual Identity link inside the Brand Book section
     if (section === 'Brand Book') {
       navigation += `
-        <li><a href="brand-book/index.html" class="nav-link">Brand Book Preview</a></li>
+        <li><a href="brand-book/index.html" class="nav-link">Visual Identity</a></li>
       `;
     }
 
@@ -320,11 +320,11 @@ function generateIndexPage(template, navigation, filesBySection) {
       `;
     }
 
-    // Add Brand Book Preview card at the end of the Brand Book section
+    // Add Visual Identity card at the end of the Brand Book section
     if (section === 'Brand Book') {
       cards += `
         <a href="brand-book/index.html" class="docs-card">
-          <h3 class="docs-card-title">Brand Book Preview</h3>
+          <h3 class="docs-card-title">Visual Identity</h3>
           <p class="docs-card-subtitle">Visual brand identity — logo, palette, typography, and icons</p>
         </a>
       `;
