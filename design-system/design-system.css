@@ -21,22 +21,22 @@
 :root {
   /* -- Fonts & palette colours: defined in brand-book.css -- */
 
-  /* -- Base font sizes -- */
-  --font-2xs: 12px;
-  --font-xs: 14px;
-  --font-s: 16px;
-  --font-m: 18px;
-  --font-l: 22px;
-  --font-xl: 28px;
-  --font-2xl: 32px;
-  --font-3xl: 40px;
-  --font-4xl: 48px;
-  --font-5xl: 55px;
-  --font-6xl: 64px;
-  --font-7xl: 72px;
+  /* -- Base font sizes (rem-based, scale with root font-size) -- */
+  --font-2xs: 0.75rem;   /* 12px */
+  --font-xs: 0.875rem;   /* 14px */
+  --font-s: 1rem;        /* 16px */
+  --font-m: 1.125rem;    /* 18px */
+  --font-l: 1.375rem;    /* 22px */
+  --font-xl: 1.75rem;    /* 28px */
+  --font-2xl: 2rem;      /* 32px */
+  --font-3xl: 2.5rem;    /* 40px */
+  --font-4xl: 3rem;      /* 48px */
+  --font-5xl: 3.4375rem; /* 55px */
+  --font-6xl: 4rem;      /* 64px */
+  --font-7xl: 4.5rem;    /* 72px */
 
   /* -- UI font sizes -- */
-  --button-font-size: 20px;
+  --button-font-size: var(--font-m);
   --button-font-size-small: var(--font-2xs);
 
   /* -- Line height tokens -- */
@@ -250,6 +250,10 @@
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+html {
+  font-size: clamp(14px, 0.5rem + 1vw, 16px);
 }
 
 body {
@@ -592,8 +596,8 @@ section {
 .color-row {
   display: flex;
   align-items: center;
-  padding: var(--space-2xl) var(--space-l);
-  font-size: var(--font-s);
+  padding: var(--space-4xl) var(--space-xl);
+  font-size: var(--font-m);
   font-weight: var(--font-weight-medium);
   cursor: default;
   position: relative;
@@ -901,6 +905,17 @@ button {
   height: 1.5rem;
   display: flex;
   aspect-ratio: 1 / 1;
+}
+
+.icn-svg.is-preview {
+  width: 3rem;
+  height: 3rem;
+}
+
+.svg-logo {
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 210 / 101;
 }
 
 .button-group {
@@ -1308,42 +1323,18 @@ details .disclosure-content {
  * - Should reuse callout/status tokens
  */
 
-/* ------ 14. RESPONSIVE ------ */
+/* ------ 14. BACK TO DOCS BUTTON ------ */
+
+.docs-back-btn-wrapper {
+  position: fixed;
+  top: var(--space-m);
+  right: var(--space-m);
+  z-index: 100;
+}
+
+/* ------ 15. RESPONSIVE ------ */
 
 @media (max-width: 768px) {
-  :root {
-    /* -- Mobile font sizes -- */
-    --font-2xs: 12px;
-    --font-xs: 12px;
-    --font-s: 14px;
-    --font-m: 17px;
-    --font-l: 19px;
-    --font-xl: 21px;
-    --font-2xl: 23px;
-    --font-3xl: 26px;
-    --font-4xl: 28px;
-    --font-5xl: 34px;
-    --font-6xl: 40px;
-
-    /* -- Mobile section spacing -- */
-    --section-xs: var(--space-l);
-    --section-s: var(--space-xl);
-    --section-m: var(--space-2xl);
-    --section-l: var(--space-5xl);
-    --section-xl: var(--space-8xl);
-
-    /* -- Mobile responsive space tokens -- */
-    --space-xs: 0.25rem;
-    --space-s: 0.25rem;
-    --space-m: 0.5rem;
-    --space-l: 1rem;
-    --space-xl: 1rem;
-    --space-2xl: 1.5rem;
-    --space-3xl: 2rem;
-    --space-4xl: 2rem;
-    --space-6xl: 3rem;
-  }
-
   .grid {
     grid-template-columns: 1fr;
   }

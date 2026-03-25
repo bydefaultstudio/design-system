@@ -129,9 +129,7 @@ function markdownToHtml(markdown) {
     
     return `
       <div class="code-block-wrapper">
-        <button class="copy-code-btn" data-clipboard-target="#${codeId}" type="button" aria-label="Copy code">
-          <span class="copy-text">Copy</span>
-        </button>
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#${codeId}" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
         <pre><code id="${codeId}"${attributes}>${code}</code></pre>
       </div>
     `;
@@ -435,7 +433,7 @@ function generatePageNav(file, pageOrder) {
       <span class="page-nav-text">
         <span class="page-nav-label">Previous</span>
         ${sectionLabel}
-        <span class="page-nav-title">${prev.title}</span>
+        <h3 class="page-nav-title">${prev.title}</h3>
       </span>
     </a>`;
   } else {
@@ -448,7 +446,7 @@ function generatePageNav(file, pageOrder) {
       <span class="page-nav-text">
         <span class="page-nav-label">Next</span>
         ${sectionLabel}
-        <span class="page-nav-title">${next.title}</span>
+        <h3 class="page-nav-title">${next.title}</h3>
       </span>
       ${arrowRight}
     </a>`;
