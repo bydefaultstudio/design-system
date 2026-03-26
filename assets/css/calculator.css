@@ -1,0 +1,70 @@
+/* ------ CALCULATOR STYLES ------ */
+
+/* -- Input overrides -- */
+.calculator-input-inline {
+  padding: var(--space-s) var(--space-m);
+  font-size: var(--font-s);
+}
+
+.calculator-output {
+  background-color: var(--input-disabled-bg);
+  color: var(--input-disabled-text);
+  cursor: not-allowed;
+}
+
+/* -- Table wrapper -- */
+.calculator-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* -- Table -- */
+.calculator-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-s);
+}
+
+.calculator-table th,
+.calculator-table td {
+  padding: var(--space-m) var(--space-l);
+  text-align: left;
+  border-bottom: var(--border-s) solid var(--border-secondary);
+}
+
+.calculator-table th {
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--text-primary);
+  background-color: var(--background-secondary);
+}
+
+.calculator-table tbody tr:hover {
+  background-color: var(--background-faded);
+}
+
+.calculator-table tfoot tr {
+  border-top: var(--border-m) solid var(--border-primary);
+}
+
+.calculator-table tfoot th {
+  font-weight: var(--font-weight-bold);
+  background-color: var(--background-primary);
+}
+
+.calculator-table tfoot td {
+  font-weight: var(--font-weight-semi-bold);
+  background-color: var(--background-primary);
+}
+
+/* -- Output cells -- */
+.calculator-output-cell {
+  color: var(--text-secondary);
+  font-family: var(--font-tertiary);
+}
+
+/* -- Totals row -- */
+.calculator-totals-row th,
+.calculator-totals-row td {
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-xl);
+}

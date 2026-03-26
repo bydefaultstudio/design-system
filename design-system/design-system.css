@@ -588,6 +588,14 @@ section {
   align-items: flex-end;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
 /* -- Color palette (styleguide) -- */
 .color-list {
   overflow: hidden;
@@ -1341,7 +1349,24 @@ details .disclosure-content {
   z-index: 100;
 }
 
-/* ------ 15. RESPONSIVE ------ */
+/* ------ 15. BACK TO TOP BUTTON ------ */
+
+.back-to-top-wrapper {
+  position: fixed;
+  right: var(--space-m);
+  bottom: var(--space-m);
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.back-to-top-wrapper.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ------ 16. RESPONSIVE ------ */
 
 @media (max-width: 768px) {
   .grid {

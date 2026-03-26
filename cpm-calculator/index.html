@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Essential -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CPM Calculator</title>
+  <meta name="description" content="A web-based campaign impression planner and pricing calculator for media planners and sales teams." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="CPM Calculator - By Default Brand OS">
+  <meta property="og:description" content="A web-based campaign impression planner and pricing calculator for media planners and sales teams.">
+  <meta property="og:image" content="../assets/images/og-default.jpg">
+  <meta property="og:type" content="website">
+
+  <!-- Robots -->
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Brand Book -->
+  <link rel="stylesheet" href="../brand-book/brand-book.css" />
+  <!-- Design System Framework -->
+  <link rel="stylesheet" href="../design-system/design-system.css" />
+  <!-- Calculator Styles -->
+  <link rel="stylesheet" href="../assets/css/calculator.css" />
+
+  <!-- Google Fonts: Inclusive Sans (body) + JetBrains Mono (code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="page-wrapper">
+    <div class="page-content">
+
+      <!-- Back Button -->
+      <div class="docs-back-btn-wrapper">
+        <a href="../index.html" class="button is-small">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M18 18V15C18 13.8954 17.1046 13 16 13H10.2392C9.34831 13 8.90214 14.0771 9.53211 14.7071L11.425 16.6L10.025 18.025L4 12L10 6L11.425 7.425L9.54652 9.29043C8.91317 9.91938 9.35857 11 10.2512 11H20V18H18Z" fill="currentColor"/>
+          </svg>
+          Back
+        </a>
+      </div>
+
+      <!-- Header -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-s">
+              <p class="eyebrow">Tools</p>
+              <h1>CPM & Spend Calculator</h1>
+              <p class="text-size-small" data-text-wrap="pretty">Campaign impression planner and pricing calculator for media planners and sales teams.</p>
+              <p class="text-size-small"><a href="../calculator.html">How to use this tool</a></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 1: Global Inputs -->
+      <section class="top-medium bottom-medium">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-l">
+              <h2>Global Settings</h2>
+
+              <details id="calculator-options">
+                <summary>Show options</summary>
+                <div class="block row gap-l">
+                  <div class="form-check">
+                    <input type="checkbox" id="opt-af">
+                    <label for="opt-af">By Default Fee</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" id="opt-ah">
+                    <label for="opt-ah">Ad Hosting Fee</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" id="opt-pf">
+                    <label for="opt-pf">Publisher Payout</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" id="opt-pm">
+                    <label for="opt-pm">Partner Margin</label>
+                  </div>
+                </div>
+              </details>
+
+              <div class="block gap-m">
+                <div class="block gap-s">
+                  <label for="campaign-cpm">
+                    <strong>Campaign CPM (£)</strong>
+                  </label>
+                  <input
+                    type="number"
+                    id="campaign-cpm"
+                    name="campaign-cpm"
+                    min="0"
+                    value="15"
+                  />
+                </div>
+
+                <div class="block gap-s" data-opt="af">
+                  <label for="agency-fee-cpm">
+                    <strong>By Default fee (CPM, £)</strong>
+                  </label>
+                  <input
+                    type="number"
+                    id="agency-fee-cpm"
+                    name="agency-fee-cpm"
+                    min="0"
+                    value="1"
+                  />
+                </div>
+
+                <div class="block gap-s" data-opt="ah">
+                  <label for="ad-hosting-fee-cpm">
+                    <strong>Ad hosting fee (CPM, £)</strong>
+                  </label>
+                  <input
+                    type="number"
+                    id="ad-hosting-fee-cpm"
+                    name="ad-hosting-fee-cpm"
+                    min="0"
+                    value="1"
+                  />
+                </div>
+
+                <div class="block gap-s" data-opt="pf">
+                  <label for="publisher-payout">
+                    <strong>Publisher payout (%)</strong>
+                  </label>
+                  <input
+                    type="number"
+                    id="publisher-payout"
+                    name="publisher-payout"
+                    min="0"
+                    max="100"
+                    value="70"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Campaign Inputs -->
+      <section class="bottom-medium">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-l">
+              <h2>Campaign Overview</h2>
+
+              <div class="block gap-m">
+                <div class="block gap-s">
+                  <label for="total-campaign-spend">
+                    <strong>Total campaign spend (£)</strong>
+                  </label>
+                  <input
+                    type="number"
+                    id="total-campaign-spend"
+                    name="total-campaign-spend"
+                    min="0"
+                    value="300000"
+                  />
+                </div>
+
+                <div class="block gap-s">
+                  <label for="calculated-impressions">
+                    <strong>Calculated impressions</strong>
+                  </label>
+                  <input
+                    type="text"
+                    id="calculated-impressions"
+                    name="calculated-impressions"
+                    readonly
+                    class="calculator-output"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Monthly Breakdown Table -->
+      <section class="bottom-large">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-l">
+              <h2>Monthly Breakdown</h2>
+
+              <div class="calculator-table-wrapper">
+                <table class="calculator-table">
+                  <thead>
+                    <tr>
+                      <th>Month</th>
+                      <th>Campaign (£)</th>
+                      <th>Impressions</th>
+                      <th data-opt="af">By Default</th>
+                      <th data-opt="ah">Ad hosting</th>
+                      <th data-opt="pf">Publisher</th>
+                      <th data-opt="pm">Partner Margin</th>
+                    </tr>
+                  </thead>
+                  <tbody id="monthly-table-body">
+                    <!-- Rows will be generated by JavaScript -->
+                  </tbody>
+                  <tfoot>
+                    <tr class="calculator-totals-row">
+                      <th>Total</th>
+                      <td id="total-spend">£0.00</td>
+                      <td id="total-impressions">0</td>
+                      <td data-opt="af" id="total-agency-earnings">£0.00</td>
+                      <td data-opt="ah" id="total-ad-hosting-cost">£0.00</td>
+                      <td data-opt="pf" id="total-publisher-payout">£0.00</td>
+                      <td data-opt="pm" id="total-partner-margin">£0.00</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="../assets/js/calculator.js"></script>
+
+  <!-- Back to Top -->
+  <div class="back-to-top-wrapper">
+    <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
+      <div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 4V2H20V4H4Z" fill="currentColor"/>
+        <path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/>
+      </svg></div>
+    </button>
+  </div>
+  <script>
+    (function() {
+      var btn = document.querySelector('.back-to-top-wrapper');
+      if (!btn) return;
+      window.addEventListener('scroll', function() {
+        btn.classList.toggle('is-visible', window.scrollY > 300);
+      });
+      btn.querySelector('button').addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+  </script>
+
+</body>
+
+</html>

@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Setup - By Default Brand OS</title>
-    <meta name="description" content="Guide to customizing this project template for your new project.">
+    <title>SVG Cleaner - By Default Brand OS</title>
+    <meta name="description" content="Paste raw SVG code and get a cleaned, optimised version ready for the design system.">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
     <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Setup - By Default Brand OS">
-    <meta property="og:description" content="Guide to customizing this project template for your new project.">
+    <meta property="og:title" content="SVG Cleaner - By Default Brand OS">
+    <meta property="og:description" content="Paste raw SVG code and get a cleaned, optimised version ready for the design system.">
     <meta property="og:image" content="assets/images/og-default.jpg">
     <meta property="og:type" content="website">
 
@@ -163,7 +163,7 @@
         <li><a href="markdown-style.html" class="nav-link ">Markdown</a></li>
       
       </ul>
-    </details><details class="nav-section">
+    </details><details class="nav-section" open>
       <summary class="nav-section-toggle">
         <span>Tools</span>
         <span class="nav-toggle-icon">
@@ -175,7 +175,7 @@
       <ul class="nav-list">
         <li><a href="calculator.html" class="nav-link ">CPM Calculator</a></li>
       
-        <li><a href="svg-cleaner.html" class="nav-link ">SVG Cleaner</a></li>
+        <li><a href="svg-cleaner.html" class="nav-link nav-link-active">SVG Cleaner</a></li>
       
       </ul>
     </details>
@@ -187,11 +187,11 @@
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
       <div class="container-small">
-        <h1>Setup</h1>
-        <p class="page-subtitle" data-text-wrap="pretty">Getting started with this template</p>
+        <h1>SVG Cleaner</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">How to use the SVG Cleaner tool</p>
         <div class="button-group justify-center">
-          <a href="docs/setup.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
-          
+          <a href="docs/svg-cleaner.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+          <a href="svg-cleaner/index.html" class="button is-small page-source-link">Open Tool</a>
         </div>
       </div>
     </div>
@@ -201,93 +201,65 @@
                 <!-- Main Content -->
                 <main class="docs-main">
                     <article class="markdown-body">
-                        <p>This template provides a solid foundation for new projects. Follow these steps to customize it for your project.</p>
+                        <p>The SVG Cleaner is a browser-based tool for cleaning and optimising SVG code before adding it to the project. Paste raw SVG and get a cleaned version ready for the design system.</p>
 <hr>
-<h2 id="brand-colors">Brand Colors</h2>
-<p>Update brand colors in <code>brand-book/brand-book.css</code>.</p>
-<p>The brand book defines colour and font tokens. The design system reads these directly.</p>
-<p><strong>What to change:</strong></p>
+<h2 id="what-it-does-always">What It Does (Always)</h2>
 <ul>
-<li><code>--off-white</code>, <code>--warm-black</code>, etc. — Your palette colours</li>
-<li><code>--green</code>, <code>--red</code>, <code>--blue</code>, etc. — Your accent colours</li>
-<li><code>--font-primary</code>, <code>--font-secondary</code>, <code>--font-tertiary</code> — Your fonts</li>
+<li>Strips <code>xmlns</code> and <code>xmlns:xlink</code> from the root <code>&lt;svg&gt;</code> element</li>
 </ul>
-<p><strong>Example:</strong></p>
+<hr>
+<h2 id="optional-flags">Optional Flags</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--current-color</code></td>
+<td>Sets all <code>&lt;path&gt;</code> fill attributes to <code>currentColor</code></td>
+</tr>
+<tr>
+<td><code>--size</code></td>
+<td>Removes width/height, adds <code>width=&quot;100%&quot; height=&quot;100%&quot;</code></td>
+</tr>
+<tr>
+<td><code>--strip-comments</code></td>
+<td>Removes XML/HTML comments</td>
+</tr>
+<tr>
+<td><code>--minify</code></td>
+<td>Collapses output to a single line</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="browser-ui">Browser UI</h2>
+<p>Open the SVG Cleaner tool in your browser to use the visual paste-and-copy workflow:</p>
+<ol>
+<li>Paste your raw SVG code into the input area</li>
+<li>Select the cleaning options you need</li>
+<li>Copy the cleaned output</li>
+</ol>
+<hr>
+<h2 id="cli-usage">CLI Usage</h2>
+<p>The tool also works from the command line via <code>svg-cleaner/svg-clean.js</code>:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-2p6m7wr4e" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-2p6m7wr4e" class="language-css">/* brand-book/brand-book.css */
-:root {
-  --off-white: #fff7f1;
-  --warm-black: #221f1c;
-  --green: #167255;
-}
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-rdc2r0ks0" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-rdc2r0ks0" class="language-bash">node svg-cleaner/svg-clean.js --current-color --strip-comments -o assets/images/filename.svg &lt;&lt;&#39;SVGEOF&#39;
+&lt;svg&gt;...pasted code...&lt;/svg&gt;
+SVGEOF
 </code></pre>
       </div>
     
-<p><strong>Note:</strong> The design system reads these tokens directly. You do not need to touch <code>design-system/design-system.css</code> for brand colours.</p>
+<p>Use heredoc syntax (<code>&lt;&lt;&#39;SVGEOF&#39;</code>) to avoid shell escaping issues with quotes in SVG attributes.</p>
 <hr>
-<h2 id="fonts">Fonts</h2>
-<p>Update font families in <code>brand-book/brand-book.css</code>.</p>
-<p><strong>What to change:</strong></p>
+<h2 id="file-locations">File Locations</h2>
 <ul>
-<li><code>--font-primary</code> — Your primary font family</li>
-<li><code>--font-secondary</code> — Your secondary font family (if used)</li>
-<li><code>--font-tertiary</code> — Your monospace font (if used)</li>
+<li><code>assets/icons/</code> — favicons and app icons</li>
+<li><code>assets/images/</code> — logos, illustrations, and general SVGs</li>
 </ul>
-<p><strong>Also update:</strong></p>
-<ul>
-<li>Google Fonts link in <code>docs/docs.config.js</code> (if using Google Fonts)</li>
-<li>Google Fonts link in <code>design-system/index.html</code> (if using Google Fonts)</li>
-<li>Google Fonts link in <code>brand-book/index.html</code> (if using Google Fonts)</li>
-</ul>
-<hr>
-<h2 id="logo">Logo</h2>
-<p>Replace the logo image:</p>
-<ul>
-<li><code>assets/images/logo.svg</code> - Documentation site logo</li>
-</ul>
-<hr>
-<h2 id="project-brief">Project Brief</h2>
-<p>Fill in <code>PROJECT_BRIEF.md</code> with your project details:</p>
-<ul>
-<li>Replace all bracketed placeholders <code>[like this]</code> with actual content</li>
-<li>Define project goals, audience, and constraints</li>
-</ul>
-<hr>
-<h2 id="meta-tags-amp-seo">Meta Tags &amp; SEO</h2>
-<p>Update SEO meta tags in <code>docs/generator/template.html</code>:</p>
-<ul>
-<li>Update <code>&lt;title&gt;</code> template if needed</li>
-<li>Add Open Graph tags for social sharing</li>
-<li>Update favicon references if using custom favicons</li>
-</ul>
-<hr>
-<h2 id="documentation">Documentation</h2>
-<p>The documentation is ready to use, but you may want to:</p>
-<ul>
-<li>Review and customize documentation content in <code>docs/</code> folder</li>
-<li>Update the index page description in <code>docs/generator/generate-docs.js</code></li>
-<li>Add or remove documentation pages as needed</li>
-</ul>
-<hr>
-<h2 id="quick-checklist">Quick Checklist</h2>
-<ul>
-<li><input disabled="" type="checkbox"> Update brand colors in <code>brand-book/brand-book.css</code></li>
-<li><input disabled="" type="checkbox"> Update font families in <code>brand-book/brand-book.css</code></li>
-<li><input disabled="" type="checkbox"> Replace logo in <code>assets/images/logo.svg</code></li>
-<li><input disabled="" type="checkbox"> Fill in <code>PROJECT_BRIEF.md</code></li>
-<li><input disabled="" type="checkbox"> Update Google Fonts links (if applicable)</li>
-<li><input disabled="" type="checkbox"> Review and customize documentation</li>
-</ul>
-<hr>
-<h2 id="next-steps">Next Steps</h2>
-<ol>
-<li>Start building your project in the <code>src/</code> directory</li>
-<li>Use the templates in <code>templates/</code> folder for new components</li>
-<li>Follow the coding standards in the documentation</li>
-<li>Keep documentation updated as you build</li>
-</ol>
 
                     </article>
                 </main>
@@ -295,12 +267,19 @@
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#brand-colors" class="toc-link">Brand Colors</a></li><li class="toc-item toc-level-2"><a href="#fonts" class="toc-link">Fonts</a></li><li class="toc-item toc-level-2"><a href="#logo" class="toc-link">Logo</a></li><li class="toc-item toc-level-2"><a href="#project-brief" class="toc-link">Project Brief</a></li><li class="toc-item toc-level-2"><a href="#meta-tags-amp-seo" class="toc-link">Meta Tags &amp; SEO</a></li><li class="toc-item toc-level-2"><a href="#documentation" class="toc-link">Documentation</a></li><li class="toc-item toc-level-2"><a href="#quick-checklist" class="toc-link">Quick Checklist</a></li><li class="toc-item toc-level-2"><a href="#next-steps" class="toc-link">Next Steps</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#what-it-does-always" class="toc-link">What It Does (Always)</a></li><li class="toc-item toc-level-2"><a href="#optional-flags" class="toc-link">Optional Flags</a></li><li class="toc-item toc-level-2"><a href="#browser-ui" class="toc-link">Browser UI</a></li><li class="toc-item toc-level-2"><a href="#cli-usage" class="toc-link">CLI Usage</a></li><li class="toc-item toc-level-2"><a href="#file-locations" class="toc-link">File Locations</a></li></ul></nav></div>
     </aside>
             </div>
             
             <!-- Page Navigation (Previous / Next) -->
-            
+            <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="calculator.html" class="page-nav-link page-nav-prev" rel="prev">
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <h3 class="page-nav-title">CPM Calculator</h3>
+      </span>
+    </a><span class="page-nav-link page-nav-placeholder"></span></div></nav>
 
             <!-- Footer -->
             <footer class="docs-footer">

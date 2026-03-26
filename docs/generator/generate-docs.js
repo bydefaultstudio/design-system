@@ -231,10 +231,10 @@ function generateNavigation(filesBySection, currentPage = null) {
       `;
     }
 
-    // Add Styleguide link inside the Design System section
+    // Add Style Guide link inside the Design System section
     if (section === 'Design System') {
       navigation += `
-        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+        <li><a href="design-system/index.html" class="nav-link">Style Guide</a></li>
       `;
     }
 
@@ -249,21 +249,6 @@ function generateNavigation(filesBySection, currentPage = null) {
       </ul>
     </details>`;
   }
-
-  // Add Tools section with hardcoded links (no markdown source)
-  navigation += `<details class="nav-section">
-    <summary class="nav-section-toggle">
-      <span>Tools</span>
-      <span class="nav-toggle-icon">
-        <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
-          <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
-        </svg>
-      </span>
-    </summary>
-    <ul class="nav-list">
-      <li><a href="svg-cleaner/index.html" class="nav-link">SVG Cleaner</a></li>
-    </ul>
-  </details>`;
 
   return navigation;
 }
@@ -320,11 +305,11 @@ function generateIndexPage(template, navigation, filesBySection) {
       `;
     }
 
-    // Add Styleguide card at the end of the Design System section
+    // Add Style Guide card at the end of the Design System section
     if (section === 'Design System') {
       cards += `
         <a href="design-system/index.html" class="docs-card">
-          <h3 class="docs-card-title">Styleguide</h3>
+          <h3 class="docs-card-title">Style Guide</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Live preview of all design system tokens and components</p>
         </a>
       `;
@@ -334,17 +319,6 @@ function generateIndexPage(template, navigation, filesBySection) {
       </div>
     </div>`;
   }
-
-  // Add Tools section with hardcoded cards (no markdown source)
-  cards += `<div class="docs-section">
-    <h2 class="eyebrow">Tools</h2>
-    <div class="grid cols-3 gap-xl">
-      <a href="svg-cleaner/index.html" class="docs-card">
-        <h3 class="docs-card-title">SVG Cleaner</h3>
-        <p class="docs-card-subtitle" data-text-wrap="pretty">Paste raw SVG code and get a cleaned, optimised version</p>
-      </a>
-    </div>
-  </div>`;
 
   const indexContent = `
     <div class="docs-hero">
@@ -465,7 +439,10 @@ function generatePage(file, template, navigation, pageOrder) {
       <div class="container-small">
         <h1>${frontmatter.title}</h1>
         ${frontmatter.subtitle ? `<p class="page-subtitle" data-text-wrap="pretty">${frontmatter.subtitle}</p>` : ''}
-        <a href="docs/${file.markdownPath}" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <div class="button-group justify-center">
+          <a href="docs/${file.markdownPath}" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+          ${frontmatter.toolUrl ? `<a href="${frontmatter.toolUrl}" class="button is-small page-source-link">${frontmatter.toolLabel || 'Open Tool'}</a>` : ''}
+        </div>
       </div>
     </div>`;
   }
