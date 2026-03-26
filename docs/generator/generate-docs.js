@@ -349,7 +349,7 @@ function generateIndexPage(template, navigation, filesBySection) {
   const indexContent = `
     <div class="docs-hero">
       <h1 class="docs-hero-title">By Default Brand OS</h1>
-      <p class="docs-hero-description">${PROJECT_CONFIG.indexDescription}</p>
+      <p class="docs-hero-description" data-text-wrap="balance">${PROJECT_CONFIG.indexDescription}</p>
     </div>
     ${cards}
   `;
