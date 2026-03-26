@@ -151,6 +151,56 @@ Button modifiers can be combined to match intent and context.
 
 ---
 
+## Button Group
+
+`.button-group` is a flex container for grouping multiple buttons together. Use it whenever two or more buttons sit side by side.
+
+### Why use it
+
+- Provides consistent spacing between buttons (`var(--space-m)`)
+- Wraps buttons cleanly on smaller screens (`flex-wrap: wrap`)
+- Vertically centres buttons of different sizes (`align-items: center`)
+
+### Default (left-aligned)
+
+```html
+<div class="button-group">
+  <button class="button">Primary</button>
+  <button class="button is-outline">Secondary</button>
+</div>
+```
+
+### Centred
+
+Add `.justify-center` to horizontally centre the group.
+
+```html
+<div class="button-group justify-center">
+  <button class="button">Primary</button>
+  <button class="button is-outline">Secondary</button>
+</div>
+```
+
+### Right-aligned
+
+Add `.justify-end` to push buttons to the right.
+
+```html
+<div class="button-group justify-end">
+  <button class="button is-faded">Cancel</button>
+  <button class="button">Confirm</button>
+</div>
+```
+
+### Combo classes
+
+| Class | Effect |
+|-------|--------|
+| `.justify-center` | Centre-aligns the button group |
+| `.justify-end` | Right-aligns the button group |
+
+---
+
 ## Usage Rules
 
 * Buttons should **never stretch full width by default**

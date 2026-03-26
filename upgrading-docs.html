@@ -128,7 +128,7 @@
       
         <li><a href="form.html" class="nav-link ">Form</a></li>
       
-        <li><a href="design-system/index.html" class="nav-link">Styleguide</a></li>
+        <li><a href="design-system/index.html" class="nav-link">Style Guide</a></li>
       
       </ul>
     </details><details class="nav-section">
@@ -164,18 +164,21 @@
       
       </ul>
     </details><details class="nav-section">
-    <summary class="nav-section-toggle">
-      <span>Tools</span>
-      <span class="nav-toggle-icon">
-        <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
-          <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
-        </svg>
-      </span>
-    </summary>
-    <ul class="nav-list">
-      <li><a href="svg-cleaner/index.html" class="nav-link">SVG Cleaner</a></li>
-    </ul>
-  </details>
+      <summary class="nav-section-toggle">
+        <span>Tools</span>
+        <span class="nav-toggle-icon">
+          <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
+            <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
+          </svg>
+        </span>
+      </summary>
+      <ul class="nav-list">
+        <li><a href="calculator.html" class="nav-link ">CPM Calculator</a></li>
+      
+        <li><a href="svg-cleaner.html" class="nav-link ">SVG Cleaner</a></li>
+      
+      </ul>
+    </details>
                 </div>
             </nav>
         </aside>
@@ -186,7 +189,10 @@
       <div class="container-small">
         <h1>Upgrading the Docs Engine</h1>
         <p class="page-subtitle" data-text-wrap="pretty">How to update the doc site across projects</p>
-        <a href="docs/upgrading-docs.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+        <div class="button-group justify-center">
+          <a href="docs/upgrading-docs.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+          
+        </div>
       </div>
     </div>
             
@@ -232,8 +238,8 @@
 </ol>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-8l3avhj55" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-8l3avhj55" class="language-bash">cd docs/generator
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-sb0aioey4" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-sb0aioey4" class="language-bash">cd docs/generator
 npm install
 npm run docgen
 </code></pre>
@@ -247,8 +253,8 @@ npm run docgen
 <p>Edit <code>docs/docs.config.js</code> in the project:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-b5y6ouc2p" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-b5y6ouc2p" class="language-js">module.exports = {
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-pfph41v8k" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-pfph41v8k" class="language-js">module.exports = {
   // Path to design system CSS, relative from project root
   designSystemPath: &#39;../../design-system/design-system.css&#39;,
 
@@ -288,8 +294,8 @@ npm run docgen
 <p>Run these from inside <code>docs/generator/</code>:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-roqq3xk37" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-roqq3xk37" class="language-bash">npm run docgen     # Generate HTML from markdown
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-gyutpjyq6" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-gyutpjyq6" class="language-bash">npm run docgen     # Generate HTML from markdown
 npm run serve      # View locally in browser
 npm run docwatch   # Auto-regenerate on markdown changes
 npm run docfull    # Generate + serve + watch (all at once)
@@ -516,7 +522,8 @@ npm run docfull    # Generate + serve + watch (all at once)
     <div class="back-to-top-wrapper">
       <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
         <div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M5 11.5L6.425 12.925L11 8.375V20H13V8.375L17.575 12.95L19 11.5L12 4.5L5 11.5Z" fill="currentColor"/>
+          <path d="M4 4V2H20V4H4Z" fill="currentColor"/>
+          <path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/>
         </svg></div>
       </button>
     </div>

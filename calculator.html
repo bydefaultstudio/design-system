@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Setup - By Default Brand OS</title>
-    <meta name="description" content="Guide to customizing this project template for your new project.">
+    <title>CPM Calculator - By Default Brand OS</title>
+    <meta name="description" content="Complete guide to using the calculator, URL feature toggles, and calculation formulas.">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
     <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Setup - By Default Brand OS">
-    <meta property="og:description" content="Guide to customizing this project template for your new project.">
+    <meta property="og:title" content="CPM Calculator - By Default Brand OS">
+    <meta property="og:description" content="Complete guide to using the calculator, URL feature toggles, and calculation formulas.">
     <meta property="og:image" content="assets/images/og-default.jpg">
     <meta property="og:type" content="website">
 
@@ -163,7 +163,7 @@
         <li><a href="markdown-style.html" class="nav-link ">Markdown</a></li>
       
       </ul>
-    </details><details class="nav-section">
+    </details><details class="nav-section" open>
       <summary class="nav-section-toggle">
         <span>Tools</span>
         <span class="nav-toggle-icon">
@@ -173,7 +173,7 @@
         </span>
       </summary>
       <ul class="nav-list">
-        <li><a href="calculator.html" class="nav-link ">CPM Calculator</a></li>
+        <li><a href="calculator.html" class="nav-link nav-link-active">CPM Calculator</a></li>
       
         <li><a href="svg-cleaner.html" class="nav-link ">SVG Cleaner</a></li>
       
@@ -187,11 +187,11 @@
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
       <div class="container-small">
-        <h1>Setup</h1>
-        <p class="page-subtitle" data-text-wrap="pretty">Getting started with this template</p>
+        <h1>CPM Calculator</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">How to use the CPM & Spend Calculator</p>
         <div class="button-group justify-center">
-          <a href="docs/setup.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
-          
+          <a href="docs/calculator.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+          <a href="cpm-calculator/index.html" class="button is-small page-source-link">Open Tool</a>
         </div>
       </div>
     </div>
@@ -201,93 +201,266 @@
                 <!-- Main Content -->
                 <main class="docs-main">
                     <article class="markdown-body">
-                        <p>This template provides a solid foundation for new projects. Follow these steps to customize it for your project.</p>
+                        <p>The CPM &amp; Spend Calculator is a web-based tool for media planners and sales teams to calculate campaign impressions, fees, payouts, and margins based on monthly spend.</p>
 <hr>
-<h2 id="brand-colors">Brand Colors</h2>
-<p>Update brand colors in <code>brand-book/brand-book.css</code>.</p>
-<p>The brand book defines colour and font tokens. The design system reads these directly.</p>
-<p><strong>What to change:</strong></p>
+<h2 id="how-it-works">How It Works</h2>
+<p>The calculator has three main sections:</p>
+<h3 id="1-global-settings">1. Global Settings</h3>
+<p>These inputs affect all calculations below:</p>
 <ul>
-<li><code>--off-white</code>, <code>--warm-black</code>, etc. — Your palette colours</li>
-<li><code>--green</code>, <code>--red</code>, <code>--blue</code>, etc. — Your accent colours</li>
-<li><code>--font-primary</code>, <code>--font-secondary</code>, <code>--font-tertiary</code> — Your fonts</li>
+<li><strong>Campaign CPM (£)</strong> - The cost per thousand impressions (always visible)</li>
+<li><strong>Agency fee (CPM, £)</strong> - Optional agency fee per thousand impressions</li>
+<li><strong>Ad hosting fee (CPM, £)</strong> - Optional ad hosting cost per thousand impressions</li>
+<li><strong>Publisher payout (%)</strong> - Optional percentage of spend paid to publisher</li>
 </ul>
-<p><strong>Example:</strong></p>
+<h3 id="2-campaign-overview">2. Campaign Overview</h3>
+<p>Quick sanity-check section showing:</p>
+<ul>
+<li><strong>Total campaign spend (£)</strong> - Total budget for the campaign</li>
+<li><strong>Calculated impressions</strong> - Total impressions based on spend and CPM (read-only)</li>
+</ul>
+<h3 id="3-monthly-breakdown-table">3. Monthly Breakdown Table</h3>
+<p>The primary output showing:</p>
+<ul>
+<li>One row per month (January through December)</li>
+<li><strong>Campaign (£)</strong> - Editable monthly spend</li>
+<li><strong>Impressions</strong> - Calculated impressions for that month</li>
+<li>Optional columns (shown/hidden via URL):<ul>
+<li><strong>Agency</strong> - Agency earnings for the month</li>
+<li><strong>Ad hosting</strong> - Ad hosting costs for the month</li>
+<li><strong>Publisher</strong> - Publisher payout for the month</li>
+<li><strong>Partner Margin</strong> - Partner margin for the month</li>
+</ul>
+</li>
+<li><strong>Totals row</strong> - Sum of all months</li>
+</ul>
+<hr>
+<h2 id="url-feature-toggles">URL Feature Toggles</h2>
+<p>The calculator supports URL-driven feature toggles to show/hide optional fields and columns. Use the <code>f</code> query parameter with feature codes.</p>
+<h3 id="feature-codes">Feature Codes</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Feature</th>
+<th>Shows</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>pf</code></td>
+<td>Publisher payout</td>
+<td>Publisher payout (%) input + Publisher column + totals</td>
+</tr>
+<tr>
+<td><code>af</code></td>
+<td>Agency fee</td>
+<td>Agency fee (CPM, £) input + Agency column + totals</td>
+</tr>
+<tr>
+<td><code>ah</code></td>
+<td>Ad hosting fee</td>
+<td>Ad hosting fee (CPM, £) input + Ad hosting column + totals</td>
+</tr>
+<tr>
+<td><code>pm</code></td>
+<td>Partner margin</td>
+<td>Partner Margin column + totals</td>
+</tr>
+</tbody></table></div>
+<h3 id="url-examples">URL Examples</h3>
+<p>Copy these URLs to share different views:</p>
+<h4 id="default-view-core-calculator-only">Default View (Core Calculator Only)</h4>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-2p6m7wr4e" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-2p6m7wr4e" class="language-css">/* brand-book/brand-book.css */
-:root {
-  --off-white: #fff7f1;
-  --warm-black: #221f1c;
-  --green: #167255;
-}
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-viu6us7vg" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-viu6us7vg">index.html
 </code></pre>
       </div>
     
-<p><strong>Note:</strong> The design system reads these tokens directly. You do not need to touch <code>design-system/design-system.css</code> for brand colours.</p>
-<hr>
-<h2 id="fonts">Fonts</h2>
-<p>Update font families in <code>brand-book/brand-book.css</code>.</p>
-<p><strong>What to change:</strong></p>
+<p>Shows only Campaign CPM, Total spend, Impressions, and monthly Campaign spend.</p>
+<h4 id="publisher-payout-only">Publisher Payout Only</h4>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-pd2bqhf8s" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-pd2bqhf8s">index.html?f=pf
+</code></pre>
+      </div>
+    
+<p>Adds Publisher payout (%) input and Publisher column.</p>
+<h4 id="agency-fee-only">Agency Fee Only</h4>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-3utxlg239" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-3utxlg239">index.html?f=af
+</code></pre>
+      </div>
+    
+<p>Adds Agency fee (CPM, £) input and Agency column.</p>
+<h4 id="ad-hosting-fee-only">Ad Hosting Fee Only</h4>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-gcbfbxeen" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-gcbfbxeen">index.html?f=ah
+</code></pre>
+      </div>
+    
+<p>Adds Ad hosting fee (CPM, £) input and Ad hosting column.</p>
+<h4 id="partner-margin-only">Partner Margin Only</h4>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-qu67n8mqj" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-qu67n8mqj">index.html?f=pm
+</code></pre>
+      </div>
+    
+<p>Adds Partner Margin column (no input field required).</p>
+<h4 id="multiple-features">Multiple Features</h4>
+<p><strong>Publisher + Agency:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-9824hltxg" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-9824hltxg">index.html?f=pf,af
+</code></pre>
+      </div>
+    
+<p><strong>Agency + Ad Hosting:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-wlvi3t59a" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-wlvi3t59a">index.html?f=af,ah
+</code></pre>
+      </div>
+    
+<p><strong>Publisher + Agency + Ad Hosting:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-tkatlxnmv" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-tkatlxnmv">index.html?f=pf,af,ah
+</code></pre>
+      </div>
+    
+<p><strong>All Features:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-zorrjjmw6" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-zorrjjmw6">index.html?f=pf,af,ah,pm
+</code></pre>
+      </div>
+    
+<p><strong>Publisher + Partner Margin:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-wxhh0frja" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-wxhh0frja">index.html?f=pf,pm
+</code></pre>
+      </div>
+    
+<p><strong>Agency + Ad Hosting + Partner Margin:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-o8llg840g" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-o8llg840g">index.html?f=af,ah,pm
+</code></pre>
+      </div>
+    
+<h3 id="url-format-rules">URL Format Rules</h3>
 <ul>
-<li><code>--font-primary</code> — Your primary font family</li>
-<li><code>--font-secondary</code> — Your secondary font family (if used)</li>
-<li><code>--font-tertiary</code> — Your monospace font (if used)</li>
-</ul>
-<p><strong>Also update:</strong></p>
-<ul>
-<li>Google Fonts link in <code>docs/docs.config.js</code> (if using Google Fonts)</li>
-<li>Google Fonts link in <code>design-system/index.html</code> (if using Google Fonts)</li>
-<li>Google Fonts link in <code>brand-book/index.html</code> (if using Google Fonts)</li>
+<li>Feature codes are comma-separated (no spaces)</li>
+<li>Order doesn&#39;t matter: <code>?f=af,pf</code> is the same as <code>?f=pf,af</code></li>
+<li>Unknown codes are ignored</li>
+<li>Each feature shows its related input (if applicable) and table columns</li>
 </ul>
 <hr>
-<h2 id="logo">Logo</h2>
-<p>Replace the logo image:</p>
+<h2 id="calculations">Calculations</h2>
+<p>All calculations update instantly when inputs change. Impressions are always calculated, never manually entered.</p>
+<h3 id="core-calculations">Core Calculations</h3>
+<p><strong>Impressions</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-cbg5m5x3w" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-cbg5m5x3w">(Campaign spend ÷ Campaign CPM) × 1,000
+</code></pre>
+      </div>
+    
+<p><strong>Agency Earnings</strong> (when <code>af</code> is enabled)</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-27qb4vzm5" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-27qb4vzm5">(Impressions ÷ 1,000) × Agency fee CPM
+</code></pre>
+      </div>
+    
+<p><strong>Ad Hosting Cost</strong> (when <code>ah</code> is enabled)</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-jge0qrq1k" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-jge0qrq1k">(Impressions ÷ 1,000) × Ad hosting fee CPM
+</code></pre>
+      </div>
+    
+<p><strong>Net Spend</strong> (calculated internally)</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-g2r2yzy3w" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-g2r2yzy3w">Campaign spend − Agency earnings − Ad hosting cost
+</code></pre>
+      </div>
+    
+<p><strong>Publisher Payout</strong> (when <code>pf</code> is enabled)</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-lmqye8q30" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-lmqye8q30">Net spend × (Publisher payout % ÷ 100)
+</code></pre>
+      </div>
+    
+<p><strong>Partner Margin</strong> (when <code>pm</code> is enabled)</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-8pxvnvsoj" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-8pxvnvsoj">Net spend × 30%
+</code></pre>
+      </div>
+    
+<h3 id="monthly-totals">Monthly Totals</h3>
+<p>The totals row sums all monthly values:</p>
 <ul>
-<li><code>assets/images/logo.svg</code> - Documentation site logo</li>
+<li>Total campaign spend = Sum of all monthly spends</li>
+<li>Total impressions = Sum of all monthly impressions</li>
+<li>Optional totals only include values when their feature is enabled</li>
 </ul>
 <hr>
-<h2 id="project-brief">Project Brief</h2>
-<p>Fill in <code>PROJECT_BRIEF.md</code> with your project details:</p>
-<ul>
-<li>Replace all bracketed placeholders <code>[like this]</code> with actual content</li>
-<li>Define project goals, audience, and constraints</li>
-</ul>
-<hr>
-<h2 id="meta-tags-amp-seo">Meta Tags &amp; SEO</h2>
-<p>Update SEO meta tags in <code>docs/generator/template.html</code>:</p>
-<ul>
-<li>Update <code>&lt;title&gt;</code> template if needed</li>
-<li>Add Open Graph tags for social sharing</li>
-<li>Update favicon references if using custom favicons</li>
-</ul>
-<hr>
-<h2 id="documentation">Documentation</h2>
-<p>The documentation is ready to use, but you may want to:</p>
-<ul>
-<li>Review and customize documentation content in <code>docs/</code> folder</li>
-<li>Update the index page description in <code>docs/generator/generate-docs.js</code></li>
-<li>Add or remove documentation pages as needed</li>
-</ul>
-<hr>
-<h2 id="quick-checklist">Quick Checklist</h2>
-<ul>
-<li><input disabled="" type="checkbox"> Update brand colors in <code>brand-book/brand-book.css</code></li>
-<li><input disabled="" type="checkbox"> Update font families in <code>brand-book/brand-book.css</code></li>
-<li><input disabled="" type="checkbox"> Replace logo in <code>assets/images/logo.svg</code></li>
-<li><input disabled="" type="checkbox"> Fill in <code>PROJECT_BRIEF.md</code></li>
-<li><input disabled="" type="checkbox"> Update Google Fonts links (if applicable)</li>
-<li><input disabled="" type="checkbox"> Review and customize documentation</li>
-</ul>
-<hr>
-<h2 id="next-steps">Next Steps</h2>
+<h2 id="usage-tips">Usage Tips</h2>
 <ol>
-<li>Start building your project in the <code>src/</code> directory</li>
-<li>Use the templates in <code>templates/</code> folder for new components</li>
-<li>Follow the coding standards in the documentation</li>
-<li>Keep documentation updated as you build</li>
+<li><strong>Start with Campaign CPM</strong> - Set your base CPM rate first (default: £15)</li>
+<li><strong>Enter Monthly Spend</strong> - Type spend values directly in the table cells</li>
+<li><strong>Use URL Toggles</strong> - Share different views with different audiences:<ul>
+<li>Media planners: Default view or with <code>?f=pf</code></li>
+<li>Publishers: <code>?f=pf</code> to show payout</li>
+<li>Partners: <code>?f=pf,af,ah,pm</code> to show all breakdowns</li>
+</ul>
+</li>
+<li><strong>Instant Updates</strong> - All calculations update automatically as you type</li>
+<li><strong>Notion Embedding</strong> - The calculator works when embedded in Notion pages</li>
 </ol>
+<hr>
+<h2 id="technical-notes">Technical Notes</h2>
+<ul>
+<li>Plain JavaScript only (no external dependencies)</li>
+<li>All calculations are deterministic and visible</li>
+<li>Feature toggles use <code>data-opt</code> attributes on HTML elements</li>
+<li>Hidden features don&#39;t affect visible totals</li>
+<li>Works in all modern browsers</li>
+</ul>
+<hr>
+<h2 id="default-values">Default Values</h2>
+<ul>
+<li>Campaign CPM: £15</li>
+<li>Agency fee CPM: £1 (when enabled)</li>
+<li>Ad hosting fee CPM: £0.22 (when enabled)</li>
+<li>Publisher payout: 70% (when enabled)</li>
+<li>Total campaign spend: £300,000</li>
+</ul>
 
                     </article>
                 </main>
@@ -295,12 +468,26 @@
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#brand-colors" class="toc-link">Brand Colors</a></li><li class="toc-item toc-level-2"><a href="#fonts" class="toc-link">Fonts</a></li><li class="toc-item toc-level-2"><a href="#logo" class="toc-link">Logo</a></li><li class="toc-item toc-level-2"><a href="#project-brief" class="toc-link">Project Brief</a></li><li class="toc-item toc-level-2"><a href="#meta-tags-amp-seo" class="toc-link">Meta Tags &amp; SEO</a></li><li class="toc-item toc-level-2"><a href="#documentation" class="toc-link">Documentation</a></li><li class="toc-item toc-level-2"><a href="#quick-checklist" class="toc-link">Quick Checklist</a></li><li class="toc-item toc-level-2"><a href="#next-steps" class="toc-link">Next Steps</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#how-it-works" class="toc-link">How It Works</a></li><li class="toc-item toc-level-2"><a href="#url-feature-toggles" class="toc-link">URL Feature Toggles</a></li><li class="toc-item toc-level-2"><a href="#calculations" class="toc-link">Calculations</a></li><li class="toc-item toc-level-2"><a href="#usage-tips" class="toc-link">Usage Tips</a></li><li class="toc-item toc-level-2"><a href="#technical-notes" class="toc-link">Technical Notes</a></li><li class="toc-item toc-level-2"><a href="#default-values" class="toc-link">Default Values</a></li></ul></nav></div>
     </aside>
             </div>
             
             <!-- Page Navigation (Previous / Next) -->
-            
+            <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="markdown-style.html" class="page-nav-link page-nav-prev" rel="prev">
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        <span class="page-nav-section">Content</span>
+        <h3 class="page-nav-title">Markdown</h3>
+      </span>
+    </a><a href="svg-cleaner.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <h3 class="page-nav-title">SVG Cleaner</h3>
+      </span>
+      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a></div></nav>
 
             <!-- Footer -->
             <footer class="docs-footer">

@@ -4,6 +4,8 @@ subtitle: "Introduction to the design system"
 description: "Learn what a design system is and what it contains."
 section: "Design System"
 order: 1
+toolUrl: "design-system/index.html"
+toolLabel: "Open Style Guide"
 ---
 
 ## What Is a Design System?
