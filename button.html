@@ -3,13 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Button - Documentation</title>
+    <title>Button - By Default Brand OS</title>
     <meta name="description" content="How to use button styles and modifiers in the design system.">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
     <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
-    
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Button - By Default Brand OS">
+    <meta property="og:description" content="How to use button styles and modifiers in the design system.">
+    <meta property="og:image" content="assets/images/og-default.jpg">
+    <meta property="og:type" content="website">
+
     <!-- Design System Framework (path set in docs/docs.config.js) -->
     <link rel="stylesheet" href="design-system/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
@@ -46,14 +52,14 @@
                         <img src="assets/images/logo-small.svg" alt="Logo" class="nav-logo-small">
                     </a>
                     <button class="docs-sidebar-toggle" aria-label="Collapse sidebar" type="button">
-                        <svg class="sidebar-icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <div class="icn-svg sidebar-icon-open"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                             <path d="M5.6 12L9.6 8L11 9.4L9.81421 10.5858C9.03316 11.3668 9.03316 12.6332 9.81421 13.4142L11 14.6L9.6 16L5.6 12Z" fill="currentColor"/>
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M22 22H2V2H22V22ZM4 18C4 19.1046 4.89543 20 6 20H12C13.1046 20 14 19.1046 14 18V6C14 4.89543 13.1046 4 12 4H6C4.89543 4 4 4.89543 4 6V18ZM16 18C16 19.1046 16.8954 20 18 20C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4C16.8954 4 16 4.89543 16 6V18Z" fill="currentColor"/>
-                        </svg>
-                        <svg class="sidebar-icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        </svg></div>
+                        <div class="icn-svg sidebar-icon-close"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                             <path d="M12.4 12L8.4 16L7 14.6L8.18579 13.4142C8.96684 12.6332 8.96684 11.3668 8.18579 10.5858L7 9.4L8.4 8L12.4 12Z" fill="currentColor"/>
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M22 22H2V2H22V22ZM4 18C4 19.1046 4.89543 20 6 20H12C13.1046 20 14 19.1046 14 18V6C14 4.89543 13.1046 4 12 4H6C4.89543 4 4 4.89543 4 6V18ZM16 18C16 19.1046 16.8954 20 18 20C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4C16.8954 4 16 4.89543 16 6V18Z" fill="currentColor"/>
-                        </svg>
+                        </svg></div>
                     </button>
                     <button class="docs-mobile-toggle" aria-label="Open navigation" type="button">
                         <svg class="mobile-icon-open" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -65,11 +71,7 @@
                     </button>
                 </div>
                 <div class="docs-nav-content">
-                    
-    <ul class="nav-list nav-home">
-      <li><a href="index.html" class="nav-link ">Home</a></li>
-    </ul>
-  <details class="nav-section">
+                    <details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Brand Book</span>
         <span class="nav-toggle-icon">
@@ -181,9 +183,9 @@
         <div class="docs-main-area">
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
-      <div class="container-medium">
+      <div class="container-small">
         <h1>Button</h1>
-        <p class="page-subtitle">Button component and usage guidelines</p>
+        <p class="page-subtitle" data-text-wrap="pretty">Button component and usage guidelines</p>
         <a href="docs/button.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>
@@ -213,8 +215,8 @@
 </ul>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-7cgr3d7z2" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-7cgr3d7z2" class="language-html">&lt;button class=&quot;button&quot;&gt;Primary Action&lt;/button&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-12hnredp6" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-12hnredp6" class="language-html">&lt;button class=&quot;button&quot;&gt;Primary Action&lt;/button&gt;
 </code></pre>
       </div>
     
@@ -229,8 +231,8 @@
 </ul>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-4oyw0r2pq" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-4oyw0r2pq" class="language-html">&lt;button class=&quot;button is-outline&quot;&gt;Secondary Action&lt;/button&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-en2x04yne" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-en2x04yne" class="language-html">&lt;button class=&quot;button is-outline&quot;&gt;Secondary Action&lt;/button&gt;
 </code></pre>
       </div>
     
@@ -245,8 +247,8 @@
 </ul>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-xekz8rvym" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-xekz8rvym" class="language-html">&lt;button class=&quot;button is-faded&quot;&gt;Optional Action&lt;/button&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-iqohkz4ks" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-iqohkz4ks" class="language-html">&lt;button class=&quot;button is-faded&quot;&gt;Optional Action&lt;/button&gt;
 </code></pre>
       </div>
     
@@ -261,8 +263,8 @@
 </ul>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-5puq2vwwc" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-5puq2vwwc" class="language-html">&lt;button class=&quot;button is-outline is-faded&quot;&gt;Tertiary Action&lt;/button&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-6idy5vjkx" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-6idy5vjkx" class="language-html">&lt;button class=&quot;button is-outline is-faded&quot;&gt;Tertiary Action&lt;/button&gt;
 </code></pre>
       </div>
     
@@ -277,8 +279,8 @@
 </ul>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-kou17nj9l" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-kou17nj9l" class="language-html">&lt;button class=&quot;button is-small&quot;&gt;Small Action&lt;/button&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-hqmhgn1xv" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-hqmhgn1xv" class="language-html">&lt;button class=&quot;button is-small&quot;&gt;Small Action&lt;/button&gt;
 </code></pre>
       </div>
     
@@ -293,8 +295,8 @@
 </ul>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-86fxhv53q" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-86fxhv53q" class="language-html">&lt;button class=&quot;button is-icon&quot;&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-d1yrde284" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-d1yrde284" class="language-html">&lt;button class=&quot;button is-icon&quot;&gt;
   &lt;div class=&quot;icn-svg&quot;&gt;
     &lt;!-- SVG icon --&gt;
   &lt;/div&gt;
@@ -313,8 +315,8 @@
 </ul>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-6gk81nn52" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-6gk81nn52" class="language-html">&lt;button class=&quot;button&quot; disabled&gt;Disabled Action&lt;/button&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-7lziws7mq" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-7lziws7mq" class="language-html">&lt;button class=&quot;button&quot; disabled&gt;Disabled Action&lt;/button&gt;
 &lt;button class=&quot;button is-outline&quot; disabled&gt;Disabled Outline&lt;/button&gt;
 </code></pre>
       </div>
@@ -578,6 +580,27 @@
                 init();
             }
         })();
+    </script>
+
+    <!-- Back to Top -->
+    <div class="back-to-top-wrapper">
+      <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
+        <div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 11.5L6.425 12.925L11 8.375V20H13V8.375L17.575 12.95L19 11.5L12 4.5L5 11.5Z" fill="currentColor"/>
+        </svg></div>
+      </button>
+    </div>
+    <script>
+      (function() {
+        var btn = document.querySelector('.back-to-top-wrapper');
+        if (!btn) return;
+        window.addEventListener('scroll', function() {
+          btn.classList.toggle('is-visible', window.scrollY > 300);
+        });
+        btn.querySelector('button').addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
     </script>
 </body>
 </html>

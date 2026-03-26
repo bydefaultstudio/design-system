@@ -8,6 +8,16 @@
   <title>Brand Book</title>
   <meta name="description" content="Brand identity reference — logo, colours, typography, and iconography." />
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Brand Book - By Default Brand OS">
+  <meta property="og:description" content="Brand identity reference — logo, colours, typography, and iconography.">
+  <meta property="og:image" content="../assets/images/og-default.jpg">
+  <meta property="og:type" content="website">
+
   <!-- Robots -->
   <meta name="robots" content="noindex, nofollow" />
 
@@ -31,7 +41,7 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M18 18V15C18 13.8954 17.1046 13 16 13H10.2392C9.34831 13 8.90214 14.0771 9.53211 14.7071L11.425 16.6L10.025 18.025L4 12L10 6L11.425 7.425L9.54652 9.29043C8.91317 9.91938 9.35857 11 10.2512 11H20V18H18Z" fill="currentColor"/>
           </svg>
-          Documentation
+          Back
         </a>
       </div>
 
@@ -1773,6 +1783,27 @@
     }
 
     document.addEventListener('click', handleIconDownloadClick);
+  </script>
+
+  <!-- Back to Top -->
+  <div class="back-to-top-wrapper">
+    <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
+      <div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M5 11.5L6.425 12.925L11 8.375V20H13V8.375L17.575 12.95L19 11.5L12 4.5L5 11.5Z" fill="currentColor"/>
+      </svg></div>
+    </button>
+  </div>
+  <script>
+    (function() {
+      var btn = document.querySelector('.back-to-top-wrapper');
+      if (!btn) return;
+      window.addEventListener('scroll', function() {
+        btn.classList.toggle('is-visible', window.scrollY > 300);
+      });
+      btn.querySelector('button').addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
   </script>
 
 </body>

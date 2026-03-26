@@ -243,17 +243,16 @@ html {
   height: 32px;
   flex-shrink: 0;
   background: none;
-  border: var(--border-s) solid var(--border-secondary);
-  border-radius: 4px;
+  border: none;
   cursor: pointer;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   padding: 0;
   transition: color 0.2s, background 0.2s;
 }
 
 .docs-sidebar-toggle:hover {
   color: var(--text-plain);
-  background: var(--background-plain);
+  background: var(--background-faded);
 }
 
 /* Sidebar toggle: swap between open/close icons */
@@ -411,7 +410,7 @@ html {
   margin-bottom: var(--space-2xl);
 }
 
-.page-header .container-medium {
+.page-header .container-small {
   text-align: center;
 }
 
@@ -779,5 +778,24 @@ html {
   .grid.cols-3 {
     grid-template-columns: 1fr;
   }
+}
+
+/* ─────────────────────────────
+   BACK TO TOP BUTTON
+   ───────────────────────────── */
+
+.back-to-top-wrapper {
+  position: fixed;
+  bottom: var(--space-l);
+  right: var(--space-l);
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.back-to-top-wrapper.is-visible {
+  opacity: 1;
+  visibility: visible;
 }
 
