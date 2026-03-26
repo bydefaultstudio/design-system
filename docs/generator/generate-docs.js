@@ -178,14 +178,6 @@ function generateTableOfContents(html) {
 function generateNavigation(filesBySection, currentPage = null) {
   let navigation = '';
   
-  // Add Home link (outside of sections)
-  const isHomeActive = currentPage && currentPage.filename === 'index';
-  const homeActiveClass = isHomeActive ? 'nav-link-active' : '';
-  navigation += `
-    <ul class="nav-list nav-home">
-      <li><a href="index.html" class="nav-link ${homeActiveClass}">Home</a></li>
-    </ul>
-  `;
   
   // Sort sections in custom order (hidden sections are excluded from nav)
   const sectionOrder = ['Brand Book', 'Design System', 'Code', 'Content', 'Tools'];
@@ -313,7 +305,7 @@ function generateIndexPage(template, navigation, filesBySection) {
       cards += `
         <a href="${file.htmlPath}" class="docs-card">
           <h3 class="docs-card-title">${file.title}</h3>
-          ${file.frontmatter.subtitle ? `<p class="docs-card-subtitle">${file.frontmatter.subtitle}</p>` : ''}
+          ${file.frontmatter.subtitle ? `<p class="docs-card-subtitle" data-text-wrap="pretty">${file.frontmatter.subtitle}</p>` : ''}
         </a>
       `;
     }
@@ -323,7 +315,7 @@ function generateIndexPage(template, navigation, filesBySection) {
       cards += `
         <a href="brand-book/index.html" class="docs-card">
           <h3 class="docs-card-title">Visual Identity</h3>
-          <p class="docs-card-subtitle">Visual brand identity — logo, palette, typography, and icons</p>
+          <p class="docs-card-subtitle" data-text-wrap="pretty">Visual brand identity — logo, palette, typography, and icons</p>
         </a>
       `;
     }
@@ -333,7 +325,7 @@ function generateIndexPage(template, navigation, filesBySection) {
       cards += `
         <a href="design-system/index.html" class="docs-card">
           <h3 class="docs-card-title">Styleguide</h3>
-          <p class="docs-card-subtitle">Live preview of all design system tokens and components</p>
+          <p class="docs-card-subtitle" data-text-wrap="pretty">Live preview of all design system tokens and components</p>
         </a>
       `;
     }
@@ -349,22 +341,22 @@ function generateIndexPage(template, navigation, filesBySection) {
     <div class="grid cols-3 gap-xl">
       <a href="svg-cleaner/index.html" class="docs-card">
         <h3 class="docs-card-title">SVG Cleaner</h3>
-        <p class="docs-card-subtitle">Paste raw SVG code and get a cleaned, optimised version</p>
+        <p class="docs-card-subtitle" data-text-wrap="pretty">Paste raw SVG code and get a cleaned, optimised version</p>
       </a>
     </div>
   </div>`;
 
   const indexContent = `
     <div class="docs-hero">
-      <h1 class="docs-hero-title">Documentation</h1>
+      <h1 class="docs-hero-title">By Default Brand OS</h1>
       <p class="docs-hero-description">${PROJECT_CONFIG.indexDescription}</p>
     </div>
     ${cards}
   `;
 
   return template
-    .replace('{{PAGE_TITLE}}', 'Documentation')
-    .replace('{{META_DESCRIPTION}}', PROJECT_CONFIG.indexDescription)
+    .replaceAll('{{PAGE_TITLE}}', 'Home')
+    .replaceAll('{{META_DESCRIPTION}}', PROJECT_CONFIG.indexDescription)
     .replace('{{PAGE_HEADER}}', '') // Index page doesn't need a header
     .replace('{{PAGE_CONTENT}}', indexContent)
     .replace('{{NAVIGATION}}', navigation)
@@ -470,17 +462,17 @@ function generatePage(file, template, navigation, pageOrder) {
   let pageHeader = '';
   if (frontmatter.title) {
     pageHeader = `<div class="page-header">
-      <div class="container-medium">
+      <div class="container-small">
         <h1>${frontmatter.title}</h1>
-        ${frontmatter.subtitle ? `<p class="page-subtitle">${frontmatter.subtitle}</p>` : ''}
+        ${frontmatter.subtitle ? `<p class="page-subtitle" data-text-wrap="pretty">${frontmatter.subtitle}</p>` : ''}
         <a href="docs/${file.markdownPath}" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
       </div>
     </div>`;
   }
   
   return template
-    .replace('{{PAGE_TITLE}}', frontmatter.title || 'Untitled')
-    .replace('{{META_DESCRIPTION}}', frontmatter.description || '')
+    .replaceAll('{{PAGE_TITLE}}', frontmatter.title || 'Untitled')
+    .replaceAll('{{META_DESCRIPTION}}', frontmatter.description || '')
     .replace('{{PAGE_HEADER}}', pageHeader)
     .replace('{{PAGE_CONTENT}}', htmlContent)
     .replace('{{NAVIGATION}}', navigation)
