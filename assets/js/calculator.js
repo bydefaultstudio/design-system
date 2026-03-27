@@ -1,7 +1,7 @@
 /**
  * Script Purpose: CPM & Spend Calculator
  * Calculates campaign impressions, fees, payouts, and margins based on monthly spend
- * Supports URL-driven and checkbox-driven feature toggles for optional fields
+ * Supports checkbox-driven feature toggles for optional fields
  * Version: 1.1.0
  */
 
@@ -17,21 +17,10 @@ var activeFlags = [];
 //------- Utility Functions -------//
 //
 
-// Parse URL query parameters for feature flags
-function getFeatureFlagsFromUrl() {
-  var params = new URLSearchParams(window.location.search);
-  var featuresParam = params.get('f');
-  if (!featuresParam) return [];
-
-  var flags = featuresParam.split(',').map(function(f) { return f.trim().toLowerCase(); });
-  var validFlags = ['pf', 'af', 'ah', 'pm'];
-  return flags.filter(function(flag) { return validFlags.indexOf(flag) !== -1; });
-}
-
 // Read active flags from checkbox state
 function getCheckboxFlags() {
   var flags = [];
-  var codes = ['af', 'ah', 'pf', 'pm'];
+  var codes = ['af', 'ah', 'pf'];
 
   codes.forEach(function(code) {
     var checkbox = document.getElementById('opt-' + code);
@@ -41,35 +30,6 @@ function getCheckboxFlags() {
   });
 
   return flags;
-}
-
-// Update URL to reflect current flags without page reload
-function updateUrlFromFlags(flags) {
-  var url = new URL(window.location);
-  if (flags.length > 0) {
-    url.searchParams.set('f', flags.join(','));
-  } else {
-    url.searchParams.delete('f');
-  }
-  window.history.replaceState({}, '', url);
-}
-
-// Set checkbox states to match flags
-function syncCheckboxesToFlags(flags) {
-  var codes = ['af', 'ah', 'pf', 'pm'];
-
-  codes.forEach(function(code) {
-    var checkbox = document.getElementById('opt-' + code);
-    if (checkbox) {
-      checkbox.checked = flags.indexOf(code) !== -1;
-    }
-  });
-
-  // Auto-open details if any flags are active
-  var details = document.getElementById('calculator-options');
-  if (details && flags.length > 0) {
-    details.open = true;
-  }
 }
 
 // Toggle visibility of optional elements based on feature flags
@@ -90,7 +50,24 @@ function toggleOptionalElements(flags) {
 function handleOptionChange() {
   activeFlags = getCheckboxFlags();
   toggleOptionalElements(activeFlags);
+  syncPublisherNetDefaults();
   recalculate();
+}
+
+// When partner share toggle changes, sync net percentage
+function syncPublisherNetDefaults() {
+  var pfActive = activeFlags.indexOf('pf') !== -1;
+  var publisherInput = document.getElementById('publisher-payout');
+  var netInput = document.getElementById('partner-margin-payout');
+
+  if (pfActive) {
+    // Partner share active — sync net from current partner share value
+    syncPartnerFromPublisher();
+  } else {
+    // Partner share off — reset to defaults
+    if (publisherInput) publisherInput.value = 70;
+    if (netInput) netInput.value = 30;
+  }
 }
 
 // Format currency value
@@ -126,15 +103,46 @@ function calculateAdHostingCost(impressions, adHostingFeeCPM) {
   return (impressions / 1000) * adHostingFeeCPM;
 }
 
-// Calculate publisher payout (from net spend after fees)
+// Calculate partner share (from net spend after fees)
 function calculatePublisherPayout(netSpend, payoutPercentage) {
   if (!payoutPercentage || payoutPercentage <= 0) return 0;
   return netSpend * (payoutPercentage / 100);
 }
 
-// Calculate partner margin (30% of net spend after fees)
-function calculatePartnerMargin(netSpend) {
-  return netSpend * 0.30;
+// Calculate net (remainder after partner share)
+function calculatePartnerMargin(netSpend, partnerMarginPercent) {
+  if (!partnerMarginPercent || partnerMarginPercent <= 0) return 0;
+  return netSpend * (partnerMarginPercent / 100);
+}
+
+// Update table header with partner name
+function updatePartnerShareHeader() {
+  var nameInput = document.getElementById('partner-name');
+  var header = document.getElementById('partner-share-header');
+  if (!nameInput || !header) return;
+
+  var name = nameInput.value.trim();
+  header.textContent = name || 'Partner';
+}
+
+// Sync net input from partner share
+function syncPartnerFromPublisher() {
+  var publisherInput = document.getElementById('publisher-payout');
+  var partnerInput = document.getElementById('partner-margin-payout');
+  if (!publisherInput || !partnerInput) return;
+
+  var publisherValue = Math.min(100, Math.max(0, parseFloat(publisherInput.value) || 0));
+  partnerInput.value = 100 - publisherValue;
+}
+
+// Sync partner share input from net
+function syncPublisherFromPartner() {
+  var partnerInput = document.getElementById('partner-margin-payout');
+  var publisherInput = document.getElementById('publisher-payout');
+  if (!publisherInput || !partnerInput) return;
+
+  var partnerValue = Math.min(100, Math.max(0, parseFloat(partnerInput.value) || 0));
+  publisherInput.value = 100 - partnerValue;
 }
 
 //
@@ -154,6 +162,9 @@ function getInputValues() {
     publisherPayoutPercent: activeFlags.indexOf('pf') !== -1
       ? (parseFloat(document.getElementById('publisher-payout').value) || 0)
       : 0,
+    partnerMarginPercent: activeFlags.indexOf('pf') !== -1
+      ? (parseFloat(document.getElementById('partner-margin-payout').value) || 0)
+      : 100,
     totalCampaignSpend: parseFloat(document.getElementById('total-campaign-spend').value) || 0,
     monthlySpends: getMonthlySpends(),
     featureFlags: activeFlags
@@ -189,13 +200,11 @@ function calculateMonthValues(monthSpend, inputs) {
   // Calculate net spend (after fees are deducted)
   var netSpend = monthSpend - agencyEarnings - adHostingCost;
 
-  // Split net spend: 70% publisher, 30% partner margin
+  // Split net spend between partner share and net
   var publisherPayout = inputs.featureFlags.indexOf('pf') !== -1
     ? calculatePublisherPayout(netSpend, inputs.publisherPayoutPercent)
     : 0;
-  var partnerMargin = inputs.featureFlags.indexOf('pm') !== -1
-    ? calculatePartnerMargin(netSpend)
-    : 0;
+  var partnerMargin = calculatePartnerMargin(netSpend, inputs.partnerMarginPercent);
 
   return {
     spend: monthSpend,
@@ -227,10 +236,10 @@ function updateTableRow(row, monthIndex, monthName, values, inputs) {
   // Index 4: Ad hosting cost
   if (cells[4]) cells[4].textContent = formatCurrency(values.adHostingCost);
 
-  // Index 5: Publisher payout
+  // Index 5: Partner share
   if (cells[5]) cells[5].textContent = formatCurrency(values.publisherPayout);
 
-  // Index 6: Partner margin
+  // Index 6: Net
   if (cells[6]) cells[6].textContent = formatCurrency(values.partnerMargin);
 }
 
@@ -258,9 +267,7 @@ function updateTotalsRow(inputs) {
     if (inputs.featureFlags.indexOf('pf') !== -1) {
       totalPublisherPayout += monthValues.publisherPayout;
     }
-    if (inputs.featureFlags.indexOf('pm') !== -1) {
-      totalPartnerMargin += monthValues.partnerMargin;
-    }
+    totalPartnerMargin += monthValues.partnerMargin;
   });
 
   document.getElementById('total-spend').textContent = formatCurrency(totalSpend);
@@ -275,9 +282,7 @@ function updateTotalsRow(inputs) {
   if (inputs.featureFlags.indexOf('pf') !== -1) {
     document.getElementById('total-publisher-payout').textContent = formatCurrency(totalPublisherPayout);
   }
-  if (inputs.featureFlags.indexOf('pm') !== -1) {
-    document.getElementById('total-partner-margin').textContent = formatCurrency(totalPartnerMargin);
-  }
+  document.getElementById('total-partner-margin').textContent = formatCurrency(totalPartnerMargin);
 }
 
 // Create monthly table rows
@@ -299,7 +304,7 @@ function createMonthlyTableRows() {
       '<td data-opt="af" class="calculator-output-cell">£0.00</td>' +
       '<td data-opt="ah" class="calculator-output-cell">£0.00</td>' +
       '<td data-opt="pf" class="calculator-output-cell">£0.00</td>' +
-      '<td data-opt="pm" class="calculator-output-cell">£0.00</td>';
+      '<td class="calculator-output-cell">£0.00</td>';
     tbody.appendChild(row);
   });
 }
@@ -336,7 +341,6 @@ function setupEventListeners() {
     'campaign-cpm',
     'agency-fee-cpm',
     'ad-hosting-fee-cpm',
-    'publisher-payout',
     'total-campaign-spend'
   ];
 
@@ -347,6 +351,38 @@ function setupEventListeners() {
       input.addEventListener('change', recalculate);
     }
   });
+
+  // Partner share and net inputs sync each other
+  var publisherInput = document.getElementById('publisher-payout');
+  if (publisherInput) {
+    publisherInput.addEventListener('input', function() {
+      syncPartnerFromPublisher();
+      recalculate();
+    });
+    publisherInput.addEventListener('change', function() {
+      syncPartnerFromPublisher();
+      recalculate();
+    });
+  }
+
+  var partnerInput = document.getElementById('partner-margin-payout');
+  if (partnerInput) {
+    partnerInput.addEventListener('input', function() {
+      syncPublisherFromPartner();
+      recalculate();
+    });
+    partnerInput.addEventListener('change', function() {
+      syncPublisherFromPartner();
+      recalculate();
+    });
+  }
+
+  // Partner name updates table header
+  var partnerNameInput = document.getElementById('partner-name');
+  if (partnerNameInput) {
+    partnerNameInput.addEventListener('input', updatePartnerShareHeader);
+    partnerNameInput.addEventListener('change', updatePartnerShareHeader);
+  }
 
   // Monthly spend input listeners (delegated)
   var tableBody = document.getElementById('monthly-table-body');
@@ -364,7 +400,7 @@ function setupEventListeners() {
   }
 
   // Option checkbox listeners
-  var codes = ['af', 'ah', 'pf', 'pm'];
+  var codes = ['af', 'ah', 'pf'];
   codes.forEach(function(code) {
     var checkbox = document.getElementById('opt-' + code);
     if (checkbox) {
@@ -378,16 +414,10 @@ function setupEventListeners() {
 //
 
 document.addEventListener("DOMContentLoaded", function() {
-  // Parse flags from URL
-  activeFlags = getFeatureFlagsFromUrl();
-
-  // Sync checkboxes to match URL flags
-  syncCheckboxesToFlags(activeFlags);
-
   // Create monthly table rows
   createMonthlyTableRows();
 
-  // Toggle optional elements
+  // Toggle optional elements (none active by default)
   toggleOptionalElements(activeFlags);
 
   // Setup event listeners

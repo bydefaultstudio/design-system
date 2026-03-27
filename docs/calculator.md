@@ -1,7 +1,7 @@
 ---
 title: "CPM Calculator"
 subtitle: "How to use the CPM & Spend Calculator"
-description: "Complete guide to using the calculator, URL feature toggles, and calculation formulas."
+description: "Complete guide to using the calculator, toggle options, and calculation formulas."
 section: "Tools"
 order: 1
 toolUrl: "cpm-calculator/index.html"
@@ -17,119 +17,38 @@ The calculator has three main sections:
 
 ### 1. Global Settings
 
-These inputs affect all calculations below:
+Toggle buttons control which optional features are visible. All toggles are off by default.
 
-- **Campaign CPM (£)** - The cost per thousand impressions (always visible)
-- **By Default fee (CPM, £)** - Optional By Default fee per thousand impressions
-- **Ad hosting fee (CPM, £)** - Optional ad hosting cost per thousand impressions
-- **Publisher payout (%)** - Optional percentage of spend paid to publisher
+| Toggle | Shows |
+|--------|-------|
+| **By Default Fee** | By Default Fee (CPM, £) input + By Default column |
+| **Ad Hosting Fee** | Ad Hosting Fee (CPM, £) input + Ad Hosting column |
+| **Add Partner** | Partner Name, Partner Share (%), and Net (%) inputs + Partner column |
+
+When **Add Partner** is enabled:
+- **Partner Name** — free-text input that updates the "Partner" column header in the table (e.g. entering "Dianomi" changes the header to "Dianomi")
+- **Partner Share (%)** and **Net (%)** are linked — they always sum to 100%. Changing one auto-updates the other
 
 ### 2. Campaign Overview
 
-Quick sanity-check section showing:
-- **Total campaign spend (£)** - Total budget for the campaign
-- **Calculated impressions** - Total impressions based on spend and CPM (read-only)
+- **Campaign CPM (£)** — cost per thousand impressions (default: £15)
+- **Total campaign spend (£)** — total budget for the campaign (default: £300,000)
+- **Calculated impressions** — total impressions based on spend and CPM (read-only)
 
 ### 3. Monthly Breakdown Table
 
-The primary output showing:
+The primary output:
 - One row per month (January through December)
-- **Campaign (£)** - Editable monthly spend
-- **Impressions** - Calculated impressions for that month
-- Optional columns (shown/hidden via URL):
-  - **By Default** - By Default earnings for the month
-  - **Ad hosting** - Ad hosting costs for the month
-  - **Publisher** - Publisher payout for the month
-  - **Partner Margin** - Partner margin for the month
-- **Totals row** - Sum of all months
+- **Campaign (£)** — editable monthly spend
+- **Impressions** — calculated impressions for that month
+- **Net** — always visible, shows the net amount after all deductions and partner share
 
----
+Optional columns (shown/hidden via toggle buttons):
+- **By Default** — By Default earnings for the month
+- **Ad Hosting** — Ad hosting costs for the month
+- **Partner** — partner share amount for the month
 
-## URL Feature Toggles
-
-The calculator supports URL-driven feature toggles to show/hide optional fields and columns. Use the `f` query parameter with feature codes.
-
-### Feature Codes
-
-| Code | Feature | Shows |
-|------|---------|-------|
-| `pf` | Publisher payout | Publisher payout (%) input + Publisher column + totals |
-| `af` | By Default fee | By Default fee (CPM, £) input + By Default column + totals |
-| `ah` | Ad hosting fee | Ad hosting fee (CPM, £) input + Ad hosting column + totals |
-| `pm` | Partner margin | Partner Margin column + totals |
-
-### URL Examples
-
-Copy these URLs to share different views:
-
-#### Default View (Core Calculator Only)
-```
-index.html
-```
-Shows only Campaign CPM, Total spend, Impressions, and monthly Campaign spend.
-
-#### Publisher Payout Only
-```
-index.html?f=pf
-```
-Adds Publisher payout (%) input and Publisher column.
-
-#### By Default Fee Only
-```
-index.html?f=af
-```
-Adds By Default fee (CPM, £) input and By Default column.
-
-#### Ad Hosting Fee Only
-```
-index.html?f=ah
-```
-Adds Ad hosting fee (CPM, £) input and Ad hosting column.
-
-#### Partner Margin Only
-```
-index.html?f=pm
-```
-Adds Partner Margin column (no input field required).
-
-#### Multiple Features
-
-**Publisher + By Default:**
-```
-index.html?f=pf,af
-```
-
-**By Default + Ad Hosting:**
-```
-index.html?f=af,ah
-```
-
-**Publisher + By Default + Ad Hosting:**
-```
-index.html?f=pf,af,ah
-```
-
-**All Features:**
-```
-index.html?f=pf,af,ah,pm
-```
-
-**Publisher + Partner Margin:**
-```
-index.html?f=pf,pm
-```
-
-**By Default + Ad Hosting + Partner Margin:**
-```
-index.html?f=af,ah,pm
-```
-
-### URL Format Rules
-
-- Feature codes are comma-separated (no spaces)
-- Order doesn't matter: `?f=af,pf` is the same as `?f=pf,af`
-- Unknown codes are ignored
-- Each feature shows its related input (if applicable) and table columns
+The **Totals** row sums all monthly values.
 
 ---
 
@@ -144,14 +63,14 @@ All calculations update instantly when inputs change. Impressions are always cal
 (Campaign spend ÷ Campaign CPM) × 1,000
 ```
 
-**By Default Earnings** (when `af` is enabled)
+**By Default Earnings** (when enabled)
 ```
-(Impressions ÷ 1,000) × By Default fee CPM
+(Impressions ÷ 1,000) × By Default Fee CPM
 ```
 
-**Ad Hosting Cost** (when `ah` is enabled)
+**Ad Hosting Cost** (when enabled)
 ```
-(Impressions ÷ 1,000) × Ad hosting fee CPM
+(Impressions ÷ 1,000) × Ad Hosting Fee CPM
 ```
 
 **Net Spend** (calculated internally)
@@ -159,35 +78,46 @@ All calculations update instantly when inputs change. Impressions are always cal
 Campaign spend − By Default earnings − Ad hosting cost
 ```
 
-**Publisher Payout** (when `pf` is enabled)
+### Partner Split (when Add Partner is enabled)
+
+Partner Share and Net are complementary percentages of net spend:
+
+**Partner Share**
 ```
-Net spend × (Publisher payout % ÷ 100)
+Net spend × (Partner Share % ÷ 100)
 ```
 
-**Partner Margin** (when `pm` is enabled)
+**Net**
 ```
-Net spend × 30%
+Net spend × (Net % ÷ 100)
 ```
 
-### Monthly Totals
+Where `Partner Share % + Net % = 100%` always.
 
-The totals row sums all monthly values:
-- Total campaign spend = Sum of all monthly spends
-- Total impressions = Sum of all monthly impressions
-- Optional totals only include values when their feature is enabled
+When Add Partner is **not** enabled, the Net column shows 100% of net spend.
 
 ---
 
 ## Usage Tips
 
-1. **Start with Campaign CPM** - Set your base CPM rate first (default: £15)
-2. **Enter Monthly Spend** - Type spend values directly in the table cells
-3. **Use URL Toggles** - Share different views with different audiences:
-   - Media planners: Default view or with `?f=pf`
-   - Publishers: `?f=pf` to show payout
-   - Partners: `?f=pf,af,ah,pm` to show all breakdowns
-4. **Instant Updates** - All calculations update automatically as you type
-5. **Notion Embedding** - The calculator works when embedded in Notion pages
+1. **Start with Campaign CPM** — set your base CPM rate first
+2. **Enter monthly spend** — type spend values directly in the table cells
+3. **Toggle optional features** — click the toggle buttons in Global Settings to show/hide fields
+4. **Name the partner** — use the Partner Name field to label the Partner column for your audience
+5. **Instant updates** — all calculations update automatically as you type
+
+---
+
+## Default Values
+
+| Input | Default |
+|-------|---------|
+| Campaign CPM | £15 |
+| By Default Fee CPM | £1 (when enabled) |
+| Ad Hosting Fee CPM | £1 (when enabled) |
+| Partner Share | 70% (when enabled) |
+| Net | 30% (when enabled) |
+| Total campaign spend | £300,000 |
 
 ---
 
@@ -198,14 +128,3 @@ The totals row sums all monthly values:
 - Feature toggles use `data-opt` attributes on HTML elements
 - Hidden features don't affect visible totals
 - Works in all modern browsers
-
----
-
-## Default Values
-
-- Campaign CPM: £15
-- By Default fee CPM: £1 (when enabled)
-- Ad hosting fee CPM: £1 (when enabled)
-- Publisher payout: 70% (when enabled)
-- Total campaign spend: £300,000
-

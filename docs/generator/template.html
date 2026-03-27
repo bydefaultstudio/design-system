@@ -314,6 +314,29 @@
         });
       })();
     </script>
+    <script>
+      /* Table scroll overflow hint */
+      (function initTableScroll() {
+        var wrappers = document.querySelectorAll('.table-scroll');
+        if (!wrappers.length) return;
+
+        function checkOverflow(wrapper) {
+          var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
+          var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
+          wrapper.classList.toggle('is-overflowing', isOverflowing);
+          wrapper.classList.toggle('is-scrolled-end', isAtEnd);
+        }
+
+        wrappers.forEach(function(wrapper) {
+          checkOverflow(wrapper);
+          wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+        });
+
+        window.addEventListener('resize', function() {
+          wrappers.forEach(checkOverflow);
+        });
+      })();
+    </script>
 </body>
 </html>
 

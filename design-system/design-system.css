@@ -1144,6 +1144,7 @@ select:disabled {
   background-color: var(--input-disabled-bg);
   color: var(--input-disabled-text);
   cursor: not-allowed;
+  border: none;
 }
 
 /* -- Fieldset & legend -- */
@@ -1277,7 +1278,97 @@ details .disclosure-content {
   border-color: var(--status-success);
 }
 
-/* ------ 14. FUTURE COMPONENTS ------ */
+/* ------ 14. TABLES ------ */
+
+/* -- Table scroll wrapper -- */
+.table-scroll {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* -- Scroll hint: fade on right edge when overflowing -- */
+.table-scroll.is-overflowing::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--space-2xl);
+  background: linear-gradient(to right, transparent, var(--background-primary));
+  pointer-events: none;
+}
+
+.table-scroll.is-scrolled-end::after {
+  display: none;
+}
+
+/* -- Base table -- */
+.table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  width: fit-content;
+  max-width: 100%;
+  font-variant: tabular-nums;
+  font-size: var(--font-s);
+}
+
+.table th {
+  font-weight: var(--font-weight-bold);
+  text-align: left;
+}
+
+.table th,
+.table td {
+  padding: var(--space-m) var(--space-l);
+  border: none;
+}
+
+.table thead {
+  background-color: transparent;
+}
+
+.table thead tr {
+  border-bottom: var(--border-s) solid var(--border-secondary);
+}
+
+.table tbody tr {
+  border-bottom: var(--border-s) solid var(--border-faded);
+}
+
+/* -- Table modifier: full width -- */
+.table-full {
+  width: 100%;
+}
+
+/* -- Table modifier: hoverable rows -- */
+.table-hover tbody tr:hover {
+  background-color: var(--background-faded);
+}
+
+/* -- Table modifier: header background -- */
+.table-header-filled th {
+  background-color: var(--background-secondary);
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--text-primary);
+}
+
+/* -- Table footer -- */
+.table tfoot tr {
+  border-top: var(--border-m) solid var(--border-primary);
+}
+
+.table tfoot th {
+  font-weight: var(--font-weight-bold);
+}
+
+.table tfoot td {
+  font-weight: var(--font-weight-semi-bold);
+}
+
+
+/* ------ 15. FUTURE COMPONENTS ------ */
 
 /*
  * The following elements are candidates for future design system styling.
@@ -1340,7 +1431,7 @@ details .disclosure-content {
  * - Should reuse callout/status tokens
  */
 
-/* ------ 14. BACK TO DOCS BUTTON ------ */
+/* ------ 16. BACK TO DOCS BUTTON ------ */
 
 .docs-back-btn-wrapper {
   position: fixed;
@@ -1349,7 +1440,7 @@ details .disclosure-content {
   z-index: 100;
 }
 
-/* ------ 15. BACK TO TOP BUTTON ------ */
+/* ------ 17. BACK TO TOP BUTTON ------ */
 
 .back-to-top-wrapper {
   position: fixed;
@@ -1366,7 +1457,7 @@ details .disclosure-content {
   visibility: visible;
 }
 
-/* ------ 16. RESPONSIVE ------ */
+/* ------ 18. RESPONSIVE ------ */
 
 @media (max-width: 768px) {
   .grid {
@@ -1379,5 +1470,12 @@ details .disclosure-content {
 
   .cols-4 {
     grid-template-columns: 1fr;
+  }
+
+  /* -- Condensed table on mobile -- */
+  .table th,
+  .table td {
+    padding: var(--space-s) var(--space-m);
+    font-size: var(--font-xs);
   }
 }

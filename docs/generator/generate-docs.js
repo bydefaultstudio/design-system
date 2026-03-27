@@ -120,7 +120,7 @@ function markdownToHtml(markdown) {
   });
 
   // Wrap tables in a scroll container for horizontal scrolling on mobile
-  html = html.replace(/<table>/g, '<div class="table-scroll"><table>');
+  html = html.replace(/<table>/g, '<div class="table-scroll"><table class="table">');
   html = html.replace(/<\/table>/g, '</table></div>');
 
   // Add copy buttons to code blocks
@@ -387,8 +387,8 @@ function generatePageNav(file, pageOrder) {
 
   if (!prev && !next) return '';
 
-  const arrowLeft = `<svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-  const arrowRight = `<svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const arrowLeft = `<div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>`;
+  const arrowRight = `<div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>`;
 
   let html = '<nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global">';
 

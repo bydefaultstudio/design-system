@@ -67,48 +67,49 @@
       <section class="top-medium bottom-medium">
         <div class="padding-global">
           <div class="container-medium">
-            <div class="block gap-l">
-              <h2>Global Settings</h2>
+            <div class="block gap-l padding-2xl border border-faded">
+              <h2 class="eyebrow" style="margin:0;">Global Settings</h2>
 
-              <details id="calculator-options">
-                <summary>Show options</summary>
-                <div class="block row gap-l">
-                  <div class="form-check">
-                    <input type="checkbox" id="opt-af">
-                    <label for="opt-af">By Default Fee</label>
-                  </div>
-                  <div class="form-check">
-                    <input type="checkbox" id="opt-ah">
-                    <label for="opt-ah">Ad Hosting Fee</label>
-                  </div>
-                  <div class="form-check">
-                    <input type="checkbox" id="opt-pf">
-                    <label for="opt-pf">Publisher Payout</label>
-                  </div>
-                  <div class="form-check">
-                    <input type="checkbox" id="opt-pm">
-                    <label for="opt-pm">Partner Margin</label>
-                  </div>
+              <div class="calculator-toggle-group">
+                <div class="calculator-toggle">
+                  <input type="checkbox" id="opt-af" class="sr-only">
+                  <label for="opt-af" class="calculator-toggle-btn">
+                    <div class="icn-svg calculator-toggle-icon" data-icon="check">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/>
+                      </svg>
+                    </div>
+                    By Default Fee
+                  </label>
                 </div>
-              </details>
+                <div class="calculator-toggle">
+                  <input type="checkbox" id="opt-ah" class="sr-only">
+                  <label for="opt-ah" class="calculator-toggle-btn">
+                    <div class="icn-svg calculator-toggle-icon" data-icon="check">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/>
+                      </svg>
+                    </div>
+                    Ad Hosting Fee
+                  </label>
+                </div>
+                <div class="calculator-toggle">
+                  <input type="checkbox" id="opt-pf" class="sr-only">
+                  <label for="opt-pf" class="calculator-toggle-btn">
+                    <div class="icn-svg calculator-toggle-icon" data-icon="check">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/>
+                      </svg>
+                    </div>
+                    Add Partner
+                  </label>
+                </div>
+              </div>
 
               <div class="block gap-m">
-                <div class="block gap-s">
-                  <label for="campaign-cpm">
-                    <strong>Campaign CPM (£)</strong>
-                  </label>
-                  <input
-                    type="number"
-                    id="campaign-cpm"
-                    name="campaign-cpm"
-                    min="0"
-                    value="15"
-                  />
-                </div>
-
                 <div class="block gap-s" data-opt="af">
                   <label for="agency-fee-cpm">
-                    <strong>By Default fee (CPM, £)</strong>
+                    <strong>By Default Fee (CPM, £)</strong>
                   </label>
                   <input
                     type="number"
@@ -121,7 +122,7 @@
 
                 <div class="block gap-s" data-opt="ah">
                   <label for="ad-hosting-fee-cpm">
-                    <strong>Ad hosting fee (CPM, £)</strong>
+                    <strong>Ad Hosting Fee (CPM, £)</strong>
                   </label>
                   <input
                     type="number"
@@ -133,8 +134,21 @@
                 </div>
 
                 <div class="block gap-s" data-opt="pf">
+                  <label for="partner-name">
+                    <strong>Partner Name</strong>
+                  </label>
+                  <input
+                    type="text"
+                    id="partner-name"
+                    name="partner-name"
+                    placeholder="e.g. Vouge"
+                    value=""
+                  />
+                </div>
+
+                <div class="block gap-s" data-opt="pf">
                   <label for="publisher-payout">
-                    <strong>Publisher payout (%)</strong>
+                    <strong>Partner Share (%)</strong>
                   </label>
                   <input
                     type="number"
@@ -143,6 +157,20 @@
                     min="0"
                     max="100"
                     value="70"
+                  />
+                </div>
+
+                <div class="block gap-s" data-opt="pf">
+                  <label for="partner-margin-payout">
+                    <strong>Net (%)</strong>
+                  </label>
+                  <input
+                    type="number"
+                    id="partner-margin-payout"
+                    name="partner-margin-payout"
+                    min="0"
+                    max="100"
+                    value="30"
                   />
                 </div>
               </div>
@@ -159,6 +187,19 @@
               <h2>Campaign Overview</h2>
 
               <div class="block gap-m">
+                <div class="block gap-s">
+                  <label for="campaign-cpm">
+                    <strong>Campaign CPM (£)</strong>
+                  </label>
+                  <input
+                    type="number"
+                    id="campaign-cpm"
+                    name="campaign-cpm"
+                    min="0"
+                    value="15"
+                  />
+                </div>
+
                 <div class="block gap-s">
                   <label for="total-campaign-spend">
                     <strong>Total campaign spend (£)</strong>
@@ -197,17 +238,17 @@
             <div class="block gap-l">
               <h2>Monthly Breakdown</h2>
 
-              <div class="calculator-table-wrapper">
-                <table class="calculator-table">
+              <div class="table-scroll">
+                <table class="table table-full table-hover table-header-filled calculator-table">
                   <thead>
                     <tr>
                       <th>Month</th>
                       <th>Campaign (£)</th>
                       <th>Impressions</th>
                       <th data-opt="af">By Default</th>
-                      <th data-opt="ah">Ad hosting</th>
-                      <th data-opt="pf">Publisher</th>
-                      <th data-opt="pm">Partner Margin</th>
+                      <th data-opt="ah">Ad Hosting</th>
+                      <th data-opt="pf" id="partner-share-header">Partner</th>
+                      <th>Net</th>
                     </tr>
                   </thead>
                   <tbody id="monthly-table-body">
@@ -221,7 +262,7 @@
                       <td data-opt="af" id="total-agency-earnings">£0.00</td>
                       <td data-opt="ah" id="total-ad-hosting-cost">£0.00</td>
                       <td data-opt="pf" id="total-publisher-payout">£0.00</td>
-                      <td data-opt="pm" id="total-partner-margin">£0.00</td>
+                      <td id="total-partner-margin">£0.00</td>
                     </tr>
                   </tfoot>
                 </table>
@@ -254,6 +295,29 @@
       });
       btn.querySelector('button').addEventListener('click', function() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+  </script>
+  <script>
+    /* Table scroll overflow hint */
+    (function initTableScroll() {
+      var wrappers = document.querySelectorAll('.table-scroll');
+      if (!wrappers.length) return;
+
+      function checkOverflow(wrapper) {
+        var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
+        var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
+        wrapper.classList.toggle('is-overflowing', isOverflowing);
+        wrapper.classList.toggle('is-scrolled-end', isAtEnd);
+      }
+
+      wrappers.forEach(function(wrapper) {
+        checkOverflow(wrapper);
+        wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+      });
+
+      window.addEventListener('resize', function() {
+        wrappers.forEach(checkOverflow);
       });
     })();
   </script>
