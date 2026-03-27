@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Overview - By Default Brand OS</title>
-    <meta name="description" content="Learn what a design system is and what it contains.">
+    <title>Table - By Default Brand OS</title>
+    <meta name="description" content="Guide to using the table component with base styles and modifier classes.">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
     <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Overview - By Default Brand OS">
-    <meta property="og:description" content="Learn what a design system is and what it contains.">
+    <meta property="og:title" content="Table - By Default Brand OS">
+    <meta property="og:description" content="Guide to using the table component with base styles and modifier classes.">
     <meta property="og:image" content="assets/images/og-default.jpg">
     <meta property="og:type" content="website">
 
@@ -108,7 +108,7 @@
         </span>
       </summary>
       <ul class="nav-list">
-        <li><a href="design-system-overview.html" class="nav-link nav-link-active">Overview</a></li>
+        <li><a href="design-system-overview.html" class="nav-link ">Overview</a></li>
       
         <li><a href="color.html" class="nav-link ">Color</a></li>
       
@@ -128,7 +128,7 @@
       
         <li><a href="form.html" class="nav-link ">Form</a></li>
       
-        <li><a href="table.html" class="nav-link ">Table</a></li>
+        <li><a href="table.html" class="nav-link nav-link-active">Table</a></li>
       
         <li><a href="design-system/index.html" class="nav-link">Style Guide</a></li>
       
@@ -191,11 +191,11 @@
             <!-- Page Header (full width, outside grid) -->
             <div class="page-header">
       <div class="container-small">
-        <h1>Overview</h1>
-        <p class="page-subtitle" data-text-wrap="pretty">Introduction to the design system</p>
+        <h1>Table</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">Composable table styling</p>
         <div class="button-group justify-center">
-          <a href="docs/design-system-overview.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
-          <a href="design-system/index.html" class="button is-small page-source-link">Open Style Guide</a>
+          <a href="docs/table.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+          
         </div>
       </div>
     </div>
@@ -205,25 +205,188 @@
                 <!-- Main Content -->
                 <main class="docs-main">
                     <article class="markdown-body">
-                        <h2 id="what-is-a-design-system">What Is a Design System?</h2>
-<p>A <strong>Design System</strong> is your team&#39;s shared toolkit for creating <strong>consistent, high‑quality digital products and brand experiences</strong>.</p>
-<p>Think of it as a <strong>well‑organised box of Lego bricks,</strong> but instead of plastic pieces, you get reusable components, brand assets, design rules, and clear guidelines.</p>
-<p>It serves as a <strong>single source of truth</strong> for both <strong>product teams and brand guardians</strong>, so no one wastes time reinventing elements or guessing which visual style to use.</p>
-<p>Whether you&#39;re designing an app screen, a marketing campaign, or a customer touchpoint, the Design System ensures everything looks, feels, and behaves like it comes from the same brand.</p>
+                        <p>Tables use a <strong>composable architecture</strong> with a base class and optional modifiers. The base style is minimalistic — clean borders, no background fills — and modifiers layer on additional behaviour.</p>
+<h2 id="structure">Structure</h2>
+<p>Every table needs two elements:</p>
+<ol>
+<li>A <strong>scroll wrapper</strong> (<code>.table-scroll</code>) for horizontal overflow on small screens</li>
+<li>The <strong>table element</strong> with the <code>.table</code> base class</li>
+</ol>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-k0jdye9lf" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-k0jdye9lf" class="language-html">&lt;div class=&quot;table-scroll&quot;&gt;
+  &lt;table class=&quot;table&quot;&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Column&lt;/th&gt;
+        &lt;th&gt;Column&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td&gt;Data&lt;/td&gt;
+        &lt;td&gt;Data&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
 <hr>
-<h2 id="what39s-inside-a-design-system">What&#39;s Inside a Design System?</h2>
+<h2 id="base-class">Base Class</h2>
+<p>The <code>.table</code> class provides the default minimalistic style:</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Border collapse</td>
+<td><code>collapse</code></td>
+</tr>
+<tr>
+<td>Width</td>
+<td><code>fit-content</code> (max 100%)</td>
+</tr>
+<tr>
+<td>Font size</td>
+<td><code>var(--font-s)</code></td>
+</tr>
+<tr>
+<td>Font variant</td>
+<td><code>tabular-nums</code></td>
+</tr>
+<tr>
+<td>Header background</td>
+<td>Transparent</td>
+</tr>
+<tr>
+<td>Header border</td>
+<td><code>var(--border-s) solid var(--border-secondary)</code></td>
+</tr>
+<tr>
+<td>Body row border</td>
+<td><code>var(--border-s) solid var(--border-faded)</code></td>
+</tr>
+<tr>
+<td>Cell padding</td>
+<td><code>var(--space-m) var(--space-l)</code></td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="modifiers">Modifiers</h2>
+<p>Modifiers are added alongside <code>.table</code> on the <code>&lt;table&gt;</code> element. They can be combined freely.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Class</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.table-full</code></td>
+<td>Sets width to 100%</td>
+</tr>
+<tr>
+<td><code>.table-hover</code></td>
+<td>Adds hover highlight on body rows</td>
+</tr>
+<tr>
+<td><code>.table-header-filled</code></td>
+<td>Adds background colour to header cells</td>
+</tr>
+</tbody></table></div>
+<h3 id="full-width">Full Width</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-a75oaaojp" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-a75oaaojp" class="language-html">&lt;table class=&quot;table table-full&quot;&gt;
+</code></pre>
+      </div>
+    
+<p>Makes the table span the full width of its container.</p>
+<h3 id="hoverable-rows">Hoverable Rows</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-wqwp2v737" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-wqwp2v737" class="language-html">&lt;table class=&quot;table table-hover&quot;&gt;
+</code></pre>
+      </div>
+    
+<p>Body rows highlight with <code>var(--background-faded)</code> on hover.</p>
+<h3 id="filled-header">Filled Header</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-nyk0twt7c" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-nyk0twt7c" class="language-html">&lt;table class=&quot;table table-header-filled&quot;&gt;
+</code></pre>
+      </div>
+    
+<p>Header cells get a <code>var(--background-secondary)</code> background with semi-bold weight.</p>
+<hr>
+<h2 id="footer">Footer</h2>
+<p>The <code>&lt;tfoot&gt;</code> element is styled automatically when inside a <code>.table</code>:</p>
 <ul>
-<li><strong>Design tokens</strong> – Core values like color palettes, spacing, typography scales, and animations that power both design and code.</li>
-<li><strong>Typography</strong> – Rules for fonts, sizes, and spacing to ensure readability and brand voice.</li>
-<li><strong>Components</strong> – Reusable interface elements like buttons, forms, and menus.</li>
-<li><strong>Brand assets</strong> – Logos, imagery, and iconography for consistent marketing and product use.</li>
-<li><strong>Layout principles</strong> – Guidelines for arranging content in a clear, intuitive way.</li>
+<li>Top border: <code>var(--border-m) solid var(--border-primary)</code></li>
+<li>Header cells: bold weight</li>
+<li>Data cells: semi-bold weight</li>
 </ul>
-<p>By following a Design System, teams can <strong>move faster, collaborate better, and maintain consistency across every brand interaction, whether it&#39;s in-app, on the web, or in the real world</strong>.</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-ud96k3yc9" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-ud96k3yc9" class="language-html">&lt;table class=&quot;table table-full&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;Item&lt;/th&gt;&lt;th&gt;Price&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;Widget&lt;/td&gt;&lt;td&gt;£50&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;&lt;th&gt;Total&lt;/th&gt;&lt;td&gt;£50&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;
+</code></pre>
+      </div>
+    
 <hr>
-<h2 id="style-guide">Style Guide</h2>
-<p>For a visual, interactive showcase of all design tokens, components, and layout primitives, visit the <a href="../../design-system/index.html">Design System Styleguide</a>.</p>
-<p>To see the current brand identity applied, visit the <a href="../../brand-book/index.html">Brand Book</a>.</p>
+<h2 id="combining-modifiers">Combining Modifiers</h2>
+<p>Modifiers compose naturally. A full-featured table with hover, filled header, and footer:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-5s8t9hi1p" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-5s8t9hi1p" class="language-html">&lt;div class=&quot;table-scroll&quot;&gt;
+  &lt;table class=&quot;table table-full table-hover table-header-filled&quot;&gt;
+    &lt;thead&gt;...&lt;/thead&gt;
+    &lt;tbody&gt;...&lt;/tbody&gt;
+    &lt;tfoot&gt;...&lt;/tfoot&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="responsive-behaviour">Responsive Behaviour</h2>
+<p>Tables are mobile-friendly by default:</p>
+<ul>
+<li><strong>Horizontal scroll</strong> — <code>.table-scroll</code> allows swiping when the table is wider than the viewport</li>
+<li><strong>Scroll hint</strong> — a subtle fade appears on the right edge when the table overflows, indicating more content. It disappears once the user scrolls to the end</li>
+<li><strong>Condensed padding</strong> — at <code>768px</code> and below, cell padding and font size reduce automatically to fit more content on screen</li>
+</ul>
+<p>No extra classes or markup are needed — this behaviour is built into <code>.table-scroll</code> and <code>.table</code>.</p>
+<hr>
+<h2 id="markdown-tables">Markdown Tables</h2>
+<p>Tables generated from markdown (via the doc generator) automatically receive the <code>.table</code> class inside a <code>.table-scroll</code> wrapper. No manual class application is needed for documentation pages.</p>
+<hr>
+<h2 id="do-not">Do Not</h2>
+<ul>
+<li>Do not apply spacing or margins to <code>.table</code> directly — use the scroll wrapper or parent block for spacing</li>
+<li>Do not create combined classes like <code>.table-hover-filled</code> — compose existing modifiers instead</li>
+<li>Do not hardcode border or colour values — use the design system tokens</li>
+</ul>
 
                     </article>
                 </main>
@@ -231,23 +394,23 @@
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#what-is-a-design-system" class="toc-link">What Is a Design System?</a></li><li class="toc-item toc-level-2"><a href="#what39s-inside-a-design-system" class="toc-link">What&#39;s Inside a Design System?</a></li><li class="toc-item toc-level-2"><a href="#style-guide" class="toc-link">Style Guide</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#structure" class="toc-link">Structure</a></li><li class="toc-item toc-level-2"><a href="#base-class" class="toc-link">Base Class</a></li><li class="toc-item toc-level-2"><a href="#modifiers" class="toc-link">Modifiers</a></li><li class="toc-item toc-level-2"><a href="#footer" class="toc-link">Footer</a></li><li class="toc-item toc-level-2"><a href="#combining-modifiers" class="toc-link">Combining Modifiers</a></li><li class="toc-item toc-level-2"><a href="#responsive-behaviour" class="toc-link">Responsive Behaviour</a></li><li class="toc-item toc-level-2"><a href="#markdown-tables" class="toc-link">Markdown Tables</a></li><li class="toc-item toc-level-2"><a href="#do-not" class="toc-link">Do Not</a></li></ul></nav></div>
     </aside>
             </div>
             
             <!-- Page Navigation (Previous / Next) -->
-            <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="brand-tone-of-voice.html" class="page-nav-link page-nav-prev" rel="prev">
+            <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="form.html" class="page-nav-link page-nav-prev" rel="prev">
       <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
       <span class="page-nav-text">
         <span class="page-nav-label">Previous</span>
-        <span class="page-nav-section">Brand Book</span>
-        <h3 class="page-nav-title">Tone of Voice</h3>
+        
+        <h3 class="page-nav-title">Form</h3>
       </span>
-    </a><a href="color.html" class="page-nav-link page-nav-next" rel="next">
+    </a><a href="js-code-structure.html" class="page-nav-link page-nav-next" rel="next">
       <span class="page-nav-text">
         <span class="page-nav-label">Next</span>
-        
-        <h3 class="page-nav-title">Color</h3>
+        <span class="page-nav-section">Code</span>
+        <h3 class="page-nav-title">JavaScript</h3>
       </span>
       <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
     </a></div></nav>

@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Essential -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Display Ad Preview</title>
+  <meta name="description" content="Generate Celtra ad preview sandbox URLs with device simulation and publisher context." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Display Ad Preview - By Default Brand OS">
+  <meta property="og:description" content="Generate Celtra ad preview sandbox URLs with device simulation and publisher context.">
+  <meta property="og:image" content="../assets/images/og-default.jpg">
+  <meta property="og:type" content="website">
+
+  <!-- Robots -->
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Brand Book -->
+  <link rel="stylesheet" href="../brand-book/brand-book.css" />
+  <!-- Design System Framework -->
+  <link rel="stylesheet" href="../design-system/design-system.css" />
+
+  <!-- Google Fonts: Inclusive Sans (body) + JetBrains Mono (code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-primary), sans-serif;
+      background: var(--background-primary);
+      color: var(--text-primary);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 320px;
+      min-width: 320px;
+      background: var(--background-secondary);
+      border-right: var(--border-s) solid var(--border-secondary);
+      padding: var(--space-xl);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl);
+      transition: margin-left 0.3s ease, opacity 0.3s ease;
+      position: relative;
+    }
+
+    .sidebar.collapsed {
+      margin-left: -320px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Sidebar toggle button */
+    .sidebar-toggle {
+      position: absolute;
+      top: var(--space-xl);
+      right: var(--space-l);
+      width: 32px;
+      height: 32px;
+      background: transparent;
+      border: var(--border-m) solid var(--border-faded);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease-in-out;
+      z-index: 20;
+      flex-shrink: 0;
+    }
+
+    .sidebar-toggle:hover {
+      background: var(--background-faded);
+      border-color: var(--border-secondary);
+    }
+
+    /* Toggle button when sidebar is collapsed — sits in top-left of main area */
+    .main-toggle {
+      position: absolute;
+      top: var(--space-l);
+      left: var(--space-l);
+      width: 36px;
+      height: 36px;
+      background: var(--background-secondary);
+      border: var(--border-m) solid var(--border-faded);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      transition: all 0.15s ease-in-out;
+    }
+
+    .main-toggle:hover {
+      background: var(--background-faded);
+      border-color: var(--border-secondary);
+    }
+
+    .sidebar.collapsed ~ .main .main-toggle {
+      display: flex;
+    }
+
+    .sidebar h1 {
+      font-size: var(--font-m);
+      font-weight: var(--font-weight-semi-bold);
+      color: var(--text-primary);
+      margin-bottom: var(--space-xs);
+    }
+
+    .sidebar .subtitle {
+      font-size: var(--font-2xs);
+      color: var(--text-faded);
+      margin-bottom: var(--space-s);
+    }
+
+    /* Section label */
+    .section-label {
+      font-size: var(--font-2xs);
+      font-weight: var(--font-weight-semi-bold);
+      text-transform: uppercase;
+      letter-spacing: var(--letter-spacing-l);
+      color: var(--text-faded);
+    }
+
+    /* Monospace override for creative ID input */
+    #creativeId {
+      font-family: var(--font-tertiary);
+    }
+
+    /* Toggle group (segmented control) */
+    .toggle-group {
+      display: flex;
+      background: var(--background-faded);
+      padding: 3px;
+      gap: 2px;
+    }
+
+    .toggle-group button {
+      flex: 1;
+      padding: var(--space-s) var(--space-m);
+      background: transparent;
+      border: var(--border-m) solid transparent;
+      color: var(--text-faded);
+      font-family: var(--font-primary);
+      font-size: var(--button-font-size-small);
+      font-weight: var(--font-weight-semi-bold);
+      line-height: var(--line-height-m);
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+    }
+
+    .toggle-group button.active {
+      background: var(--button-primary);
+      color: var(--button-text);
+      border-color: var(--button-primary);
+    }
+
+    .toggle-group button:hover:not(.active) {
+      color: var(--text-secondary);
+      background: var(--black-alpha-5);
+    }
+
+    /* Size buttons row */
+    .size-row {
+      display: flex;
+      gap: var(--space-xs);
+    }
+
+    .size-row button {
+      flex: 1;
+      padding: var(--space-s) var(--space-m);
+      background: transparent;
+      border: var(--border-m) solid var(--border-faded);
+      color: var(--text-faded);
+      font-family: var(--font-primary);
+      font-size: var(--button-font-size-small);
+      font-weight: var(--font-weight-semi-bold);
+      line-height: var(--line-height-m);
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+    }
+
+    .size-row button.active {
+      background: var(--button-primary);
+      border-color: var(--button-primary);
+      color: var(--button-text);
+    }
+
+    .size-row button:hover:not(.active) {
+      border-color: var(--border-secondary);
+      color: var(--text-secondary);
+    }
+
+    .device-info {
+      font-size: var(--font-2xs);
+      color: var(--text-faded);
+      font-style: italic;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--border-secondary);
+      margin: var(--space-xs) 0;
+    }
+
+    /* Conditional sections */
+    .conditional {
+      display: none;
+    }
+
+    .conditional.visible {
+      display: flex;
+    }
+
+    /* Main area */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* URL bar */
+    .url-bar {
+      padding: var(--space-l) var(--space-xl);
+      background: var(--background-secondary);
+      border-bottom: var(--border-s) solid var(--border-secondary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-m);
+    }
+
+    .url-display {
+      flex: 1;
+      padding: var(--space-m) var(--space-l);
+      background: var(--input-background);
+      border: var(--border-s) solid var(--input-border);
+      font-family: var(--font-tertiary);
+      font-size: var(--font-2xs);
+      color: var(--text-accent);
+      overflow-x: auto;
+      white-space: nowrap;
+      user-select: all;
+    }
+
+    .url-display.empty {
+      color: var(--input-placeholder);
+    }
+
+    /* Copied state for copy button */
+    .button.copied {
+      background: var(--status-success);
+      border-color: var(--status-success);
+      color: var(--off-white);
+    }
+
+    .button.copied:hover {
+      background: var(--status-success);
+      color: var(--off-white);
+      transform: none;
+    }
+
+    /* Preview iframe area */
+    .preview-area {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-xl);
+      background: var(--background-primary);
+      overflow: hidden;
+    }
+
+    /* Device frame wrapper */
+    .device-frame {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .device-frame iframe {
+      border: var(--border-s) solid var(--border-secondary);
+      background: var(--white);
+      transition: width 0.3s ease, height 0.3s ease;
+    }
+
+    .device-frame.desktop iframe {
+      width: 100%;
+      height: 100%;
+    }
+
+    .device-frame.phone iframe,
+    .device-frame.tablet iframe {
+      height: 100%;
+      max-height: 100%;
+    }
+
+    .preview-placeholder {
+      text-align: center;
+      color: var(--text-faded);
+    }
+
+    .preview-placeholder .icon {
+      font-size: var(--font-4xl);
+      margin-bottom: var(--space-m);
+    }
+
+    .preview-placeholder p {
+      font-size: var(--font-xs);
+    }
+
+    /* Viewport label under iframe */
+    .viewport-label {
+      position: absolute;
+      bottom: var(--space-s);
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: var(--font-2xs);
+      color: var(--text-faded);
+      background: var(--background-secondary);
+      padding: var(--space-xs) var(--space-m);
+      white-space: nowrap;
+    }
+
+    .preview-wrapper {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Publisher nav bar overlay */
+    .publisher-nav {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 56px;
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-l);
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .publisher-nav .pub-logo {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
+    .publisher-nav.desktop-nav .pub-logo {
+      justify-content: center;
+    }
+
+    .publisher-nav .pub-logo img {
+      height: 24px;
+      width: auto;
+      display: block;
+    }
+
+    .publisher-nav .pub-logo-text {
+      font-size: var(--font-xs);
+      font-weight: var(--font-weight-semi-bold);
+      letter-spacing: var(--letter-spacing-s);
+    }
+
+    .publisher-nav .pub-burger {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      flex-shrink: 0;
+    }
+
+    .publisher-nav .pub-burger span {
+      display: block;
+      width: 20px;
+      height: 2px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Collapse sidebar">
+      <div class="icn-svg" data-icon="sidebar-close">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12.4 12L8.4 16L7 14.6L8.18579 13.4142C8.96684 12.6332 8.96684 11.3668 8.18579 10.5858L7 9.4L8.4 8L12.4 12Z" fill="currentColor"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M22 22H2V2H22V22ZM4 18C4 19.1046 4.89543 20 6 20H12C13.1046 20 14 19.1046 14 18V6C14 4.89543 13.1046 4 12 4H6C4.89543 4 4 4.89543 4 6V18ZM16 18C16 19.1046 16.8954 20 18 20C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4C16.8954 4 16 4.89543 16 6V18Z" fill="currentColor"/>
+        </svg>
+      </div>
+    </button>
+    <div>
+      <h1>Display Ad Preview</h1>
+      <div class="subtitle">Generate sandbox preview URLs</div>
+    </div>
+
+    <!-- Creative ID -->
+    <div class="block gap-s">
+      <div class="section-label">Creative ID</div>
+      <input type="text" id="creativeId" placeholder="e.g. 81e89b8a" oninput="buildURL()" aria-label="Creative ID">
+    </div>
+
+    <!-- Publisher -->
+    <div class="block gap-s">
+      <div class="section-label">Publisher</div>
+      <select id="publisher" onchange="setPublisher(this.value)" aria-label="Publisher">
+        <!-- Options auto-generated from publishers data in JS -->
+      </select>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Device Type -->
+    <div class="block gap-s">
+      <div class="section-label">Device Type</div>
+      <div class="toggle-group" id="deviceType">
+        <button class="active" data-value="Phone" onclick="setToggle('deviceType', this)">Phone</button>
+        <button data-value="Tablet" onclick="setToggle('deviceType', this)">Tablet</button>
+        <button data-value="Desktop" onclick="setToggle('deviceType', this)">Desktop</button>
+      </div>
+    </div>
+
+    <!-- Device Size (Phone) -->
+    <div class="block gap-s conditional visible" id="phoneSizeSection">
+      <div class="section-label">Phone Size</div>
+      <div class="size-row" id="phoneSize">
+        <button data-value="320" onclick="setSize('phoneSize', this)">XS</button>
+        <button data-value="375" onclick="setSize('phoneSize', this)">S</button>
+        <button class="active" data-value="390" onclick="setSize('phoneSize', this)">M</button>
+        <button data-value="428" onclick="setSize('phoneSize', this)">L</button>
+      </div>
+      <div class="device-info" id="phoneDeviceInfo">iPhone 14 / Samsung Galaxy S21 Plus</div>
+    </div>
+
+    <!-- Device Size (Tablet) -->
+    <div class="block gap-s conditional" id="tabletSizeSection">
+      <div class="section-label">Tablet Size</div>
+      <div class="size-row" id="tabletSize">
+        <button data-value="600" onclick="setSize('tabletSize', this)">S</button>
+        <button class="active" data-value="768" onclick="setSize('tabletSize', this)">M</button>
+        <button data-value="800" onclick="setSize('tabletSize', this)">L</button>
+      </div>
+      <div class="device-info" id="tabletDeviceInfo">9" tablets (iPad, Nexus 7)</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Preview Options -->
+    <div class="block gap-s">
+      <div class="section-label">Preview Mode</div>
+      <div class="toggle-group" id="stickyMode">
+        <button class="active" data-value="inline" onclick="setToggle('stickyMode', this)">Inline</button>
+        <button data-value="top" onclick="setToggle('stickyMode', this)">Sticky Top</button>
+        <button data-value="bottom" onclick="setToggle('stickyMode', this)">Sticky Btm</button>
+        <button data-value="fullscreen" onclick="setToggle('stickyMode', this)">Fullscreen</button>
+      </div>
+    </div>
+
+    <!-- Fold Position -->
+    <div class="block gap-s">
+      <div class="section-label">Fold Position</div>
+      <div class="toggle-group" id="foldPosition">
+        <button class="active" data-value="above" onclick="setToggle('foldPosition', this)">Above the fold</button>
+        <button data-value="below" onclick="setToggle('foldPosition', this)">Below the fold</button>
+      </div>
+    </div>
+
+    <!-- Creative Position (Desktop only) -->
+    <div class="block gap-s conditional" id="creativePositionSection">
+      <div class="section-label">Creative Position (Desktop)</div>
+      <div class="toggle-group" id="creativePosition">
+        <button class="active" data-value="top" onclick="setToggle('creativePosition', this)">Top</button>
+        <button data-value="left" onclick="setToggle('creativePosition', this)">Sidebar Left</button>
+        <button data-value="right" onclick="setToggle('creativePosition', this)">Sidebar Right</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main area -->
+  <div class="main" style="position: relative;">
+    <button class="main-toggle" id="mainToggle" onclick="toggleSidebar()" aria-label="Open sidebar">
+      <div class="icn-svg" data-icon="sidebar-open">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5.6 12L9.6 8L11 9.4L9.81421 10.5858C9.03316 11.3668 9.03316 12.6332 9.81421 13.4142L11 14.6L9.6 16L5.6 12Z" fill="currentColor"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M22 22H2V2H22V22ZM4 18C4 19.1046 4.89543 20 6 20H12C13.1046 20 14 19.1046 14 18V6C14 4.89543 13.1046 4 12 4H6C4.89543 4 4 4.89543 4 6V18ZM16 18C16 19.1046 16.8954 20 18 20C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4C16.8954 4 16 4.89543 16 6V18Z" fill="currentColor"/>
+        </svg>
+      </div>
+    </button>
+    <!-- URL bar -->
+    <div class="url-bar">
+      <div class="url-display empty" id="urlDisplay">Enter a Creative ID to generate a URL</div>
+      <a class="button is-outline is-small" id="openLink" href="#" target="_blank" style="display:none;">Open</a>
+      <button class="button is-small" id="copyBtn" onclick="copyURL()" style="display:none;">Copy URL</button>
+    </div>
+
+    <!-- Preview -->
+    <div class="preview-area" id="previewArea">
+      <div class="preview-placeholder" id="placeholder">
+        <div class="icon">&#x1F50D;</div>
+        <p>Enter a Creative ID to see a live preview</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── Data ──
+
+    const publishers = {
+      'none': null,
+      'forbes': {
+        name: 'Forbes',
+        bgColor: '#0a0a0a',
+        textColor: '#fff',
+        borderColor: 'rgba(255,255,255,0.1)',
+        logo: '../assets/images/logo_forbes.svg',
+        logoFilter: 'brightness(0) invert(1)'
+      },
+      'reuters': {
+        name: 'Reuters',
+        bgColor: '#ffffff',
+        textColor: '#222',
+        borderColor: 'rgba(0,0,0,0.1)',
+        logo: '../assets/images/logo_reuters.svg',
+        logoFilter: null
+      },
+      'wsj': {
+        name: 'The Wall Street Journal',
+        bgColor: '#ffffff',
+        textColor: '#222',
+        borderColor: 'rgba(0,0,0,0.1)',
+        logoMobile: '../assets/images/logo_wsj-mobile.svg',
+        logoDesktop: '../assets/images/logo_wsj-desktop.svg',
+        logoFilter: null
+      }
+    };
+
+    const phoneDevices = {
+      '320': 'iPhone 5 — 320 x 568',
+      '375': 'iPhone 13 Mini / Galaxy S21 — 375 x 812',
+      '390': 'iPhone 14 / Galaxy S21 Plus — 390 x 844',
+      '428': 'iPhone 14 Plus / Galaxy S21 Ultra — 428 x 926'
+    };
+
+    const tabletDevices = {
+      '600': '7" Galaxy Tab 7 — 600px wide',
+      '768': '9" iPad / Nexus 7 — 768px wide',
+      '800': '10" Galaxy Tab 10 — 800px wide'
+    };
+
+    // ── State ──
+
+    let state = {
+      creativeId: '',
+      publisher: 'none',
+      deviceType: 'Phone',
+      phoneSize: '390',
+      tabletSize: '768',
+      stickyMode: 'inline',
+      foldPosition: 'above',
+      creativePosition: 'top'
+    };
+
+    let debounceTimer = null;
+    let suppressHashUpdate = false;
+
+    // ── Hash sync ──
+
+    function stateToHash() {
+      const p = new URLSearchParams();
+      if (state.creativeId) p.set('id', state.creativeId);
+      p.set('device', state.deviceType);
+      if (state.deviceType === 'Phone') p.set('phoneSize', state.phoneSize);
+      if (state.deviceType === 'Tablet') p.set('tabletSize', state.tabletSize);
+      if (state.publisher !== 'none') p.set('pub', state.publisher);
+      if (state.stickyMode !== 'inline') p.set('sticky', state.stickyMode);
+      if (state.foldPosition !== 'above') p.set('fold', state.foldPosition);
+      if (state.deviceType === 'Desktop' && state.creativePosition !== 'top') {
+        p.set('position', state.creativePosition);
+      }
+      return p.toString();
+    }
+
+    function hashToState() {
+      const hash = window.location.hash.slice(1);
+      if (!hash) return false;
+
+      const p = new URLSearchParams(hash);
+      let changed = false;
+
+      if (p.has('id')) { state.creativeId = p.get('id'); changed = true; }
+      if (p.has('device')) { state.deviceType = p.get('device'); changed = true; }
+      if (p.has('phoneSize')) { state.phoneSize = p.get('phoneSize'); changed = true; }
+      if (p.has('tabletSize')) { state.tabletSize = p.get('tabletSize'); changed = true; }
+      state.publisher = p.get('pub') || 'none';
+      state.stickyMode = p.get('sticky') || 'inline';
+      state.foldPosition = p.get('fold') || 'above';
+      state.creativePosition = p.get('position') || 'top';
+
+      return changed;
+    }
+
+    function updateHash() {
+      if (suppressHashUpdate) return;
+      history.replaceState(null, '', '#' + stateToHash());
+    }
+
+    // ── UI sync ──
+
+    function syncUIFromState() {
+      document.getElementById('creativeId').value = state.creativeId;
+      document.getElementById('publisher').value = state.publisher;
+      syncButtonGroup('deviceType', state.deviceType);
+      syncButtonGroup('phoneSize', state.phoneSize);
+      syncButtonGroup('tabletSize', state.tabletSize);
+      document.getElementById('phoneDeviceInfo').textContent = phoneDevices[state.phoneSize] || '';
+      document.getElementById('tabletDeviceInfo').textContent = tabletDevices[state.tabletSize] || '';
+      syncButtonGroup('stickyMode', state.stickyMode);
+      syncButtonGroup('foldPosition', state.foldPosition);
+      syncButtonGroup('creativePosition', state.creativePosition);
+      updateDeviceSections();
+    }
+
+    function syncButtonGroup(groupId, value) {
+      const el = document.getElementById(groupId);
+      if (!el) return;
+      el.querySelectorAll('button').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.value === value);
+      });
+    }
+
+    // ── Controls ──
+
+    function setToggle(group, btn) {
+      btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state[group] = btn.dataset.value;
+      if (group === 'deviceType') {
+        updateDeviceSections();
+        updateNavBar();
+      }
+      buildURL();
+    }
+
+    function setSize(group, btn) {
+      btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state[group] = btn.dataset.value;
+      if (group === 'phoneSize') {
+        document.getElementById('phoneDeviceInfo').textContent = phoneDevices[state.phoneSize] || '';
+      } else if (group === 'tabletSize') {
+        document.getElementById('tabletDeviceInfo').textContent = tabletDevices[state.tabletSize] || '';
+      }
+      buildURL();
+      updateNavBar();
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const mainToggle = document.getElementById('mainToggle');
+      const isCollapsed = sidebar.classList.toggle('collapsed');
+      mainToggle.style.display = isCollapsed ? 'flex' : 'none';
+    }
+
+    function setPublisher(value) {
+      state.publisher = value;
+      updateHash();
+      updateNavBar();
+    }
+
+    function updateDeviceSections() {
+      const device = state.deviceType;
+      document.getElementById('phoneSizeSection').classList.toggle('visible', device === 'Phone');
+      document.getElementById('tabletSizeSection').classList.toggle('visible', device === 'Tablet');
+      document.getElementById('creativePositionSection').classList.toggle('visible', device === 'Desktop');
+    }
+
+    // ── URL building & preview (desktop) ──
+
+    function buildURL() {
+      state.creativeId = document.getElementById('creativeId').value.trim();
+      updateHash();
+
+      if (!state.creativeId) {
+        document.getElementById('urlDisplay').textContent = 'Enter a Creative ID to generate a URL';
+        document.getElementById('urlDisplay').classList.add('empty');
+        document.getElementById('copyBtn').style.display = 'none';
+        document.getElementById('openLink').style.display = 'none';
+        showPlaceholder();
+        return;
+      }
+
+      const params = new URLSearchParams();
+      params.set('overrides.deviceInfo.deviceType', state.deviceType);
+
+      if (state.deviceType === 'Phone') {
+        params.set('placementWidth', state.phoneSize);
+        params.set('placementHeight', 'auto');
+      } else if (state.deviceType === 'Tablet') {
+        params.set('placementWidth', state.tabletSize);
+        params.set('placementHeight', 'auto');
+      } else if (state.deviceType === 'Desktop') {
+        params.set('desktopPreviewFrame', '1');
+        if (state.creativePosition !== 'top') {
+          params.set('rp.creativePosition', state.creativePosition);
+        }
+      }
+
+      if (state.stickyMode !== 'inline') params.set('rp.sticky', state.stickyMode);
+      if (state.foldPosition === 'below') params.set('rp.foldPosition', 'below');
+
+      const url = `https://preview-sandbox.celtra.com/preview/${state.creativeId}/frame?${params.toString()}`;
+
+      document.getElementById('urlDisplay').textContent = url;
+      document.getElementById('urlDisplay').classList.remove('empty');
+      document.getElementById('copyBtn').style.display = 'flex';
+      document.getElementById('openLink').style.display = 'flex';
+      document.getElementById('openLink').href = url;
+
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => updatePreview(url), 600);
+    }
+
+    function updatePreview(url) {
+      const area = document.getElementById('previewArea');
+
+      const placeholder = document.getElementById('placeholder');
+      if (placeholder) placeholder.remove();
+
+      const existing = area.querySelector('.preview-wrapper');
+      if (existing) existing.remove();
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'preview-wrapper';
+
+      const frame = document.createElement('div');
+      frame.className = 'device-frame';
+
+      const iframe = document.createElement('iframe');
+      iframe.src = url;
+      iframe.setAttribute('allow', 'autoplay; encrypted-media');
+      iframe.setAttribute('allowfullscreen', '');
+
+      const label = document.createElement('div');
+      label.className = 'viewport-label';
+
+      if (state.deviceType === 'Phone') {
+        const w = parseInt(state.phoneSize);
+        iframe.style.width = w + 'px';
+        iframe.style.maxWidth = '100%';
+        frame.classList.add('phone');
+        label.textContent = `${w}px — ${phoneDevices[state.phoneSize] || ''}`;
+      } else if (state.deviceType === 'Tablet') {
+        const w = parseInt(state.tabletSize);
+        iframe.style.width = w + 'px';
+        iframe.style.maxWidth = '100%';
+        frame.classList.add('tablet');
+        label.textContent = `${w}px — ${tabletDevices[state.tabletSize] || ''}`;
+      } else {
+        frame.classList.add('desktop');
+        label.textContent = 'Desktop — full width';
+      }
+
+      frame.appendChild(iframe);
+      wrapper.appendChild(frame);
+      wrapper.appendChild(label);
+      area.appendChild(wrapper);
+
+      updateNavBar();
+    }
+
+    function getLogoSrc(pub) {
+      const isDesktop = state.deviceType === 'Desktop';
+      if (isDesktop && pub.logoDesktop) return pub.logoDesktop;
+      if (!isDesktop && pub.logoMobile) return pub.logoMobile;
+      return pub.logo || null;
+    }
+
+    function getNavWidth() {
+      if (state.deviceType === 'Phone') return parseInt(state.phoneSize);
+      if (state.deviceType === 'Tablet') return parseInt(state.tabletSize);
+      return null;
+    }
+
+    function updateNavBar() {
+      const frame = document.querySelector('.device-frame');
+      if (!frame) return;
+
+      const existing = frame.querySelector('.publisher-nav');
+      if (existing) existing.remove();
+
+      const pub = publishers[state.publisher];
+      if (!pub) return;
+
+      const nav = document.createElement('div');
+      nav.className = 'publisher-nav';
+      if (state.deviceType === 'Desktop') nav.classList.add('desktop-nav');
+      nav.style.backgroundColor = pub.bgColor;
+      nav.style.color = pub.textColor;
+      nav.style.borderBottom = `1px solid ${pub.borderColor}`;
+
+      const navWidth = getNavWidth();
+      if (navWidth) {
+        nav.style.width = navWidth + 'px';
+        nav.style.maxWidth = '100%';
+      } else {
+        nav.style.width = '100%';
+      }
+
+      const logoWrap = document.createElement('div');
+      logoWrap.className = 'pub-logo';
+
+      const logoSrc = getLogoSrc(pub);
+      if (logoSrc) {
+        const img = document.createElement('img');
+        img.src = logoSrc;
+        img.alt = pub.name;
+        if (pub.logoFilter) img.style.filter = pub.logoFilter;
+        img.onerror = () => {
+          img.remove();
+          const text = document.createElement('span');
+          text.className = 'pub-logo-text';
+          text.textContent = pub.name;
+          logoWrap.appendChild(text);
+        };
+        logoWrap.appendChild(img);
+      } else {
+        const text = document.createElement('span');
+        text.className = 'pub-logo-text';
+        text.textContent = pub.name;
+        logoWrap.appendChild(text);
+      }
+      nav.appendChild(logoWrap);
+
+      const burger = document.createElement('div');
+      burger.className = 'pub-burger';
+      for (let i = 0; i < 3; i++) {
+        const line = document.createElement('span');
+        line.style.backgroundColor = pub.textColor;
+        burger.appendChild(line);
+      }
+      nav.appendChild(burger);
+
+      frame.appendChild(nav);
+    }
+
+    function populatePublisherDropdown() {
+      const select = document.getElementById('publisher');
+      select.innerHTML = '';
+      for (const [key, pub] of Object.entries(publishers)) {
+        const opt = document.createElement('option');
+        opt.value = key;
+        opt.textContent = key === 'none' ? 'None' : pub.name;
+        select.appendChild(opt);
+      }
+    }
+
+    function showPlaceholder() {
+      const area = document.getElementById('previewArea');
+      const existing = area.querySelector('.preview-wrapper');
+      if (existing) existing.remove();
+
+      if (!document.getElementById('placeholder')) {
+        const div = document.createElement('div');
+        div.className = 'preview-placeholder';
+        div.id = 'placeholder';
+        div.innerHTML = '<div class="icon">&#x1F50D;</div><p>Enter a Creative ID to see a live preview</p>';
+        area.appendChild(div);
+      }
+    }
+
+    function copyURL() {
+      const url = document.getElementById('urlDisplay').textContent;
+      navigator.clipboard.writeText(url).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy URL';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    // ── Mobile: redirect to Celtra native preview ──
+
+    function isMobileDevice() {
+      const hasTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+      const isSmallScreen = window.innerWidth <= 768;
+      const isMobileUA = /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      return (hasTouch && isSmallScreen) || isMobileUA;
+    }
+
+    // ── Initialize ──
+
+    populatePublisherDropdown();
+
+    window.addEventListener('hashchange', () => {
+      suppressHashUpdate = true;
+      if (hashToState()) {
+        syncUIFromState();
+        buildURL();
+      }
+      suppressHashUpdate = false;
+    });
+
+    if (window.location.hash.length > 1) {
+      suppressHashUpdate = true;
+      hashToState();
+      syncUIFromState();
+      suppressHashUpdate = false;
+    }
+
+    if (isMobileDevice()) {
+      if (state.creativeId) {
+        window.location.replace(
+          `https://preview-sandbox.celtra.com/preview/${state.creativeId}/frame?overrides.deviceInfo.deviceType=${state.deviceType}`
+        );
+      }
+    } else {
+      if (window.location.hash.length > 1) {
+        buildURL();
+      } else {
+        updateDeviceSections();
+      }
+    }
+  </script>
+
+</body>
+</html>

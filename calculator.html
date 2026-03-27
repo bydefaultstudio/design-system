@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CPM Calculator - By Default Brand OS</title>
-    <meta name="description" content="Complete guide to using the calculator, URL feature toggles, and calculation formulas.">
+    <meta name="description" content="Complete guide to using the calculator, toggle options, and calculation formulas.">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
@@ -12,7 +12,7 @@
 
     <!-- Open Graph -->
     <meta property="og:title" content="CPM Calculator - By Default Brand OS">
-    <meta property="og:description" content="Complete guide to using the calculator, URL feature toggles, and calculation formulas.">
+    <meta property="og:description" content="Complete guide to using the calculator, toggle options, and calculation formulas.">
     <meta property="og:image" content="assets/images/og-default.jpg">
     <meta property="og:type" content="website">
 
@@ -128,6 +128,8 @@
       
         <li><a href="form.html" class="nav-link ">Form</a></li>
       
+        <li><a href="table.html" class="nav-link ">Table</a></li>
+      
         <li><a href="design-system/index.html" class="nav-link">Style Guide</a></li>
       
       </ul>
@@ -177,6 +179,8 @@
       
         <li><a href="svg-cleaner.html" class="nav-link ">SVG Cleaner</a></li>
       
+        <li><a href="display-ad-preview.html" class="nav-link ">Display Ad Preview</a></li>
+      
       </ul>
     </details>
                 </div>
@@ -206,170 +210,53 @@
 <h2 id="how-it-works">How It Works</h2>
 <p>The calculator has three main sections:</p>
 <h3 id="1-global-settings">1. Global Settings</h3>
-<p>These inputs affect all calculations below:</p>
-<ul>
-<li><strong>Campaign CPM (£)</strong> - The cost per thousand impressions (always visible)</li>
-<li><strong>Agency fee (CPM, £)</strong> - Optional agency fee per thousand impressions</li>
-<li><strong>Ad hosting fee (CPM, £)</strong> - Optional ad hosting cost per thousand impressions</li>
-<li><strong>Publisher payout (%)</strong> - Optional percentage of spend paid to publisher</li>
-</ul>
-<h3 id="2-campaign-overview">2. Campaign Overview</h3>
-<p>Quick sanity-check section showing:</p>
-<ul>
-<li><strong>Total campaign spend (£)</strong> - Total budget for the campaign</li>
-<li><strong>Calculated impressions</strong> - Total impressions based on spend and CPM (read-only)</li>
-</ul>
-<h3 id="3-monthly-breakdown-table">3. Monthly Breakdown Table</h3>
-<p>The primary output showing:</p>
-<ul>
-<li>One row per month (January through December)</li>
-<li><strong>Campaign (£)</strong> - Editable monthly spend</li>
-<li><strong>Impressions</strong> - Calculated impressions for that month</li>
-<li>Optional columns (shown/hidden via URL):<ul>
-<li><strong>Agency</strong> - Agency earnings for the month</li>
-<li><strong>Ad hosting</strong> - Ad hosting costs for the month</li>
-<li><strong>Publisher</strong> - Publisher payout for the month</li>
-<li><strong>Partner Margin</strong> - Partner margin for the month</li>
-</ul>
-</li>
-<li><strong>Totals row</strong> - Sum of all months</li>
-</ul>
-<hr>
-<h2 id="url-feature-toggles">URL Feature Toggles</h2>
-<p>The calculator supports URL-driven feature toggles to show/hide optional fields and columns. Use the <code>f</code> query parameter with feature codes.</p>
-<h3 id="feature-codes">Feature Codes</h3>
-<div class="table-scroll"><table>
+<p>Toggle buttons control which optional features are visible. All toggles are off by default.</p>
+<div class="table-scroll"><table class="table">
 <thead>
 <tr>
-<th>Code</th>
-<th>Feature</th>
+<th>Toggle</th>
 <th>Shows</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>pf</code></td>
-<td>Publisher payout</td>
-<td>Publisher payout (%) input + Publisher column + totals</td>
+<td><strong>By Default Fee</strong></td>
+<td>By Default Fee (CPM, £) input + By Default column</td>
 </tr>
 <tr>
-<td><code>af</code></td>
-<td>Agency fee</td>
-<td>Agency fee (CPM, £) input + Agency column + totals</td>
+<td><strong>Ad Hosting Fee</strong></td>
+<td>Ad Hosting Fee (CPM, £) input + Ad Hosting column</td>
 </tr>
 <tr>
-<td><code>ah</code></td>
-<td>Ad hosting fee</td>
-<td>Ad hosting fee (CPM, £) input + Ad hosting column + totals</td>
-</tr>
-<tr>
-<td><code>pm</code></td>
-<td>Partner margin</td>
-<td>Partner Margin column + totals</td>
+<td><strong>Add Partner</strong></td>
+<td>Partner Name, Partner Share (%), and Net (%) inputs + Partner column</td>
 </tr>
 </tbody></table></div>
-<h3 id="url-examples">URL Examples</h3>
-<p>Copy these URLs to share different views:</p>
-<h4 id="default-view-core-calculator-only">Default View (Core Calculator Only)</h4>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-viu6us7vg" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-viu6us7vg">index.html
-</code></pre>
-      </div>
-    
-<p>Shows only Campaign CPM, Total spend, Impressions, and monthly Campaign spend.</p>
-<h4 id="publisher-payout-only">Publisher Payout Only</h4>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-pd2bqhf8s" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-pd2bqhf8s">index.html?f=pf
-</code></pre>
-      </div>
-    
-<p>Adds Publisher payout (%) input and Publisher column.</p>
-<h4 id="agency-fee-only">Agency Fee Only</h4>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-3utxlg239" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-3utxlg239">index.html?f=af
-</code></pre>
-      </div>
-    
-<p>Adds Agency fee (CPM, £) input and Agency column.</p>
-<h4 id="ad-hosting-fee-only">Ad Hosting Fee Only</h4>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-gcbfbxeen" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-gcbfbxeen">index.html?f=ah
-</code></pre>
-      </div>
-    
-<p>Adds Ad hosting fee (CPM, £) input and Ad hosting column.</p>
-<h4 id="partner-margin-only">Partner Margin Only</h4>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-qu67n8mqj" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-qu67n8mqj">index.html?f=pm
-</code></pre>
-      </div>
-    
-<p>Adds Partner Margin column (no input field required).</p>
-<h4 id="multiple-features">Multiple Features</h4>
-<p><strong>Publisher + Agency:</strong></p>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-9824hltxg" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-9824hltxg">index.html?f=pf,af
-</code></pre>
-      </div>
-    
-<p><strong>Agency + Ad Hosting:</strong></p>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-wlvi3t59a" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-wlvi3t59a">index.html?f=af,ah
-</code></pre>
-      </div>
-    
-<p><strong>Publisher + Agency + Ad Hosting:</strong></p>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-tkatlxnmv" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-tkatlxnmv">index.html?f=pf,af,ah
-</code></pre>
-      </div>
-    
-<p><strong>All Features:</strong></p>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-zorrjjmw6" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-zorrjjmw6">index.html?f=pf,af,ah,pm
-</code></pre>
-      </div>
-    
-<p><strong>Publisher + Partner Margin:</strong></p>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-wxhh0frja" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-wxhh0frja">index.html?f=pf,pm
-</code></pre>
-      </div>
-    
-<p><strong>Agency + Ad Hosting + Partner Margin:</strong></p>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-o8llg840g" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-o8llg840g">index.html?f=af,ah,pm
-</code></pre>
-      </div>
-    
-<h3 id="url-format-rules">URL Format Rules</h3>
+<p>When <strong>Add Partner</strong> is enabled:</p>
 <ul>
-<li>Feature codes are comma-separated (no spaces)</li>
-<li>Order doesn&#39;t matter: <code>?f=af,pf</code> is the same as <code>?f=pf,af</code></li>
-<li>Unknown codes are ignored</li>
-<li>Each feature shows its related input (if applicable) and table columns</li>
+<li><strong>Partner Name</strong> — free-text input that updates the &quot;Partner&quot; column header in the table (e.g. entering &quot;Dianomi&quot; changes the header to &quot;Dianomi&quot;)</li>
+<li><strong>Partner Share (%)</strong> and <strong>Net (%)</strong> are linked — they always sum to 100%. Changing one auto-updates the other</li>
 </ul>
+<h3 id="2-campaign-overview">2. Campaign Overview</h3>
+<ul>
+<li><strong>Campaign CPM (£)</strong> — cost per thousand impressions (default: £15)</li>
+<li><strong>Total campaign spend (£)</strong> — total budget for the campaign (default: £300,000)</li>
+<li><strong>Calculated impressions</strong> — total impressions based on spend and CPM (read-only)</li>
+</ul>
+<h3 id="3-monthly-breakdown-table">3. Monthly Breakdown Table</h3>
+<p>The primary output:</p>
+<ul>
+<li>One row per month (January through December)</li>
+<li><strong>Campaign (£)</strong> — editable monthly spend</li>
+<li><strong>Impressions</strong> — calculated impressions for that month</li>
+<li><strong>Net</strong> — always visible, shows the net amount after all deductions and partner share</li>
+</ul>
+<p>Optional columns (shown/hidden via toggle buttons):</p>
+<ul>
+<li><strong>By Default</strong> — By Default earnings for the month</li>
+<li><strong>Ad Hosting</strong> — Ad hosting costs for the month</li>
+<li><strong>Partner</strong> — partner share amount for the month</li>
+</ul>
+<p>The <strong>Totals</strong> row sums all monthly values.</p>
 <hr>
 <h2 id="calculations">Calculations</h2>
 <p>All calculations update instantly when inputs change. Impressions are always calculated, never manually entered.</p>
@@ -377,72 +264,98 @@
 <p><strong>Impressions</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-cbg5m5x3w" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-cbg5m5x3w">(Campaign spend ÷ Campaign CPM) × 1,000
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-y5zmxxold" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-y5zmxxold">(Campaign spend ÷ Campaign CPM) × 1,000
 </code></pre>
       </div>
     
-<p><strong>Agency Earnings</strong> (when <code>af</code> is enabled)</p>
+<p><strong>By Default Earnings</strong> (when enabled)</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-27qb4vzm5" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-27qb4vzm5">(Impressions ÷ 1,000) × Agency fee CPM
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-ujqs3ls3a" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-ujqs3ls3a">(Impressions ÷ 1,000) × By Default Fee CPM
 </code></pre>
       </div>
     
-<p><strong>Ad Hosting Cost</strong> (when <code>ah</code> is enabled)</p>
+<p><strong>Ad Hosting Cost</strong> (when enabled)</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-jge0qrq1k" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-jge0qrq1k">(Impressions ÷ 1,000) × Ad hosting fee CPM
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-twhmc1ukn" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-twhmc1ukn">(Impressions ÷ 1,000) × Ad Hosting Fee CPM
 </code></pre>
       </div>
     
 <p><strong>Net Spend</strong> (calculated internally)</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-g2r2yzy3w" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-g2r2yzy3w">Campaign spend − Agency earnings − Ad hosting cost
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-69sz3a4x1" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-69sz3a4x1">Campaign spend − By Default earnings − Ad hosting cost
 </code></pre>
       </div>
     
-<p><strong>Publisher Payout</strong> (when <code>pf</code> is enabled)</p>
+<h3 id="partner-split-when-add-partner-is-enabled">Partner Split (when Add Partner is enabled)</h3>
+<p>Partner Share and Net are complementary percentages of net spend:</p>
+<p><strong>Partner Share</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-lmqye8q30" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-lmqye8q30">Net spend × (Publisher payout % ÷ 100)
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-grtfbuj2d" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-grtfbuj2d">Net spend × (Partner Share % ÷ 100)
 </code></pre>
       </div>
     
-<p><strong>Partner Margin</strong> (when <code>pm</code> is enabled)</p>
+<p><strong>Net</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-8pxvnvsoj" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-8pxvnvsoj">Net spend × 30%
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-il9huufc1" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-il9huufc1">Net spend × (Net % ÷ 100)
 </code></pre>
       </div>
     
-<h3 id="monthly-totals">Monthly Totals</h3>
-<p>The totals row sums all monthly values:</p>
-<ul>
-<li>Total campaign spend = Sum of all monthly spends</li>
-<li>Total impressions = Sum of all monthly impressions</li>
-<li>Optional totals only include values when their feature is enabled</li>
-</ul>
+<p>Where <code>Partner Share % + Net % = 100%</code> always.</p>
+<p>When Add Partner is <strong>not</strong> enabled, the Net column shows 100% of net spend.</p>
 <hr>
 <h2 id="usage-tips">Usage Tips</h2>
 <ol>
-<li><strong>Start with Campaign CPM</strong> - Set your base CPM rate first (default: £15)</li>
-<li><strong>Enter Monthly Spend</strong> - Type spend values directly in the table cells</li>
-<li><strong>Use URL Toggles</strong> - Share different views with different audiences:<ul>
-<li>Media planners: Default view or with <code>?f=pf</code></li>
-<li>Publishers: <code>?f=pf</code> to show payout</li>
-<li>Partners: <code>?f=pf,af,ah,pm</code> to show all breakdowns</li>
-</ul>
-</li>
-<li><strong>Instant Updates</strong> - All calculations update automatically as you type</li>
-<li><strong>Notion Embedding</strong> - The calculator works when embedded in Notion pages</li>
+<li><strong>Start with Campaign CPM</strong> — set your base CPM rate first</li>
+<li><strong>Enter monthly spend</strong> — type spend values directly in the table cells</li>
+<li><strong>Toggle optional features</strong> — click the toggle buttons in Global Settings to show/hide fields</li>
+<li><strong>Name the partner</strong> — use the Partner Name field to label the Partner column for your audience</li>
+<li><strong>Instant updates</strong> — all calculations update automatically as you type</li>
 </ol>
+<hr>
+<h2 id="default-values">Default Values</h2>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Input</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Campaign CPM</td>
+<td>£15</td>
+</tr>
+<tr>
+<td>By Default Fee CPM</td>
+<td>£1 (when enabled)</td>
+</tr>
+<tr>
+<td>Ad Hosting Fee CPM</td>
+<td>£1 (when enabled)</td>
+</tr>
+<tr>
+<td>Partner Share</td>
+<td>70% (when enabled)</td>
+</tr>
+<tr>
+<td>Net</td>
+<td>30% (when enabled)</td>
+</tr>
+<tr>
+<td>Total campaign spend</td>
+<td>£300,000</td>
+</tr>
+</tbody></table></div>
 <hr>
 <h2 id="technical-notes">Technical Notes</h2>
 <ul>
@@ -452,15 +365,6 @@
 <li>Hidden features don&#39;t affect visible totals</li>
 <li>Works in all modern browsers</li>
 </ul>
-<hr>
-<h2 id="default-values">Default Values</h2>
-<ul>
-<li>Campaign CPM: £15</li>
-<li>Agency fee CPM: £1 (when enabled)</li>
-<li>Ad hosting fee CPM: £0.22 (when enabled)</li>
-<li>Publisher payout: 70% (when enabled)</li>
-<li>Total campaign spend: £300,000</li>
-</ul>
 
                     </article>
                 </main>
@@ -468,13 +372,13 @@
                 <!-- Table of Contents -->
                 <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#how-it-works" class="toc-link">How It Works</a></li><li class="toc-item toc-level-2"><a href="#url-feature-toggles" class="toc-link">URL Feature Toggles</a></li><li class="toc-item toc-level-2"><a href="#calculations" class="toc-link">Calculations</a></li><li class="toc-item toc-level-2"><a href="#usage-tips" class="toc-link">Usage Tips</a></li><li class="toc-item toc-level-2"><a href="#technical-notes" class="toc-link">Technical Notes</a></li><li class="toc-item toc-level-2"><a href="#default-values" class="toc-link">Default Values</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#how-it-works" class="toc-link">How It Works</a></li><li class="toc-item toc-level-2"><a href="#calculations" class="toc-link">Calculations</a></li><li class="toc-item toc-level-2"><a href="#usage-tips" class="toc-link">Usage Tips</a></li><li class="toc-item toc-level-2"><a href="#default-values" class="toc-link">Default Values</a></li><li class="toc-item toc-level-2"><a href="#technical-notes" class="toc-link">Technical Notes</a></li></ul></nav></div>
     </aside>
             </div>
             
             <!-- Page Navigation (Previous / Next) -->
             <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="markdown-style.html" class="page-nav-link page-nav-prev" rel="prev">
-      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
       <span class="page-nav-text">
         <span class="page-nav-label">Previous</span>
         <span class="page-nav-section">Content</span>
@@ -486,7 +390,7 @@
         
         <h3 class="page-nav-title">SVG Cleaner</h3>
       </span>
-      <svg class="page-nav-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
     </a></div></nav>
 
             <!-- Footer -->
@@ -706,6 +610,29 @@
         });
         btn.querySelector('button').addEventListener('click', function() {
           window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+    <script>
+      /* Table scroll overflow hint */
+      (function initTableScroll() {
+        var wrappers = document.querySelectorAll('.table-scroll');
+        if (!wrappers.length) return;
+
+        function checkOverflow(wrapper) {
+          var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
+          var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
+          wrapper.classList.toggle('is-overflowing', isOverflowing);
+          wrapper.classList.toggle('is-scrolled-end', isAtEnd);
+        }
+
+        wrappers.forEach(function(wrapper) {
+          checkOverflow(wrapper);
+          wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+        });
+
+        window.addEventListener('resize', function() {
+          wrappers.forEach(checkOverflow);
         });
       })();
     </script>

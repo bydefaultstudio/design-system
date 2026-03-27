@@ -128,6 +128,8 @@
       
         <li><a href="form.html" class="nav-link ">Form</a></li>
       
+        <li><a href="table.html" class="nav-link ">Table</a></li>
+      
         <li><a href="design-system/index.html" class="nav-link">Style Guide</a></li>
       
       </ul>
@@ -176,6 +178,8 @@
         <li><a href="calculator.html" class="nav-link ">CPM Calculator</a></li>
       
         <li><a href="svg-cleaner.html" class="nav-link ">SVG Cleaner</a></li>
+      
+        <li><a href="display-ad-preview.html" class="nav-link ">Display Ad Preview</a></li>
       
       </ul>
     </details>
@@ -518,6 +522,29 @@
         });
         btn.querySelector('button').addEventListener('click', function() {
           window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+    <script>
+      /* Table scroll overflow hint */
+      (function initTableScroll() {
+        var wrappers = document.querySelectorAll('.table-scroll');
+        if (!wrappers.length) return;
+
+        function checkOverflow(wrapper) {
+          var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
+          var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
+          wrapper.classList.toggle('is-overflowing', isOverflowing);
+          wrapper.classList.toggle('is-scrolled-end', isAtEnd);
+        }
+
+        wrappers.forEach(function(wrapper) {
+          checkOverflow(wrapper);
+          wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+        });
+
+        window.addEventListener('resize', function() {
+          wrappers.forEach(checkOverflow);
         });
       })();
     </script>
