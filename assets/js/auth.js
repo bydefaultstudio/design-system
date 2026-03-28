@@ -65,10 +65,11 @@
 
   function getEffectiveRole(roles) {
     if (!roles || !roles.length) return null;
-    var highest = roles[0];
+    var highest = roles[0].toLowerCase();
     for (var i = 1; i < roles.length; i++) {
-      if (getRoleRank(roles[i]) > getRoleRank(highest)) {
-        highest = roles[i];
+      var r = roles[i].toLowerCase();
+      if (getRoleRank(r) > getRoleRank(highest)) {
+        highest = r;
       }
     }
     return highest;
