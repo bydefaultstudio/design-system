@@ -674,6 +674,7 @@
 
   function checkAuth() {
     var requiredRole = getRequiredRole();
+    console.log('[Auth] checkAuth — required:', requiredRole, '| gotrueAuth:', !!gotrueAuth);
 
     // Public pages: show content immediately
     if (requiredRole === 'public') {
@@ -704,22 +705,27 @@
     }
 
     var user = gotrueAuth.currentUser();
+    console.log('[Auth] currentUser:', user ? user.email : 'null');
 
     if (!user) {
+      console.log('[Auth] No user — redirecting to login');
       redirectToLogin();
       return;
     }
 
     var metadata = user.app_metadata || {};
     var userRole = getEffectiveRole(metadata.roles || []);
+    console.log('[Auth] app_metadata:', JSON.stringify(metadata), '| effectiveRole:', userRole);
 
     if (!userRole) {
+      console.log('[Auth] No role — redirecting to access-denied');
       renderAuthButton(user);
       redirectAccessDenied();
       return;
     }
 
     if (!hasAccess(userRole, requiredRole)) {
+      console.log('[Auth] Access denied — role:', userRole, 'required:', requiredRole);
       renderAuthButton(user);
       setRoleClass(userRole);
       redirectAccessDenied();
@@ -728,6 +734,7 @@
 
     var pagePath = getCurrentPagePath();
     if (!hasClientFolderAccess(user, pagePath)) {
+      console.log('[Auth] Client folder access denied — path:', pagePath);
       renderAuthButton(user);
       setRoleClass(userRole);
       redirectAccessDenied();
@@ -735,6 +742,7 @@
     }
 
     // Access granted
+    console.log('[Auth] Access granted — role:', userRole);
     setRoleClass(userRole);
     renderAuthButton(user);
     filterNavLinks(userRole, user);
