@@ -42,8 +42,9 @@
   var gotrueAuth = null;
 
   function initGoTrue() {
-    if (IS_DEV || !window.GoTrue) return;
-    gotrueAuth = new window.GoTrue({
+    var GoTrueCtor = window.GoTrue || window.goTrue;
+    if (IS_DEV || !GoTrueCtor) return;
+    gotrueAuth = new GoTrueCtor({
       APIUrl: window.location.origin + '/.netlify/identity',
       setCookie: true
     });
