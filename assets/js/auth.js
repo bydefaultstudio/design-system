@@ -904,21 +904,45 @@
       return;
     }
 
-    initGoTrue();
     initLoginForm();
 
-    // Handle Netlify Identity hash tokens (invite, recovery, confirmation, OAuth)
-    var handledToken = handleHashTokens();
-    if (handledToken) return;
+    // GoTrue loads async via ESM import — may already be available or not yet
+    function runWithGoTrue() {
+      initGoTrue();
 
-    // On login page: check if already logged in
-    if (isLoginPage()) {
-      checkLoginPageAuth();
-      showContent();
-      return;
+      // Handle Netlify Identity hash tokens (invite, recovery, confirmation, OAuth)
+      var handledToken = handleHashTokens();
+      if (handledToken) return;
+
+      // On login page: check if already logged in
+      if (isLoginPage()) {
+        checkLoginPageAuth();
+        showContent();
+        return;
+      }
+
+      checkAuth();
     }
 
-    checkAuth();
+    // If GoTrue is already loaded, run immediately
+    var GoTrueCtor = window.GoTrue || window.goTrue;
+    if (GoTrueCtor) {
+      runWithGoTrue();
+    } else {
+      // Wait for the gotrue-ready event from the ESM loader
+      window.addEventListener('gotrue-ready', function () {
+        runWithGoTrue();
+      });
+
+      // Fallback timeout: if GoTrue never loads (blocked, offline),
+      // proceed without it after 3 seconds
+      setTimeout(function () {
+        if (!gotrueAuth) {
+          console.warn('[Auth] GoTrue load timeout — proceeding without auth');
+          runWithGoTrue();
+        }
+      }, 3000);
+    }
   }
 
   //------- Boot -------//

@@ -29,9 +29,11 @@
   <link rel="stylesheet" href="../assets/css/style.css" />
 
   <!-- GoTrue JS (skipped on localhost) -->
-  <script>
+  <script type="module">
     if (!(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0')) {
-      document.write('<script src="https://unpkg.com/gotrue-js@0.9.29/dist/goTrue.umd.js"><\/script>');
+      const { default: GoTrue } = await import('https://cdn.jsdelivr.net/npm/gotrue-js@0.9.29/+esm');
+      window.GoTrue = GoTrue;
+      window.dispatchEvent(new Event('gotrue-ready'));
     }
   </script>
 

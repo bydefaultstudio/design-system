@@ -34,9 +34,11 @@
     <link rel="stylesheet" href="../assets/css/style.css">
 
     <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
-    <script>
+    <script type="module">
       if (!(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0')) {
-        document.write('<script src="https://unpkg.com/gotrue-js@0.9.29/dist/goTrue.umd.js"><\/script>');
+        const { default: GoTrue } = await import('https://cdn.jsdelivr.net/npm/gotrue-js@0.9.29/+esm');
+        window.GoTrue = GoTrue;
+        window.dispatchEvent(new Event('gotrue-ready'));
       }
     </script>
 </head>
@@ -85,8 +87,8 @@
 <h2 id="basic-usage">Basic Usage</h2>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-x3yuiv66w" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-x3yuiv66w" class="language-html">&lt;details&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-m2j3cw1dh" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-m2j3cw1dh" class="language-html">&lt;details&gt;
   &lt;summary&gt;Show details&lt;/summary&gt;
   &lt;div class=&quot;disclosure-content&quot;&gt;
     &lt;p&gt;Content revealed when expanded.&lt;/p&gt;
@@ -100,8 +102,8 @@
 <p>Use <code>.disclosure-table</code> with a <code>&lt;dl&gt;</code> to display property-value pairs:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-dazaaf8xh" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-dazaaf8xh" class="language-html">&lt;details&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-cxr9ml1eb" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-cxr9ml1eb" class="language-html">&lt;details&gt;
   &lt;summary&gt;Show details&lt;/summary&gt;
   &lt;div class=&quot;disclosure-content&quot;&gt;
     &lt;dl class=&quot;disclosure-table&quot;&gt;
@@ -123,8 +125,8 @@
 <p>Add a <code>.copy-btn</code> inside <code>.disclosure-content</code> with a <code>data-copy</code> attribute containing the text to copy:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-k27z4yxqc" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-k27z4yxqc" class="language-html">&lt;button class=&quot;button is-small is-faded copy-btn&quot;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-tiyqs2c5f" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-tiyqs2c5f" class="language-html">&lt;button class=&quot;button is-small is-faded copy-btn&quot;
   data-copy=&quot;font-size: var(--font-4xl);&amp;#10;line-height: var(--line-height-s);&quot;
   aria-label=&quot;Copy CSS for Heading 1&quot;&gt;
   Copy CSS
@@ -135,8 +137,8 @@
 <p>Use <code>&amp;#10;</code> for newlines in the <code>data-copy</code> value. The button requires a small JS handler:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-uvki0s6io" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-uvki0s6io" class="language-js">document.addEventListener(&#39;click&#39;, function (event) {
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-a7m941ahu" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-a7m941ahu" class="language-js">document.addEventListener(&#39;click&#39;, function (event) {
   var button = event.target.closest(&#39;.copy-btn&#39;);
   if (!button) return;
   var text = button.getAttribute(&#39;data-copy&#39;);
