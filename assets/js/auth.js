@@ -38,8 +38,8 @@
   var gotrueAuth = null;
 
   function initGoTrue() {
-    if (IS_DEV || !window.goTrue) return;
-    gotrueAuth = new window.goTrue({
+    if (IS_DEV || !window.GoTrue) return;
+    gotrueAuth = new window.GoTrue({
       APIUrl: window.location.origin + '/.netlify/identity',
       setCookie: true
     });
@@ -453,8 +453,9 @@
 
     // Protected page: check for current user
     if (!gotrueAuth) {
-      console.warn('[Auth] GoTrue not available');
-      showContent();
+      console.warn('[Auth] GoTrue not available — blocking access');
+      renderAuthButton(null);
+      showLoginOverlay();
       return;
     }
 
