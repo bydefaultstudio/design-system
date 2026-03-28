@@ -924,24 +924,12 @@
       checkAuth();
     }
 
-    // If GoTrue is already loaded, run immediately
-    var GoTrueCtor = window.GoTrue || window.goTrue;
-    if (GoTrueCtor) {
-      runWithGoTrue();
+    // Wait for GoTrue to load via the Promise-based loader in <head>
+    if (window._gotrueReady) {
+      window._gotrueReady.then(runWithGoTrue);
     } else {
-      // Wait for the gotrue-ready event from the ESM loader
-      window.addEventListener('gotrue-ready', function () {
-        runWithGoTrue();
-      });
-
-      // Fallback timeout: if GoTrue never loads (blocked, offline),
-      // proceed without it after 3 seconds
-      setTimeout(function () {
-        if (!gotrueAuth) {
-          console.warn('[Auth] GoTrue load timeout — proceeding without auth');
-          runWithGoTrue();
-        }
-      }, 3000);
+      // No loader present (dev mode or missing script) — run immediately
+      runWithGoTrue();
     }
   }
 
