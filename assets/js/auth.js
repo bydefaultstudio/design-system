@@ -938,11 +938,25 @@
     }
 
     // Wait for GoTrue to load via the Promise-based loader in <head>
+    var hasRun = false;
+    function runOnce() {
+      if (hasRun) return;
+      hasRun = true;
+      runWithGoTrue();
+    }
+
     if (window._gotrueReady) {
-      window._gotrueReady.then(runWithGoTrue);
+      window._gotrueReady.then(runOnce).catch(function () { runOnce(); });
+      // Fallback: if import hangs (CDN blocked, slow network), proceed after 5s
+      setTimeout(function () {
+        if (!hasRun) {
+          console.warn('[Auth] GoTrue load timeout — proceeding without auth');
+          runOnce();
+        }
+      }, 5000);
     } else {
       // No loader present (dev mode or missing script) — run immediately
-      runWithGoTrue();
+      runOnce();
     }
   }
 
