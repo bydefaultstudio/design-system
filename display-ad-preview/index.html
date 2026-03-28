@@ -25,6 +25,15 @@
   <link rel="stylesheet" href="../brand-book/brand-book.css" />
   <!-- Design System Framework -->
   <link rel="stylesheet" href="../design-system/design-system.css" />
+  <!-- Site styles (auth UI) -->
+  <link rel="stylesheet" href="../assets/css/style.css" />
+
+  <!-- GoTrue JS (skipped on localhost) -->
+  <script>
+    if (!(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0')) {
+      document.write('<script src="https://unpkg.com/gotrue-js@0.9.29/lib/index.umd.js"><\/script>');
+    }
+  </script>
 
   <!-- Google Fonts: Inclusive Sans (body) + JetBrains Mono (code) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,6 +50,7 @@
       display: flex;
       height: 100vh;
       overflow: hidden;
+      padding-top: var(--header-height);
     }
 
     /* Sidebar */
@@ -402,7 +412,42 @@
   </style>
 </head>
 
-<body>
+<body class="auth-loading">
+
+  <!-- Login Overlay -->
+  <div class="login-overlay" id="login-overlay">
+    <div class="login-card">
+      <img src="../assets/images/logo.svg" alt="Logo" class="login-logo">
+      <h1 class="login-title">Welcome to BrandOS</h1>
+      <p class="login-subtitle">Sign in to access your dashboard</p>
+      <form class="login-form" id="login-form" autocomplete="on">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" name="email" autocomplete="email" required placeholder="you@company.com">
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" name="password" autocomplete="current-password" required placeholder="Enter your password">
+        </div>
+        <div class="login-error" id="login-error" role="alert"></div>
+        <button type="submit" class="button login-submit-btn">Log in</button>
+      </form>
+      <button type="button" class="login-forgot-btn" id="login-forgot-btn">Forgot password?</button>
+      <div class="login-reset-form" id="login-reset-form" style="display:none;">
+        <div class="form-group">
+          <label for="reset-email">Email</label>
+          <input type="email" id="reset-email" name="reset-email" autocomplete="email" required placeholder="you@company.com">
+        </div>
+        <div class="login-error" id="reset-error" role="alert"></div>
+        <div class="login-success" id="reset-success" role="status"></div>
+        <button type="button" class="button login-submit-btn" id="reset-submit-btn">Send reset link</button>
+        <button type="button" class="login-forgot-btn" id="reset-back-btn">Back to login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Site Navigation (header only, no sidebar — injected by nav.js) -->
+  <div id="site-nav" data-base="../" data-sidebar="false"></div>
 
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
@@ -950,5 +995,10 @@
     }
   </script>
 
+  <!-- Site Navigation -->
+  <script src="../assets/js/nav.js"></script>
+  <!-- Auth -->
+  <script src="../assets/js/auth-config.js"></script>
+  <script src="../assets/js/auth.js"></script>
 </body>
 </html>

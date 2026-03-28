@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Table - By Default Brand OS</title>
     <meta name="description" content="Guide to using the table component with base styles and modifier classes.">
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
     <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
@@ -21,19 +21,58 @@
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     <!-- Brand Book (path set in docs/docs.config.js) -->
     <link rel="stylesheet" href="brand-book/brand-book.css">
-    
+
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-       
+
     <!-- Markdown CSS -->
     <link rel="stylesheet" href="assets/css/markdown.css">
 
     <!-- Site styles -->
     <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
+    <script>
+      if (!(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0')) {
+        document.write('<script src="https://unpkg.com/gotrue-js@0.9.29/lib/index.umd.js"><\/script>');
+      }
+    </script>
 </head>
-<body>
+<body class="auth-loading">
+
+    <!-- Login Overlay -->
+    <div class="login-overlay" id="login-overlay">
+      <div class="login-card">
+        <img src="assets/images/logo.svg" alt="Logo" class="login-logo">
+        <h1 class="login-title">Welcome to BrandOS</h1>
+        <p class="login-subtitle">Sign in to access your dashboard</p>
+        <form class="login-form" id="login-form" autocomplete="on">
+          <div class="form-group">
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" name="email" autocomplete="email" required placeholder="you@company.com">
+          </div>
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" name="password" autocomplete="current-password" required placeholder="Enter your password">
+          </div>
+          <div class="login-error" id="login-error" role="alert"></div>
+          <button type="submit" class="button login-submit-btn">Log in</button>
+        </form>
+        <button type="button" class="login-forgot-btn" id="login-forgot-btn">Forgot password?</button>
+        <div class="login-reset-form" id="login-reset-form" style="display:none;">
+          <div class="form-group">
+            <label for="reset-email">Email</label>
+            <input type="email" id="reset-email" name="reset-email" autocomplete="email" required placeholder="you@company.com">
+          </div>
+          <div class="login-error" id="reset-error" role="alert"></div>
+          <div class="login-success" id="reset-success" role="status"></div>
+          <button type="button" class="button login-submit-btn" id="reset-submit-btn">Send reset link</button>
+          <button type="button" class="login-forgot-btn" id="reset-back-btn">Back to login</button>
+        </div>
+      </div>
+    </div>
 
     <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
     <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
@@ -42,154 +81,12 @@
         <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
     </div>
 
-    <div class="docs-container">
-        <!-- Sidebar Navigation (sticky on desktop, top bar on mobile) -->
-        <aside class="docs-sidebar">
-            <nav class="docs-nav">
-                <div class="docs-sidebar-header">
-                    <a href="index.html" class="docs-logo-link">
-                        <img src="assets/images/logo.svg" alt="Logo" class="nav-logo">
-                        <img src="assets/images/logo-small.svg" alt="Logo" class="nav-logo-small">
-                    </a>
-                    <button class="docs-sidebar-toggle" aria-label="Collapse sidebar" type="button">
-                        <div class="icn-svg sidebar-icon-open"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M5.6 12L9.6 8L11 9.4L9.81421 10.5858C9.03316 11.3668 9.03316 12.6332 9.81421 13.4142L11 14.6L9.6 16L5.6 12Z" fill="currentColor"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M22 22H2V2H22V22ZM4 18C4 19.1046 4.89543 20 6 20H12C13.1046 20 14 19.1046 14 18V6C14 4.89543 13.1046 4 12 4H6C4.89543 4 4 4.89543 4 6V18ZM16 18C16 19.1046 16.8954 20 18 20C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4C16.8954 4 16 4.89543 16 6V18Z" fill="currentColor"/>
-                        </svg></div>
-                        <div class="icn-svg sidebar-icon-close"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M12.4 12L8.4 16L7 14.6L8.18579 13.4142C8.96684 12.6332 8.96684 11.3668 8.18579 10.5858L7 9.4L8.4 8L12.4 12Z" fill="currentColor"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M22 22H2V2H22V22ZM4 18C4 19.1046 4.89543 20 6 20H12C13.1046 20 14 19.1046 14 18V6C14 4.89543 13.1046 4 12 4H6C4.89543 4 4 4.89543 4 6V18ZM16 18C16 19.1046 16.8954 20 18 20C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4C16.8954 4 16 4.89543 16 6V18Z" fill="currentColor"/>
-                        </svg></div>
-                    </button>
-                    <button class="docs-mobile-toggle" aria-label="Open navigation" type="button">
-                        <svg class="mobile-icon-open" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M3 18V16H21V18H3ZM3 13V11H21V13H3ZM3 8V6H21V8H3Z" fill="currentColor"/>
-                        </svg>
-                        <svg class="mobile-icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/>
-                        </svg>
-                    </button>
-                </div>
-                <div class="docs-nav-content">
-                    <details class="nav-section">
-      <summary class="nav-section-toggle">
-        <span>Brand Book</span>
-        <span class="nav-toggle-icon">
-          <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
-            <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
-          </svg>
-        </span>
-      </summary>
-      <ul class="nav-list">
-        <li><a href="brand-mission-vision-purpose.html" class="nav-link ">Mission, Vision & Purpose</a></li>
-      
-        <li><a href="brand-values.html" class="nav-link ">Brand Values</a></li>
-      
-        <li><a href="brand-origin-story.html" class="nav-link ">Origin Story</a></li>
-      
-        <li><a href="brand-positioning.html" class="nav-link ">Positioning</a></li>
-      
-        <li><a href="brand-value-proposition.html" class="nav-link ">Value Proposition</a></li>
-      
-        <li><a href="brand-personality.html" class="nav-link ">Brand Personality</a></li>
-      
-        <li><a href="brand-tone-of-voice.html" class="nav-link ">Tone of Voice</a></li>
-      
-        <li><a href="brand-book/index.html" class="nav-link">Visual Identity</a></li>
-      
-      </ul>
-    </details><details class="nav-section" open>
-      <summary class="nav-section-toggle">
-        <span>Design System</span>
-        <span class="nav-toggle-icon">
-          <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
-            <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
-          </svg>
-        </span>
-      </summary>
-      <ul class="nav-list">
-        <li><a href="design-system-overview.html" class="nav-link ">Overview</a></li>
-      
-        <li><a href="color.html" class="nav-link ">Color</a></li>
-      
-        <li><a href="typography.html" class="nav-link ">Typography</a></li>
-      
-        <li><a href="spacing.html" class="nav-link ">Spacing</a></li>
-      
-        <li><a href="border.html" class="nav-link ">Border</a></li>
-      
-        <li><a href="iconography.html" class="nav-link ">Iconography</a></li>
-      
-        <li><a href="button.html" class="nav-link ">Button</a></li>
-      
-        <li><a href="callout.html" class="nav-link ">Callout</a></li>
-      
-        <li><a href="disclosure.html" class="nav-link ">Disclosure</a></li>
-      
-        <li><a href="form.html" class="nav-link ">Form</a></li>
-      
-        <li><a href="table.html" class="nav-link nav-link-active">Table</a></li>
-      
-        <li><a href="design-system/index.html" class="nav-link">Style Guide</a></li>
-      
-      </ul>
-    </details><details class="nav-section">
-      <summary class="nav-section-toggle">
-        <span>Code</span>
-        <span class="nav-toggle-icon">
-          <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
-            <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
-          </svg>
-        </span>
-      </summary>
-      <ul class="nav-list">
-        <li><a href="js-code-structure.html" class="nav-link ">JavaScript</a></li>
-      
-        <li><a href="css-code-struture.html" class="nav-link ">CSS</a></li>
-      
-        <li><a href="layout.html" class="nav-link ">HTML Layout</a></li>
-      
-      </ul>
-    </details><details class="nav-section">
-      <summary class="nav-section-toggle">
-        <span>Content</span>
-        <span class="nav-toggle-icon">
-          <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
-            <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
-          </svg>
-        </span>
-      </summary>
-      <ul class="nav-list">
-        <li><a href="seo-best-practices.html" class="nav-link ">SEO</a></li>
-      
-        <li><a href="markdown-style.html" class="nav-link ">Markdown</a></li>
-      
-      </ul>
-    </details><details class="nav-section">
-      <summary class="nav-section-toggle">
-        <span>Tools</span>
-        <span class="nav-toggle-icon">
-          <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
-            <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
-          </svg>
-        </span>
-      </summary>
-      <ul class="nav-list">
-        <li><a href="calculator-docs.html" class="nav-link ">CPM Calculator</a></li>
-      
-        <li><a href="svg-cleaner-docs.html" class="nav-link ">SVG Cleaner</a></li>
-      
-        <li><a href="display-ad-preview-docs.html" class="nav-link ">Display Ad Preview</a></li>
-      
-      </ul>
-    </details>
-                </div>
-            </nav>
-        </aside>
+    <!-- Site Navigation (header + sidebar injected by nav.js) -->
+    <div id="site-nav" data-base=""></div>
 
-        <div class="docs-main-area">
-            <!-- Page Header (full width, outside grid) -->
-            <div class="page-header">
+    <div class="docs-main-area">
+        <!-- Page Header (full width, outside grid) -->
+        <div class="page-header">
       <div class="container-small">
         <h1>Table</h1>
         <p class="page-subtitle" data-text-wrap="pretty">Composable table styling</p>
@@ -199,13 +96,13 @@
         </div>
       </div>
     </div>
-            
-            <!-- Main Content + TOC grid -->
-            <div class="docs-content-grid padding-global">
-                <!-- Main Content -->
-                <main class="docs-main">
-                    <article class="markdown-body">
-                        <p>Tables use a <strong>composable architecture</strong> with a base class and optional modifiers. The base style is minimalistic — clean borders, no background fills — and modifiers layer on additional behaviour.</p>
+
+        <!-- Main Content + TOC grid -->
+        <div class="docs-content-grid padding-global">
+            <!-- Main Content -->
+            <main class="docs-main">
+                <article class="markdown-body">
+                    <p>Tables use a <strong>composable architecture</strong> with a base class and optional modifiers. The base style is minimalistic — clean borders, no background fills — and modifiers layer on additional behaviour.</p>
 <h2 id="structure">Structure</h2>
 <p>Every table needs two elements:</p>
 <ol>
@@ -214,8 +111,8 @@
 </ol>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-mxlio9fz7" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-mxlio9fz7" class="language-html">&lt;div class=&quot;table-scroll&quot;&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-7pq5znlh7" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-7pq5znlh7" class="language-html">&lt;div class=&quot;table-scroll&quot;&gt;
   &lt;table class=&quot;table&quot;&gt;
     &lt;thead&gt;
       &lt;tr&gt;
@@ -303,8 +200,8 @@
 <h3 id="full-width">Full Width</h3>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-9tbcqjrsz" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-9tbcqjrsz" class="language-html">&lt;table class=&quot;table table-full&quot;&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-n1iz5n2gb" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-n1iz5n2gb" class="language-html">&lt;table class=&quot;table table-full&quot;&gt;
 </code></pre>
       </div>
     
@@ -312,8 +209,8 @@
 <h3 id="hoverable-rows">Hoverable Rows</h3>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-1t864kp68" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-1t864kp68" class="language-html">&lt;table class=&quot;table table-hover&quot;&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-5ikx70w2z" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-5ikx70w2z" class="language-html">&lt;table class=&quot;table table-hover&quot;&gt;
 </code></pre>
       </div>
     
@@ -321,8 +218,8 @@
 <h3 id="filled-header">Filled Header</h3>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-59bx19lbp" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-59bx19lbp" class="language-html">&lt;table class=&quot;table table-header-filled&quot;&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-oikrtc7n8" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-oikrtc7n8" class="language-html">&lt;table class=&quot;table table-header-filled&quot;&gt;
 </code></pre>
       </div>
     
@@ -337,8 +234,8 @@
 </ul>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-thzvce5oe" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-thzvce5oe" class="language-html">&lt;table class=&quot;table table-full&quot;&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-b90usys0o" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-b90usys0o" class="language-html">&lt;table class=&quot;table table-full&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;&lt;th&gt;Item&lt;/th&gt;&lt;th&gt;Price&lt;/th&gt;&lt;/tr&gt;
   &lt;/thead&gt;
@@ -357,8 +254,8 @@
 <p>Modifiers compose naturally. A full-featured table with hover, filled header, and footer:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-orergb7ax" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-orergb7ax" class="language-html">&lt;div class=&quot;table-scroll&quot;&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-o15wwg5t1" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-o15wwg5t1" class="language-html">&lt;div class=&quot;table-scroll&quot;&gt;
   &lt;table class=&quot;table table-full table-hover table-header-filled&quot;&gt;
     &lt;thead&gt;...&lt;/thead&gt;
     &lt;tbody&gt;...&lt;/tbody&gt;
@@ -388,18 +285,18 @@
 <li>Do not hardcode border or colour values — use the design system tokens</li>
 </ul>
 
-                    </article>
-                </main>
+                </article>
+            </main>
 
-                <!-- Table of Contents -->
-                <aside class="docs-toc">
+            <!-- Table of Contents -->
+            <aside class="docs-toc">
       <span class="toc-header">On this page</span>
       <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#structure" class="toc-link">Structure</a></li><li class="toc-item toc-level-2"><a href="#base-class" class="toc-link">Base Class</a></li><li class="toc-item toc-level-2"><a href="#modifiers" class="toc-link">Modifiers</a></li><li class="toc-item toc-level-2"><a href="#footer" class="toc-link">Footer</a></li><li class="toc-item toc-level-2"><a href="#combining-modifiers" class="toc-link">Combining Modifiers</a></li><li class="toc-item toc-level-2"><a href="#responsive-behaviour" class="toc-link">Responsive Behaviour</a></li><li class="toc-item toc-level-2"><a href="#markdown-tables" class="toc-link">Markdown Tables</a></li><li class="toc-item toc-level-2"><a href="#do-not" class="toc-link">Do Not</a></li></ul></nav></div>
     </aside>
-            </div>
-            
-            <!-- Page Navigation (Previous / Next) -->
-            <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="form.html" class="page-nav-link page-nav-prev" rel="prev">
+        </div>
+
+        <!-- Page Navigation (Previous / Next) -->
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="form.html" class="page-nav-link page-nav-prev" rel="prev">
       <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
       <span class="page-nav-text">
         <span class="page-nav-label">Previous</span>
@@ -415,30 +312,28 @@
       <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
     </a></div></nav>
 
-            <!-- Footer -->
-            <footer class="docs-footer">
-                <div class="docs-footer-inner padding-global">
-                    <p class="docs-footer-text">© 2026 By Default BrandOS</p>
-                </div>
-            </footer>
-        </div>
+        <!-- Footer -->
+        <footer class="docs-footer">
+            <div class="docs-footer-inner padding-global">
+                <p class="docs-footer-text">© 2026 By Default BrandOS</p>
+            </div>
+        </footer>
     </div>
 
     <!-- Highlight.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    
-    <!-- Initialize Highlight.js and Copy functionality -->
+
+    <!-- Initialize Highlight.js, Copy, and TOC -->
     <script>
         (function() {
             'use strict';
-            
+
             function initHighlight() {
-                // Initialize Highlight.js on all code blocks
                 document.querySelectorAll('pre code').forEach((block) => {
                     hljs.highlightElement(block);
                 });
             }
-            
+
             function copyToClipboard(text) {
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     return navigator.clipboard.writeText(text);
@@ -490,44 +385,13 @@
                     });
                 });
             }
-            
-            function initSidebarToggle() {
-                var SIDEBAR_KEY = 'docs-sidebar-collapsed';
-                var container = document.querySelector('.docs-container');
-                var sidebarToggle = document.querySelector('.docs-sidebar-toggle');
-                var mobileToggle = document.querySelector('.docs-mobile-toggle');
-
-                if (!container) return;
-
-                // Restore desktop sidebar state
-                if (localStorage.getItem(SIDEBAR_KEY) === 'true') {
-                    container.classList.add('sidebar-collapsed');
-                    if (sidebarToggle) sidebarToggle.setAttribute('aria-label', 'Expand sidebar');
-                }
-
-                if (sidebarToggle) {
-                    sidebarToggle.addEventListener('click', function onSidebarToggle() {
-                        var isCollapsed = container.classList.toggle('sidebar-collapsed');
-                        localStorage.setItem(SIDEBAR_KEY, isCollapsed);
-                        sidebarToggle.setAttribute('aria-label', isCollapsed ? 'Expand sidebar' : 'Collapse sidebar');
-                    });
-                }
-
-                if (mobileToggle) {
-                    mobileToggle.addEventListener('click', function onMobileToggle() {
-                        var isOpen = container.classList.toggle('mobile-nav-open');
-                        mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
-                    });
-                }
-            }
 
             function initTOCActiveState() {
                 const tocLinks = document.querySelectorAll('.toc-link');
                 const headings = document.querySelectorAll('h1[id], h2[id]');
-                
+
                 if (tocLinks.length === 0 || headings.length === 0) return;
-                
-                // Create a map of heading IDs to TOC links
+
                 const linkMap = new Map();
                 tocLinks.forEach(link => {
                     const href = link.getAttribute('href');
@@ -536,41 +400,36 @@
                         linkMap.set(id, link);
                     }
                 });
-                
-                // Intersection Observer to detect which heading is in view
+
                 const observerOptions = {
-                    rootMargin: '-20% 0px -70% 0px', // Trigger when heading is in top 30% of viewport
+                    rootMargin: '-20% 0px -70% 0px',
                     threshold: 0
                 };
-                
+
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         const id = entry.target.id;
                         const link = linkMap.get(id);
-                        
+
                         if (entry.isIntersecting) {
-                            // Remove active from all links
                             tocLinks.forEach(l => l.classList.remove('toc-link-active'));
-                            // Add active to current link
                             if (link) {
                                 link.classList.add('toc-link-active');
                             }
                         }
                     });
                 }, observerOptions);
-                
-                // Observe all headings
+
                 headings.forEach(heading => {
                     if (heading.id) {
                         observer.observe(heading);
                     }
                 });
-                
-                // Set initial active state based on scroll position
+
                 function setInitialActive() {
                     let activeHeading = null;
                     let maxTop = -Infinity;
-                    
+
                     headings.forEach(heading => {
                         const rect = heading.getBoundingClientRect();
                         if (rect.top <= 100 && rect.top > maxTop) {
@@ -578,7 +437,7 @@
                             activeHeading = heading;
                         }
                     });
-                    
+
                     if (activeHeading && activeHeading.id) {
                         const link = linkMap.get(activeHeading.id);
                         if (link) {
@@ -587,20 +446,17 @@
                         }
                     }
                 }
-                
-                // Set initial state
+
                 setInitialActive();
-                
-                // Update on scroll (debounced)
+
                 let scrollTimeout;
                 window.addEventListener('scroll', () => {
                     clearTimeout(scrollTimeout);
                     scrollTimeout = setTimeout(setInitialActive, 100);
                 });
             }
-            
+
             function init() {
-                initSidebarToggle();
                 initHighlight();
                 initClipboard();
                 initTOCActiveState();
@@ -635,6 +491,13 @@
         });
       })();
     </script>
+
+    <!-- Site Navigation -->
+    <script src="assets/js/nav.js"></script>
+    <!-- Auth -->
+    <script src="assets/js/auth-config.js"></script>
+    <script src="assets/js/auth.js"></script>
+
     <script>
       /* Table scroll overflow hint */
       (function initTableScroll() {
@@ -660,4 +523,3 @@
     </script>
 </body>
 </html>
-

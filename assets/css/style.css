@@ -9,10 +9,11 @@
 
 
 :root {
+  --header-height: 80px;
   --sidebar-width: 250px;
   --sidebar-collapsed-width: 64px;
   --toc-width: 300px;
-  --toc-top-offset: var(--space-xl);
+  --toc-top-offset: calc(var(--header-height) + var(--space-xl));
   --sidebar-transition: 0.3s ease;
 }
 
@@ -22,25 +23,40 @@ html {
   scroll-behavior: smooth;
 }
 
-/* CSS grid drives the two-column layout.
-   Transitioning grid-template-columns animates the sidebar open/close. */
+/* Simple block wrapper — sidebar is now position: fixed via nav.js */
 .docs-container {
-  display: grid;
-  grid-template-columns: var(--sidebar-width) 1fr;
   min-height: 100vh;
-  transition: grid-template-columns var(--sidebar-transition);
 }
 
-/* Collapsed state: shrink the sidebar column */
-.docs-container.sidebar-collapsed {
-  grid-template-columns: var(--sidebar-collapsed-width) 1fr;
-}
-
+/* Content area offset for fixed header + sidebar */
 .docs-main-area {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   position: relative;
+  margin-top: var(--header-height);
+  margin-left: var(--sidebar-width);
+  transition: margin-left var(--sidebar-transition);
+}
+
+/* Standalone page wrapper offset — combo class keeps base .page-wrapper untouched */
+.page-wrapper.has-sidebar {
+  width: auto;
+  margin-top: var(--header-height);
+  margin-left: var(--sidebar-width);
+  transition: margin-left var(--sidebar-transition);
+}
+
+/* Collapsed sidebar: shrink content margin */
+body.sidebar-collapsed .docs-main-area,
+body.sidebar-collapsed .page-wrapper.has-sidebar {
+  margin-left: var(--sidebar-collapsed-width);
+}
+
+/* No sidebar: full-width content */
+body.no-sidebar .docs-main-area,
+body.no-sidebar .page-wrapper.has-sidebar {
+  margin-left: 0;
 }
 
 .docs-content-grid {
@@ -57,6 +73,323 @@ html {
 /* When TOC exists, use 2-column layout */
 .docs-content-grid:has(.docs-toc) {
   grid-template-columns: 1fr var(--toc-width);
+}
+
+
+/* ------ 1B. SITE HEADER (Fixed) ------ */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-l);
+  background: var(--background-primary);
+  border-bottom: var(--border-s) solid var(--black-alpha-10);
+}
+
+.site-header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  min-width: 0;
+}
+
+.site-header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+}
+
+.svg-logo.nav-logo {
+  display: block;
+  height: 50px;
+  width: auto;
+  color: var(--text-plain);
+}
+
+.svg-logo.nav-logo svg {
+  height: 100%;
+  width: auto;
+}
+
+/* Back link shown on no-sidebar pages */
+.site-header-back {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: var(--font-s);
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.site-header-back:hover {
+  color: var(--text-link);
+}
+
+/* Dark mode toggle button */
+.dark-mode-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 0;
+  border-radius: 50%;
+  transition: color 0.2s, background 0.2s;
+}
+
+.dark-mode-toggle:hover {
+  color: var(--text-plain);
+  background: var(--background-faded);
+}
+
+.dark-mode-icon-light,
+.dark-mode-icon-dark {
+  display: block;
+}
+
+/* Swap icons based on dark mode state */
+html.dark-mode .dark-mode-icon-light { display: none; }
+html:not(.dark-mode) .dark-mode-icon-dark { display: none; }
+
+/* Hamburger button — visible on mobile only */
+.site-header-hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 0;
+}
+
+.site-header-hamburger:hover {
+  color: var(--text-plain);
+}
+
+/* Swap hamburger/close icons */
+.hamburger-icon-close { display: none; }
+body.mobile-nav-open .hamburger-icon-open { display: none; }
+body.mobile-nav-open .hamburger-icon-close { display: block; }
+
+/* Auth header container (compact login/user in header) */
+.auth-header-container {
+  display: flex;
+  align-items: center;
+}
+
+.auth-header-container .auth-login-btn {
+  width: auto;
+}
+
+
+/* ------ 1C. SITE SIDEBAR (Fixed) ------ */
+
+.site-sidebar {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
+  z-index: 50;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--background-secondary);
+  border-right: var(--border-s) solid var(--black-alpha-10);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  transition: width var(--sidebar-transition), padding var(--sidebar-transition);
+}
+
+/* Sidebar header: just the toggle button now (logo moved to header) */
+.site-sidebar-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: var(--space-l);
+  min-height: 32px;
+}
+
+/* Desktop sidebar toggle button */
+.site-sidebar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-primary);
+  padding: 0;
+  transition: color 0.2s, background 0.2s;
+}
+
+.site-sidebar-toggle:hover {
+  color: var(--text-plain);
+  background: var(--background-faded);
+}
+
+/* Sidebar toggle: swap between open/close icons */
+.sidebar-icon-close { display: none; }
+body.sidebar-collapsed .sidebar-icon-open { display: none; }
+body.sidebar-collapsed .sidebar-icon-close { display: block; }
+
+/* Sidebar nav content wrapper */
+.site-sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  transition: opacity 0.2s ease;
+}
+
+/* Auth button at bottom of sidebar */
+.site-sidebar .auth-button-container {
+  flex-shrink: 0;
+}
+
+/* Mobile sidebar backdrop */
+.site-sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  top: var(--header-height);
+  z-index: 49;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+body.mobile-nav-open .site-sidebar-backdrop {
+  display: block;
+}
+
+/* --- Collapsed sidebar state (desktop) --- */
+
+body.sidebar-collapsed .site-sidebar {
+  width: var(--sidebar-collapsed-width);
+  padding: var(--space-m);
+}
+
+body.sidebar-collapsed .site-sidebar-header {
+  justify-content: center;
+}
+
+body.sidebar-collapsed .site-sidebar-content {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+body.sidebar-collapsed .auth-button-container {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+
+/* ------ 1D. NAV SECTIONS & LINKS ------ */
+
+.nav-section {
+  margin-bottom: var(--space-l);
+}
+
+/* Desktop: Toggle styling */
+.nav-section-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-s);
+  padding: 0;
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--text-faded);
+  font-size: var(--font-xs);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-m);
+}
+
+/* Remove default WebKit arrow */
+.nav-section-toggle::-webkit-details-marker {
+  display: none;
+}
+
+/* Override global disclosure chevron — nav uses its own SVG icon */
+.nav-section-toggle::after {
+  display: none;
+}
+
+/* Toggle icon styling */
+.nav-toggle-icon {
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.3s ease;
+  margin-left: var(--space-xs);
+}
+
+.nav-toggle-icon svg {
+  display: block;
+  width: 10px;
+  height: 10px;
+}
+
+/* Rotate icon when open (90deg to point down) */
+.nav-section[open] .nav-toggle-icon {
+  transform: rotate(90deg);
+}
+
+/* Desktop: Ensure nav-list is always visible regardless of details state */
+.nav-section[open] .nav-list,
+.nav-section:not([open]) .nav-list {
+  display: block;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-list li {
+  margin-top: var(--space-xs);
+}
+
+.nav-home {
+  margin-bottom: var(--space-l);
+}
+
+.nav-link {
+  display: block;
+  padding: var(--space-xs) 0;
+  color: var(--text-plain);
+  text-decoration: none;
+  transition: color 0.2s;
+  font-size: var(--font-m);
+}
+
+.nav-link:hover {
+  color: var(--text-link);
+}
+
+.nav-link-active {
+  color: var(--text-link);
+  font-weight: var(--font-weight-semi-bold);
 }
 
 
@@ -168,216 +501,6 @@ html {
   color: var(--text-primary);
 }
 
-/* -- Page nav responsive -- */
-
-@media (max-width: 768px) {
-  .page-nav-inner {
-    grid-template-columns: 1fr;
-  }
-
-  .page-nav-next {
-    flex-direction: row;
-    text-align: left;
-    margin-left: 0;
-  }
-
-
-}
-
-
-/* ------ 3. DOCS SIDEBAR ------ */
-
-/* position: sticky keeps the sidebar fixed in the viewport while
-   remaining in normal grid flow — no margin-left hacks needed. */
-.docs-sidebar {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  align-self: start;
-  background: var(--background-secondary);
-  border-right: var(--border-s) solid var(--black-alpha-10);
-  padding: var(--space-xl);
-  z-index: 10;
-  transition: padding var(--sidebar-transition);
-}
-
-/* Sidebar header: logo + toggle buttons */
-.docs-sidebar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--space-xl);
-  gap: var(--space-s);
-  min-height: 40px;
-}
-
-.docs-logo-link {
-  display: block;
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-}
-
-.nav-logo {
-  display: block;
-  width: auto;
-  height: auto;
-  max-height: 70px;
-  max-width: 100%;
-}
-
-.nav-logo-small {
-  display: none;
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-}
-
-/* Desktop sidebar toggle button */
-.docs-sidebar-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  flex-shrink: 0;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--text-primary);
-  padding: 0;
-  transition: color 0.2s, background 0.2s;
-}
-
-.docs-sidebar-toggle:hover {
-  color: var(--text-plain);
-  background: var(--background-faded);
-}
-
-/* Sidebar toggle: swap between open/close icons */
-.sidebar-icon-close { display: none; }
-.sidebar-collapsed .sidebar-icon-open { display: none; }
-.sidebar-collapsed .sidebar-icon-close { display: block; }
-
-/* Mobile toggle: swap between menu/close icons */
-.mobile-icon-close { display: none; }
-.mobile-nav-open .mobile-icon-open { display: none; }
-.mobile-nav-open .mobile-icon-close { display: block; }
-
-/* Mobile toggle button — hidden on desktop */
-.docs-mobile-toggle {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  flex-shrink: 0;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--text-secondary);
-  padding: 0;
-}
-
-.docs-mobile-toggle:hover {
-  color: var(--text-plain);
-}
-
-/* Nav content wrapper */
-.docs-nav-content {
-  transition: opacity 0.2s ease;
-}
-
-.nav-section {
-  margin-bottom: var(--space-l);
-}
-
-/* Desktop: Toggle styling */
-.nav-section-toggle {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--space-s);
-  padding: 0;
-  font-weight: var(--font-weight-semi-bold);
-  color: var(--text-faded);
-  font-size: var(--font-xs);
-  cursor: pointer;
-  list-style: none;
-  user-select: none;
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-m);
-}
-
-/* Remove default WebKit arrow */
-.nav-section-toggle::-webkit-details-marker {
-  display: none;
-}
-
-/* Override global disclosure chevron — nav uses its own SVG icon */
-.nav-section-toggle::after {
-  display: none;
-}
-
-/* Toggle icon styling */
-.nav-toggle-icon {
-  display: inline-flex;
-  align-items: center;
-  transition: transform 0.3s ease;
-  margin-left: var(--space-xs);
-}
-
-.nav-toggle-icon svg {
-  display: block;
-  width: 10px;
-  height: 10px;
-}
-
-/* Rotate icon when open (90deg to point down) */
-.nav-section[open] .nav-toggle-icon {
-  transform: rotate(90deg);
-}
-
-/* Desktop: Ensure nav-list is always visible regardless of details state */
-.nav-section[open] .nav-list,
-.nav-section:not([open]) .nav-list {
-  display: block;
-}
-
-.nav-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.nav-list li {
-  margin-top: var(--space-xs);
-}
-
-.nav-home {
-  margin-bottom: var(--space-l);
-}
-
-.nav-link {
-  display: block;
-  padding: var(--space-xs) 0;
-  color: var(--text-plain);
-  text-decoration: none;
-  transition: color 0.2s;
-  font-size: var(--font-m);
-}
-
-.nav-link:hover {
-  color: var(--text-link);
-}
-
-.nav-link-active {
-  color: var(--text-link);
-  font-weight: var(--font-weight-semi-bold);
-}
-
 
 /* ------ 4. DOCS MAIN CONTENT ------ */
 
@@ -386,12 +509,10 @@ html {
   padding: var(--space-m) 0 var(--space-5xl) 0;
 }
 
-/* .markdown-body uses design system typography */
-
-/* Offset headings for anchor links */
+/* Offset headings for anchor links — accounts for fixed header */
 .markdown-body h1[id],
 .markdown-body h2[id] {
-  scroll-margin-top: var(--space-2xl);
+  scroll-margin-top: calc(var(--header-height) + var(--space-m));
 }
 
 /* GitHub Markdown CSS integration */
@@ -572,54 +693,8 @@ html {
 
 /* ------ 8. RESPONSIVE ------ */
 
-/* ---- Desktop: Collapsed sidebar state ---- */
-@media (min-width: 769px) {
-
-  /* Reduce padding in collapsed state */
-  .sidebar-collapsed .docs-sidebar {
-    padding: var(--space-m);
-  }
-
-  /* Stack header items vertically to fit the narrow column */
-  .sidebar-collapsed .docs-sidebar-header {
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: var(--space-s);
-    margin-bottom: var(--space-m);
-  }
-
-  .sidebar-collapsed .docs-logo-link {
-    flex: 0 0 auto;
-  }
-
-  /* Swap full logo for small logo */
-  .sidebar-collapsed .nav-logo {
-    display: none;
-  }
-
-  .sidebar-collapsed .nav-logo-small {
-    display: block;
-  }
-
-  /* Hide nav links when sidebar is collapsed */
-  .sidebar-collapsed .docs-nav-content {
-    opacity: 0;
-    pointer-events: none;
-    visibility: hidden;
-  }
-}
-
-/* ---- Tablet: Narrower sidebar ---- */
+/* ---- Tablet: TOC below content ---- */
 @media (max-width: 1024px) {
-
-  .docs-container {
-    grid-template-columns: 240px 1fr;
-  }
-
-  .docs-container.sidebar-collapsed {
-    grid-template-columns: var(--sidebar-collapsed-width) 1fr;
-  }
 
   .docs-content-grid {
     grid-template-columns: 1fr; /* TOC below content on tablet */
@@ -631,63 +706,47 @@ html {
   }
 }
 
-/* ---- Mobile: Stacked layout with hamburger nav ---- */
+/* ---- Mobile: Overlay sidebar ---- */
 @media (max-width: 768px) {
 
-  /* Switch to block layout — sidebar stacks above main content */
-  .docs-container {
-    display: block;
-    transition: none;
-  }
-
-  /* Show hamburger, hide desktop toggle */
-  .docs-sidebar-toggle {
-    display: none;
-  }
-
-  .docs-mobile-toggle {
+  /* Header: show hamburger */
+  .site-header-hamburger {
     display: flex;
   }
 
-  /* Sidebar becomes a slim top bar */
-  .docs-sidebar {
-    position: static;
-    height: auto;
-    max-height: none;
-    overflow: hidden;
-    border-right: none;
-    border-bottom: var(--border-s) solid var(--border-secondary);
-    padding: var(--space-m) var(--space-xl);
-    align-self: auto;
+  /* Hide desktop sidebar toggle on mobile */
+  .site-sidebar-toggle {
+    display: none;
+  }
+
+  /* Sidebar: off-screen by default, slides in as overlay */
+  .site-sidebar {
+    width: var(--sidebar-width);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 101;
+  }
+
+  body.mobile-nav-open .site-sidebar {
+    transform: translateX(0);
+  }
+
+  /* Sidebar header: not needed on mobile (toggle is in header) */
+  .site-sidebar-header {
+    display: none;
+  }
+
+  /* Content: full width on mobile (no sidebar offset) */
+  .docs-main-area,
+  .page-wrapper.has-sidebar {
+    margin-left: 0;
     transition: none;
   }
 
-  .nav-logo {
-    max-height: 50px;
-  }
-
-  /* Header fills the top bar: logo left, hamburger right */
-  .docs-sidebar-header {
-    margin-bottom: 0;
-  }
-
-  /* Nav content hidden by default — expands on hamburger tap */
-  .docs-nav-content {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.3s ease, opacity 0.2s ease;
-  }
-
-  /* Open state: nav pushes content down */
-  .mobile-nav-open .docs-nav-content {
-    max-height: 800px;
-    opacity: 1;
-    padding-top: var(--space-l);
-  }
-
-  .docs-main-area {
-    min-height: 0;
+  /* Override collapsed state on mobile */
+  body.sidebar-collapsed .docs-main-area,
+  body.sidebar-collapsed .page-wrapper.has-sidebar {
+    margin-left: 0;
   }
 
   .docs-content-grid {
@@ -768,6 +827,17 @@ html {
     color: var(--text-link);
   }
 
+  /* Page nav: single column */
+  .page-nav-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .page-nav-next {
+    flex-direction: row;
+    text-align: left;
+    margin-left: 0;
+  }
+
   /* Page header: taller hero on mobile */
   .page-header {
     min-height: 30vh;
@@ -780,6 +850,320 @@ html {
   .grid.cols-3 {
     grid-template-columns: 1fr;
   }
+
+  /* Auth: stack user info vertically on mobile */
+  .auth-user-info {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .auth-user-details {
+    margin-bottom: var(--space-xs);
+  }
 }
 
 
+/* ========================================================================
+   DARK MODE — Semantic token overrides
+   ======================================================================== */
+
+html.dark-mode {
+  --background-primary: #1a1a1a;
+  --background-secondary: #222222;
+  --background-faded: rgba(255, 255, 255, 0.06);
+
+  --text-primary: #e8e6e3;
+  --text-secondary: #a8a5a2;
+  --text-plain: #f0eeeb;
+  --text-faded: rgba(255, 255, 255, 0.45);
+  --text-link: #5bb89a;
+  --text-inverted: #1a1a1a;
+
+  --border-primary: #e8e6e3;
+  --border-secondary: #3a3a3a;
+  --border-faded: rgba(255, 255, 255, 0.12);
+
+  --black-alpha-5: rgba(255, 255, 255, 0.05);
+  --black-alpha-10: rgba(255, 255, 255, 0.08);
+  --black-alpha-15: rgba(255, 255, 255, 0.12);
+  --black-alpha-20: rgba(255, 255, 255, 0.16);
+  --black-alpha-30: rgba(255, 255, 255, 0.22);
+  --black-alpha-50: rgba(255, 255, 255, 0.45);
+
+  --button-primary: #5bb89a;
+  --button-text: #1a1a1a;
+  --button-faded: rgba(255, 255, 255, 0.12);
+
+  --input-background: rgba(255, 255, 255, 0.08);
+  --input-border: #3a3a3a;
+
+  --status-error: #f87171;
+  --status-success: #5bb89a;
+
+  color-scheme: dark;
+}
+
+
+/* ========================================================================
+   AUTH — Login, Role Gating, Element Visibility
+   ======================================================================== */
+
+/* --- Auth Loading State --- */
+
+body.auth-loading .docs-main-area,
+body.auth-loading .page-wrapper.has-sidebar {
+  visibility: hidden;
+}
+
+body.auth-ready .docs-main-area,
+body.auth-ready .page-wrapper.has-sidebar {
+  visibility: visible;
+}
+
+/* --- Auth Button Container --- */
+
+.auth-button-container {
+  padding: var(--space-s) var(--space-m);
+  border-top: var(--border-s) solid var(--border-secondary);
+  margin-top: auto;
+}
+
+.auth-login-btn {
+  width: 100%;
+}
+
+/* --- Logged-in User Info --- */
+
+.auth-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.auth-user-details {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.auth-user-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--background-faded);
+  color: var(--text-inverted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  flex-shrink: 0;
+}
+
+.auth-user-role {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  text-transform: capitalize;
+}
+
+.auth-logout-btn {
+  width: 100%;
+}
+
+/* --- Element-Level Role Gating --- */
+
+[data-auth-role] {
+  display: none;
+}
+
+[data-auth-role="public"] {
+  display: revert;
+}
+
+body.auth-role-client [data-auth-role="client"],
+body.auth-role-team [data-auth-role="team"],
+body.auth-role-team [data-auth-role="client"],
+body.auth-role-admin [data-auth-role="admin"],
+body.auth-role-admin [data-auth-role="team"],
+body.auth-role-admin [data-auth-role="client"] {
+  display: revert;
+}
+
+/* --- Login Overlay --- */
+
+.login-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: var(--background-primary);
+  padding: var(--space-l);
+}
+
+.login-overlay.is-visible {
+  display: flex;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-logo {
+  height: 48px;
+  width: auto;
+  margin-bottom: var(--space-l);
+}
+
+.login-title {
+  font-size: var(--text-l);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-2xs);
+  text-align: center;
+}
+
+.login-subtitle {
+  font-size: var(--text-s);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-l);
+  text-align: center;
+}
+
+.login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.login-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+}
+
+.login-form label {
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+}
+
+.login-submit-btn {
+  width: 100%;
+  margin-top: var(--space-2xs);
+}
+
+.login-error {
+  display: none;
+  font-size: var(--text-xs);
+  color: var(--status-error);
+  text-align: center;
+}
+
+.login-success {
+  display: none;
+  font-size: var(--text-xs);
+  color: var(--status-success);
+  text-align: center;
+}
+
+.login-forgot-btn {
+  background: none;
+  border: none;
+  padding: var(--space-xs) 0;
+  margin-top: var(--space-2xs);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  cursor: pointer;
+  font-family: inherit;
+  transition: color 0.2s;
+}
+
+.login-forgot-btn:hover {
+  color: var(--text-link);
+}
+
+.login-reset-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.login-reset-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+}
+
+.login-reset-form label {
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+}
+
+/* --- Dev Toolbar --- */
+
+.auth-dev-toolbar {
+  --dev-toolbar-active: var(--brand-primary, var(--text-accent));
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  padding: var(--space-s) var(--space-l);
+  background: var(--background-secondary);
+  border-top: var(--border-s) solid var(--border-faded);
+  font-size: var(--button-font-size-small);
+}
+
+.auth-dev-toolbar-label {
+  margin-right: var(--space-2xs);
+  white-space: nowrap;
+}
+
+.auth-dev-toolbar .button.is-dev-active {
+  background-color: var(--dev-toolbar-active);
+  border-color: var(--dev-toolbar-active);
+  color: var(--button-text);
+}
+
+.auth-dev-toolbar-page-info {
+  margin-left: auto;
+  font-size: var(--text-2xs);
+  white-space: nowrap;
+}
+
+body.has-dev-toolbar {
+  padding-bottom: var(--space-3xl);
+}
+
+/* --- Access Denied Page --- */
+
+.access-denied-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  padding: var(--space-2xl);
+}
+
+.access-denied-wrapper h1 {
+  margin-bottom: var(--space-s);
+}
+
+.access-denied-wrapper p {
+  margin-bottom: var(--space-l);
+  color: var(--text-secondary);
+}

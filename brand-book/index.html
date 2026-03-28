@@ -29,21 +29,57 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Site styles (auth UI) -->
+  <link rel="stylesheet" href="../assets/css/style.css" />
+
+  <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
+  <script>
+    if (!(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0')) {
+      document.write('<script src="https://unpkg.com/gotrue-js@0.9.29/lib/index.umd.js"><\/script>');
+    }
+  </script>
 </head>
 
-<body>
+<body class="auth-loading">
 
-  <div class="page-wrapper">
-    <div class="page-content">
-
-      <div class="docs-back-btn-wrapper">
-        <a href="../index.html" class="button is-small">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M18 18V15C18 13.8954 17.1046 13 16 13H10.2392C9.34831 13 8.90214 14.0771 9.53211 14.7071L11.425 16.6L10.025 18.025L4 12L10 6L11.425 7.425L9.54652 9.29043C8.91317 9.91938 9.35857 11 10.2512 11H20V18H18Z" fill="currentColor"/>
-          </svg>
-          Back
-        </a>
+  <!-- Login Overlay -->
+  <div class="login-overlay" id="login-overlay">
+    <div class="login-card">
+      <img src="../assets/images/logo.svg" alt="Logo" class="login-logo">
+      <h1 class="login-title">Welcome to BrandOS</h1>
+      <p class="login-subtitle">Sign in to access your dashboard</p>
+      <form class="login-form" id="login-form" autocomplete="on">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" name="email" autocomplete="email" required placeholder="you@company.com">
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" name="password" autocomplete="current-password" required placeholder="Enter your password">
+        </div>
+        <div class="login-error" id="login-error" role="alert"></div>
+        <button type="submit" class="button login-submit-btn">Log in</button>
+      </form>
+      <button type="button" class="login-forgot-btn" id="login-forgot-btn">Forgot password?</button>
+      <div class="login-reset-form" id="login-reset-form" style="display:none;">
+        <div class="form-group">
+          <label for="reset-email">Email</label>
+          <input type="email" id="reset-email" name="reset-email" autocomplete="email" required placeholder="you@company.com">
+        </div>
+        <div class="login-error" id="reset-error" role="alert"></div>
+        <div class="login-success" id="reset-success" role="status"></div>
+        <button type="button" class="button login-submit-btn" id="reset-submit-btn">Send reset link</button>
+        <button type="button" class="login-forgot-btn" id="reset-back-btn">Back to login</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Site Navigation (header + sidebar injected by nav.js) -->
+  <div id="site-nav" data-base="../"></div>
+
+  <div class="page-wrapper has-sidebar">
+    <div class="page-content">
 
       <!-- Header -->
       <section class="top-medium bottom-medium border-bottom border-secondary">
@@ -1670,6 +1706,36 @@
                 </div>
               </div>
 
+              <span class="token-tag">Authentication</span>
+              <div class="grid cols-3 gap-m">
+                <div class="block gap-xs border border-faded padding-xl" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100px;">
+                  <div class="icn-svg is-preview" data-icon="login">
+                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+                      <path d="M2 11.025H12.7608C13.6517 11.025 14.0979 9.94785 13.4679 9.31789L11.575 7.42499L12.975 5.99999L19 12.025L13 18.025L11.575 16.6L13.4535 14.7346C14.0868 14.1056 13.6414 13.025 12.7488 13.025H2L2 11.025Z" fill="currentColor"/>
+                      <path d="M8.03784 22V16H10.0378V18C10.0378 19.1046 10.9333 20 12.0378 20H18.0378C19.1424 20 20.0378 19.1046 20.0378 18V6C20.0378 4.89543 19.1424 4 18.0378 4H12.0378C10.9333 4 10.0378 4.89543 10.0378 6V8H8.03784V2H22.0378V22H8.03784Z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <p class="text-size-xsmall" style="color: var(--text-faded); text-align: center;">login</p>
+                  <div class="button-group" style="align-self: center;">
+                    <button class="button is-xsmall icon-copy-btn" aria-label="Copy icon code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> Copy</button>
+                    <button class="button is-xsmall icon-download-btn" aria-label="Download SVG file"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div> Download</button>
+                  </div>
+                </div>
+                <div class="block gap-xs border border-faded padding-xl" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100px;">
+                  <div class="icn-svg is-preview" data-icon="logout">
+                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+                      <path d="M18 13H7.23922C6.34831 13 5.90214 14.0771 6.53211 14.7071L8.425 16.6L7.025 18.025L1 12L7 5.99999L8.425 7.42499L6.54652 9.29043C5.91317 9.91938 6.35857 11 7.25116 11H18V13Z" fill="currentColor"/>
+                      <path d="M10.0378 22V16H12.0378V18C12.0378 19.1046 12.9333 20 14.0378 20H18.0378C19.1424 20 20.0378 19.1046 20.0378 18V6C20.0378 4.89543 19.1424 4 18.0378 4H14.0378C12.9333 4 12.0378 4.89543 12.0378 6V8H10.0378V2H22.0378V22H10.0378Z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <p class="text-size-xsmall" style="color: var(--text-faded); text-align: center;">logout</p>
+                  <div class="button-group" style="align-self: center;">
+                    <button class="button is-xsmall icon-copy-btn" aria-label="Copy icon code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> Copy</button>
+                    <button class="button is-xsmall icon-download-btn" aria-label="Download SVG file"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div> Download</button>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
@@ -1854,6 +1920,12 @@
       });
     })();
   </script>
+
+  <!-- Site Navigation -->
+  <script src="../assets/js/nav.js"></script>
+  <!-- Auth -->
+  <script src="../assets/js/auth-config.js"></script>
+  <script src="../assets/js/auth.js"></script>
 
 </body>
 

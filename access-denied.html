@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Access Denied - By Default Brand OS</title>
+  <meta name="description" content="You do not have permission to view this page.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+
+  <!-- Robots -->
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Brand Book -->
+  <link rel="stylesheet" href="brand-book/brand-book.css">
+  <!-- Design System Framework -->
+  <link rel="stylesheet" href="design-system/design-system.css">
+  <!-- Site styles -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- GoTrue JS (skipped on localhost) -->
+  <script>
+    if (!(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0')) {
+      document.write('<script src="https://unpkg.com/gotrue-js@0.9.29/lib/index.umd.js"><\/script>');
+    }
+  </script>
+</head>
+
+<body>
+  <!-- Login Overlay (reused for "log in with different account") -->
+  <div class="login-overlay" id="login-overlay">
+    <div class="login-card">
+      <img src="assets/images/logo.svg" alt="Logo" class="login-logo">
+      <h1 class="login-title">Welcome to BrandOS</h1>
+      <p class="login-subtitle">Sign in to access your dashboard</p>
+      <form class="login-form" id="login-form" autocomplete="on">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" name="email" autocomplete="email" required placeholder="you@company.com">
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" name="password" autocomplete="current-password" required placeholder="Enter your password">
+        </div>
+        <div class="login-error" id="login-error" role="alert"></div>
+        <button type="submit" class="button login-submit-btn">Log in</button>
+      </form>
+      <button type="button" class="login-forgot-btn" id="login-forgot-btn">Forgot password?</button>
+      <div class="login-reset-form" id="login-reset-form" style="display:none;">
+        <div class="form-group">
+          <label for="reset-email">Email</label>
+          <input type="email" id="reset-email" name="reset-email" autocomplete="email" required placeholder="you@company.com">
+        </div>
+        <div class="login-error" id="reset-error" role="alert"></div>
+        <div class="login-success" id="reset-success" role="status"></div>
+        <button type="button" class="button login-submit-btn" id="reset-submit-btn">Send reset link</button>
+        <button type="button" class="login-forgot-btn" id="reset-back-btn">Back to login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Site Navigation (header + sidebar injected by nav.js) -->
+  <div id="site-nav" data-base=""></div>
+
+  <div class="page-wrapper has-sidebar">
+    <div class="page-content">
+      <section>
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="access-denied-wrapper">
+              <h1>Access Denied</h1>
+              <p>You don't have permission to view this page. Please contact an administrator if you believe this is an error.</p>
+              <div class="button-group justify-center">
+                <a href="index.html" class="button">Go to Home</a>
+                <button class="button is-outline" type="button" id="access-denied-login-btn">Log in with a different account</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Site Navigation -->
+  <script src="assets/js/nav.js"></script>
+  <!-- Auth -->
+  <script src="assets/js/auth-config.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var loginBtn = document.getElementById('access-denied-login-btn');
+      if (!loginBtn) return;
+
+      loginBtn.addEventListener('click', function () {
+        var isDev = window.location.hostname === 'localhost' ||
+                    window.location.hostname === '127.0.0.1' ||
+                    window.location.hostname === '0.0.0.0';
+
+        if (isDev) {
+          sessionStorage.removeItem('auth-dev-role');
+        }
+
+        // Show login overlay
+        var overlay = document.getElementById('login-overlay');
+        if (overlay) overlay.classList.add('is-visible');
+      });
+    })();
+  </script>
+</body>
+
+</html>
