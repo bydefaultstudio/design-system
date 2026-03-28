@@ -32,23 +32,78 @@ const GOOGLE_FONTS_HTML = PROJECT_CONFIG.googleFontsUrl
     <link href="${PROJECT_CONFIG.googleFontsUrl}" rel="stylesheet">`
   : '';
 
+//------- Section-to-Folder Mapping -------//
+
+const SECTION_FOLDERS = {
+  'Brand Book': 'brand',
+  'Design System': 'design-system',
+  'Code': 'code',
+  'Content': 'content',
+  'Tools': null,   // tool docs use special per-file mapping
+  'Admin': 'admin',
+  'Project': 'project'
+};
+
+// Special filename overrides for files that don't follow the prefix-strip pattern
+const FILENAME_OVERRIDES = {
+  'calculator-docs.md': { folder: 'cpm-calculator', name: 'about.html' },
+  'svg-cleaner-docs.md': { folder: 'svg-cleaner', name: 'about.html' },
+  'display-ad-preview-docs.md': { folder: 'display-ad-preview', name: 'about.html' },
+  'css-code-struture.md': { folder: 'code', name: 'css.html' },
+  'js-code-structure.md': { folder: 'code', name: 'javascript.html' },
+  'design-system-overview.md': { folder: 'design-system', name: 'overview.html' },
+  'markdown-style.md': { folder: 'design-system', name: 'markdown-style.html' },
+  'seo-best-practices.md': { folder: 'content', name: 'seo-best-practices.html' },
+};
+
+/**
+ * Derive output folder and filename for a markdown file
+ */
+function deriveOutputPath(filename, section) {
+  // Check for explicit override
+  if (FILENAME_OVERRIDES[filename]) {
+    const override = FILENAME_OVERRIDES[filename];
+    return { folder: override.folder, htmlName: override.name };
+  }
+
+  // Get section folder
+  const folder = SECTION_FOLDERS[section];
+  if (!folder) {
+    // Fallback: use filename as-is at root (shouldn't happen for mapped sections)
+    return { folder: '', htmlName: filename.replace('.md', '.html') };
+  }
+
+  // Strip section prefix from filename
+  // e.g. "brand-values.md" with folder "brand" → strip "brand-" → "values.html"
+  let baseName = filename.replace('.md', '');
+  const prefixes = [folder + '-', section.toLowerCase().replace(/\s+/g, '-') + '-'];
+  for (const prefix of prefixes) {
+    if (baseName.startsWith(prefix)) {
+      baseName = baseName.substring(prefix.length);
+      break;
+    }
+  }
+
+  return { folder, htmlName: baseName + '.html' };
+}
+
 /**
  * Parse frontmatter from markdown content
  */
 function parseFrontmatter(content) {
   const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
   const match = content.match(frontmatterRegex);
-  
+
   if (!match) {
     return { frontmatter: {}, content: content.trim() };
   }
-  
+
   const frontmatterText = match[1];
   const markdownContent = match[2];
-  
+
   const frontmatter = {};
   const lines = frontmatterText.split('\n');
-  
+
   for (const line of lines) {
     const colonIndex = line.indexOf(':');
     if (colonIndex > 0) {
@@ -57,7 +112,7 @@ function parseFrontmatter(content) {
       frontmatter[key] = value;
     }
   }
-  
+
   return { frontmatter, content: markdownContent.trim() };
 }
 
@@ -77,7 +132,7 @@ function markdownToHtml(markdown) {
   });
 
   let html = marked(markdown);
-  
+
   // Add IDs to headings for anchor links
   html = html.replace(/<h([1-6])>([^<]+)<\/h[1-6]>/g, (match, level, text) => {
     const id = text.toLowerCase()
@@ -85,7 +140,7 @@ function markdownToHtml(markdown) {
       .replace(/\s+/g, '-') // Replace spaces with hyphens
       .replace(/-+/g, '-') // Replace multiple hyphens with single
       .trim();
-    
+
     return `<h${level} id="${id}">${text}</h${level}>`;
   });
 
@@ -94,12 +149,12 @@ function markdownToHtml(markdown) {
     // Check if link is external (starts with http:// or https://)
     if (href.startsWith('http://') || href.startsWith('https://')) {
       let newMatch = match;
-      
+
       // Add target="_blank" if it doesn't exist
       if (!newMatch.includes('target=')) {
         newMatch = newMatch.replace(/>$/, ' target="_blank">');
       }
-      
+
       // Add or update rel attribute
       if (newMatch.includes('rel=')) {
         newMatch = newMatch.replace(/rel=["']([^"']*)["']/i, (m, rel) => {
@@ -113,7 +168,7 @@ function markdownToHtml(markdown) {
         // Add new rel attribute
         newMatch = newMatch.replace(/>$/, ' rel="noopener noreferrer">');
       }
-      
+
       return newMatch;
     }
     return match;
@@ -126,7 +181,7 @@ function markdownToHtml(markdown) {
   // Add copy buttons to code blocks
   html = html.replace(/<pre><code([^>]*)>([\s\S]*?)<\/code><\/pre>/g, (match, attributes, code) => {
     const codeId = 'code-' + Math.random().toString(36).substr(2, 9);
-    
+
     return `
       <div class="code-block-wrapper">
         <button class="button is-xsmall copy-code-btn" data-clipboard-target="#${codeId}" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
@@ -150,7 +205,7 @@ function generateTableOfContents(html) {
     const level = parseInt(match[1]);
     const id = match[2];
     const text = match[0].replace(/<[^>]*>/g, '').trim();
-    
+
     // Only include H1 and H2 headings in TOC
     if (level <= 2) {
       headings.push({ level, id, text });
@@ -162,12 +217,12 @@ function generateTableOfContents(html) {
   }
 
   let toc = '<nav class="toc"><ul class="toc-list">';
-  
+
   headings.forEach((heading) => {
     const { level, id, text } = heading;
     toc += `<li class="toc-item toc-level-${level}"><a href="#${id}" class="toc-link">${text}</a></li>`;
   });
-  
+
   toc += '</ul></nav>';
   return toc;
 }
@@ -201,16 +256,17 @@ function generateIndexPage(template, filesBySection) {
       return a.title.localeCompare(b.title);
     });
 
-    // Admin section is gated to admin role via data-auth-role
-    const sectionAuthAttr = section === 'Admin' ? ' data-auth-role="admin"' : '';
+    const accessAttr = section === 'Admin' ? ' data-access="admin"' : '';
 
-    cards += `<div class="docs-section"${sectionAuthAttr}>
+    cards += `<div class="docs-section"${accessAttr}>
       <h2 class="eyebrow">${section}</h2>
       <div class="grid cols-3 gap-xl">`;
 
     for (const file of files) {
+      const cardAccess = file.frontmatter.access || 'team';
+      const cardAccessAttr = cardAccess !== 'team' ? ` data-access="${cardAccess}"` : '';
       cards += `
-        <a href="${file.htmlPath}" class="docs-card">
+        <a href="${file.htmlPath}" class="docs-card"${cardAccessAttr}>
           <h3 class="docs-card-title">${file.title}</h3>
           ${file.frontmatter.subtitle ? `<p class="docs-card-subtitle" data-text-wrap="pretty">${file.frontmatter.subtitle}</p>` : ''}
         </a>
@@ -220,7 +276,7 @@ function generateIndexPage(template, filesBySection) {
     // Add Visual Identity card at the end of the Brand Book section
     if (section === 'Brand Book') {
       cards += `
-        <a href="brand-book/index.html" class="docs-card">
+        <a href="brand/index.html" class="docs-card">
           <h3 class="docs-card-title">Visual Identity</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Visual brand identity — logo, palette, typography, and icons</p>
         </a>
@@ -250,6 +306,8 @@ function generateIndexPage(template, filesBySection) {
     ${cards}
   `;
 
+  const access = 'team'; // index page requires team
+
   return template
     .replaceAll('{{PAGE_TITLE}}', 'Home')
     .replaceAll('{{META_DESCRIPTION}}', PROJECT_CONFIG.indexDescription)
@@ -260,7 +318,9 @@ function generateIndexPage(template, filesBySection) {
     .replace('{{BRAND_CSS}}', BRAND_CSS_HTML)
     .replace('{{GOOGLE_FONTS}}', GOOGLE_FONTS_HTML)
     .replace('{{PAGE_NAV}}', '')
-    .replace('{{FOOTER_TEXT}}', PROJECT_CONFIG.footerText);
+    .replace('{{FOOTER_TEXT}}', PROJECT_CONFIG.footerText)
+    .replace('{{PAGE_ACCESS}}', access)
+    .replaceAll('{{NAV_BASE}}', '');
 }
 
 /**
@@ -351,7 +411,8 @@ function generatePage(file, template, pageOrder) {
   const { frontmatter, content } = file;
   const htmlContent = markdownToHtml(content);
   const tableOfContents = generateTableOfContents(htmlContent);
-  
+  const access = frontmatter.access || 'team';
+
   // Generate page header separately
   let pageHeader = '';
   if (frontmatter.title) {
@@ -360,13 +421,13 @@ function generatePage(file, template, pageOrder) {
         <h1>${frontmatter.title}</h1>
         ${frontmatter.subtitle ? `<p class="page-subtitle" data-text-wrap="pretty">${frontmatter.subtitle}</p>` : ''}
         <div class="button-group justify-center">
-          <a href="docs/${file.markdownPath}" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+          <a href="../docs/${file.markdownPath}" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
           ${frontmatter.toolUrl ? `<a href="${frontmatter.toolUrl}" class="button is-small page-source-link">${frontmatter.toolLabel || 'Open Tool'}</a>` : ''}
         </div>
       </div>
     </div>`;
   }
-  
+
   return template
     .replaceAll('{{PAGE_TITLE}}', frontmatter.title || 'Untitled')
     .replaceAll('{{META_DESCRIPTION}}', frontmatter.description || '')
@@ -376,11 +437,13 @@ function generatePage(file, template, pageOrder) {
       <span class="toc-header">On this page</span>
       <div class="toc-wrapper">${tableOfContents}</div>
     </aside>`)
-    .replace('{{DESIGN_SYSTEM_PATH}}', PROJECT_CONFIG.designSystemPath)
-    .replace('{{BRAND_CSS}}', BRAND_CSS_HTML)
+    .replace('{{DESIGN_SYSTEM_PATH}}', '../' + PROJECT_CONFIG.designSystemPath)
+    .replace('{{BRAND_CSS}}', BRAND_CSS_HTML ? `<link rel="stylesheet" href="../${PROJECT_CONFIG.brandCssPath}">` : '')
     .replace('{{GOOGLE_FONTS}}', GOOGLE_FONTS_HTML)
     .replace('{{PAGE_NAV}}', generatePageNav(file, pageOrder))
-    .replace('{{FOOTER_TEXT}}', PROJECT_CONFIG.footerText);
+    .replace('{{FOOTER_TEXT}}', PROJECT_CONFIG.footerText)
+    .replace('{{PAGE_ACCESS}}', access)
+    .replaceAll('{{NAV_BASE}}', '../');
 }
 
 /**
@@ -630,9 +693,9 @@ function buildNavSectionsHtml(filesBySection) {
     });
 
     const sectionLabel = section.charAt(0).toUpperCase() + section.slice(1);
-    const authAttr = section === 'Admin' ? ' data-auth-role="admin"' : '';
+    const accessAttr = section === 'Admin' ? ' data-access="admin"' : '';
 
-    html += `<details class="nav-section"${authAttr}>
+    html += `<details class="nav-section"${accessAttr}>
       <summary class="nav-section-toggle">
         <span>${sectionLabel}</span>
         <span class="nav-toggle-icon">
@@ -644,7 +707,9 @@ function buildNavSectionsHtml(filesBySection) {
       <ul class="nav-list">`;
 
     for (const file of files) {
-      html += `<li><a href="${file.htmlPath}" class="nav-link">${file.title}</a></li>`;
+      const linkAccess = file.frontmatter.access || 'team';
+      const linkAccessAttr = linkAccess !== 'team' ? ` data-access="${linkAccess}"` : '';
+      html += `<li><a href="${file.htmlPath}" class="nav-link"${linkAccessAttr}>${file.title}</a></li>`;
     }
 
     if (section === 'Design System') {
@@ -652,7 +717,7 @@ function buildNavSectionsHtml(filesBySection) {
     }
 
     if (section === 'Brand Book') {
-      html += `<li><a href="brand-book/index.html" class="nav-link">Visual Identity</a></li>`;
+      html += `<li><a href="brand/index.html" class="nav-link">Visual Identity</a></li>`;
     }
 
     html += `</ul></details>`;
@@ -670,7 +735,7 @@ async function generateDocs() {
   // Load template
   const template = fs.readFileSync(TEMPLATE_FILE, 'utf8');
   console.log('✅ Template loaded');
-  
+
   // Find all markdown files (exclude generator folder and README files)
   const markdownFiles = fs.readdirSync(DOCS_DIR)
     .filter(file => {
@@ -685,43 +750,48 @@ async function generateDocs() {
       }
       return true;
     });
-  
+
   console.log(`📁 Found ${markdownFiles.length} markdown files`);
-  
+
   // Parse files and organize by section
   const filesBySection = {};
   const allFiles = [];
-  
+
   for (const filename of markdownFiles) {
     const filePath = path.join(DOCS_DIR, filename);
     const content = fs.readFileSync(filePath, 'utf8');
     const { frontmatter, content: markdownContent } = parseFrontmatter(content);
-    
+
     const title = frontmatter.title || filename.replace('.md', '');
     const section = frontmatter.section || 'uncategorized';
-    const htmlPath = filename.replace('.md', '.html');
+
+    // Derive output folder and filename
+    const { folder, htmlName } = deriveOutputPath(filename, section);
+    const htmlPath = folder ? folder + '/' + htmlName : htmlName;
     const markdownPath = filename;
-    
+
     const file = {
       filename,
       title,
       section,
       htmlPath,
+      htmlFolder: folder,
+      htmlName,
       markdownPath,
       frontmatter,
       content: markdownContent
     };
-    
+
     if (!filesBySection[section]) {
       filesBySection[section] = [];
     }
     filesBySection[section].push(file);
     allFiles.push(file);
   }
-  
+
   console.log(`📂 Found sections: ${Object.keys(filesBySection).join(', ')}`);
-  
-  // Generate index.html
+
+  // Generate index.html (at project root)
   const indexContent = generateIndexPage(template, filesBySection);
   fs.writeFileSync(path.join(OUTPUT_DIR, 'index.html'), indexContent);
   console.log('📄 Generated: index.html');
@@ -729,15 +799,21 @@ async function generateDocs() {
   // Build ordered page list for prev/next navigation
   const pageOrder = buildPageOrder(filesBySection);
 
-  // Generate HTML for each file
+  // Generate HTML for each file in its subfolder
   for (const file of allFiles) {
     const pageContent = generatePage(file, template, pageOrder);
+
+    // Ensure output directory exists
+    if (file.htmlFolder) {
+      const dir = path.join(OUTPUT_DIR, file.htmlFolder);
+      fs.mkdirSync(dir, { recursive: true });
+    }
+
     const outputPath = path.join(OUTPUT_DIR, file.htmlPath);
-    
     fs.writeFileSync(outputPath, pageContent);
     console.log(`📄 Generated: ${file.htmlPath}`);
   }
-  
+
   // Generate nav.js
   const navJs = generateNavJs(filesBySection);
   const navJsPath = path.join(OUTPUT_DIR, 'assets', 'js', 'nav.js');
@@ -751,4 +827,3 @@ async function generateDocs() {
 
 // Run the generator
 generateDocs().catch(console.error);
-

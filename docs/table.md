@@ -4,6 +4,7 @@ subtitle: "Composable table styling"
 description: "Guide to using the table component with base styles and modifier classes."
 section: "Design System"
 order: 11
+access: "team"
 ---
 
 Tables use a **composable architecture** with a base class and optional modifiers. The base style is minimalistic — clean borders, no background fills — and modifiers layer on additional behaviour.

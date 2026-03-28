@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spacing - By Default Brand OS</title>
+    <meta name="description" content="Complete reference for spacing tokens including units, space tokens, section spacing, and border tokens.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Spacing - By Default Brand OS">
+    <meta property="og:description" content="Complete reference for spacing tokens including units, space tokens, section spacing, and border tokens.">
+    <meta property="og:image" content="../assets/images/og-default.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Design System Framework (path set in docs/docs.config.js) -->
+    <link rel="stylesheet" href="../design-system/design-system.css" id="design-system-css"
+          onerror="document.getElementById('ds-missing-banner').style.display='flex'">
+    <!-- Brand Book (path set in docs/docs.config.js) -->
+    <link rel="stylesheet" href="../brand-book/brand-book.css">
+
+    <!-- Google Fonts (configured in docs/docs.config.js) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Markdown CSS -->
+    <link rel="stylesheet" href="../assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
+    <script>
+      if (!(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0')) {
+        document.write('<script src="https://unpkg.com/gotrue-js@0.9.29/lib/index.umd.js"><\/script>');
+      }
+    </script>
+</head>
+<body class="auth-loading" data-access="team">
+
+    <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
+    <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
+        <span>⚠️</span>
+        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">docs/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
+        <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
+    </div>
+
+    <!-- Site Navigation (header + sidebar injected by nav.js) -->
+    <div id="site-nav" data-base="../"></div>
+
+    <div class="docs-main-area">
+        <!-- Page Header (full width, outside grid) -->
+        <div class="page-header">
+      <div class="container-small">
+        <h1>Spacing</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">Spacing tokens and units</p>
+        <div class="button-group justify-center">
+          <a href="../docs/spacing.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+          
+        </div>
+      </div>
+    </div>
+
+        <!-- Main Content + TOC grid -->
+        <div class="docs-content-grid padding-global">
+            <!-- Main Content -->
+            <main class="docs-main">
+                <article class="markdown-body">
+                    <p>Spacing tokens define <strong>distance</strong>, not intent. They are reused for gaps, padding, and margins depending on context.</p>
+<h2 id="unit-tokens">Unit Tokens</h2>
+<p>Units act as the basic measure for spacing, typography, and layout tokens.</p>
+<p>They represent neutral values and best used in <strong>semantic tokens and utility classes</strong>, rather than applied directly in layouts or components. Using units in this way ensures spacing and sizing stay consistent, predictable, and easy to update across the system without creating individual values.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Unit</th>
+<th>px</th>
+<th>rem</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>none</code></td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>2xs</code></td>
+<td>2</td>
+<td>0.125</td>
+</tr>
+<tr>
+<td><code>xs</code></td>
+<td>4</td>
+<td>0.25</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td>8</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td><code>m</code></td>
+<td>12</td>
+<td>0.75</td>
+</tr>
+<tr>
+<td><code>l</code></td>
+<td>16</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>xl</code></td>
+<td>24</td>
+<td>1.5</td>
+</tr>
+<tr>
+<td><code>2xl</code></td>
+<td>32</td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>3xl</code></td>
+<td>40</td>
+<td>2.5</td>
+</tr>
+<tr>
+<td><code>4xl</code></td>
+<td>48</td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>5xl</code></td>
+<td>56</td>
+<td>3.5</td>
+</tr>
+<tr>
+<td><code>6xl</code></td>
+<td>64</td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>7xl</code></td>
+<td>72</td>
+<td>4.5</td>
+</tr>
+<tr>
+<td><code>8xl</code></td>
+<td>80</td>
+<td>5</td>
+</tr>
+<tr>
+<td><code>9xl</code></td>
+<td>88</td>
+<td>5.5</td>
+</tr>
+<tr>
+<td><code>10xl</code></td>
+<td>96</td>
+<td>6</td>
+</tr>
+<tr>
+<td><code>11xl</code></td>
+<td>104</td>
+<td>6.5</td>
+</tr>
+<tr>
+<td><code>12xl</code></td>
+<td>112</td>
+<td>7</td>
+</tr>
+<tr>
+<td><code>13xl</code></td>
+<td>120</td>
+<td>7.5</td>
+</tr>
+<tr>
+<td><code>14xl</code></td>
+<td>160</td>
+<td>10</td>
+</tr>
+</tbody></table></div>
+<p><strong>Usage:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-f2bphd59c" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-f2bphd59c" class="language-css">:root {
+  --space-m: var(--m);
+  --space-l: var(--l);
+}
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="space-tokens">Space Tokens</h2>
+<p>Space tokens provide responsive spacing values that scale between desktop and mobile devices. They are used for gaps, padding, and margins to maintain consistent spacing throughout the interface.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Desktop</th>
+<th>Mobile</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--space-xs</code></td>
+<td><code>XS</code></td>
+<td><code>XS</code></td>
+</tr>
+<tr>
+<td><code>--space-s</code></td>
+<td><code>S</code></td>
+<td><code>XS</code></td>
+</tr>
+<tr>
+<td><code>--space-m</code></td>
+<td><code>M</code></td>
+<td><code>S</code></td>
+</tr>
+<tr>
+<td><code>--space-l</code></td>
+<td><code>L</code></td>
+<td><code>M</code></td>
+</tr>
+<tr>
+<td><code>--space-xl</code></td>
+<td><code>XL</code></td>
+<td><code>L</code></td>
+</tr>
+<tr>
+<td><code>--space-2xl</code></td>
+<td><code>2XL</code></td>
+<td><code>XL</code></td>
+</tr>
+<tr>
+<td><code>--space-3xl</code></td>
+<td><code>3XL</code></td>
+<td><code>2XL</code></td>
+</tr>
+<tr>
+<td><code>--space-4xl</code></td>
+<td><code>4XL</code></td>
+<td><code>2XL</code></td>
+</tr>
+<tr>
+<td><code>--space-6xl</code></td>
+<td><code>6XL</code></td>
+<td><code>4XL</code></td>
+</tr>
+</tbody></table></div>
+<p><strong>Usage:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-51yocqv1g" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-51yocqv1g" class="language-css">.card {
+  padding: var(--space-m);
+  margin-bottom: var(--space-l);
+}
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="padding">Padding</h2>
+<p>Padding utilities apply internal padding to elements. These are convenience utilities for quick spacing adjustments.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Class</th>
+<th>Spacing</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.padding-s</code></td>
+<td><code>var(--space-s)</code></td>
+</tr>
+<tr>
+<td><code>.padding-m</code></td>
+<td><code>var(--space-m)</code></td>
+</tr>
+<tr>
+<td><code>.padding-l</code></td>
+<td><code>var(--space-l)</code></td>
+</tr>
+<tr>
+<td><code>.padding-xl</code></td>
+<td><code>var(--space-xl)</code></td>
+</tr>
+<tr>
+<td><code>.padding-2xl</code></td>
+<td><code>var(--space-2xl)</code></td>
+</tr>
+<tr>
+<td><code>.padding-3xl</code></td>
+<td><code>var(--space-3xl)</code></td>
+</tr>
+</tbody></table></div>
+<p><strong>Usage</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-loug5dfmx" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-loug5dfmx" class="language-html">&lt;div class=&quot;padding-m&quot;&gt;
+  &lt;!-- Content with medium padding on all sides --&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<p><strong>Important</strong></p>
+<ul>
+<li>These utilities apply internal padding only (all sides).</li>
+<li>They are convenience utilities for quick spacing adjustments.</li>
+<li>They do not replace section spacing or layout primitives.</li>
+<li>For section-level spacing, use section spacing combo classes (see Layout).</li>
+<li>For component-level spacing, prefer blocks with gap modifiers.</li>
+</ul>
+<hr>
+<h2 id="section-spacing">Section Spacing</h2>
+<p>Section spacing tokens control the <strong>vertical rhythm between sections</strong>. They scale responsively between desktop and mobile.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Desktop</th>
+<th>Mobile</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--section-xs</code></td>
+<td>XL</td>
+<td>L</td>
+</tr>
+<tr>
+<td><code>--section-s</code></td>
+<td>2XL</td>
+<td>XL</td>
+</tr>
+<tr>
+<td><code>--section-m</code></td>
+<td>6XL</td>
+<td>2XL</td>
+</tr>
+<tr>
+<td><code>--section-l</code></td>
+<td>10XL</td>
+<td>5XL</td>
+</tr>
+<tr>
+<td><code>--section-xl</code></td>
+<td>14XL</td>
+<td>8XL</td>
+</tr>
+</tbody></table></div>
+<p><strong>Usage:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-9ndsksr34" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-9ndsksr34" class="language-css">.top-small {
+  padding-top: var(--section-s);
+}
+</code></pre>
+      </div>
+    
+
+                </article>
+            </main>
+
+            <!-- Table of Contents -->
+            <aside class="docs-toc">
+      <span class="toc-header">On this page</span>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#unit-tokens" class="toc-link">Unit Tokens</a></li><li class="toc-item toc-level-2"><a href="#space-tokens" class="toc-link">Space Tokens</a></li><li class="toc-item toc-level-2"><a href="#padding" class="toc-link">Padding</a></li><li class="toc-item toc-level-2"><a href="#section-spacing" class="toc-link">Section Spacing</a></li></ul></nav></div>
+    </aside>
+        </div>
+
+        <!-- Page Navigation (Previous / Next) -->
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="design-system/typography.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <h3 class="page-nav-title">Typography</h3>
+      </span>
+    </a><a href="design-system/border.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <h3 class="page-nav-title">Border</h3>
+      </span>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+    </a></div></nav>
+
+        <!-- Footer -->
+        <footer class="docs-footer">
+            <div class="docs-footer-inner padding-global">
+                <p class="docs-footer-text">© 2026 By Default BrandOS</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- Initialize Highlight.js, Copy, and TOC -->
+    <script>
+        (function() {
+            'use strict';
+
+            function initHighlight() {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+
+            function copyToClipboard(text) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    return navigator.clipboard.writeText(text);
+                }
+                var textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                return Promise.resolve();
+            }
+
+            var copyIconPath = 'M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z';
+            var checkIconPath = 'M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z';
+
+            function initClipboard() {
+                const buttons = document.querySelectorAll('.copy-code-btn');
+
+                buttons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const targetId = this.getAttribute('data-clipboard-target');
+                        const codeElement = document.querySelector(targetId);
+
+                        if (codeElement) {
+                            const text = codeElement.textContent;
+                            const textSpan = this.querySelector('.copy-text');
+                            const btnPath = this.querySelector('path');
+
+                            copyToClipboard(text).then(() => {
+                                if (btnPath) {
+                                    btnPath.setAttribute('d', checkIconPath);
+                                }
+                                if (textSpan) {
+                                    textSpan.textContent = 'Copied!';
+                                }
+                                setTimeout(() => {
+                                    if (btnPath) {
+                                        btnPath.setAttribute('d', copyIconPath);
+                                    }
+                                    if (textSpan) {
+                                        textSpan.textContent = 'Copy';
+                                    }
+                                }, 1500);
+                            });
+                        }
+                    });
+                });
+            }
+
+            function initTOCActiveState() {
+                const tocLinks = document.querySelectorAll('.toc-link');
+                const headings = document.querySelectorAll('h1[id], h2[id]');
+
+                if (tocLinks.length === 0 || headings.length === 0) return;
+
+                const linkMap = new Map();
+                tocLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        const id = href.substring(1);
+                        linkMap.set(id, link);
+                    }
+                });
+
+                const observerOptions = {
+                    rootMargin: '-20% 0px -70% 0px',
+                    threshold: 0
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const id = entry.target.id;
+                        const link = linkMap.get(id);
+
+                        if (entry.isIntersecting) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            if (link) {
+                                link.classList.add('toc-link-active');
+                            }
+                        }
+                    });
+                }, observerOptions);
+
+                headings.forEach(heading => {
+                    if (heading.id) {
+                        observer.observe(heading);
+                    }
+                });
+
+                function setInitialActive() {
+                    let activeHeading = null;
+                    let maxTop = -Infinity;
+
+                    headings.forEach(heading => {
+                        const rect = heading.getBoundingClientRect();
+                        if (rect.top <= 100 && rect.top > maxTop) {
+                            maxTop = rect.top;
+                            activeHeading = heading;
+                        }
+                    });
+
+                    if (activeHeading && activeHeading.id) {
+                        const link = linkMap.get(activeHeading.id);
+                        if (link) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            link.classList.add('toc-link-active');
+                        }
+                    }
+                }
+
+                setInitialActive();
+
+                let scrollTimeout;
+                window.addEventListener('scroll', () => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(setInitialActive, 100);
+                });
+            }
+
+            function init() {
+                initHighlight();
+                initClipboard();
+                initTOCActiveState();
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+
+    <!-- Back to Top -->
+    <div class="back-to-top-wrapper">
+      <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
+        <div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 4V2H20V4H4Z" fill="currentColor"/>
+          <path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/>
+        </svg></div>
+      </button>
+    </div>
+    <script>
+      (function() {
+        var btn = document.querySelector('.back-to-top-wrapper');
+        if (!btn) return;
+        window.addEventListener('scroll', function() {
+          btn.classList.toggle('is-visible', window.scrollY > 300);
+        });
+        btn.querySelector('button').addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+
+    <!-- Site Navigation -->
+    <script src="../assets/js/nav.js"></script>
+    <!-- Auth -->
+    <script src="../assets/js/auth-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+
+    <script>
+      /* Table scroll overflow hint */
+      (function initTableScroll() {
+        var wrappers = document.querySelectorAll('.table-scroll');
+        if (!wrappers.length) return;
+
+        function checkOverflow(wrapper) {
+          var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
+          var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
+          wrapper.classList.toggle('is-overflowing', isOverflowing);
+          wrapper.classList.toggle('is-scrolled-end', isAtEnd);
+        }
+
+        wrappers.forEach(function(wrapper) {
+          checkOverflow(wrapper);
+          wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+        });
+
+        window.addEventListener('resize', function() {
+          wrappers.forEach(checkOverflow);
+        });
+      })();
+    </script>
+</body>
+</html>

@@ -4,6 +4,7 @@ subtitle: "Where the brand came from"
 description: "The story of how the brand came to be — its history, inspiration, and founding moments."
 section: "Brand Book"
 order: 3
+access: "team"
 ---
 
 We started with a mission to create a workplace that works for our brains — not one that boxes us in.

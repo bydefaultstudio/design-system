@@ -4,6 +4,7 @@ subtitle: "File organization and directory structure"
 description: "Guide defining where files live and why in the project structure."
 section: "Project"
 order: 4
+access: "team"
 ---
 
 This document defines where files live and why.

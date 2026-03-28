@@ -4,6 +4,7 @@ subtitle: "Page layout and structure primitives"
 description: "How to structure pages using sections, containers, blocks, and grids."
 section: "Code"
 order: 6
+access: "team"
 ---
 
 This system provides a **predictable layout structure** that keeps spacing, alignment, and width consistent across all pages.

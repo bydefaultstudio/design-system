@@ -4,6 +4,7 @@ subtitle: "Button component and usage guidelines"
 description: "How to use button styles and modifiers in the design system."
 section: "Design System"
 order: 8
+access: "team"
 ---
 
 Buttons are interactive elements used to trigger actions.  

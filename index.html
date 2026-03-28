@@ -40,39 +40,7 @@
       }
     </script>
 </head>
-<body class="auth-loading">
-
-    <!-- Login Overlay -->
-    <div class="login-overlay" id="login-overlay">
-      <div class="login-card">
-        <img src="assets/images/logo.svg" alt="Logo" class="login-logo">
-        <h1 class="login-title">Welcome to BrandOS</h1>
-        <p class="login-subtitle">Sign in to access your dashboard</p>
-        <form class="login-form" id="login-form" autocomplete="on">
-          <div class="form-group">
-            <label for="login-email">Email</label>
-            <input type="email" id="login-email" name="email" autocomplete="email" required placeholder="you@company.com">
-          </div>
-          <div class="form-group">
-            <label for="login-password">Password</label>
-            <input type="password" id="login-password" name="password" autocomplete="current-password" required placeholder="Enter your password">
-          </div>
-          <div class="login-error" id="login-error" role="alert"></div>
-          <button type="submit" class="button login-submit-btn">Log in</button>
-        </form>
-        <button type="button" class="login-forgot-btn" id="login-forgot-btn">Forgot password?</button>
-        <div class="login-reset-form" id="login-reset-form" style="display:none;">
-          <div class="form-group">
-            <label for="reset-email">Email</label>
-            <input type="email" id="reset-email" name="reset-email" autocomplete="email" required placeholder="you@company.com">
-          </div>
-          <div class="login-error" id="reset-error" role="alert"></div>
-          <div class="login-success" id="reset-success" role="status"></div>
-          <button type="button" class="button login-submit-btn" id="reset-submit-btn">Send reset link</button>
-          <button type="button" class="login-forgot-btn" id="reset-back-btn">Back to login</button>
-        </div>
-      </div>
-    </div>
+<body class="auth-loading" data-access="team">
 
     <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
     <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
@@ -101,42 +69,42 @@
     <div class="docs-section">
       <h2 class="eyebrow">Brand Book</h2>
       <div class="grid cols-3 gap-xl">
-        <a href="brand-mission-vision-purpose.html" class="docs-card">
+        <a href="brand/mission-vision-purpose.html" class="docs-card">
           <h3 class="docs-card-title">Mission, Vision & Purpose</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">The why behind the brand</p>
         </a>
       
-        <a href="brand-values.html" class="docs-card">
+        <a href="brand/values.html" class="docs-card">
           <h3 class="docs-card-title">Brand Values</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">The principles that guide every decision</p>
         </a>
       
-        <a href="brand-origin-story.html" class="docs-card">
+        <a href="brand/origin-story.html" class="docs-card">
           <h3 class="docs-card-title">Origin Story</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Where the brand came from</p>
         </a>
       
-        <a href="brand-positioning.html" class="docs-card">
+        <a href="brand/positioning.html" class="docs-card">
           <h3 class="docs-card-title">Positioning</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Where the brand stands in the market</p>
         </a>
       
-        <a href="brand-value-proposition.html" class="docs-card">
+        <a href="brand/value-proposition.html" class="docs-card">
           <h3 class="docs-card-title">Value Proposition</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">What the brand uniquely offers</p>
         </a>
       
-        <a href="brand-personality.html" class="docs-card">
+        <a href="brand/personality.html" class="docs-card">
           <h3 class="docs-card-title">Brand Personality</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">The human traits behind the brand</p>
         </a>
       
-        <a href="brand-tone-of-voice.html" class="docs-card">
+        <a href="brand/tone-of-voice.html" class="docs-card">
           <h3 class="docs-card-title">Tone of Voice</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">How the brand speaks and writes</p>
         </a>
       
-        <a href="brand-book/index.html" class="docs-card">
+        <a href="brand/index.html" class="docs-card">
           <h3 class="docs-card-title">Visual Identity</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Visual brand identity — logo, palette, typography, and icons</p>
         </a>
@@ -145,57 +113,57 @@
     </div><div class="docs-section">
       <h2 class="eyebrow">Design System</h2>
       <div class="grid cols-3 gap-xl">
-        <a href="design-system-overview.html" class="docs-card">
+        <a href="design-system/overview.html" class="docs-card">
           <h3 class="docs-card-title">Overview</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Introduction to the design system</p>
         </a>
       
-        <a href="color.html" class="docs-card">
+        <a href="design-system/color.html" class="docs-card">
           <h3 class="docs-card-title">Color</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Color tokens and semantic colors</p>
         </a>
       
-        <a href="typography.html" class="docs-card">
+        <a href="design-system/typography.html" class="docs-card">
           <h3 class="docs-card-title">Typography</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Typography tokens and text components</p>
         </a>
       
-        <a href="spacing.html" class="docs-card">
+        <a href="design-system/spacing.html" class="docs-card">
           <h3 class="docs-card-title">Spacing</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Spacing tokens and units</p>
         </a>
       
-        <a href="border.html" class="docs-card">
+        <a href="design-system/border.html" class="docs-card">
           <h3 class="docs-card-title">Border</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Composable border system</p>
         </a>
       
-        <a href="iconography.html" class="docs-card">
+        <a href="design-system/iconography.html" class="docs-card">
           <h3 class="docs-card-title">Iconography</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Icon usage, sizing, and integration guidelines</p>
         </a>
       
-        <a href="button.html" class="docs-card">
+        <a href="design-system/button.html" class="docs-card">
           <h3 class="docs-card-title">Button</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Button component and usage guidelines</p>
         </a>
       
-        <a href="callout.html" class="docs-card">
+        <a href="design-system/callout.html" class="docs-card">
           <h3 class="docs-card-title">Callout</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Callout and alert component guidelines</p>
         </a>
       
-        <a href="disclosure.html" class="docs-card">
+        <a href="design-system/disclosure.html" class="docs-card">
           <h3 class="docs-card-title">Disclosure</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Details and summary toggle component</p>
         </a>
       
-        <a href="form.html" class="docs-card">
+        <a href="design-system/form.html" class="docs-card">
           <h3 class="docs-card-title">Form</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Form element styling and patterns</p>
         </a>
       
-        <a href="table.html" class="docs-card">
+        <a href="design-system/table.html" class="docs-card">
           <h3 class="docs-card-title">Table</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Composable table styling</p>
         </a>
@@ -209,17 +177,17 @@
     </div><div class="docs-section">
       <h2 class="eyebrow">Code</h2>
       <div class="grid cols-3 gap-xl">
-        <a href="js-code-structure.html" class="docs-card">
+        <a href="code/javascript.html" class="docs-card">
           <h3 class="docs-card-title">JavaScript</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">JavaScript coding standards and organization guidelines</p>
         </a>
       
-        <a href="css-code-struture.html" class="docs-card">
+        <a href="code/css.html" class="docs-card">
           <h3 class="docs-card-title">CSS</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">CSS coding standards, organization, and commenting guidelines</p>
         </a>
       
-        <a href="layout.html" class="docs-card">
+        <a href="code/layout.html" class="docs-card">
           <h3 class="docs-card-title">HTML Layout</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Page layout and structure primitives</p>
         </a>
@@ -228,12 +196,12 @@
     </div><div class="docs-section">
       <h2 class="eyebrow">Content</h2>
       <div class="grid cols-3 gap-xl">
-        <a href="seo-best-practices.html" class="docs-card">
+        <a href="content/seo-best-practices.html" class="docs-card">
           <h3 class="docs-card-title">SEO</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">SEO meta tags and social sharing guidelines</p>
         </a>
       
-        <a href="markdown-style.html" class="docs-card">
+        <a href="design-system/markdown-style.html" class="docs-card">
           <h3 class="docs-card-title">Markdown</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Styling guidelines for markdown content</p>
         </a>
@@ -242,26 +210,26 @@
     </div><div class="docs-section">
       <h2 class="eyebrow">Tools</h2>
       <div class="grid cols-3 gap-xl">
-        <a href="calculator-docs.html" class="docs-card">
+        <a href="cpm-calculator/about.html" class="docs-card">
           <h3 class="docs-card-title">CPM Calculator</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">How to use the CPM & Spend Calculator</p>
         </a>
       
-        <a href="svg-cleaner-docs.html" class="docs-card">
+        <a href="svg-cleaner/about.html" class="docs-card">
           <h3 class="docs-card-title">SVG Cleaner</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">How to use the SVG Cleaner tool</p>
         </a>
       
-        <a href="display-ad-preview-docs.html" class="docs-card">
+        <a href="display-ad-preview/about.html" class="docs-card">
           <h3 class="docs-card-title">Display Ad Preview</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">How to use the Display Ad Preview tool</p>
         </a>
       
       </div>
-    </div><div class="docs-section" data-auth-role="admin">
+    </div><div class="docs-section" data-access="admin">
       <h2 class="eyebrow">Admin</h2>
       <div class="grid cols-3 gap-xl">
-        <a href="access-control.html" class="docs-card">
+        <a href="admin/access-control.html" class="docs-card" data-access="admin">
           <h3 class="docs-card-title">Access Control</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Managing user authentication and page permissions</p>
         </a>

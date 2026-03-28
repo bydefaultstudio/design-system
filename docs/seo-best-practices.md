@@ -4,6 +4,7 @@ subtitle: "SEO meta tags and social sharing guidelines"
 description: "Complete guide to SEO meta tags, Open Graph, X Cards, and structured data."
 section: "Content"
 order: 9
+access: "team"
 ---
 
 This document outlines SEO best practices for HTML pages, including meta tags, Open Graph, X (Twitter) Cards, and structured data.

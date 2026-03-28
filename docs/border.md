@@ -4,6 +4,7 @@ subtitle: "Composable border system"
 description: "Guide to using the composable border architecture for flexible border styling."
 section: "Design System"
 order: 5
+access: "team"
 ---
 
 Borders use a **composable architecture** that separates structural positioning from styling concerns. This approach keeps the system extensible without class explosion.

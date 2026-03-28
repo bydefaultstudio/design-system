@@ -4,6 +4,7 @@ subtitle: "Managing user authentication and page permissions"
 description: "How to manage user logins, roles, and page-level access control using Netlify Identity."
 section: "Admin"
 order: 1
+access: "admin"
 ---
 
 This site uses **Netlify Identity** for authentication. Users are invited by email, assigned a role, and can only access pages permitted by their role.

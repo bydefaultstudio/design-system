@@ -4,6 +4,7 @@ subtitle: "Color tokens and semantic colors"
 description: "Complete reference for all color tokens including primitive colors and semantic color mappings."
 section: "Design System"
 order: 2
+access: "team"
 ---
 
 Color tokens are the foundation of the design system's color system. They define the shared, reusable color values that power both design and code. By standardising these decisions in one place, tokens keep the experience consistent, reduce duplication, and make global updates safe and fast.

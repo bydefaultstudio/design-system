@@ -4,7 +4,8 @@ subtitle: "How to use the Display Ad Preview tool"
 description: "Generate Celtra ad preview sandbox URLs with device simulation and publisher context."
 section: "Tools"
 order: 3
-toolUrl: "display-ad-preview/index.html"
+access: "team"
+toolUrl: "index.html"
 ---
 
 The Display Ad Preview tool generates Celtra sandbox preview URLs through a visual interface. Instead of manually constructing URLs with query parameters, select a device type, size, position, and preview mode from the sidebar controls.

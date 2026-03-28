@@ -4,6 +4,7 @@ subtitle: "The why behind the brand"
 description: "The mission, vision, and purpose that define why the brand exists and where it is going."
 section: "Brand Book"
 order: 1
+access: "team"
 ---
 
 ## Mission

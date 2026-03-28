@@ -4,6 +4,7 @@ subtitle: "Styling guidelines for markdown content"
 description: "Documentation for markdown styling and design system integration"
 section: "Content"
 order: 10
+access: "team"
 ---
 
 This guide defines the consistent formatting standards for all documentation pages in the ByDefault project.
@@ -30,6 +31,7 @@ subtitle: "Your page subtitle or brief description"
 description: "Guide defining how to structure and organize your content"
 section: "overview"
 order: 1
+access: "team"
 ---
 
 Your markdown content starts here...

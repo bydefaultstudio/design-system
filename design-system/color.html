@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color - By Default Brand OS</title>
+    <meta name="description" content="Complete reference for all color tokens including primitive colors and semantic color mappings.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Color - By Default Brand OS">
+    <meta property="og:description" content="Complete reference for all color tokens including primitive colors and semantic color mappings.">
+    <meta property="og:image" content="../assets/images/og-default.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Design System Framework (path set in docs/docs.config.js) -->
+    <link rel="stylesheet" href="../design-system/design-system.css" id="design-system-css"
+          onerror="document.getElementById('ds-missing-banner').style.display='flex'">
+    <!-- Brand Book (path set in docs/docs.config.js) -->
+    <link rel="stylesheet" href="../brand-book/brand-book.css">
+
+    <!-- Google Fonts (configured in docs/docs.config.js) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Markdown CSS -->
+    <link rel="stylesheet" href="../assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
+    <script>
+      if (!(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0')) {
+        document.write('<script src="https://unpkg.com/gotrue-js@0.9.29/lib/index.umd.js"><\/script>');
+      }
+    </script>
+</head>
+<body class="auth-loading" data-access="team">
+
+    <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
+    <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
+        <span>⚠️</span>
+        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">docs/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
+        <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
+    </div>
+
+    <!-- Site Navigation (header + sidebar injected by nav.js) -->
+    <div id="site-nav" data-base="../"></div>
+
+    <div class="docs-main-area">
+        <!-- Page Header (full width, outside grid) -->
+        <div class="page-header">
+      <div class="container-small">
+        <h1>Color</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">Color tokens and semantic colors</p>
+        <div class="button-group justify-center">
+          <a href="../docs/color.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+          
+        </div>
+      </div>
+    </div>
+
+        <!-- Main Content + TOC grid -->
+        <div class="docs-content-grid padding-global">
+            <!-- Main Content -->
+            <main class="docs-main">
+                <article class="markdown-body">
+                    <p>Color tokens are the foundation of the design system&#39;s color system. They define the shared, reusable color values that power both design and code. By standardising these decisions in one place, tokens keep the experience consistent, reduce duplication, and make global updates safe and fast.</p>
+<h2 id="primitive-colors">Primitive Colors</h2>
+<p>Primitive colors are the raw color values used as building blocks for all other color tokens. They can be used directly in layouts or components, but it&#39;s <strong>preferred to use semantic tokens</strong> instead.</p>
+<h3 id="brand-colors">Brand Colors</h3>
+<p>Brand tokens are project-level overrides and may change per project. <strong>You can rename the token names</strong> to anything relating to your brand (e.g., <code>--primary</code>, <code>--off-white</code>, <code>--charcoal</code>, <code>--hero-blue</code>, etc.). This personalizes the system and makes it more intuitive for your team.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--warm-black</code></td>
+<td>#brand-hex1</td>
+<td>Dark brand color</td>
+</tr>
+<tr>
+<td><code>--off-white</code></td>
+<td>#brand-hex2</td>
+<td>Light brand color</td>
+</tr>
+<tr>
+<td><code>--green</code></td>
+<td>#brand-hex3</td>
+<td>Accent brand color</td>
+</tr>
+</tbody></table></div>
+<p><strong>Usage:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-dfssog6o8" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-dfssog6o8" class="language-css">:root {
+  /* You can use default names or rename tokens to match your brand */
+  --warm-black: #1a1a1a; /* Replace with your brand color */
+  
+  /* Or use custom names that make sense for your project */
+  --charcoal: #1a1a1a;
+  --off-white: #f5f5f5;
+  --hero-blue: #0066cc;
+}
+
+.div {
+  color: var(--warm-black);
+  /* Or use your custom token name */
+  /* color: var(--charcoal); */
+}
+</code></pre>
+      </div>
+    
+<h3 id="black">Black</h3>
+<p>Black tokens provide true black and black with varying opacity levels for overlays, shadows, and faded text.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--black</code></td>
+<td>#000000</td>
+<td>True black</td>
+</tr>
+<tr>
+<td><code>--black-alpha-5</code></td>
+<td>#0000000D</td>
+<td>5% opacity</td>
+</tr>
+<tr>
+<td><code>--black-alpha-10</code></td>
+<td>#0000001A</td>
+<td>10% opacity</td>
+</tr>
+<tr>
+<td><code>--black-alpha-15</code></td>
+<td>#00000026</td>
+<td>15% opacity</td>
+</tr>
+<tr>
+<td><code>--black-alpha-20</code></td>
+<td>#00000033</td>
+<td>20% opacity</td>
+</tr>
+<tr>
+<td><code>--black-alpha-30</code></td>
+<td>#0000004D</td>
+<td>30% opacity</td>
+</tr>
+<tr>
+<td><code>--black-alpha-40</code></td>
+<td>#00000066</td>
+<td>40% opacity</td>
+</tr>
+<tr>
+<td><code>--black-alpha-50</code></td>
+<td>#00000080</td>
+<td>50% opacity</td>
+</tr>
+</tbody></table></div>
+<p><strong>Usage:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-b8dugy3am" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-b8dugy3am" class="language-css">.shadow {
+  box-shadow: 0 4px 6px var(--black-alpha-30);
+}
+</code></pre>
+      </div>
+    
+<h3 id="white">White</h3>
+<p>White tokens provide true white and white with varying opacity levels for overlays and backgrounds.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--white</code></td>
+<td>#FFFFFF</td>
+<td>True white</td>
+</tr>
+<tr>
+<td><code>--white-alpha-5</code></td>
+<td>#FFFFFF0D</td>
+<td>5% opacity</td>
+</tr>
+<tr>
+<td><code>--white-alpha-10</code></td>
+<td>#FFFFFF1A</td>
+<td>10% opacity</td>
+</tr>
+<tr>
+<td><code>--white-alpha-15</code></td>
+<td>#FFFFFF26</td>
+<td>15% opacity</td>
+</tr>
+<tr>
+<td><code>--white-alpha-20</code></td>
+<td>#FFFFFF33</td>
+<td>20% opacity</td>
+</tr>
+<tr>
+<td><code>--white-alpha-30</code></td>
+<td>#FFFFFF4D</td>
+<td>30% opacity</td>
+</tr>
+<tr>
+<td><code>--white-alpha-40</code></td>
+<td>#FFFFFF66</td>
+<td>40% opacity</td>
+</tr>
+<tr>
+<td><code>--white-alpha-50</code></td>
+<td>#FFFFFF80</td>
+<td>50% opacity</td>
+</tr>
+</tbody></table></div>
+<p><strong>Usage:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-6pzrs1bhf" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-6pzrs1bhf" class="language-css">.highlight {
+  background-color: var(--white-alpha-30);
+}
+</code></pre>
+      </div>
+    
+<h3 id="neutral-colors">Neutral Colors</h3>
+<p>Neutral colors provide a grayscale palette from light to dark for backgrounds, borders, and text.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--neutral-50</code></td>
+<td>#FFF7F1</td>
+</tr>
+<tr>
+<td><code>--neutral-100</code></td>
+<td>#E3E0DE</td>
+</tr>
+<tr>
+<td><code>--neutral-150</code></td>
+<td>#DDD6D1</td>
+</tr>
+<tr>
+<td><code>--neutral-200</code></td>
+<td>#CECCCA</td>
+</tr>
+<tr>
+<td><code>--neutral-300</code></td>
+<td>#BAB8B6</td>
+</tr>
+<tr>
+<td><code>--neutral-400</code></td>
+<td>#A5A4A2</td>
+</tr>
+<tr>
+<td><code>--neutral-500</code></td>
+<td>#918F8E</td>
+</tr>
+<tr>
+<td><code>--neutral-600</code></td>
+<td>#7D7B7B</td>
+</tr>
+<tr>
+<td><code>--neutral-700</code></td>
+<td>#686767</td>
+</tr>
+<tr>
+<td><code>--neutral-800</code></td>
+<td>#545353</td>
+</tr>
+<tr>
+<td><code>--neutral-900</code></td>
+<td>#3F3F3F</td>
+</tr>
+<tr>
+<td><code>--neutral-950</code></td>
+<td>#1D1C1B</td>
+</tr>
+<tr>
+<td><code>--neutral-990</code></td>
+<td>#0F0E0E</td>
+</tr>
+</tbody></table></div>
+<p><strong>Usage:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-pn5iytkj9" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-pn5iytkj9" class="language-css">.text {
+  color: var(--neutral-800);
+}
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="semantic-colors">Semantic Colors</h2>
+<p>Semantic colors map primitive tokens to <strong>meaning and intent</strong>, giving context and purpose to how colors are used. This makes it easier to implement consistent styling across components and ensures colors are used appropriately throughout the interface.</p>
+<h3 id="text-colors">Text Colors</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th><strong>Name</strong></th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--text-primary</code></td>
+<td>↳<code>--warm-black</code></td>
+<td>Primary text color</td>
+</tr>
+<tr>
+<td><code>--text-secondary</code></td>
+<td>↳<code>--text-secondary-brand</code></td>
+<td>Secondary text color</td>
+</tr>
+<tr>
+<td><code>--text-plain</code></td>
+<td>↳<code>--black</code></td>
+<td>True black text</td>
+</tr>
+<tr>
+<td><code>--text-faded</code></td>
+<td>↳<code>--black-alpha-50</code></td>
+<td>Faded text</td>
+</tr>
+<tr>
+<td><code>--text-accent</code></td>
+<td>↳<code>--green</code></td>
+<td>Accent text</td>
+</tr>
+<tr>
+<td><code>--text-link</code></td>
+<td>↳<code>--green</code></td>
+<td>Link text color</td>
+</tr>
+</tbody></table></div>
+<p><strong>Usage:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-ry586o89y" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-ry586o89y" class="language-css">h1 {
+  color: var(--text-primary);
+}
+</code></pre>
+      </div>
+    
+<h3 id="background-colors">Background Colors</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th><strong>Name</strong></th>
+<th><strong>Value</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--background-primary</code></td>
+<td>↳<code>--off-white</code></td>
+<td>Default background</td>
+</tr>
+<tr>
+<td><code>--background-secondary</code></td>
+<td>↳<code>--warm-white</code></td>
+<td>Secondary background</td>
+</tr>
+<tr>
+<td><code>--background-plain</code></td>
+<td>↳<code>--white</code></td>
+<td>True white background</td>
+</tr>
+<tr>
+<td><code>--background-faded</code></td>
+<td>↳<code>--black-alpha-5</code></td>
+<td>Faded background overlay</td>
+</tr>
+</tbody></table></div>
+<p><strong>Usage:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-d5lu4b2ql" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-d5lu4b2ql" class="language-css">.card {
+  background-color: var(--background-plain);
+}
+</code></pre>
+      </div>
+    
+<h3 id="border-colors">Border Colors</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th><strong>Name</strong></th>
+<th><strong>Value</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--border-primary</code></td>
+<td>↳<code>--border-primary-brand</code></td>
+<td>Default border</td>
+</tr>
+<tr>
+<td><code>--border-secondary</code></td>
+<td>↳<code>--border-secondary-brand</code></td>
+<td>Second border</td>
+</tr>
+<tr>
+<td><code>--border-faded</code></td>
+<td>↳<code>--black-alpha-15</code></td>
+<td>Faded border</td>
+</tr>
+</tbody></table></div>
+<p><strong>Usage:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-jxu2wck99" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-jxu2wck99" class="language-css">.card {
+  border-color: var(--border-primary);
+}
+</code></pre>
+      </div>
+    
+
+                </article>
+            </main>
+
+            <!-- Table of Contents -->
+            <aside class="docs-toc">
+      <span class="toc-header">On this page</span>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#primitive-colors" class="toc-link">Primitive Colors</a></li><li class="toc-item toc-level-2"><a href="#semantic-colors" class="toc-link">Semantic Colors</a></li></ul></nav></div>
+    </aside>
+        </div>
+
+        <!-- Page Navigation (Previous / Next) -->
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="design-system/overview.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <h3 class="page-nav-title">Overview</h3>
+      </span>
+    </a><a href="design-system/typography.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <h3 class="page-nav-title">Typography</h3>
+      </span>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+    </a></div></nav>
+
+        <!-- Footer -->
+        <footer class="docs-footer">
+            <div class="docs-footer-inner padding-global">
+                <p class="docs-footer-text">© 2026 By Default BrandOS</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- Initialize Highlight.js, Copy, and TOC -->
+    <script>
+        (function() {
+            'use strict';
+
+            function initHighlight() {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+
+            function copyToClipboard(text) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    return navigator.clipboard.writeText(text);
+                }
+                var textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                return Promise.resolve();
+            }
+
+            var copyIconPath = 'M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z';
+            var checkIconPath = 'M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z';
+
+            function initClipboard() {
+                const buttons = document.querySelectorAll('.copy-code-btn');
+
+                buttons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const targetId = this.getAttribute('data-clipboard-target');
+                        const codeElement = document.querySelector(targetId);
+
+                        if (codeElement) {
+                            const text = codeElement.textContent;
+                            const textSpan = this.querySelector('.copy-text');
+                            const btnPath = this.querySelector('path');
+
+                            copyToClipboard(text).then(() => {
+                                if (btnPath) {
+                                    btnPath.setAttribute('d', checkIconPath);
+                                }
+                                if (textSpan) {
+                                    textSpan.textContent = 'Copied!';
+                                }
+                                setTimeout(() => {
+                                    if (btnPath) {
+                                        btnPath.setAttribute('d', copyIconPath);
+                                    }
+                                    if (textSpan) {
+                                        textSpan.textContent = 'Copy';
+                                    }
+                                }, 1500);
+                            });
+                        }
+                    });
+                });
+            }
+
+            function initTOCActiveState() {
+                const tocLinks = document.querySelectorAll('.toc-link');
+                const headings = document.querySelectorAll('h1[id], h2[id]');
+
+                if (tocLinks.length === 0 || headings.length === 0) return;
+
+                const linkMap = new Map();
+                tocLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        const id = href.substring(1);
+                        linkMap.set(id, link);
+                    }
+                });
+
+                const observerOptions = {
+                    rootMargin: '-20% 0px -70% 0px',
+                    threshold: 0
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const id = entry.target.id;
+                        const link = linkMap.get(id);
+
+                        if (entry.isIntersecting) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            if (link) {
+                                link.classList.add('toc-link-active');
+                            }
+                        }
+                    });
+                }, observerOptions);
+
+                headings.forEach(heading => {
+                    if (heading.id) {
+                        observer.observe(heading);
+                    }
+                });
+
+                function setInitialActive() {
+                    let activeHeading = null;
+                    let maxTop = -Infinity;
+
+                    headings.forEach(heading => {
+                        const rect = heading.getBoundingClientRect();
+                        if (rect.top <= 100 && rect.top > maxTop) {
+                            maxTop = rect.top;
+                            activeHeading = heading;
+                        }
+                    });
+
+                    if (activeHeading && activeHeading.id) {
+                        const link = linkMap.get(activeHeading.id);
+                        if (link) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            link.classList.add('toc-link-active');
+                        }
+                    }
+                }
+
+                setInitialActive();
+
+                let scrollTimeout;
+                window.addEventListener('scroll', () => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(setInitialActive, 100);
+                });
+            }
+
+            function init() {
+                initHighlight();
+                initClipboard();
+                initTOCActiveState();
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+
+    <!-- Back to Top -->
+    <div class="back-to-top-wrapper">
+      <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
+        <div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 4V2H20V4H4Z" fill="currentColor"/>
+          <path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/>
+        </svg></div>
+      </button>
+    </div>
+    <script>
+      (function() {
+        var btn = document.querySelector('.back-to-top-wrapper');
+        if (!btn) return;
+        window.addEventListener('scroll', function() {
+          btn.classList.toggle('is-visible', window.scrollY > 300);
+        });
+        btn.querySelector('button').addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+
+    <!-- Site Navigation -->
+    <script src="../assets/js/nav.js"></script>
+    <!-- Auth -->
+    <script src="../assets/js/auth-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+
+    <script>
+      /* Table scroll overflow hint */
+      (function initTableScroll() {
+        var wrappers = document.querySelectorAll('.table-scroll');
+        if (!wrappers.length) return;
+
+        function checkOverflow(wrapper) {
+          var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
+          var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
+          wrapper.classList.toggle('is-overflowing', isOverflowing);
+          wrapper.classList.toggle('is-scrolled-end', isAtEnd);
+        }
+
+        wrappers.forEach(function(wrapper) {
+          checkOverflow(wrapper);
+          wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+        });
+
+        window.addEventListener('resize', function() {
+          wrappers.forEach(checkOverflow);
+        });
+      })();
+    </script>
+</body>
+</html>

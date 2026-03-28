@@ -7,13 +7,13 @@
     <meta name="description" content="{{META_DESCRIPTION}}">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="{{NAV_BASE}}assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="{{NAV_BASE}}assets/icons/favicon.ico">
 
     <!-- Open Graph -->
     <meta property="og:title" content="{{PAGE_TITLE}} - By Default Brand OS">
     <meta property="og:description" content="{{META_DESCRIPTION}}">
-    <meta property="og:image" content="assets/images/og-default.jpg">
+    <meta property="og:image" content="{{NAV_BASE}}assets/images/og-default.jpg">
     <meta property="og:type" content="website">
 
     <!-- Design System Framework (path set in docs/docs.config.js) -->
@@ -26,10 +26,10 @@
     {{GOOGLE_FONTS}}
 
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="assets/css/markdown.css">
+    <link rel="stylesheet" href="{{NAV_BASE}}assets/css/markdown.css">
 
     <!-- Site styles -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="{{NAV_BASE}}assets/css/style.css">
 
     <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
     <script>
@@ -38,39 +38,7 @@
       }
     </script>
 </head>
-<body class="auth-loading">
-
-    <!-- Login Overlay -->
-    <div class="login-overlay" id="login-overlay">
-      <div class="login-card">
-        <img src="assets/images/logo.svg" alt="Logo" class="login-logo">
-        <h1 class="login-title">Welcome to BrandOS</h1>
-        <p class="login-subtitle">Sign in to access your dashboard</p>
-        <form class="login-form" id="login-form" autocomplete="on">
-          <div class="form-group">
-            <label for="login-email">Email</label>
-            <input type="email" id="login-email" name="email" autocomplete="email" required placeholder="you@company.com">
-          </div>
-          <div class="form-group">
-            <label for="login-password">Password</label>
-            <input type="password" id="login-password" name="password" autocomplete="current-password" required placeholder="Enter your password">
-          </div>
-          <div class="login-error" id="login-error" role="alert"></div>
-          <button type="submit" class="button login-submit-btn">Log in</button>
-        </form>
-        <button type="button" class="login-forgot-btn" id="login-forgot-btn">Forgot password?</button>
-        <div class="login-reset-form" id="login-reset-form" style="display:none;">
-          <div class="form-group">
-            <label for="reset-email">Email</label>
-            <input type="email" id="reset-email" name="reset-email" autocomplete="email" required placeholder="you@company.com">
-          </div>
-          <div class="login-error" id="reset-error" role="alert"></div>
-          <div class="login-success" id="reset-success" role="status"></div>
-          <button type="button" class="button login-submit-btn" id="reset-submit-btn">Send reset link</button>
-          <button type="button" class="login-forgot-btn" id="reset-back-btn">Back to login</button>
-        </div>
-      </div>
-    </div>
+<body class="auth-loading" data-access="{{PAGE_ACCESS}}">
 
     <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
     <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
@@ -80,7 +48,7 @@
     </div>
 
     <!-- Site Navigation (header + sidebar injected by nav.js) -->
-    <div id="site-nav" data-base=""></div>
+    <div id="site-nav" data-base="{{NAV_BASE}}"></div>
 
     <div class="docs-main-area">
         <!-- Page Header (full width, outside grid) -->
@@ -283,10 +251,10 @@
     </script>
 
     <!-- Site Navigation -->
-    <script src="assets/js/nav.js"></script>
+    <script src="{{NAV_BASE}}assets/js/nav.js"></script>
     <!-- Auth -->
-    <script src="assets/js/auth-config.js"></script>
-    <script src="assets/js/auth.js"></script>
+    <script src="{{NAV_BASE}}assets/js/auth-config.js"></script>
+    <script src="{{NAV_BASE}}assets/js/auth.js"></script>
 
     <script>
       /* Table scroll overflow hint */

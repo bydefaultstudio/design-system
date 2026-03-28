@@ -4,6 +4,7 @@ subtitle: "CSS coding standards, organization, and commenting guidelines"
 description: "Guide defining how CSS should be structured, organized, and commented for maintainability."
 section: "Code"
 order: 3
+access: "team"
 ---
 
 ## Overview

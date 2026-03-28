@@ -4,6 +4,7 @@ subtitle: "Getting started with this template"
 description: "Guide to customizing this project template for your new project."
 section: "Project"
 order: 1
+access: "team"
 ---
 
 This template provides a solid foundation for new projects. Follow these steps to customize it for your project.

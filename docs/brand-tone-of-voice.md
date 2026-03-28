@@ -4,6 +4,7 @@ subtitle: "How the brand speaks and writes"
 description: "The language, tone, and communication style that defines how the brand expresses itself."
 section: "Brand Book"
 order: 7
+access: "team"
 ---
 
 ## One-screen cheat sheet (use this when you're writing)

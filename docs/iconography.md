@@ -4,6 +4,7 @@ subtitle: "Icon usage, sizing, and integration guidelines"
 description: "How to use icons in the design system — SVG standards, wrapper classes, accessibility, and tooling."
 section: "Design System"
 order: 7
+access: "team"
 ---
 
 Icons are inline SVG elements wrapped in a container class. They inherit colour from the surrounding text, maintain a fixed square aspect ratio, and are accessible by default.
@@ -137,7 +138,7 @@ Icons inherit colour through `currentColor`. To change an icon's colour, change 
 
 ## SVG Cleaner Tool
 
-Use the [SVG Cleaner](svg-cleaner/index.html) to prepare icons before adding them to the codebase. The tool automates the required cleanup:
+Use the [SVG Cleaner](../svg-cleaner/index.html) to prepare icons before adding them to the codebase. The tool automates the required cleanup:
 
 - Strips `xmlns` attributes
 - Sets fills to `currentColor` (when enabled)

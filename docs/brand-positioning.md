@@ -4,6 +4,7 @@ subtitle: "Where the brand stands in the market"
 description: "How the brand is positioned relative to its audience, competitors, and the broader market."
 section: "Brand Book"
 order: 4
+access: "team"
 ---
 
 We think differently by default.

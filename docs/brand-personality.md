@@ -4,6 +4,7 @@ subtitle: "The human traits behind the brand"
 description: "The personality traits and character that define how the brand presents itself to the world."
 section: "Brand Book"
 order: 6
+access: "team"
 ---
 
 ## Our Brand Archetype

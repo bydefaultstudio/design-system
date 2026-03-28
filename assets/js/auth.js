@@ -6,24 +6,28 @@
  * On localhost: runs in dev mode with simulated users and a role-switcher toolbar.
  * On production: uses GoTrue JS to authenticate against Netlify Identity.
  *
+ * Auth gating: protected pages redirect to /auth/login.html instead of
+ * showing an inline overlay. The login page handles all auth flows
+ * (sign in, forgot password, set password via invite/recovery tokens).
+ *
  * Requires: auth-config.js (loaded before this script)
  * Requires: gotrue-js UMD (loaded via CDN on production only)
  *
- * @version 2.0.0
+ * @version 3.0.0
  * @author By Default
  */
 
 (function () {
   'use strict';
 
-  console.log('[Auth] v2.0.0 loaded');
+  console.log('[Auth] v3.0.0 loaded');
 
   //------- Constants -------//
 
   var ROLE_HIERARCHY = AUTH_CONFIG.roleHierarchy;
-  var PAGE_ROLES = AUTH_CONFIG.pageRoles;
   var DEFAULT_ROLE = AUTH_CONFIG.defaultRole;
   var ACCESS_DENIED_PAGE = AUTH_CONFIG.accessDeniedPage;
+  var LOGIN_PAGE = AUTH_CONFIG.loginPage || 'auth/login.html';
 
   //------- Dev Mode Detection -------//
 
@@ -69,9 +73,11 @@
     return highest;
   }
 
-  function getRequiredRole(pagePath) {
-    if (PAGE_ROLES.hasOwnProperty(pagePath)) {
-      return PAGE_ROLES[pagePath];
+  function getRequiredRole() {
+    // Read from data-access attribute on <body> (set by generator or manually)
+    var bodyAccess = document.body.getAttribute('data-access');
+    if (bodyAccess && ROLE_HIERARCHY.indexOf(bodyAccess) !== -1) {
+      return bodyAccess;
     }
     return DEFAULT_ROLE;
   }
@@ -93,8 +99,9 @@
     if (pagePath.indexOf(folderPrefix) === 0) return true;
 
     var knownFolders = [
-      'assets', 'brand-book', 'design-system', 'docs', 'templates',
-      'cpm-calculator', 'svg-cleaner', 'display-ad-preview', 'src'
+      'assets', 'brand', 'design-system', 'docs', 'templates',
+      'cpm-calculator', 'svg-cleaner', 'display-ad-preview', 'src',
+      'auth', 'code', 'content', 'admin', 'project'
     ];
     var firstSegment = pagePath.split('/')[0];
     if (pagePath.indexOf('/') !== -1 && knownFolders.indexOf(firstSegment) === -1) {
@@ -102,6 +109,72 @@
     }
 
     return true;
+  }
+
+  //------- URL & Redirect Helpers -------//
+
+  function getLoginUrl(redirectPath) {
+    var base = getBasePrefix();
+    var url = base + LOGIN_PAGE;
+    if (redirectPath) {
+      url += '?redirect=' + encodeURIComponent(redirectPath);
+    }
+    return url;
+  }
+
+  function getBasePrefix() {
+    // Determine path depth from site root for relative URLs
+    var navEl = document.getElementById('site-nav');
+    if (navEl && navEl.getAttribute('data-base')) {
+      return navEl.getAttribute('data-base');
+    }
+    // Fallback: count path segments
+    var path = window.location.pathname.replace(/^\/+/, '');
+    var segments = path.split('/').length - 1;
+    var prefix = '';
+    for (var i = 0; i < segments; i++) {
+      prefix += '../';
+    }
+    return prefix;
+  }
+
+  function redirectToLogin() {
+    var currentPath = getCurrentPagePath();
+    window.location.href = getLoginUrl(currentPath);
+  }
+
+  function getRedirectTarget() {
+    var params = new URLSearchParams(window.location.search);
+    return params.get('redirect') || null;
+  }
+
+  //------- Hash Token Parsing -------//
+
+  function parseHashTokens() {
+    var hash = window.location.hash;
+    if (!hash || hash.length < 2) return null;
+
+    var params = {};
+    hash.substring(1).split('&').forEach(function (part) {
+      var pair = part.split('=');
+      if (pair.length === 2) {
+        params[pair[0]] = decodeURIComponent(pair[1]);
+      }
+    });
+
+    if (params.invite_token) return { type: 'invite', token: params.invite_token };
+    if (params.recovery_token) return { type: 'recovery', token: params.recovery_token };
+    if (params.confirmation_token) return { type: 'confirmation', token: params.confirmation_token };
+    if (params.access_token) return { type: 'access', token: params.access_token };
+    return null;
+  }
+
+  function clearHash() {
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    } else {
+      window.location.hash = '';
+    }
   }
 
   //------- UI Functions -------//
@@ -117,7 +190,8 @@
       showContent();
       return;
     }
-    window.location.href = ACCESS_DENIED_PAGE;
+    var base = getBasePrefix();
+    window.location.href = base + ACCESS_DENIED_PAGE;
   }
 
   function setRoleClass(role) {
@@ -135,40 +209,22 @@
   }
 
   function filterNavLinks(userRole, user) {
-    var navLinks = document.querySelectorAll('.nav-link');
+    // Filter nav links by checking data-access on linked pages (if available)
+    // For now, nav filtering relies on nav-link data attributes
+    var navLinks = document.querySelectorAll('.nav-link[data-access]');
     navLinks.forEach(function (link) {
-      var href = link.getAttribute('href');
-      if (!href) return;
-      var linkPath = href.replace(/^\.?\/?/, '');
-      var requiredRole = getRequiredRole(linkPath);
-
-      if (!hasAccess(userRole, requiredRole)) {
-        link.closest('li').style.display = 'none';
-        return;
-      }
-      if (userRole === 'client' && user) {
-        if (!hasClientFolderAccess(user, linkPath)) {
-          link.closest('li').style.display = 'none';
-          return;
-        }
+      var requiredRole = link.getAttribute('data-access');
+      if (requiredRole && !hasAccess(userRole, requiredRole)) {
+        var li = link.closest('li');
+        if (li) li.style.display = 'none';
       }
     });
 
-    var docCards = document.querySelectorAll('.docs-card');
+    var docCards = document.querySelectorAll('.docs-card[data-access]');
     docCards.forEach(function (card) {
-      var href = card.getAttribute('href');
-      if (!href) return;
-      var linkPath = href.replace(/^\.?\/?/, '');
-      var requiredRole = getRequiredRole(linkPath);
-
-      if (!hasAccess(userRole, requiredRole)) {
+      var requiredRole = card.getAttribute('data-access');
+      if (requiredRole && !hasAccess(userRole, requiredRole)) {
         card.style.display = 'none';
-        return;
-      }
-      if (userRole === 'client' && user) {
-        if (!hasClientFolderAccess(user, linkPath)) {
-          card.style.display = 'none';
-        }
       }
     });
 
@@ -193,14 +249,25 @@
     });
   }
 
-  //------- Login Overlay -------//
+  //------- Login Page Forms -------//
+
+  function isLoginPage() {
+    var path = getCurrentPagePath();
+    return path === LOGIN_PAGE || path === 'auth/login.html';
+  }
 
   function showLoginOverlay() {
+    // Legacy support: if a login overlay exists on the page, show it
     var overlay = document.getElementById('login-overlay');
     if (overlay) {
       overlay.classList.add('is-visible');
       var emailInput = document.getElementById('login-email');
       if (emailInput) emailInput.focus();
+      return;
+    }
+    // Otherwise redirect to login page
+    if (!isLoginPage()) {
+      redirectToLogin();
     }
   }
 
@@ -222,6 +289,117 @@
     if (errorEl) {
       errorEl.textContent = '';
       errorEl.style.display = 'none';
+    }
+  }
+
+  function showSetPasswordForm(titleText, subtitleText) {
+    var form = document.getElementById('login-form');
+    var forgotBtn = document.getElementById('login-forgot-btn');
+    var resetForm = document.getElementById('login-reset-form');
+    var setPasswordForm = document.getElementById('login-set-password-form');
+    var title = document.getElementById('login-title');
+    var subtitle = document.getElementById('login-subtitle');
+
+    if (form) form.style.display = 'none';
+    if (forgotBtn) forgotBtn.style.display = 'none';
+    if (resetForm) resetForm.style.display = 'none';
+    if (setPasswordForm) setPasswordForm.style.display = 'flex';
+    if (title) title.textContent = titleText || 'Set Your Password';
+    if (subtitle) subtitle.textContent = subtitleText || 'Choose a secure password for your account.';
+
+    var newPwInput = document.getElementById('set-password-new');
+    if (newPwInput) newPwInput.focus();
+  }
+
+  function hideSetPasswordForm() {
+    var form = document.getElementById('login-form');
+    var forgotBtn = document.getElementById('login-forgot-btn');
+    var setPasswordForm = document.getElementById('login-set-password-form');
+    var title = document.getElementById('login-title');
+    var subtitle = document.getElementById('login-subtitle');
+
+    if (setPasswordForm) setPasswordForm.style.display = 'none';
+    if (form) { form.style.display = 'block'; form.reset(); }
+    if (forgotBtn) forgotBtn.style.display = 'block';
+    if (title) title.textContent = 'Welcome to BrandOS';
+    if (subtitle) subtitle.textContent = 'Sign in to access your dashboard';
+
+    var newPw = document.getElementById('set-password-new');
+    var confirmPw = document.getElementById('set-password-confirm');
+    var errEl = document.getElementById('set-password-error');
+    var successEl = document.getElementById('set-password-success');
+    if (newPw) newPw.value = '';
+    if (confirmPw) confirmPw.value = '';
+    if (errEl) { errEl.textContent = ''; errEl.style.display = 'none'; }
+    if (successEl) { successEl.textContent = ''; successEl.style.display = 'none'; }
+  }
+
+  function initSetPasswordFormHandler(submitAction) {
+    var submitBtn = document.getElementById('set-password-submit-btn');
+    var backBtn = document.getElementById('set-password-back-btn');
+    var errEl = document.getElementById('set-password-error');
+    var successEl = document.getElementById('set-password-success');
+
+    if (!submitBtn) return;
+
+    // Clone and replace to remove previous event listeners
+    var newSubmitBtn = submitBtn.cloneNode(true);
+    submitBtn.parentNode.replaceChild(newSubmitBtn, submitBtn);
+
+    var newBackBtn = backBtn ? backBtn.cloneNode(true) : null;
+    if (backBtn && newBackBtn) {
+      backBtn.parentNode.replaceChild(newBackBtn, backBtn);
+    }
+
+    newSubmitBtn.addEventListener('click', function () {
+      var newPw = document.getElementById('set-password-new').value;
+      var confirmPw = document.getElementById('set-password-confirm').value;
+
+      if (errEl) { errEl.textContent = ''; errEl.style.display = 'none'; }
+      if (successEl) { successEl.textContent = ''; successEl.style.display = 'none'; }
+
+      if (!newPw || !confirmPw) {
+        if (errEl) { errEl.textContent = 'Please fill in both fields.'; errEl.style.display = 'block'; }
+        return;
+      }
+      if (newPw.length < 8) {
+        if (errEl) { errEl.textContent = 'Password must be at least 8 characters.'; errEl.style.display = 'block'; }
+        return;
+      }
+      if (newPw !== confirmPw) {
+        if (errEl) { errEl.textContent = 'Passwords do not match.'; errEl.style.display = 'block'; }
+        return;
+      }
+
+      newSubmitBtn.disabled = true;
+      newSubmitBtn.textContent = 'Setting password...';
+
+      submitAction(newPw)
+        .then(function () {
+          if (successEl) {
+            successEl.textContent = 'Password set! Redirecting...';
+            successEl.style.display = 'block';
+          }
+          setTimeout(function () {
+            var redirect = getRedirectTarget();
+            window.location.href = redirect ? redirect : '/';
+          }, 1500);
+        })
+        .catch(function (err) {
+          var message = 'Could not set password. The link may have expired.';
+          if (err && err.json && err.json.error_description) {
+            message = err.json.error_description;
+          }
+          if (errEl) { errEl.textContent = message; errEl.style.display = 'block'; }
+          newSubmitBtn.disabled = false;
+          newSubmitBtn.textContent = 'Set password';
+        });
+    });
+
+    if (newBackBtn) {
+      newBackBtn.addEventListener('click', function () {
+        hideSetPasswordForm();
+      });
     }
   }
 
@@ -252,16 +430,15 @@
       submitBtn.textContent = 'Logging in...';
 
       if (IS_DEV) {
-        // Dev mode: simulate login
         setTimeout(function () {
           var devConfig = AUTH_CONFIG.devMode || {};
           sessionStorage.setItem('auth-dev-role', devConfig.defaultRole || 'admin');
-          window.location.reload();
+          var redirect = getRedirectTarget();
+          window.location.href = redirect ? redirect : '/';
         }, 500);
         return;
       }
 
-      // Production: use GoTrue
       if (!gotrueAuth) {
         showLoginError('Authentication service not available.');
         submitBtn.disabled = false;
@@ -270,9 +447,9 @@
       }
 
       gotrueAuth.login(email, password, true)
-        .then(function (user) {
-          hideLoginOverlay();
-          window.location.reload();
+        .then(function () {
+          var redirect = getRedirectTarget();
+          window.location.href = redirect ? redirect : '/';
         })
         .catch(function (err) {
           var message = 'Invalid email or password.';
@@ -396,11 +573,7 @@
 
       var loginBtn = container.querySelector('.auth-login-btn');
       loginBtn.addEventListener('click', function () {
-        if (IS_DEV) {
-          showLoginOverlay();
-        } else {
-          showLoginOverlay();
-        }
+        redirectToLogin();
       });
     }
   }
@@ -413,22 +586,88 @@
       if (user) {
         user.logout()
           .then(function () {
-            window.location.href = 'index.html';
+            window.location.href = '/';
           })
           .catch(function () {
-            window.location.href = 'index.html';
+            window.location.href = '/';
           });
         return;
       }
     }
-    window.location.href = 'index.html';
+    window.location.href = '/';
+  }
+
+  //------- Hash Token Handler -------//
+
+  function handleHashTokens() {
+    var tokenInfo = parseHashTokens();
+    if (!tokenInfo) return false;
+
+    clearHash();
+
+    // If we're not on the login page, redirect there with the token
+    if (!isLoginPage()) {
+      var base = getBasePrefix();
+      window.location.href = base + LOGIN_PAGE + '#' + tokenInfo.type + '_token=' + encodeURIComponent(tokenInfo.token);
+      return true;
+    }
+
+    if (!gotrueAuth) {
+      console.warn('[Auth] Token in URL but GoTrue not available');
+      showLoginError('Authentication service not available. Please try again later.');
+      return true;
+    }
+
+    // Invite token — accept invitation and set password
+    if (tokenInfo.type === 'invite') {
+      showSetPasswordForm('Accept Invitation', 'Create a password to activate your account.');
+      initSetPasswordFormHandler(function (password) {
+        return gotrueAuth.acceptInvite(tokenInfo.token, password, true);
+      });
+      return true;
+    }
+
+    // Recovery token — reset password
+    if (tokenInfo.type === 'recovery') {
+      showSetPasswordForm('Reset Password', 'Enter your new password below.');
+      initSetPasswordFormHandler(function (password) {
+        return gotrueAuth.recover(tokenInfo.token, true).then(function (user) {
+          return user.update({ password: password });
+        });
+      });
+      return true;
+    }
+
+    // Confirmation token — confirm email
+    if (tokenInfo.type === 'confirmation') {
+      gotrueAuth.confirm(tokenInfo.token)
+        .then(function () {
+          var successEl = document.getElementById('login-success');
+          if (successEl) {
+            successEl.textContent = 'Email confirmed! You can now log in.';
+            successEl.style.display = 'block';
+          }
+        })
+        .catch(function () {
+          showLoginError('Email confirmation failed. The link may have expired.');
+        });
+      return true;
+    }
+
+    // Access token (OAuth callback) — GoTrue handles automatically, just reload
+    if (tokenInfo.type === 'access') {
+      var redirect = getRedirectTarget();
+      window.location.href = redirect ? redirect : '/';
+      return true;
+    }
+
+    return false;
   }
 
   //------- Main Auth Check -------//
 
   function checkAuth() {
-    var pagePath = getCurrentPagePath();
-    var requiredRole = getRequiredRole(pagePath);
+    var requiredRole = getRequiredRole();
 
     // Public pages: show content immediately
     if (requiredRole === 'public') {
@@ -453,17 +692,15 @@
 
     // Protected page: check for current user
     if (!gotrueAuth) {
-      console.warn('[Auth] GoTrue not available — blocking access');
-      renderAuthButton(null);
-      showLoginOverlay();
+      console.warn('[Auth] GoTrue not available — redirecting to login');
+      redirectToLogin();
       return;
     }
 
     var user = gotrueAuth.currentUser();
 
     if (!user) {
-      renderAuthButton(null);
-      showLoginOverlay();
+      redirectToLogin();
       return;
     }
 
@@ -483,6 +720,7 @@
       return;
     }
 
+    var pagePath = getCurrentPagePath();
     if (!hasClientFolderAccess(user, pagePath)) {
       renderAuthButton(user);
       setRoleClass(userRole);
@@ -494,8 +732,20 @@
     setRoleClass(userRole);
     renderAuthButton(user);
     filterNavLinks(userRole, user);
-    hideLoginOverlay();
     showContent();
+  }
+
+  //------- Login Page Auth Check -------//
+
+  function checkLoginPageAuth() {
+    // If user is already logged in and lands on login page, redirect away
+    if (!gotrueAuth) return;
+
+    var user = gotrueAuth.currentUser();
+    if (user) {
+      var redirect = getRedirectTarget();
+      window.location.href = redirect ? redirect : '/';
+    }
   }
 
   //------- Dev Mode -------//
@@ -541,8 +791,7 @@
       toolbar.appendChild(btn);
     });
 
-    var pagePath = getCurrentPagePath();
-    var requiredRole = getRequiredRole(pagePath);
+    var requiredRole = getRequiredRole();
     var pageInfo = document.createElement('span');
     pageInfo.className = 'auth-dev-toolbar-page-info';
     pageInfo.textContent = 'Page requires: ' + requiredRole;
@@ -561,18 +810,69 @@
 
     initLoginForm();
 
-    // Logged-out state: show login overlay
+    // On the login page in dev mode
+    if (isLoginPage()) {
+      // Handle hash tokens in dev mode (simulate)
+      var tokenInfo = parseHashTokens();
+      if (tokenInfo) {
+        clearHash();
+        if (tokenInfo.type === 'invite') {
+          showSetPasswordForm('Accept Invitation', 'Create a password to activate your account.');
+          initSetPasswordFormHandler(function () {
+            return new Promise(function (resolve) {
+              setTimeout(function () {
+                sessionStorage.setItem('auth-dev-role', devConfig.defaultRole || 'admin');
+                resolve();
+              }, 500);
+            });
+          });
+          renderDevToolbar(activeRole);
+          return;
+        }
+        if (tokenInfo.type === 'recovery') {
+          showSetPasswordForm('Reset Password', 'Enter your new password below.');
+          initSetPasswordFormHandler(function () {
+            return new Promise(function (resolve) {
+              setTimeout(function () {
+                resolve();
+              }, 500);
+            });
+          });
+          renderDevToolbar(activeRole);
+          return;
+        }
+      }
+
+      // If logged in, redirect away from login page
+      if (activeRole !== 'logged-out') {
+        var redirect = getRedirectTarget();
+        if (redirect) {
+          window.location.href = redirect;
+          return;
+        }
+      }
+      showContent();
+      renderDevToolbar(activeRole);
+      return;
+    }
+
+    // Logged-out state: redirect to login
     if (activeRole === 'logged-out') {
+      var requiredRole = getRequiredRole();
+      if (requiredRole !== 'public') {
+        renderDevToolbar('logged-out');
+        redirectToLogin();
+        return;
+      }
       renderAuthButton(null);
+      showContent();
       renderDevToolbar('logged-out');
-      showLoginOverlay();
       return;
     }
 
     // Simulate a logged-in user
     var devUser = createDevUser(activeRole);
-    var pagePath = getCurrentPagePath();
-    var requiredRole = getRequiredRole(pagePath);
+    var requiredRole = getRequiredRole();
 
     setRoleClass(activeRole);
     renderAuthButton(devUser);
@@ -583,6 +883,7 @@
       return;
     }
 
+    var pagePath = getCurrentPagePath();
     if (!hasClientFolderAccess(devUser, pagePath)) {
       renderDevToolbar(activeRole);
       redirectAccessDenied();
@@ -604,6 +905,18 @@
 
     initGoTrue();
     initLoginForm();
+
+    // Handle Netlify Identity hash tokens (invite, recovery, confirmation, OAuth)
+    var handledToken = handleHashTokens();
+    if (handledToken) return;
+
+    // On login page: check if already logged in
+    if (isLoginPage()) {
+      checkLoginPageAuth();
+      showContent();
+      return;
+    }
+
     checkAuth();
   }
 

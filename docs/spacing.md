@@ -4,6 +4,7 @@ subtitle: "Spacing tokens and units"
 description: "Complete reference for spacing tokens including units, space tokens, section spacing, and border tokens."
 section: "Design System"
 order: 4
+access: "team"
 ---
 
 Spacing tokens define **distance**, not intent. They are reused for gaps, padding, and margins depending on context.

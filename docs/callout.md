@@ -4,6 +4,7 @@ subtitle: "Callout and alert component guidelines"
 description: "How to use callout styles and semantic variants in the design system."
 section: "Design System"
 order: 9
+access: "team"
 ---
 
 Callouts are used to **highlight important information** within content. They draw attention to notes, tips, warnings, and other contextual messages.

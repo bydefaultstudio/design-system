@@ -4,6 +4,7 @@ subtitle: "What the brand uniquely offers"
 description: "The unique value the brand delivers to its audience and why it matters."
 section: "Brand Book"
 order: 5
+access: "team"
 ---
 
 We design culturally forward and strategically led digital brands and interactive experiences for publishers and brands.

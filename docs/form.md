@@ -4,6 +4,7 @@ subtitle: "Form element styling and patterns"
 description: "How to use form elements, labels, inputs, and layout patterns in the design system."
 section: "Design System"
 order: 10
+access: "team"
 ---
 
 Form elements are styled globally using semantic tokens. All text inputs, textareas, selects, checkboxes, and radios share **consistent sizing, focus states, and disabled styling**.

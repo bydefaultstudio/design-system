@@ -1,6 +1,6 @@
 /**
  * Auth Configuration
- * Role-to-page mapping for Netlify Identity authentication.
+ * Role hierarchy and settings for Netlify Identity authentication.
  *
  * Access levels (lowest to highest):
  *   public  — no login required
@@ -8,7 +8,11 @@
  *   team    — requires team role or higher (default)
  *   admin   — requires admin role only
  *
- * @version 1.0.0
+ * Page access is controlled via data-access attribute on <body>,
+ * set either by the docs generator (from frontmatter) or manually
+ * on standalone HTML pages.
+ *
+ * @version 2.0.0
  * @author By Default
  */
 
@@ -19,35 +23,18 @@ var AUTH_CONFIG = {
   // Ordered from lowest to highest privilege
   roleHierarchy: ['public', 'client', 'team', 'admin'],
 
-  //------- Page Access Map -------//
-  // Key: page path relative to site root
-  // Value: minimum role required
-  // Pages not listed here default to `defaultRole`
-
-  pageRoles: {
-
-    // Public pages (no login required)
-    // 'some-page.html': 'public',
-
-    // Client pages (tool UIs only, not doc pages)
-    'cpm-calculator/index.html': 'client',
-    'svg-cleaner/index.html': 'client',
-    'display-ad-preview/index.html': 'client',
-
-    // Admin pages
-    'access-control.html': 'admin'
-
-  },
-
-  // Pages not listed above require this role
+  // Pages without a data-access attribute default to this role
   defaultRole: 'team',
+
+  // Standalone login page (relative to site root)
+  loginPage: 'auth/login.html',
+
+  // Page shown when access is denied
+  accessDeniedPage: 'access-denied.html',
 
   // Client folder prefix — pages under these paths
   // are accessible only to the client whose app_metadata.clientFolder matches
   clientFolderPrefix: '/',
-
-  // Page shown when access is denied
-  accessDeniedPage: 'access-denied.html',
 
   //------- Dev Mode -------//
   // Activates automatically on localhost / 127.0.0.1.

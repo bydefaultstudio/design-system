@@ -4,6 +4,7 @@ subtitle: "The principles that guide every decision"
 description: "The core values that shape how the brand thinks, acts, and communicates."
 section: "Brand Book"
 order: 2
+access: "team"
 ---
 
 ## Alternative

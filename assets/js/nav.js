@@ -79,7 +79,7 @@
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="brand-mission-vision-purpose.html" class="nav-link">Mission, Vision & Purpose</a></li><li><a href="brand-values.html" class="nav-link">Brand Values</a></li><li><a href="brand-origin-story.html" class="nav-link">Origin Story</a></li><li><a href="brand-positioning.html" class="nav-link">Positioning</a></li><li><a href="brand-value-proposition.html" class="nav-link">Value Proposition</a></li><li><a href="brand-personality.html" class="nav-link">Brand Personality</a></li><li><a href="brand-tone-of-voice.html" class="nav-link">Tone of Voice</a></li><li><a href="brand-book/index.html" class="nav-link">Visual Identity</a></li></ul></details><details class="nav-section">
+      <ul class="nav-list"><li><a href="brand/mission-vision-purpose.html" class="nav-link">Mission, Vision & Purpose</a></li><li><a href="brand/values.html" class="nav-link">Brand Values</a></li><li><a href="brand/origin-story.html" class="nav-link">Origin Story</a></li><li><a href="brand/positioning.html" class="nav-link">Positioning</a></li><li><a href="brand/value-proposition.html" class="nav-link">Value Proposition</a></li><li><a href="brand/personality.html" class="nav-link">Brand Personality</a></li><li><a href="brand/tone-of-voice.html" class="nav-link">Tone of Voice</a></li><li><a href="brand/index.html" class="nav-link">Visual Identity</a></li></ul></details><details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Design System</span>
         <span class="nav-toggle-icon">
@@ -88,7 +88,7 @@
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="design-system-overview.html" class="nav-link">Overview</a></li><li><a href="color.html" class="nav-link">Color</a></li><li><a href="typography.html" class="nav-link">Typography</a></li><li><a href="spacing.html" class="nav-link">Spacing</a></li><li><a href="border.html" class="nav-link">Border</a></li><li><a href="iconography.html" class="nav-link">Iconography</a></li><li><a href="button.html" class="nav-link">Button</a></li><li><a href="callout.html" class="nav-link">Callout</a></li><li><a href="disclosure.html" class="nav-link">Disclosure</a></li><li><a href="form.html" class="nav-link">Form</a></li><li><a href="table.html" class="nav-link">Table</a></li><li><a href="design-system/index.html" class="nav-link">Style Guide</a></li></ul></details><details class="nav-section">
+      <ul class="nav-list"><li><a href="design-system/overview.html" class="nav-link">Overview</a></li><li><a href="design-system/color.html" class="nav-link">Color</a></li><li><a href="design-system/typography.html" class="nav-link">Typography</a></li><li><a href="design-system/spacing.html" class="nav-link">Spacing</a></li><li><a href="design-system/border.html" class="nav-link">Border</a></li><li><a href="design-system/iconography.html" class="nav-link">Iconography</a></li><li><a href="design-system/button.html" class="nav-link">Button</a></li><li><a href="design-system/callout.html" class="nav-link">Callout</a></li><li><a href="design-system/disclosure.html" class="nav-link">Disclosure</a></li><li><a href="design-system/form.html" class="nav-link">Form</a></li><li><a href="design-system/table.html" class="nav-link">Table</a></li><li><a href="design-system/index.html" class="nav-link">Style Guide</a></li></ul></details><details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Code</span>
         <span class="nav-toggle-icon">
@@ -97,7 +97,7 @@
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="js-code-structure.html" class="nav-link">JavaScript</a></li><li><a href="css-code-struture.html" class="nav-link">CSS</a></li><li><a href="layout.html" class="nav-link">HTML Layout</a></li></ul></details><details class="nav-section">
+      <ul class="nav-list"><li><a href="code/javascript.html" class="nav-link">JavaScript</a></li><li><a href="code/css.html" class="nav-link">CSS</a></li><li><a href="code/layout.html" class="nav-link">HTML Layout</a></li></ul></details><details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Content</span>
         <span class="nav-toggle-icon">
@@ -106,7 +106,7 @@
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="seo-best-practices.html" class="nav-link">SEO</a></li><li><a href="markdown-style.html" class="nav-link">Markdown</a></li></ul></details><details class="nav-section">
+      <ul class="nav-list"><li><a href="content/seo-best-practices.html" class="nav-link">SEO</a></li><li><a href="design-system/markdown-style.html" class="nav-link">Markdown</a></li></ul></details><details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Tools</span>
         <span class="nav-toggle-icon">
@@ -115,7 +115,7 @@
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="calculator-docs.html" class="nav-link">CPM Calculator</a></li><li><a href="svg-cleaner-docs.html" class="nav-link">SVG Cleaner</a></li><li><a href="display-ad-preview-docs.html" class="nav-link">Display Ad Preview</a></li></ul></details><details class="nav-section" data-auth-role="admin">
+      <ul class="nav-list"><li><a href="cpm-calculator/about.html" class="nav-link">CPM Calculator</a></li><li><a href="svg-cleaner/about.html" class="nav-link">SVG Cleaner</a></li><li><a href="display-ad-preview/about.html" class="nav-link">Display Ad Preview</a></li></ul></details><details class="nav-section" data-access="admin">
       <summary class="nav-section-toggle">
         <span>Admin</span>
         <span class="nav-toggle-icon">
@@ -124,7 +124,7 @@
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="access-control.html" class="nav-link">Access Control</a></li></ul></details>`
+      <ul class="nav-list"><li><a href="admin/access-control.html" class="nav-link" data-access="admin">Access Control</a></li></ul></details>`
       + '</div>'
       + '<div class="auth-button-container"></div>'
       + '</aside>'

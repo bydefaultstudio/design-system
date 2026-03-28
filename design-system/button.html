@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button - By Default Brand OS</title>
+    <meta name="description" content="How to use button styles and modifiers in the design system.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Button - By Default Brand OS">
+    <meta property="og:description" content="How to use button styles and modifiers in the design system.">
+    <meta property="og:image" content="../assets/images/og-default.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Design System Framework (path set in docs/docs.config.js) -->
+    <link rel="stylesheet" href="../design-system/design-system.css" id="design-system-css"
+          onerror="document.getElementById('ds-missing-banner').style.display='flex'">
+    <!-- Brand Book (path set in docs/docs.config.js) -->
+    <link rel="stylesheet" href="../brand-book/brand-book.css">
+
+    <!-- Google Fonts (configured in docs/docs.config.js) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Markdown CSS -->
+    <link rel="stylesheet" href="../assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
+    <script>
+      if (!(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0')) {
+        document.write('<script src="https://unpkg.com/gotrue-js@0.9.29/lib/index.umd.js"><\/script>');
+      }
+    </script>
+</head>
+<body class="auth-loading" data-access="team">
+
+    <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
+    <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
+        <span>⚠️</span>
+        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">docs/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
+        <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
+    </div>
+
+    <!-- Site Navigation (header + sidebar injected by nav.js) -->
+    <div id="site-nav" data-base="../"></div>
+
+    <div class="docs-main-area">
+        <!-- Page Header (full width, outside grid) -->
+        <div class="page-header">
+      <div class="container-small">
+        <h1>Button</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">Button component and usage guidelines</p>
+        <div class="button-group justify-center">
+          <a href="../docs/button.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+          
+        </div>
+      </div>
+    </div>
+
+        <!-- Main Content + TOC grid -->
+        <div class="docs-content-grid padding-global">
+            <!-- Main Content -->
+            <main class="docs-main">
+                <article class="markdown-body">
+                    <p>Buttons are interactive elements used to trigger actions.<br>They size to their content by default and should communicate <strong>clear intent and hierarchy</strong>.</p>
+<hr>
+<h2 id="base-button">Base Button</h2>
+<p><code>.button</code> (or the <code>button</code> element) is the default and most commonly used button.</p>
+<p>Use this when you want to highlight a <strong>primary action</strong>.</p>
+<h3 id="when-to-use">When to use</h3>
+<ul>
+<li>Primary calls to action</li>
+<li>Form submissions</li>
+<li>Key user decisions</li>
+</ul>
+<h3 id="default-styling">Default Styling</h3>
+<ul>
+<li><strong>Font:</strong> Primary font, <code>var(--button-font-size)</code></li>
+<li><strong>Background:</strong> <code>var(--button-primary)</code></li>
+<li><strong>Text color:</strong> <code>var(--button-text)</code></li>
+<li><strong>Border:</strong> <code>var(--border-m)</code> solid <code>var(--button-primary)</code></li>
+</ul>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-an2xpn5id" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-an2xpn5id" class="language-html">&lt;button class=&quot;button&quot;&gt;Primary Action&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="outline-button">Outline Button</h2>
+<p><code>.is-outline</code> removes the filled background and uses a border instead.</p>
+<h3 id="when-to-use">When to use</h3>
+<ul>
+<li>Secondary actions</li>
+<li>Actions that should not visually compete with the primary CTA</li>
+<li>Buttons placed near strong visual content</li>
+</ul>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-d49o96b9f" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-d49o96b9f" class="language-html">&lt;button class=&quot;button is-outline&quot;&gt;Secondary Action&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="faded-button">Faded Button</h2>
+<p><code>.is-faded</code> applies a subtle background using <code>var(--button-faded)</code>.</p>
+<h3 id="when-to-use">When to use</h3>
+<ul>
+<li>Low-priority actions</li>
+<li>Passive or optional interactions</li>
+<li>UI controls that should feel lightweight</li>
+</ul>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-paik1zswf" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-paik1zswf" class="language-html">&lt;button class=&quot;button is-faded&quot;&gt;Optional Action&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="outline-faded">Outline + Faded</h2>
+<p><code>.is-outline.is-faded</code> combines both modifiers.</p>
+<h3 id="when-to-use">When to use</h3>
+<ul>
+<li>Tertiary actions</li>
+<li>Utility controls</li>
+<li>Actions that should be visible but de-emphasised</li>
+</ul>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-glkl7gctu" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-glkl7gctu" class="language-html">&lt;button class=&quot;button is-outline is-faded&quot;&gt;Tertiary Action&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="small-button">Small Button</h2>
+<p><code>.is-small</code> reduces font size and padding.</p>
+<h3 id="when-to-use">When to use</h3>
+<ul>
+<li>Dense UI areas</li>
+<li>Tables, cards, or compact layouts</li>
+<li>Secondary actions inside components</li>
+</ul>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-e7wl6wwls" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-e7wl6wwls" class="language-html">&lt;button class=&quot;button is-small&quot;&gt;Small Action&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="icon-button">Icon Button</h2>
+<p><code>.is-icon</code> creates a circular button designed for icons only.</p>
+<h3 id="when-to-use">When to use</h3>
+<ul>
+<li>Icon-only actions</li>
+<li>Toolbar controls</li>
+<li>Repeated UI actions (close, add, expand)</li>
+</ul>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-rd90qd88u" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-rd90qd88u" class="language-html">&lt;button class=&quot;button is-icon&quot;&gt;
+  &lt;div class=&quot;icn-svg&quot;&gt;
+    &lt;!-- SVG icon --&gt;
+  &lt;/div&gt;
+&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="disabled-button">Disabled Button</h2>
+<p><code>:disabled</code> or <code>.is-disabled</code> reduces opacity and prevents interaction.</p>
+<h3 id="when-to-use">When to use</h3>
+<ul>
+<li>Actions that are temporarily unavailable</li>
+<li>Form submissions when validation is incomplete</li>
+<li>Controls that require a prerequisite action</li>
+</ul>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-at6qgwra2" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-at6qgwra2" class="language-html">&lt;button class=&quot;button&quot; disabled&gt;Disabled Action&lt;/button&gt;
+&lt;button class=&quot;button is-outline&quot; disabled&gt;Disabled Outline&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<p><strong>Styling:</strong> <code>opacity: 0.4</code>, <code>cursor: not-allowed</code>, <code>pointer-events: none</code>.</p>
+<hr>
+<h2 id="combining-modifiers">Combining Modifiers</h2>
+<p>Button modifiers can be combined to match intent and context.</p>
+<h3 id="common-combinations">Common combinations</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Combination</th>
+<th>Use case</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.is-outline.is-faded</code></td>
+<td>Tertiary or utility actions</td>
+</tr>
+<tr>
+<td><code>.is-small.is-outline</code></td>
+<td>Compact secondary actions</td>
+</tr>
+<tr>
+<td><code>.is-small.is-faded</code></td>
+<td>Low-priority compact actions</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="button-group">Button Group</h2>
+<p><code>.button-group</code> is a flex container for grouping multiple buttons together. Use it whenever two or more buttons sit side by side.</p>
+<h3 id="why-use-it">Why use it</h3>
+<ul>
+<li>Provides consistent spacing between buttons (<code>var(--space-m)</code>)</li>
+<li>Wraps buttons cleanly on smaller screens (<code>flex-wrap: wrap</code>)</li>
+<li>Vertically centres buttons of different sizes (<code>align-items: center</code>)</li>
+</ul>
+<h3 id="default-left-aligned">Default (left-aligned)</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-mnv27g1l0" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-mnv27g1l0" class="language-html">&lt;div class=&quot;button-group&quot;&gt;
+  &lt;button class=&quot;button&quot;&gt;Primary&lt;/button&gt;
+  &lt;button class=&quot;button is-outline&quot;&gt;Secondary&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="centred">Centred</h3>
+<p>Add <code>.justify-center</code> to horizontally centre the group.</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-nxk17u85w" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-nxk17u85w" class="language-html">&lt;div class=&quot;button-group justify-center&quot;&gt;
+  &lt;button class=&quot;button&quot;&gt;Primary&lt;/button&gt;
+  &lt;button class=&quot;button is-outline&quot;&gt;Secondary&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="right-aligned">Right-aligned</h3>
+<p>Add <code>.justify-end</code> to push buttons to the right.</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-g5cb24kr6" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-g5cb24kr6" class="language-html">&lt;div class=&quot;button-group justify-end&quot;&gt;
+  &lt;button class=&quot;button is-faded&quot;&gt;Cancel&lt;/button&gt;
+  &lt;button class=&quot;button&quot;&gt;Confirm&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="combo-classes">Combo classes</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Class</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.justify-center</code></td>
+<td>Centre-aligns the button group</td>
+</tr>
+<tr>
+<td><code>.justify-end</code></td>
+<td>Right-aligns the button group</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="usage-rules">Usage Rules</h2>
+<ul>
+<li>Buttons should <strong>never stretch full width by default</strong></li>
+<li>Use one clear primary button per section when possible</li>
+<li>Use outline or faded styles to reduce visual competition</li>
+<li>Use icon buttons <strong>only</strong> when the icon meaning is clear</li>
+</ul>
+<p>If a button feels too prominent or too quiet, change the modifier — not the base styles.</p>
+
+                </article>
+            </main>
+
+            <!-- Table of Contents -->
+            <aside class="docs-toc">
+      <span class="toc-header">On this page</span>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#base-button" class="toc-link">Base Button</a></li><li class="toc-item toc-level-2"><a href="#outline-button" class="toc-link">Outline Button</a></li><li class="toc-item toc-level-2"><a href="#faded-button" class="toc-link">Faded Button</a></li><li class="toc-item toc-level-2"><a href="#outline-faded" class="toc-link">Outline + Faded</a></li><li class="toc-item toc-level-2"><a href="#small-button" class="toc-link">Small Button</a></li><li class="toc-item toc-level-2"><a href="#icon-button" class="toc-link">Icon Button</a></li><li class="toc-item toc-level-2"><a href="#disabled-button" class="toc-link">Disabled Button</a></li><li class="toc-item toc-level-2"><a href="#combining-modifiers" class="toc-link">Combining Modifiers</a></li><li class="toc-item toc-level-2"><a href="#button-group" class="toc-link">Button Group</a></li><li class="toc-item toc-level-2"><a href="#usage-rules" class="toc-link">Usage Rules</a></li></ul></nav></div>
+    </aside>
+        </div>
+
+        <!-- Page Navigation (Previous / Next) -->
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="design-system/iconography.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <h3 class="page-nav-title">Iconography</h3>
+      </span>
+    </a><a href="design-system/callout.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <h3 class="page-nav-title">Callout</h3>
+      </span>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+    </a></div></nav>
+
+        <!-- Footer -->
+        <footer class="docs-footer">
+            <div class="docs-footer-inner padding-global">
+                <p class="docs-footer-text">© 2026 By Default BrandOS</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- Initialize Highlight.js, Copy, and TOC -->
+    <script>
+        (function() {
+            'use strict';
+
+            function initHighlight() {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+
+            function copyToClipboard(text) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    return navigator.clipboard.writeText(text);
+                }
+                var textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                return Promise.resolve();
+            }
+
+            var copyIconPath = 'M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z';
+            var checkIconPath = 'M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z';
+
+            function initClipboard() {
+                const buttons = document.querySelectorAll('.copy-code-btn');
+
+                buttons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const targetId = this.getAttribute('data-clipboard-target');
+                        const codeElement = document.querySelector(targetId);
+
+                        if (codeElement) {
+                            const text = codeElement.textContent;
+                            const textSpan = this.querySelector('.copy-text');
+                            const btnPath = this.querySelector('path');
+
+                            copyToClipboard(text).then(() => {
+                                if (btnPath) {
+                                    btnPath.setAttribute('d', checkIconPath);
+                                }
+                                if (textSpan) {
+                                    textSpan.textContent = 'Copied!';
+                                }
+                                setTimeout(() => {
+                                    if (btnPath) {
+                                        btnPath.setAttribute('d', copyIconPath);
+                                    }
+                                    if (textSpan) {
+                                        textSpan.textContent = 'Copy';
+                                    }
+                                }, 1500);
+                            });
+                        }
+                    });
+                });
+            }
+
+            function initTOCActiveState() {
+                const tocLinks = document.querySelectorAll('.toc-link');
+                const headings = document.querySelectorAll('h1[id], h2[id]');
+
+                if (tocLinks.length === 0 || headings.length === 0) return;
+
+                const linkMap = new Map();
+                tocLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        const id = href.substring(1);
+                        linkMap.set(id, link);
+                    }
+                });
+
+                const observerOptions = {
+                    rootMargin: '-20% 0px -70% 0px',
+                    threshold: 0
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const id = entry.target.id;
+                        const link = linkMap.get(id);
+
+                        if (entry.isIntersecting) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            if (link) {
+                                link.classList.add('toc-link-active');
+                            }
+                        }
+                    });
+                }, observerOptions);
+
+                headings.forEach(heading => {
+                    if (heading.id) {
+                        observer.observe(heading);
+                    }
+                });
+
+                function setInitialActive() {
+                    let activeHeading = null;
+                    let maxTop = -Infinity;
+
+                    headings.forEach(heading => {
+                        const rect = heading.getBoundingClientRect();
+                        if (rect.top <= 100 && rect.top > maxTop) {
+                            maxTop = rect.top;
+                            activeHeading = heading;
+                        }
+                    });
+
+                    if (activeHeading && activeHeading.id) {
+                        const link = linkMap.get(activeHeading.id);
+                        if (link) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            link.classList.add('toc-link-active');
+                        }
+                    }
+                }
+
+                setInitialActive();
+
+                let scrollTimeout;
+                window.addEventListener('scroll', () => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(setInitialActive, 100);
+                });
+            }
+
+            function init() {
+                initHighlight();
+                initClipboard();
+                initTOCActiveState();
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+
+    <!-- Back to Top -->
+    <div class="back-to-top-wrapper">
+      <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
+        <div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 4V2H20V4H4Z" fill="currentColor"/>
+          <path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/>
+        </svg></div>
+      </button>
+    </div>
+    <script>
+      (function() {
+        var btn = document.querySelector('.back-to-top-wrapper');
+        if (!btn) return;
+        window.addEventListener('scroll', function() {
+          btn.classList.toggle('is-visible', window.scrollY > 300);
+        });
+        btn.querySelector('button').addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+
+    <!-- Site Navigation -->
+    <script src="../assets/js/nav.js"></script>
+    <!-- Auth -->
+    <script src="../assets/js/auth-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+
+    <script>
+      /* Table scroll overflow hint */
+      (function initTableScroll() {
+        var wrappers = document.querySelectorAll('.table-scroll');
+        if (!wrappers.length) return;
+
+        function checkOverflow(wrapper) {
+          var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
+          var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
+          wrapper.classList.toggle('is-overflowing', isOverflowing);
+          wrapper.classList.toggle('is-scrolled-end', isAtEnd);
+        }
+
+        wrappers.forEach(function(wrapper) {
+          checkOverflow(wrapper);
+          wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+        });
+
+        window.addEventListener('resize', function() {
+          wrappers.forEach(checkOverflow);
+        });
+      })();
+    </script>
+</body>
+</html>

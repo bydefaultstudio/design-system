@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In - By Default Brand OS</title>
+  <meta name="description" content="Sign in to access By Default BrandOS.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+  <!-- Robots -->
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Brand Book -->
+  <link rel="stylesheet" href="../brand-book/brand-book.css">
+  <!-- Design System Framework -->
+  <link rel="stylesheet" href="../design-system/design-system.css">
+  <!-- Site styles -->
+  <link rel="stylesheet" href="../assets/css/style.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
+  <script>
+    if (!(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0')) {
+      document.write('<script src="https://unpkg.com/gotrue-js@0.9.29/lib/index.umd.js"><\/script>');
+    }
+  </script>
+</head>
+
+<body data-access="public">
+
+  <div class="login-page">
+    <div class="login-card">
+      <img src="../assets/images/logo.svg" alt="Logo" class="login-logo">
+      <h1 class="login-title" id="login-title">Welcome to BrandOS</h1>
+      <p class="login-subtitle" id="login-subtitle">Sign in to access your dashboard</p>
+
+      <!-- Login Form -->
+      <form class="login-form" id="login-form" autocomplete="on">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" name="email" autocomplete="email" required placeholder="you@company.com">
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" name="password" autocomplete="current-password" required placeholder="Enter your password">
+        </div>
+        <div class="login-error" id="login-error" role="alert"></div>
+        <div class="login-success" id="login-success" role="status"></div>
+        <button type="submit" class="button login-submit-btn">Log in</button>
+      </form>
+
+      <!-- Forgot Password Toggle -->
+      <button type="button" class="login-forgot-btn" id="login-forgot-btn">Forgot password?</button>
+
+      <!-- Reset Password Form (send recovery email) -->
+      <div class="login-reset-form" id="login-reset-form" style="display:none;">
+        <div class="form-group">
+          <label for="reset-email">Email</label>
+          <input type="email" id="reset-email" name="reset-email" autocomplete="email" required placeholder="you@company.com">
+        </div>
+        <div class="login-error" id="reset-error" role="alert"></div>
+        <div class="login-success" id="reset-success" role="status"></div>
+        <button type="button" class="button login-submit-btn" id="reset-submit-btn">Send reset link</button>
+        <button type="button" class="login-forgot-btn" id="reset-back-btn">Back to login</button>
+      </div>
+
+      <!-- Set Password Form (for invite/recovery tokens) -->
+      <div class="login-set-password-form" id="login-set-password-form" style="display:none;">
+        <div class="form-group">
+          <label for="set-password-new">New password</label>
+          <input type="password" id="set-password-new" name="new-password" autocomplete="new-password" required placeholder="Enter new password" minlength="8">
+        </div>
+        <div class="form-group">
+          <label for="set-password-confirm">Confirm password</label>
+          <input type="password" id="set-password-confirm" name="confirm-password" autocomplete="new-password" required placeholder="Confirm new password" minlength="8">
+        </div>
+        <div class="login-error" id="set-password-error" role="alert"></div>
+        <div class="login-success" id="set-password-success" role="status"></div>
+        <button type="button" class="button login-submit-btn" id="set-password-submit-btn">Set password</button>
+        <button type="button" class="login-forgot-btn" id="set-password-back-btn">Back to login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auth -->
+  <script src="../assets/js/auth-config.js"></script>
+  <script src="../assets/js/auth.js"></script>
+
+</body>
+
+</html>
