@@ -146,7 +146,11 @@
 
   function getRedirectTarget() {
     var params = new URLSearchParams(window.location.search);
-    return params.get('redirect') || null;
+    var target = params.get('redirect');
+    if (!target) return null;
+    // Ensure absolute path so it resolves from root, not from /auth/
+    if (target.charAt(0) !== '/') target = '/' + target;
+    return target;
   }
 
   //------- Hash Token Parsing -------//
