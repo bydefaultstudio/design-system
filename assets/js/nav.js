@@ -18,18 +18,18 @@
   var ICON_COLLAPSE = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5.6 12L9.6 8L11 9.4L9.81421 10.5858C9.03316 11.3668 9.03316 12.6332 9.81421 13.4142L11 14.6L9.6 16L5.6 12Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22 22H2V2H22V22ZM4 18C4 19.1046 4.89543 20 6 20H12C13.1046 20 14 19.1046 14 18V6C14 4.89543 13.1046 4 12 4H6C4.89543 4 4 4.89543 4 6V18ZM16 18C16 19.1046 16.8954 20 18 20C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4C16.8954 4 16 4.89543 16 6V18Z" fill="currentColor"/></svg>';
   var ICON_EXPAND = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12.4 12L8.4 16L7 14.6L8.18579 13.4142C8.96684 12.6332 8.96684 11.3668 8.18579 10.5858L7 9.4L8.4 8L12.4 12Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22 22H2V2H22V22ZM4 18C4 19.1046 4.89543 20 6 20H12C13.1046 20 14 19.1046 14 18V6C14 4.89543 13.1046 4 12 4H6C4.89543 4 4 4.89543 4 6V18ZM16 18C16 19.1046 16.8954 20 18 20C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4C16.8954 4 16 4.89543 16 6V18Z" fill="currentColor"/></svg>';
   var ICON_BACK = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 18V15C18 13.8954 17.1046 13 16 13H10.2392C9.34831 13 8.90214 14.0771 9.53211 14.7071L11.425 16.6L10.025 18.025L4 12L10 6L11.425 7.425L9.54652 9.29043C8.91317 9.91938 9.35857 11 10.2512 11H20V18H18Z" fill="currentColor"/></svg>';
-  var ICON_SUN = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15ZM12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17ZM11 1H13V4H11V1ZM11 20H13V23H11V20ZM3.51472 4.92893L4.92893 3.51472L7.05025 5.63604L5.63604 7.05025L3.51472 4.92893ZM16.9497 18.364L18.364 16.9497L20.4853 19.0711L19.0711 20.4853L16.9497 18.364ZM1 13V11H4V13H1ZM20 13V11H23V13H20ZM3.51472 19.0711L5.63604 16.9497L7.05025 18.364L4.92893 20.4853L3.51472 19.0711ZM16.9497 5.63604L19.0711 3.51472L20.4853 4.92893L18.364 7.05025L16.9497 5.63604Z" fill="currentColor"/></svg>';
-  var ICON_MOON = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C12.3373 3 12.6713 3.01526 13.0014 3.04517C10.6237 4.52399 9 7.07627 9 10C9 14.4183 12.5817 18 17 18C17.9254 18 18.8091 17.8298 19.6253 17.5192C18.2725 19.6313 15.8032 21 13 21H12Z" fill="currentColor"/></svg>';
+  var ICON_SUN = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15ZM12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17ZM11 1H13V4H11V1ZM11 20H13V23H11V20ZM3.51472 4.92893L4.92893 3.51472L7.05025 5.63604L5.63604 7.05025L3.51472 4.92893ZM16.9497 18.364L18.364 16.9497L20.4853 19.0711L19.0711 20.4853L16.9497 18.364ZM1 13V11H4V13H1ZM20 13V11H23V13H20ZM3.51472 19.0711L5.63604 16.9497L7.05025 18.364L4.92893 20.4853L3.51472 19.0711ZM16.9497 5.63604L19.0711 3.51472L20.4853 4.92893L18.364 7.05025L16.9497 5.63604Z" fill="currentColor"/></svg>';
+  var ICON_MOON = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15.1625 17.6625C16.7208 16.1042 17.5 14.2167 17.5 12C17.5 9.78333 16.7208 7.89583 15.1625 6.3375C13.9817 5.15672 12.1597 4.35602 10.402 4.10029C9.60391 3.98418 9.20482 4.89906 9.63374 5.58204C10.0596 6.26022 10.4192 6.97871 10.7125 7.7375C11.2375 9.09583 11.5 10.5167 11.5 12C11.5 13.4833 11.2375 14.9042 10.7125 16.2625C10.4462 16.9516 10.1252 17.6074 9.74945 18.23C9.31198 18.955 9.78479 19.9392 10.6206 19.8035C12.371 19.5193 14.0025 18.8225 15.1625 17.6625ZM9.5 22C8.61667 22 7.75417 21.8875 6.9125 21.6625C6.07083 21.4375 5.26667 21.1 4.5 20.65C6.05 19.75 7.27083 18.5333 8.1625 17C9.05417 15.4667 9.5 13.8 9.5 12C9.5 10.2 9.05417 8.53333 8.1625 7C7.27083 5.46667 6.05 4.25 4.5 3.35C5.26667 2.9 6.07083 2.5625 6.9125 2.3375C7.75417 2.1125 8.61667 2 9.5 2C10.8833 2 12.1833 2.2625 13.4 2.7875C14.6167 3.3125 15.675 4.025 16.575 4.925C17.475 5.825 18.1875 6.88333 18.7125 8.1C19.2375 9.31667 19.5 10.6167 19.5 12C19.5 13.3833 19.2375 14.6833 18.7125 15.9C18.1875 17.1167 17.475 18.175 16.575 19.075C15.675 19.975 14.6167 20.6875 13.4 21.2125C12.1833 21.7375 10.8833 22 9.5 22Z" fill="currentColor"/></svg>';
 
   // ── Build header HTML ──
   var headerLeft = '<div class="site-header-left">';
 
   if (hasSidebar) {
     // Hamburger for mobile sidebar
-    headerLeft += '<button class="site-header-hamburger" aria-label="Open navigation" type="button">'
-      + '<span class="hamburger-icon-open">' + ICON_HAMBURGER + '</span>'
-      + '<span class="hamburger-icon-close">' + ICON_CLOSE + '</span>'
-      + '</button>';
+    headerLeft += '<div class="header-link site-header-hamburger" role="button" tabindex="0" aria-label="Open navigation">'
+      + '<div class="icn-svg hamburger-icon-open">' + ICON_HAMBURGER + '</div>'
+      + '<div class="icn-svg hamburger-icon-close">' + ICON_CLOSE + '</div>'
+      + '</div>';
   } else {
     // Back link for no-sidebar pages
     headerLeft += '<a href="' + base + 'index.html" class="site-header-back">' + ICON_BACK + ' Docs</a>';
@@ -49,12 +49,30 @@
     + '</svg></div>'
     + '</a></div>';
 
+  var ICON_CHEVRON_DOWN = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/></svg>';
+
   var headerRight = '<div class="site-header-right">'
-    + '<button class="dark-mode-toggle" aria-label="Toggle dark mode" type="button">'
-    + '<span class="dark-mode-icon-light">' + ICON_SUN + '</span>'
-    + '<span class="dark-mode-icon-dark">' + ICON_MOON + '</span>'
-    + '</button>'
+    + '<div class="header-dropdown demo-dropdown testing">'
+    + '<div class="header-link" role="button" tabindex="0" aria-expanded="false">'
+    + '<div class="icn-svg" data-icon="add"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>'
+    + '<span>Demo</span>'
+    + '<div class="icn-svg header-link-chevron" data-icon="chevron-down">' + ICON_CHEVRON_DOWN + '</div>'
+    + '</div>'
+    + '<div class="header-dropdown-menu">'
+    + '<div class="header-dropdown-label">Actions</div>'
+    + '<a href="#" class="header-link"><div class="icn-svg" data-icon="add"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div><span>New Page</span></a>'
+    + '<a href="#" class="header-link"><div class="icn-svg" data-icon="settings"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13.875 22H10.125L9.65 18.8C9.18333 18.6333 8.74167 18.4167 8.325 18.15C7.90833 17.8833 7.51667 17.5833 7.15 17.25L4.125 18.575L2.25 15.425L4.85 13.375C4.81667 13.1583 4.79583 12.9458 4.7875 12.7375C4.77917 12.5292 4.775 12.2667 4.775 11.95C4.775 11.65 4.77917 11.3958 4.7875 11.1875C4.79583 10.9792 4.81667 10.7667 4.85 10.55L2.25 8.575L4.125 5.425L7.15 6.725C7.51667 6.39167 7.90833 6.09583 8.325 5.8375C8.74167 5.57917 9.18333 5.36667 9.65 5.2L10.125 2H13.875L14.35 5.2C14.8167 5.36667 15.2583 5.58333 15.675 5.85C16.0917 6.11667 16.4833 6.41667 16.85 6.75L19.875 5.425L21.75 8.575L19.15 10.575C19.1833 10.7917 19.2042 11.0042 19.2125 11.2125C19.2208 11.4208 19.225 11.6667 19.225 11.95C19.225 12.2333 19.2167 12.4833 19.2 12.7C19.1833 12.9167 19.1583 13.1333 19.125 13.35L21.75 15.425L19.875 18.575L16.85 17.25C16.4833 17.5833 16.0917 17.8833 15.675 18.15C15.2583 18.4167 14.8167 18.6333 14.35 18.8L13.875 22ZM12 15.5C12.9667 15.5 13.7917 15.1583 14.475 14.475C15.1583 13.7917 15.5 12.9667 15.5 12C15.5 11.0333 15.1583 10.2083 14.475 9.525C13.7917 8.84167 12.9667 8.5 12 8.5C11.0333 8.5 10.2083 8.84167 9.525 9.525C8.84167 10.2083 8.5 11.0333 8.5 12C8.5 12.9667 8.84167 13.7917 9.525 14.475C10.2083 15.1583 11.0333 15.5 12 15.5Z" fill="currentColor"/></svg></div><span>Settings</span></a>'
+    + '<div class="header-dropdown-divider"></div>'
+    + '<div class="header-dropdown-label">Resources</div>'
+    + '<a href="#" class="header-link">Documentation</a>'
+    + '<a href="#" class="header-link">Help Centre</a>'
+    + '</div>'
+    + '</div>'
     + '<div class="auth-header-container"></div>'
+    + '<div class="header-link dark-mode-toggle" role="button" tabindex="0" aria-label="Toggle dark mode">'
+    + '<div class="icn-svg dark-mode-icon-light">' + ICON_SUN + '</div>'
+    + '<div class="icn-svg dark-mode-icon-dark">' + ICON_MOON + '</div>'
+    + '</div>'
     + '</div>';
 
   var headerHtml = '<header class="site-header">' + headerLeft + headerRight + '</header>';
@@ -62,7 +80,7 @@
   // ── Build sidebar HTML (if needed) ──
   var sidebarHtml = '';
   if (hasSidebar) {
-    sidebarHtml = '<aside class="site-sidebar">'
+    sidebarHtml = '<aside class="site-sidebar" role="navigation" aria-label="Site navigation">'
       + '<div class="site-sidebar-header">'
       + '<button class="site-sidebar-toggle" aria-label="Collapse sidebar" type="button">'
       + '<div class="icn-svg sidebar-icon-open">' + ICON_COLLAPSE + '</div>'
@@ -79,7 +97,7 @@
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="brand/mission-vision-purpose.html" class="nav-link">Mission, Vision & Purpose</a></li><li><a href="brand/values.html" class="nav-link">Brand Values</a></li><li><a href="brand/origin-story.html" class="nav-link">Origin Story</a></li><li><a href="brand/positioning.html" class="nav-link">Positioning</a></li><li><a href="brand/value-proposition.html" class="nav-link">Value Proposition</a></li><li><a href="brand/personality.html" class="nav-link">Brand Personality</a></li><li><a href="brand/tone-of-voice.html" class="nav-link">Tone of Voice</a></li><li><a href="brand/index.html" class="nav-link">Visual Identity</a></li></ul></details><details class="nav-section">
+      <ul class="nav-list"><li><a href="brand/mission-vision-purpose.html" class="nav-link"><span>Mission, Vision & Purpose</span></a></li><li><a href="brand/values.html" class="nav-link"><span>Brand Values</span></a></li><li><a href="brand/origin-story.html" class="nav-link"><span>Origin Story</span></a></li><li><a href="brand/positioning.html" class="nav-link"><span>Positioning</span></a></li><li><a href="brand/value-proposition.html" class="nav-link"><span>Value Proposition</span></a></li><li><a href="brand/personality.html" class="nav-link"><span>Brand Personality</span></a></li><li><a href="brand/tone-of-voice.html" class="nav-link"><span>Tone of Voice</span></a></li><li><a href="../brand/index.html" class="nav-link"><span>Visual Identity</span></a></li></ul></details><details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Design System</span>
         <span class="nav-toggle-icon">
@@ -88,7 +106,7 @@
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="design-system/overview.html" class="nav-link">Overview</a></li><li><a href="design-system/color.html" class="nav-link">Color</a></li><li><a href="design-system/typography.html" class="nav-link">Typography</a></li><li><a href="design-system/spacing.html" class="nav-link">Spacing</a></li><li><a href="design-system/border.html" class="nav-link">Border</a></li><li><a href="design-system/iconography.html" class="nav-link">Iconography</a></li><li><a href="design-system/button.html" class="nav-link">Button</a></li><li><a href="design-system/callout.html" class="nav-link">Callout</a></li><li><a href="design-system/disclosure.html" class="nav-link">Disclosure</a></li><li><a href="design-system/form.html" class="nav-link">Form</a></li><li><a href="design-system/table.html" class="nav-link">Table</a></li><li><a href="design-system/index.html" class="nav-link">Style Guide</a></li></ul></details><details class="nav-section">
+      <ul class="nav-list"><li><a href="design-system/overview.html" class="nav-link"><span>Overview</span></a></li><li><a href="design-system/color.html" class="nav-link"><span>Color</span></a></li><li><a href="design-system/typography.html" class="nav-link"><span>Typography</span></a></li><li><a href="design-system/spacing.html" class="nav-link"><span>Spacing</span></a></li><li><a href="design-system/border.html" class="nav-link"><span>Border</span></a></li><li><a href="design-system/iconography.html" class="nav-link"><span>Iconography</span></a></li><li><a href="design-system/button.html" class="nav-link"><span>Button</span></a></li><li><a href="design-system/callout.html" class="nav-link"><span>Callout</span></a></li><li><a href="design-system/disclosure.html" class="nav-link"><span>Disclosure</span></a></li><li><a href="design-system/form.html" class="nav-link"><span>Form</span></a></li><li><a href="design-system/table.html" class="nav-link"><span>Table</span></a></li><li><a href="../design-system/index.html" class="nav-link"><span>Style Guide</span></a></li></ul></details><details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Code</span>
         <span class="nav-toggle-icon">
@@ -97,7 +115,7 @@
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="code/javascript.html" class="nav-link">JavaScript</a></li><li><a href="code/css.html" class="nav-link">CSS</a></li><li><a href="code/layout.html" class="nav-link">HTML Layout</a></li></ul></details><details class="nav-section">
+      <ul class="nav-list"><li><a href="code/javascript.html" class="nav-link"><span>JavaScript</span></a></li><li><a href="code/css.html" class="nav-link"><span>CSS</span></a></li><li><a href="code/layout.html" class="nav-link"><span>HTML Layout</span></a></li></ul></details><details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Content</span>
         <span class="nav-toggle-icon">
@@ -106,7 +124,7 @@
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="content/seo-best-practices.html" class="nav-link">SEO</a></li><li><a href="design-system/markdown-style.html" class="nav-link">Markdown</a></li></ul></details><details class="nav-section">
+      <ul class="nav-list"><li><a href="content/seo-best-practices.html" class="nav-link"><span>SEO</span></a></li><li><a href="design-system/markdown-style.html" class="nav-link"><span>Markdown</span></a></li></ul></details><details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Tools</span>
         <span class="nav-toggle-icon">
@@ -115,7 +133,7 @@
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="cpm-calculator/about.html" class="nav-link">CPM Calculator</a></li><li><a href="svg-cleaner/about.html" class="nav-link">SVG Cleaner</a></li><li><a href="display-ad-preview/about.html" class="nav-link">Display Ad Preview</a></li></ul></details><details class="nav-section" data-access="admin">
+      <ul class="nav-list"><li><a href="cpm-calculator/about.html" class="nav-link"><span>CPM Calculator</span></a></li><li><a href="svg-cleaner/about.html" class="nav-link"><span>SVG Cleaner</span></a></li><li><a href="display-ad-preview/about.html" class="nav-link"><span>Display Ad Preview</span></a></li></ul></details><details class="nav-section" data-access="admin">
       <summary class="nav-section-toggle">
         <span>Admin</span>
         <span class="nav-toggle-icon">
@@ -124,7 +142,7 @@
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="admin/access-control.html" class="nav-link" data-access="admin">Access Control</a></li></ul></details>`
+      <ul class="nav-list"><li><a href="admin/access-control.html" class="nav-link" data-access="admin"><span>Access Control</span></a></li></ul></details>`
       + '</div>'
       + '<div class="auth-button-container"></div>'
       + '</aside>'
@@ -161,8 +179,12 @@
       // Also check full path match for subdirectory pages
       var fullMatch = currentPath.endsWith(linkHref) || currentPath.endsWith('/' + linkHref);
 
-      if (linkFile === currentFile || fullMatch) {
+      // Skip filename-only match for index.html (ambiguous across directories)
+      var filenameMatch = linkFile === currentFile && linkFile !== 'index.html';
+
+      if (filenameMatch || fullMatch) {
         link.classList.add('nav-link-active');
+        link.setAttribute('aria-current', 'page');
         // Open parent details section
         var parentDetails = link.closest('.nav-section');
         if (parentDetails) {
@@ -235,14 +257,57 @@
   // Apply saved preference or system default
   var savedDark = localStorage.getItem(DARK_KEY);
   if (savedDark === 'true' || (savedDark === null && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    document.documentElement.classList.add('dark-mode');
+    document.documentElement.setAttribute('data-theme', 'dark');
   }
 
   if (darkToggle) {
-    darkToggle.addEventListener('click', function() {
-      var isDark = document.documentElement.classList.toggle('dark-mode');
-      localStorage.setItem(DARK_KEY, isDark);
+    darkToggle.addEventListener('click', function toggleDarkMode() {
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+      localStorage.setItem(DARK_KEY, !isDark);
     });
+  }
+
+  // ── Header dropdown toggles ──
+  var headerDropdowns = mount.querySelectorAll('.header-dropdown');
+  for (var d = 0; d < headerDropdowns.length; d++) {
+    (function(dd) {
+      var ddToggle = dd.querySelector('.header-link');
+      if (!ddToggle) return;
+
+      ddToggle.addEventListener('click', function() {
+        var wasOpen = dd.classList.contains('is-open');
+        // Close all header dropdowns first
+        for (var k = 0; k < headerDropdowns.length; k++) {
+          headerDropdowns[k].classList.remove('is-open');
+          var t = headerDropdowns[k].querySelector('.header-link');
+          if (t) t.setAttribute('aria-expanded', 'false');
+        }
+        if (!wasOpen) {
+          dd.classList.add('is-open');
+          ddToggle.setAttribute('aria-expanded', 'true');
+        }
+      });
+
+      document.addEventListener('click', function(e) {
+        if (!dd.contains(e.target)) {
+          dd.classList.remove('is-open');
+          ddToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && dd.classList.contains('is-open')) {
+          dd.classList.remove('is-open');
+          ddToggle.setAttribute('aria-expanded', 'false');
+          ddToggle.focus();
+        }
+      });
+    })(headerDropdowns[d]);
   }
 
   // Signal that nav is ready

@@ -192,7 +192,7 @@ Typography principles for effective design:
 
 ## Links
 
-For further information, check out [this link](design-system.html), which will take you to another page.
+For further information, check out [this link](overview.html), which will take you to another page.
 
 Visit [ByDefault Studio](https://bydefault.studio "ByDefault Design System") for comprehensive guidelines.
 
@@ -206,7 +206,7 @@ Some text to show that the reference links can follow later.
 [link text itself]: https://bydefault.studio/contact
 
 ```markdown
-For further information, check out [this link](design-system.html), which will take you to another page.
+For further information, check out [this link](overview.html), which will take you to another page.
 
 Visit [ByDefault Studio](https://bydefault.studio "ByDefault Design System") for comprehensive guidelines.
 
@@ -227,22 +227,22 @@ Some text to show that the reference links can follow later.
 
 Here's the ByDefault favicon (hover to see the title text):
 
-Inline-style: ![ByDefault Favicon](assets/icons/favicon.svg "ByDefault Studio Favicon")
+Inline-style: ![ByDefault Favicon](../assets/icons/favicon.svg "ByDefault Studio Favicon")
 
 Reference-style:
 ![ByDefault Logo][logo]
 
-[logo]: assets/icons/favicon.svg "ByDefault Studio Logo"
+[logo]: ../assets/icons/favicon.svg "ByDefault Studio Logo"
 
 ```markdown
 Here's the ByDefault favicon (hover to see the title text):
 
-Inline-style: ![ByDefault Favicon](assets/icons/favicon.svg "ByDefault Studio Favicon")
+Inline-style: ![ByDefault Favicon](../assets/icons/favicon.svg "ByDefault Studio Favicon")
 
 Reference-style:
 ![ByDefault Logo][logo]
 
-[logo]: assets/icons/favicon.svg "ByDefault Studio Logo"
+[logo]: ../assets/icons/favicon.svg "ByDefault Studio Logo"
 ```
 
 ---
