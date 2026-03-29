@@ -26,7 +26,7 @@ Use `.icn-svg` to wrap inline SVG icons. This class constrains the icon to a fix
 
 ```html
 <div class="icn-svg" data-icon="arrow-right">
-  <svg viewBox="0 0 24 24">
+  <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
     <path d="M5 12h14M12 5l7 7-7 7" fill="currentColor"/>
   </svg>
 </div>
@@ -64,7 +64,7 @@ For icon-only buttons, use `.is-icon` on the button and `.icn-svg` as the SVG wr
 ```html
 <button class="button is-icon" aria-label="Close">
   <div class="icn-svg">
-    <svg viewBox="0 0 24 24">
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
       <path d="M18 6L6 18M6 6l12 12" fill="currentColor"/>
     </svg>
   </div>
@@ -84,7 +84,8 @@ Every icon SVG must follow these rules before being added to the codebase:
 | `fill="currentColor"` | Yes | Inherits text colour from parent |
 | `viewBox` attribute | Yes | `viewBox="0 0 24 24"` defines the coordinate space |
 | No `xmlns` | Yes | Strip `xmlns` and `xmlns:xlink` — not needed inline |
-| No `width`/`height` | Yes | Size is controlled by the wrapper class, not the SVG |
+| `width="100%" height="100%"` | Yes | SVG fills its `.icn-svg` wrapper; sizing is controlled by the wrapper class |
+| `fill="none"` on `<svg>` | Yes | Prevents default black fill; paths use `fill="currentColor"` individually |
 | No XML comments | Recommended | Remove `<!-- ... -->` comments for cleaner code |
 
 ### Standard `viewBox`
@@ -102,7 +103,7 @@ Use `0 0 24 24` as the default icon grid. If an icon uses a different coordinate
 ```html
 <!-- Decorative: icon next to text -->
 <div class="icn-svg" data-icon="check">
-  <svg viewBox="0 0 24 24" aria-hidden="true">
+  <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path d="M20 6L9 17l-5-5" fill="currentColor"/>
   </svg>
 </div>
@@ -110,7 +111,7 @@ Use `0 0 24 24` as the default icon grid. If an icon uses a different coordinate
 <!-- Meaningful: icon button with no visible text -->
 <button class="button is-icon" aria-label="Close menu">
   <div class="icn-svg">
-    <svg viewBox="0 0 24 24" aria-hidden="true">
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path d="M18 6L6 18M6 6l12 12" fill="currentColor"/>
     </svg>
   </div>
@@ -127,7 +128,7 @@ Icons inherit colour through `currentColor`. To change an icon's colour, change 
 <!-- Icon inherits the faded text colour -->
 <div class="text-faded">
   <div class="icn-svg" data-icon="info">
-    <svg viewBox="0 0 24 24" aria-hidden="true">
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="currentColor"/>
     </svg>
   </div>
@@ -175,5 +176,7 @@ echo '<svg>...</svg>' | node svg-cleaner/svg-clean.js --current-color --icon --i
 | Include `aria-hidden="true"` on decorative icons | Omit accessibility attributes |
 | Include `aria-label` on icon-only buttons | Rely on the icon alone to convey meaning |
 | Use the SVG Cleaner to prepare icons | Manually edit SVG attributes |
-| Strip `xmlns`, `width`, `height` from inline SVGs | Keep attributes meant for standalone files |
-| Use `viewBox` for coordinate space | Use `width`/`height` to size the SVG |
+| Strip `xmlns` from inline SVGs | Keep attributes meant for standalone files |
+| Use `width="100%" height="100%"` on SVGs | Use fixed pixel/rem sizes on the SVG element |
+| Use `fill="none"` on the `<svg>` element | Omit `fill` on `<svg>` (defaults to black) |
+| Use `.icn-svg` wrapper to control icon size | Size icons via `width`/`height` on the SVG |

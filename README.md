@@ -14,10 +14,10 @@ This project includes:
 ## Getting Started
 
 1. Review `PROJECT_BRIEF.md` for project goals and requirements
-2. Follow the [Setup guide](setup.html) to customize brand colors, fonts, and logo
+2. Follow the [Setup guide](project/setup.html) to customize brand colors, fonts, and logo
 3. Explore the [Documentation](index.html) for design system details
 4. Check the [Design System Styleguide](design-system/index.html) to see available patterns
-5. Check the [Brand Book](brand-book/index.html) to see the current brand identity
+5. Check the [Brand Book](brand/index.html) to see the current brand identity
 6. Start building pages inside `/src`
 
 ## Documentation

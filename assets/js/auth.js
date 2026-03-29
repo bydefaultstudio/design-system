@@ -773,40 +773,130 @@
     var existing = document.getElementById('auth-dev-toolbar');
     if (existing) existing.remove();
 
-    var toolbar = document.createElement('div');
-    toolbar.id = 'auth-dev-toolbar';
-    toolbar.className = 'auth-dev-toolbar';
+    var container = document.querySelector('.auth-header-container');
+    if (!container) return;
 
-    var label = document.createElement('span');
-    label.className = 'auth-dev-toolbar-label';
-    label.textContent = 'Dev Mode';
-    toolbar.appendChild(label);
+    // Dropdown wrapper
+    var dropdown = document.createElement('div');
+    dropdown.id = 'auth-dev-toolbar';
+    dropdown.className = 'header-dropdown';
 
+    // Toggle
+    var toggle = document.createElement('div');
+    toggle.className = 'header-link';
+    toggle.setAttribute('role', 'button');
+    toggle.setAttribute('tabindex', '0');
+    toggle.setAttribute('aria-label', 'Dev mode');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.innerHTML = '<div class="icn-svg" data-icon="dev-mode">'
+      + '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
+      + '<path d="M6 17L1 12L6 7L7.4 8.4L4.87462 10.943C4.29375 11.528 4.29375 12.472 4.87462 13.057L7.4 15.6L6 17ZM10.45 20.3L8.55 19.7L13.55 3.7L15.45 4.3L10.45 20.3ZM18 17L16.6 15.6L19.1254 13.057C19.7062 12.472 19.7063 11.528 19.1254 10.943L16.6 8.4L18 7L23 12L18 17Z" fill="currentColor"/>'
+      + '</svg></div>'
+      + '<div class="icn-svg header-link-chevron" data-icon="chevron-down">'
+      + '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
+      + '<path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/>'
+      + '</svg></div>';
+    dropdown.appendChild(toggle);
+
+    // Dropdown menu
+    var menu = document.createElement('div');
+    menu.className = 'header-dropdown-menu';
+
+    var ICON_CHECK = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
+      + '<path d="M9.55 18L3.85 12.3L5.275 10.875L9.55 15.15L18.725 5.975L20.15 7.4L9.55 18Z" fill="currentColor"/>'
+      + '</svg>';
+
+    // Section label
+    var label = document.createElement('div');
+    label.className = 'header-dropdown-label';
+    label.textContent = 'Switch Role';
+    menu.appendChild(label);
+
+    // Role links
+    var requiredRole = getRequiredRole();
     var roles = ['logged-out', 'public', 'client', 'team', 'admin'];
     roles.forEach(function (role) {
-      var btn = document.createElement('button');
-      btn.textContent = role === 'logged-out' ? 'Logged Out' : role.charAt(0).toUpperCase() + role.slice(1);
-      btn.className = role === activeRole ? 'button is-small is-dev-active' : 'button is-small is-outline is-faded';
-      btn.type = 'button';
-      btn.addEventListener('click', function () {
+      var item = document.createElement('div');
+      item.className = 'header-link';
+      item.setAttribute('role', 'button');
+      item.setAttribute('tabindex', '0');
+
+      var isActive = role === activeRole;
+
+      // Check icon (visible or placeholder)
+      var icon = document.createElement('div');
+      icon.className = 'icn-svg';
+      icon.setAttribute('data-icon', 'check');
+      if (isActive) {
+        icon.innerHTML = ICON_CHECK;
+      } else {
+        icon.style.visibility = 'hidden';
+      }
+      item.appendChild(icon);
+
+      var text = document.createElement('span');
+      text.textContent = role === 'logged-out' ? 'Logged Out' : role.charAt(0).toUpperCase() + role.slice(1);
+      item.appendChild(text);
+
+      item.addEventListener('click', function () {
         sessionStorage.setItem('auth-dev-role', role);
         window.location.reload();
       });
-      toolbar.appendChild(btn);
+      menu.appendChild(item);
     });
 
-    var requiredRole = getRequiredRole();
-    var pageInfo = document.createElement('span');
-    pageInfo.className = 'auth-dev-toolbar-page-info';
-    pageInfo.textContent = 'Page requires: ' + requiredRole;
-    toolbar.appendChild(pageInfo);
+    // Divider + page info
+    var divider = document.createElement('div');
+    divider.className = 'header-dropdown-divider';
+    menu.appendChild(divider);
 
-    document.body.appendChild(toolbar);
-    document.body.classList.add('has-dev-toolbar');
+    var pageInfo = document.createElement('div');
+    pageInfo.className = 'header-dropdown-label';
+    pageInfo.textContent = 'Page requires: ' + requiredRole;
+    pageInfo.style.textTransform = 'none';
+    menu.appendChild(pageInfo);
+
+    dropdown.appendChild(menu);
+
+    // Toggle open/close
+    toggle.addEventListener('click', function () {
+      var wasOpen = dropdown.classList.contains('is-open');
+      // Close all header dropdowns first
+      var allDropdowns = document.querySelectorAll('.header-dropdown');
+      for (var i = 0; i < allDropdowns.length; i++) {
+        allDropdowns[i].classList.remove('is-open');
+        var t = allDropdowns[i].querySelector('.header-link');
+        if (t) t.setAttribute('aria-expanded', 'false');
+      }
+      if (!wasOpen) {
+        dropdown.classList.add('is-open');
+        toggle.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    // Close on click outside
+    document.addEventListener('click', function (e) {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && dropdown.classList.contains('is-open')) {
+        dropdown.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.focus();
+      }
+    });
+
+    container.appendChild(dropdown);
   }
 
   function initDevMode() {
     console.log('[Auth] Dev mode active (localhost detected)');
+    document.body.classList.add('is-dev-mode');
 
     var devConfig = AUTH_CONFIG.devMode || {};
     var savedRole = sessionStorage.getItem('auth-dev-role');

@@ -5,7 +5,7 @@ description: "Learn what a design system is and what it contains."
 section: "Design System"
 order: 1
 access: "team"
-toolUrl: "design-system/index.html"
+toolUrl: "../design-system/index.html"
 toolLabel: "Open Style Guide"
 ---
 
@@ -35,6 +35,6 @@ By following a Design System, teams can **move faster, collaborate better, and m
 
 ## Style Guide
 
-For a visual, interactive showcase of all design tokens, components, and layout primitives, visit the [Design System Styleguide](../../design-system/index.html).
+For a visual, interactive showcase of all design tokens, components, and layout primitives, visit the [Design System Styleguide](../design-system/index.html).
 
-To see the current brand identity applied, visit the [Brand Book](../../brand-book/index.html).
+To see the current brand identity applied, visit the [Brand Book](../brand/index.html).

@@ -111,6 +111,17 @@ See `docs/border.md` for complete composable architecture.
 - Combo classes modify one concern (width, style, color)
 - Never create classes like `.border-top-m` or hardcode border values
 
+### Iconography
+See `docs/iconography.md` for complete icon guidelines.
+
+**Critical rules:**
+- Always wrap icons in `<div class="icn-svg" data-icon="name">` — never use bare `<svg>`, `<span>`, or `<img>`
+- SVGs must use `width="100%" height="100%"` — the `.icn-svg` wrapper controls sizing
+- SVGs must use `fill="none"` on the `<svg>` element; paths use `fill="currentColor"`
+- Strip `xmlns` from inline SVGs
+- Include `data-icon` with a descriptive kebab-case name
+- Use the SVG Cleaner (`svg-cleaner/svg-clean.js`) to prepare icons
+
 ### Components
 See `docs/button.md` for button usage and modifiers.
 
