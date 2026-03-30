@@ -63,28 +63,45 @@ Team and admin users can access all client folders.
 
 ## Page Access Configuration
 
-Page access is configured in `assets/js/auth-config.js`. Each page can be mapped to a minimum required role:
+Page access is set via the `data-access` attribute on `<body>`, or via frontmatter `access` in markdown docs (the generator sets it automatically).
 
-```js
-pageRoles: {
-  // Public pages
-  'some-page.html': 'public',
+### Standard roles
 
-  // Client pages
-  'cpm-calculator/index.html': 'client',
-
-  // Admin pages
-  'access-control.html': 'admin',
-}
+```yaml
+access: "public"    # No login required
+access: "client"    # Any client or higher
+access: "team"      # Team members and admins (default)
+access: "admin"     # Admins only
 ```
 
-Pages **not listed** in the config default to `team` access (configurable via `defaultRole`).
+Pages without an `access` value default to `team`.
+
+### Per-client access
+
+To restrict a page to specific clients, use the `client:` prefix with a comma-separated list of client folder names:
+
+```yaml
+access: "client:blank"              # Only the "blank" client
+access: "client:blank,dianomi"      # "blank" or "dianomi" clients
+access: "client:blank,dianomi,acme" # Any of these three clients
+```
+
+Team and admin users always have access regardless of the client list. The client folder names must match the `clientFolder` value in the user's Netlify Identity `app_metadata`.
+
+### On standalone HTML pages
+
+Set the attribute directly on `<body>`:
+
+```html
+<body class="auth-loading" data-access="client:blank,dianomi">
+```
 
 ### Adding a New Page
 
 1. Create the page as usual
-2. If it needs a non-default access level, add it to `pageRoles` in `auth-config.js`
-3. Deploy — the auth script handles the rest
+2. Set the `access` frontmatter (for docs) or `data-access` attribute (for standalone HTML)
+3. Run `npm run docgen` if it's a docs page
+4. Deploy — the auth script handles the rest
 
 ## Element-Level Visibility
 

@@ -127,7 +127,7 @@ Controls how search engines index and follow links on a page.
 Open Graph tags control how content appears when shared on Facebook, LinkedIn, and other social platforms.
 
 **Where to save images:**
-- Save Open Graph images in `assets/images/`
+- Save Open Graph images in `assets/images/og/`
 - Use descriptive filenames (e.g., `og-default.jpg`, `og-homepage.jpg`)
 
 ### Required Open Graph Tags
@@ -137,7 +137,7 @@ Open Graph tags control how content appears when shared on Facebook, LinkedIn, a
 <meta property="og:url" content="https://yoursite.com/page/" />
 <meta property="og:title" content="Page Title - Site Name" />
 <meta property="og:description" content="A concise, compelling description of the page." />
-<meta property="og:image" content="https://yoursite.com/assets/images/og-default.jpg" />
+<meta property="og:image" content="https://yoursite.com/assets/images/og/og-default.jpg" />
 ```
 
 ### Recommended Additional Tags
@@ -178,7 +178,7 @@ X Cards (formerly Twitter Cards) control how content appears when shared on X (f
 <meta name="twitter:url" content="https://yoursite.com/page/" />
 <meta name="twitter:title" content="Page Title - Site Name" />
 <meta name="twitter:description" content="A concise, compelling description of the page." />
-<meta name="twitter:image" content="https://yoursite.com/assets/images/og-default.jpg" />
+<meta name="twitter:image" content="https://yoursite.com/assets/images/og/og-default.jpg" />
 <meta name="twitter:image:alt" content="Descriptive alt text for the image" />
 ```
 
@@ -242,7 +242,7 @@ Structured data helps search engines understand your content and can enable rich
   "@type": "Organization",
   "name": "Site Name",
   "url": "https://yoursite.com",
-  "logo": "https://yoursite.com/assets/images/logo.png"
+  "logo": "https://yoursite.com/assets/images/logos/logo.png"
 }
 </script>
 ```

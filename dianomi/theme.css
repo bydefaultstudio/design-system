@@ -1,0 +1,129 @@
+/* ─────────────────────────────
+   CLIENT THEME: Dianomi
+   ─────────────────────────────
+
+   This theme demonstrates how overriding design system
+   tokens produces a completely different look and feel.
+   ───────────────────────────── */
+
+
+:root {
+
+  /* ── Typography ──────────────────────────── */
+  --font-primary: "Inter", "Helvetica Neue", sans-serif;
+  --font-secondary: "Inter", "Helvetica Neue", sans-serif;
+  --font-tertiary: "JetBrains Mono", monospace;
+
+
+
+  /* ── Neutral scale ──────────────────────────
+     Pure grey ramp — no warm or cool tint.
+     ─────────────────────────────────────────── */
+  --neutral-50:  #fafafa;
+  --neutral-100: #e5e5e5;
+  --neutral-150: #d4d4d4;
+  --neutral-200: #c4c4c4;
+  --neutral-300: #a3a3a3;
+  --neutral-400: #8a8a8a;
+  --neutral-500: #737373;
+  --neutral-600: #5c5c5c;
+  --neutral-700: #474747;
+  --neutral-800: #333333;
+  --neutral-900: #1f1f1f;
+  --neutral-950: #141414;
+  --neutral-990: #0a0a0a;
+
+
+  /* ── Text ────────────────────────────────── */
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-accent: #2563eb;
+  --text-link: #2563eb;
+  --text-inverted: #f9fafb;
+
+
+  /* ── Backgrounds ─────────────────────────── */
+  --background-primary: #f9fafb;
+  --background-secondary: #e5e7eb;
+
+
+  /* ── Borders ─────────────────────────────── */
+  --border-primary: #111827;
+  --border-secondary: #d1d5db;
+
+
+  /* ── Buttons ─────────────────────────────── */
+  --button-primary: #2563eb;
+  --button-text: #ffffff;
+  --button-secondary: #111827;
+  --button-secondary-text: #f9fafb;
+
+
+  /* ── Accent ──────────────────────────────── */
+  --status-info: #2563eb;
+  --input-focus: #2563eb;
+  --checkbox-selected: #2563eb;
+
+
+  /* ── Selection ───────────────────────────── */
+  --selection-text: #ffffff;
+  --selection-background: #2563eb;
+}
+
+
+/* ── Dark mode ─────────────────────────────── */
+
+[data-theme="dark"] {
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-plain: #f3f4f6;
+  --text-accent: #60a5fa;
+  --text-link: #60a5fa;
+  --text-inverted: #111827;
+
+  --background-primary: #111827;
+  --background-secondary: #1f2937;
+  --background-plain: #374151;
+
+  --border-primary: #f3f4f6;
+  --border-secondary: #4b5563;
+
+  --button-primary: #60a5fa;
+  --button-text: #111827;
+  --button-secondary: #f3f4f6;
+  --button-secondary-text: #111827;
+
+  --status-info: #60a5fa;
+  --input-focus: #60a5fa;
+  --checkbox-selected: #60a5fa;
+}
+
+
+/* ── System preference fallback (no-JS) ────── */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --text-primary: #f3f4f6;
+    --text-secondary: #9ca3af;
+    --text-plain: #f3f4f6;
+    --text-accent: #60a5fa;
+    --text-link: #60a5fa;
+    --text-inverted: #111827;
+
+    --background-primary: #111827;
+    --background-secondary: #1f2937;
+    --background-plain: #374151;
+
+    --border-primary: #f3f4f6;
+    --border-secondary: #4b5563;
+
+    --button-primary: #60a5fa;
+    --button-text: #111827;
+    --button-secondary: #f3f4f6;
+    --button-secondary-text: #111827;
+
+    --status-info: #60a5fa;
+    --input-focus: #60a5fa;
+    --checkbox-selected: #60a5fa;
+  }
+}

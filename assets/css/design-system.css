@@ -3,23 +3,43 @@
    ───────────────────────────── */
 
 
+/* -- @font-face: Local fonts -- */
+@font-face {
+  font-family: "RecifeText";
+  src: url("../fonts/RecifeText-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
-/* ------ 1. BRAND MAPPING ------ */
+
+/* ------ 1. BRAND TOKENS ------ */
 
 /*
- * This section maps brand book tokens into the design system.
- * The brand book (brand-book/brand-book.css) defines palette and font tokens.
- * The DS reads them here with fallback defaults.
- *
- * If no brand book is loaded, the defaults below are used.
- * Load order does not matter — CSS custom property fallbacks handle it.
- *
- *   <link rel="stylesheet" href="design-system/design-system.css">
- *   <link rel="stylesheet" href="brand-book/brand-book.css">
+ * Brand identity tokens (fonts, palette) are defined here.
+ * Update these values when customising for a new project.
  */
 
 :root {
-  /* -- Fonts & palette colours: defined in brand-book.css -- */
+  /* -- Typography -- */
+  --font-primary: "Inclusive Sans", sans-serif;
+  --font-secondary: "RecifeText", Georgia, serif;
+  --font-tertiary: "JetBrains Mono", monospace;
+
+  /* -- Palette -- */
+  --off-white: #fff7f1;
+  --warm-white: #f5ebe3;
+  --warm-black: #221f1c;
+  --off-black: #0f0e0e;
+
+  /* -- Accent colours -- */
+  --red: #d92a27;
+  --red-light: #ffd6cd;
+  --blue: #1a54d6;
+  --blue-light: #b1e6fc;
+  --yellow: #ffb533;
+  --yellow-light: #ffea83;
+  --green: #167255;
 
   /* -- Base font sizes (rem-based, scale with root font-size) -- */
   --font-3xs: 0.625rem;  /* 10px */
@@ -83,6 +103,7 @@
 
   /* -- Black & White Alpha Tokens -- */
   --black: #000000;
+    --black-alpha-3: #00000008;
   --black-alpha-5: #0000000d;
   --black-alpha-10: #0000001a;
   --black-alpha-15: #00000026;
@@ -90,6 +111,11 @@
   --black-alpha-30: #0000004d;
   --black-alpha-40: #00000066;
   --black-alpha-50: #00000080;
+  --black-alpha-60: #00000099;
+  --black-alpha-70: #000000b3;
+  --black-alpha-80: #000000cc;
+  --black-alpha-90: #000000e6;
+  --black-alpha-95: #000000f2;
 
   --white: #ffffff;
   --white-alpha-5: #ffffff0d;
@@ -99,6 +125,11 @@
   --white-alpha-30: #ffffff4d;
   --white-alpha-40: #ffffff66;
   --white-alpha-50: #ffffff80;
+  --white-alpha-60: #ffffff99;
+  --white-alpha-70: #ffffffb3;
+  --white-alpha-80: #ffffffcc;
+  --white-alpha-90: #ffffffe6;
+  --white-alpha-95: #fffffff2;
 
   --transparent: transparent;
 
@@ -109,17 +140,19 @@
   --text-faded: var(--black-alpha-50);
   --text-accent: var(--green);
   --text-link: var(--green);
+  --text-inverted: var(--off-white);
 
   --background-primary: var(--off-white);
   --background-secondary: var(--warm-white);
   --background-plain: var(--white);
   --background-faded: var(--black-alpha-5);
+  --background-modal: rgba(0, 0, 0, 0.75);
 
   --border-primary: var(--text-primary);
   --border-secondary: var(--neutral-300);
   --border-faded: var(--black-alpha-15);
 
-  --button-primary: var(--off-black);
+  --button-primary: var(--text-primary);
   --button-text: var(--off-white);
   --button-secondary: var(--black);
   --button-secondary-text: var(--off-white);
@@ -155,6 +188,132 @@
   --checkbox-background: var(--neutral-100);
   --checkbox-selected: var(--green);
 
+  /* -- Selection -- */
+  --selection-text: var(--background-primary);
+  --selection-background: var(--text-primary);
+
+}
+
+/* ------ 2b. THEME TOKENS - DARK MODE ------ */
+/* Set data-theme="dark" on <html> for page-level, or on any element for scoped theming */
+
+[data-theme="dark"] {
+  /* -- Text -- */
+  --text-primary: #e8e6e3;
+  --text-secondary: #a8a5a2;
+  --text-plain: #f0eeeb;
+  --text-faded: rgba(255, 255, 255, 0.45);
+  --text-accent: #5bb89a;
+  --text-link: #5bb89a;
+  --text-inverted: #1a1a1a;
+
+  /* -- Background -- */
+  --background-primary: #1a1a1a;
+  --background-secondary: #222222;
+  --background-plain: #2a2a2a;
+  --background-faded: rgba(255, 255, 255, 0.06);
+  --background-modal: rgba(0, 0, 0, 0.5);
+
+  /* -- Border -- */
+  --border-primary: #e8e6e3;
+  --border-secondary: #3a3a3a;
+  --border-faded: rgba(255, 255, 255, 0.12);
+
+  /* -- Black & white alpha (inverted for dark surfaces) -- */
+  --black-alpha-5: rgba(255, 255, 255, 0.05);
+  --black-alpha-10: rgba(255, 255, 255, 0.08);
+  --black-alpha-15: rgba(255, 255, 255, 0.12);
+  --black-alpha-20: rgba(255, 255, 255, 0.16);
+  --black-alpha-30: rgba(255, 255, 255, 0.22);
+  --black-alpha-50: rgba(255, 255, 255, 0.45);
+
+  /* -- Button -- */
+  --button-primary: #5bb89a;
+  --button-text: #1a1a1a;
+  --button-secondary: #e8e6e3;
+  --button-secondary-text: #1a1a1a;
+  --button-faded: rgba(255, 255, 255, 0.12);
+
+  /* -- Status -- */
+  --status-info: #5bb89a;
+  --status-success: #3fb950;
+  --status-warning: #d29922;
+  --status-danger: #f85149;
+  --status-accent: #a371f7;
+
+  /* -- Form -- */
+  --input-border: #3a3a3a;
+  --input-background: rgba(255, 255, 255, 0.08);
+  --input-text: #f0eeeb;
+  --input-placeholder: rgba(255, 255, 255, 0.45);
+  --input-focus: #5bb89a;
+  --input-disabled-bg: rgba(255, 255, 255, 0.06);
+  --input-disabled-text: rgba(255, 255, 255, 0.3);
+  --checkbox-background: #3a3a3a;
+  --checkbox-selected: #5bb89a;
+
+  color-scheme: dark;
+}
+
+/* ------ 2c. SYSTEM PREFERENCE FALLBACK (no-JS) ------ */
+/* Applies dark tokens when the user's OS prefers dark and no data-theme is set */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --text-primary: #e8e6e3;
+    --text-secondary: #a8a5a2;
+    --text-plain: #f0eeeb;
+    --text-faded: rgba(255, 255, 255, 0.45);
+    --text-accent: #5bb89a;
+    --text-link: #5bb89a;
+    --text-inverted: #1a1a1a;
+
+    --background-primary: #1a1a1a;
+    --background-secondary: #222222;
+    --background-plain: #2a2a2a;
+    --background-faded: rgba(255, 255, 255, 0.06);
+
+    --border-primary: #e8e6e3;
+    --border-secondary: #3a3a3a;
+    --border-faded: rgba(255, 255, 255, 0.12);
+
+    --black-alpha-5: rgba(255, 255, 255, 0.05);
+    --black-alpha-10: rgba(255, 255, 255, 0.08);
+    --black-alpha-15: rgba(255, 255, 255, 0.12);
+    --black-alpha-20: rgba(255, 255, 255, 0.16);
+    --black-alpha-30: rgba(255, 255, 255, 0.22);
+    --black-alpha-50: rgba(255, 255, 255, 0.45);
+
+    --button-primary: #5bb89a;
+    --button-text: #1a1a1a;
+    --button-secondary: #e8e6e3;
+    --button-secondary-text: #1a1a1a;
+    --button-faded: rgba(255, 255, 255, 0.12);
+
+    --status-info: #5bb89a;
+    --status-success: #3fb950;
+    --status-warning: #d29922;
+    --status-danger: #f85149;
+    --status-accent: #a371f7;
+
+    --input-border: #3a3a3a;
+    --input-background: rgba(255, 255, 255, 0.08);
+    --input-text: #f0eeeb;
+    --input-placeholder: rgba(255, 255, 255, 0.45);
+    --input-focus: #5bb89a;
+    --input-disabled-bg: rgba(255, 255, 255, 0.06);
+    --input-disabled-text: rgba(255, 255, 255, 0.3);
+    --checkbox-background: #3a3a3a;
+    --checkbox-selected: #5bb89a;
+
+    color-scheme: dark;
+  }
+}
+
+/* -- Selection highlight -- */
+::selection {
+  color: var(--selection-text);
+  background: var(--selection-background);
 }
 
 /* ------ 3. SYSTEM TOKENS - SPACING & TYPOGRAPHY ------ */
@@ -231,7 +390,7 @@
   --section-xl: var(--space-14xl);
 
   /* -- Border width tokens -- */
-  --border-s: 1px;
+  --border-s: 1.5px;
   --border-m: 2px;
   --border-l: 4px;
 
@@ -245,174 +404,12 @@
   --radius-pill: 999px;
 }
 
-/* ------ 4. BASE STYLES ------ */
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  font-size: clamp(14px, 0.5rem + 1vw, 16px);
-}
-
-body {
-  margin: 0;
-  font-family: var(--font-primary);
-  color: var(--text-plain);
-  font-size: var(--font-m);
-  font-weight: var(--font-weight-regular);
-  background: var(--background-primary);
-  line-height: var(--line-height-l);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
-
-/* -- Page layout structure -- */
-.page-wrapper {
-  width: 100%;
-}
-
-.page-content {
-  width: 100%;
-}
-
-/* -- Headings -- */
-h1 {
-  font-size: var(--font-5xl);
-  line-height: var(--line-height-s);
-}
-
-h2 {
-  font-size: var(--font-3xl);
-  line-height: var(--line-height-s);
-}
-
-h3 {
-  font-size: var(--font-2xl);
-  line-height: 1.1;
-}
-
-h4 {
-  font-size: var(--font-xl);
-  line-height: 1.1;
-}
-
-h5 {
-  font-size: var(--font-l);
-  line-height: var(--line-height-s);
-}
-
-h6 {
-  font-size: var(--font-l);
-  line-height: var(--line-height-l);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-secondary);
-  font-weight: var(--font-weight-regular);
-  margin-top: var(--space-xl);
-  margin-bottom: var(--space-l);
-}
-
-/* -- Paragraphs -- */
-p {
-  margin-top: 0;
-  margin-bottom: var(--space-m);
-}
-
-/* -- Links -- */
-a {
-  color: var(--text-plain);
-  text-underline-offset: 2.5px;
-  text-decoration: underline;
-  -webkit-text-decoration-color: var(--text-link);
-  text-decoration-color: var(--text-link);
-  text-decoration-thickness: 1.5px;
-  transition: all 0.3s;
-}
-
-a:hover {
-  color: var(--text-link);
-  text-underline-offset: 4px;
-}
-
-/* -- Lists -- */
-ul,
-ol {
-  margin-top: 0;
-  margin-bottom: var(--space-m);
-  padding-left: var(--space-2xl);
-}
-
-li {
-  margin-top: var(--space-s);
-  margin-bottom: 0;
-}
-
-li:first-child {
-  margin-top: 0;
-}
-
-/* Nested lists */
-ul ul,
-ul ol,
-ol ul,
-ol ol {
-  margin-top: var(--space-s);
-  margin-bottom: 0;
-}
-
-/* List items with paragraphs */
-li > p {
-  margin-top: var(--space-l);
-  margin-bottom: 0;
-}
-
-li > p:first-child {
-  margin-top: 0;
-}
-
-/* -- Blockquotes -- */
-blockquote {
-  margin: var(--space-xl) 0;
-  padding-left: var(--space-l);
-  border-left: var(--border-m) solid var(--border-secondary);
-  color: var(--text-secondary);
-  font-size: var(--font-m);
-  font-style: italic;
-}
-
-blockquote p {
-  margin-top: 0;
-  margin-bottom: var(--space-m);
-}
-
-blockquote p:last-child {
-  margin-bottom: 0;
-}
-
-/* -- Horizontal rules -- */
-hr {
-  margin: var(--space-2xl) 0;
-  border: 0;
-  border-top: var(--border-s) solid var(--border-secondary);
-  height: 0;
-}
-
-/* ------ 5. LAYOUT PRIMITIVES ------ */
+/* ------ 4. LAYOUT PRIMITIVES ------ */
 
 /* -- Global horizontal padding -- */
 .padding-global {
-  padding-left: var(--space-l);
-  padding-right: var(--space-l);
+  padding-left: var(--space-xl);
+  padding-right: var(--space-xl);
 }
 
 /* -- Padding utilities -- */
@@ -597,47 +594,6 @@ section {
   justify-content: flex-end;
 }
 
-/* -- Color palette (styleguide) -- */
-.color-list {
-  overflow: hidden;
-}
-
-.color-row {
-  display: flex;
-  align-items: center;
-  padding: var(--space-4xl) var(--space-xl);
-  font-size: var(--font-m);
-  font-weight: var(--font-weight-medium);
-  cursor: default;
-  position: relative;
-}
-
-.color-row-name {
-  pointer-events: none;
-}
-
-.color-row-actions {
-  display: none;
-  gap: var(--space-s);
-  margin-left: auto;
-}
-
-.color-row:hover .color-row-actions,
-.color-row:focus-within .color-row-actions {
-  display: flex;
-}
-
-.color-copy-btn {
-  color: inherit;
-  background: none;
-  border: none;
-  font-size: var(--font-xs);
-  font-weight: var(--font-weight-semi-bold);
-  cursor: pointer;
-  padding: var(--space-2xs) var(--space-s);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
 
 /* ------ 7. GRID ------ */
 
@@ -850,7 +806,7 @@ button {
   padding: var(--space-l) var(--space-2xl);
   background-color: var(--button-primary);
   color: var(--button-text);
-  border: var(--border-m) solid var(--button-primary);
+  border: var(--border-s) solid var(--button-primary);
   cursor: pointer;
   transform: scale3d(1none, 1none, 1none);
   transform-style: preserve-3d;
@@ -863,10 +819,10 @@ button {
 .is-outline.is-faded:hover,
 .demo-hover.button {
   transform: scale(1.05);
-  background-color: var(--button-text);
+  /* background-color: var(--button-text);
   color: var(--button-primary);
-  border: var(--border-m) solid var(--button-primary);
-  text-decoration: none;
+  border: var(--border-s) solid var(--button-primary);
+  text-decoration: none; */
 
 }
 
@@ -878,19 +834,19 @@ button {
 .is-faded {
   background-color: var(--button-faded);
   color: var(--button-primary);
-  border: var(--border-m) solid var(--transparent);
+  border: var(--border-s) solid var(--transparent);
 }
 
 .is-outline {
   background-color: var(--transparent);
   color: var(--button-primary);
-  border: var(--border-m) solid var(--button-primary);
+  border: var(--border-s) solid var(--button-primary);
 }
 
 .is-outline.is-faded {
   background-color: var(--transparent);
   color: var(--button-primary);
-  border: var(--border-m) solid var(--button-faded);
+  border: var(--border-s) solid var(--button-faded);
 }
 
 .is-small {
@@ -926,8 +882,8 @@ button {
 }
 
 .icn-svg.is-preview {
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 .svg-logo {
@@ -992,6 +948,31 @@ button {
 
 .bg-faded {
   background-color: var(--background-faded);
+}
+
+/* -- Text color utilities -- */
+.text-primary {
+  color: var(--text-primary);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-plain {
+  color: var(--text-plain);
+}
+
+.text-faded {
+  color: var(--text-faded);
+}
+
+.text-accent {
+  color: var(--text-accent);
+}
+
+.text-link {
+  color: var(--text-link);
 }
 
 /* ------ 11. CALLOUTS & ALERTS ------ */
@@ -1279,94 +1260,6 @@ details .disclosure-content {
   border-color: var(--status-success);
 }
 
-/* ------ 14. TABLES ------ */
-
-/* -- Table scroll wrapper -- */
-.table-scroll {
-  position: relative;
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* -- Scroll hint: fade on right edge when overflowing -- */
-.table-scroll.is-overflowing::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: var(--space-2xl);
-  background: linear-gradient(to right, transparent, var(--background-primary));
-  pointer-events: none;
-}
-
-.table-scroll.is-scrolled-end::after {
-  display: none;
-}
-
-/* -- Base table -- */
-.table {
-  border-spacing: 0;
-  border-collapse: collapse;
-  width: fit-content;
-  max-width: 100%;
-  font-variant: tabular-nums;
-  font-size: var(--font-s);
-}
-
-.table th {
-  font-weight: var(--font-weight-bold);
-  text-align: left;
-}
-
-.table th,
-.table td {
-  padding: var(--space-m) var(--space-l);
-  border: none;
-}
-
-.table thead {
-  background-color: transparent;
-}
-
-.table thead tr {
-  border-bottom: var(--border-s) solid var(--border-secondary);
-}
-
-.table tbody tr {
-  border-bottom: var(--border-s) solid var(--border-faded);
-}
-
-/* -- Table modifier: full width -- */
-.table-full {
-  width: 100%;
-}
-
-/* -- Table modifier: hoverable rows -- */
-.table-hover tbody tr:hover {
-  background-color: var(--background-faded);
-}
-
-/* -- Table modifier: header background -- */
-.table-header-filled th {
-  background-color: var(--background-secondary);
-  font-weight: var(--font-weight-semi-bold);
-  color: var(--text-primary);
-}
-
-/* -- Table footer -- */
-.table tfoot tr {
-  border-top: var(--border-m) solid var(--border-primary);
-}
-
-.table tfoot th {
-  font-weight: var(--font-weight-bold);
-}
-
-.table tfoot td {
-  font-weight: var(--font-weight-semi-bold);
-}
 
 
 /* ------ 15. FUTURE COMPONENTS ------ */
@@ -1432,51 +1325,3 @@ details .disclosure-content {
  * - Should reuse callout/status tokens
  */
 
-/* ------ 16. BACK TO DOCS BUTTON ------ */
-
-.docs-back-btn-wrapper {
-  position: fixed;
-  top: var(--space-m);
-  right: var(--space-m);
-  z-index: 100;
-}
-
-/* ------ 17. BACK TO TOP BUTTON ------ */
-
-.back-to-top-wrapper {
-  position: fixed;
-  right: var(--space-m);
-  bottom: var(--space-m);
-  z-index: 100;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s, visibility 0.3s;
-}
-
-.back-to-top-wrapper.is-visible {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* ------ 18. RESPONSIVE ------ */
-
-@media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  .cols-3 {
-    grid-template-columns: 1fr;
-  }
-
-  .cols-4 {
-    grid-template-columns: 1fr;
-  }
-
-  /* -- Condensed table on mobile -- */
-  .table th,
-  .table td {
-    padding: var(--space-s) var(--space-m);
-    font-size: var(--font-xs);
-  }
-}

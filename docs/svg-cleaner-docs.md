@@ -2,10 +2,10 @@
 title: "SVG Cleaner"
 subtitle: "How to use the SVG Cleaner tool"
 description: "Paste raw SVG code and get a cleaned, optimised version ready for the design system."
-section: "Tools"
-order: 2
+section: "Project"
+order: 11
 access: "team"
-toolUrl: "index.html"
+toolUrl: "../svg-cleaner/index.html"
 ---
 
 The SVG Cleaner is a browser-based tool for cleaning and optimising SVG code before adding it to the project. Paste raw SVG and get a cleaned version ready for the design system.
@@ -44,7 +44,7 @@ Open the SVG Cleaner tool in your browser to use the visual paste-and-copy workf
 The tool also works from the command line via `svg-cleaner/svg-clean.js`:
 
 ```bash
-node svg-cleaner/svg-clean.js --current-color --strip-comments -o assets/images/filename.svg <<'SVGEOF'
+node svg-cleaner/svg-clean.js --current-color --strip-comments -o assets/images/illustrations/filename.svg <<'SVGEOF'
 <svg>...pasted code...</svg>
 SVGEOF
 ```
@@ -56,4 +56,7 @@ Use heredoc syntax (`<<'SVGEOF'`) to avoid shell escaping issues with quotes in 
 ## File Locations
 
 - `assets/icons/` — favicons and app icons
-- `assets/images/` — logos, illustrations, and general SVGs
+- `assets/images/logos/` — site and publication logos
+- `assets/images/og/` — Open Graph social sharing images
+- `assets/images/illustrations/` — decorative and UI illustrations
+- `assets/images/svg-icons/` — SVG component icons

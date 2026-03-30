@@ -78,7 +78,7 @@ Lighthouse score 90+
 ## 8. Design & Build Notes
 
 **Design system**
-Use the shared design system with brand-specific color overrides in `brand-book/brand-book.css`
+Use the shared design system with brand tokens defined in `assets/css/design-system.css`
 
 **Content**
 Content will be created during the build

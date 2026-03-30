@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const vm = require('vm');
 const { marked } = require('marked');
 
 // Configuration
@@ -13,7 +14,7 @@ const TEMPLATE_FILE = path.join(__dirname, 'template.html');
 const configPath = path.join(DOCS_DIR, 'docs.config.js');
 const userConfig = fs.existsSync(configPath) ? require(configPath) : {};
 const PROJECT_CONFIG = {
-  designSystemPath: userConfig.designSystemPath || 'design-system/design-system.css',
+  designSystemPath: userConfig.designSystemPath || 'assets/css/design-system.css',
   brandCssPath: userConfig.brandCssPath || null,
   googleFontsUrl: userConfig.googleFontsUrl !== undefined ? userConfig.googleFontsUrl : null,
   footerText: userConfig.footerText || '',
@@ -39,16 +40,15 @@ const SECTION_FOLDERS = {
   'Design System': 'design-system',
   'Code': 'code',
   'Content': 'content',
-  'Tools': null,   // tool docs use special per-file mapping
   'Admin': 'admin',
   'Project': 'project'
 };
 
 // Special filename overrides for files that don't follow the prefix-strip pattern
 const FILENAME_OVERRIDES = {
-  'calculator-docs.md': { folder: 'cpm-calculator', name: 'about.html' },
-  'svg-cleaner-docs.md': { folder: 'svg-cleaner', name: 'about.html' },
-  'display-ad-preview-docs.md': { folder: 'display-ad-preview', name: 'about.html' },
+  'calculator-docs.md': { folder: 'project', name: 'cpm-calculator.html' },
+  'svg-cleaner-docs.md': { folder: 'project', name: 'svg-cleaner.html' },
+  'display-ad-preview-docs.md': { folder: 'project', name: 'display-ad-preview.html' },
   'css-code-struture.md': { folder: 'code', name: 'css.html' },
   'js-code-structure.md': { folder: 'code', name: 'javascript.html' },
   'design-system-overview.md': { folder: 'design-system', name: 'overview.html' },
@@ -233,8 +233,8 @@ function generateTableOfContents(html) {
 function generateIndexPage(template, filesBySection) {
   let cards = '';
 
-  const sectionOrder = ['Brand Book', 'Design System', 'Code', 'Content', 'Tools', 'Admin'];
-  const hiddenSections = ['Project'];
+  const sectionOrder = ['Brand Book', 'Design System', 'Code', 'Content', 'Project', 'Admin'];
+  const hiddenSections = [];
   const sortedSections = Object.keys(filesBySection)
     .filter(s => !hiddenSections.includes(s))
     .sort((a, b) => {
@@ -256,15 +256,16 @@ function generateIndexPage(template, filesBySection) {
       return a.title.localeCompare(b.title);
     });
 
-    const accessAttr = section === 'Admin' ? ' data-access="admin"' : '';
+    // Only Admin section gets section-level access; others rely on per-card filtering
+    const sectionAccessAttr = section === 'Admin' ? ' data-access="admin"' : '';
 
-    cards += `<div class="docs-section"${accessAttr}>
+    cards += `<div class="docs-section"${sectionAccessAttr}>
       <h2 class="eyebrow">${section}</h2>
       <div class="grid cols-3 gap-xl">`;
 
     for (const file of files) {
       const cardAccess = file.frontmatter.access || 'team';
-      const cardAccessAttr = cardAccess !== 'team' ? ` data-access="${cardAccess}"` : '';
+      const cardAccessAttr = ` data-access="${cardAccess}"`;
       cards += `
         <a href="${file.htmlPath}" class="docs-card"${cardAccessAttr}>
           <h3 class="docs-card-title">${file.title}</h3>
@@ -327,8 +328,8 @@ function generateIndexPage(template, filesBySection) {
  * Build a flat ordered list of all pages following the nav order
  */
 function buildPageOrder(filesBySection) {
-  const sectionOrder = ['Brand Book', 'Design System', 'Code', 'Content', 'Tools', 'Admin'];
-  const hiddenSections = ['Project'];
+  const sectionOrder = ['Brand Book', 'Design System', 'Code', 'Content', 'Project', 'Admin'];
+  const hiddenSections = [];
   const sortedSections = Object.keys(filesBySection)
     .filter(s => !hiddenSections.includes(s))
     .sort((a, b) => {
@@ -504,9 +505,6 @@ function generateNavJs(filesBySection) {
       + '<div class="icn-svg hamburger-icon-open">' + ICON_HAMBURGER + '</div>'
       + '<div class="icn-svg hamburger-icon-close">' + ICON_CLOSE + '</div>'
       + '</div>';
-  } else {
-    // Back link for no-sidebar pages
-    headerLeft += '<a href="' + base + 'index.html" class="site-header-back">' + ICON_BACK + ' Docs</a>';
   }
 
   headerLeft += '<a href="' + base + 'index.html" class="site-header-logo-link">'
@@ -526,22 +524,6 @@ function generateNavJs(filesBySection) {
   var ICON_CHEVRON_DOWN = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/></svg>';
 
   var headerRight = '<div class="site-header-right">'
-    + '<div class="header-dropdown demo-dropdown testing">'
-    + '<div class="header-link" role="button" tabindex="0" aria-expanded="false">'
-    + '<div class="icn-svg" data-icon="add"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>'
-    + '<span>Demo</span>'
-    + '<div class="icn-svg header-link-chevron" data-icon="chevron-down">' + ICON_CHEVRON_DOWN + '</div>'
-    + '</div>'
-    + '<div class="header-dropdown-menu">'
-    + '<div class="header-dropdown-label">Actions</div>'
-    + '<a href="#" class="header-link"><div class="icn-svg" data-icon="add"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div><span>New Page</span></a>'
-    + '<a href="#" class="header-link"><div class="icn-svg" data-icon="settings"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13.875 22H10.125L9.65 18.8C9.18333 18.6333 8.74167 18.4167 8.325 18.15C7.90833 17.8833 7.51667 17.5833 7.15 17.25L4.125 18.575L2.25 15.425L4.85 13.375C4.81667 13.1583 4.79583 12.9458 4.7875 12.7375C4.77917 12.5292 4.775 12.2667 4.775 11.95C4.775 11.65 4.77917 11.3958 4.7875 11.1875C4.79583 10.9792 4.81667 10.7667 4.85 10.55L2.25 8.575L4.125 5.425L7.15 6.725C7.51667 6.39167 7.90833 6.09583 8.325 5.8375C8.74167 5.57917 9.18333 5.36667 9.65 5.2L10.125 2H13.875L14.35 5.2C14.8167 5.36667 15.2583 5.58333 15.675 5.85C16.0917 6.11667 16.4833 6.41667 16.85 6.75L19.875 5.425L21.75 8.575L19.15 10.575C19.1833 10.7917 19.2042 11.0042 19.2125 11.2125C19.2208 11.4208 19.225 11.6667 19.225 11.95C19.225 12.2333 19.2167 12.4833 19.2 12.7C19.1833 12.9167 19.1583 13.1333 19.125 13.35L21.75 15.425L19.875 18.575L16.85 17.25C16.4833 17.5833 16.0917 17.8833 15.675 18.15C15.2583 18.4167 14.8167 18.6333 14.35 18.8L13.875 22ZM12 15.5C12.9667 15.5 13.7917 15.1583 14.475 14.475C15.1583 13.7917 15.5 12.9667 15.5 12C15.5 11.0333 15.1583 10.2083 14.475 9.525C13.7917 8.84167 12.9667 8.5 12 8.5C11.0333 8.5 10.2083 8.84167 9.525 9.525C8.84167 10.2083 8.5 11.0333 8.5 12C8.5 12.9667 8.84167 13.7917 9.525 14.475C10.2083 15.1583 11.0333 15.5 12 15.5Z" fill="currentColor"/></svg></div><span>Settings</span></a>'
-    + '<div class="header-dropdown-divider"></div>'
-    + '<div class="header-dropdown-label">Resources</div>'
-    + '<a href="#" class="header-link">Documentation</a>'
-    + '<a href="#" class="header-link">Help Centre</a>'
-    + '</div>'
-    + '</div>'
     + '<div class="auth-header-container"></div>'
     + '<div class="header-link dark-mode-toggle" role="button" tabindex="0" aria-label="Toggle dark mode">'
     + '<div class="icn-svg dark-mode-icon-light">' + ICON_SUN + '</div>'
@@ -564,7 +546,7 @@ function generateNavJs(filesBySection) {
       + '<div class="site-sidebar-content">'
       + \`${esc(navSectionsHtml)}\`
       + '</div>'
-      + '<div class="auth-button-container"></div>'
+      + ''
       + '</aside>'
       + '<div class="site-sidebar-backdrop"></div>';
   }
@@ -744,8 +726,8 @@ function generateNavJs(filesBySection) {
 function buildNavSectionsHtml(filesBySection) {
   let html = '';
 
-  const sectionOrder = ['Brand Book', 'Design System', 'Code', 'Content', 'Tools', 'Admin'];
-  const hiddenSections = ['Project'];
+  const sectionOrder = ['Brand Book', 'Design System', 'Code', 'Content', 'Project', 'Admin'];
+  const hiddenSections = [];
   const sortedSections = Object.keys(filesBySection)
     .filter(s => !hiddenSections.includes(s))
     .sort((a, b) => {
@@ -768,6 +750,7 @@ function buildNavSectionsHtml(filesBySection) {
     });
 
     const sectionLabel = section.charAt(0).toUpperCase() + section.slice(1);
+    // Only Admin section gets section-level access; others rely on per-link filtering
     const accessAttr = section === 'Admin' ? ' data-access="admin"' : '';
 
     html += `<details class="nav-section"${accessAttr}>
@@ -783,22 +766,146 @@ function buildNavSectionsHtml(filesBySection) {
 
     for (const file of files) {
       const linkAccess = file.frontmatter.access || 'team';
-      const linkAccessAttr = linkAccess !== 'team' ? ` data-access="${linkAccess}"` : '';
-      html += `<li><a href="${file.htmlPath}" class="nav-link"${linkAccessAttr}><span>${file.title}</span></a></li>`;
+      html += `<li><a href="${file.htmlPath}" class="nav-link" data-access="${linkAccess}"><span>${file.title}</span></a></li>`;
     }
 
     if (section === 'Design System') {
-      html += `<li><a href="../design-system/index.html" class="nav-link"><span>Style Guide</span></a></li>`;
+      html += `<li><a href="../design-system/index.html" class="nav-link" data-access="team"><span>Style Guide</span></a></li>`;
     }
 
     if (section === 'Brand Book') {
-      html += `<li><a href="../brand/index.html" class="nav-link"><span>Visual Identity</span></a></li>`;
+      html += `<li><a href="../brand/index.html" class="nav-link" data-access="team"><span>Visual Identity</span></a></li>`;
+    }
+
+    if (section === 'Admin') {
+      html += `<li class="nav-label">Login Scenarios</li>`;
+      html += `<li><a href="../auth/login.html" class="nav-link" data-access="admin"><span>Login</span></a></li>`;
+      html += `<li><a href="../auth/login.html#forgot" class="nav-link" data-access="admin"><span>Forgot Password</span></a></li>`;
+      html += `<li><a href="../auth/login.html#recovery_token=dev" class="nav-link" data-access="admin"><span>Reset Password</span></a></li>`;
+      html += `<li><a href="../auth/login.html#invite_token=dev" class="nav-link" data-access="admin"><span>Accept Invitation</span></a></li>`;
+      html += `<li><a href="../auth/login.html#confirmation_token=dev" class="nav-link" data-access="admin"><span>Email Confirmation</span></a></li>`;
+      html += `<li><a href="../auth/account.html" class="nav-link" data-access="admin"><span>Account</span></a></li>`;
+      html += `<li><a href="../access-denied.html" class="nav-link" data-access="admin"><span>Access Denied</span></a></li>`;
     }
 
     html += `</ul></details>`;
   }
 
   return html;
+}
+
+/**
+ * Generate client index pages from theme-config.js
+ * Each client gets an auto-generated index.html with their pages and granted tools.
+ */
+function generateClientIndexPages(template) {
+  const themeConfigPath = path.join(OUTPUT_DIR, 'assets', 'js', 'theme-config.js');
+  if (!fs.existsSync(themeConfigPath)) {
+    console.log('⚠️  theme-config.js not found, skipping client index generation');
+    return;
+  }
+
+  // Parse theme-config.js (uses var assignment, not module.exports)
+  const configCode = fs.readFileSync(themeConfigPath, 'utf8');
+  const sandbox = {};
+  vm.runInNewContext(configCode, sandbox);
+  const themeConfig = sandbox.THEME_CONFIG;
+
+  if (!themeConfig || !themeConfig.themes) {
+    console.log('⚠️  No themes found in theme-config.js');
+    return;
+  }
+
+  const globalTools = themeConfig.tools || {};
+
+  for (const [clientKey, theme] of Object.entries(themeConfig.themes)) {
+    let contentHtml = '';
+
+    // Hero section
+    const clientLabel = theme.label || clientKey;
+    const clientDesc = theme.description || `Brand guidelines and tools for ${clientLabel}.`;
+    contentHtml += `<div class="docs-hero">
+      <h1 class="docs-hero-title">${clientLabel}</h1>
+      <p class="docs-hero-description" data-text-wrap="balance">${clientDesc}</p>
+    </div>`;
+
+    // Client pages grouped by section (exclude index.html)
+    const clientPages = (theme.pages || []).filter(p => !p.href.endsWith('/index.html'));
+    const sectionGroups = {};
+    const sectionOrder = [];
+    for (const page of clientPages) {
+      const section = page.section || clientLabel;
+      if (!sectionGroups[section]) {
+        sectionGroups[section] = [];
+        sectionOrder.push(section);
+      }
+      sectionGroups[section].push(page);
+    }
+
+    for (const section of sectionOrder) {
+      contentHtml += `<div class="docs-section">
+      <h2 class="eyebrow">${section}</h2>
+      <div class="grid cols-3 gap-xl">`;
+      for (const page of sectionGroups[section]) {
+        const href = page.href.startsWith(clientKey + '/')
+          ? page.href.replace(clientKey + '/', '')
+          : page.href;
+        contentHtml += `<a href="${href}" class="docs-card">
+          <h3 class="docs-card-title">${page.title}</h3>
+        </a>`;
+      }
+      contentHtml += `</div></div>`;
+    }
+
+    // Tools section
+    const clientTools = (theme.tools || []).filter(t => globalTools[t]);
+    if (clientTools.length > 0) {
+      contentHtml += `<div class="docs-section">
+      <h2 class="eyebrow">Tools</h2>
+      <div class="grid cols-3 gap-xl">`;
+      for (const toolKey of clientTools) {
+        const tool = globalTools[toolKey];
+        contentHtml += `<a href="../${toolKey}/index.html" class="docs-card">
+          <h3 class="docs-card-title">${tool.title}</h3>
+          <p class="docs-card-subtitle" data-text-wrap="pretty">${tool.subtitle}</p>
+        </a>`;
+      }
+      contentHtml += `</div></div>`;
+    }
+
+    // Build page from template
+    const navBase = '../';
+    const dsPath = navBase + PROJECT_CONFIG.designSystemPath;
+    const brandCss = PROJECT_CONFIG.brandCssPath
+      ? `<link rel="stylesheet" href="${navBase}${PROJECT_CONFIG.brandCssPath}">\n    <!-- Client Theme Override -->\n    <link rel="stylesheet" href="theme.css">`
+      : `<!-- Client Theme Override -->\n    <link rel="stylesheet" href="theme.css">`;
+    const googleFonts = theme.fonts
+      ? `<link rel="preconnect" href="https://fonts.googleapis.com">\n    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n    <link href="${theme.fonts}" rel="stylesheet">`
+      : GOOGLE_FONTS_HTML;
+
+    let html = template
+      .replace(/\{\{PAGE_TITLE\}\}/g, `${clientLabel} — Brand Guidelines`)
+      .replace(/\{\{META_DESCRIPTION\}\}/g, clientDesc)
+      .replace(/\{\{NAV_BASE\}\}/g, navBase)
+      .replace(/\{\{PAGE_ACCESS\}\}/g, 'client')
+      .replace('{{PAGE_HEADER}}', '')
+      .replace('{{PAGE_CONTENT}}', contentHtml)
+      .replace('{{TOC_SECTION}}', '')
+      .replace('{{PAGE_NAV}}', '')
+      .replace('{{FOOTER_TEXT}}', `${clientLabel} — Powered by By Default BrandOS`)
+      .replace(`<link rel="stylesheet" href="${dsPath}" id="design-system-css"`, `<link rel="stylesheet" href="${navBase}${PROJECT_CONFIG.designSystemPath}" id="design-system-css"`)
+      .replace('{{BRAND_CSS}}', brandCss)
+      .replace('{{GOOGLE_FONTS}}', googleFonts);
+
+    // Replace design system path placeholder
+    html = html.replace('{{DESIGN_SYSTEM_PATH}}', navBase + PROJECT_CONFIG.designSystemPath);
+
+    // Write to client folder
+    const dir = path.join(OUTPUT_DIR, clientKey);
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, 'index.html'), html);
+    console.log(`📄 Generated: ${clientKey}/index.html`);
+  }
 }
 
 /**
@@ -894,6 +1001,9 @@ async function generateDocs() {
   const navJsPath = path.join(OUTPUT_DIR, 'assets', 'js', 'nav.js');
   fs.writeFileSync(navJsPath, navJs);
   console.log('📄 Generated: assets/js/nav.js');
+
+  // Generate client index pages from theme-config.js
+  generateClientIndexPages(template);
 
   console.log('✅ Documentation generation complete!');
   console.log(`📊 Generated ${allFiles.length + 1} HTML pages + nav.js`);

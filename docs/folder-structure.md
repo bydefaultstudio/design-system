@@ -21,36 +21,54 @@ Do not add new top-level folders without updating this file.
 - `CLAUDE.md` → Claude Code development rules (authoritative)
 - `assets/` → All project assets (CSS, fonts, icons, images, video)
 - `design-system/` → Design system framework (shared across projects)
-- `brand-book/` → Brand identity tokens (customised per project)
+- `brand-book/` → Brand preview page (brand tokens now live in `assets/css/design-system.css`)
 - `templates/` → Component and page templates
 - `docs/` → Documentation markdown source and generator
 - `src/` → Source files (pages, JS)
+- `themes/` → Client theme overrides (one CSS file per client)
 - `svg-cleaner/` → SVG optimisation tool (CLI + browser UI)
 
 ## assets/
 
 Single source of truth for all assets. No duplication.
 
+- `css/design-system.css` → Core design system framework (tokens, utilities, layout primitives)
 - `css/style.css` → Site layout and component styles
 - `css/markdown.css` → Markdown rendering styles (code blocks, tables, syntax highlighting)
+- `js/auth.js` → Authentication module (Netlify Identity)
+- `js/auth-config.js` → Auth role hierarchy and settings
+- `js/theme-config.js` → Theme registry (maps clientFolder → CSS path + Google Fonts URL)
+- `js/theme-loader.js` → Dynamic theme loading/unloading module
 - `fonts/` → Web fonts
 - `icons/` → Favicons and app icons
-- `images/` → Logos, Open Graph images, general images
+- `images/` → All images, organised by type:
+  - `logos/` → Site and publication logos
+  - `og/` → Open Graph social sharing images
+  - `illustrations/` → Decorative and UI illustrations
+  - `svg-icons/` → SVG component icons
 - `video/` → Video assets
 
 ## design-system/
 
-The design system framework. Contains all utility classes, layout primitives, components, and default tokens.
+The design system styleguide preview.
 
-- `design-system.css` → Core design system stylesheet
 - `index.html` → Styleguide preview (renders with default tokens)
+
+The design system CSS (`assets/css/design-system.css`) lives in the assets folder alongside other stylesheets.
 
 ## brand-book/
 
-Brand identity tokens. Customise this per project. The design system reads these tokens directly.
+Brand preview page. Brand tokens now live directly in `assets/css/design-system.css`.
 
-- `brand-book.css` → Brand tokens (fonts, colours)
 - `index.html` → Brand preview page (logo, palette, typography, icons)
+
+## themes/
+
+Client theme overrides. Each file overrides design system semantic tokens and the neutral colour scale for a specific client brand. Themes are loaded dynamically by `theme-loader.js` based on the user's auth identity.
+
+- `theme-template.css` → Starter template (copy and customise per client)
+
+Register themes in `assets/js/theme-config.js`. See [Setup — Client Theming](setup.md#client-theming) for usage.
 
 ## src/
 
@@ -79,8 +97,8 @@ Brand identity tokens. Customise this per project. The design system reads these
 
 The generated HTML loads CSS in this order:
 
-1. `design-system/design-system.css` → Framework tokens, utilities, layout primitives
-2. `brand-book/brand-book.css` → Brand token overrides (fonts, colours)
+1. `assets/css/design-system.css` → Brand tokens, framework tokens, utilities, layout primitives
+2. `themes/client-name.css` → Client theme overrides (optional)
 3. `assets/css/markdown.css` → Markdown content rendering
 4. `assets/css/style.css` → Site layout and components
 

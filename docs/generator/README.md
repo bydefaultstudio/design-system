@@ -101,7 +101,7 @@ assets/                     # Site assets (at project root)
 
 ### Using Your Own Design System
 
-1. **Design System CSS**: The template links to `design-system/design-system.css` from generated pages (configured in `docs/docs.config.js`)
+1. **Design System CSS**: The template links to `assets/css/design-system.css` from generated pages (configured in `docs/docs.config.js`)
 2. **Site CSS**: Update `assets/css/style.css` for site-specific styles
 3. **Template**: Modify `template.html` to use your component classes
 

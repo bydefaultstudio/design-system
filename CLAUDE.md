@@ -6,7 +6,7 @@ You are a Senior Front-End Developer working inside this project's **Design Syst
 - Write correct, best-practice, DRY, bug-free code — no TODOs or placeholders
 - Prefer readability; avoid unnecessary abstractions
 - Use semantic tokens over primitives; prefer existing utility classes over new CSS
-- Only write new CSS if the design system can't express the requirement — and if so, add it to `design-system/design-system.css` under the correct section
+- Only write new CSS if the design system can't express the requirement — and if so, add it to `assets/css/design-system.css` under the correct section
 - Accessibility required: keyboard navigation, `aria-label`, focus states, `<button>` for actions, `<a>` for links
 - If unsure, say so — never guess
 
@@ -86,8 +86,8 @@ See `docs/color.md`, `docs/typography.md`, `docs/spacing.md` for complete token 
 See `docs/css-code-struture.md` for complete organization guidelines.
 
 **Critical rules:**
-- Design system CSS (`design-system/design-system.css`) is the single source of truth
-- Brand tokens live in `brand-book/brand-book.css` — the DS reads them directly
+- Design system CSS (`assets/css/design-system.css`) is the single source of truth
+- Brand tokens live in `assets/css/design-system.css` under the "Brand Tokens" section
 - Follow the CSS commenting hierarchy (major sections, subsections, inline)
 - All tokens must be defined in `:root` before use
 - Never hardcode values that should use tokens
@@ -156,7 +156,7 @@ See `docs/folder-structure.md` for complete directory structure.
 **Key locations:**
 - `assets/` — all project assets (CSS, fonts, icons, images, video)
 - `design-system/` — design system framework (CSS + styleguide)
-- `brand-book/` — brand identity tokens (CSS + brand preview)
+- `brand-book/` — brand preview page (brand tokens live in design-system.css)
 - `src/js/` — JavaScript files
 - `src/pages/` — HTML pages
 - `templates/` — reusable templates
@@ -283,7 +283,7 @@ After gathering answers:
    - `templates/page-template.html` → replace `Site Name` in title, OG `og:site_name`, and `yoursite.com` placeholder URLs
    - `docs/docs.config.js` → update `footerText` and `indexDescription`
    - `PROJECT_BRIEF.md` → add project name at the top
-3. Update `brand-book/brand-book.css` with any known brand tokens (fonts, colours)
+3. Update brand tokens in `assets/css/design-system.css` (Brand Tokens section) with any known brand values (fonts, colours)
 
 This must happen before any other work begins.
 
@@ -390,7 +390,7 @@ Use `svg-cleaner/svg-clean.js` to clean SVGs before adding them to the project. 
 When a user pastes SVG code in the chat, clean it and save it:
 
 ```bash
-node svg-cleaner/svg-clean.js --current-color --strip-comments -o assets/images/filename.svg <<'SVGEOF'
+node svg-cleaner/svg-clean.js --current-color --strip-comments -o assets/images/illustrations/filename.svg <<'SVGEOF'
 <svg>...pasted code...</svg>
 SVGEOF
 ```
@@ -399,7 +399,10 @@ Use heredoc syntax (`<<'SVGEOF'`) to avoid shell escaping issues with quotes in 
 
 ### File locations
 - `assets/icons/` — favicons and app icons
-- `assets/images/` — logos, illustrations, and general SVGs
+- `assets/images/logos/` — site and publication logos
+- `assets/images/og/` — Open Graph social sharing images
+- `assets/images/illustrations/` — decorative and UI illustrations
+- `assets/images/svg-icons/` — SVG component icons
 
 ### Browser UI
 `svg-cleaner/index.html` provides a visual SVG cleaner — open it in a browser for manual paste-and-copy workflows.

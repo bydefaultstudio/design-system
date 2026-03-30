@@ -14,10 +14,8 @@
   <!-- Robots -->
   <meta name="robots" content="noindex, nofollow">
 
-  <!-- Brand Book -->
-  <link rel="stylesheet" href="brand-book/brand-book.css">
   <!-- Design System Framework -->
-  <link rel="stylesheet" href="design-system/design-system.css">
+  <link rel="stylesheet" href="assets/css/design-system.css">
   <!-- Site styles -->
   <link rel="stylesheet" href="assets/css/style.css">
 
@@ -37,7 +35,7 @@
 <body data-access="public">
 
   <!-- Site Navigation (header + sidebar injected by nav.js) -->
-  <div id="site-nav" data-base=""></div>
+  <div id="site-nav" data-base="" data-sidebar="false"></div>
 
   <div class="page-wrapper has-sidebar">
     <div class="page-content">
@@ -48,7 +46,7 @@
               <h1>Access Denied</h1>
               <p>You don't have permission to view this page. Please contact an administrator if you believe this is an error.</p>
               <div class="button-group justify-center">
-                <a href="index.html" class="button">Go to Home</a>
+                <a href="index.html" class="button" data-home-link>Go to Home</a>
                 <button class="button is-outline" type="button" id="access-denied-login-btn">Log in with a different account</button>
               </div>
             </div>
@@ -62,6 +60,8 @@
   <script src="assets/js/nav.js"></script>
   <!-- Auth -->
   <script src="assets/js/auth-config.js"></script>
+  <script src="assets/js/theme-config.js"></script>
+  <script src="assets/js/theme-loader.js"></script>
   <script src="assets/js/auth.js"></script>
   <script>
     (function () {

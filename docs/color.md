@@ -57,6 +57,11 @@ Black tokens provide true black and black with varying opacity levels for overla
 | `--black-alpha-30` | #0000004D | 30% opacity |
 | `--black-alpha-40` | #00000066 | 40% opacity |
 | `--black-alpha-50` | #00000080 | 50% opacity |
+| `--black-alpha-60` | #00000099 | 60% opacity |
+| `--black-alpha-70` | #000000B3 | 70% opacity |
+| `--black-alpha-80` | #000000CC | 80% opacity |
+| `--black-alpha-90` | #000000E6 | 90% opacity |
+| `--black-alpha-95` | #000000F2 | 95% opacity |
 
 **Usage:**
 
@@ -80,6 +85,11 @@ White tokens provide true white and white with varying opacity levels for overla
 | `--white-alpha-30` | #FFFFFF4D | 30% opacity |
 | `--white-alpha-40` | #FFFFFF66 | 40% opacity |
 | `--white-alpha-50` | #FFFFFF80 | 50% opacity |
+| `--white-alpha-60` | #FFFFFF99 | 60% opacity |
+| `--white-alpha-70` | #FFFFFFB3 | 70% opacity |
+| `--white-alpha-80` | #FFFFFFCC | 80% opacity |
+| `--white-alpha-90` | #FFFFFFE6 | 90% opacity |
+| `--white-alpha-95` | #FFFFFFF2 | 95% opacity |
 
 **Usage:**
 
@@ -174,4 +184,68 @@ h1 {
   border-color: var(--border-primary);
 }
 ```
+
+---
+
+## Dark Mode
+
+The design system uses a `data-theme` attribute to switch between light and dark modes. Light mode is the default (defined in `:root`). Dark mode activates when `data-theme="dark"` is set on any element.
+
+### How It Works
+
+- **`:root`** — light mode tokens (always present, the default)
+- **`[data-theme="dark"]`** — overrides semantic tokens with dark-appropriate values
+- **`@media (prefers-color-scheme: dark)`** — no-JS fallback for users with dark OS preference
+
+The toggle button in the site header sets `data-theme="dark"` on `<html>` and persists the choice in `localStorage`.
+
+### Page-Level Usage
+
+The toggle handles this automatically. When dark mode is active:
+
+```html
+<html data-theme="dark">
+```
+
+When light mode is active, the attribute is removed and `:root` defaults apply.
+
+### Scoped Usage
+
+You can apply dark mode to any element, not just the page:
+
+```html
+<!-- Dark card on a light page -->
+<div data-theme="dark" class="card">
+  <p>This section uses dark mode tokens</p>
+</div>
+```
+
+All semantic tokens inside that element will resolve to their dark values via CSS custom property inheritance.
+
+### Dark Mode Token Overrides
+
+Every semantic token has a dark mode override. The key mappings:
+
+| Token | Light Value | Dark Value |
+| --- | --- | --- |
+| `--text-primary` | `var(--warm-black)` | `#e8e6e3` |
+| `--text-secondary` | `var(--neutral-800)` | `#a8a5a2` |
+| `--text-plain` | `var(--black)` | `#f0eeeb` |
+| `--text-faded` | `var(--black-alpha-50)` | `rgba(255,255,255,0.45)` |
+| `--text-accent` | `var(--green)` | `#5bb89a` |
+| `--text-link` | `var(--green)` | `#5bb89a` |
+| `--text-inverted` | `var(--off-white)` | `#1a1a1a` |
+| `--background-primary` | `var(--off-white)` | `#1a1a1a` |
+| `--background-secondary` | `var(--warm-white)` | `#222222` |
+| `--background-plain` | `var(--white)` | `#2a2a2a` |
+| `--background-faded` | `var(--black-alpha-5)` | `rgba(255,255,255,0.06)` |
+| `--border-primary` | `var(--text-primary)` | `#e8e6e3` |
+| `--border-secondary` | `var(--neutral-300)` | `#3a3a3a` |
+| `--border-faded` | `var(--black-alpha-15)` | `rgba(255,255,255,0.12)` |
+
+Button, status, and form tokens also have dark overrides. See `assets/css/design-system.css` section 2b for the complete list.
+
+### Customizing Dark Mode Colors
+
+Edit the `[data-theme="dark"]` block in `assets/css/design-system.css`. When changing a value, also update the `@media (prefers-color-scheme: dark)` fallback block (section 2c) to keep them in sync.
 

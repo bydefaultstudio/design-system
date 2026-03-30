@@ -30,9 +30,6 @@
       + '<div class="icn-svg hamburger-icon-open">' + ICON_HAMBURGER + '</div>'
       + '<div class="icn-svg hamburger-icon-close">' + ICON_CLOSE + '</div>'
       + '</div>';
-  } else {
-    // Back link for no-sidebar pages
-    headerLeft += '<a href="' + base + 'index.html" class="site-header-back">' + ICON_BACK + ' Docs</a>';
   }
 
   headerLeft += '<a href="' + base + 'index.html" class="site-header-logo-link">'
@@ -52,22 +49,6 @@
   var ICON_CHEVRON_DOWN = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/></svg>';
 
   var headerRight = '<div class="site-header-right">'
-    + '<div class="header-dropdown demo-dropdown testing">'
-    + '<div class="header-link" role="button" tabindex="0" aria-expanded="false">'
-    + '<div class="icn-svg" data-icon="add"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>'
-    + '<span>Demo</span>'
-    + '<div class="icn-svg header-link-chevron" data-icon="chevron-down">' + ICON_CHEVRON_DOWN + '</div>'
-    + '</div>'
-    + '<div class="header-dropdown-menu">'
-    + '<div class="header-dropdown-label">Actions</div>'
-    + '<a href="#" class="header-link"><div class="icn-svg" data-icon="add"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div><span>New Page</span></a>'
-    + '<a href="#" class="header-link"><div class="icn-svg" data-icon="settings"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13.875 22H10.125L9.65 18.8C9.18333 18.6333 8.74167 18.4167 8.325 18.15C7.90833 17.8833 7.51667 17.5833 7.15 17.25L4.125 18.575L2.25 15.425L4.85 13.375C4.81667 13.1583 4.79583 12.9458 4.7875 12.7375C4.77917 12.5292 4.775 12.2667 4.775 11.95C4.775 11.65 4.77917 11.3958 4.7875 11.1875C4.79583 10.9792 4.81667 10.7667 4.85 10.55L2.25 8.575L4.125 5.425L7.15 6.725C7.51667 6.39167 7.90833 6.09583 8.325 5.8375C8.74167 5.57917 9.18333 5.36667 9.65 5.2L10.125 2H13.875L14.35 5.2C14.8167 5.36667 15.2583 5.58333 15.675 5.85C16.0917 6.11667 16.4833 6.41667 16.85 6.75L19.875 5.425L21.75 8.575L19.15 10.575C19.1833 10.7917 19.2042 11.0042 19.2125 11.2125C19.2208 11.4208 19.225 11.6667 19.225 11.95C19.225 12.2333 19.2167 12.4833 19.2 12.7C19.1833 12.9167 19.1583 13.1333 19.125 13.35L21.75 15.425L19.875 18.575L16.85 17.25C16.4833 17.5833 16.0917 17.8833 15.675 18.15C15.2583 18.4167 14.8167 18.6333 14.35 18.8L13.875 22ZM12 15.5C12.9667 15.5 13.7917 15.1583 14.475 14.475C15.1583 13.7917 15.5 12.9667 15.5 12C15.5 11.0333 15.1583 10.2083 14.475 9.525C13.7917 8.84167 12.9667 8.5 12 8.5C11.0333 8.5 10.2083 8.84167 9.525 9.525C8.84167 10.2083 8.5 11.0333 8.5 12C8.5 12.9667 8.84167 13.7917 9.525 14.475C10.2083 15.1583 11.0333 15.5 12 15.5Z" fill="currentColor"/></svg></div><span>Settings</span></a>'
-    + '<div class="header-dropdown-divider"></div>'
-    + '<div class="header-dropdown-label">Resources</div>'
-    + '<a href="#" class="header-link">Documentation</a>'
-    + '<a href="#" class="header-link">Help Centre</a>'
-    + '</div>'
-    + '</div>'
     + '<div class="auth-header-container"></div>'
     + '<div class="header-link dark-mode-toggle" role="button" tabindex="0" aria-label="Toggle dark mode">'
     + '<div class="icn-svg dark-mode-icon-light">' + ICON_SUN + '</div>'
@@ -97,7 +78,7 @@
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="brand/mission-vision-purpose.html" class="nav-link"><span>Mission, Vision & Purpose</span></a></li><li><a href="brand/values.html" class="nav-link"><span>Brand Values</span></a></li><li><a href="brand/origin-story.html" class="nav-link"><span>Origin Story</span></a></li><li><a href="brand/positioning.html" class="nav-link"><span>Positioning</span></a></li><li><a href="brand/value-proposition.html" class="nav-link"><span>Value Proposition</span></a></li><li><a href="brand/personality.html" class="nav-link"><span>Brand Personality</span></a></li><li><a href="brand/tone-of-voice.html" class="nav-link"><span>Tone of Voice</span></a></li><li><a href="../brand/index.html" class="nav-link"><span>Visual Identity</span></a></li></ul></details><details class="nav-section">
+      <ul class="nav-list"><li><a href="brand/mission-vision-purpose.html" class="nav-link" data-access="team"><span>Mission, Vision & Purpose</span></a></li><li><a href="brand/values.html" class="nav-link" data-access="team"><span>Brand Values</span></a></li><li><a href="brand/origin-story.html" class="nav-link" data-access="team"><span>Origin Story</span></a></li><li><a href="brand/positioning.html" class="nav-link" data-access="team"><span>Positioning</span></a></li><li><a href="brand/value-proposition.html" class="nav-link" data-access="team"><span>Value Proposition</span></a></li><li><a href="brand/personality.html" class="nav-link" data-access="team"><span>Brand Personality</span></a></li><li><a href="brand/tone-of-voice.html" class="nav-link" data-access="team"><span>Tone of Voice</span></a></li><li><a href="../brand/index.html" class="nav-link" data-access="team"><span>Visual Identity</span></a></li></ul></details><details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Design System</span>
         <span class="nav-toggle-icon">
@@ -106,7 +87,7 @@
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="design-system/overview.html" class="nav-link"><span>Overview</span></a></li><li><a href="design-system/color.html" class="nav-link"><span>Color</span></a></li><li><a href="design-system/typography.html" class="nav-link"><span>Typography</span></a></li><li><a href="design-system/spacing.html" class="nav-link"><span>Spacing</span></a></li><li><a href="design-system/border.html" class="nav-link"><span>Border</span></a></li><li><a href="design-system/iconography.html" class="nav-link"><span>Iconography</span></a></li><li><a href="design-system/button.html" class="nav-link"><span>Button</span></a></li><li><a href="design-system/callout.html" class="nav-link"><span>Callout</span></a></li><li><a href="design-system/disclosure.html" class="nav-link"><span>Disclosure</span></a></li><li><a href="design-system/form.html" class="nav-link"><span>Form</span></a></li><li><a href="design-system/table.html" class="nav-link"><span>Table</span></a></li><li><a href="../design-system/index.html" class="nav-link"><span>Style Guide</span></a></li></ul></details><details class="nav-section">
+      <ul class="nav-list"><li><a href="design-system/overview.html" class="nav-link" data-access="team"><span>Overview</span></a></li><li><a href="design-system/color.html" class="nav-link" data-access="team"><span>Color</span></a></li><li><a href="design-system/typography.html" class="nav-link" data-access="team"><span>Typography</span></a></li><li><a href="design-system/spacing.html" class="nav-link" data-access="team"><span>Spacing</span></a></li><li><a href="design-system/border.html" class="nav-link" data-access="team"><span>Border</span></a></li><li><a href="design-system/iconography.html" class="nav-link" data-access="team"><span>Iconography</span></a></li><li><a href="design-system/button.html" class="nav-link" data-access="team"><span>Button</span></a></li><li><a href="design-system/callout.html" class="nav-link" data-access="team"><span>Callout</span></a></li><li><a href="design-system/disclosure.html" class="nav-link" data-access="team"><span>Disclosure</span></a></li><li><a href="design-system/form.html" class="nav-link" data-access="team"><span>Form</span></a></li><li><a href="design-system/table.html" class="nav-link" data-access="team"><span>Table</span></a></li><li><a href="../design-system/index.html" class="nav-link" data-access="team"><span>Style Guide</span></a></li></ul></details><details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Code</span>
         <span class="nav-toggle-icon">
@@ -115,7 +96,7 @@
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="code/javascript.html" class="nav-link"><span>JavaScript</span></a></li><li><a href="code/css.html" class="nav-link"><span>CSS</span></a></li><li><a href="code/layout.html" class="nav-link"><span>HTML Layout</span></a></li></ul></details><details class="nav-section">
+      <ul class="nav-list"><li><a href="code/javascript.html" class="nav-link" data-access="team"><span>JavaScript</span></a></li><li><a href="code/css.html" class="nav-link" data-access="team"><span>CSS</span></a></li><li><a href="code/layout.html" class="nav-link" data-access="team"><span>HTML Layout</span></a></li></ul></details><details class="nav-section">
       <summary class="nav-section-toggle">
         <span>Content</span>
         <span class="nav-toggle-icon">
@@ -124,16 +105,16 @@
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="content/seo-best-practices.html" class="nav-link"><span>SEO</span></a></li><li><a href="design-system/markdown-style.html" class="nav-link"><span>Markdown</span></a></li></ul></details><details class="nav-section">
+      <ul class="nav-list"><li><a href="content/seo-best-practices.html" class="nav-link" data-access="team"><span>SEO</span></a></li><li><a href="design-system/markdown-style.html" class="nav-link" data-access="team"><span>Markdown</span></a></li></ul></details><details class="nav-section">
       <summary class="nav-section-toggle">
-        <span>Tools</span>
+        <span>Project</span>
         <span class="nav-toggle-icon">
           <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
             <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="cpm-calculator/about.html" class="nav-link"><span>CPM Calculator</span></a></li><li><a href="svg-cleaner/about.html" class="nav-link"><span>SVG Cleaner</span></a></li><li><a href="display-ad-preview/about.html" class="nav-link"><span>Display Ad Preview</span></a></li></ul></details><details class="nav-section" data-access="admin">
+      <ul class="nav-list"><li><a href="project/setup.html" class="nav-link" data-access="team"><span>Setup</span></a></li><li><a href="project/folder-structure.html" class="nav-link" data-access="team"><span>Folders</span></a></li><li><a href="project/upgrading-docs.html" class="nav-link" data-access="team"><span>Upgrading the Docs Engine</span></a></li><li><a href="project/cpm-calculator.html" class="nav-link" data-access="team"><span>CPM Calculator</span></a></li><li><a href="project/svg-cleaner.html" class="nav-link" data-access="team"><span>SVG Cleaner</span></a></li><li><a href="project/display-ad-preview.html" class="nav-link" data-access="team"><span>Display Ad Preview</span></a></li></ul></details><details class="nav-section" data-access="admin">
       <summary class="nav-section-toggle">
         <span>Admin</span>
         <span class="nav-toggle-icon">
@@ -142,9 +123,9 @@
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="admin/access-control.html" class="nav-link" data-access="admin"><span>Access Control</span></a></li></ul></details>`
+      <ul class="nav-list"><li><a href="admin/access-control.html" class="nav-link" data-access="admin"><span>Access Control</span></a></li><li><a href="admin/client-setup.html" class="nav-link" data-access="admin"><span>Client Setup</span></a></li><li class="nav-label">Login Scenarios</li><li><a href="../auth/login.html" class="nav-link" data-access="admin"><span>Login</span></a></li><li><a href="../auth/login.html#forgot" class="nav-link" data-access="admin"><span>Forgot Password</span></a></li><li><a href="../auth/login.html#recovery_token=dev" class="nav-link" data-access="admin"><span>Reset Password</span></a></li><li><a href="../auth/login.html#invite_token=dev" class="nav-link" data-access="admin"><span>Accept Invitation</span></a></li><li><a href="../auth/login.html#confirmation_token=dev" class="nav-link" data-access="admin"><span>Email Confirmation</span></a></li><li><a href="../auth/account.html" class="nav-link" data-access="admin"><span>Account</span></a></li><li><a href="../access-denied.html" class="nav-link" data-access="admin"><span>Access Denied</span></a></li></ul></details>`
       + '</div>'
-      + '<div class="auth-button-container"></div>'
+      + ''
       + '</aside>'
       + '<div class="site-sidebar-backdrop"></div>';
   }
