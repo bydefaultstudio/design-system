@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[Client Name] — Brand Book</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+  <!-- Design System Framework -->
+  <link rel="stylesheet" href="../assets/css/design-system.css" />
+  <!-- Client Theme Override -->
+  <link rel="stylesheet" href="theme.css" />
+
+  <!-- Google Fonts: update with client fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="../assets/css/style.css" />
+
+  <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
+  <script>
+    window._gotrueReady = (function() {
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0') {
+        return Promise.resolve(null);
+      }
+      return import('https://cdn.jsdelivr.net/npm/gotrue-js@0.9.29/+esm')
+        .then(function(m) { var G = m.default && m.default.default ? m.default.default : m.default; window.GoTrue = G; return G; })
+        .catch(function(e) { console.error('[Auth] GoTrue load failed:', e); return null; });
+    })();
+  </script>
+</head>
+
+<body class="auth-loading" data-access="client">
+
+  <!-- Site Navigation (header + sidebar injected by nav.js) -->
+  <div id="site-nav" data-base="../"></div>
+
+  <div class="page-wrapper has-sidebar">
+    <div class="page-content">
+
+      <!-- Header -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-s">
+              <p class="eyebrow">[Client Name]</p>
+              <h1>Brand Book</h1>
+              <p class="text-size-small">All design system components rendered with the client theme. Every component below inherits themed tokens — no component CSS was changed.</p>
+              <a class="button is-small is-outline" href="../design-system/index.html">Compare with Default</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Typography -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <article class="type-demo">
+              <h2 class="eyebrow">Typography</h2>
+
+              <span class="token-tag">Heading 1</span>
+              <h1>Your Primary Headline, Big, Bold, and Unmissable</h1>
+
+              <span class="token-tag">Heading 2</span>
+              <h2>Supporting Headline to Guide Your Content</h2>
+
+              <span class="token-tag">Heading 3</span>
+              <h3>Section Headings to Keep Content Organised</h3>
+
+              <span class="token-tag">Heading 4</span>
+              <h4>Smaller Subheading for Detailed Content Organisation</h4>
+
+              <span class="token-tag">Paragraph</span>
+              <p>
+                This paragraph demonstrates how body text will look across your layout. <strong>Bold text</strong>
+                adds emphasis, while <em>italics</em> offer a subtle highlight. You can also use
+                <del>strikethrough</del> to show edits. This is an entire paragraph to test readability and text flow.
+              </p>
+
+              <p>
+                This example paragraph demonstrates how hyperlinks appear within body text. When designing your
+                layout, consider how <a href="#">linked text</a> stands out from regular content.
+              </p>
+
+              <span class="token-tag">Small Text</span>
+              <p class="text-size-small">
+                Longer paragraphs help test how body text behaves over multiple lines and paragraphs in a real layout.
+                Use them to observe spacing, line height, and visual fatigue. <strong>Bold calls attention</strong>,
+                <em>italics guide the tone</em>, and clearly formatted links or buttons can suggest interactivity.
+              </p>
+
+              <span class="token-tag">Eyebrow</span>
+              <p class="eyebrow">Eyebrow Text</p>
+
+              <span class="token-tag">Blockquote</span>
+              <blockquote>
+                Words matter, but how those words are presented matters just as much. Typography transforms content from
+                mundane to magical, from ordinary to extraordinary.
+              </blockquote>
+
+              <span class="token-tag">Unordered List</span>
+              <ul>
+                <li>Unordered lists help organize related items without hierarchy</li>
+                <li>Perfect for showing features, benefits, or options</li>
+                <li>Allows readers to quickly scan through content</li>
+              </ul>
+
+              <span class="token-tag">Ordered List</span>
+              <ol>
+                <li>Use headings to create a visual hierarchy.</li>
+                <li>Structure content with clear lists.</li>
+                <li>Guide readers step-by-step with ordered items.</li>
+              </ol>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Buttons -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-none">
+              <div class="block gap-l button-demo">
+                <h2 class="eyebrow">Buttons</h2>
+
+                <span class="token-tag">button</span>
+                <button class="button">Button</button>
+
+                <span class="token-tag">button is-outline</span>
+                <button class="button is-outline">Button</button>
+
+                <span class="token-tag">button is-faded</span>
+                <button class="button is-faded">Button</button>
+
+                <span class="token-tag">button is-outline is-faded</span>
+                <button class="button is-outline is-faded">Button</button>
+
+                <span class="token-tag">button is-icon</span>
+                <button class="button is-icon" aria-label="Add">
+                  <div class="icn-svg">
+                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z"
+                        fill="currentColor" />
+                    </svg>
+                  </div>
+                </button>
+
+                <span class="token-tag">button is-small</span>
+                <button class="button is-small">Button</button>
+
+                <span class="token-tag">button:disabled</span>
+                <button class="button" disabled>Button</button>
+
+                <span class="token-tag">button-group</span>
+                <div class="button-group">
+                  <button class="button">Button</button>
+                  <button class="button is-faded">Button</button>
+                  <button class="button is-outline">Button</button>
+                  <button class="button is-outline is-faded">Button</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Form Elements -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-l">
+              <h2 class="eyebrow">Form Elements</h2>
+
+              <div class="form-group">
+                <label for="demo-text">Text input</label>
+                <input type="text" id="demo-text" placeholder="Placeholder text">
+              </div>
+
+              <div class="form-group">
+                <label for="demo-email">Email input</label>
+                <input type="email" id="demo-email" placeholder="name@example.com">
+              </div>
+
+              <div class="form-group">
+                <label for="demo-textarea">Textarea</label>
+                <textarea id="demo-textarea" placeholder="Enter longer text here..."></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="demo-select">Select</label>
+                <select id="demo-select">
+                  <option value="" disabled selected>Choose an option</option>
+                  <option value="1">Option 1</option>
+                  <option value="2">Option 2</option>
+                  <option value="3">Option 3</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="demo-disabled">Disabled input</label>
+                <input type="text" id="demo-disabled" value="Cannot edit this" disabled>
+              </div>
+
+              <div class="form-check">
+                <input type="checkbox" id="demo-check">
+                <label for="demo-check">Checkbox label</label>
+              </div>
+
+              <div class="form-check">
+                <input type="radio" name="demo-radio" id="demo-radio-1">
+                <label for="demo-radio-1">Radio option 1</label>
+              </div>
+              <div class="form-check">
+                <input type="radio" name="demo-radio" id="demo-radio-2">
+                <label for="demo-radio-2">Radio option 2</label>
+              </div>
+
+              <fieldset>
+                <legend>Fieldset legend</legend>
+                <div class="form-group">
+                  <label for="demo-fieldset-input">Input inside fieldset</label>
+                  <input type="text" id="demo-fieldset-input" placeholder="Grouped input">
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Callouts & Alerts -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-l">
+              <h2 class="eyebrow">Callouts & Alerts</h2>
+
+              <div class="callout">
+                <p>This is a base callout with no variant. Use it for general-purpose highlighted content.</p>
+              </div>
+
+              <div class="callout callout-note">
+                <div class="callout-title">Note</div>
+                <p>Useful information that users should know, even when skimming content.</p>
+              </div>
+
+              <div class="callout callout-tip">
+                <div class="callout-title">Tip</div>
+                <p>Helpful advice for doing things better or more easily.</p>
+              </div>
+
+              <div class="callout callout-warning">
+                <div class="callout-title">Warning</div>
+                <p>Urgent information that needs immediate attention to avoid problems.</p>
+              </div>
+
+              <div class="callout callout-caution">
+                <div class="callout-title">Caution</div>
+                <p>Advises about risks or negative outcomes of certain actions.</p>
+              </div>
+
+              <div class="callout callout-important">
+                <div class="callout-title">Important</div>
+                <p>Key information users need to know to achieve their goal.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Borders -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-l">
+              <h2 class="eyebrow">Borders</h2>
+
+              <span class="token-tag">.border .border-primary</span>
+              <div class="border border-primary padding-l">Primary border</div>
+
+              <span class="token-tag">.border .border-secondary</span>
+              <div class="border border-secondary padding-l">Secondary border</div>
+
+              <span class="token-tag">.border .border-faded</span>
+              <div class="border border-faded padding-l">Faded border</div>
+
+              <span class="token-tag">.border-top .border-m .border-dashed</span>
+              <div class="border-top border-m border-dashed padding-l">Dashed top, medium width</div>
+
+              <span class="token-tag">.border .border-l .border-dotted</span>
+              <div class="border border-l border-dotted padding-l">Dotted, large width</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grid -->
+      <section class="top-medium bottom-medium">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-l">
+              <h2 class="eyebrow">Grid</h2>
+
+              <span class="token-tag">.grid .cols-3</span>
+              <div class="grid cols-3 gap-m">
+                <div class="bg-faded padding-m border border-faded">Column 1</div>
+                <div class="bg-faded padding-m border border-faded">Column 2</div>
+                <div class="bg-faded padding-m border border-faded">Column 3</div>
+              </div>
+
+              <span class="token-tag">.grid .cols-4</span>
+              <div class="grid cols-4 gap-m">
+                <div class="bg-faded padding-m border border-faded">1</div>
+                <div class="bg-faded padding-m border border-faded">2</div>
+                <div class="bg-faded padding-m border border-faded">3</div>
+                <div class="bg-faded padding-m border border-faded">4</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Site Navigation -->
+  <script src="../assets/js/nav.js"></script>
+  <!-- Auth -->
+  <script src="../assets/js/auth-config.js"></script>
+  <script src="../assets/js/theme-config.js"></script>
+  <script src="../assets/js/theme-loader.js"></script>
+  <script src="../assets/js/auth.js"></script>
+
+</body>
+</html>

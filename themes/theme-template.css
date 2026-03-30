@@ -1,0 +1,158 @@
+/* ─────────────────────────────
+   CLIENT THEME: [Client Name]
+   ─────────────────────────────
+
+   This file overrides design system tokens for a specific client.
+   Loaded dynamically by theme-loader.js based on the logged-in user.
+
+   How to use:
+   1. Copy this file → themes/client-name.css
+   2. Update the values below to match the client brand
+   3. Register the theme in assets/js/theme-config.js:
+      'client-name': {
+        label: 'Client Name',
+        css: 'themes/client-name.css',
+        fonts: 'https://fonts.googleapis.com/css2?family=...'
+      }
+   4. Set clientFolder: 'client-name' in the user's Netlify Identity app_metadata
+
+   Only override what differs from the default.
+   Tokens left commented inherit from the design system.
+   ───────────────────────────── */
+
+
+/* -- @font-face: Client fonts -- */
+/*
+@font-face {
+  font-family: "ClientFont";
+  src: url("../assets/fonts/ClientFont-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+*/
+
+
+:root {
+
+  /* ── Typography ──────────────────────────── */
+  /* --font-primary: "ClientFont", sans-serif; */
+  /* --font-secondary: "ClientSerif", Georgia, serif; */
+  /* --font-tertiary: "JetBrains Mono", monospace; */
+
+
+  /* ── Neutral scale ──────────────────────────
+     Pure grey ramp from near-white to near-black.
+     Replaces the warm-tinted By Default neutrals.
+     ─────────────────────────────────────────── */
+  --neutral-50:  #fafafa;
+  --neutral-100: #e5e5e5;
+  --neutral-150: #d4d4d4;
+  --neutral-200: #c4c4c4;
+  --neutral-300: #a3a3a3;
+  --neutral-400: #8a8a8a;
+  --neutral-500: #737373;
+  --neutral-600: #5c5c5c;
+  --neutral-700: #474747;
+  --neutral-800: #333333;
+  --neutral-900: #1f1f1f;
+  --neutral-950: #141414;
+  --neutral-990: #0a0a0a;
+
+
+  /* ── Text ────────────────────────────────── */
+  /* --text-primary: #1a1a1a; */
+  /* --text-secondary: #555555; */
+  /* --text-accent: #0d6efd; */
+  /* --text-link: #0d6efd; */
+  /* --text-inverted: #f5f5f5; */
+
+
+  /* ── Backgrounds ─────────────────────────── */
+  /* --background-primary: #f5f5f5; */
+  /* --background-secondary: #e8e8e8; */
+
+
+  /* ── Borders ─────────────────────────────── */
+  /* --border-primary: #1a1a1a; */
+  /* --border-secondary: #d4d4d4; */
+
+
+  /* ── Buttons ─────────────────────────────── */
+  /* --button-primary: #1a1a1a; */
+  /* --button-text: #f5f5f5; */
+  /* --button-secondary: #000000; */
+  /* --button-secondary-text: #f5f5f5; */
+
+
+  /* ── Accent (links, focus rings, status) ── */
+  /* --status-info: #0d6efd; */
+  /* --input-focus: #0d6efd; */
+  /* --checkbox-selected: #0d6efd; */
+}
+
+
+/* ── Dark mode ─────────────────────────────────
+   Uncomment and customise if the client needs
+   dark mode theming. Only override what differs.
+   ─────────────────────────────────────────────── */
+/*
+[data-theme="dark"] {
+  --text-primary: #e5e5e5;
+  --text-secondary: #a3a3a3;
+  --text-plain: #eeeeee;
+  --text-accent: #6ea8fe;
+  --text-link: #6ea8fe;
+  --text-inverted: #1a1a1a;
+
+  --background-primary: #121212;
+  --background-secondary: #1e1e1e;
+  --background-plain: #2a2a2a;
+
+  --border-primary: #e5e5e5;
+  --border-secondary: #3a3a3a;
+
+  --button-primary: #6ea8fe;
+  --button-text: #121212;
+  --button-secondary: #e5e5e5;
+  --button-secondary-text: #121212;
+
+  --status-info: #6ea8fe;
+  --input-focus: #6ea8fe;
+  --checkbox-selected: #6ea8fe;
+}
+*/
+
+
+/* ── System preference fallback (no-JS dark mode) ──
+   Duplicate the dark mode block above inside this
+   media query for users without JavaScript.
+   ──────────────────────────────────────────────────── */
+/*
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --text-primary: #e5e5e5;
+    --text-secondary: #a3a3a3;
+    --text-plain: #eeeeee;
+    --text-accent: #6ea8fe;
+    --text-link: #6ea8fe;
+    --text-inverted: #1a1a1a;
+
+    --background-primary: #121212;
+    --background-secondary: #1e1e1e;
+    --background-plain: #2a2a2a;
+
+    --border-primary: #e5e5e5;
+    --border-secondary: #3a3a3a;
+
+    --button-primary: #6ea8fe;
+    --button-text: #121212;
+    --button-secondary: #e5e5e5;
+    --button-secondary-text: #121212;
+
+    --status-info: #6ea8fe;
+    --input-focus: #6ea8fe;
+    --checkbox-selected: #6ea8fe;
+  }
+}
+*/

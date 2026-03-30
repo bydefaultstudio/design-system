@@ -16,8 +16,8 @@ The doc site is split into two parts: **content** (your markdown files) and the 
 | File/Folder | What it controls |
 | --- | --- |
 | `docs/*.md` | All documentation content |
-| `docs/docs.config.js` | Design system path, brand book path, fonts, footer text, index description |
-| `assets/images/` and `assets/icons/` | Logo (`logo.svg`) and favicons |
+| `docs/docs.config.js` | Design system path, fonts, footer text, index description |
+| `assets/images/logos/` and `assets/icons/` | Logo (`logo.svg`) and favicons |
 
 ---
 
@@ -53,11 +53,10 @@ Edit `docs/docs.config.js` in the project:
 ```js
 module.exports = {
   // Path to design system CSS, relative from project root
-  designSystemPath: '../../design-system/design-system.css',
+  designSystemPath: '../../assets/css/design-system.css',
 
-  // Path to brand book CSS, relative from project root
-  // Set to null to use framework defaults only
-  brandCssPath: '../../brand-book/brand-book.css',
+  // Brand tokens are now defined directly in design-system.css
+  brandCssPath: null,
 
   // Google Fonts URL — set to null to disable
   googleFontsUrl: 'https://fonts.googleapis.com/...',
@@ -70,14 +69,14 @@ module.exports = {
 };
 ```
 
-Replace the logo by swapping `assets/images/logo.svg`.
+Replace the logo by swapping `assets/images/logos/logo.svg`.
 Replace favicons by swapping `assets/icons/favicon.svg` and `assets/icons/favicon.ico`.
 
 ---
 
 ## Design System CSS Convention
 
-The design system CSS lives at `design-system/design-system.css`. The brand book lives at `brand-book/brand-book.css`. Both paths are referenced in `docs/docs.config.js` and used by every generated doc page.
+The design system CSS lives at `assets/css/design-system.css` and includes brand tokens directly. Its path is referenced in `docs/docs.config.js` and used by every generated doc page.
 
 **If the path is wrong or the file is missing**, every doc page will show a friendly amber banner at the top:
 

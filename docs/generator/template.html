@@ -13,13 +13,12 @@
     <!-- Open Graph -->
     <meta property="og:title" content="{{PAGE_TITLE}} - By Default Brand OS">
     <meta property="og:description" content="{{META_DESCRIPTION}}">
-    <meta property="og:image" content="{{NAV_BASE}}assets/images/og-default.jpg">
+    <meta property="og:image" content="{{NAV_BASE}}assets/images/og/og-default.jpg">
     <meta property="og:type" content="website">
 
     <!-- Design System Framework (path set in docs/docs.config.js) -->
     <link rel="stylesheet" href="{{DESIGN_SYSTEM_PATH}}" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
-    <!-- Brand Book (path set in docs/docs.config.js) -->
     {{BRAND_CSS}}
 
     <!-- Google Fonts (configured in docs/docs.config.js) -->
@@ -71,6 +70,36 @@
             <!-- Table of Contents -->
             {{TOC_SECTION}}
         </div>
+
+        <!-- Page Feedback -->
+        <section class="page-feedback" aria-label="Page feedback">
+            <div class="page-feedback-inner padding-global">
+                <h3 class="page-feedback-prompt">Was this page helpful?</h3>
+                <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
+                <div class="button-group">
+                    <button class="button is-small" data-feedback="yes" type="button">Yes</button>
+                    <button class="button is-small is-outline is-faded" data-feedback="no" type="button">No</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Modal -->
+        <dialog class="feedback-modal" aria-label="Send feedback">
+            <div class="feedback-modal-content">
+                <h3 class="feedback-modal-title">Send feedback</h3>
+                <p class="feedback-modal-subtitle"></p>
+                <form class="feedback-form" name="page-feedback" data-netlify="true">
+                    <input type="hidden" name="form-name" value="page-feedback">
+                    <input type="hidden" name="sentiment" value="">
+                    <input type="hidden" name="page" value="">
+                    <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
+                    <div class="button-group feedback-modal-actions">
+                        <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>
+                        <button type="submit" class="button is-small">Send feedback</button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
 
         <!-- Page Navigation (Previous / Next) -->
         {{PAGE_NAV}}
@@ -259,7 +288,13 @@
     <script src="{{NAV_BASE}}assets/js/nav.js"></script>
     <!-- Auth -->
     <script src="{{NAV_BASE}}assets/js/auth-config.js"></script>
+    <!-- Theme -->
+    <script src="{{NAV_BASE}}assets/js/theme-config.js"></script>
+    <script src="{{NAV_BASE}}assets/js/theme-loader.js"></script>
+    <!-- Auth (must load after theme scripts) -->
     <script src="{{NAV_BASE}}assets/js/auth.js"></script>
+    <!-- Feedback -->
+    <script src="{{NAV_BASE}}assets/js/feedback.js"></script>
 
     <script>
       /* Table scroll overflow hint */

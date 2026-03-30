@@ -96,7 +96,7 @@ Options:
 
 Examples:
   echo '<svg>...</svg>' | node svg-clean.js
-  echo '<svg>...</svg>' | node svg-clean.js --size -o assets/images/logo.svg
+  echo '<svg>...</svg>' | node svg-clean.js --size -o assets/images/logos/logo.svg
   cat icon.svg | node svg-clean.js --strip-comments --minify
 `);
 }

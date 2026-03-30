@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Setup - By Default Brand OS</title>
+    <meta name="description" content="Complete guide to creating client folders, themes, logos, and user accounts.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Client Setup - By Default Brand OS">
+    <meta property="og:description" content="Complete guide to creating client folders, themes, logos, and user accounts.">
+    <meta property="og:image" content="../assets/images/og/og-default.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Design System Framework (path set in docs/docs.config.js) -->
+    <link rel="stylesheet" href="../assets/css/design-system.css" id="design-system-css"
+          onerror="document.getElementById('ds-missing-banner').style.display='flex'">
+    
+
+    <!-- Google Fonts (configured in docs/docs.config.js) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Markdown CSS -->
+    <link rel="stylesheet" href="../assets/css/markdown.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
+    <script>
+      window._gotrueReady = (function() {
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0') {
+          return Promise.resolve(null);
+        }
+        return import('https://cdn.jsdelivr.net/npm/gotrue-js@0.9.29/+esm')
+          .then(function(m) { var G = m.default && m.default.default ? m.default.default : m.default; window.GoTrue = G; return G; })
+          .catch(function(e) { console.error('[Auth] GoTrue load failed:', e); return null; });
+      })();
+    </script>
+</head>
+<body class="auth-loading" data-access="admin">
+
+    <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
+    <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
+        <span>⚠️</span>
+        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">docs/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
+        <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
+    </div>
+
+    <!-- Site Navigation (header + sidebar injected by nav.js) -->
+    <div id="site-nav" data-base="../"></div>
+
+    <div class="docs-main-area">
+        <!-- Page Header (full width, outside grid) -->
+        <div class="page-header">
+      <div class="container-small">
+        <h1>Client Setup</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">Setting up a new client environment</p>
+        <div class="button-group justify-center">
+          <a href="../docs/client-setup.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+          
+        </div>
+      </div>
+    </div>
+
+        <!-- Main Content + TOC grid -->
+        <div class="docs-content-grid padding-global">
+            <!-- Main Content -->
+            <main class="docs-main">
+                <article class="markdown-body">
+                    <p>This guide covers how to set up a new client environment from scratch. When a client user logs in, the system automatically loads their theme, swaps the logo, updates the home link, and filters the sidebar navigation.</p>
+<hr>
+<h2 id="what-clients-see">What Clients See</h2>
+<p>When a client logs in, the following elements personalise automatically:</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Element</th>
+<th>Default (team/admin)</th>
+<th>Client</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Logo</strong></td>
+<td>By Default</td>
+<td>Client logo from <code>assets/images/logos/</code></td>
+</tr>
+<tr>
+<td><strong>Home link</strong></td>
+<td><code>index.html</code></td>
+<td><code>client-name/index.html</code></td>
+</tr>
+<tr>
+<td><strong>Theme</strong></td>
+<td>By Default brand</td>
+<td>Client <code>theme.css</code></td>
+</tr>
+<tr>
+<td><strong>Fonts</strong></td>
+<td>Inclusive Sans + RecifeText</td>
+<td>Per <code>theme-config.js</code></td>
+</tr>
+<tr>
+<td><strong>Sidebar</strong></td>
+<td>Full navigation</td>
+<td>Auto-filtered by page access</td>
+</tr>
+</tbody></table></div>
+<p>All of this is driven by the user&#39;s <code>clientFolder</code> value in Netlify Identity.</p>
+<hr>
+<h2 id="quick-checklist">Quick Checklist</h2>
+<ol>
+<li>Copy the <code>blank/</code> folder to <code>your-client/</code></li>
+<li>Add client logos to <code>assets/images/logos/</code></li>
+<li>Customise <code>your-client/theme.css</code></li>
+<li>Register the theme in <code>assets/js/theme-config.js</code></li>
+<li>Create a Netlify Identity user with the client role</li>
+<li>Test in dev mode</li>
+</ol>
+<p>Each step is explained in detail below.</p>
+<hr>
+<h2 id="step-1-create-the-client-folder">Step 1: Create the Client Folder</h2>
+<p>Copy the <code>blank/</code> folder and rename it to the client name. Use lowercase, hyphenated names.</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-lbf3oydx8" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-lbf3oydx8">cp -r blank/ your-client/
+</code></pre>
+      </div>
+    
+<p>The folder contains three files:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-lsxsxqo3g" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-lsxsxqo3g">your-client/
+  index.html      — Client homepage (brand guidelines landing page)
+  brand-book.html — Full component showcase (typography, buttons, forms, etc.)
+  theme.css       — Design system token overrides
+</code></pre>
+      </div>
+    
+<p><strong>After copying</strong>, find and replace <code>[Client Name]</code> in both HTML files with the actual client name:</p>
+<ul>
+<li>Page titles (<code>&lt;title&gt;</code>)</li>
+<li>Eyebrow text</li>
+<li>Heading text</li>
+<li>Footer text</li>
+</ul>
+<hr>
+<h2 id="step-2-add-client-logos">Step 2: Add Client Logos</h2>
+<p>Logo files live in <code>assets/images/logos/</code> with a fixed naming convention:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-1hbwykde9" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-1hbwykde9">assets/images/logos/your-client.svg        — Full header logo (desktop)
+assets/images/logos/your-client-small.svg  — Compact variant (mobile, future use)
+</code></pre>
+      </div>
+    
+<p>The filename must match the client folder name exactly.</p>
+<h3 id="logo-requirements">Logo requirements</h3>
+<ul>
+<li><strong>Format:</strong> SVG</li>
+<li><strong>Sizing:</strong> The container is 50px tall (desktop) / 45px tall (mobile). Width scales automatically. A wide aspect ratio (roughly 2:1) works best.</li>
+<li><strong>Colour:</strong> Use fixed colours or <code>currentColor</code> if you want the logo to adapt to the theme&#39;s text colour and dark mode.</li>
+<li><strong>Cleanup:</strong> Run logos through the SVG Cleaner before adding them:</li>
+</ul>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-13urz2zs1" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-13urz2zs1" class="language-bash">node svg-cleaner/svg-clean.js --strip-comments --size -o assets/images/logos/your-client.svg &lt;&lt;&#39;SVGEOF&#39;
+&lt;svg&gt;...paste logo SVG here...&lt;/svg&gt;
+SVGEOF
+</code></pre>
+      </div>
+    
+<h3 id="how-it-works">How it works</h3>
+<p>When a client logs in, <code>theme-loader.js</code> replaces the By Default inline SVG with an <code>&lt;img&gt;</code> tag pointing to the client&#39;s logo file. When an admin previews a theme, the logo swaps too. When the theme is unloaded, the original By Default logo is restored.</p>
+<hr>
+<h2 id="step-3-customise-the-theme">Step 3: Customise the Theme</h2>
+<p>Open <code>your-client/theme.css</code> and update the token values to match the client&#39;s brand.</p>
+<h3 id="what-to-override">What to override</h3>
+<p>The theme file groups tokens by concern. Only uncomment and change what differs from the default:</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Category</th>
+<th>Tokens</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Typography</strong></td>
+<td><code>--font-primary</code>, <code>--font-secondary</code>, <code>--font-tertiary</code></td>
+<td>Client fonts (add <code>@font-face</code> if using local fonts)</td>
+</tr>
+<tr>
+<td><strong>Neutral scale</strong></td>
+<td><code>--neutral-50</code> through <code>--neutral-990</code></td>
+<td>Grey ramp (uncommented by default with pure greys)</td>
+</tr>
+<tr>
+<td><strong>Text</strong></td>
+<td><code>--text-primary</code>, <code>--text-secondary</code>, <code>--text-accent</code>, <code>--text-link</code>, <code>--text-inverted</code></td>
+<td>Core text colours</td>
+</tr>
+<tr>
+<td><strong>Backgrounds</strong></td>
+<td><code>--background-primary</code>, <code>--background-secondary</code></td>
+<td>Surface colours</td>
+</tr>
+<tr>
+<td><strong>Borders</strong></td>
+<td><code>--border-primary</code>, <code>--border-secondary</code></td>
+<td>Border colours</td>
+</tr>
+<tr>
+<td><strong>Buttons</strong></td>
+<td><code>--button-primary</code>, <code>--button-text</code>, <code>--button-secondary</code>, <code>--button-secondary-text</code></td>
+<td>Button colours</td>
+</tr>
+<tr>
+<td><strong>Accent</strong></td>
+<td><code>--status-info</code>, <code>--input-focus</code>, <code>--checkbox-selected</code></td>
+<td>Accent colour used across UI</td>
+</tr>
+</tbody></table></div>
+<h3 id="tokens-you-usually-don39t-need-to-override">Tokens you usually don&#39;t need to override</h3>
+<ul>
+<li><code>--text-faded</code>, <code>--background-faded</code>, <code>--border-faded</code> — use alpha transparency, work across any theme</li>
+<li><code>--callout-*</code> — derived from status colours via <code>color-mix()</code>, update automatically</li>
+<li><code>--selection-*</code> — selection highlight, inherits from primary tokens</li>
+</ul>
+<h3 id="dark-mode">Dark mode</h3>
+<p>The theme template includes a commented-out <code>[data-theme=&quot;dark&quot;]</code> block. Uncomment and customise it to theme dark mode. Also duplicate the values inside the <code>@media (prefers-color-scheme: dark)</code> fallback for users without JavaScript.</p>
+<h3 id="how-it-works">How it works</h3>
+<p>The theme CSS file is loaded dynamically by <code>theme-loader.js</code> after the design system CSS. It overrides CSS custom properties, and the entire site updates automatically. The theme file is never hardcoded in the HTML — it is injected as a <code>&lt;link&gt;</code> tag by JavaScript based on the user&#39;s identity.</p>
+<hr>
+<h2 id="step-4-register-the-theme">Step 4: Register the Theme</h2>
+<p>Add an entry to <code>assets/js/theme-config.js</code>:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-w8lf97yjn" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-w8lf97yjn" class="language-js">&#39;your-client&#39;: {
+  label: &#39;Your Client&#39;,
+  css: &#39;your-client/theme.css&#39;,
+  fonts: &#39;https://fonts.googleapis.com/css2?family=YourFont:wght@300;400;500;600;700&amp;display=swap&#39;
+}
+</code></pre>
+      </div>
+    
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Field</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>key</strong></td>
+<td>Yes</td>
+<td>Must match the <code>clientFolder</code> value in Netlify Identity</td>
+</tr>
+<tr>
+<td><strong>label</strong></td>
+<td>Yes</td>
+<td>Display name shown in the admin theme switcher</td>
+</tr>
+<tr>
+<td><strong>css</strong></td>
+<td>Yes</td>
+<td>Path to the theme CSS file (relative to site root)</td>
+</tr>
+<tr>
+<td><strong>fonts</strong></td>
+<td>No</td>
+<td>Google Fonts URL. Set to <code>null</code> if using local fonts or the default fonts</td>
+</tr>
+</tbody></table></div>
+<h3 id="google-fonts">Google Fonts</h3>
+<p>If the client uses Google Fonts, the URL goes in the <code>fonts</code> field. The theme loader injects the font <code>&lt;link&gt;</code> tag dynamically — you do not need to add it to any HTML file.</p>
+<p>If using local fonts instead, define them with <code>@font-face</code> in the theme CSS file and set <code>fonts: null</code> in the config.</p>
+<hr>
+<h2 id="step-5-create-the-netlify-identity-user">Step 5: Create the Netlify Identity User</h2>
+<p>In the Netlify Identity dashboard, create a new user and set their <code>app_metadata</code>:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-uv2xqt71l" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-uv2xqt71l" class="language-json">{
+  &quot;roles&quot;: [&quot;client&quot;],
+  &quot;clientFolder&quot;: &quot;your-client&quot;
+}
+</code></pre>
+      </div>
+    
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>roles</code></td>
+<td><code>[&quot;client&quot;]</code></td>
+<td>Grants client-level access (can view <code>client</code> and <code>public</code> pages)</td>
+</tr>
+<tr>
+<td><code>clientFolder</code></td>
+<td><code>&quot;your-client&quot;</code></td>
+<td>Maps to the client folder name, theme config key, and logo filename</td>
+</tr>
+</tbody></table></div>
+<p>The <code>clientFolder</code> value is the single identifier that ties everything together:</p>
+<ul>
+<li>Theme CSS: <code>your-client/theme.css</code></li>
+<li>Logo: <code>assets/images/logos/your-client.svg</code></li>
+<li>Home link: <code>your-client/index.html</code></li>
+<li>Page access: restricted to <code>your-client/</code> folder + shared tool pages</li>
+</ul>
+<hr>
+<h2 id="step-6-test-in-dev-mode">Step 6: Test in Dev Mode</h2>
+<p>On localhost, the dev toolbar lets you switch roles without logging in.</p>
+<h3 id="test-as-client">Test as client</h3>
+<ol>
+<li>Open <code>assets/js/auth-config.js</code></li>
+<li>Set <code>devMode.clientFolder</code> to your client name:
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-l739k9nri" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-l739k9nri" class="language-js">devMode: {
+  defaultRole: &#39;client&#39;,
+  email: &#39;dev@bydefault.studio&#39;,
+  clientFolder: &#39;your-client&#39;
+}
+</code></pre>
+      </div>
+    
+</li>
+<li>Open any page on localhost</li>
+<li>Switch to the <strong>client</strong> role in the dev toolbar</li>
+<li>Verify: logo swaps, home link updates, theme loads, sidebar filters</li>
+</ol>
+<h3 id="test-as-admin-with-theme-preview">Test as admin with theme preview</h3>
+<ol>
+<li>Set <code>devMode.defaultRole</code> back to <code>&#39;admin&#39;</code></li>
+<li>Open any page on localhost</li>
+<li>Click the user icon in the header → open the dropdown</li>
+<li>Under <strong>Theme Preview</strong>, select your client&#39;s theme</li>
+<li>Verify: theme loads, logo swaps, persists across page navigation</li>
+<li>Select <strong>By Default</strong> to unload the theme</li>
+</ol>
+<hr>
+<h2 id="creating-from-blank-full-walkthrough">Creating from Blank — Full Walkthrough</h2>
+<p>Here is the complete workflow for adding a new client called &quot;acme&quot;:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-88mivnpl9" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-88mivnpl9" class="language-bash"># 1. Copy the blank template
+cp -r blank/ acme/
+
+# 2. Clean and add logos
+node svg-cleaner/svg-clean.js --strip-comments --size \
+  -o assets/images/logos/acme.svg &lt;&lt;&#39;SVGEOF&#39;
+&lt;svg&gt;...paste full logo...&lt;/svg&gt;
+SVGEOF
+
+node svg-cleaner/svg-clean.js --strip-comments --size \
+  -o assets/images/logos/acme-small.svg &lt;&lt;&#39;SVGEOF&#39;
+&lt;svg&gt;...paste small logo...&lt;/svg&gt;
+SVGEOF
+</code></pre>
+      </div>
+    
+<p>Then manually:</p>
+<ol start="3">
+<li>Edit <code>acme/index.html</code> and <code>acme/brand-book.html</code> — replace <code>[Client Name]</code> with &quot;Acme&quot;</li>
+<li>Edit <code>acme/theme.css</code> — uncomment and set brand colours and fonts</li>
+<li>Add to <code>assets/js/theme-config.js</code>:
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-805ipupk6" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-805ipupk6" class="language-js">&#39;acme&#39;: {
+  label: &#39;Acme&#39;,
+  css: &#39;acme/theme.css&#39;,
+  fonts: &#39;https://fonts.googleapis.com/css2?family=...&#39;
+}
+</code></pre>
+      </div>
+    
+</li>
+<li>In Netlify Identity, create a user with:
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-n5xfwonca" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-n5xfwonca" class="language-json">{ &quot;roles&quot;: [&quot;client&quot;], &quot;clientFolder&quot;: &quot;acme&quot; }
+</code></pre>
+      </div>
+    
+</li>
+<li>Test in dev mode</li>
+</ol>
+<hr>
+<h2 id="architecture-reference">Architecture Reference</h2>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>assets/js/theme-config.js</code></td>
+<td>Registry of available themes (maps <code>clientFolder</code> to CSS, fonts, label)</td>
+</tr>
+<tr>
+<td><code>assets/js/theme-loader.js</code></td>
+<td>Loads/unloads theme CSS, fonts, logo, and home link dynamically</td>
+</tr>
+<tr>
+<td><code>assets/js/auth.js</code></td>
+<td>Calls <code>initThemeForUser()</code> after auth resolves</td>
+</tr>
+<tr>
+<td><code>assets/js/auth-config.js</code></td>
+<td>Role hierarchy, dev mode settings (including <code>clientFolder</code> for testing)</td>
+</tr>
+<tr>
+<td><code>themes/theme-template.css</code></td>
+<td>Standalone theme template (for themes not inside a client folder)</td>
+</tr>
+<tr>
+<td><code>blank/</code></td>
+<td>Blank client folder template (copy to create new clients)</td>
+</tr>
+</tbody></table></div>
+<h3 id="data-flow">Data flow</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-2zxkh3ktd" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-2zxkh3ktd">User logs in
+  → auth.js resolves role + clientFolder from app_metadata
+  → auth.js calls initThemeForUser(user)
+  → theme-loader.js reads clientFolder
+  → Sets home link to clientFolder/index.html
+  → Swaps logo to assets/images/logos/clientFolder.svg
+  → Loads clientFolder/theme.css (if registered in theme-config.js)
+  → Injects Google Fonts link (if specified in theme-config.js)
+  → Auth filters sidebar navigation by access level
+  → Page renders with full client branding
+</code></pre>
+      </div>
+    
+
+                </article>
+            </main>
+
+            <!-- Table of Contents -->
+            <aside class="docs-toc">
+      <span class="toc-header">On this page</span>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#what-clients-see" class="toc-link">What Clients See</a></li><li class="toc-item toc-level-2"><a href="#quick-checklist" class="toc-link">Quick Checklist</a></li><li class="toc-item toc-level-2"><a href="#step-1-create-the-client-folder" class="toc-link">Step 1: Create the Client Folder</a></li><li class="toc-item toc-level-2"><a href="#step-2-add-client-logos" class="toc-link">Step 2: Add Client Logos</a></li><li class="toc-item toc-level-2"><a href="#step-3-customise-the-theme" class="toc-link">Step 3: Customise the Theme</a></li><li class="toc-item toc-level-2"><a href="#step-4-register-the-theme" class="toc-link">Step 4: Register the Theme</a></li><li class="toc-item toc-level-2"><a href="#step-5-create-the-netlify-identity-user" class="toc-link">Step 5: Create the Netlify Identity User</a></li><li class="toc-item toc-level-2"><a href="#step-6-test-in-dev-mode" class="toc-link">Step 6: Test in Dev Mode</a></li><li class="toc-item toc-level-2"><a href="#creating-from-blank-full-walkthrough" class="toc-link">Creating from Blank — Full Walkthrough</a></li><li class="toc-item toc-level-2"><a href="#architecture-reference" class="toc-link">Architecture Reference</a></li></ul></nav></div>
+    </aside>
+        </div>
+
+        <!-- Page Feedback -->
+        <section class="page-feedback" aria-label="Page feedback">
+            <div class="page-feedback-inner padding-global">
+                <h3 class="page-feedback-prompt">Was this page helpful?</h3>
+                <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
+                <div class="button-group">
+                    <button class="button is-small" data-feedback="yes" type="button">Yes</button>
+                    <button class="button is-small is-outline is-faded" data-feedback="no" type="button">No</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Modal -->
+        <dialog class="feedback-modal" aria-label="Send feedback">
+            <div class="feedback-modal-content">
+                <h3 class="feedback-modal-title">Send feedback</h3>
+                <p class="feedback-modal-subtitle"></p>
+                <form class="feedback-form" name="page-feedback" data-netlify="true">
+                    <input type="hidden" name="form-name" value="page-feedback">
+                    <input type="hidden" name="sentiment" value="">
+                    <input type="hidden" name="page" value="">
+                    <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
+                    <div class="button-group feedback-modal-actions">
+                        <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>
+                        <button type="submit" class="button is-small">Send feedback</button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
+
+        <!-- Page Navigation (Previous / Next) -->
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="access-control.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <h3 class="page-nav-title">Access Control</h3>
+      </span>
+    </a><span class="page-nav-link page-nav-placeholder"></span></div></nav>
+
+        <!-- Footer -->
+        <footer class="docs-footer">
+            <div class="docs-footer-inner padding-global">
+                <p class="docs-footer-text">© 2026 By Default BrandOS</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- Initialize Highlight.js, Copy, and TOC -->
+    <script>
+        (function() {
+            'use strict';
+
+            function initHighlight() {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+
+            function copyToClipboard(text) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    return navigator.clipboard.writeText(text);
+                }
+                var textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                return Promise.resolve();
+            }
+
+            var copyIconPath = 'M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z';
+            var checkIconPath = 'M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z';
+
+            function initClipboard() {
+                const buttons = document.querySelectorAll('.copy-code-btn');
+
+                buttons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const targetId = this.getAttribute('data-clipboard-target');
+                        const codeElement = document.querySelector(targetId);
+
+                        if (codeElement) {
+                            const text = codeElement.textContent;
+                            const textSpan = this.querySelector('.copy-text');
+                            const btnPath = this.querySelector('path');
+
+                            copyToClipboard(text).then(() => {
+                                if (btnPath) {
+                                    btnPath.setAttribute('d', checkIconPath);
+                                }
+                                if (textSpan) {
+                                    textSpan.textContent = 'Copied!';
+                                }
+                                setTimeout(() => {
+                                    if (btnPath) {
+                                        btnPath.setAttribute('d', copyIconPath);
+                                    }
+                                    if (textSpan) {
+                                        textSpan.textContent = 'Copy';
+                                    }
+                                }, 1500);
+                            });
+                        }
+                    });
+                });
+            }
+
+            function initTOCActiveState() {
+                const tocLinks = document.querySelectorAll('.toc-link');
+                const headings = document.querySelectorAll('h1[id], h2[id]');
+
+                if (tocLinks.length === 0 || headings.length === 0) return;
+
+                const linkMap = new Map();
+                tocLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        const id = href.substring(1);
+                        linkMap.set(id, link);
+                    }
+                });
+
+                const observerOptions = {
+                    rootMargin: '-20% 0px -70% 0px',
+                    threshold: 0
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const id = entry.target.id;
+                        const link = linkMap.get(id);
+
+                        if (entry.isIntersecting) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            if (link) {
+                                link.classList.add('toc-link-active');
+                            }
+                        }
+                    });
+                }, observerOptions);
+
+                headings.forEach(heading => {
+                    if (heading.id) {
+                        observer.observe(heading);
+                    }
+                });
+
+                function setInitialActive() {
+                    let activeHeading = null;
+                    let maxTop = -Infinity;
+
+                    headings.forEach(heading => {
+                        const rect = heading.getBoundingClientRect();
+                        if (rect.top <= 100 && rect.top > maxTop) {
+                            maxTop = rect.top;
+                            activeHeading = heading;
+                        }
+                    });
+
+                    if (activeHeading && activeHeading.id) {
+                        const link = linkMap.get(activeHeading.id);
+                        if (link) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            link.classList.add('toc-link-active');
+                        }
+                    }
+                }
+
+                setInitialActive();
+
+                let scrollTimeout;
+                window.addEventListener('scroll', () => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(setInitialActive, 100);
+                });
+            }
+
+            function init() {
+                initHighlight();
+                initClipboard();
+                initTOCActiveState();
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+
+    <!-- Back to Top -->
+    <div class="back-to-top-wrapper">
+      <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
+        <div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 4V2H20V4H4Z" fill="currentColor"/>
+          <path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/>
+        </svg></div>
+      </button>
+    </div>
+    <script>
+      (function() {
+        var btn = document.querySelector('.back-to-top-wrapper');
+        if (!btn) return;
+        window.addEventListener('scroll', function() {
+          btn.classList.toggle('is-visible', window.scrollY > 300);
+        });
+        btn.querySelector('button').addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+
+    <!-- Site Navigation -->
+    <script src="../assets/js/nav.js"></script>
+    <!-- Auth -->
+    <script src="../assets/js/auth-config.js"></script>
+    <!-- Theme -->
+    <script src="../assets/js/theme-config.js"></script>
+    <script src="../assets/js/theme-loader.js"></script>
+    <!-- Auth (must load after theme scripts) -->
+    <script src="../assets/js/auth.js"></script>
+    <!-- Feedback -->
+    <script src="../assets/js/feedback.js"></script>
+
+    <script>
+      /* Table scroll overflow hint */
+      (function initTableScroll() {
+        var wrappers = document.querySelectorAll('.table-scroll');
+        if (!wrappers.length) return;
+
+        function checkOverflow(wrapper) {
+          var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
+          var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
+          wrapper.classList.toggle('is-overflowing', isOverflowing);
+          wrapper.classList.toggle('is-scrolled-end', isAtEnd);
+        }
+
+        wrappers.forEach(function(wrapper) {
+          checkOverflow(wrapper);
+          wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+        });
+
+        window.addEventListener('resize', function() {
+          wrappers.forEach(checkOverflow);
+        });
+      })();
+    </script>
+</body>
+</html>

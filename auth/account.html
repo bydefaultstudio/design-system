@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account - By Default Brand OS</title>
+  <meta name="description" content="Manage your account settings.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+  <!-- Robots -->
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Design System Framework -->
+  <link rel="stylesheet" href="../assets/css/design-system.css">
+  <!-- Site styles -->
+  <link rel="stylesheet" href="../assets/css/style.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
+  <script>
+    window._gotrueReady = (function() {
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0') {
+        return Promise.resolve(null);
+      }
+      return import('https://cdn.jsdelivr.net/npm/gotrue-js@0.9.29/+esm')
+        .then(function(m) { var G = m.default && m.default.default ? m.default.default : m.default; window.GoTrue = G; return G; })
+        .catch(function(e) { console.error('[Auth] GoTrue load failed:', e); return null; });
+    })();
+  </script>
+</head>
+
+<body data-access="public" data-page="account">
+
+  <!-- Site Navigation (header injected by nav.js, no sidebar) -->
+  <div id="site-nav" data-base="../" data-sidebar="false"></div>
+
+  <div class="login-page">
+    <div class="login-card">
+      <h1 class="login-title">Account</h1>
+      <p class="login-subtitle" id="account-subtitle">Manage your profile and password</p>
+
+      <!-- Account Info (read-only) -->
+      <div class="account-section" id="account-info">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="account-email" disabled>
+        </div>
+        <div class="form-group">
+          <label>Role</label>
+          <input type="text" id="account-role" disabled>
+        </div>
+      </div>
+
+      <!-- Profile Section -->
+      <div class="account-section" id="account-profile">
+        <div class="form-group">
+          <label for="account-name">Full name</label>
+          <input type="text" id="account-name" name="full-name" autocomplete="name" placeholder="Your full name">
+        </div>
+        <div class="login-error" id="account-profile-error" role="alert"></div>
+        <div class="login-success" id="account-profile-success" role="status"></div>
+        <button type="button" class="button login-submit-btn" id="account-profile-save">Save name</button>
+      </div>
+
+      <!-- Change Password Section -->
+      <div class="account-section" id="account-password">
+        <div class="form-group">
+          <label for="account-new-password">New password</label>
+          <input type="password" id="account-new-password" name="new-password" autocomplete="new-password" placeholder="Enter new password" minlength="8">
+        </div>
+        <div class="form-group">
+          <label for="account-confirm-password">Confirm password</label>
+          <input type="password" id="account-confirm-password" name="confirm-password" autocomplete="new-password" placeholder="Confirm new password" minlength="8">
+        </div>
+        <div class="login-error" id="account-password-error" role="alert"></div>
+        <div class="login-success" id="account-password-success" role="status"></div>
+        <button type="button" class="button login-submit-btn" id="account-password-save">Update password</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <script src="../assets/js/nav.js"></script>
+
+  <!-- Auth -->
+  <script src="../assets/js/auth-config.js"></script>
+  <script src="../assets/js/theme-config.js"></script>
+  <script src="../assets/js/theme-loader.js"></script>
+  <script src="../assets/js/auth.js"></script>
+
+</body>
+
+</html>

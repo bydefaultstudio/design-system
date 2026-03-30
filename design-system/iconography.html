@@ -13,14 +13,13 @@
     <!-- Open Graph -->
     <meta property="og:title" content="Iconography - By Default Brand OS">
     <meta property="og:description" content="How to use icons in the design system — SVG standards, wrapper classes, accessibility, and tooling.">
-    <meta property="og:image" content="../assets/images/og-default.jpg">
+    <meta property="og:image" content="../assets/images/og/og-default.jpg">
     <meta property="og:type" content="website">
 
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="../assets/css/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
-    <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../brand-book/brand-book.css">
+    
 
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -89,8 +88,8 @@
 <p>Use <code>.icn-svg</code> to wrap inline SVG icons. This class constrains the icon to a fixed size and enforces the square aspect ratio.</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-94sjhcsq2" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-94sjhcsq2" class="language-html">&lt;div class=&quot;icn-svg&quot; data-icon=&quot;arrow-right&quot;&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-b8frjmhcp" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-b8frjmhcp" class="language-html">&lt;div class=&quot;icn-svg&quot; data-icon=&quot;arrow-right&quot;&gt;
   &lt;svg width=&quot;100%&quot; height=&quot;100%&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot;&gt;
     &lt;path d=&quot;M5 12h14M12 5l7 7-7 7&quot; fill=&quot;currentColor&quot;/&gt;
   &lt;/svg&gt;
@@ -142,8 +141,8 @@
 <p>Always include a <code>data-icon</code> attribute with a descriptive name. This makes icons identifiable in code — raw SVG paths are unreadable without it.</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-nh0prbzby" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-nh0prbzby" class="language-html">&lt;div class=&quot;icn-svg&quot; data-icon=&quot;chevron-down&quot;&gt;...&lt;/div&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-hbshjf851" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-hbshjf851" class="language-html">&lt;div class=&quot;icn-svg&quot; data-icon=&quot;chevron-down&quot;&gt;...&lt;/div&gt;
 &lt;div class=&quot;icn-svg&quot; data-icon=&quot;close&quot;&gt;...&lt;/div&gt;
 &lt;div class=&quot;icn-svg&quot; data-icon=&quot;search&quot;&gt;...&lt;/div&gt;
 </code></pre>
@@ -155,8 +154,8 @@
 <p>For icon-only buttons, use <code>.is-icon</code> on the button and <code>.icn-svg</code> as the SVG wrapper.</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-k249mfegp" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-k249mfegp" class="language-html">&lt;button class=&quot;button is-icon&quot; aria-label=&quot;Close&quot;&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-ioqywwu0m" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-ioqywwu0m" class="language-html">&lt;button class=&quot;button is-icon&quot; aria-label=&quot;Close&quot;&gt;
   &lt;div class=&quot;icn-svg&quot;&gt;
     &lt;svg width=&quot;100%&quot; height=&quot;100%&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot;&gt;
       &lt;path d=&quot;M18 6L6 18M6 6l12 12&quot; fill=&quot;currentColor&quot;/&gt;
@@ -220,8 +219,8 @@
 </ul>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-6lse6rcvt" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-6lse6rcvt" class="language-html">&lt;!-- Decorative: icon next to text --&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-hif179nl0" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-hif179nl0" class="language-html">&lt;!-- Decorative: icon next to text --&gt;
 &lt;div class=&quot;icn-svg&quot; data-icon=&quot;check&quot;&gt;
   &lt;svg width=&quot;100%&quot; height=&quot;100%&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;
     &lt;path d=&quot;M20 6L9 17l-5-5&quot; fill=&quot;currentColor&quot;/&gt;
@@ -244,8 +243,8 @@
 <p>Icons inherit colour through <code>currentColor</code>. To change an icon&#39;s colour, change the text colour of its parent — never hardcode a fill value.</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-qi2wtujpo" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-qi2wtujpo" class="language-html">&lt;!-- Icon inherits the faded text colour --&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-eq2iqc1xu" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-eq2iqc1xu" class="language-html">&lt;!-- Icon inherits the faded text colour --&gt;
 &lt;div class=&quot;text-faded&quot;&gt;
   &lt;div class=&quot;icn-svg&quot; data-icon=&quot;info&quot;&gt;
     &lt;svg width=&quot;100%&quot; height=&quot;100%&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;
@@ -269,8 +268,8 @@
 <p>For CLI usage:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-kazpii0pz" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-kazpii0pz" class="language-bash">echo &#39;&lt;svg&gt;...&lt;/svg&gt;&#39; | node svg-cleaner/svg-clean.js --current-color --icon --icon-name arrow-right --strip-comments
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-7gvzv9bgc" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-7gvzv9bgc" class="language-bash">echo &#39;&lt;svg&gt;...&lt;/svg&gt;&#39; | node svg-cleaner/svg-clean.js --current-color --icon --icon-name arrow-right --strip-comments
 </code></pre>
       </div>
     
@@ -360,6 +359,36 @@
       <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#principles" class="toc-link">Principles</a></li><li class="toc-item toc-level-2"><a href="#icon-wrapper" class="toc-link">Icon Wrapper</a></li><li class="toc-item toc-level-2"><a href="#icon-in-buttons" class="toc-link">Icon in Buttons</a></li><li class="toc-item toc-level-2"><a href="#svg-requirements" class="toc-link">SVG Requirements</a></li><li class="toc-item toc-level-2"><a href="#accessibility" class="toc-link">Accessibility</a></li><li class="toc-item toc-level-2"><a href="#colour" class="toc-link">Colour</a></li><li class="toc-item toc-level-2"><a href="#svg-cleaner-tool" class="toc-link">SVG Cleaner Tool</a></li><li class="toc-item toc-level-2"><a href="#naming-conventions" class="toc-link">Naming Conventions</a></li><li class="toc-item toc-level-2"><a href="#rules" class="toc-link">Rules</a></li></ul></nav></div>
     </aside>
         </div>
+
+        <!-- Page Feedback -->
+        <section class="page-feedback" aria-label="Page feedback">
+            <div class="page-feedback-inner padding-global">
+                <h3 class="page-feedback-prompt">Was this page helpful?</h3>
+                <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
+                <div class="button-group">
+                    <button class="button is-small" data-feedback="yes" type="button">Yes</button>
+                    <button class="button is-small is-outline is-faded" data-feedback="no" type="button">No</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Modal -->
+        <dialog class="feedback-modal" aria-label="Send feedback">
+            <div class="feedback-modal-content">
+                <h3 class="feedback-modal-title">Send feedback</h3>
+                <p class="feedback-modal-subtitle"></p>
+                <form class="feedback-form" name="page-feedback" data-netlify="true">
+                    <input type="hidden" name="form-name" value="page-feedback">
+                    <input type="hidden" name="sentiment" value="">
+                    <input type="hidden" name="page" value="">
+                    <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
+                    <div class="button-group feedback-modal-actions">
+                        <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>
+                        <button type="submit" class="button is-small">Send feedback</button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
 
         <!-- Page Navigation (Previous / Next) -->
         <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="border.html" class="page-nav-link page-nav-prev" rel="prev">
@@ -562,7 +591,13 @@
     <script src="../assets/js/nav.js"></script>
     <!-- Auth -->
     <script src="../assets/js/auth-config.js"></script>
+    <!-- Theme -->
+    <script src="../assets/js/theme-config.js"></script>
+    <script src="../assets/js/theme-loader.js"></script>
+    <!-- Auth (must load after theme scripts) -->
     <script src="../assets/js/auth.js"></script>
+    <!-- Feedback -->
+    <script src="../assets/js/feedback.js"></script>
 
     <script>
       /* Table scroll overflow hint */

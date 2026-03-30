@@ -225,7 +225,7 @@
     content: "";
   }
   
-  /* Table base styles are in design-system.css (.table class) */
+  /* Table base styles are in assets/css/design-system.css (.table class) */
   
   .markdown-body details summary {
     cursor: pointer;
@@ -537,7 +537,7 @@
     margin-bottom: var(--space-l);
   }
 
-  /* Table base styles are in design-system.css (.table class) */
+  /* Table base styles are in assets/css/design-system.css (.table class) */
   /* Only markdown-specific overrides below */
 
   .markdown-body .table-scroll {
@@ -711,8 +711,13 @@
     font-size: var(--font-s);
     line-height: var(--line-height-2xl);
     background-color: var(--background-faded);
-    border-radius: 6px;
+    border: var(--border-s) solid transparent;
+    transition: border-color 0.3s ease;
   }
+
+    .markdown-body pre:hover {
+      border: var(--border-s) solid var(--border-faded);
+    }
   
   .markdown-body pre code,
   .markdown-body pre tt {

@@ -13,14 +13,13 @@
     <!-- Open Graph -->
     <meta property="og:title" content="Upgrading the Docs Engine - By Default Brand OS">
     <meta property="og:description" content="Guide to upgrading the documentation engine without affecting project content.">
-    <meta property="og:image" content="../assets/images/og-default.jpg">
+    <meta property="og:image" content="../assets/images/og/og-default.jpg">
     <meta property="og:type" content="website">
 
     <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../design-system/design-system.css" id="design-system-css"
+    <link rel="stylesheet" href="../assets/css/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
-    <!-- Brand Book (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../brand-book/brand-book.css">
+    
 
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -91,10 +90,10 @@
 </tr>
 <tr>
 <td><code>docs/docs.config.js</code></td>
-<td>Design system path, brand book path, fonts, footer text, index description</td>
+<td>Design system path, fonts, footer text, index description</td>
 </tr>
 <tr>
-<td><code>assets/images/</code> and <code>assets/icons/</code></td>
+<td><code>assets/images/logos/</code> and <code>assets/icons/</code></td>
 <td>Logo (<code>logo.svg</code>) and favicons</td>
 </tr>
 </tbody></table></div>
@@ -112,8 +111,8 @@
 </ol>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-zfpd2j3cy" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-zfpd2j3cy" class="language-bash">cd docs/generator
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-0mr3qk8k1" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-0mr3qk8k1" class="language-bash">cd docs/generator
 npm install
 npm run docgen
 </code></pre>
@@ -127,14 +126,13 @@ npm run docgen
 <p>Edit <code>docs/docs.config.js</code> in the project:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-k6yq71as3" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-k6yq71as3" class="language-js">module.exports = {
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-0dj2ohcap" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-0dj2ohcap" class="language-js">module.exports = {
   // Path to design system CSS, relative from project root
-  designSystemPath: &#39;../../design-system/design-system.css&#39;,
+  designSystemPath: &#39;../../assets/css/design-system.css&#39;,
 
-  // Path to brand book CSS, relative from project root
-  // Set to null to use framework defaults only
-  brandCssPath: &#39;../../brand-book/brand-book.css&#39;,
+  // Brand tokens are now defined directly in design-system.css
+  brandCssPath: null,
 
   // Google Fonts URL — set to null to disable
   googleFontsUrl: &#39;https://fonts.googleapis.com/...&#39;,
@@ -148,10 +146,10 @@ npm run docgen
 </code></pre>
       </div>
     
-<p>Replace the logo by swapping <code>assets/images/logo.svg</code>.<br>Replace favicons by swapping <code>assets/icons/favicon.svg</code> and <code>assets/icons/favicon.ico</code>.</p>
+<p>Replace the logo by swapping <code>assets/images/logos/logo.svg</code>.<br>Replace favicons by swapping <code>assets/icons/favicon.svg</code> and <code>assets/icons/favicon.ico</code>.</p>
 <hr>
 <h2 id="design-system-css-convention">Design System CSS Convention</h2>
-<p>The design system CSS lives at <code>design-system/design-system.css</code>. The brand book lives at <code>brand-book/brand-book.css</code>. Both paths are referenced in <code>docs/docs.config.js</code> and used by every generated doc page.</p>
+<p>The design system CSS lives at <code>assets/css/design-system.css</code> and includes brand tokens directly. Its path is referenced in <code>docs/docs.config.js</code> and used by every generated doc page.</p>
 <p><strong>If the path is wrong or the file is missing</strong>, every doc page will show a friendly amber banner at the top:</p>
 <blockquote>
 <p>Design system CSS not found. Check the path in <code>docs/docs.config.js</code> → <code>designSystemPath</code>, then re-run <code>npm run docgen</code>.</p>
@@ -168,8 +166,8 @@ npm run docgen
 <p>Run these from inside <code>docs/generator/</code>:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-mnl7qixr1" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-mnl7qixr1" class="language-bash">npm run docgen     # Generate HTML from markdown
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-4i39d22oh" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-4i39d22oh" class="language-bash">npm run docgen     # Generate HTML from markdown
 npm run serve      # View locally in browser
 npm run docwatch   # Auto-regenerate on markdown changes
 npm run docfull    # Generate + serve + watch (all at once)
@@ -190,8 +188,52 @@ npm run docfull    # Generate + serve + watch (all at once)
     </aside>
         </div>
 
+        <!-- Page Feedback -->
+        <section class="page-feedback" aria-label="Page feedback">
+            <div class="page-feedback-inner padding-global">
+                <h3 class="page-feedback-prompt">Was this page helpful?</h3>
+                <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
+                <div class="button-group">
+                    <button class="button is-small" data-feedback="yes" type="button">Yes</button>
+                    <button class="button is-small is-outline is-faded" data-feedback="no" type="button">No</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Modal -->
+        <dialog class="feedback-modal" aria-label="Send feedback">
+            <div class="feedback-modal-content">
+                <h3 class="feedback-modal-title">Send feedback</h3>
+                <p class="feedback-modal-subtitle"></p>
+                <form class="feedback-form" name="page-feedback" data-netlify="true">
+                    <input type="hidden" name="form-name" value="page-feedback">
+                    <input type="hidden" name="sentiment" value="">
+                    <input type="hidden" name="page" value="">
+                    <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
+                    <div class="button-group feedback-modal-actions">
+                        <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>
+                        <button type="submit" class="button is-small">Send feedback</button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
+
         <!-- Page Navigation (Previous / Next) -->
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="folder-structure.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
         
+        <h3 class="page-nav-title">Folders</h3>
+      </span>
+    </a><a href="cpm-calculator.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <h3 class="page-nav-title">CPM Calculator</h3>
+      </span>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+    </a></div></nav>
 
         <!-- Footer -->
         <footer class="docs-footer">
@@ -377,7 +419,13 @@ npm run docfull    # Generate + serve + watch (all at once)
     <script src="../assets/js/nav.js"></script>
     <!-- Auth -->
     <script src="../assets/js/auth-config.js"></script>
+    <!-- Theme -->
+    <script src="../assets/js/theme-config.js"></script>
+    <script src="../assets/js/theme-loader.js"></script>
+    <!-- Auth (must load after theme scripts) -->
     <script src="../assets/js/auth.js"></script>
+    <!-- Feedback -->
+    <script src="../assets/js/feedback.js"></script>
 
     <script>
       /* Table scroll overflow hint */

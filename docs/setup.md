@@ -13,9 +13,7 @@ This template provides a solid foundation for new projects. Follow these steps t
 
 ## Brand Colors
 
-Update brand colors in `brand-book/brand-book.css`.
-
-The brand book defines colour and font tokens. The design system reads these directly.
+Update brand colors in `assets/css/design-system.css` under the **Brand Tokens** section at the top.
 
 **What to change:**
 - `--off-white`, `--warm-black`, etc. — Your palette colours
@@ -24,7 +22,7 @@ The brand book defines colour and font tokens. The design system reads these dir
 
 **Example:**
 ```css
-/* brand-book/brand-book.css */
+/* assets/css/design-system.css — Brand Tokens section */
 :root {
   --off-white: #fff7f1;
   --warm-black: #221f1c;
@@ -32,13 +30,11 @@ The brand book defines colour and font tokens. The design system reads these dir
 }
 ```
 
-**Note:** The design system reads these tokens directly. You do not need to touch `design-system/design-system.css` for brand colours.
-
 ---
 
 ## Fonts
 
-Update font families in `brand-book/brand-book.css`.
+Update font families in `assets/css/design-system.css` under the **Brand Tokens** section.
 
 **What to change:**
 - `--font-primary` — Your primary font family
@@ -55,7 +51,7 @@ Update font families in `brand-book/brand-book.css`.
 ## Logo
 
 Replace the logo image:
-- `assets/images/logo.svg` - Documentation site logo
+- `assets/images/logos/logo.svg` - Documentation site logo
 
 ---
 
@@ -87,12 +83,91 @@ The documentation is ready to use, but you may want to:
 
 ## Quick Checklist
 
-- [ ] Update brand colors in `brand-book/brand-book.css`
-- [ ] Update font families in `brand-book/brand-book.css`
-- [ ] Replace logo in `assets/images/logo.svg`
+- [ ] Update brand colors in `assets/css/design-system.css` (Brand Tokens section)
+- [ ] Update font families in `assets/css/design-system.css` (Brand Tokens section)
+- [ ] Replace logo in `assets/images/logos/logo.svg`
 - [ ] Fill in `PROJECT_BRIEF.md`
 - [ ] Update Google Fonts links (if applicable)
+- [ ] Set up client theme (if applicable) — see [Client Theming](#client-theming)
 - [ ] Review and customize documentation
+
+---
+
+## Client Theming
+
+For client projects, use a **theme file** to override design system tokens without touching the design system CSS. Themes load dynamically based on the logged-in user's role and identity.
+
+### How it works
+
+The theme system uses the auth module to determine which theme to load:
+
+- **Team members** see the By Default brand (no theme)
+- **Client users** see their client-branded theme automatically (matched via `clientFolder` in Netlify Identity `app_metadata`)
+- **Admins** see By Default by default, with a theme switcher in the header dropdown to preview any client theme
+
+```
+assets/css/design-system.css →  Brand primitives + semantic tokens
+themes/client.css           →  Overrides semantic tokens + neutrals (injected by JS)
+style.css                   →  Uses semantic tokens (gets themed values)
+```
+
+### Creating a theme
+
+1. Copy `themes/theme-template.css` → `themes/client-name.css`
+2. Uncomment and update the tokens you need to change
+3. Register the theme in `assets/js/theme-config.js`:
+
+```js
+'client-name': {
+  label: 'Client Name',
+  css: 'themes/client-name.css',
+  fonts: 'https://fonts.googleapis.com/css2?family=YourFont&display=swap'
+}
+```
+
+4. In Netlify Identity, set the client user's `app_metadata`:
+
+```json
+{
+  "roles": ["client"],
+  "clientFolder": "client-name"
+}
+```
+
+The `clientFolder` value must match the key in `theme-config.js`.
+
+### What to override
+
+The template groups tokens by concern. Only uncomment what differs from the default:
+
+| Category | Tokens | Purpose |
+|----------|--------|---------|
+| **Typography** | `--font-primary`, `--font-secondary`, `--font-tertiary` | Client fonts (add `@font-face` too) |
+| **Neutral scale** | `--neutral-50` through `--neutral-990` | Generic grey ramp (uncommented by default) |
+| **Text** | `--text-primary`, `--text-secondary`, `--text-accent`, `--text-link`, `--text-inverted` | Core text colours |
+| **Backgrounds** | `--background-primary`, `--background-secondary` | Surface colours |
+| **Borders** | `--border-primary`, `--border-secondary` | Border colours |
+| **Buttons** | `--button-primary`, `--button-text` | Button colours |
+| **Accent** | `--status-info`, `--input-focus`, `--checkbox-selected` | Accent colour used across UI |
+
+Tokens like `--text-faded`, `--background-faded`, and `--border-faded` use alpha transparency and generally work across any theme without overriding. Callout tokens derive from status colours via `color-mix()` and update automatically.
+
+### Dark mode
+
+The theme template includes a commented-out `[data-theme="dark"]` block. Uncomment and customise it to theme dark mode. Also duplicate the values inside the `@media (prefers-color-scheme: dark)` fallback for users without JavaScript.
+
+### Admin theme preview
+
+Admins see a **Theme Preview** section in the header dropdown menu. Selecting a theme loads it immediately and persists across page navigation (via `sessionStorage`). Selecting "By Default" unloads the theme. The preview resets when the browser tab is closed.
+
+### Architecture
+
+| File | Purpose |
+|------|---------|
+| `assets/js/theme-config.js` | Registry of available themes (clientFolder → CSS path + Google Fonts URL) |
+| `assets/js/theme-loader.js` | Loads/unloads theme CSS and fonts dynamically |
+| `assets/js/auth.js` | Calls `initThemeForUser()` after auth resolves |
+| `themes/theme-template.css` | Starter template for new client themes |
 
 ---
 

@@ -77,8 +77,9 @@
 
   function getRequiredRole() {
     // Read from data-access attribute on <body> (set by generator or manually)
+    // Supports standard roles ("team") and per-client syntax ("client:blank,dianomi")
     var bodyAccess = document.body.getAttribute('data-access');
-    if (bodyAccess && ROLE_HIERARCHY.indexOf(bodyAccess) !== -1) {
+    if (bodyAccess && (ROLE_HIERARCHY.indexOf(bodyAccess) !== -1 || bodyAccess.indexOf('client:') === 0)) {
       return bodyAccess;
     }
     return DEFAULT_ROLE;
@@ -88,29 +89,74 @@
     return getRoleRank(userRole) >= getRoleRank(requiredRole);
   }
 
+  /**
+   * Extended access check supporting per-client syntax.
+   *
+   * Accepted formats:
+   *   "team"                → standard hierarchy check
+   *   "client:blank"        → client role required, clientFolder must be "blank"
+   *   "client:blank,dianomi"→ client role required, clientFolder must match one listed
+   *
+   * Team and admin always pass (higher in hierarchy than client).
+   */
+  function hasAccessForValue(userRole, accessValue, user) {
+    // Standard hierarchy role (public, client, team, admin)
+    if (ROLE_HIERARCHY.indexOf(accessValue) !== -1) {
+      return hasAccess(userRole, accessValue);
+    }
+
+    // Per-client syntax: "client:folder1,folder2"
+    if (accessValue.indexOf('client:') === 0) {
+      // Team and admin always have access
+      if (hasAccess(userRole, 'team')) return true;
+
+      // Must be at least client role
+      if (!hasAccess(userRole, 'client')) return false;
+
+      // Check if user's clientFolder matches any listed folder
+      var allowedFolders = accessValue.substring(7).split(',');
+      var metadata = user ? (user.app_metadata || {}) : {};
+      var clientFolder = metadata.clientFolder || '';
+
+      for (var i = 0; i < allowedFolders.length; i++) {
+        if (allowedFolders[i].trim() === clientFolder) return true;
+      }
+      return false;
+    }
+
+    // Unknown format — deny
+    return false;
+  }
+
   function hasClientFolderAccess(user, pagePath) {
     var metadata = user.app_metadata || {};
     var userRole = getEffectiveRole(metadata.roles || []);
 
+    // Team and admin can access everything
     if (userRole === 'team' || userRole === 'admin') return true;
 
     var clientFolder = metadata.clientFolder;
     if (!clientFolder) return true;
 
-    var folderPrefix = clientFolder + '/';
-    if (pagePath.indexOf(folderPrefix) === 0) return true;
+    // Own client folder
+    if (pagePath.indexOf(clientFolder + '/') === 0) return true;
 
-    var knownFolders = [
-      'assets', 'brand', 'design-system', 'docs', 'templates',
-      'cpm-calculator', 'svg-cleaner', 'display-ad-preview', 'src',
-      'auth', 'code', 'content', 'admin', 'project'
-    ];
-    var firstSegment = pagePath.split('/')[0];
-    if (pagePath.indexOf('/') !== -1 && knownFolders.indexOf(firstSegment) === -1) {
-      return pagePath.indexOf(folderPrefix) === 0;
+    // Granted tool UIs only (not doc pages)
+    if (typeof THEME_CONFIG !== 'undefined' && THEME_CONFIG.themes && THEME_CONFIG.themes[clientFolder]) {
+      var grantedTools = THEME_CONFIG.themes[clientFolder].tools || [];
+      for (var i = 0; i < grantedTools.length; i++) {
+        if (pagePath === grantedTools[i] + '/index.html') return true;
+      }
     }
 
-    return true;
+    // Auth pages
+    if (pagePath.indexOf('auth/') === 0 || pagePath === 'access-denied.html') return true;
+
+    // Root index (role-filtered cards handle visibility)
+    if (pagePath === 'index.html' || pagePath === '') return true;
+
+    // Deny everything else (doc pages, other client folders, etc.)
+    return false;
   }
 
   //------- URL & Redirect Helpers -------//
@@ -219,8 +265,8 @@
     // For now, nav filtering relies on nav-link data attributes
     var navLinks = document.querySelectorAll('.nav-link[data-access]');
     navLinks.forEach(function (link) {
-      var requiredRole = link.getAttribute('data-access');
-      if (requiredRole && !hasAccess(userRole, requiredRole)) {
+      var requiredAccess = link.getAttribute('data-access');
+      if (requiredAccess && !hasAccessForValue(userRole, requiredAccess, user)) {
         var li = link.closest('li');
         if (li) li.style.display = 'none';
       }
@@ -228,14 +274,21 @@
 
     var docCards = document.querySelectorAll('.docs-card[data-access]');
     docCards.forEach(function (card) {
-      var requiredRole = card.getAttribute('data-access');
-      if (requiredRole && !hasAccess(userRole, requiredRole)) {
+      var requiredAccess = card.getAttribute('data-access');
+      if (requiredAccess && !hasAccessForValue(userRole, requiredAccess, user)) {
         card.style.display = 'none';
       }
     });
 
     var navSections = document.querySelectorAll('.nav-section');
     navSections.forEach(function (section) {
+      // Check section-level access first
+      var sectionAccess = section.getAttribute('data-access');
+      if (sectionAccess && !hasAccessForValue(userRole, sectionAccess, user)) {
+        section.style.display = 'none';
+        return;
+      }
+      // Fallback: hide if all child links are hidden
       var visibleLinks = section.querySelectorAll('li');
       var allHidden = true;
       visibleLinks.forEach(function (li) {
@@ -246,6 +299,13 @@
 
     var docSections = document.querySelectorAll('.docs-section');
     docSections.forEach(function (section) {
+      // Check section-level access first
+      var docSectionAccess = section.getAttribute('data-access');
+      if (docSectionAccess && !hasAccessForValue(userRole, docSectionAccess, user)) {
+        section.style.display = 'none';
+        return;
+      }
+      // Fallback: hide if all child cards are hidden
       var visibleCards = section.querySelectorAll('.docs-card');
       var allHidden = true;
       visibleCards.forEach(function (card) {
@@ -298,11 +358,13 @@
     }
   }
 
-  function showSetPasswordForm(titleText, subtitleText) {
+  function showSetPasswordForm(titleText, subtitleText, options) {
+    var opts = options || {};
     var form = document.getElementById('login-form');
     var forgotBtn = document.getElementById('login-forgot-btn');
     var resetForm = document.getElementById('login-reset-form');
     var setPasswordForm = document.getElementById('login-set-password-form');
+    var nameGroup = document.getElementById('set-password-name-group');
     var title = document.getElementById('login-title');
     var subtitle = document.getElementById('login-subtitle');
 
@@ -310,11 +372,17 @@
     if (forgotBtn) forgotBtn.style.display = 'none';
     if (resetForm) resetForm.style.display = 'none';
     if (setPasswordForm) setPasswordForm.style.display = 'flex';
+    if (nameGroup) nameGroup.style.display = opts.showName ? 'flex' : 'none';
     if (title) title.textContent = titleText || 'Set Your Password';
     if (subtitle) subtitle.textContent = subtitleText || 'Choose a secure password for your account.';
 
-    var newPwInput = document.getElementById('set-password-new');
-    if (newPwInput) newPwInput.focus();
+    if (opts.showName) {
+      var nameInput = document.getElementById('set-password-name');
+      if (nameInput) nameInput.focus();
+    } else {
+      var newPwInput = document.getElementById('set-password-new');
+      if (newPwInput) newPwInput.focus();
+    }
   }
 
   function hideSetPasswordForm() {
@@ -358,6 +426,10 @@
     }
 
     newSubmitBtn.addEventListener('click', function () {
+      var nameInput = document.getElementById('set-password-name');
+      var nameGroup = document.getElementById('set-password-name-group');
+      var nameVisible = nameGroup && nameGroup.style.display !== 'none';
+      var name = nameVisible && nameInput ? nameInput.value.trim() : '';
       var newPw = document.getElementById('set-password-new').value;
       var confirmPw = document.getElementById('set-password-confirm').value;
 
@@ -380,7 +452,7 @@
       newSubmitBtn.disabled = true;
       newSubmitBtn.textContent = 'Setting password...';
 
-      submitAction(newPw)
+      submitAction(newPw, name)
         .then(function () {
           if (successEl) {
             successEl.textContent = 'Password set! Redirecting...';
@@ -542,28 +614,100 @@
 
   //------- Auth Button in Sidebar -------//
 
-  function renderAuthButton(user) {
-    var container = document.querySelector('.auth-button-container');
+  //------- Auth Header Dropdown -------//
+
+  var ICON_USER = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
+    + '<path d="M21 22H19V19C19 17.8954 18.1046 17 17 17H7C5.89543 17 5 17.8954 5 19V22H3V15H21V22Z" fill="currentColor"/>'
+    + '<path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 2C15.5376 2 18 4.46243 18 7.5C18 10.5376 15.5376 13 12.5 13C9.46243 13 7 10.5376 7 7.5C7 4.46243 9.46243 2 12.5 2ZM12.5 4C10.567 4 9 5.567 9 7.5C9 9.433 10.567 11 12.5 11C14.433 11 16 9.433 16 7.5C16 5.567 14.433 4 12.5 4Z" fill="currentColor"/>'
+    + '</svg>';
+
+  var ICON_CHEVRON = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
+    + '<path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/>'
+    + '</svg>';
+
+  var ICON_LOGOUT = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
+    + '<path d="M18 13H7.23922C6.34831 13 5.90214 14.0771 6.53211 14.7071L8.425 16.6L7.025 18.025L1 12L7 5.99999L8.425 7.42499L6.54652 9.29043C5.91317 9.91938 6.35857 11 7.25116 11H18V13Z" fill="currentColor"></path>'
+    + '<path d="M10.0378 22V16H12.0378V18C12.0378 19.1046 12.9333 20 14.0378 20H18.0378C19.1424 20 20.0378 19.1046 20.0378 18V6C20.0378 4.89543 19.1424 4 18.0378 4H14.0378C12.9333 4 12.0378 4.89543 12.0378 6V8H10.0378V2H22.0378V22H10.0378Z" fill="currentColor"></path>'
+    + '</svg>';
+
+  function renderAuthHeaderDropdown(user) {
+    var container = document.querySelector('.auth-header-container');
     if (!container) return;
+
+    container.innerHTML = '';
 
     if (user) {
       var metadata = user.app_metadata || {};
+      var userMeta = user.user_metadata || {};
       var roles = metadata.roles || [];
       var displayRole = roles.length ? roles[0] : 'user';
+      var fullName = userMeta.full_name || '';
       var email = user.email || '';
-      var initial = email.charAt(0).toUpperCase();
+      var initial = fullName ? fullName.charAt(0).toUpperCase() : email.charAt(0).toUpperCase();
 
-      container.innerHTML =
-        '<div class="auth-user-info">' +
-          '<div class="auth-user-details">' +
-            '<span class="auth-user-avatar">' + initial + '</span>' +
-            '<span class="auth-user-role">' + displayRole + '</span>' +
-          '</div>' +
-          '<button class="button is-faded is-small auth-logout-btn" type="button"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M18 13H7.23922C6.34831 13 5.90214 14.0771 6.53211 14.7071L8.425 16.6L7.025 18.025L1 12L7 5.99999L8.425 7.42499L6.54652 9.29043C5.91317 9.91938 6.35857 11 7.25116 11H18V13Z" fill="currentColor"></path><path d="M10.0378 22V16H12.0378V18C12.0378 19.1046 12.9333 20 14.0378 20H18.0378C19.1424 20 20.0378 19.1046 20.0378 18V6C20.0378 4.89543 19.1424 4 18.0378 4H14.0378C12.9333 4 12.0378 4.89543 12.0378 6V8H10.0378V2H22.0378V22H10.0378Z" fill="currentColor"></path></svg></div> Log out</button>' +
-        '</div>';
+      // Dropdown wrapper
+      var dropdown = document.createElement('div');
+      dropdown.id = 'auth-header-dropdown';
+      dropdown.className = 'header-dropdown';
 
-      var logoutBtn = container.querySelector('.auth-logout-btn');
-      logoutBtn.addEventListener('click', function () {
+      // Toggle
+      var toggle = document.createElement('div');
+      toggle.className = 'header-link';
+      toggle.setAttribute('role', 'button');
+      toggle.setAttribute('tabindex', '0');
+      toggle.setAttribute('aria-label', 'Account menu');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.innerHTML = '<div class="icn-svg" data-icon="user">' + ICON_USER + '</div>'
+        + '<div class="icn-svg header-link-chevron" data-icon="chevron-down">' + ICON_CHEVRON + '</div>';
+      dropdown.appendChild(toggle);
+
+      // Dropdown menu
+      var menu = document.createElement('div');
+      menu.className = 'header-dropdown-menu';
+
+      // Role label
+      var roleLabel = document.createElement('div');
+      roleLabel.className = 'header-dropdown-label';
+      roleLabel.style.textTransform = 'capitalize';
+      roleLabel.textContent = 'Role: ' + displayRole;
+      menu.appendChild(roleLabel);
+
+      // User info
+      var userInfo = document.createElement('div');
+      userInfo.className = 'header-link';
+      userInfo.style.pointerEvents = 'none';
+      if (fullName) {
+        userInfo.innerHTML = '<span class="auth-user-avatar">' + initial + '</span>'
+          + '<div><div>' + fullName + '</div>'
+          + '<div style="font-size:var(--font-2xs);color:var(--text-faded);">' + email + '</div></div>';
+      } else {
+        userInfo.innerHTML = '<span class="auth-user-avatar">' + initial + '</span>'
+          + '<span>' + email + '</span>';
+      }
+      menu.appendChild(userInfo);
+
+      // Divider
+      var divider = document.createElement('div');
+      divider.className = 'header-dropdown-divider';
+      menu.appendChild(divider);
+
+      // Account link
+      var navMount = document.getElementById('site-nav');
+      var basePath = navMount ? (navMount.getAttribute('data-base') || '') : '';
+      var accountLink = document.createElement('a');
+      accountLink.className = 'header-link';
+      accountLink.href = basePath + 'auth/account.html';
+      accountLink.textContent = 'Account';
+      menu.appendChild(accountLink);
+
+      // Logout
+      var logoutItem = document.createElement('div');
+      logoutItem.className = 'header-link';
+      logoutItem.setAttribute('role', 'button');
+      logoutItem.setAttribute('tabindex', '0');
+      logoutItem.innerHTML = '<div class="icn-svg" data-icon="logout">' + ICON_LOGOUT + '</div>'
+        + '<span>Log out</span>';
+      logoutItem.addEventListener('click', function () {
         if (IS_DEV) {
           sessionStorage.setItem('auth-dev-role', 'logged-out');
           window.location.reload();
@@ -571,16 +715,55 @@
           handleLogout();
         }
       });
-    } else {
-      container.innerHTML =
-        '<button class="button is-faded is-small auth-login-btn" type="button">' +
-          '<span>Log in</span>' +
-        '</button>';
+      menu.appendChild(logoutItem);
 
-      var loginBtn = container.querySelector('.auth-login-btn');
-      loginBtn.addEventListener('click', function () {
-        redirectToLogin();
+      dropdown.appendChild(menu);
+
+      // Toggle open/close
+      toggle.addEventListener('click', function () {
+        var wasOpen = dropdown.classList.contains('is-open');
+        var allDropdowns = document.querySelectorAll('.header-dropdown');
+        for (var i = 0; i < allDropdowns.length; i++) {
+          allDropdowns[i].classList.remove('is-open');
+          var t = allDropdowns[i].querySelector('.header-link');
+          if (t) t.setAttribute('aria-expanded', 'false');
+        }
+        if (!wasOpen) {
+          dropdown.classList.add('is-open');
+          toggle.setAttribute('aria-expanded', 'true');
+        }
       });
+
+      // Close on click outside
+      document.addEventListener('click', function (e) {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // Close on Escape
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && dropdown.classList.contains('is-open')) {
+          dropdown.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.focus();
+        }
+      });
+
+      container.appendChild(dropdown);
+
+    } else {
+      // Logged out: show login link on protected pages only
+      var requiredRole = getRequiredRole();
+      if (requiredRole !== 'public') {
+        var loginLink = document.createElement('a');
+        loginLink.className = 'header-link';
+        loginLink.href = LOGIN_PAGE;
+        loginLink.innerHTML = '<div class="icn-svg" data-icon="user">' + ICON_USER + '</div>'
+          + '<span>Log in</span>';
+        container.appendChild(loginLink);
+      }
     }
   }
 
@@ -626,9 +809,13 @@
 
     // Invite token — accept invitation and set password
     if (tokenInfo.type === 'invite') {
-      showSetPasswordForm('Accept Invitation', 'Create a password to activate your account.');
-      initSetPasswordFormHandler(function (password) {
-        return gotrueAuth.acceptInvite(tokenInfo.token, password, true);
+      showSetPasswordForm('Accept Invitation', 'Create a password to activate your account.', { showName: true });
+      initSetPasswordFormHandler(function (password, name) {
+        return gotrueAuth.acceptInvite(tokenInfo.token, password, true)
+          .then(function (user) {
+            if (name) return user.update({ data: { full_name: name } });
+            return user;
+          });
       });
       return true;
     }
@@ -675,8 +862,17 @@
   function checkAuth() {
     var requiredRole = getRequiredRole();
 
-    // Public pages: show content immediately
+    // Public pages: show content immediately (except account page requires login)
     if (requiredRole === 'public') {
+      if (isAccountPage()) {
+        if (gotrueAuth) {
+          var accountUser = gotrueAuth.currentUser();
+          if (!accountUser) { redirectToLogin(); return; }
+        } else {
+          redirectToLogin();
+          return;
+        }
+      }
       setRoleClass('public');
       showContent();
       if (gotrueAuth) {
@@ -685,13 +881,15 @@
           var metadata = user.app_metadata || {};
           var userRole = getEffectiveRole(metadata.roles || []);
           setRoleClass(userRole);
-          renderAuthButton(user);
+          if (typeof initThemeForUser === 'function') initThemeForUser(user);
+          renderAuthHeaderDropdown(user);
+          initAccountPage(user);
           filterNavLinks(userRole, user);
         } else {
-          renderAuthButton(null);
+          renderAuthHeaderDropdown(null);
         }
       } else {
-        renderAuthButton(null);
+        renderAuthHeaderDropdown(null);
       }
       return;
     }
@@ -712,13 +910,13 @@
     var metadata = user.app_metadata || {};
     var userRole = getEffectiveRole(metadata.roles || []);
     if (!userRole) {
-      renderAuthButton(user);
+      renderAuthHeaderDropdown(user);
       redirectAccessDenied();
       return;
     }
 
-    if (!hasAccess(userRole, requiredRole)) {
-      renderAuthButton(user);
+    if (!hasAccessForValue(userRole, requiredRole, user)) {
+      renderAuthHeaderDropdown(user);
       setRoleClass(userRole);
       redirectAccessDenied();
       return;
@@ -726,7 +924,7 @@
 
     var pagePath = getCurrentPagePath();
     if (!hasClientFolderAccess(user, pagePath)) {
-      renderAuthButton(user);
+      renderAuthHeaderDropdown(user);
       setRoleClass(userRole);
       redirectAccessDenied();
       return;
@@ -734,8 +932,10 @@
 
     // Access granted
     setRoleClass(userRole);
-    renderAuthButton(user);
+    if (typeof initThemeForUser === 'function') initThemeForUser(user);
+    renderAuthHeaderDropdown(user);
     filterNavLinks(userRole, user);
+    initAccountPage(user);
     showContent();
   }
 
@@ -752,19 +952,157 @@
     }
   }
 
+  //------- Account Page -------//
+
+  function isAccountPage() {
+    return document.body.getAttribute('data-page') === 'account';
+  }
+
+  function initAccountPage(user) {
+    if (!isAccountPage()) return;
+
+    var userMeta = user.user_metadata || {};
+    var metadata = user.app_metadata || {};
+    var roles = metadata.roles || [];
+    var displayRole = roles.length ? roles[0] : 'user';
+
+    // Populate read-only fields
+    var emailEl = document.getElementById('account-email');
+    var roleEl = document.getElementById('account-role');
+    if (emailEl) emailEl.value = user.email || '';
+    if (roleEl) roleEl.value = displayRole;
+
+    // Populate name
+    var nameEl = document.getElementById('account-name');
+    if (nameEl) nameEl.value = userMeta.full_name || '';
+
+    // Profile save
+    var profileSaveBtn = document.getElementById('account-profile-save');
+    var profileErr = document.getElementById('account-profile-error');
+    var profileSuccess = document.getElementById('account-profile-success');
+
+    if (profileSaveBtn) {
+      profileSaveBtn.addEventListener('click', function () {
+        var name = nameEl ? nameEl.value.trim() : '';
+        if (profileErr) { profileErr.textContent = ''; profileErr.style.display = 'none'; }
+        if (profileSuccess) { profileSuccess.textContent = ''; profileSuccess.style.display = 'none'; }
+
+        profileSaveBtn.disabled = true;
+        profileSaveBtn.textContent = 'Saving...';
+
+        var saveAction;
+        if (IS_DEV) {
+          saveAction = new Promise(function (resolve) {
+            setTimeout(function () {
+              if (name) sessionStorage.setItem('auth-dev-name', name);
+              resolve();
+            }, 500);
+          });
+        } else {
+          saveAction = user.update({ data: { full_name: name } });
+        }
+
+        saveAction
+          .then(function () {
+            if (profileSuccess) {
+              profileSuccess.textContent = 'Name updated.';
+              profileSuccess.style.display = 'block';
+            }
+            profileSaveBtn.disabled = false;
+            profileSaveBtn.textContent = 'Save name';
+          })
+          .catch(function () {
+            if (profileErr) {
+              profileErr.textContent = 'Could not update name. Please try again.';
+              profileErr.style.display = 'block';
+            }
+            profileSaveBtn.disabled = false;
+            profileSaveBtn.textContent = 'Save name';
+          });
+      });
+    }
+
+    // Password save
+    var passwordSaveBtn = document.getElementById('account-password-save');
+    var passwordErr = document.getElementById('account-password-error');
+    var passwordSuccess = document.getElementById('account-password-success');
+    var newPwEl = document.getElementById('account-new-password');
+    var confirmPwEl = document.getElementById('account-confirm-password');
+
+    if (passwordSaveBtn) {
+      passwordSaveBtn.addEventListener('click', function () {
+        var newPw = newPwEl ? newPwEl.value : '';
+        var confirmPw = confirmPwEl ? confirmPwEl.value : '';
+
+        if (passwordErr) { passwordErr.textContent = ''; passwordErr.style.display = 'none'; }
+        if (passwordSuccess) { passwordSuccess.textContent = ''; passwordSuccess.style.display = 'none'; }
+
+        if (!newPw || !confirmPw) {
+          if (passwordErr) { passwordErr.textContent = 'Please fill in both fields.'; passwordErr.style.display = 'block'; }
+          return;
+        }
+        if (newPw.length < 8) {
+          if (passwordErr) { passwordErr.textContent = 'Password must be at least 8 characters.'; passwordErr.style.display = 'block'; }
+          return;
+        }
+        if (newPw !== confirmPw) {
+          if (passwordErr) { passwordErr.textContent = 'Passwords do not match.'; passwordErr.style.display = 'block'; }
+          return;
+        }
+
+        passwordSaveBtn.disabled = true;
+        passwordSaveBtn.textContent = 'Updating...';
+
+        var saveAction;
+        if (IS_DEV) {
+          saveAction = new Promise(function (resolve) {
+            setTimeout(resolve, 500);
+          });
+        } else {
+          saveAction = user.update({ password: newPw });
+        }
+
+        saveAction
+          .then(function () {
+            if (passwordSuccess) {
+              passwordSuccess.textContent = 'Password updated.';
+              passwordSuccess.style.display = 'block';
+            }
+            if (newPwEl) newPwEl.value = '';
+            if (confirmPwEl) confirmPwEl.value = '';
+            passwordSaveBtn.disabled = false;
+            passwordSaveBtn.textContent = 'Update password';
+          })
+          .catch(function () {
+            if (passwordErr) {
+              passwordErr.textContent = 'Could not update password. Please try again.';
+              passwordErr.style.display = 'block';
+            }
+            passwordSaveBtn.disabled = false;
+            passwordSaveBtn.textContent = 'Update password';
+          });
+      });
+    }
+  }
+
   //------- Dev Mode -------//
 
   function createDevUser(role) {
     var devConfig = AUTH_CONFIG.devMode || {};
     var email = devConfig.email || 'dev@localhost';
+    var devName = sessionStorage.getItem('auth-dev-name') || 'Dev User';
     var user = {
       email: email,
       app_metadata: {
         roles: [role]
+      },
+      user_metadata: {
+        full_name: devName
       }
     };
-    if (role === 'client' && devConfig.clientFolder) {
-      user.app_metadata.clientFolder = devConfig.clientFolder;
+    if (role === 'client') {
+      var savedClientFolder = sessionStorage.getItem('auth-dev-client-folder');
+      user.app_metadata.clientFolder = savedClientFolder || devConfig.clientFolder || '';
     }
     return user;
   }
@@ -788,10 +1126,18 @@
     toggle.setAttribute('tabindex', '0');
     toggle.setAttribute('aria-label', 'Dev mode');
     toggle.setAttribute('aria-expanded', 'false');
+    // Resolve display name for the active role
+    var savedClientFolder = sessionStorage.getItem('auth-dev-client-folder') || '';
+    var toggleLabel = activeRole.charAt(0).toUpperCase() + activeRole.slice(1);
+    if (activeRole === 'client' && savedClientFolder && typeof THEME_CONFIG !== 'undefined' && THEME_CONFIG.themes && THEME_CONFIG.themes[savedClientFolder]) {
+      toggleLabel = THEME_CONFIG.themes[savedClientFolder].label;
+    }
+
     toggle.innerHTML = '<div class="icn-svg" data-icon="dev-mode">'
       + '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
       + '<path d="M6 17L1 12L6 7L7.4 8.4L4.87462 10.943C4.29375 11.528 4.29375 12.472 4.87462 13.057L7.4 15.6L6 17ZM10.45 20.3L8.55 19.7L13.55 3.7L15.45 4.3L10.45 20.3ZM18 17L16.6 15.6L19.1254 13.057C19.7062 12.472 19.7063 11.528 19.1254 10.943L16.6 8.4L18 7L23 12L18 17Z" fill="currentColor"/>'
       + '</svg></div>'
+      + '<span>' + toggleLabel + '</span>'
       + '<div class="icn-svg header-link-chevron" data-icon="chevron-down">'
       + '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
       + '<path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/>'
@@ -812,49 +1158,72 @@
     label.textContent = 'Switch Role';
     menu.appendChild(label);
 
-    // Role links
-    var requiredRole = getRequiredRole();
-    var roles = ['logged-out', 'public', 'client', 'team', 'admin'];
-    roles.forEach(function (role) {
+    // Role links (system roles)
+    function addRoleItem(roleName, displayName, isActive, clickFn) {
       var item = document.createElement('div');
       item.className = 'header-link';
       item.setAttribute('role', 'button');
       item.setAttribute('tabindex', '0');
 
-      var isActive = role === activeRole;
-
-      // Check icon (visible or placeholder)
       var icon = document.createElement('div');
       icon.className = 'icn-svg';
       icon.setAttribute('data-icon', 'check');
       if (isActive) {
         icon.innerHTML = ICON_CHECK;
       } else {
-        icon.style.visibility = 'hidden';
+        icon.style.display = 'none';
       }
       item.appendChild(icon);
 
       var text = document.createElement('span');
-      text.textContent = role === 'logged-out' ? 'Logged Out' : role.charAt(0).toUpperCase() + role.slice(1);
+      text.textContent = displayName;
       item.appendChild(text);
 
-      item.addEventListener('click', function () {
-        sessionStorage.setItem('auth-dev-role', role);
-        window.location.reload();
-      });
+      item.addEventListener('click', clickFn);
       menu.appendChild(item);
+    }
+
+    var navMount = document.getElementById('site-nav');
+    var basePath = navMount ? (navMount.getAttribute('data-base') || '') : '';
+
+    var systemRoles = ['public', 'team', 'admin'];
+    systemRoles.forEach(function (role) {
+      var isActive = role === activeRole;
+      addRoleItem(role, role.charAt(0).toUpperCase() + role.slice(1), isActive, function () {
+        sessionStorage.setItem('auth-dev-role', role);
+        sessionStorage.removeItem('auth-dev-client-folder');
+        if (role === 'public') {
+          window.location.reload();
+        } else {
+          window.location.href = basePath + 'index.html';
+        }
+      });
     });
 
-    // Divider + page info
-    var divider = document.createElement('div');
-    divider.className = 'header-dropdown-divider';
-    menu.appendChild(divider);
+    // Client role links (one per theme config entry)
+    if (typeof THEME_CONFIG !== 'undefined' && THEME_CONFIG.themes) {
+      var themeKeys = Object.keys(THEME_CONFIG.themes);
+      if (themeKeys.length > 0) {
+        var clientDivider = document.createElement('div');
+        clientDivider.className = 'header-dropdown-divider';
+        menu.appendChild(clientDivider);
 
-    var pageInfo = document.createElement('div');
-    pageInfo.className = 'header-dropdown-label';
-    pageInfo.textContent = 'Page requires: ' + requiredRole;
-    pageInfo.style.textTransform = 'none';
-    menu.appendChild(pageInfo);
+        var clientLabel = document.createElement('div');
+        clientLabel.className = 'header-dropdown-label';
+        clientLabel.textContent = 'Switch Client';
+        menu.appendChild(clientLabel);
+
+        themeKeys.forEach(function (key) {
+          var theme = THEME_CONFIG.themes[key];
+          var isActive = activeRole === 'client' && savedClientFolder === key;
+          addRoleItem(key, theme.label, isActive, function () {
+            sessionStorage.setItem('auth-dev-role', 'client');
+            sessionStorage.setItem('auth-dev-client-folder', key);
+            window.location.href = basePath + key + '/index.html';
+          });
+        });
+      }
+    }
 
     dropdown.appendChild(menu);
 
@@ -911,10 +1280,11 @@
       if (tokenInfo) {
         clearHash();
         if (tokenInfo.type === 'invite') {
-          showSetPasswordForm('Accept Invitation', 'Create a password to activate your account.');
-          initSetPasswordFormHandler(function () {
+          showSetPasswordForm('Accept Invitation', 'Create a password to activate your account.', { showName: true });
+          initSetPasswordFormHandler(function (password, name) {
             return new Promise(function (resolve) {
               setTimeout(function () {
+                if (name) sessionStorage.setItem('auth-dev-name', name);
                 sessionStorage.setItem('auth-dev-role', devConfig.defaultRole || 'admin');
                 resolve();
               }, 500);
@@ -935,6 +1305,34 @@
           renderDevToolbar(activeRole);
           return;
         }
+        if (tokenInfo.type === 'confirmation') {
+          var successEl = document.getElementById('login-success');
+          if (successEl) {
+            successEl.textContent = 'Email confirmed! You can now log in.';
+            successEl.style.display = 'block';
+          }
+          showContent();
+          renderDevToolbar(activeRole);
+          return;
+        }
+      }
+
+      // Handle #forgot hash (dev shortcut)
+      if (window.location.hash === '#forgot') {
+        clearHash();
+        var form = document.getElementById('login-form');
+        var forgotBtn = document.getElementById('login-forgot-btn');
+        var resetForm = document.getElementById('login-reset-form');
+        var title = document.getElementById('login-title');
+        var subtitle = document.getElementById('login-subtitle');
+        if (form) form.style.display = 'none';
+        if (forgotBtn) forgotBtn.style.display = 'none';
+        if (resetForm) resetForm.style.display = 'flex';
+        if (title) title.textContent = 'Forgot Password';
+        if (subtitle) subtitle.textContent = 'Enter your email to receive a reset link.';
+        showContent();
+        renderDevToolbar(activeRole);
+        return;
       }
 
       // If logged in, redirect away from login page
@@ -953,12 +1351,12 @@
     // Logged-out state: redirect to login
     if (activeRole === 'logged-out') {
       var requiredRole = getRequiredRole();
-      if (requiredRole !== 'public') {
+      if (requiredRole !== 'public' || isAccountPage()) {
         renderDevToolbar('logged-out');
         redirectToLogin();
         return;
       }
-      renderAuthButton(null);
+      renderAuthHeaderDropdown(null);
       showContent();
       renderDevToolbar('logged-out');
       return;
@@ -969,9 +1367,10 @@
     var requiredRole = getRequiredRole();
 
     setRoleClass(activeRole);
-    renderAuthButton(devUser);
+    if (typeof initThemeForUser === 'function') initThemeForUser(devUser);
+    renderAuthHeaderDropdown(devUser);
 
-    if (requiredRole !== 'public' && !hasAccess(activeRole, requiredRole)) {
+    if (requiredRole !== 'public' && !hasAccessForValue(activeRole, requiredRole, devUser)) {
       renderDevToolbar(activeRole);
       redirectAccessDenied();
       return;
@@ -985,6 +1384,7 @@
     }
 
     filterNavLinks(activeRole, devUser);
+    initAccountPage(devUser);
     showContent();
     renderDevToolbar(activeRole);
   }
