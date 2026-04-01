@@ -237,7 +237,7 @@ function generateTableOfContents(html) {
 function generateIndexPage(template, filesBySection) {
   let cards = '';
 
-  const sectionOrder = ['Brand Book', 'Design System', 'Docs', 'Tools'];
+  const sectionOrder = ['Brand Book', 'Design System', 'Tools', 'Docs'];
   const hiddenSections = [];
   const sortedSections = Object.keys(filesBySection)
     .filter(s => !hiddenSections.includes(s))
@@ -270,8 +270,13 @@ function generateIndexPage(template, filesBySection) {
     for (const file of files) {
       const cardAccess = file.frontmatter.access || 'team';
       const cardAccessAttr = ` data-access="${cardAccess}"`;
+      // For Tools section: link to actual tool, not documentation page
+      let cardHref = file.htmlPath;
+      if (section === 'Tools' && file.frontmatter.toolUrl) {
+        cardHref = file.frontmatter.toolUrl.replace(/^\.\.\//, '');
+      }
       cards += `
-        <a href="${file.htmlPath}" class="docs-card"${cardAccessAttr}>
+        <a href="${cardHref}" class="docs-card"${cardAccessAttr}>
           <h3 class="docs-card-title">${file.title}</h3>
           ${file.frontmatter.subtitle ? `<p class="docs-card-subtitle" data-text-wrap="pretty">${file.frontmatter.subtitle}</p>` : ''}
         </a>
@@ -334,7 +339,7 @@ function generateIndexPage(template, filesBySection) {
 /**
  * Generate a section overview page with card grid
  */
-function generateSectionIndexPage(section, template, files) {
+function generateSectionIndexPage(section, template, files, filesBySection) {
   const sectionFolder = SECTION_FOLDERS[section];
   if (!sectionFolder) return null;
 
@@ -389,12 +394,33 @@ function generateSectionIndexPage(section, template, files) {
       }
       cards += `</div></div>`;
     }
+
+    // Add Tools documentation as a subsection of Docs
+    if (filesBySection && filesBySection['Tools']) {
+      const toolFiles = [...filesBySection['Tools']].sort((a, b) => {
+        const orderA = a.frontmatter.order || 999;
+        const orderB = b.frontmatter.order || 999;
+        if (orderA !== orderB) return orderA - orderB;
+        return a.title.localeCompare(b.title);
+      });
+      cards += `<div class="docs-section"><h2 class="eyebrow">Tools</h2><div class="grid cols-3 gap-xl">`;
+      for (const file of toolFiles) {
+        const cardAccess = file.frontmatter.access || 'team';
+        cards += `<a href="../${file.htmlPath}" class="docs-card" data-access="${cardAccess}"><h3 class="docs-card-title">${file.title}</h3>${file.frontmatter.subtitle ? `<p class="docs-card-subtitle" data-text-wrap="pretty">${file.frontmatter.subtitle}</p>` : ''}</a>`;
+      }
+      cards += `</div></div>`;
+    }
   } else {
     // Standard section: flat card grid
     cards += `<div class="docs-section"><div class="grid cols-3 gap-xl">`;
     for (const file of sorted) {
       const cardAccess = file.frontmatter.access || 'team';
-      cards += `<a href="${file.htmlName}" class="docs-card" data-access="${cardAccess}"><h3 class="docs-card-title">${file.title}</h3>${file.frontmatter.subtitle ? `<p class="docs-card-subtitle" data-text-wrap="pretty">${file.frontmatter.subtitle}</p>` : ''}</a>`;
+      // For Tools section: link to actual tool, not documentation page
+      let cardHref = file.htmlName;
+      if (section === 'Tools' && file.frontmatter.toolUrl) {
+        cardHref = file.frontmatter.toolUrl;
+      }
+      cards += `<a href="${cardHref}" class="docs-card" data-access="${cardAccess}"><h3 class="docs-card-title">${file.title}</h3>${file.frontmatter.subtitle ? `<p class="docs-card-subtitle" data-text-wrap="pretty">${file.frontmatter.subtitle}</p>` : ''}</a>`;
     }
 
     // Append special cards
@@ -433,7 +459,7 @@ function generateSectionIndexPage(section, template, files) {
  * Build a flat ordered list of all pages following the nav order
  */
 function buildPageOrder(filesBySection) {
-  const sectionOrder = ['Brand Book', 'Design System', 'Docs', 'Tools'];
+  const sectionOrder = ['Brand Book', 'Design System', 'Tools', 'Docs'];
   const hiddenSections = [];
   const sortedSections = Object.keys(filesBySection)
     .filter(s => !hiddenSections.includes(s))
@@ -903,7 +929,7 @@ function buildNavSectionsHtml(filesBySection) {
   // Subsection rendering order within the Docs section
   const subsectionOrder = ['Code Standards', 'Dev', 'Site Management'];
 
-  const sectionOrder = ['Brand Book', 'Design System', 'Docs', 'Tools'];
+  const sectionOrder = ['Brand Book', 'Design System', 'Tools', 'Docs'];
   const sortedSections = Object.keys(filesBySection)
     .sort((a, b) => {
       const indexA = sectionOrder.indexOf(a);
@@ -961,7 +987,12 @@ function buildNavSectionsHtml(filesBySection) {
     // Render ungrouped files first
     for (const file of ungrouped) {
       const linkAccess = file.frontmatter.access || 'team';
-      html += `<li><a href="${file.htmlPath}" class="nav-link" data-access="${linkAccess}"><span>${file.title}</span></a></li>`;
+      // For Tools section: link to actual tool, not documentation page
+      let linkHref = file.htmlPath;
+      if (section === 'Tools' && file.frontmatter.toolUrl) {
+        linkHref = file.frontmatter.toolUrl.replace(/^\.\.\//, '');
+      }
+      html += `<li><a href="${linkHref}" class="nav-link" data-access="${linkAccess}"><span>${file.title}</span></a></li>`;
     }
 
     // Render subsections in order
@@ -977,6 +1008,21 @@ function buildNavSectionsHtml(filesBySection) {
     for (const sub of subsections) {
       html += `<li class="nav-label">${sub}</li>`;
       for (const file of grouped[sub]) {
+        const linkAccess = file.frontmatter.access || 'team';
+        html += `<li><a href="${file.htmlPath}" class="nav-link" data-access="${linkAccess}"><span>${file.title}</span></a></li>`;
+      }
+    }
+
+    // Add Tools documentation links as a subsection of Docs
+    if (section === 'Docs' && filesBySection['Tools']) {
+      const toolFiles = [...filesBySection['Tools']].sort((a, b) => {
+        const orderA = a.frontmatter.order || 999;
+        const orderB = b.frontmatter.order || 999;
+        if (orderA !== orderB) return orderA - orderB;
+        return a.title.localeCompare(b.title);
+      });
+      html += `<li class="nav-label">Tools</li>`;
+      for (const file of toolFiles) {
         const linkAccess = file.frontmatter.access || 'team';
         html += `<li><a href="${file.htmlPath}" class="nav-link" data-access="${linkAccess}"><span>${file.title}</span></a></li>`;
       }
@@ -1548,7 +1594,7 @@ async function generateDocs() {
   for (const section of Object.keys(filesBySection)) {
     const sectionFolder = SECTION_FOLDERS[section];
     if (!sectionFolder) continue;
-    const sectionIndexHtml = generateSectionIndexPage(section, template, filesBySection[section]);
+    const sectionIndexHtml = generateSectionIndexPage(section, template, filesBySection[section], filesBySection);
     if (sectionIndexHtml) {
       const dir = path.join(OUTPUT_DIR, sectionFolder);
       fs.mkdirSync(dir, { recursive: true });
