@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-client-theme="dianomi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,19 +19,25 @@
     <!-- Design System Framework (path set in docs/docs.config.js) -->
     <link rel="stylesheet" href="../assets/css/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
-    <!-- Client Theme Override -->
-    <link rel="stylesheet" href="theme.css">
+    
 
     <!-- Google Fonts (configured in docs/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="../assets/css/markdown.css">
 
     <!-- Site styles -->
     <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- Client Theme Override (must load last to override base styles) -->
+    <link rel="stylesheet" href="theme.css">
+
+    <!-- Early theme loader: apply cached client theme before first paint -->
+    <script>
+    (function(){try{if(document.documentElement.getAttribute('data-client-theme'))return;var c=localStorage.getItem('bdd-client-theme');if(!c)return;var p=c.split('|'),k=p[0],css=p[1],fonts=p[2];if(!k||!css)return;var b='../';var l=document.createElement('link');l.id='client-theme-css';l.rel='stylesheet';l.href=b+css;document.head.appendChild(l);document.documentElement.setAttribute('data-client-theme',k);if(fonts){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://fonts.googleapis.com';pc.id='client-theme-fonts-preconnect';document.head.appendChild(pc);var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';pc2.id='client-theme-fonts-preconnect2';document.head.appendChild(pc2);var fl=document.createElement('link');fl.id='client-theme-fonts';fl.rel='stylesheet';fl.href=fonts;document.head.appendChild(fl)}}catch(e){}})();
+    </script>
 
     <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
     <script>
@@ -61,21 +67,30 @@
         <!-- Page Header (full width, outside grid) -->
         
 
+        <!-- Page Sub-bar (breadcrumbs + actions) -->
+        
+
         <!-- Main Content + TOC grid -->
         <div class="docs-content-grid padding-global">
             <!-- Main Content -->
             <main class="docs-main">
-                <article class="markdown-body">
+                <article>
                     <div class="docs-hero">
       <h1 class="docs-hero-title">Dianomi</h1>
       <p class="docs-hero-description" data-text-wrap="balance">Brand guidelines and tools for Dianomi.</p>
     </div><div class="docs-section">
-      <h2 class="eyebrow">Brand</h2>
+      <h2 class="eyebrow">Dianomi</h2>
       <div class="grid cols-3 gap-xl"><a href="brand-book.html" class="docs-card">
           <h3 class="docs-card-title">Brand Book</h3>
         </a></div></div><div class="docs-section">
+      <h2 class="eyebrow">Docs</h2>
+      <div class="grid cols-3 gap-xl"><a href="docs-overview.html" class="docs-card">
+          <h3 class="docs-card-title">Overview</h3>
+        </a><a href="welcome.html" class="docs-card">
+          <h3 class="docs-card-title">Welcome</h3>
+        </a></div></div><div class="docs-section">
       <h2 class="eyebrow">Tools</h2>
-      <div class="grid cols-3 gap-xl"><a href="../cpm-calculator/index.html" class="docs-card">
+      <div class="grid cols-3 gap-xl"><a href="tools-overview.html" class="docs-card"><h3 class="docs-card-title">Overview</h3></a><a href="../cpm-calculator/index.html" class="docs-card">
           <h3 class="docs-card-title">CPM Calculator</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">CPM & Spend Calculator</p>
         </a><a href="../display-ad-preview/index.html" class="docs-card">
@@ -298,6 +313,45 @@
         });
         btn.querySelector('button').addEventListener('click', function() {
           window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+
+    <!-- Sub-bar dropdown toggle -->
+    <script>
+      (function() {
+        var dropdowns = document.querySelectorAll('.subbar-dropdown');
+        dropdowns.forEach(function(dd) {
+          var toggle = dd.querySelector(':scope > .header-link');
+          if (!toggle) return;
+
+          toggle.addEventListener('click', function() {
+            var wasOpen = dd.classList.contains('is-open');
+            dropdowns.forEach(function(d) {
+              d.classList.remove('is-open');
+              var t = d.querySelector(':scope > .header-link');
+              if (t) t.setAttribute('aria-expanded', 'false');
+            });
+            if (!wasOpen) {
+              dd.classList.add('is-open');
+              toggle.setAttribute('aria-expanded', 'true');
+            }
+          });
+
+          document.addEventListener('click', function(e) {
+            if (!dd.contains(e.target)) {
+              dd.classList.remove('is-open');
+              toggle.setAttribute('aria-expanded', 'false');
+            }
+          });
+
+          document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && dd.classList.contains('is-open')) {
+              dd.classList.remove('is-open');
+              toggle.setAttribute('aria-expanded', 'false');
+              toggle.focus();
+            }
+          });
         });
       })();
     </script>

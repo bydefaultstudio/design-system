@@ -2,9 +2,10 @@
 title: "Folders"
 subtitle: "File organization and directory structure"
 description: "Guide defining where files live and why in the project structure."
-section: "Project"
-order: 4
-access: "team"
+section: "Docs"
+subsection: "Dev"
+order: 21
+access: "admin"
 ---
 
 This document defines where files live and why.
@@ -33,8 +34,7 @@ Do not add new top-level folders without updating this file.
 Single source of truth for all assets. No duplication.
 
 - `css/design-system.css` → Core design system framework (tokens, utilities, layout primitives)
-- `css/style.css` → Site layout and component styles
-- `css/markdown.css` → Markdown rendering styles (code blocks, tables, syntax highlighting)
+- `css/style.css` → Site layout, component styles, and markdown content rendering
 - `js/auth.js` → Authentication module (Netlify Identity)
 - `js/auth-config.js` → Auth role hierarchy and settings
 - `js/theme-config.js` → Theme registry (maps clientFolder → CSS path + Google Fonts URL)
@@ -99,8 +99,7 @@ The generated HTML loads CSS in this order:
 
 1. `assets/css/design-system.css` → Brand tokens, framework tokens, utilities, layout primitives
 2. `themes/client-name.css` → Client theme overrides (optional)
-3. `assets/css/markdown.css` → Markdown content rendering
-4. `assets/css/style.css` → Site layout and components
+3. `assets/css/style.css` → Site layout, components, and markdown content rendering
 
 New site-specific CSS goes in `assets/css/style.css`.
 

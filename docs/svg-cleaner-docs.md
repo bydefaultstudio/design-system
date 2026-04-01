@@ -2,9 +2,9 @@
 title: "SVG Cleaner"
 subtitle: "How to use the SVG Cleaner tool"
 description: "Paste raw SVG code and get a cleaned, optimised version ready for the design system."
-section: "Project"
-order: 11
-access: "team"
+section: "Tools"
+order: 2
+access: "admin"
 toolUrl: "../svg-cleaner/index.html"
 ---
 

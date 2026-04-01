@@ -2,18 +2,29 @@
    CLIENT THEME: Dianomi
    ─────────────────────────────
 
-   This theme demonstrates how overriding design system
-   tokens produces a completely different look and feel.
+   Brand primitives are defined once at the top.
+   Semantic tokens reference them — update a primitive
+   and every usage updates automatically.
    ───────────────────────────── */
 
 
 :root {
 
-  /* ── Typography ──────────────────────────── */
-  --font-primary: "Inter", "Helvetica Neue", sans-serif;
-  --font-secondary: "Inter", "Helvetica Neue", sans-serif;
-  --font-tertiary: "JetBrains Mono", monospace;
+  /* ── Brand Primitives ───────────────────────
+     Core brand colours — change these to update
+     every semantic token that references them.
+     ─────────────────────────────────────────── */
+  --brand-dark: #212121;
+  --brand-grey: #595959;
+  --brand-green: #40997f;
+  --brand-light: #eeeeee;
+  --brand-white: #fafafa;
 
+
+  /* ── Typography ──────────────────────────── */
+  --font-primary: "Montserrat", "Helvetica Neue", sans-serif;
+  --font-secondary: "Montserrat", "Helvetica Neue", sans-serif;
+  --font-tertiary: "JetBrains Mono", monospace;
 
 
   /* ── Neutral scale ──────────────────────────
@@ -35,39 +46,39 @@
 
 
   /* ── Text ────────────────────────────────── */
-  --text-primary: #111827;
-  --text-secondary: #4b5563;
-  --text-accent: #2563eb;
-  --text-link: #2563eb;
-  --text-inverted: #f9fafb;
+  --text-primary: var(--brand-dark);
+  --text-secondary: var(--brand-grey);
+  --text-accent: var(--brand-green);
+  --text-link: var(--brand-green);
+  --text-inverted: var(--brand-white);
 
 
   /* ── Backgrounds ─────────────────────────── */
-  --background-primary: #f9fafb;
-  --background-secondary: #e5e7eb;
+  --background-primary: var(--brand-white);
+  --background-secondary: var(--brand-light);
 
 
   /* ── Borders ─────────────────────────────── */
-  --border-primary: #111827;
+  --border-primary: var(--brand-dark);
   --border-secondary: #d1d5db;
 
 
   /* ── Buttons ─────────────────────────────── */
-  --button-primary: #2563eb;
+  --button-primary: var(--brand-green);
   --button-text: #ffffff;
-  --button-secondary: #111827;
-  --button-secondary-text: #f9fafb;
+  --button-secondary: var(--brand-dark);
+  --button-secondary-text: var(--brand-white);
 
 
   /* ── Accent ──────────────────────────────── */
-  --status-info: #2563eb;
-  --input-focus: #2563eb;
-  --checkbox-selected: #2563eb;
+  --status-info: var(--brand-green);
+  --input-focus: var(--brand-green);
+  --checkbox-selected: var(--brand-green);
 
 
   /* ── Selection ───────────────────────────── */
   --selection-text: #ffffff;
-  --selection-background: #2563eb;
+  --selection-background: var(--brand-green);
 }
 
 
@@ -77,25 +88,28 @@
   --text-primary: #f3f4f6;
   --text-secondary: #9ca3af;
   --text-plain: #f3f4f6;
-  --text-accent: #60a5fa;
-  --text-link: #60a5fa;
-  --text-inverted: #111827;
+  --text-accent: #6bc4a8;
+  --text-link: #6bc4a8;
+  --text-inverted: var(--brand-dark);
 
-  --background-primary: #111827;
-  --background-secondary: #1f2937;
-  --background-plain: #374151;
+  --background-primary: var(--brand-dark);
+  --background-secondary: #2a2a2a;
+  --background-plain: #333333;
 
   --border-primary: #f3f4f6;
   --border-secondary: #4b5563;
 
-  --button-primary: #60a5fa;
-  --button-text: #111827;
+  --button-primary: #6bc4a8;
+  --button-text: var(--brand-dark);
   --button-secondary: #f3f4f6;
-  --button-secondary-text: #111827;
+  --button-secondary-text: var(--brand-dark);
 
-  --status-info: #60a5fa;
-  --input-focus: #60a5fa;
-  --checkbox-selected: #60a5fa;
+  --status-info: #6bc4a8;
+  --input-focus: #6bc4a8;
+  --checkbox-selected: #6bc4a8;
+
+  --selection-text: var(--brand-dark);
+  --selection-background: #6bc4a8;
 }
 
 
@@ -106,24 +120,47 @@
     --text-primary: #f3f4f6;
     --text-secondary: #9ca3af;
     --text-plain: #f3f4f6;
-    --text-accent: #60a5fa;
-    --text-link: #60a5fa;
-    --text-inverted: #111827;
+    --text-accent: #6bc4a8;
+    --text-link: #6bc4a8;
+    --text-inverted: var(--brand-dark);
 
-    --background-primary: #111827;
-    --background-secondary: #1f2937;
-    --background-plain: #374151;
+    --background-primary: var(--brand-dark);
+    --background-secondary: #2a2a2a;
+    --background-plain: #333333;
 
     --border-primary: #f3f4f6;
     --border-secondary: #4b5563;
 
-    --button-primary: #60a5fa;
-    --button-text: #111827;
+    --button-primary: #6bc4a8;
+    --button-text: var(--brand-dark);
     --button-secondary: #f3f4f6;
-    --button-secondary-text: #111827;
+    --button-secondary-text: var(--brand-dark);
 
-    --status-info: #60a5fa;
-    --input-focus: #60a5fa;
-    --checkbox-selected: #60a5fa;
+    --status-info: #6bc4a8;
+    --input-focus: #6bc4a8;
+    --checkbox-selected: #6bc4a8;
+
+    --selection-text: var(--brand-dark);
+    --selection-background: #6bc4a8;
   }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--font-weight-semi-bold);
+}
+
+.svg-logo.nav-logo {
+  height: 35px;
+}
+
+@media (max-width: 768px) {
+
+.svg-logo.nav-logo {
+  height: 25px;
+}
+}
+
+
+.nav-link, .nav-section-toggle {
+  font-weight: var(--font-weight-semi-bold);
 }

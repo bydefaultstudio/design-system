@@ -2,9 +2,9 @@
 title: "CPM Calculator"
 subtitle: "How to use the CPM & Spend Calculator"
 description: "Complete guide to using the calculator, toggle options, and calculation formulas."
-section: "Project"
-order: 10
-access: "team"
+section: "Tools"
+order: 1
+access: "admin"
 toolUrl: "../cpm-calculator/index.html"
 ---
 

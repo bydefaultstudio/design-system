@@ -2,7 +2,8 @@
 title: "SEO"
 subtitle: "SEO meta tags and social sharing guidelines"
 description: "Complete guide to SEO meta tags, Open Graph, X Cards, and structured data."
-section: "Content"
+section: "Docs"
+subsection: "Code Standards"
 order: 9
 access: "team"
 ---

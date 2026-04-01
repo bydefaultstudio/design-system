@@ -2,8 +2,9 @@
 title: "Access Control"
 subtitle: "Managing user authentication and page permissions"
 description: "How to manage user logins, roles, and page-level access control using Netlify Identity."
-section: "Admin"
-order: 1
+section: "Docs"
+subsection: "Site Management"
+order: 30
 access: "admin"
 ---
 

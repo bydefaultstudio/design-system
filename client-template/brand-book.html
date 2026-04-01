@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[Client Name] — Brand Book</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+  <!-- Design System Framework -->
+  <link rel="stylesheet" href="../assets/css/design-system.css" />
+  <!-- Google Fonts: update with client fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="../assets/css/style.css" />
+
+  <!-- Client Theme Override (must load last to override base styles) -->
+  <link rel="stylesheet" href="theme.css" />
+
+  <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
+  <script>
+    window._gotrueReady = (function() {
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0') {
+        return Promise.resolve(null);
+      }
+      return import('https://cdn.jsdelivr.net/npm/gotrue-js@0.9.29/+esm')
+        .then(function(m) { var G = m.default && m.default.default ? m.default.default : m.default; window.GoTrue = G; return G; })
+        .catch(function(e) { console.error('[Auth] GoTrue load failed:', e); return null; });
+    })();
+  </script>
+</head>
+
+<body class="auth-loading" data-access="client">
+
+  <!-- Site Navigation (header + sidebar injected by nav.js) -->
+  <div id="site-nav" data-base="../"></div>
+
+  <div class="page-wrapper has-sidebar">
+    <div class="page-content">
+
+      <!-- Header -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-s">
+              <p class="eyebrow">[Client Name]</p>
+              <h1>Brand Style Guide</h1>
+              <p class="text-size-small">A preview of how brand elements will be applied across collateral we create for you. Typography, colour, and interactive elements styled using your brand tokens.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Brand Colours -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-l">
+              <h2 class="eyebrow">Brand Colours</h2>
+
+              <!-- Update: add/remove rows, set data-token to match your theme.css brand primitives -->
+              <div class="color-list border border-faded">
+                <div class="color-row" style="background-color: var(--text-primary);" data-token="--text-primary"><span class="color-row-name">[Colour Name]</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+                <div class="color-row" style="background-color: var(--text-accent);" data-token="--text-accent"><span class="color-row-name">[Colour Name]</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+                <div class="color-row" style="background-color: var(--background-secondary);" data-token="--background-secondary"><span class="color-row-name">[Colour Name]</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Applied Colours -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-l">
+              <h2 class="eyebrow">Applied Colours</h2>
+              <p class="text-size-small">Semantic tokens that reference the brand colours. These define how colours are used across UI elements.</p>
+
+              <div class="grid cols-2 gap-m">
+                <div class="block gap-m">
+                  <h3>Text</h3>
+                  <div class="color-list border border-faded">
+                    <div class="color-row" style="background-color: var(--text-primary);" data-token="--text-primary"><span class="color-row-name">Text Primary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+                    <div class="color-row" style="background-color: var(--text-secondary);" data-token="--text-secondary"><span class="color-row-name">Text Secondary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+                    <div class="color-row" style="background-color: var(--text-accent);" data-token="--text-accent"><span class="color-row-name">Accent / Link</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+                  </div>
+                </div>
+
+                <div class="block gap-m">
+                  <h3>Surfaces</h3>
+                  <div class="color-list border border-faded">
+                    <div class="color-row" style="background-color: var(--background-primary);" data-token="--background-primary"><span class="color-row-name">Background Primary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+                    <div class="color-row" style="background-color: var(--background-secondary);" data-token="--background-secondary"><span class="color-row-name">Background Secondary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+                    <div class="color-row" style="background-color: var(--button-primary);" data-token="--button-primary"><span class="color-row-name">Button Primary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Typography -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <article class="type-demo">
+              <h2 class="eyebrow">Typography</h2>
+
+              <h1>Your Primary Headline, Big, Bold, and Unmissable</h1>
+
+              <h2>Supporting Headline to Guide Your Content</h2>
+
+              <h3>Section Headings to Keep Content Organised</h3>
+
+              <h4>Smaller Subheading for Detailed Content Organisation</h4>
+
+              <p>
+                This paragraph demonstrates how body text will look across your layout. <strong>Bold text</strong>
+                adds emphasis, while <em>italics</em> offer a subtle highlight. This is how content will read at
+                standard body size, giving a feel for line height, spacing, and overall readability.
+              </p>
+
+              <p>
+                When designing collateral, consider how <a href="#">linked text</a> stands out from regular content
+                to draw the reader's attention to key actions.
+              </p>
+
+              <p class="text-size-small">
+                Smaller supporting text for captions, footnotes, and secondary information. This size is used
+                sparingly to complement the primary body copy without competing for attention.
+              </p>
+
+              <blockquote>
+                Words matter, but how those words are presented matters just as much. Typography transforms content from
+                mundane to magical, from ordinary to extraordinary.
+              </blockquote>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Buttons -->
+      <section class="top-medium bottom-medium">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-none">
+              <div class="block gap-l button-demo">
+                <h2 class="eyebrow">Buttons</h2>
+                <p class="text-size-small">Button styles available for use across collateral. Primary for key actions, outline and faded for secondary interactions.</p>
+
+                <div class="button-group">
+                  <button class="button">Primary</button>
+                  <button class="button is-outline">Outline</button>
+                  <button class="button is-faded">Faded</button>
+                </div>
+
+                <div class="button-group">
+                  <button class="button is-small">Primary</button>
+                  <button class="button is-small is-outline">Outline</button>
+                  <button class="button is-small is-faded">Faded</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Page Feedback -->
+    <section class="page-feedback" aria-label="Page feedback">
+      <div class="page-feedback-inner padding-global">
+        <h3 class="page-feedback-prompt">Was this page helpful?</h3>
+        <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
+        <div class="button-group">
+          <button class="button is-small" data-feedback="yes" type="button">Yes</button>
+          <button class="button is-small is-outline is-faded" data-feedback="no" type="button">No</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feedback Modal -->
+    <dialog class="feedback-modal" aria-label="Send feedback">
+      <div class="feedback-modal-content">
+        <h3 class="feedback-modal-title">Send feedback</h3>
+        <p class="feedback-modal-subtitle"></p>
+        <form class="feedback-form" name="page-feedback" data-netlify="true">
+          <input type="hidden" name="form-name" value="page-feedback">
+          <input type="hidden" name="sentiment" value="">
+          <input type="hidden" name="page" value="">
+          <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
+          <div class="button-group feedback-modal-actions">
+            <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>
+            <button type="submit" class="button is-small">Send feedback</button>
+          </div>
+        </form>
+      </div>
+    </dialog>
+
+    <!-- Footer -->
+    <footer class="docs-footer">
+      <div class="docs-footer-inner padding-global">
+        <p class="docs-footer-text">&copy; 2026 By Default BrandOS</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Site Navigation -->
+  <script src="../assets/js/nav.js"></script>
+  <!-- Auth -->
+  <script src="../assets/js/auth-config.js"></script>
+  <script src="../assets/js/theme-config.js"></script>
+  <script src="../assets/js/theme-loader.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <!-- Feedback -->
+  <script src="../assets/js/feedback.js"></script>
+
+  <!-- Colour copy-to-clipboard + contrast detection -->
+  <script>
+    (function () {
+      function copyToClipboard(text) {
+        if (navigator.clipboard) return navigator.clipboard.writeText(text);
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        return Promise.resolve();
+      }
+
+      function getRowColor(row) {
+        var bg = getComputedStyle(row).backgroundColor;
+        var match = bg.match(/rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+))?\s*\)/);
+        if (!match) return null;
+        return { r: Math.round(parseFloat(match[1])), g: Math.round(parseFloat(match[2])), b: Math.round(parseFloat(match[3])), a: match[4] !== undefined ? parseFloat(match[4]) : 1 };
+      }
+
+      function rgbToHex(c) {
+        var hex = '#' + ((1 << 24) + (c.r << 16) + (c.g << 8) + c.b).toString(16).slice(1);
+        if (c.a < 1) hex += Math.round(c.a * 255).toString(16).padStart(2, '0');
+        return hex;
+      }
+
+      function luminance(r, g, b) {
+        var a = [r, g, b].map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+        return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+      }
+
+      document.addEventListener('click', function (e) {
+        var btn = e.target.closest('.color-copy-btn');
+        if (!btn) return;
+        var row = btn.closest('.color-row');
+        var token = row.getAttribute('data-token');
+        var format = btn.getAttribute('data-format');
+        var text;
+        if (format === 'css') {
+          text = 'var(' + token + ')';
+        } else {
+          var rgb = getRowColor(row);
+          if (!rgb) return;
+          text = rgbToHex(rgb);
+        }
+        var original = btn.textContent;
+        copyToClipboard(text).then(function () {
+          btn.textContent = 'Copied!';
+          setTimeout(function () { btn.textContent = original; }, 1500);
+        });
+      });
+
+      document.querySelectorAll('.color-row').forEach(function (row) {
+        var rgb = getRowColor(row);
+        if (!rgb) return;
+        row.style.color = luminance(rgb.r, rgb.g, rgb.b) < 0.4 ? '#ffffff' : '#000000';
+      });
+    })();
+  </script>
+
+</body>
+</html>

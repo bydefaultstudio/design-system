@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-client-theme="client-template">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Access Control - By Default Brand OS</title>
-    <meta name="description" content="How to manage user logins, roles, and page-level access control using Netlify Identity.">
+    <title>Client Template — Tools - By Default Brand OS</title>
+    <meta name="description" content="Tools overview for Client Template.">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
     <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Access Control - By Default Brand OS">
-    <meta property="og:description" content="How to manage user logins, roles, and page-level access control using Netlify Identity.">
+    <meta property="og:title" content="Client Template — Tools - By Default Brand OS">
+    <meta property="og:description" content="Tools overview for Client Template.">
     <meta property="og:image" content="../assets/images/og/og-default.jpg">
     <meta property="og:type" content="website">
 
@@ -27,10 +27,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="../assets/css/markdown.css">
 
     <!-- Site styles -->
     <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- Client Theme Override (must load last to override base styles) -->
+    <link rel="stylesheet" href="theme.css">
+
+    <!-- Early theme loader: apply cached client theme before first paint -->
+    <script>
+    (function(){try{if(document.documentElement.getAttribute('data-client-theme'))return;var c=localStorage.getItem('bdd-client-theme');if(!c)return;var p=c.split('|'),k=p[0],css=p[1],fonts=p[2];if(!k||!css)return;var b='../';var l=document.createElement('link');l.id='client-theme-css';l.rel='stylesheet';l.href=b+css;document.head.appendChild(l);document.documentElement.setAttribute('data-client-theme',k);if(fonts){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://fonts.googleapis.com';pc.id='client-theme-fonts-preconnect';document.head.appendChild(pc);var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';pc2.id='client-theme-fonts-preconnect2';document.head.appendChild(pc2);var fl=document.createElement('link');fl.id='client-theme-fonts';fl.rel='stylesheet';fl.href=fonts;document.head.appendChild(fl)}}catch(e){}})();
+    </script>
 
     <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
     <script>
@@ -44,7 +51,7 @@
       })();
     </script>
 </head>
-<body class="auth-loading" data-access="admin">
+<body class="auth-loading" data-access="client">
 
     <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
     <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
@@ -58,190 +65,22 @@
 
     <div class="docs-main-area">
         <!-- Page Header (full width, outside grid) -->
-        <div class="page-header">
-      <div class="container-small">
-        <h1>Access Control</h1>
-        <p class="page-subtitle" data-text-wrap="pretty">Managing user authentication and page permissions</p>
-        <div class="button-group justify-center">
-          <a href="../docs/access-control.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
-          
-        </div>
-      </div>
-    </div>
+        
+
+        <!-- Page Sub-bar (breadcrumbs + actions) -->
+        
 
         <!-- Main Content + TOC grid -->
         <div class="docs-content-grid padding-global">
             <!-- Main Content -->
             <main class="docs-main">
-                <article class="markdown-body">
-                    <p>This site uses <strong>Netlify Identity</strong> for authentication. Users are invited by email, assigned a role, and can only access pages permitted by their role.</p>
-<h2 id="access-levels">Access Levels</h2>
-<p>There are four access levels, from lowest to highest privilege:</p>
-<div class="table-scroll"><table class="table">
-<thead>
-<tr>
-<th>Level</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>Public</strong></td>
-<td>No login required — anyone can view</td>
-</tr>
-<tr>
-<td><strong>Client</strong></td>
-<td>Requires login with <code>client</code> role or higher</td>
-</tr>
-<tr>
-<td><strong>Team</strong></td>
-<td>Requires login with <code>team</code> role or higher (default)</td>
-</tr>
-<tr>
-<td><strong>Admin</strong></td>
-<td>Requires login with <code>admin</code> role only</td>
-</tr>
-</tbody></table></div>
-<p>Higher roles inherit access from lower roles. An admin can see everything a team member can see, and a team member can see everything a client can see.</p>
-<h2 id="managing-users">Managing Users</h2>
-<p>Users are managed in the <strong>Netlify Dashboard</strong>:</p>
-<ol>
-<li>Go to your site in the <a href="https://app.netlify.com" target="_blank" rel="noopener noreferrer">Netlify Dashboard</a></li>
-<li>Navigate to <strong>Integrations</strong> → <strong>Identity</strong></li>
-<li>Click <strong>Invite users</strong> to send email invitations</li>
-</ol>
-<h3 id="assigning-roles">Assigning Roles</h3>
-<p>After a user accepts their invitation, edit their profile in the Identity panel to set their role:</p>
-<ol>
-<li>Click on the user in the Identity list</li>
-<li>Under <strong>Metadata</strong>, edit the <code>app_metadata</code> field</li>
-<li>Set the role:</li>
-</ol>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-mufgtk3cc" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-mufgtk3cc" class="language-json">{
-  &quot;roles&quot;: [&quot;admin&quot;]
-}
-</code></pre>
-      </div>
-    
-<p>Available roles: <code>admin</code>, <code>team</code>, <code>client</code>.</p>
-<h3 id="client-folder-access">Client Folder Access</h3>
-<p>Client users can be restricted to their own folder. Add a <code>clientFolder</code> field to their <code>app_metadata</code>:</p>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-oqffd0kuc" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-oqffd0kuc" class="language-json">{
-  &quot;roles&quot;: [&quot;client&quot;],
-  &quot;clientFolder&quot;: &quot;dianomi&quot;
-}
-</code></pre>
-      </div>
-    
-<p>This user will only be able to access pages inside the <code>/dianomi/</code> folder, plus the shared tool pages (CPM Calculator, SVG Cleaner, Display Ad Preview).</p>
-<p>Team and admin users can access all client folders.</p>
-<h2 id="page-access-configuration">Page Access Configuration</h2>
-<p>Page access is set via the <code>data-access</code> attribute on <code>&lt;body&gt;</code>, or via frontmatter <code>access</code> in markdown docs (the generator sets it automatically).</p>
-<h3 id="standard-roles">Standard roles</h3>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-buntc04lb" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-buntc04lb" class="language-yaml">access: &quot;public&quot;    # No login required
-access: &quot;client&quot;    # Any client or higher
-access: &quot;team&quot;      # Team members and admins (default)
-access: &quot;admin&quot;     # Admins only
-</code></pre>
-      </div>
-    
-<p>Pages without an <code>access</code> value default to <code>team</code>.</p>
-<h3 id="per-client-access">Per-client access</h3>
-<p>To restrict a page to specific clients, use the <code>client:</code> prefix with a comma-separated list of client folder names:</p>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-qkkxpuqig" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-qkkxpuqig" class="language-yaml">access: &quot;client:blank&quot;              # Only the &quot;blank&quot; client
-access: &quot;client:blank,dianomi&quot;      # &quot;blank&quot; or &quot;dianomi&quot; clients
-access: &quot;client:blank,dianomi,acme&quot; # Any of these three clients
-</code></pre>
-      </div>
-    
-<p>Team and admin users always have access regardless of the client list. The client folder names must match the <code>clientFolder</code> value in the user&#39;s Netlify Identity <code>app_metadata</code>.</p>
-<h3 id="on-standalone-html-pages">On standalone HTML pages</h3>
-<p>Set the attribute directly on <code>&lt;body&gt;</code>:</p>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-01qn4il2w" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-01qn4il2w" class="language-html">&lt;body class=&quot;auth-loading&quot; data-access=&quot;client:blank,dianomi&quot;&gt;
-</code></pre>
-      </div>
-    
-<h3 id="adding-a-new-page">Adding a New Page</h3>
-<ol>
-<li>Create the page as usual</li>
-<li>Set the <code>access</code> frontmatter (for docs) or <code>data-access</code> attribute (for standalone HTML)</li>
-<li>Run <code>npm run docgen</code> if it&#39;s a docs page</li>
-<li>Deploy — the auth script handles the rest</li>
-</ol>
-<h2 id="element-level-visibility">Element-Level Visibility</h2>
-<p>Individual elements on a page can be shown or hidden based on the user&#39;s role. Add a <code>data-auth-role</code> attribute to any HTML element:</p>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-z6x1jmk9q" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-z6x1jmk9q" class="language-html">&lt;!-- Only visible to admin --&gt;
-&lt;div data-auth-role=&quot;admin&quot;&gt;
-  This content is only visible to administrators.
-&lt;/div&gt;
-
-&lt;!-- Visible to team and above --&gt;
-&lt;div data-auth-role=&quot;team&quot;&gt;
-  This content is visible to team members and admins.
-&lt;/div&gt;
-
-&lt;!-- Visible to everyone (no login needed) --&gt;
-&lt;div data-auth-role=&quot;public&quot;&gt;
-  This content is always visible.
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<p>Role inheritance applies: an admin can see elements marked <code>team</code> or <code>client</code>.</p>
-<h2 id="login-and-logout">Login and Logout</h2>
-<ul>
-<li><strong>Login</strong>: The Netlify Identity widget opens automatically on protected pages when no user is logged in. A login button is also available in the sidebar.</li>
-<li><strong>Logout</strong>: A logout button appears in the sidebar when logged in. Clicking it clears the session and redirects to the homepage.</li>
-</ul>
-<h2 id="security-notes">Security Notes</h2>
-<ul>
-<li>On the free Netlify tier, authentication is enforced <strong>client-side</strong>. The HTML is still served to all visitors, but the JavaScript hides content from unauthenticated or unauthorised users.</li>
-<li>This is appropriate for internal documentation. It is <strong>not</strong> suitable for highly sensitive data.</li>
-<li>For true server-side protection, upgrade to Netlify Pro and add role-based redirect rules in <code>netlify.toml</code>.</li>
-</ul>
-<h2 id="troubleshooting">Troubleshooting</h2>
-<h3 id="user-can39t-log-in">User can&#39;t log in</h3>
-<ul>
-<li>Ensure Identity is enabled in the Netlify Dashboard</li>
-<li>Check that the user has been invited and has accepted their invitation</li>
-<li>Verify the user&#39;s <code>app_metadata</code> contains a valid <code>roles</code> array</li>
-</ul>
-<h3 id="user-sees-quotaccess-deniedquot-unexpectedly">User sees &quot;Access Denied&quot; unexpectedly</h3>
-<ul>
-<li>Check the user&#39;s role in the Netlify Identity dashboard</li>
-<li>Verify the page&#39;s required role in <code>auth-config.js</code></li>
-<li>For client users, ensure <code>clientFolder</code> matches the folder path exactly</li>
-</ul>
-<h3 id="auth-not-working-locally">Auth not working locally</h3>
-<ul>
-<li>Netlify Identity requires a deployed Netlify site. Use <code>netlify dev</code> for local testing with Identity support.</li>
-</ul>
-
+                <article>
+                    <div class="docs-hero"><h1 class="docs-hero-title">Tools</h1></div><div class="docs-section"><div class="grid cols-3 gap-xl"><a href="../cpm-calculator/index.html" class="docs-card"><h3 class="docs-card-title">CPM Calculator</h3><p class="docs-card-subtitle" data-text-wrap="pretty">CPM & Spend Calculator</p></a><a href="../display-ad-preview/index.html" class="docs-card"><h3 class="docs-card-title">Display Ad Preview</h3><p class="docs-card-subtitle" data-text-wrap="pretty">Celtra ad preview sandbox</p></a></div></div>
                 </article>
             </main>
 
             <!-- Table of Contents -->
-            <aside class="docs-toc">
-      <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#access-levels" class="toc-link">Access Levels</a></li><li class="toc-item toc-level-2"><a href="#managing-users" class="toc-link">Managing Users</a></li><li class="toc-item toc-level-2"><a href="#page-access-configuration" class="toc-link">Page Access Configuration</a></li><li class="toc-item toc-level-2"><a href="#element-level-visibility" class="toc-link">Element-Level Visibility</a></li><li class="toc-item toc-level-2"><a href="#login-and-logout" class="toc-link">Login and Logout</a></li><li class="toc-item toc-level-2"><a href="#security-notes" class="toc-link">Security Notes</a></li><li class="toc-item toc-level-2"><a href="#troubleshooting" class="toc-link">Troubleshooting</a></li></ul></nav></div>
-    </aside>
+            
         </div>
 
         <!-- Page Feedback -->
@@ -275,26 +114,12 @@ access: &quot;client:blank,dianomi,acme&quot; # Any of these three clients
         </dialog>
 
         <!-- Page Navigation (Previous / Next) -->
-        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="../project/display-ad-preview.html" class="page-nav-link page-nav-prev" rel="prev">
-      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
-      <span class="page-nav-text">
-        <span class="page-nav-label">Previous</span>
-        <span class="page-nav-section">Project</span>
-        <h3 class="page-nav-title">Display Ad Preview</h3>
-      </span>
-    </a><a href="client-setup.html" class="page-nav-link page-nav-next" rel="next">
-      <span class="page-nav-text">
-        <span class="page-nav-label">Next</span>
         
-        <h3 class="page-nav-title">Client Setup</h3>
-      </span>
-      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
-    </a></div></nav>
 
         <!-- Footer -->
         <footer class="docs-footer">
             <div class="docs-footer-inner padding-global">
-                <p class="docs-footer-text">© 2026 By Default BrandOS</p>
+                <p class="docs-footer-text">Client Template — Powered by By Default BrandOS</p>
             </div>
         </footer>
     </div>
@@ -467,6 +292,45 @@ access: &quot;client:blank,dianomi,acme&quot; # Any of these three clients
         });
         btn.querySelector('button').addEventListener('click', function() {
           window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+
+    <!-- Sub-bar dropdown toggle -->
+    <script>
+      (function() {
+        var dropdowns = document.querySelectorAll('.subbar-dropdown');
+        dropdowns.forEach(function(dd) {
+          var toggle = dd.querySelector(':scope > .header-link');
+          if (!toggle) return;
+
+          toggle.addEventListener('click', function() {
+            var wasOpen = dd.classList.contains('is-open');
+            dropdowns.forEach(function(d) {
+              d.classList.remove('is-open');
+              var t = d.querySelector(':scope > .header-link');
+              if (t) t.setAttribute('aria-expanded', 'false');
+            });
+            if (!wasOpen) {
+              dd.classList.add('is-open');
+              toggle.setAttribute('aria-expanded', 'true');
+            }
+          });
+
+          document.addEventListener('click', function(e) {
+            if (!dd.contains(e.target)) {
+              dd.classList.remove('is-open');
+              toggle.setAttribute('aria-expanded', 'false');
+            }
+          });
+
+          document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && dd.classList.contains('is-open')) {
+              dd.classList.remove('is-open');
+              toggle.setAttribute('aria-expanded', 'false');
+              toggle.focus();
+            }
+          });
         });
       })();
     </script>

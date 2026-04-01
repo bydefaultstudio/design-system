@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,10 +27,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="../assets/css/markdown.css">
 
     <!-- Site styles -->
     <link rel="stylesheet" href="../assets/css/style.css">
+
+    
+
+    <!-- Early theme loader: apply cached client theme before first paint -->
+    <script>
+    (function(){try{if(document.documentElement.getAttribute('data-client-theme'))return;var c=localStorage.getItem('bdd-client-theme');if(!c)return;var p=c.split('|'),k=p[0],css=p[1],fonts=p[2];if(!k||!css)return;var b='../';var l=document.createElement('link');l.id='client-theme-css';l.rel='stylesheet';l.href=b+css;document.head.appendChild(l);document.documentElement.setAttribute('data-client-theme',k);if(fonts){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://fonts.googleapis.com';pc.id='client-theme-fonts-preconnect';document.head.appendChild(pc);var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';pc2.id='client-theme-fonts-preconnect2';document.head.appendChild(pc2);var fl=document.createElement('link');fl.id='client-theme-fonts';fl.rel='stylesheet';fl.href=fonts;document.head.appendChild(fl)}}catch(e){}})();
+    </script>
 
     <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
     <script>
@@ -62,9 +68,35 @@
       <div class="container-small">
         <h1>Color</h1>
         <p class="page-subtitle" data-text-wrap="pretty">Color tokens and semantic colors</p>
-        <div class="button-group justify-center">
-          <a href="../docs/color.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
-          
+        
+      </div>
+    </div>
+
+        <!-- Page Sub-bar (breadcrumbs + actions) -->
+        <div class="page-subbar">
+      <div class="page-subbar-inner">
+        <nav class="page-subbar-breadcrumbs" aria-label="Breadcrumb">
+          <a href="../design-system/index.html">Design System</a>
+          <span class="breadcrumb-separator">/</span>
+          <span>Color</span>
+        </nav>
+        <div class="page-subbar-actions">
+          <div class="subbar-dropdown">
+            <button class="header-link" type="button" aria-expanded="false" aria-label="Markdown source options">
+              <div class="icn-svg" data-icon="more-horizontal"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
+            </button>
+            <div class="subbar-dropdown-menu">
+              <a href="../docs/color.md" class="header-link" download>
+                <div class="icn-svg" data-icon="download"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
+                <span>Download .md file</span>
+              </a>
+              <div class="header-dropdown-divider"></div>
+              <a href="../docs/color.md" class="header-link" target="_blank" rel="noopener noreferrer">
+                <div class="icn-svg" data-icon="open-full"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21V3H9V5H7C5.89543 5 5 5.89543 5 7V17C5 18.1046 5.89543 19 7 19H17C18.1046 19 19 18.1046 19 17V15H21V21H3ZM9.7 15.7L8.3 14.3L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H12V3H21V12H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L9.7 15.7Z" fill="currentColor"/></svg></div>
+                <span>Open .md in new tab</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -73,7 +105,7 @@
         <div class="docs-content-grid padding-global">
             <!-- Main Content -->
             <main class="docs-main">
-                <article class="markdown-body">
+                <article>
                     <p>Color tokens are the foundation of the design system&#39;s color system. They define the shared, reusable color values that power both design and code. By standardising these decisions in one place, tokens keep the experience consistent, reduce duplication, and make global updates safe and fast.</p>
 <h2 id="primitive-colors">Primitive Colors</h2>
 <p>Primitive colors are the raw color values used as building blocks for all other color tokens. They can be used directly in layouts or components, but it&#39;s <strong>preferred to use semantic tokens</strong> instead.</p>
@@ -106,8 +138,8 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-tfk59hyzh" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-tfk59hyzh" class="language-css">:root {
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-f7co7kpu7" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-f7co7kpu7" class="language-css">:root {
   /* You can use default names or rename tokens to match your brand */
   --warm-black: #1a1a1a; /* Replace with your brand color */
   
@@ -204,8 +236,8 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-osdwx17wy" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-osdwx17wy" class="language-css">.shadow {
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-7es878i6a" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-7es878i6a" class="language-css">.shadow {
   box-shadow: 0 4px 6px var(--black-alpha-30);
 }
 </code></pre>
@@ -290,8 +322,8 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-8k664whuu" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-8k664whuu" class="language-css">.highlight {
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-1iqz3clab" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-1iqz3clab" class="language-css">.highlight {
   background-color: var(--white-alpha-30);
 }
 </code></pre>
@@ -362,8 +394,8 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-annwkgivn" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-annwkgivn" class="language-css">.text {
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-bnsjwp8go" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-bnsjwp8go" class="language-css">.text {
   color: var(--neutral-800);
 }
 </code></pre>
@@ -415,8 +447,8 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-8xmo6wz86" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-8xmo6wz86" class="language-css">h1 {
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-2ehjof0pt" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-2ehjof0pt" class="language-css">h1 {
   color: var(--text-primary);
 }
 </code></pre>
@@ -455,8 +487,8 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-f56yckoi0" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-f56yckoi0" class="language-css">.card {
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-v7wbr91i9" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-v7wbr91i9" class="language-css">.card {
   background-color: var(--background-plain);
 }
 </code></pre>
@@ -490,8 +522,8 @@
 <p><strong>Usage:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-wp10n4zo4" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-wp10n4zo4" class="language-css">.card {
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-wjnthdi4d" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-wjnthdi4d" class="language-css">.card {
   border-color: var(--border-primary);
 }
 </code></pre>
@@ -511,8 +543,8 @@
 <p>The toggle handles this automatically. When dark mode is active:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-gie9mzqk4" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-gie9mzqk4" class="language-html">&lt;html data-theme=&quot;dark&quot;&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-eja5rq079" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-eja5rq079" class="language-html">&lt;html data-theme=&quot;dark&quot;&gt;
 </code></pre>
       </div>
     
@@ -521,8 +553,8 @@
 <p>You can apply dark mode to any element, not just the page:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-azcdg764m" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-azcdg764m" class="language-html">&lt;!-- Dark card on a light page --&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-jrouia0g6" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-jrouia0g6" class="language-html">&lt;!-- Dark card on a light page --&gt;
 &lt;div data-theme=&quot;dark&quot; class=&quot;card&quot;&gt;
   &lt;p&gt;This section uses dark mode tokens&lt;/p&gt;
 &lt;/div&gt;
@@ -656,12 +688,12 @@
         </dialog>
 
         <!-- Page Navigation (Previous / Next) -->
-        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="overview.html" class="page-nav-link page-nav-prev" rel="prev">
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="design-system.html" class="page-nav-link page-nav-prev" rel="prev">
       <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
       <span class="page-nav-text">
         <span class="page-nav-label">Previous</span>
         
-        <h3 class="page-nav-title">Overview</h3>
+        <h3 class="page-nav-title">Design System</h3>
       </span>
     </a><a href="typography.html" class="page-nav-link page-nav-next" rel="next">
       <span class="page-nav-text">
@@ -848,6 +880,45 @@
         });
         btn.querySelector('button').addEventListener('click', function() {
           window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+
+    <!-- Sub-bar dropdown toggle -->
+    <script>
+      (function() {
+        var dropdowns = document.querySelectorAll('.subbar-dropdown');
+        dropdowns.forEach(function(dd) {
+          var toggle = dd.querySelector(':scope > .header-link');
+          if (!toggle) return;
+
+          toggle.addEventListener('click', function() {
+            var wasOpen = dd.classList.contains('is-open');
+            dropdowns.forEach(function(d) {
+              d.classList.remove('is-open');
+              var t = d.querySelector(':scope > .header-link');
+              if (t) t.setAttribute('aria-expanded', 'false');
+            });
+            if (!wasOpen) {
+              dd.classList.add('is-open');
+              toggle.setAttribute('aria-expanded', 'true');
+            }
+          });
+
+          document.addEventListener('click', function(e) {
+            if (!dd.contains(e.target)) {
+              dd.classList.remove('is-open');
+              toggle.setAttribute('aria-expanded', 'false');
+            }
+          });
+
+          document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && dd.classList.contains('is-open')) {
+              dd.classList.remove('is-open');
+              toggle.setAttribute('aria-expanded', 'false');
+              toggle.focus();
+            }
+          });
         });
       })();
     </script>

@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Folders - By Default Brand OS</title>
-    <meta name="description" content="Guide defining where files live and why in the project structure.">
+    <title>Tools — Overview - By Default Brand OS</title>
+    <meta name="description" content="Overview of all Tools pages.">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
     <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Folders - By Default Brand OS">
-    <meta property="og:description" content="Guide defining where files live and why in the project structure.">
+    <meta property="og:title" content="Tools — Overview - By Default Brand OS">
+    <meta property="og:description" content="Overview of all Tools pages.">
     <meta property="og:image" content="../assets/images/og/og-default.jpg">
     <meta property="og:type" content="website">
 
@@ -27,10 +27,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="../assets/css/markdown.css">
 
     <!-- Site styles -->
     <link rel="stylesheet" href="../assets/css/style.css">
+
+    
+
+    <!-- Early theme loader: apply cached client theme before first paint -->
+    <script>
+    (function(){try{if(document.documentElement.getAttribute('data-client-theme'))return;var c=localStorage.getItem('bdd-client-theme');if(!c)return;var p=c.split('|'),k=p[0],css=p[1],fonts=p[2];if(!k||!css)return;var b='../';var l=document.createElement('link');l.id='client-theme-css';l.rel='stylesheet';l.href=b+css;document.head.appendChild(l);document.documentElement.setAttribute('data-client-theme',k);if(fonts){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://fonts.googleapis.com';pc.id='client-theme-fonts-preconnect';document.head.appendChild(pc);var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';pc2.id='client-theme-fonts-preconnect2';document.head.appendChild(pc2);var fl=document.createElement('link');fl.id='client-theme-fonts';fl.rel='stylesheet';fl.href=fonts;document.head.appendChild(fl)}}catch(e){}})();
+    </script>
 
     <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
     <script>
@@ -58,134 +64,22 @@
 
     <div class="docs-main-area">
         <!-- Page Header (full width, outside grid) -->
-        <div class="page-header">
-      <div class="container-small">
-        <h1>Folders</h1>
-        <p class="page-subtitle" data-text-wrap="pretty">File organization and directory structure</p>
-        <div class="button-group justify-center">
-          <a href="../docs/folder-structure.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
-          
-        </div>
-      </div>
-    </div>
+        
+
+        <!-- Page Sub-bar (breadcrumbs + actions) -->
+        
 
         <!-- Main Content + TOC grid -->
         <div class="docs-content-grid padding-global">
             <!-- Main Content -->
             <main class="docs-main">
-                <article class="markdown-body">
-                    <p>This document defines where files live and why.</p>
-<p>Do not add new top-level folders without updating this file.</p>
-<h2 id="root-level">Root Level</h2>
-<ul>
-<li><code>index.html</code> → Generated docs hub (homepage)</li>
-<li><code>*.html</code> → Generated documentation pages (flat at root)</li>
-<li><code>README.md</code> → Project overview and getting started</li>
-<li><code>PROJECT_BRIEF.md</code> → Project brief and requirements</li>
-<li><code>PROJECT_PROGRESS.md</code> → Progress tracker for ongoing work</li>
-<li><code>CLAUDE.md</code> → Claude Code development rules (authoritative)</li>
-<li><code>assets/</code> → All project assets (CSS, fonts, icons, images, video)</li>
-<li><code>design-system/</code> → Design system framework (shared across projects)</li>
-<li><code>brand-book/</code> → Brand preview page (brand tokens now live in <code>assets/css/design-system.css</code>)</li>
-<li><code>templates/</code> → Component and page templates</li>
-<li><code>docs/</code> → Documentation markdown source and generator</li>
-<li><code>src/</code> → Source files (pages, JS)</li>
-<li><code>themes/</code> → Client theme overrides (one CSS file per client)</li>
-<li><code>svg-cleaner/</code> → SVG optimisation tool (CLI + browser UI)</li>
-</ul>
-<h2 id="assets">assets/</h2>
-<p>Single source of truth for all assets. No duplication.</p>
-<ul>
-<li><code>css/design-system.css</code> → Core design system framework (tokens, utilities, layout primitives)</li>
-<li><code>css/style.css</code> → Site layout and component styles</li>
-<li><code>css/markdown.css</code> → Markdown rendering styles (code blocks, tables, syntax highlighting)</li>
-<li><code>js/auth.js</code> → Authentication module (Netlify Identity)</li>
-<li><code>js/auth-config.js</code> → Auth role hierarchy and settings</li>
-<li><code>js/theme-config.js</code> → Theme registry (maps clientFolder → CSS path + Google Fonts URL)</li>
-<li><code>js/theme-loader.js</code> → Dynamic theme loading/unloading module</li>
-<li><code>fonts/</code> → Web fonts</li>
-<li><code>icons/</code> → Favicons and app icons</li>
-<li><code>images/</code> → All images, organised by type:<ul>
-<li><code>logos/</code> → Site and publication logos</li>
-<li><code>og/</code> → Open Graph social sharing images</li>
-<li><code>illustrations/</code> → Decorative and UI illustrations</li>
-<li><code>svg-icons/</code> → SVG component icons</li>
-</ul>
-</li>
-<li><code>video/</code> → Video assets</li>
-</ul>
-<h2 id="design-system">design-system/</h2>
-<p>The design system styleguide preview.</p>
-<ul>
-<li><code>index.html</code> → Styleguide preview (renders with default tokens)</li>
-</ul>
-<p>The design system CSS (<code>assets/css/design-system.css</code>) lives in the assets folder alongside other stylesheets.</p>
-<h2 id="brand-book">brand-book/</h2>
-<p>Brand preview page. Brand tokens now live directly in <code>assets/css/design-system.css</code>.</p>
-<ul>
-<li><code>index.html</code> → Brand preview page (logo, palette, typography, icons)</li>
-</ul>
-<h2 id="themes">themes/</h2>
-<p>Client theme overrides. Each file overrides design system semantic tokens and the neutral colour scale for a specific client brand. Themes are loaded dynamically by <code>theme-loader.js</code> based on the user&#39;s auth identity.</p>
-<ul>
-<li><code>theme-template.css</code> → Starter template (copy and customise per client)</li>
-</ul>
-<p>Register themes in <code>assets/js/theme-config.js</code>. See <a href="setup.md#client-theming">Setup — Client Theming</a> for usage.</p>
-<h2 id="src">src/</h2>
-<h3 id="srcjs">src/js/</h3>
-<ul>
-<li>JavaScript modules and scripts</li>
-</ul>
-<h3 id="srcpages">src/pages/</h3>
-<ul>
-<li>HTML page files</li>
-</ul>
-<h2 id="templates">templates/</h2>
-<ul>
-<li><code>component-template.js</code> → JavaScript component template</li>
-<li><code>component-template.css</code> → CSS component template</li>
-<li><code>page-template.html</code> → HTML page template</li>
-</ul>
-<h2 id="docs">docs/</h2>
-<ul>
-<li>Markdown documentation files (source of truth for generated HTML)</li>
-<li><code>docs.config.js</code> → Project-specific doc settings (fonts, footer, description) — stays when generator is upgraded</li>
-<li><code>generator/</code> → Documentation site engine (replaceable — drop in a new version to upgrade)<ul>
-<li><code>template.html</code> → HTML template used for generation</li>
-<li><code>generate-docs.js</code> → Generator script (outputs HTML to project root)</li>
-<li><code>VERSION</code> → Current engine version</li>
-</ul>
-</li>
-</ul>
-<h2 id="css-loading-order">CSS Loading Order</h2>
-<p>The generated HTML loads CSS in this order:</p>
-<ol>
-<li><code>assets/css/design-system.css</code> → Brand tokens, framework tokens, utilities, layout primitives</li>
-<li><code>themes/client-name.css</code> → Client theme overrides (optional)</li>
-<li><code>assets/css/markdown.css</code> → Markdown content rendering</li>
-<li><code>assets/css/style.css</code> → Site layout and components</li>
-</ol>
-<p>New site-specific CSS goes in <code>assets/css/style.css</code>.</p>
-<h2 id="svg-cleaner">svg-cleaner/</h2>
-<p>SVG optimisation tool for cleaning raw SVGs before adding them to the design system.</p>
-<ul>
-<li><code>svg-clean.js</code> → CLI tool (pipe SVG via stdin, get cleaned output)</li>
-<li><code>index.html</code> → Browser-based SVG cleaner UI</li>
-</ul>
-<h2 id="notes">Notes</h2>
-<p>Empty folders are tracked using <code>.gitkeep</code> to preserve structure in the template.</p>
-<h3 id="favicons">Favicons</h3>
-<p>Favicons live in <code>assets/icons/</code>.</p>
-<p>They are referenced directly in the HTML <code>&lt;head&gt;</code> and are treated as brand assets, not part of the design system.</p>
-
+                <article>
+                    <div class="docs-hero"><h1 class="docs-hero-title">Tools</h1></div><div class="docs-section"><div class="grid cols-3 gap-xl"><a href="cpm-calculator.html" class="docs-card" data-access="admin"><h3 class="docs-card-title">CPM Calculator</h3><p class="docs-card-subtitle" data-text-wrap="pretty">How to use the CPM & Spend Calculator</p></a><a href="svg-cleaner.html" class="docs-card" data-access="admin"><h3 class="docs-card-title">SVG Cleaner</h3><p class="docs-card-subtitle" data-text-wrap="pretty">How to use the SVG Cleaner tool</p></a><a href="display-ad-preview.html" class="docs-card" data-access="admin"><h3 class="docs-card-title">Display Ad Preview</h3><p class="docs-card-subtitle" data-text-wrap="pretty">How to use the Display Ad Preview tool</p></a></div></div>
                 </article>
             </main>
 
             <!-- Table of Contents -->
-            <aside class="docs-toc">
-      <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#root-level" class="toc-link">Root Level</a></li><li class="toc-item toc-level-2"><a href="#assets" class="toc-link">assets/</a></li><li class="toc-item toc-level-2"><a href="#design-system" class="toc-link">design-system/</a></li><li class="toc-item toc-level-2"><a href="#brand-book" class="toc-link">brand-book/</a></li><li class="toc-item toc-level-2"><a href="#themes" class="toc-link">themes/</a></li><li class="toc-item toc-level-2"><a href="#src" class="toc-link">src/</a></li><li class="toc-item toc-level-2"><a href="#templates" class="toc-link">templates/</a></li><li class="toc-item toc-level-2"><a href="#docs" class="toc-link">docs/</a></li><li class="toc-item toc-level-2"><a href="#css-loading-order" class="toc-link">CSS Loading Order</a></li><li class="toc-item toc-level-2"><a href="#svg-cleaner" class="toc-link">svg-cleaner/</a></li><li class="toc-item toc-level-2"><a href="#notes" class="toc-link">Notes</a></li></ul></nav></div>
-    </aside>
+            
         </div>
 
         <!-- Page Feedback -->
@@ -219,21 +113,7 @@
         </dialog>
 
         <!-- Page Navigation (Previous / Next) -->
-        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="setup.html" class="page-nav-link page-nav-prev" rel="prev">
-      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
-      <span class="page-nav-text">
-        <span class="page-nav-label">Previous</span>
         
-        <h3 class="page-nav-title">Setup</h3>
-      </span>
-    </a><a href="upgrading-docs.html" class="page-nav-link page-nav-next" rel="next">
-      <span class="page-nav-text">
-        <span class="page-nav-label">Next</span>
-        
-        <h3 class="page-nav-title">Upgrading the Docs Engine</h3>
-      </span>
-      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
-    </a></div></nav>
 
         <!-- Footer -->
         <footer class="docs-footer">
@@ -411,6 +291,45 @@
         });
         btn.querySelector('button').addEventListener('click', function() {
           window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+
+    <!-- Sub-bar dropdown toggle -->
+    <script>
+      (function() {
+        var dropdowns = document.querySelectorAll('.subbar-dropdown');
+        dropdowns.forEach(function(dd) {
+          var toggle = dd.querySelector(':scope > .header-link');
+          if (!toggle) return;
+
+          toggle.addEventListener('click', function() {
+            var wasOpen = dd.classList.contains('is-open');
+            dropdowns.forEach(function(d) {
+              d.classList.remove('is-open');
+              var t = d.querySelector(':scope > .header-link');
+              if (t) t.setAttribute('aria-expanded', 'false');
+            });
+            if (!wasOpen) {
+              dd.classList.add('is-open');
+              toggle.setAttribute('aria-expanded', 'true');
+            }
+          });
+
+          document.addEventListener('click', function(e) {
+            if (!dd.contains(e.target)) {
+              dd.classList.remove('is-open');
+              toggle.setAttribute('aria-expanded', 'false');
+            }
+          });
+
+          document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && dd.classList.contains('is-open')) {
+              dd.classList.remove('is-open');
+              toggle.setAttribute('aria-expanded', 'false');
+              toggle.focus();
+            }
+          });
         });
       })();
     </script>

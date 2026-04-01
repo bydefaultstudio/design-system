@@ -2,9 +2,9 @@
 title: "Display Ad Preview"
 subtitle: "How to use the Display Ad Preview tool"
 description: "Generate Celtra ad preview sandbox URLs with device simulation and publisher context."
-section: "Project"
-order: 12
-access: "team"
+section: "Tools"
+order: 3
+access: "admin"
 toolUrl: "../display-ad-preview/index.html"
 ---
 

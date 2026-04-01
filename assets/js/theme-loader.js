@@ -15,6 +15,7 @@
   var THEME_CSS_ID = 'client-theme-css';
   var THEME_FONTS_ID = 'client-theme-fonts';
   var STORAGE_KEY = 'admin-theme-preview';
+  var CACHE_KEY = 'bdd-client-theme';
 
   //------- Path Resolution -------//
 
@@ -25,21 +26,38 @@
 
   //------- Theme Loading -------//
 
-  function loadTheme(themeKey) {
-    if (typeof THEME_CONFIG === 'undefined' || !THEME_CONFIG.themes) return;
+  function loadTheme(themeKey, onReady) {
+    if (typeof THEME_CONFIG === 'undefined' || !THEME_CONFIG.themes) {
+      if (onReady) onReady();
+      return;
+    }
 
     var theme = THEME_CONFIG.themes[themeKey];
     if (!theme) {
       console.warn('[Theme] No theme found for key:', themeKey);
+      if (onReady) onReady();
       return;
     }
 
     // Skip if this theme is already loaded
     var currentTheme = document.documentElement.getAttribute('data-client-theme');
-    if (currentTheme === themeKey) return;
+    if (currentTheme === themeKey) {
+      // Theme already active (e.g. early-loaded from cache) — check if CSS finished loading
+      var existingLink = document.getElementById(THEME_CSS_ID);
+      if (existingLink && onReady) {
+        if (existingLink.sheet) { onReady(); }
+        else {
+          existingLink.addEventListener('load', onReady);
+          existingLink.addEventListener('error', onReady);
+        }
+      } else if (onReady) {
+        onReady();
+      }
+      return;
+    }
 
-    // Remove any existing theme first
-    unloadTheme();
+    // Remove any existing theme first (but preserve cache — we'll update it below)
+    unloadTheme(true);
 
     var basePath = getBasePath();
 
@@ -48,6 +66,10 @@
     link.id = THEME_CSS_ID;
     link.rel = 'stylesheet';
     link.href = basePath + theme.css;
+    if (onReady) {
+      link.addEventListener('load', onReady);
+      link.addEventListener('error', onReady);
+    }
     document.head.appendChild(link);
 
     // Inject Google Fonts if specified
@@ -76,10 +98,17 @@
     document.documentElement.setAttribute('data-client-theme', themeKey);
     setHomeLink(themeKey);
     setLogo(themeKey);
+
+    // Cache theme for early-load on next page visit
+    try {
+      var cacheValue = themeKey + '|' + theme.css + '|' + (theme.fonts || '');
+      localStorage.setItem(CACHE_KEY, cacheValue);
+    } catch (e) {}
+
     console.log('[Theme] Loaded:', theme.label);
   }
 
-  function unloadTheme() {
+  function unloadTheme(preserveCache) {
     var ids = [THEME_CSS_ID, THEME_FONTS_ID, THEME_FONTS_ID + '-preconnect', THEME_FONTS_ID + '-preconnect2'];
     ids.forEach(function (id) {
       var el = document.getElementById(id);
@@ -88,6 +117,11 @@
     document.documentElement.removeAttribute('data-client-theme');
     setHomeLink(null);
     setLogo(null);
+
+    // Clear cached theme unless we're about to load a new one
+    if (!preserveCache) {
+      try { localStorage.removeItem(CACHE_KEY); } catch (e) {}
+    }
   }
 
   function getAvailableThemes() {
@@ -133,13 +167,21 @@
 
   //------- Sidebar Nav Sections -------//
 
-  var clientNavInjected = false;
-
   // Toggle icon SVG (matches the nav.js pattern)
   var TOGGLE_ICON = '<span class="nav-toggle-icon">'
     + '<svg width="6" height="6" viewBox="0 0 6 6" fill="none">'
     + '<path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>'
     + '</svg></span>';
+
+  // Nav icon SVGs (matches nav.js icon pattern)
+  var ICON_HOME = '<div class="icn-svg" data-icon="home"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V10L13.2 6.4C12.4889 5.86667 11.5111 5.86667 10.8 6.4L6 10V17ZM4 21V9L12 3L20 9V21H4Z" fill="currentColor"/></svg></div>';
+  var ICON_BRAND_BOOK = '<div class="icn-svg" data-icon="brand-book"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><g clip-path="url(#clip0_14540_880)"><path d="M18 6.99953V5.18605L7.45312 6.99953H18ZM3 18.4644L5.30273 19.9995H21V8.99953H5.7998L3 7.83351V18.4644ZM6.91211 5.06203L12 4.188V2.97121L6.91211 5.06203ZM23 6.99953V21.9995H4.69727L1 19.5347V5.32961L14 -0.0121918V3.84425L20 2.813V6.99953H23Z" fill="currentColor"/></g><defs><clipPath id="clip0_14540_880"><rect width="100%" height="100%" fill="white"/></clipPath></defs></svg></div>';
+  var ICON_DOCS = '<div class="icn-svg" data-icon="docs"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 21V3H22V21H2ZM4 17C4 18.1046 4.89543 19 6 19H18C19.1046 19 20 18.1046 20 17V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V17ZM6 17H15V15H6V17ZM6 13H18V11H6V13ZM6 9H18V7H6V9Z" fill="currentColor"/></svg></div>';
+  var ICON_TOOLS = '<div class="icn-svg" data-icon="tools"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10.9013 18.1151L16.0763 11.9151H12.0763L12.8013 6.2401L8.17632 12.9151H11.6513L10.9013 18.1151ZM8.35132 21.9151L9.35132 14.9151H4.35132L13.3513 1.9151H15.3513L14.3513 9.9151H20.3513L10.3513 21.9151H8.35132Z" fill="currentColor"/></svg></div>';
+
+  // Icon maps for client sidebar
+  var SECTION_ICONS = { 'Docs': ICON_DOCS, 'Tools': ICON_TOOLS };
+  var LINK_ICONS = { 'Home': ICON_HOME, 'Brand Book': ICON_BRAND_BOOK };
 
   /**
    * Group pages by their section key, preserving order of first appearance.
@@ -188,15 +230,33 @@
    * @param {HTMLElement[]} linkItems — array of <li> elements
    * @param {string} clientKey — data-client-nav attribute value
    */
-  function buildNavSection(label, linkItems, clientKey) {
+  function buildNavSection(label, linkItems, clientKey, iconHref) {
     var details = document.createElement('details');
     details.className = 'nav-section';
     if (clientKey) details.setAttribute('data-client-nav', clientKey);
 
     var summary = document.createElement('summary');
     summary.className = 'nav-section-toggle';
-    summary.innerHTML = '<span>' + label + '</span>' + TOGGLE_ICON;
+    var rawIcon = SECTION_ICONS[label] || '';
+
+    // Wrap icon in a link if an overview href is provided
+    var iconHtml = '';
+    if (rawIcon && iconHref) {
+      iconHtml = '<a href="' + iconHref + '" class="nav-section-icon">' + rawIcon + '</a>';
+    } else {
+      iconHtml = rawIcon;
+    }
+
+    summary.innerHTML = iconHtml + '<span>' + label + '</span>' + TOGGLE_ICON;
     details.appendChild(summary);
+
+    // Stop propagation on icon link to prevent details toggle
+    var iconLink = summary.querySelector('.nav-section-icon');
+    if (iconLink) {
+      iconLink.addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
+    }
 
     var ul = document.createElement('ul');
     ul.className = 'nav-list';
@@ -235,61 +295,67 @@
    * @param {string} basePath — base URL prefix
    * @param {string} fallbackLabel — label for pages without a section key
    */
-  function injectClientSections(container, theme, clientKey, basePath, fallbackLabel) {
-    var pages = theme.pages || [];
+  function injectClientSections(container, theme, clientKey, basePath) {
+    // Exclude Tools-section pages — tools are handled separately from the tools array
+    var pages = (theme.pages || []).filter(function (p) { return p.section !== 'Tools'; });
     var grouped = groupPagesBySection(pages);
 
     grouped.order.forEach(function (sectionName) {
       var sectionPages = grouped.groups[sectionName];
-      var linkItems = sectionPages.map(function (page) {
-        return buildNavLink(basePath + page.href, page.title);
-      });
 
-      var label = sectionName || fallbackLabel;
-      container.appendChild(buildNavSection(label, linkItems, clientKey));
+      // Pages without a section key render as top-level icon links
+      if (!sectionName) {
+        sectionPages.forEach(function (page) {
+          var a = document.createElement('a');
+          a.href = basePath + page.href;
+          a.className = 'nav-link' + (page.title === 'Home' ? ' nav-home' : '');
+          var iconHtml = LINK_ICONS[page.title] || '';
+          a.innerHTML = iconHtml + '<span>' + page.title + '</span>';
+
+          // Active link detection
+          var currentPath = window.location.pathname;
+          var resolvedPath = new URL(a.href, window.location.href).pathname;
+          if (currentPath === resolvedPath) {
+            a.classList.add('nav-link-active');
+            a.setAttribute('aria-current', 'page');
+          }
+
+          container.appendChild(a);
+        });
+      } else {
+        // Find overview page href for this section
+        var overviewPage = sectionPages.find(function (p) { return p.title === 'Overview'; });
+        var iconHref = overviewPage ? basePath + overviewPage.href : '';
+
+        // Sort so Overview is always first
+        var sortedPages = sectionPages.slice().sort(function (a, b) {
+          if (a.title === 'Overview') return -1;
+          if (b.title === 'Overview') return 1;
+          return 0;
+        });
+        var linkItems = sortedPages.map(function (page) {
+          return buildNavLink(basePath + page.href, page.title);
+        });
+        container.appendChild(buildNavSection(sectionName, linkItems, clientKey, iconHref));
+      }
     });
 
     // Tools section (auto-generated from tools array)
     var toolLinks = buildToolLinks(theme.tools, basePath);
     if (toolLinks.length > 0) {
-      container.appendChild(buildNavSection('Tools', toolLinks, clientKey));
+      // Find tools overview in pages
+      var allPages = theme.pages || [];
+      var toolsOverview = allPages.find(function (p) { return p.title === 'Overview' && p.section === 'Tools'; });
+      var toolsIconHref = toolsOverview ? basePath + toolsOverview.href : '';
+
+      // Prepend overview link to tools
+      if (toolsOverview) {
+        toolLinks.unshift(buildNavLink(basePath + toolsOverview.href, 'Overview'));
+      }
+      container.appendChild(buildNavSection('Tools', toolLinks, clientKey, toolsIconHref));
     }
   }
 
-  /**
-   * Inject all client nav sections with dividers (for admin/team users).
-   */
-  function injectClientNavSections() {
-    if (clientNavInjected) return;
-    if (typeof THEME_CONFIG === 'undefined' || !THEME_CONFIG.themes) return;
-
-    var sidebarContent = document.querySelector('.site-sidebar-content');
-    if (!sidebarContent) return;
-
-    var basePath = getBasePath();
-    var themeKeys = Object.keys(THEME_CONFIG.themes);
-    if (themeKeys.length === 0) return;
-
-    themeKeys.forEach(function (key) {
-      var theme = THEME_CONFIG.themes[key];
-
-      // Divider line
-      var divider = document.createElement('div');
-      divider.className = 'nav-divider';
-      sidebarContent.appendChild(divider);
-
-      // Client name label
-      var label = document.createElement('div');
-      label.className = 'nav-client-label';
-      label.textContent = theme.label;
-      sidebarContent.appendChild(label);
-
-      // Inject grouped sections (pages without section key use client label)
-      injectClientSections(sidebarContent, theme, key, basePath, theme.label);
-    });
-
-    clientNavInjected = true;
-  }
 
   /**
    * Inject a single client's nav sections (for client users).
@@ -303,16 +369,22 @@
     var sidebarContent = document.querySelector('.site-sidebar-content');
     if (!sidebarContent) return;
 
+    // Clear the team sidebar — client sees only their own nav
+    sidebarContent.innerHTML = '';
+
     var basePath = getBasePath();
 
-    // Inject grouped sections (pages without section key use generic label)
-    injectClientSections(sidebarContent, theme, clientFolder, basePath, 'Pages');
+    injectClientSections(sidebarContent, theme, clientFolder, basePath);
   }
 
   //------- Auth Integration -------//
 
-  function initThemeForUser(user) {
-    if (!user) return;
+  function initThemeForUser(user, onReady) {
+    if (!user) {
+      unloadTheme();
+      if (onReady) onReady();
+      return;
+    }
 
     var metadata = user.app_metadata || {};
     var roles = metadata.roles || [];
@@ -339,26 +411,33 @@
         setLogo(clientFolder);
         injectSingleClientNavSection(clientFolder);
         if (THEME_CONFIG && THEME_CONFIG.themes[clientFolder]) {
-          loadTheme(clientFolder);
+          loadTheme(clientFolder, onReady);
+          return;
         }
-        return;
       }
-    }
-
-    // Admin users: inject client nav sections + check for persisted theme preview
-    if (effectiveRole === 'admin') {
-      injectClientNavSections();
-      var savedTheme = sessionStorage.getItem(STORAGE_KEY);
-      if (savedTheme && THEME_CONFIG && THEME_CONFIG.themes[savedTheme]) {
-        loadTheme(savedTheme);
-      }
+      if (onReady) onReady();
       return;
     }
 
-    // Team users: inject client nav sections, no theme
-    if (effectiveRole === 'team') {
-      injectClientNavSections();
+    // Admin users: check for persisted theme preview
+    if (effectiveRole === 'admin') {
+      var savedTheme = sessionStorage.getItem(STORAGE_KEY);
+      if (savedTheme && THEME_CONFIG && THEME_CONFIG.themes[savedTheme]) {
+        loadTheme(savedTheme, onReady);
+        return;
+      }
+      // No preview theme — clear any cached/early-loaded theme
+      unloadTheme();
+      if (onReady) onReady();
+      return;
     }
+
+    // Team users: no theme, no client nav
+    if (effectiveRole === 'team') {
+      unloadTheme();
+    }
+
+    if (onReady) onReady();
   }
 
   //------- Public API -------//

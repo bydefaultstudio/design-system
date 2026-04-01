@@ -2,9 +2,10 @@
 title: "Setup"
 subtitle: "Getting started with this template"
 description: "Guide to customizing this project template for your new project."
-section: "Project"
-order: 1
-access: "team"
+section: "Docs"
+subsection: "Dev"
+order: 20
+access: "admin"
 ---
 
 This template provides a solid foundation for new projects. Follow these steps to customize it for your project.
@@ -107,9 +108,26 @@ The theme system uses the auth module to determine which theme to load:
 
 ```
 assets/css/design-system.css →  Brand primitives + semantic tokens
-themes/client.css           →  Overrides semantic tokens + neutrals (injected by JS)
 style.css                   →  Uses semantic tokens (gets themed values)
+themes/client.css           →  Overrides tokens + component styles (must load last)
 ```
+
+### Stylesheet load order
+
+Theme CSS **must always load after** all other stylesheets (`design-system.css`, `style.css`). This ensures theme overrides win via the CSS cascade — no `!important` needed.
+
+```html
+<!-- 1. Design System Framework -->
+<link rel="stylesheet" href="../assets/css/design-system.css" />
+<!-- 2. Google Fonts -->
+...
+<!-- 3. Site styles (includes markdown content rendering) -->
+<link rel="stylesheet" href="../assets/css/style.css">
+<!-- 4. Client Theme Override (must load last to override base styles) -->
+<link rel="stylesheet" href="theme.css">
+```
+
+When overriding component styles (not just tokens), match the specificity of the base selector. For example, `style.css` uses `.svg-logo.nav-logo` — so the theme should use `.svg-logo.nav-logo`, not just `.nav-logo`.
 
 ### Creating a theme
 
