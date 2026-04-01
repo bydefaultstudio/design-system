@@ -43,12 +43,18 @@
   
   <!-- Design System Framework -->
   <link rel="stylesheet" href="../assets/css/design-system.css" />
-  <!-- Client Theme: uncomment and update path to activate -->
-  <!-- <link rel="stylesheet" href="../themes/theme-template.css" /> -->
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Client Theme Override (must load last to override base styles) -->
+  <!-- <link rel="stylesheet" href="theme.css" /> -->
+
+  <!-- Early theme loader: apply cached client theme before first paint -->
+  <script>
+  (function(){try{if(document.documentElement.getAttribute('data-client-theme'))return;var c=localStorage.getItem('bdd-client-theme');if(!c)return;var p=c.split('|'),k=p[0],css=p[1],fonts=p[2];if(!k||!css)return;var b='../';var l=document.createElement('link');l.id='client-theme-css';l.rel='stylesheet';l.href=b+css;document.head.appendChild(l);document.documentElement.setAttribute('data-client-theme',k);if(fonts){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://fonts.googleapis.com';pc.id='client-theme-fonts-preconnect';document.head.appendChild(pc);var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';pc2.id='client-theme-fonts-preconnect2';document.head.appendChild(pc2);var fl=document.createElement('link');fl.id='client-theme-fonts';fl.rel='stylesheet';fl.href=fonts;document.head.appendChild(fl)}}catch(e){}})();
+  </script>
 
   <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
   <script>
@@ -77,6 +83,44 @@
         </div>
       </section>
     </div>
+
+    <!-- Page Feedback -->
+    <section class="page-feedback" aria-label="Page feedback">
+      <div class="page-feedback-inner padding-global">
+        <h3 class="page-feedback-prompt">Was this page helpful?</h3>
+        <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
+        <div class="button-group">
+          <button class="button is-small" data-feedback="yes" type="button">Yes</button>
+          <button class="button is-small is-outline is-faded" data-feedback="no" type="button">No</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feedback Modal -->
+    <dialog class="feedback-modal" aria-label="Send feedback">
+      <div class="feedback-modal-content">
+        <h3 class="feedback-modal-title">Send feedback</h3>
+        <p class="feedback-modal-subtitle"></p>
+        <form class="feedback-form" name="page-feedback" data-netlify="true">
+          <input type="hidden" name="form-name" value="page-feedback">
+          <input type="hidden" name="sentiment" value="">
+          <input type="hidden" name="page" value="">
+          <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
+          <div class="button-group feedback-modal-actions">
+            <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>
+            <button type="submit" class="button is-small">Send feedback</button>
+          </div>
+        </form>
+      </div>
+    </dialog>
+
+    <!-- Footer -->
+    <footer class="docs-footer">
+      <div class="docs-footer-inner padding-global">
+        <p class="docs-footer-text">&copy; 2026 By Default BrandOS</p>
+      </div>
+    </footer>
+
   </div>
 
   <!-- Site Navigation -->
@@ -88,6 +132,8 @@
   <script src="../assets/js/theme-loader.js"></script>
   <!-- Auth (must load after theme scripts) -->
   <script src="../assets/js/auth.js"></script>
+  <!-- Feedback -->
+  <script src="../assets/js/feedback.js"></script>
 
 </body>
 </html>

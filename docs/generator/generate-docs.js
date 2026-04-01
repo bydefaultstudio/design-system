@@ -38,22 +38,26 @@ const GOOGLE_FONTS_HTML = PROJECT_CONFIG.googleFontsUrl
 const SECTION_FOLDERS = {
   'Brand Book': 'brand',
   'Design System': 'design-system',
-  'Code': 'code',
-  'Content': 'content',
-  'Admin': 'admin',
-  'Project': 'project'
+  'Docs': 'docs',
+  'Tools': 'tools'
 };
 
 // Special filename overrides for files that don't follow the prefix-strip pattern
 const FILENAME_OVERRIDES = {
-  'calculator-docs.md': { folder: 'project', name: 'cpm-calculator.html' },
-  'svg-cleaner-docs.md': { folder: 'project', name: 'svg-cleaner.html' },
-  'display-ad-preview-docs.md': { folder: 'project', name: 'display-ad-preview.html' },
-  'css-code-struture.md': { folder: 'code', name: 'css.html' },
-  'js-code-structure.md': { folder: 'code', name: 'javascript.html' },
-  'design-system-overview.md': { folder: 'design-system', name: 'overview.html' },
-  'markdown-style.md': { folder: 'design-system', name: 'markdown-style.html' },
-  'seo-best-practices.md': { folder: 'content', name: 'seo-best-practices.html' },
+  'calculator-docs.md': { folder: 'tools', name: 'cpm-calculator.html' },
+  'svg-cleaner-docs.md': { folder: 'tools', name: 'svg-cleaner.html' },
+  'display-ad-preview-docs.md': { folder: 'tools', name: 'display-ad-preview.html' },
+  'css-code-struture.md': { folder: 'docs', name: 'css.html' },
+  'js-code-structure.md': { folder: 'docs', name: 'javascript.html' },
+  'design-system-overview.md': { folder: 'design-system', name: 'design-system.html' },
+  'markdown-style.md': { folder: 'docs', name: 'markdown-style.html' },
+  'seo-best-practices.md': { folder: 'docs', name: 'seo-best-practices.html' },
+  'access-control.md': { folder: 'docs', name: 'access-control.html' },
+  'client-setup.md': { folder: 'docs', name: 'client-setup.html' },
+  'setup.md': { folder: 'docs', name: 'setup.html' },
+  'folder-structure.md': { folder: 'docs', name: 'folder-structure.html' },
+  'upgrading-docs.md': { folder: 'docs', name: 'upgrading-docs.html' },
+  'login-scenarios.md': { folder: 'docs', name: 'login-scenarios.html' },
 };
 
 /**
@@ -233,7 +237,7 @@ function generateTableOfContents(html) {
 function generateIndexPage(template, filesBySection) {
   let cards = '';
 
-  const sectionOrder = ['Brand Book', 'Design System', 'Code', 'Content', 'Project', 'Admin'];
+  const sectionOrder = ['Brand Book', 'Design System', 'Docs', 'Tools'];
   const hiddenSections = [];
   const sortedSections = Object.keys(filesBySection)
     .filter(s => !hiddenSections.includes(s))
@@ -256,8 +260,8 @@ function generateIndexPage(template, filesBySection) {
       return a.title.localeCompare(b.title);
     });
 
-    // Only Admin section gets section-level access; others rely on per-card filtering
-    const sectionAccessAttr = section === 'Admin' ? ' data-access="admin"' : '';
+    // Per-card filtering handles access control
+    const sectionAccessAttr = '';
 
     cards += `<div class="docs-section"${sectionAccessAttr}>
       <h2 class="eyebrow">${section}</h2>
@@ -277,7 +281,7 @@ function generateIndexPage(template, filesBySection) {
     // Add Visual Identity card at the end of the Brand Book section
     if (section === 'Brand Book') {
       cards += `
-        <a href="brand/index.html" class="docs-card">
+        <a href="brand/visual-identity.html" class="docs-card">
           <h3 class="docs-card-title">Visual Identity</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Visual brand identity — logo, palette, typography, and icons</p>
         </a>
@@ -287,7 +291,7 @@ function generateIndexPage(template, filesBySection) {
     // Add Style Guide card at the end of the Design System section
     if (section === 'Design System') {
       cards += `
-        <a href="design-system/index.html" class="docs-card">
+        <a href="design-system/style-guide.html" class="docs-card">
           <h3 class="docs-card-title">Style Guide</h3>
           <p class="docs-card-subtitle" data-text-wrap="pretty">Live preview of all design system tokens and components</p>
         </a>
@@ -313,10 +317,13 @@ function generateIndexPage(template, filesBySection) {
     .replaceAll('{{PAGE_TITLE}}', 'Home')
     .replaceAll('{{META_DESCRIPTION}}', PROJECT_CONFIG.indexDescription)
     .replace('{{PAGE_HEADER}}', '') // Index page doesn't need a header
+    .replace('{{PAGE_SUBBAR}}', '')
     .replace('{{PAGE_CONTENT}}', indexContent)
     .replace('{{TOC_SECTION}}', '')
     .replace('{{DESIGN_SYSTEM_PATH}}', PROJECT_CONFIG.designSystemPath)
     .replace('{{BRAND_CSS}}', BRAND_CSS_HTML)
+    .replace('{{CLIENT_THEME_CSS}}', '')
+    .replace('{{CLIENT_THEME_ATTR}}', '')
     .replace('{{GOOGLE_FONTS}}', GOOGLE_FONTS_HTML)
     .replace('{{PAGE_NAV}}', '')
     .replace('{{FOOTER_TEXT}}', PROJECT_CONFIG.footerText)
@@ -325,10 +332,108 @@ function generateIndexPage(template, filesBySection) {
 }
 
 /**
+ * Generate a section overview page with card grid
+ */
+function generateSectionIndexPage(section, template, files) {
+  const sectionFolder = SECTION_FOLDERS[section];
+  if (!sectionFolder) return null;
+
+  // Sort files by order
+  const sorted = [...files].sort((a, b) => {
+    const orderA = a.frontmatter.order || 999;
+    const orderB = b.frontmatter.order || 999;
+    if (orderA !== orderB) return orderA - orderB;
+    return a.title.localeCompare(b.title);
+  });
+
+  let cards = '';
+
+  // Docs section: group by subsection
+  if (section === 'Docs') {
+    const subsectionOrder = ['Code Standards', 'Dev', 'Site Management'];
+    const ungrouped = sorted.filter(f => !f.frontmatter.subsection);
+    const grouped = {};
+    for (const file of sorted) {
+      const sub = file.frontmatter.subsection;
+      if (sub) {
+        if (!grouped[sub]) grouped[sub] = [];
+        grouped[sub].push(file);
+      }
+    }
+
+    // Ungrouped first
+    if (ungrouped.length > 0) {
+      cards += `<div class="docs-section"><div class="grid cols-3 gap-xl">`;
+      for (const file of ungrouped) {
+        const cardAccess = file.frontmatter.access || 'team';
+        cards += `<a href="${file.htmlName}" class="docs-card" data-access="${cardAccess}"><h3 class="docs-card-title">${file.title}</h3>${file.frontmatter.subtitle ? `<p class="docs-card-subtitle" data-text-wrap="pretty">${file.frontmatter.subtitle}</p>` : ''}</a>`;
+      }
+      cards += `</div></div>`;
+    }
+
+    // Subsections in order
+    const subs = Object.keys(grouped).sort((a, b) => {
+      const idxA = subsectionOrder.indexOf(a);
+      const idxB = subsectionOrder.indexOf(b);
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+      if (idxA !== -1) return -1;
+      if (idxB !== -1) return 1;
+      return a.localeCompare(b);
+    });
+
+    for (const sub of subs) {
+      cards += `<div class="docs-section"><h2 class="eyebrow">${sub}</h2><div class="grid cols-3 gap-xl">`;
+      for (const file of grouped[sub]) {
+        const cardAccess = file.frontmatter.access || 'team';
+        cards += `<a href="${file.htmlName}" class="docs-card" data-access="${cardAccess}"><h3 class="docs-card-title">${file.title}</h3>${file.frontmatter.subtitle ? `<p class="docs-card-subtitle" data-text-wrap="pretty">${file.frontmatter.subtitle}</p>` : ''}</a>`;
+      }
+      cards += `</div></div>`;
+    }
+  } else {
+    // Standard section: flat card grid
+    cards += `<div class="docs-section"><div class="grid cols-3 gap-xl">`;
+    for (const file of sorted) {
+      const cardAccess = file.frontmatter.access || 'team';
+      cards += `<a href="${file.htmlName}" class="docs-card" data-access="${cardAccess}"><h3 class="docs-card-title">${file.title}</h3>${file.frontmatter.subtitle ? `<p class="docs-card-subtitle" data-text-wrap="pretty">${file.frontmatter.subtitle}</p>` : ''}</a>`;
+    }
+
+    // Append special cards
+    if (section === 'Brand Book') {
+      cards += `<a href="visual-identity.html" class="docs-card"><h3 class="docs-card-title">Visual Identity</h3><p class="docs-card-subtitle" data-text-wrap="pretty">Visual brand identity — logo, palette, typography, and icons</p></a>`;
+    }
+    if (section === 'Design System') {
+      cards += `<a href="style-guide.html" class="docs-card"><h3 class="docs-card-title">Style Guide</h3><p class="docs-card-subtitle" data-text-wrap="pretty">Live preview of all design system tokens and components</p></a>`;
+    }
+
+    cards += `</div></div>`;
+  }
+
+  const pageContent = `<div class="docs-hero"><h1 class="docs-hero-title">${section}</h1></div>${cards}`;
+  const navBase = '../';
+
+  return template
+    .replaceAll('{{PAGE_TITLE}}', `${section} — Overview`)
+    .replaceAll('{{META_DESCRIPTION}}', `Overview of all ${section} pages.`)
+    .replace('{{PAGE_HEADER}}', '')
+    .replace('{{PAGE_SUBBAR}}', '')
+    .replace('{{PAGE_CONTENT}}', pageContent)
+    .replace('{{TOC_SECTION}}', '')
+    .replace('{{DESIGN_SYSTEM_PATH}}', navBase + PROJECT_CONFIG.designSystemPath)
+    .replace('{{BRAND_CSS}}', BRAND_CSS_HTML ? BRAND_CSS_HTML.replace(/href="(?!http)/g, `href="${navBase}`) : '')
+    .replace('{{CLIENT_THEME_CSS}}', '')
+    .replace('{{CLIENT_THEME_ATTR}}', '')
+    .replace('{{GOOGLE_FONTS}}', GOOGLE_FONTS_HTML)
+    .replace('{{PAGE_NAV}}', '')
+    .replace('{{FOOTER_TEXT}}', PROJECT_CONFIG.footerText)
+    .replace('{{PAGE_ACCESS}}', 'team')
+    .replaceAll('{{NAV_BASE}}', navBase);
+}
+
+/**
  * Build a flat ordered list of all pages following the nav order
  */
 function buildPageOrder(filesBySection) {
-  const sectionOrder = ['Brand Book', 'Design System', 'Code', 'Content', 'Project', 'Admin'];
+  const sectionOrder = ['Brand Book', 'Design System', 'Docs', 'Tools'];
   const hiddenSections = [];
   const sortedSections = Object.keys(filesBySection)
     .filter(s => !hiddenSections.includes(s))
@@ -426,14 +531,52 @@ function generatePage(file, template, pageOrder) {
 
   // Generate page header separately
   let pageHeader = '';
+  const toolLinkHtml = frontmatter.toolUrl
+    ? `<div class="button-group justify-center">
+        <a href="${frontmatter.toolUrl}" class="button is-small page-source-link">${frontmatter.toolLabel || 'Open Tool'}</a>
+      </div>`
+    : '';
   if (frontmatter.title) {
     pageHeader = `<div class="page-header">
       <div class="container-small">
         <h1>${frontmatter.title}</h1>
         ${frontmatter.subtitle ? `<p class="page-subtitle" data-text-wrap="pretty">${frontmatter.subtitle}</p>` : ''}
-        <div class="button-group justify-center">
-          <a href="../docs/${file.markdownPath}" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
-          ${frontmatter.toolUrl ? `<a href="${frontmatter.toolUrl}" class="button is-small page-source-link">${frontmatter.toolLabel || 'Open Tool'}</a>` : ''}
+        ${toolLinkHtml}
+      </div>
+    </div>`;
+  }
+
+  // Generate page sub-bar (breadcrumbs + markdown dropdown)
+  let pageSubbar = '';
+  if (frontmatter.title && file.htmlFolder) {
+    const sectionLabel = file.section || file.htmlFolder.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(' ');
+    const moreHorizontalSvg = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg>';
+    const downloadSvg = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg>';
+    const openFullSvg = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21V3H9V5H7C5.89543 5 5 5.89543 5 7V17C5 18.1046 5.89543 19 7 19H17C18.1046 19 19 18.1046 19 17V15H21V21H3ZM9.7 15.7L8.3 14.3L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H12V3H21V12H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L9.7 15.7Z" fill="currentColor"/></svg>';
+    pageSubbar = `<div class="page-subbar">
+      <div class="page-subbar-inner">
+        <nav class="page-subbar-breadcrumbs" aria-label="Breadcrumb">
+          <a href="../${file.htmlFolder}/index.html">${sectionLabel}</a>
+          <span class="breadcrumb-separator">/</span>
+          <span>${frontmatter.title}</span>
+        </nav>
+        <div class="page-subbar-actions">
+          <div class="subbar-dropdown">
+            <button class="header-link" type="button" aria-expanded="false" aria-label="Markdown source options">
+              <div class="icn-svg" data-icon="more-horizontal">${moreHorizontalSvg}</div>
+            </button>
+            <div class="subbar-dropdown-menu">
+              <a href="../docs/${file.markdownPath}" class="header-link" download>
+                <div class="icn-svg" data-icon="download">${downloadSvg}</div>
+                <span>Download .md file</span>
+              </a>
+              <div class="header-dropdown-divider"></div>
+              <a href="../docs/${file.markdownPath}" class="header-link" target="_blank" rel="noopener noreferrer">
+                <div class="icn-svg" data-icon="open-full">${openFullSvg}</div>
+                <span>Open .md in new tab</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>`;
@@ -443,6 +586,7 @@ function generatePage(file, template, pageOrder) {
     .replaceAll('{{PAGE_TITLE}}', frontmatter.title || 'Untitled')
     .replaceAll('{{META_DESCRIPTION}}', frontmatter.description || '')
     .replace('{{PAGE_HEADER}}', pageHeader)
+    .replace('{{PAGE_SUBBAR}}', pageSubbar)
     .replace('{{PAGE_CONTENT}}', htmlContent)
     .replace('{{TOC_SECTION}}', `<aside class="docs-toc">
       <span class="toc-header">On this page</span>
@@ -450,6 +594,8 @@ function generatePage(file, template, pageOrder) {
     </aside>`)
     .replace('{{DESIGN_SYSTEM_PATH}}', '../' + PROJECT_CONFIG.designSystemPath)
     .replace('{{BRAND_CSS}}', BRAND_CSS_HTML ? `<link rel="stylesheet" href="../${PROJECT_CONFIG.brandCssPath}">` : '')
+    .replace('{{CLIENT_THEME_CSS}}', '')
+    .replace('{{CLIENT_THEME_ATTR}}', '')
     .replace('{{GOOGLE_FONTS}}', GOOGLE_FONTS_HTML)
     .replace('{{PAGE_NAV}}', generatePageNav(file, pageOrder))
     .replace('{{FOOTER_TEXT}}', PROJECT_CONFIG.footerText)
@@ -493,6 +639,7 @@ function generateNavJs(filesBySection) {
   var ICON_COLLAPSE = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5.6 12L9.6 8L11 9.4L9.81421 10.5858C9.03316 11.3668 9.03316 12.6332 9.81421 13.4142L11 14.6L9.6 16L5.6 12Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22 22H2V2H22V22ZM4 18C4 19.1046 4.89543 20 6 20H12C13.1046 20 14 19.1046 14 18V6C14 4.89543 13.1046 4 12 4H6C4.89543 4 4 4.89543 4 6V18ZM16 18C16 19.1046 16.8954 20 18 20C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4C16.8954 4 16 4.89543 16 6V18Z" fill="currentColor"/></svg>';
   var ICON_EXPAND = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12.4 12L8.4 16L7 14.6L8.18579 13.4142C8.96684 12.6332 8.96684 11.3668 8.18579 10.5858L7 9.4L8.4 8L12.4 12Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22 22H2V2H22V22ZM4 18C4 19.1046 4.89543 20 6 20H12C13.1046 20 14 19.1046 14 18V6C14 4.89543 13.1046 4 12 4H6C4.89543 4 4 4.89543 4 6V18ZM16 18C16 19.1046 16.8954 20 18 20C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4C16.8954 4 16 4.89543 16 6V18Z" fill="currentColor"/></svg>';
   var ICON_BACK = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 18V15C18 13.8954 17.1046 13 16 13H10.2392C9.34831 13 8.90214 14.0771 9.53211 14.7071L11.425 16.6L10.025 18.025L4 12L10 6L11.425 7.425L9.54652 9.29043C8.91317 9.91938 9.35857 11 10.2512 11H20V18H18Z" fill="currentColor"/></svg>';
+  var ICON_HOME = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V10L13.2 6.4C12.4889 5.86667 11.5111 5.86667 10.8 6.4L6 10V17ZM4 21V9L12 3L20 9V21H4Z" fill="currentColor"/></svg>';
   var ICON_SUN = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15ZM12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17ZM11 1H13V4H11V1ZM11 20H13V23H11V20ZM3.51472 4.92893L4.92893 3.51472L7.05025 5.63604L5.63604 7.05025L3.51472 4.92893ZM16.9497 18.364L18.364 16.9497L20.4853 19.0711L19.0711 20.4853L16.9497 18.364ZM1 13V11H4V13H1ZM20 13V11H23V13H20ZM3.51472 19.0711L5.63604 16.9497L7.05025 18.364L4.92893 20.4853L3.51472 19.0711ZM16.9497 5.63604L19.0711 3.51472L20.4853 4.92893L18.364 7.05025L16.9497 5.63604Z" fill="currentColor"/></svg>';
   var ICON_MOON = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15.1625 17.6625C16.7208 16.1042 17.5 14.2167 17.5 12C17.5 9.78333 16.7208 7.89583 15.1625 6.3375C13.9817 5.15672 12.1597 4.35602 10.402 4.10029C9.60391 3.98418 9.20482 4.89906 9.63374 5.58204C10.0596 6.26022 10.4192 6.97871 10.7125 7.7375C11.2375 9.09583 11.5 10.5167 11.5 12C11.5 13.4833 11.2375 14.9042 10.7125 16.2625C10.4462 16.9516 10.1252 17.6074 9.74945 18.23C9.31198 18.955 9.78479 19.9392 10.6206 19.8035C12.371 19.5193 14.0025 18.8225 15.1625 17.6625ZM9.5 22C8.61667 22 7.75417 21.8875 6.9125 21.6625C6.07083 21.4375 5.26667 21.1 4.5 20.65C6.05 19.75 7.27083 18.5333 8.1625 17C9.05417 15.4667 9.5 13.8 9.5 12C9.5 10.2 9.05417 8.53333 8.1625 7C7.27083 5.46667 6.05 4.25 4.5 3.35C5.26667 2.9 6.07083 2.5625 6.9125 2.3375C7.75417 2.1125 8.61667 2 9.5 2C10.8833 2 12.1833 2.2625 13.4 2.7875C14.6167 3.3125 15.675 4.025 16.575 4.925C17.475 5.825 18.1875 6.88333 18.7125 8.1C19.2375 9.31667 19.5 10.6167 19.5 12C19.5 13.3833 19.2375 14.6833 18.7125 15.9C18.1875 17.1167 17.475 18.175 16.575 19.075C15.675 19.975 14.6167 20.6875 13.4 21.2125C12.1833 21.7375 10.8833 22 9.5 22Z" fill="currentColor"/></svg>';
 
@@ -544,6 +691,10 @@ function generateNavJs(filesBySection) {
       + '</button>'
       + '</div>'
       + '<div class="site-sidebar-content">'
+      + '<a href="' + base + 'index.html" class="nav-link nav-home" data-access="team">'
+      + '<div class="icn-svg" data-icon="home">' + ICON_HOME + '</div>'
+      + '<span>Home</span>'
+      + '</a>'
       + \`${esc(navSectionsHtml)}\`
       + '</div>'
       + ''
@@ -556,7 +707,7 @@ function generateNavJs(filesBySection) {
 
   // Fix relative paths in sidebar nav links
   if (base && hasSidebar) {
-    var links = mount.querySelectorAll('.site-sidebar .nav-link');
+    var links = mount.querySelectorAll('.site-sidebar .nav-link, .site-sidebar .nav-section-icon');
     for (var i = 0; i < links.length; i++) {
       var href = links[i].getAttribute('href');
       if (href && !href.startsWith('http') && !href.startsWith('/') && !href.startsWith('#')) {
@@ -618,6 +769,16 @@ function generateNavJs(filesBySection) {
         var isCollapsed = document.body.classList.toggle('sidebar-collapsed');
         localStorage.setItem(SIDEBAR_KEY, isCollapsed);
         this.setAttribute('aria-label', isCollapsed ? 'Expand sidebar' : 'Collapse sidebar');
+      });
+    }
+  }
+
+  // ── Section icon links: stop propagation to prevent details toggle ──
+  if (hasSidebar) {
+    var iconLinks = mount.querySelectorAll('.nav-section-icon');
+    for (var s = 0; s < iconLinks.length; s++) {
+      iconLinks[s].addEventListener('click', function(e) {
+        e.stopPropagation();
       });
     }
   }
@@ -726,10 +887,24 @@ function generateNavJs(filesBySection) {
 function buildNavSectionsHtml(filesBySection) {
   let html = '';
 
-  const sectionOrder = ['Brand Book', 'Design System', 'Code', 'Content', 'Project', 'Admin'];
-  const hiddenSections = [];
+  // Section icons — inline SVGs for sidebar nav toggles
+  const ICON_BRAND_BOOK = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><g clip-path="url(#clip0_14540_880)"><path d="M18 6.99953V5.18605L7.45312 6.99953H18ZM3 18.4644L5.30273 19.9995H21V8.99953H5.7998L3 7.83351V18.4644ZM6.91211 5.06203L12 4.188V2.97121L6.91211 5.06203ZM23 6.99953V21.9995H4.69727L1 19.5347V5.32961L14 -0.0121918V3.84425L20 2.813V6.99953H23Z" fill="currentColor"/></g><defs><clipPath id="clip0_14540_880"><rect width="100%" height="100%" fill="white"/></clipPath></defs></svg>';
+  const ICON_DESIGN_SYSTEM = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M21 21H13V13H21V21ZM15 19H19V15H15V19Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22.2998 7.34961L16.6504 13L11 7.34961L16.6504 1.7002L22.2998 7.34961ZM13.8496 7.375L16.6748 10.2002L19.5 7.375L16.6748 4.5498L13.8496 7.375Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M11 11H3V3H11V11ZM5 9H9V5H5V9Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M8 11C10.7614 11 13 13.2386 13 16C13 18.7614 10.7614 21 8 21C5.23858 21 3 18.7614 3 16C3 13.2386 5.23858 11 8 11ZM8 13C6.34315 13 5 14.3431 5 16C5 17.6569 6.34315 19 8 19C9.65685 19 11 17.6569 11 16C11 14.3431 9.65685 13 8 13Z" fill="currentColor"/></svg>';
+  const ICON_DOCS = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 21V3H22V21H2ZM4 17C4 18.1046 4.89543 19 6 19H18C19.1046 19 20 18.1046 20 17V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V17ZM6 17H15V15H6V17ZM6 13H18V11H6V13ZM6 9H18V7H6V9Z" fill="currentColor"/></svg>';
+  const ICON_TOOLS = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10.9013 18.1151L16.0763 11.9151H12.0763L12.8013 6.2401L8.17632 12.9151H11.6513L10.9013 18.1151ZM8.35132 21.9151L9.35132 14.9151H4.35132L13.3513 1.9151H15.3513L14.3513 9.9151H20.3513L10.3513 21.9151H8.35132Z" fill="currentColor"/></svg>';
+
+  const sectionIconMap = {
+    'Brand Book': { icon: ICON_BRAND_BOOK, name: 'brand-book' },
+    'Design System': { icon: ICON_DESIGN_SYSTEM, name: 'design-system' },
+    'Docs': { icon: ICON_DOCS, name: 'docs' },
+    'Tools': { icon: ICON_TOOLS, name: 'tools' },
+  };
+
+  // Subsection rendering order within the Docs section
+  const subsectionOrder = ['Code Standards', 'Dev', 'Site Management'];
+
+  const sectionOrder = ['Brand Book', 'Design System', 'Docs', 'Tools'];
   const sortedSections = Object.keys(filesBySection)
-    .filter(s => !hiddenSections.includes(s))
     .sort((a, b) => {
       const indexA = sectionOrder.indexOf(a);
       const indexB = sectionOrder.indexOf(b);
@@ -750,12 +925,17 @@ function buildNavSectionsHtml(filesBySection) {
     });
 
     const sectionLabel = section.charAt(0).toUpperCase() + section.slice(1);
-    // Only Admin section gets section-level access; others rely on per-link filtering
-    const accessAttr = section === 'Admin' ? ' data-access="admin"' : '';
 
-    html += `<details class="nav-section"${accessAttr}>
+    const sectionIcon = sectionIconMap[section];
+    const sectionFolder = SECTION_FOLDERS[section];
+    const sectionIndexHref = sectionFolder ? sectionFolder + '/index.html' : '';
+    const iconHtml = sectionIcon
+      ? `<a href="${sectionIndexHref}" class="nav-section-icon"><div class="icn-svg" data-icon="${sectionIcon.name}">${sectionIcon.icon}</div></a>`
+      : '';
+
+    html += `<details class="nav-section">
       <summary class="nav-section-toggle">
-        <span>${sectionLabel}</span>
+        ${iconHtml}<span>${sectionLabel}</span>
         <span class="nav-toggle-icon">
           <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
             <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
@@ -764,28 +944,50 @@ function buildNavSectionsHtml(filesBySection) {
       </summary>
       <ul class="nav-list">`;
 
+    // Overview link (first item in every section)
+    html += `<li><a href="${sectionIndexHref}" class="nav-link" data-access="team"><span>Overview</span></a></li>`;
+
+    // Group files by subsection
+    const ungrouped = files.filter(f => !f.frontmatter.subsection);
+    const grouped = {};
     for (const file of files) {
+      const sub = file.frontmatter.subsection;
+      if (sub) {
+        if (!grouped[sub]) grouped[sub] = [];
+        grouped[sub].push(file);
+      }
+    }
+
+    // Render ungrouped files first
+    for (const file of ungrouped) {
       const linkAccess = file.frontmatter.access || 'team';
       html += `<li><a href="${file.htmlPath}" class="nav-link" data-access="${linkAccess}"><span>${file.title}</span></a></li>`;
     }
 
+    // Render subsections in order
+    const subsections = Object.keys(grouped).sort((a, b) => {
+      const idxA = subsectionOrder.indexOf(a);
+      const idxB = subsectionOrder.indexOf(b);
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+      if (idxA !== -1) return -1;
+      if (idxB !== -1) return 1;
+      return a.localeCompare(b);
+    });
+
+    for (const sub of subsections) {
+      html += `<li class="nav-label">${sub}</li>`;
+      for (const file of grouped[sub]) {
+        const linkAccess = file.frontmatter.access || 'team';
+        html += `<li><a href="${file.htmlPath}" class="nav-link" data-access="${linkAccess}"><span>${file.title}</span></a></li>`;
+      }
+    }
+
     if (section === 'Design System') {
-      html += `<li><a href="../design-system/index.html" class="nav-link" data-access="team"><span>Style Guide</span></a></li>`;
+      html += `<li><a href="../design-system/style-guide.html" class="nav-link" data-access="team"><span>Style Guide</span></a></li>`;
     }
 
     if (section === 'Brand Book') {
-      html += `<li><a href="../brand/index.html" class="nav-link" data-access="team"><span>Visual Identity</span></a></li>`;
-    }
-
-    if (section === 'Admin') {
-      html += `<li class="nav-label">Login Scenarios</li>`;
-      html += `<li><a href="../auth/login.html" class="nav-link" data-access="admin"><span>Login</span></a></li>`;
-      html += `<li><a href="../auth/login.html#forgot" class="nav-link" data-access="admin"><span>Forgot Password</span></a></li>`;
-      html += `<li><a href="../auth/login.html#recovery_token=dev" class="nav-link" data-access="admin"><span>Reset Password</span></a></li>`;
-      html += `<li><a href="../auth/login.html#invite_token=dev" class="nav-link" data-access="admin"><span>Accept Invitation</span></a></li>`;
-      html += `<li><a href="../auth/login.html#confirmation_token=dev" class="nav-link" data-access="admin"><span>Email Confirmation</span></a></li>`;
-      html += `<li><a href="../auth/account.html" class="nav-link" data-access="admin"><span>Account</span></a></li>`;
-      html += `<li><a href="../access-denied.html" class="nav-link" data-access="admin"><span>Access Denied</span></a></li>`;
+      html += `<li><a href="../brand/visual-identity.html" class="nav-link" data-access="team"><span>Visual Identity</span></a></li>`;
     }
 
     html += `</ul></details>`;
@@ -795,9 +997,338 @@ function buildNavSectionsHtml(filesBySection) {
 }
 
 /**
+ * Generate client doc pages from markdown files in docs/clients/{clientFolder}/
+ *
+ * Frontmatter fields:
+ *   title    — page title (required)
+ *   section  — sidebar section label (optional, pages without one become top-level)
+ *   order    — sort order within section (optional, default 99)
+ *
+ * Output: {clientFolder}/{filename}.html
+ * Returns: map of clientKey → array of { title, href, section? } for theme-config update
+ */
+function generateClientDocs(template) {
+  const clientsDir = path.join(DOCS_DIR, 'clients');
+  if (!fs.existsSync(clientsDir)) return {};
+
+  // Load theme-config to know which clients exist
+  const themeConfigPath = path.join(OUTPUT_DIR, 'assets', 'js', 'theme-config.js');
+  if (!fs.existsSync(themeConfigPath)) return {};
+  const configCode = fs.readFileSync(themeConfigPath, 'utf8');
+  const sandbox = {};
+  vm.runInNewContext(configCode, sandbox);
+  const themeConfig = sandbox.THEME_CONFIG;
+  if (!themeConfig || !themeConfig.themes) return {};
+
+  const generatedPages = {};
+
+  const clientDirs = fs.readdirSync(clientsDir).filter(dir => {
+    return fs.statSync(path.join(clientsDir, dir)).isDirectory() && themeConfig.themes[dir];
+  });
+
+  for (const clientKey of clientDirs) {
+    const clientDocsPath = path.join(clientsDir, clientKey);
+    const mdFiles = fs.readdirSync(clientDocsPath)
+      .filter(f => f.endsWith('.md') && !f.startsWith('README'));
+
+    if (mdFiles.length === 0) continue;
+
+    const theme = themeConfig.themes[clientKey];
+    const pages = [];
+
+    for (const filename of mdFiles) {
+      const filePath = path.join(clientDocsPath, filename);
+      const raw = fs.readFileSync(filePath, 'utf8');
+      const { frontmatter, content } = parseFrontmatter(raw);
+
+      const title = frontmatter.title || filename.replace('.md', '');
+      const htmlName = filename.replace('.md', '.html');
+      const htmlContent = markdownToHtml(content);
+      const tableOfContents = generateTableOfContents(htmlContent);
+      const order = parseInt(frontmatter.order, 10) || 99;
+
+      // Page header
+      let pageHeader = '';
+      if (title) {
+        pageHeader = `<div class="page-header">
+          <div class="container-small">
+            <h1>${title}</h1>
+            ${frontmatter.subtitle ? `<p class="page-subtitle" data-text-wrap="pretty">${frontmatter.subtitle}</p>` : ''}
+          </div>
+        </div>`;
+      }
+
+      // Build page sub-bar (breadcrumbs)
+      let pageSubbar = '';
+      if (title && frontmatter.section) {
+        const sectionLabel = frontmatter.section;
+        const sectionSlug = sectionLabel.toLowerCase().replace(/\s+/g, '-');
+        const overviewHref = `${sectionSlug}-overview.html`;
+        const moreHorizontalSvg = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg>';
+        const downloadSvg = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg>';
+        const openFullSvg = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21V3H9V5H7C5.89543 5 5 5.89543 5 7V17C5 18.1046 5.89543 19 7 19H17C18.1046 19 19 18.1046 19 17V15H21V21H3ZM9.7 15.7L8.3 14.3L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H12V3H21V12H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L9.7 15.7Z" fill="currentColor"/></svg>';
+        const mdPath = `../docs/clients/${clientKey}/${filename}`;
+        pageSubbar = `<div class="page-subbar">
+          <div class="page-subbar-inner">
+            <nav class="page-subbar-breadcrumbs" aria-label="Breadcrumb">
+              <a href="${overviewHref}">${sectionLabel}</a>
+              <span class="breadcrumb-separator">/</span>
+              <span>${title}</span>
+            </nav>
+            <div class="page-subbar-actions">
+              <div class="subbar-dropdown">
+                <button class="header-link" type="button" aria-expanded="false" aria-label="Markdown source options">
+                  <div class="icn-svg" data-icon="more-horizontal">${moreHorizontalSvg}</div>
+                </button>
+                <div class="subbar-dropdown-menu">
+                  <a href="${mdPath}" class="header-link" download>
+                    <div class="icn-svg" data-icon="download">${downloadSvg}</div>
+                    <span>Download .md file</span>
+                  </a>
+                  <div class="header-dropdown-divider"></div>
+                  <a href="${mdPath}" class="header-link" target="_blank" rel="noopener noreferrer">
+                    <div class="icn-svg" data-icon="open-full">${openFullSvg}</div>
+                    <span>Open .md in new tab</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      }
+
+      // Build client-specific template
+      const navBase = '../';
+      const brandCss = PROJECT_CONFIG.brandCssPath
+        ? `<link rel="stylesheet" href="${navBase}${PROJECT_CONFIG.brandCssPath}">`
+        : '';
+      const clientThemeCss = `<!-- Client Theme Override (must load last to override base styles) -->\n    <link rel="stylesheet" href="theme.css">`;
+      const googleFonts = theme.fonts
+        ? `<link rel="preconnect" href="https://fonts.googleapis.com">\n    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n    <link href="${theme.fonts}" rel="stylesheet">`
+        : GOOGLE_FONTS_HTML;
+
+      let html = template
+        .replaceAll('{{PAGE_TITLE}}', `${theme.label} — ${title}`)
+        .replaceAll('{{META_DESCRIPTION}}', frontmatter.description || '')
+        .replace('{{PAGE_HEADER}}', pageHeader)
+        .replace('{{PAGE_SUBBAR}}', pageSubbar)
+        .replace('{{PAGE_CONTENT}}', htmlContent)
+        .replace('{{TOC_SECTION}}', tableOfContents
+          ? `<aside class="docs-toc"><span class="toc-header">On this page</span><div class="toc-wrapper">${tableOfContents}</div></aside>`
+          : '')
+        .replace('{{DESIGN_SYSTEM_PATH}}', navBase + PROJECT_CONFIG.designSystemPath)
+        .replace('{{BRAND_CSS}}', brandCss)
+        .replace('{{CLIENT_THEME_CSS}}', clientThemeCss)
+        .replace('{{CLIENT_THEME_ATTR}}', `data-client-theme="${clientKey}"`)
+        .replace('{{GOOGLE_FONTS}}', googleFonts)
+        .replace('{{PAGE_NAV}}', '')
+        .replace('{{FOOTER_TEXT}}', `${theme.label} — Powered by By Default BrandOS`)
+        .replace('{{PAGE_ACCESS}}', 'client')
+        .replaceAll('{{NAV_BASE}}', navBase);
+
+      // Write file
+      const dir = path.join(OUTPUT_DIR, clientKey);
+      fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(path.join(dir, htmlName), html);
+      console.log(`📄 Generated: ${clientKey}/${htmlName}`);
+
+      pages.push({
+        title,
+        href: clientKey + '/' + htmlName,
+        section: frontmatter.section || null,
+        order
+      });
+    }
+
+    // Sort by order
+    pages.sort((a, b) => a.order - b.order);
+    generatedPages[clientKey] = pages.map(({ title, href, section }) => {
+      const entry = { title, href };
+      if (section) entry.section = section;
+      return entry;
+    });
+  }
+
+  return generatedPages;
+}
+
+/**
+ * Update theme-config.js pages arrays with generated client doc pages.
+ * Preserves manually-defined pages (index.html) and merges generated ones.
+ */
+function updateThemeConfigPages(generatedPages) {
+  if (Object.keys(generatedPages).length === 0) return;
+
+  const themeConfigPath = path.join(OUTPUT_DIR, 'assets', 'js', 'theme-config.js');
+  let configSource = fs.readFileSync(themeConfigPath, 'utf8');
+
+  for (const [clientKey, newPages] of Object.entries(generatedPages)) {
+    // Find the pages array for this client in the source
+    // Match: pages: [ ... ] within the client block
+    const clientPattern = new RegExp(
+      `('${clientKey}':\\s*\\{[\\s\\S]*?)(pages:\\s*\\[)([\\s\\S]*?)(\\])(\\s*,\\s*tools:)`,
+    );
+    const match = configSource.match(clientPattern);
+    if (!match) {
+      console.warn(`⚠️  Could not find pages array for client '${clientKey}' in theme-config.js`);
+      continue;
+    }
+
+    // Keep manually-defined pages (like index.html) from the existing array
+    const existingPagesStr = match[3];
+    const manualPages = [];
+    const pageRegex = /\{[^}]*href:\s*'([^']+)'[^}]*\}/g;
+    let pageMatch;
+    while ((pageMatch = pageRegex.exec(existingPagesStr)) !== null) {
+      const href = pageMatch[1];
+      // Keep pages that aren't being generated (e.g. index.html)
+      const isGenerated = newPages.some(p => p.href === href);
+      if (!isGenerated) {
+        manualPages.push(pageMatch[0]);
+      }
+    }
+
+    // Build new pages entries
+    const generatedEntries = newPages.map(p => {
+      let entry = `{ title: '${p.title}', href: '${p.href}'`;
+      if (p.section) entry += `, section: '${p.section}'`;
+      entry += ' }';
+      return entry;
+    });
+
+    const allEntries = [...manualPages, ...generatedEntries];
+    const newPagesArray = 'pages: [\n        ' + allEntries.join(',\n        ') + '\n      ]';
+
+    configSource = configSource.replace(
+      match[1] + match[2] + match[3] + match[4] + match[5],
+      match[1] + newPagesArray + match[5]
+    );
+  }
+
+  fs.writeFileSync(themeConfigPath, configSource);
+  console.log('📄 Updated: assets/js/theme-config.js');
+}
+
+/**
  * Generate client index pages from theme-config.js
  * Each client gets an auto-generated index.html with their pages and granted tools.
  */
+/**
+ * Generate section overview pages for each client (docs-overview, tools-overview).
+ * Also updates theme-config.js pages arrays with the overview entries.
+ */
+function generateClientSectionOverviews(template) {
+  const themeConfigPath = path.join(OUTPUT_DIR, 'assets', 'js', 'theme-config.js');
+  if (!fs.existsSync(themeConfigPath)) return;
+
+  const configCode = fs.readFileSync(themeConfigPath, 'utf8');
+  const sandbox = {};
+  vm.runInNewContext(configCode, sandbox);
+  const themeConfig = sandbox.THEME_CONFIG;
+  if (!themeConfig || !themeConfig.themes) return;
+
+  const globalTools = themeConfig.tools || {};
+
+  for (const [clientKey, theme] of Object.entries(themeConfig.themes)) {
+    const clientLabel = theme.label || clientKey;
+    const navBase = '../';
+    const brandCss = PROJECT_CONFIG.brandCssPath
+      ? `<link rel="stylesheet" href="${navBase}${PROJECT_CONFIG.brandCssPath}">`
+      : '';
+    const clientThemeCss = `<!-- Client Theme Override (must load last to override base styles) -->\n    <link rel="stylesheet" href="theme.css">`;
+    const googleFonts = theme.fonts
+      ? `<link rel="preconnect" href="https://fonts.googleapis.com">\n    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n    <link href="${theme.fonts}" rel="stylesheet">`
+      : GOOGLE_FONTS_HTML;
+
+    const dir = path.join(OUTPUT_DIR, clientKey);
+    fs.mkdirSync(dir, { recursive: true });
+
+    // Helper to build a client overview page
+    function buildOverviewPage(title, cardsHtml) {
+      const content = `<div class="docs-hero"><h1 class="docs-hero-title">${title}</h1></div>${cardsHtml}`;
+      return template
+        .replace(/\{\{PAGE_TITLE\}\}/g, `${clientLabel} — ${title}`)
+        .replace(/\{\{META_DESCRIPTION\}\}/g, `${title} overview for ${clientLabel}.`)
+        .replace(/\{\{NAV_BASE\}\}/g, navBase)
+        .replace(/\{\{PAGE_ACCESS\}\}/g, 'client')
+        .replace('{{PAGE_HEADER}}', '')
+        .replace('{{PAGE_SUBBAR}}', '')
+        .replace('{{PAGE_CONTENT}}', content)
+        .replace('{{TOC_SECTION}}', '')
+        .replace('{{PAGE_NAV}}', '')
+        .replace('{{FOOTER_TEXT}}', `${clientLabel} — Powered by By Default BrandOS`)
+        .replace('{{DESIGN_SYSTEM_PATH}}', navBase + PROJECT_CONFIG.designSystemPath)
+        .replace('{{BRAND_CSS}}', brandCss)
+        .replace('{{CLIENT_THEME_CSS}}', clientThemeCss)
+        .replace('{{CLIENT_THEME_ATTR}}', `data-client-theme="${clientKey}"`)
+        .replace('{{GOOGLE_FONTS}}', googleFonts);
+    }
+
+    // Docs overview — cards for all pages in the Docs section
+    const docsPages = (theme.pages || []).filter(p => p.section === 'Docs' && p.title !== 'Overview');
+    if (docsPages.length > 0) {
+      let cards = '<div class="docs-section"><div class="grid cols-3 gap-xl">';
+      for (const page of docsPages) {
+        const href = page.href.startsWith(clientKey + '/') ? page.href.replace(clientKey + '/', '') : page.href;
+        cards += `<a href="${href}" class="docs-card"><h3 class="docs-card-title">${page.title}</h3></a>`;
+      }
+      cards += '</div></div>';
+      fs.writeFileSync(path.join(dir, 'docs-overview.html'), buildOverviewPage('Docs', cards));
+      console.log(`📄 Generated: ${clientKey}/docs-overview.html`);
+    }
+
+    // Tools overview — cards for each granted tool
+    const clientTools = (theme.tools || []).filter(t => globalTools[t]);
+    if (clientTools.length > 0) {
+      let cards = '<div class="docs-section"><div class="grid cols-3 gap-xl">';
+      for (const toolKey of clientTools) {
+        const tool = globalTools[toolKey];
+        cards += `<a href="../${toolKey}/index.html" class="docs-card"><h3 class="docs-card-title">${tool.title}</h3><p class="docs-card-subtitle" data-text-wrap="pretty">${tool.subtitle}</p></a>`;
+      }
+      cards += '</div></div>';
+      fs.writeFileSync(path.join(dir, 'tools-overview.html'), buildOverviewPage('Tools', cards));
+      console.log(`📄 Generated: ${clientKey}/tools-overview.html`);
+    }
+  }
+
+  // Update theme-config.js with overview page entries
+  let configSource = fs.readFileSync(themeConfigPath, 'utf8');
+  for (const [clientKey, theme] of Object.entries(themeConfig.themes)) {
+    const docsPages = (theme.pages || []).filter(p => p.section === 'Docs');
+    const hasDocsOverview = docsPages.length > 0;
+    const clientTools = (theme.tools || []).filter(t => globalTools[t]);
+    const hasToolsOverview = clientTools.length > 0;
+
+    // Check if overview entries already exist
+    const alreadyHasDocsOverview = (theme.pages || []).some(p => p.href.endsWith('docs-overview.html'));
+    const alreadyHasToolsOverview = (theme.pages || []).some(p => p.href.endsWith('tools-overview.html'));
+
+    const newEntries = [];
+    if (hasDocsOverview && !alreadyHasDocsOverview) {
+      newEntries.push(`{ title: 'Overview', href: '${clientKey}/docs-overview.html', section: 'Docs' }`);
+    }
+    if (hasToolsOverview && !alreadyHasToolsOverview) {
+      newEntries.push(`{ title: 'Overview', href: '${clientKey}/tools-overview.html', section: 'Tools' }`);
+    }
+
+    if (newEntries.length > 0) {
+      // Insert overview entries before the first Docs/Tools page
+      const pagesPattern = new RegExp(
+        `('${clientKey}':\\s*\\{[\\s\\S]*?pages:\\s*\\[)([\\s\\S]*?)(\\]\\s*,\\s*tools:)`
+      );
+      const match = configSource.match(pagesPattern);
+      if (match) {
+        const newPagesStr = match[2].trimEnd() + ',\n        ' + newEntries.join(',\n        ');
+        configSource = configSource.replace(
+          match[1] + match[2] + match[3],
+          match[1] + newPagesStr + '\n      ' + match[3]
+        );
+      }
+    }
+  }
+  fs.writeFileSync(themeConfigPath, configSource);
+}
+
 function generateClientIndexPages(template) {
   const themeConfigPath = path.join(OUTPUT_DIR, 'assets', 'js', 'theme-config.js');
   if (!fs.existsSync(themeConfigPath)) {
@@ -829,8 +1360,8 @@ function generateClientIndexPages(template) {
       <p class="docs-hero-description" data-text-wrap="balance">${clientDesc}</p>
     </div>`;
 
-    // Client pages grouped by section (exclude index.html)
-    const clientPages = (theme.pages || []).filter(p => !p.href.endsWith('/index.html'));
+    // Client pages grouped by section (exclude index.html and Tools pages — tools handled separately)
+    const clientPages = (theme.pages || []).filter(p => !p.href.endsWith('/index.html') && p.section !== 'Tools');
     const sectionGroups = {};
     const sectionOrder = [];
     for (const page of clientPages) {
@@ -843,6 +1374,13 @@ function generateClientIndexPages(template) {
     }
 
     for (const section of sectionOrder) {
+      // Sort so Overview is always first
+      sectionGroups[section].sort((a, b) => {
+        if (a.title === 'Overview') return -1;
+        if (b.title === 'Overview') return 1;
+        return 0;
+      });
+
       contentHtml += `<div class="docs-section">
       <h2 class="eyebrow">${section}</h2>
       <div class="grid cols-3 gap-xl">`;
@@ -863,6 +1401,12 @@ function generateClientIndexPages(template) {
       contentHtml += `<div class="docs-section">
       <h2 class="eyebrow">Tools</h2>
       <div class="grid cols-3 gap-xl">`;
+      // Tools overview card first
+      const toolsOverviewPage = (theme.pages || []).find(p => p.section === 'Tools' && p.title === 'Overview');
+      if (toolsOverviewPage) {
+        const overviewHref = toolsOverviewPage.href.startsWith(clientKey + '/') ? toolsOverviewPage.href.replace(clientKey + '/', '') : toolsOverviewPage.href;
+        contentHtml += `<a href="${overviewHref}" class="docs-card"><h3 class="docs-card-title">Overview</h3></a>`;
+      }
       for (const toolKey of clientTools) {
         const tool = globalTools[toolKey];
         contentHtml += `<a href="../${toolKey}/index.html" class="docs-card">
@@ -877,8 +1421,9 @@ function generateClientIndexPages(template) {
     const navBase = '../';
     const dsPath = navBase + PROJECT_CONFIG.designSystemPath;
     const brandCss = PROJECT_CONFIG.brandCssPath
-      ? `<link rel="stylesheet" href="${navBase}${PROJECT_CONFIG.brandCssPath}">\n    <!-- Client Theme Override -->\n    <link rel="stylesheet" href="theme.css">`
-      : `<!-- Client Theme Override -->\n    <link rel="stylesheet" href="theme.css">`;
+      ? `<link rel="stylesheet" href="${navBase}${PROJECT_CONFIG.brandCssPath}">`
+      : '';
+    const clientThemeCss = `<!-- Client Theme Override (must load last to override base styles) -->\n    <link rel="stylesheet" href="theme.css">`;
     const googleFonts = theme.fonts
       ? `<link rel="preconnect" href="https://fonts.googleapis.com">\n    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n    <link href="${theme.fonts}" rel="stylesheet">`
       : GOOGLE_FONTS_HTML;
@@ -889,12 +1434,15 @@ function generateClientIndexPages(template) {
       .replace(/\{\{NAV_BASE\}\}/g, navBase)
       .replace(/\{\{PAGE_ACCESS\}\}/g, 'client')
       .replace('{{PAGE_HEADER}}', '')
+      .replace('{{PAGE_SUBBAR}}', '')
       .replace('{{PAGE_CONTENT}}', contentHtml)
       .replace('{{TOC_SECTION}}', '')
       .replace('{{PAGE_NAV}}', '')
       .replace('{{FOOTER_TEXT}}', `${clientLabel} — Powered by By Default BrandOS`)
       .replace(`<link rel="stylesheet" href="${dsPath}" id="design-system-css"`, `<link rel="stylesheet" href="${navBase}${PROJECT_CONFIG.designSystemPath}" id="design-system-css"`)
       .replace('{{BRAND_CSS}}', brandCss)
+      .replace('{{CLIENT_THEME_CSS}}', clientThemeCss)
+      .replace('{{CLIENT_THEME_ATTR}}', `data-client-theme="${clientKey}"`)
       .replace('{{GOOGLE_FONTS}}', googleFonts);
 
     // Replace design system path placeholder
@@ -996,13 +1544,33 @@ async function generateDocs() {
     console.log(`📄 Generated: ${file.htmlPath}`);
   }
 
+  // Generate section overview index pages
+  for (const section of Object.keys(filesBySection)) {
+    const sectionFolder = SECTION_FOLDERS[section];
+    if (!sectionFolder) continue;
+    const sectionIndexHtml = generateSectionIndexPage(section, template, filesBySection[section]);
+    if (sectionIndexHtml) {
+      const dir = path.join(OUTPUT_DIR, sectionFolder);
+      fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(path.join(dir, 'index.html'), sectionIndexHtml);
+      console.log(`📄 Generated: ${sectionFolder}/index.html`);
+    }
+  }
+
   // Generate nav.js
   const navJs = generateNavJs(filesBySection);
   const navJsPath = path.join(OUTPUT_DIR, 'assets', 'js', 'nav.js');
   fs.writeFileSync(navJsPath, navJs);
   console.log('📄 Generated: assets/js/nav.js');
 
-  // Generate client index pages from theme-config.js
+  // Generate client doc pages from docs/clients/{clientFolder}/*.md
+  const generatedClientPages = generateClientDocs(template);
+  updateThemeConfigPages(generatedClientPages);
+
+  // Generate client section overview pages + update theme-config with overview entries
+  generateClientSectionOverviews(template);
+
+  // Generate client index pages from theme-config.js (after config is updated)
   generateClientIndexPages(template);
 
   console.log('✅ Documentation generation complete!');

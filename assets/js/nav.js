@@ -18,6 +18,7 @@
   var ICON_COLLAPSE = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5.6 12L9.6 8L11 9.4L9.81421 10.5858C9.03316 11.3668 9.03316 12.6332 9.81421 13.4142L11 14.6L9.6 16L5.6 12Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22 22H2V2H22V22ZM4 18C4 19.1046 4.89543 20 6 20H12C13.1046 20 14 19.1046 14 18V6C14 4.89543 13.1046 4 12 4H6C4.89543 4 4 4.89543 4 6V18ZM16 18C16 19.1046 16.8954 20 18 20C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4C16.8954 4 16 4.89543 16 6V18Z" fill="currentColor"/></svg>';
   var ICON_EXPAND = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12.4 12L8.4 16L7 14.6L8.18579 13.4142C8.96684 12.6332 8.96684 11.3668 8.18579 10.5858L7 9.4L8.4 8L12.4 12Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22 22H2V2H22V22ZM4 18C4 19.1046 4.89543 20 6 20H12C13.1046 20 14 19.1046 14 18V6C14 4.89543 13.1046 4 12 4H6C4.89543 4 4 4.89543 4 6V18ZM16 18C16 19.1046 16.8954 20 18 20C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4C16.8954 4 16 4.89543 16 6V18Z" fill="currentColor"/></svg>';
   var ICON_BACK = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 18V15C18 13.8954 17.1046 13 16 13H10.2392C9.34831 13 8.90214 14.0771 9.53211 14.7071L11.425 16.6L10.025 18.025L4 12L10 6L11.425 7.425L9.54652 9.29043C8.91317 9.91938 9.35857 11 10.2512 11H20V18H18Z" fill="currentColor"/></svg>';
+  var ICON_HOME = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V10L13.2 6.4C12.4889 5.86667 11.5111 5.86667 10.8 6.4L6 10V17ZM4 21V9L12 3L20 9V21H4Z" fill="currentColor"/></svg>';
   var ICON_SUN = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15ZM12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17ZM11 1H13V4H11V1ZM11 20H13V23H11V20ZM3.51472 4.92893L4.92893 3.51472L7.05025 5.63604L5.63604 7.05025L3.51472 4.92893ZM16.9497 18.364L18.364 16.9497L20.4853 19.0711L19.0711 20.4853L16.9497 18.364ZM1 13V11H4V13H1ZM20 13V11H23V13H20ZM3.51472 19.0711L5.63604 16.9497L7.05025 18.364L4.92893 20.4853L3.51472 19.0711ZM16.9497 5.63604L19.0711 3.51472L20.4853 4.92893L18.364 7.05025L16.9497 5.63604Z" fill="currentColor"/></svg>';
   var ICON_MOON = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15.1625 17.6625C16.7208 16.1042 17.5 14.2167 17.5 12C17.5 9.78333 16.7208 7.89583 15.1625 6.3375C13.9817 5.15672 12.1597 4.35602 10.402 4.10029C9.60391 3.98418 9.20482 4.89906 9.63374 5.58204C10.0596 6.26022 10.4192 6.97871 10.7125 7.7375C11.2375 9.09583 11.5 10.5167 11.5 12C11.5 13.4833 11.2375 14.9042 10.7125 16.2625C10.4462 16.9516 10.1252 17.6074 9.74945 18.23C9.31198 18.955 9.78479 19.9392 10.6206 19.8035C12.371 19.5193 14.0025 18.8225 15.1625 17.6625ZM9.5 22C8.61667 22 7.75417 21.8875 6.9125 21.6625C6.07083 21.4375 5.26667 21.1 4.5 20.65C6.05 19.75 7.27083 18.5333 8.1625 17C9.05417 15.4667 9.5 13.8 9.5 12C9.5 10.2 9.05417 8.53333 8.1625 7C7.27083 5.46667 6.05 4.25 4.5 3.35C5.26667 2.9 6.07083 2.5625 6.9125 2.3375C7.75417 2.1125 8.61667 2 9.5 2C10.8833 2 12.1833 2.2625 13.4 2.7875C14.6167 3.3125 15.675 4.025 16.575 4.925C17.475 5.825 18.1875 6.88333 18.7125 8.1C19.2375 9.31667 19.5 10.6167 19.5 12C19.5 13.3833 19.2375 14.6833 18.7125 15.9C18.1875 17.1167 17.475 18.175 16.575 19.075C15.675 19.975 14.6167 20.6875 13.4 21.2125C12.1833 21.7375 10.8833 22 9.5 22Z" fill="currentColor"/></svg>';
 
@@ -69,61 +70,47 @@
       + '</button>'
       + '</div>'
       + '<div class="site-sidebar-content">'
+      + '<a href="' + base + 'index.html" class="nav-link nav-home" data-access="team">'
+      + '<div class="icn-svg" data-icon="home">' + ICON_HOME + '</div>'
+      + '<span>Home</span>'
+      + '</a>'
       + `<details class="nav-section">
       <summary class="nav-section-toggle">
-        <span>Brand Book</span>
+        <a href="brand/index.html" class="nav-section-icon"><div class="icn-svg" data-icon="brand-book"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><g clip-path="url(#clip0_14540_880)"><path d="M18 6.99953V5.18605L7.45312 6.99953H18ZM3 18.4644L5.30273 19.9995H21V8.99953H5.7998L3 7.83351V18.4644ZM6.91211 5.06203L12 4.188V2.97121L6.91211 5.06203ZM23 6.99953V21.9995H4.69727L1 19.5347V5.32961L14 -0.0121918V3.84425L20 2.813V6.99953H23Z" fill="currentColor"/></g><defs><clipPath id="clip0_14540_880"><rect width="100%" height="100%" fill="white"/></clipPath></defs></svg></div></a><span>Brand Book</span>
         <span class="nav-toggle-icon">
           <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
             <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="brand/mission-vision-purpose.html" class="nav-link" data-access="team"><span>Mission, Vision & Purpose</span></a></li><li><a href="brand/values.html" class="nav-link" data-access="team"><span>Brand Values</span></a></li><li><a href="brand/origin-story.html" class="nav-link" data-access="team"><span>Origin Story</span></a></li><li><a href="brand/positioning.html" class="nav-link" data-access="team"><span>Positioning</span></a></li><li><a href="brand/value-proposition.html" class="nav-link" data-access="team"><span>Value Proposition</span></a></li><li><a href="brand/personality.html" class="nav-link" data-access="team"><span>Brand Personality</span></a></li><li><a href="brand/tone-of-voice.html" class="nav-link" data-access="team"><span>Tone of Voice</span></a></li><li><a href="../brand/index.html" class="nav-link" data-access="team"><span>Visual Identity</span></a></li></ul></details><details class="nav-section">
+      <ul class="nav-list"><li><a href="brand/index.html" class="nav-link" data-access="team"><span>Overview</span></a></li><li><a href="brand/mission-vision-purpose.html" class="nav-link" data-access="team"><span>Mission, Vision & Purpose</span></a></li><li><a href="brand/values.html" class="nav-link" data-access="team"><span>Brand Values</span></a></li><li><a href="brand/origin-story.html" class="nav-link" data-access="team"><span>Origin Story</span></a></li><li><a href="brand/positioning.html" class="nav-link" data-access="team"><span>Positioning</span></a></li><li><a href="brand/value-proposition.html" class="nav-link" data-access="team"><span>Value Proposition</span></a></li><li><a href="brand/personality.html" class="nav-link" data-access="team"><span>Brand Personality</span></a></li><li><a href="brand/tone-of-voice.html" class="nav-link" data-access="team"><span>Tone of Voice</span></a></li><li><a href="../brand/visual-identity.html" class="nav-link" data-access="team"><span>Visual Identity</span></a></li></ul></details><details class="nav-section">
       <summary class="nav-section-toggle">
-        <span>Design System</span>
+        <a href="design-system/index.html" class="nav-section-icon"><div class="icn-svg" data-icon="design-system"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M21 21H13V13H21V21ZM15 19H19V15H15V19Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22.2998 7.34961L16.6504 13L11 7.34961L16.6504 1.7002L22.2998 7.34961ZM13.8496 7.375L16.6748 10.2002L19.5 7.375L16.6748 4.5498L13.8496 7.375Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M11 11H3V3H11V11ZM5 9H9V5H5V9Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M8 11C10.7614 11 13 13.2386 13 16C13 18.7614 10.7614 21 8 21C5.23858 21 3 18.7614 3 16C3 13.2386 5.23858 11 8 11ZM8 13C6.34315 13 5 14.3431 5 16C5 17.6569 6.34315 19 8 19C9.65685 19 11 17.6569 11 16C11 14.3431 9.65685 13 8 13Z" fill="currentColor"/></svg></div></a><span>Design System</span>
         <span class="nav-toggle-icon">
           <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
             <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="design-system/overview.html" class="nav-link" data-access="team"><span>Overview</span></a></li><li><a href="design-system/color.html" class="nav-link" data-access="team"><span>Color</span></a></li><li><a href="design-system/typography.html" class="nav-link" data-access="team"><span>Typography</span></a></li><li><a href="design-system/spacing.html" class="nav-link" data-access="team"><span>Spacing</span></a></li><li><a href="design-system/border.html" class="nav-link" data-access="team"><span>Border</span></a></li><li><a href="design-system/iconography.html" class="nav-link" data-access="team"><span>Iconography</span></a></li><li><a href="design-system/button.html" class="nav-link" data-access="team"><span>Button</span></a></li><li><a href="design-system/callout.html" class="nav-link" data-access="team"><span>Callout</span></a></li><li><a href="design-system/disclosure.html" class="nav-link" data-access="team"><span>Disclosure</span></a></li><li><a href="design-system/form.html" class="nav-link" data-access="team"><span>Form</span></a></li><li><a href="design-system/table.html" class="nav-link" data-access="team"><span>Table</span></a></li><li><a href="../design-system/index.html" class="nav-link" data-access="team"><span>Style Guide</span></a></li></ul></details><details class="nav-section">
+      <ul class="nav-list"><li><a href="design-system/index.html" class="nav-link" data-access="team"><span>Overview</span></a></li><li><a href="design-system/design-system.html" class="nav-link" data-access="team"><span>Design System</span></a></li><li><a href="design-system/color.html" class="nav-link" data-access="team"><span>Color</span></a></li><li><a href="design-system/typography.html" class="nav-link" data-access="team"><span>Typography</span></a></li><li><a href="design-system/spacing.html" class="nav-link" data-access="team"><span>Spacing</span></a></li><li><a href="design-system/border.html" class="nav-link" data-access="team"><span>Border</span></a></li><li><a href="design-system/iconography.html" class="nav-link" data-access="team"><span>Iconography</span></a></li><li><a href="design-system/button.html" class="nav-link" data-access="team"><span>Button</span></a></li><li><a href="design-system/callout.html" class="nav-link" data-access="team"><span>Callout</span></a></li><li><a href="design-system/disclosure.html" class="nav-link" data-access="team"><span>Disclosure</span></a></li><li><a href="design-system/form.html" class="nav-link" data-access="team"><span>Form</span></a></li><li><a href="design-system/table.html" class="nav-link" data-access="team"><span>Table</span></a></li><li><a href="../design-system/style-guide.html" class="nav-link" data-access="team"><span>Style Guide</span></a></li></ul></details><details class="nav-section">
       <summary class="nav-section-toggle">
-        <span>Code</span>
+        <a href="docs/index.html" class="nav-section-icon"><div class="icn-svg" data-icon="docs"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 21V3H22V21H2ZM4 17C4 18.1046 4.89543 19 6 19H18C19.1046 19 20 18.1046 20 17V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V17ZM6 17H15V15H6V17ZM6 13H18V11H6V13ZM6 9H18V7H6V9Z" fill="currentColor"/></svg></div></a><span>Docs</span>
         <span class="nav-toggle-icon">
           <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
             <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="code/javascript.html" class="nav-link" data-access="team"><span>JavaScript</span></a></li><li><a href="code/css.html" class="nav-link" data-access="team"><span>CSS</span></a></li><li><a href="code/layout.html" class="nav-link" data-access="team"><span>HTML Layout</span></a></li></ul></details><details class="nav-section">
+      <ul class="nav-list"><li><a href="docs/index.html" class="nav-link" data-access="team"><span>Overview</span></a></li><li class="nav-label">Code Standards</li><li><a href="docs/javascript.html" class="nav-link" data-access="team"><span>JavaScript</span></a></li><li><a href="docs/css.html" class="nav-link" data-access="team"><span>CSS</span></a></li><li><a href="docs/layout.html" class="nav-link" data-access="team"><span>HTML Layout</span></a></li><li><a href="docs/seo-best-practices.html" class="nav-link" data-access="team"><span>SEO</span></a></li><li><a href="docs/markdown-style.html" class="nav-link" data-access="team"><span>Markdown</span></a></li><li class="nav-label">Dev</li><li><a href="docs/setup.html" class="nav-link" data-access="admin"><span>Setup</span></a></li><li><a href="docs/folder-structure.html" class="nav-link" data-access="admin"><span>Folders</span></a></li><li><a href="docs/upgrading-docs.html" class="nav-link" data-access="admin"><span>Upgrading the Docs Engine</span></a></li><li><a href="docs/login-scenarios.html" class="nav-link" data-access="admin"><span>Login Scenarios</span></a></li><li class="nav-label">Site Management</li><li><a href="docs/access-control.html" class="nav-link" data-access="admin"><span>Access Control</span></a></li><li><a href="docs/client-setup.html" class="nav-link" data-access="admin"><span>Client Setup</span></a></li></ul></details><details class="nav-section">
       <summary class="nav-section-toggle">
-        <span>Content</span>
+        <a href="tools/index.html" class="nav-section-icon"><div class="icn-svg" data-icon="tools"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10.9013 18.1151L16.0763 11.9151H12.0763L12.8013 6.2401L8.17632 12.9151H11.6513L10.9013 18.1151ZM8.35132 21.9151L9.35132 14.9151H4.35132L13.3513 1.9151H15.3513L14.3513 9.9151H20.3513L10.3513 21.9151H8.35132Z" fill="currentColor"/></svg></div></a><span>Tools</span>
         <span class="nav-toggle-icon">
           <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
             <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="content/seo-best-practices.html" class="nav-link" data-access="team"><span>SEO</span></a></li><li><a href="design-system/markdown-style.html" class="nav-link" data-access="team"><span>Markdown</span></a></li></ul></details><details class="nav-section">
-      <summary class="nav-section-toggle">
-        <span>Project</span>
-        <span class="nav-toggle-icon">
-          <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
-            <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
-          </svg>
-        </span>
-      </summary>
-      <ul class="nav-list"><li><a href="project/setup.html" class="nav-link" data-access="team"><span>Setup</span></a></li><li><a href="project/folder-structure.html" class="nav-link" data-access="team"><span>Folders</span></a></li><li><a href="project/upgrading-docs.html" class="nav-link" data-access="team"><span>Upgrading the Docs Engine</span></a></li><li><a href="project/cpm-calculator.html" class="nav-link" data-access="team"><span>CPM Calculator</span></a></li><li><a href="project/svg-cleaner.html" class="nav-link" data-access="team"><span>SVG Cleaner</span></a></li><li><a href="project/display-ad-preview.html" class="nav-link" data-access="team"><span>Display Ad Preview</span></a></li></ul></details><details class="nav-section" data-access="admin">
-      <summary class="nav-section-toggle">
-        <span>Admin</span>
-        <span class="nav-toggle-icon">
-          <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
-            <path d="M3.58943 3L1.28943 0.7L1.98943 0L4.98943 3L1.98943 6L1.28943 5.3L3.58943 3Z" fill="currentColor"/>
-          </svg>
-        </span>
-      </summary>
-      <ul class="nav-list"><li><a href="admin/access-control.html" class="nav-link" data-access="admin"><span>Access Control</span></a></li><li><a href="admin/client-setup.html" class="nav-link" data-access="admin"><span>Client Setup</span></a></li><li class="nav-label">Login Scenarios</li><li><a href="../auth/login.html" class="nav-link" data-access="admin"><span>Login</span></a></li><li><a href="../auth/login.html#forgot" class="nav-link" data-access="admin"><span>Forgot Password</span></a></li><li><a href="../auth/login.html#recovery_token=dev" class="nav-link" data-access="admin"><span>Reset Password</span></a></li><li><a href="../auth/login.html#invite_token=dev" class="nav-link" data-access="admin"><span>Accept Invitation</span></a></li><li><a href="../auth/login.html#confirmation_token=dev" class="nav-link" data-access="admin"><span>Email Confirmation</span></a></li><li><a href="../auth/account.html" class="nav-link" data-access="admin"><span>Account</span></a></li><li><a href="../access-denied.html" class="nav-link" data-access="admin"><span>Access Denied</span></a></li></ul></details>`
+      <ul class="nav-list"><li><a href="tools/index.html" class="nav-link" data-access="team"><span>Overview</span></a></li><li><a href="tools/cpm-calculator.html" class="nav-link" data-access="admin"><span>CPM Calculator</span></a></li><li><a href="tools/svg-cleaner.html" class="nav-link" data-access="admin"><span>SVG Cleaner</span></a></li><li><a href="tools/display-ad-preview.html" class="nav-link" data-access="admin"><span>Display Ad Preview</span></a></li></ul></details>`
       + '</div>'
       + ''
       + '</aside>'
@@ -135,7 +122,7 @@
 
   // Fix relative paths in sidebar nav links
   if (base && hasSidebar) {
-    var links = mount.querySelectorAll('.site-sidebar .nav-link');
+    var links = mount.querySelectorAll('.site-sidebar .nav-link, .site-sidebar .nav-section-icon');
     for (var i = 0; i < links.length; i++) {
       var href = links[i].getAttribute('href');
       if (href && !href.startsWith('http') && !href.startsWith('/') && !href.startsWith('#')) {
@@ -197,6 +184,16 @@
         var isCollapsed = document.body.classList.toggle('sidebar-collapsed');
         localStorage.setItem(SIDEBAR_KEY, isCollapsed);
         this.setAttribute('aria-label', isCollapsed ? 'Expand sidebar' : 'Collapse sidebar');
+      });
+    }
+  }
+
+  // ── Section icon links: stop propagation to prevent details toggle ──
+  if (hasSidebar) {
+    var iconLinks = mount.querySelectorAll('.nav-section-icon');
+    for (var s = 0; s < iconLinks.length; s++) {
+      iconLinks[s].addEventListener('click', function(e) {
+        e.stopPropagation();
       });
     }
   }

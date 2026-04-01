@@ -2,9 +2,10 @@
 title: "Upgrading the Docs Engine"
 subtitle: "How to update the doc site across projects"
 description: "Guide to upgrading the documentation engine without affecting project content."
-section: "Project"
-order: 5
-access: "team"
+section: "Docs"
+subsection: "Dev"
+order: 22
+access: "admin"
 ---
 
 The doc site is split into two parts: **content** (your markdown files) and the **engine** (the generator that turns them into HTML). They are kept separate so you can upgrade the engine — better mobile nav, new sidebar, restyled layout — without ever touching your content.

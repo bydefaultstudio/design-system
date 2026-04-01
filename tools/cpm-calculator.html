@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML Layout - By Default Brand OS</title>
-    <meta name="description" content="How to structure pages using sections, containers, blocks, and grids.">
+    <title>CPM Calculator - By Default Brand OS</title>
+    <meta name="description" content="Complete guide to using the calculator, toggle options, and calculation formulas.">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
     <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="HTML Layout - By Default Brand OS">
-    <meta property="og:description" content="How to structure pages using sections, containers, blocks, and grids.">
+    <meta property="og:title" content="CPM Calculator - By Default Brand OS">
+    <meta property="og:description" content="Complete guide to using the calculator, toggle options, and calculation formulas.">
     <meta property="og:image" content="../assets/images/og/og-default.jpg">
     <meta property="og:type" content="website">
 
@@ -27,10 +27,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- Markdown CSS -->
-    <link rel="stylesheet" href="../assets/css/markdown.css">
 
     <!-- Site styles -->
     <link rel="stylesheet" href="../assets/css/style.css">
+
+    
+
+    <!-- Early theme loader: apply cached client theme before first paint -->
+    <script>
+    (function(){try{if(document.documentElement.getAttribute('data-client-theme'))return;var c=localStorage.getItem('bdd-client-theme');if(!c)return;var p=c.split('|'),k=p[0],css=p[1],fonts=p[2];if(!k||!css)return;var b='../';var l=document.createElement('link');l.id='client-theme-css';l.rel='stylesheet';l.href=b+css;document.head.appendChild(l);document.documentElement.setAttribute('data-client-theme',k);if(fonts){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://fonts.googleapis.com';pc.id='client-theme-fonts-preconnect';document.head.appendChild(pc);var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';pc2.id='client-theme-fonts-preconnect2';document.head.appendChild(pc2);var fl=document.createElement('link');fl.id='client-theme-fonts';fl.rel='stylesheet';fl.href=fonts;document.head.appendChild(fl)}}catch(e){}})();
+    </script>
 
     <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
     <script>
@@ -44,7 +50,7 @@
       })();
     </script>
 </head>
-<body class="auth-loading" data-access="team">
+<body class="auth-loading" data-access="admin">
 
     <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
     <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
@@ -60,11 +66,39 @@
         <!-- Page Header (full width, outside grid) -->
         <div class="page-header">
       <div class="container-small">
-        <h1>HTML Layout</h1>
-        <p class="page-subtitle" data-text-wrap="pretty">Page layout and structure primitives</p>
+        <h1>CPM Calculator</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">How to use the CPM & Spend Calculator</p>
         <div class="button-group justify-center">
-          <a href="../docs/layout.md" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
-          
+        <a href="../cpm-calculator/index.html" class="button is-small page-source-link">Open Tool</a>
+      </div>
+      </div>
+    </div>
+
+        <!-- Page Sub-bar (breadcrumbs + actions) -->
+        <div class="page-subbar">
+      <div class="page-subbar-inner">
+        <nav class="page-subbar-breadcrumbs" aria-label="Breadcrumb">
+          <a href="../tools/index.html">Tools</a>
+          <span class="breadcrumb-separator">/</span>
+          <span>CPM Calculator</span>
+        </nav>
+        <div class="page-subbar-actions">
+          <div class="subbar-dropdown">
+            <button class="header-link" type="button" aria-expanded="false" aria-label="Markdown source options">
+              <div class="icn-svg" data-icon="more-horizontal"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
+            </button>
+            <div class="subbar-dropdown-menu">
+              <a href="../docs/calculator-docs.md" class="header-link" download>
+                <div class="icn-svg" data-icon="download"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
+                <span>Download .md file</span>
+              </a>
+              <div class="header-dropdown-divider"></div>
+              <a href="../docs/calculator-docs.md" class="header-link" target="_blank" rel="noopener noreferrer">
+                <div class="icn-svg" data-icon="open-full"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21V3H9V5H7C5.89543 5 5 5.89543 5 7V17C5 18.1046 5.89543 19 7 19H17C18.1046 19 19 18.1046 19 17V15H21V21H3ZM9.7 15.7L8.3 14.3L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H12V3H21V12H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L9.7 15.7Z" fill="currentColor"/></svg></div>
+                <span>Open .md in new tab</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -73,355 +107,166 @@
         <div class="docs-content-grid padding-global">
             <!-- Main Content -->
             <main class="docs-main">
-                <article class="markdown-body">
-                    <p>This system provides a <strong>predictable layout structure</strong> that keeps spacing, alignment, and width consistent across all pages.</p>
+                <article>
+                    <p>The CPM &amp; Spend Calculator is a web-based tool for media planners and sales teams to calculate campaign impressions, fees, payouts, and margins based on monthly spend.</p>
 <hr>
-<h2 id="page-structure">Page Structure</h2>
-<p>All pages follow the same hierarchy:</p>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-q7wl9iyeg" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-q7wl9iyeg">body
-└─ page-wrapper
-└─ page-content
-└─ section
-└─ padding-global
-└─ container / max-width
-└─ block
-</code></pre>
-      </div>
-    
-<h3 id="why-this-matters">Why this matters</h3>
-<ul>
-<li>Clear separation of concerns</li>
-<li>Consistent spacing and widths</li>
-<li>Easy to scan and reason about layouts</li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-gu1wo84sf" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-gu1wo84sf" class="language-html">&lt;section&gt;
-  &lt;div class=&quot;padding-global&quot;&gt;
-    &lt;div class=&quot;container-medium&quot;&gt;
-      &lt;div class=&quot;block&quot;&gt;
-        &lt;!-- Content --&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/section&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="sections">Sections</h2>
-<p>Sections group <strong>major content areas</strong> and control <strong>vertical spacing</strong>.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Every major page section</li>
-<li>Any time you need vertical rhythm between content groups</li>
-</ul>
-<h3 id="rules">Rules</h3>
-<ul>
-<li>Sections own vertical spacing</li>
-<li>Use <code>.top-*</code> and <code>.bottom-*</code> classes</li>
-<li>Do not apply margins inside sections</li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-oufib9h72" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-oufib9h72" class="language-html">&lt;section class=&quot;top-large bottom-large&quot;&gt;
-  &lt;div class=&quot;padding-global&quot;&gt;
-    &lt;!-- Content --&gt;
-  &lt;/div&gt;
-&lt;/section&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="padding-global">Padding Global</h2>
-<p><code>.padding-global</code> provides <strong>consistent horizontal padding</strong>.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Inside every section</li>
-<li>Whenever content needs safe spacing from screen edges</li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-tfuwn4wwh" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-tfuwn4wwh" class="language-html">&lt;div class=&quot;padding-global&quot;&gt;
-  &lt;div class=&quot;container-medium&quot;&gt;
-    &lt;!-- Content --&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<p>Padding comes from <code>.padding-global</code>, <strong>never from containers</strong>.</p>
-<hr>
-<h2 id="containers">Containers</h2>
-<p>Containers constrain width and centre content in the viewport.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Most page content</li>
-<li>Any readable text or structured layout</li>
-</ul>
-<h3 id="key-rules">Key rules</h3>
-<ul>
-<li>Containers centre content</li>
-<li>Containers do <strong>not</strong> add padding</li>
-<li>Use one container per section (in most cases)</li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-elzk97xik" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-elzk97xik" class="language-html">&lt;div class=&quot;container-medium&quot;&gt;
-  &lt;div class=&quot;block&quot;&gt;
-    &lt;h2&gt;Heading&lt;/h2&gt;
-    &lt;p&gt;Content&lt;/p&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3 id="variants">Variants</h3>
+<h2 id="how-it-works">How It Works</h2>
+<p>The calculator has three main sections:</p>
+<h3 id="1-global-settings">1. Global Settings</h3>
+<p>Toggle buttons control which optional features are visible. All toggles are off by default.</p>
 <div class="table-scroll"><table class="table">
 <thead>
 <tr>
-<th>Class</th>
-<th>Use</th>
+<th>Toggle</th>
+<th>Shows</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>container-small</code></td>
-<td>Narrow layouts</td>
+<td><strong>By Default Fee</strong></td>
+<td>By Default Fee (CPM, £) input + By Default column</td>
 </tr>
 <tr>
-<td><code>container-medium</code></td>
-<td>Default readable width</td>
+<td><strong>Ad Hosting Fee</strong></td>
+<td>Ad Hosting Fee (CPM, £) input + Ad Hosting column</td>
 </tr>
 <tr>
-<td><code>container-large</code></td>
-<td>Wider layouts</td>
+<td><strong>Add Partner</strong></td>
+<td>Partner Name, Partner Share (%), and Net (%) inputs + Partner column</td>
+</tr>
+</tbody></table></div>
+<p>When <strong>Add Partner</strong> is enabled:</p>
+<ul>
+<li><strong>Partner Name</strong> — free-text input that updates the &quot;Partner&quot; column header in the table (e.g. entering &quot;Dianomi&quot; changes the header to &quot;Dianomi&quot;)</li>
+<li><strong>Partner Share (%)</strong> and <strong>Net (%)</strong> are linked — they always sum to 100%. Changing one auto-updates the other</li>
+</ul>
+<h3 id="2-campaign-overview">2. Campaign Overview</h3>
+<ul>
+<li><strong>Campaign CPM (£)</strong> — cost per thousand impressions (default: £15)</li>
+<li><strong>Total campaign spend (£)</strong> — total budget for the campaign (default: £300,000)</li>
+<li><strong>Calculated impressions</strong> — total impressions based on spend and CPM (read-only)</li>
+</ul>
+<h3 id="3-monthly-breakdown-table">3. Monthly Breakdown Table</h3>
+<p>The primary output:</p>
+<ul>
+<li>One row per month (January through December)</li>
+<li><strong>Campaign (£)</strong> — editable monthly spend</li>
+<li><strong>Impressions</strong> — calculated impressions for that month</li>
+<li><strong>Net</strong> — always visible, shows the net amount after all deductions and partner share</li>
+</ul>
+<p>Optional columns (shown/hidden via toggle buttons):</p>
+<ul>
+<li><strong>By Default</strong> — By Default earnings for the month</li>
+<li><strong>Ad Hosting</strong> — Ad hosting costs for the month</li>
+<li><strong>Partner</strong> — partner share amount for the month</li>
+</ul>
+<p>The <strong>Totals</strong> row sums all monthly values.</p>
+<hr>
+<h2 id="calculations">Calculations</h2>
+<p>All calculations update instantly when inputs change. Impressions are always calculated, never manually entered.</p>
+<h3 id="core-calculations">Core Calculations</h3>
+<p><strong>Impressions</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-g5apbd69v" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-g5apbd69v">(Campaign spend ÷ Campaign CPM) × 1,000
+</code></pre>
+      </div>
+    
+<p><strong>By Default Earnings</strong> (when enabled)</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-f3iz3terx" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-f3iz3terx">(Impressions ÷ 1,000) × By Default Fee CPM
+</code></pre>
+      </div>
+    
+<p><strong>Ad Hosting Cost</strong> (when enabled)</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-yud7j2rdf" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-yud7j2rdf">(Impressions ÷ 1,000) × Ad Hosting Fee CPM
+</code></pre>
+      </div>
+    
+<p><strong>Net Spend</strong> (calculated internally)</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-aglh8zxs5" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-aglh8zxs5">Campaign spend − By Default earnings − Ad hosting cost
+</code></pre>
+      </div>
+    
+<h3 id="partner-split-when-add-partner-is-enabled">Partner Split (when Add Partner is enabled)</h3>
+<p>Partner Share and Net are complementary percentages of net spend:</p>
+<p><strong>Partner Share</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-dl5xlk092" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-dl5xlk092">Net spend × (Partner Share % ÷ 100)
+</code></pre>
+      </div>
+    
+<p><strong>Net</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-c3wb27agy" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-c3wb27agy">Net spend × (Net % ÷ 100)
+</code></pre>
+      </div>
+    
+<p>Where <code>Partner Share % + Net % = 100%</code> always.</p>
+<p>When Add Partner is <strong>not</strong> enabled, the Net column shows 100% of net spend.</p>
+<hr>
+<h2 id="usage-tips">Usage Tips</h2>
+<ol>
+<li><strong>Start with Campaign CPM</strong> — set your base CPM rate first</li>
+<li><strong>Enter monthly spend</strong> — type spend values directly in the table cells</li>
+<li><strong>Toggle optional features</strong> — click the toggle buttons in Global Settings to show/hide fields</li>
+<li><strong>Name the partner</strong> — use the Partner Name field to label the Partner column for your audience</li>
+<li><strong>Instant updates</strong> — all calculations update automatically as you type</li>
+</ol>
+<hr>
+<h2 id="default-values">Default Values</h2>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Input</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Campaign CPM</td>
+<td>£15</td>
+</tr>
+<tr>
+<td>By Default Fee CPM</td>
+<td>£1 (when enabled)</td>
+</tr>
+<tr>
+<td>Ad Hosting Fee CPM</td>
+<td>£1 (when enabled)</td>
+</tr>
+<tr>
+<td>Partner Share</td>
+<td>70% (when enabled)</td>
+</tr>
+<tr>
+<td>Net</td>
+<td>30% (when enabled)</td>
+</tr>
+<tr>
+<td>Total campaign spend</td>
+<td>£300,000</td>
 </tr>
 </tbody></table></div>
 <hr>
-<h2 id="max-width">Max-Width</h2>
-<p>Max-width utilities apply <strong>width limits only</strong>.</p>
-<h3 id="when-to-use">When to use</h3>
+<h2 id="technical-notes">Technical Notes</h2>
 <ul>
-<li>Special cases</li>
-<li>Content that should not be centred</li>
-<li>Breaking out of container behaviour</li>
-</ul>
-<div class="table-scroll"><table class="table">
-<thead>
-<tr>
-<th>Class</th>
-<th>Use</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>max-width-small</code></td>
-<td>Narrow constraint</td>
-</tr>
-<tr>
-<td><code>max-width-medium</code></td>
-<td>Default readable</td>
-</tr>
-<tr>
-<td><code>max-width-large</code></td>
-<td>Wide constraint</td>
-</tr>
-<tr>
-<td><code>max-width-full</code></td>
-<td>No constraint</td>
-</tr>
-</tbody></table></div>
-<p><strong>Rule of thumb</strong></p>
-<ul>
-<li>Centre content → use a container</li>
-<li>Only limit width → use max-width (exception, not default)</li>
-</ul>
-<hr>
-<h2 id="blocks">Blocks</h2>
-<p>Blocks group <strong>related content</strong> and manage internal spacing.</p>
-<h3 id="when-to-use">When to use</h3>
-<ul>
-<li>Heading + text</li>
-<li>Text + buttons</li>
-<li>Image + caption</li>
-<li>Any content that belongs together</li>
-</ul>
-<h3 id="default-behaviour">Default behaviour</h3>
-<ul>
-<li>Vertical flex layout</li>
-<li>Uses <code>gap</code> for spacing</li>
-<li>No margins on children</li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-0w16d09m0" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-0w16d09m0" class="language-html">&lt;div class=&quot;block&quot;&gt;
-  &lt;h2&gt;Heading&lt;/h2&gt;
-  &lt;p&gt;Body text&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3 id="gap-modifiers">Gap modifiers</h3>
-<div class="table-scroll"><table class="table">
-<thead>
-<tr>
-<th>Class</th>
-<th>Effect</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>gap-xs</code></td>
-<td>Very tight</td>
-</tr>
-<tr>
-<td><code>gap-s</code></td>
-<td>Small</td>
-</tr>
-<tr>
-<td><code>gap-m</code></td>
-<td>Default</td>
-</tr>
-<tr>
-<td><code>gap-l</code></td>
-<td>Large</td>
-</tr>
-<tr>
-<td><code>gap-xl</code></td>
-<td>Extra large</td>
-</tr>
-</tbody></table></div>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-ccc453ubg" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-ccc453ubg" class="language-html">&lt;div class=&quot;block gap-l&quot;&gt;
-  &lt;h2&gt;Heading&lt;/h2&gt;
-  &lt;p&gt;More space between elements&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="block-layout-modifiers">Block Layout Modifiers</h2>
-<p>Blocks can change layout or alignment.</p>
-<div class="table-scroll"><table class="table">
-<thead>
-<tr>
-<th>Class</th>
-<th>Effect</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>row</code></td>
-<td>Horizontal layout</td>
-</tr>
-<tr>
-<td><code>row-reverse</code></td>
-<td>Reversed horizontal</td>
-</tr>
-<tr>
-<td><code>align-start</code></td>
-<td>Align items start</td>
-</tr>
-<tr>
-<td><code>align-center</code></td>
-<td>Centre items</td>
-</tr>
-<tr>
-<td><code>align-end</code></td>
-<td>Align items end</td>
-</tr>
-</tbody></table></div>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-ikduypkyi" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-ikduypkyi" class="language-html">&lt;div class=&quot;block row gap-m align-center&quot;&gt;
-  &lt;p&gt;Text&lt;/p&gt;
-  &lt;button&gt;Action&lt;/button&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="grid">Grid</h2>
-<p>Grids create <strong>column-based layouts</strong>.<br>They are not spacing utilities.</p>
-<h3 id="base-grid">Base grid</h3>
-<ul>
-<li>Two equal columns</li>
-<li>Default gap applied</li>
-</ul>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-uqfublh56" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-uqfublh56" class="language-html">&lt;div class=&quot;grid&quot;&gt;
-  &lt;div&gt;Item&lt;/div&gt;
-  &lt;div&gt;Item&lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3 id="column-modifiers">Column modifiers</h3>
-<div class="table-scroll"><table class="table">
-<thead>
-<tr>
-<th>Class</th>
-<th>Columns</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>cols-3</code></td>
-<td>Three columns</td>
-</tr>
-<tr>
-<td><code>cols-4</code></td>
-<td>Four columns</td>
-</tr>
-</tbody></table></div>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-rtsdv3uja" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-rtsdv3uja" class="language-html">&lt;div class=&quot;grid cols-3&quot;&gt;
-  &lt;div&gt;Item 1&lt;/div&gt;
-  &lt;div&gt;Item 2&lt;/div&gt;
-  &lt;div&gt;Item 3&lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3 id="item-width">Item width</h3>
-<div class="table-scroll"><table class="table">
-<thead>
-<tr>
-<th>Class</th>
-<th>Effect</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>fit-content</code></td>
-<td>Item sizes to content</td>
-</tr>
-</tbody></table></div>
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-oo1gt87ze" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-oo1gt87ze" class="language-html">&lt;div class=&quot;grid&quot;&gt;
-  &lt;div&gt;Flexible column&lt;/div&gt;
-  &lt;div class=&quot;fit-content&quot;&gt;Fixed&lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3 id="rules">Rules</h3>
-<ul>
-<li>Use grids for layout, not spacing</li>
-<li>Use <code>gap-*</code> to adjust spacing</li>
-<li>Combine column + gap modifiers as needed</li>
+<li>Plain JavaScript only (no external dependencies)</li>
+<li>All calculations are deterministic and visible</li>
+<li>Feature toggles use <code>data-opt</code> attributes on HTML elements</li>
+<li>Hidden features don&#39;t affect visible totals</li>
+<li>Works in all modern browsers</li>
 </ul>
 
                 </article>
@@ -430,7 +275,7 @@
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#page-structure" class="toc-link">Page Structure</a></li><li class="toc-item toc-level-2"><a href="#sections" class="toc-link">Sections</a></li><li class="toc-item toc-level-2"><a href="#padding-global" class="toc-link">Padding Global</a></li><li class="toc-item toc-level-2"><a href="#containers" class="toc-link">Containers</a></li><li class="toc-item toc-level-2"><a href="#max-width" class="toc-link">Max-Width</a></li><li class="toc-item toc-level-2"><a href="#blocks" class="toc-link">Blocks</a></li><li class="toc-item toc-level-2"><a href="#block-layout-modifiers" class="toc-link">Block Layout Modifiers</a></li><li class="toc-item toc-level-2"><a href="#grid" class="toc-link">Grid</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#how-it-works" class="toc-link">How It Works</a></li><li class="toc-item toc-level-2"><a href="#calculations" class="toc-link">Calculations</a></li><li class="toc-item toc-level-2"><a href="#usage-tips" class="toc-link">Usage Tips</a></li><li class="toc-item toc-level-2"><a href="#default-values" class="toc-link">Default Values</a></li><li class="toc-item toc-level-2"><a href="#technical-notes" class="toc-link">Technical Notes</a></li></ul></nav></div>
     </aside>
         </div>
 
@@ -465,18 +310,18 @@
         </dialog>
 
         <!-- Page Navigation (Previous / Next) -->
-        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="css.html" class="page-nav-link page-nav-prev" rel="prev">
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="../docs/client-setup.html" class="page-nav-link page-nav-prev" rel="prev">
       <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
       <span class="page-nav-text">
         <span class="page-nav-label">Previous</span>
-        
-        <h3 class="page-nav-title">CSS</h3>
+        <span class="page-nav-section">Docs</span>
+        <h3 class="page-nav-title">Client Setup</h3>
       </span>
-    </a><a href="../content/seo-best-practices.html" class="page-nav-link page-nav-next" rel="next">
+    </a><a href="svg-cleaner.html" class="page-nav-link page-nav-next" rel="next">
       <span class="page-nav-text">
         <span class="page-nav-label">Next</span>
-        <span class="page-nav-section">Content</span>
-        <h3 class="page-nav-title">SEO</h3>
+        
+        <h3 class="page-nav-title">SVG Cleaner</h3>
       </span>
       <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
     </a></div></nav>
@@ -657,6 +502,45 @@
         });
         btn.querySelector('button').addEventListener('click', function() {
           window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+
+    <!-- Sub-bar dropdown toggle -->
+    <script>
+      (function() {
+        var dropdowns = document.querySelectorAll('.subbar-dropdown');
+        dropdowns.forEach(function(dd) {
+          var toggle = dd.querySelector(':scope > .header-link');
+          if (!toggle) return;
+
+          toggle.addEventListener('click', function() {
+            var wasOpen = dd.classList.contains('is-open');
+            dropdowns.forEach(function(d) {
+              d.classList.remove('is-open');
+              var t = d.querySelector(':scope > .header-link');
+              if (t) t.setAttribute('aria-expanded', 'false');
+            });
+            if (!wasOpen) {
+              dd.classList.add('is-open');
+              toggle.setAttribute('aria-expanded', 'true');
+            }
+          });
+
+          document.addEventListener('click', function(e) {
+            if (!dd.contains(e.target)) {
+              dd.classList.remove('is-open');
+              toggle.setAttribute('aria-expanded', 'false');
+            }
+          });
+
+          document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && dd.classList.contains('is-open')) {
+              dd.classList.remove('is-open');
+              toggle.setAttribute('aria-expanded', 'false');
+              toggle.focus();
+            }
+          });
         });
       })();
     </script>

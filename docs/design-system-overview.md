@@ -1,11 +1,11 @@
 ---
-title: "Overview"
+title: "Design System"
 subtitle: "Introduction to the design system"
 description: "Learn what a design system is and what it contains."
 section: "Design System"
 order: 1
 access: "team"
-toolUrl: "../design-system/index.html"
+toolUrl: "../design-system/style-guide.html"
 toolLabel: "Open Style Guide"
 ---
 

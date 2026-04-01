@@ -2,7 +2,8 @@
 title: "Markdown"
 subtitle: "Styling guidelines for markdown content"
 description: "Documentation for markdown styling and design system integration"
-section: "Content"
+section: "Docs"
+subsection: "Code Standards"
 order: 10
 access: "team"
 ---

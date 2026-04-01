@@ -2,8 +2,9 @@
 title: "Client Setup"
 subtitle: "Setting up a new client environment"
 description: "Complete guide to creating client folders, themes, logos, and user accounts."
-section: "Admin"
-order: 2
+section: "Docs"
+subsection: "Site Management"
+order: 31
 access: "admin"
 ---
 

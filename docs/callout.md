@@ -141,8 +141,8 @@ For key information users need to achieve their goal.
 
 ---
 
-## Relationship to Markdown Alerts
+## Relationship to Alerts
 
-The `.markdown-body` CSS includes GitHub-style alerts (`.markdown-alert-note`, etc.) with their own color tokens. These are scoped to rendered markdown content only.
+The site also includes an `.alert` component (`.alert-note`, `.alert-tip`, `.alert-important`, `.alert-warning`, `.alert-caution`) for inline callout boxes — typically used in documentation content. These share the same colour tokens as the design system callouts.
 
-The design system callouts (`.callout`) are the **global, project-wide** equivalent. When building pages, always use `.callout` — not the markdown alert classes.
+The design system callouts (`.callout`) are the **structured, project-wide** equivalent with icon support and richer layout. For simple inline messages, use `.alert`. For prominent UI callouts, use `.callout`.

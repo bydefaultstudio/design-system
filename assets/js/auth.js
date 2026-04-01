@@ -3,8 +3,9 @@
  * Handles login/logout via GoTrue (Netlify Identity API), role-based
  * page gating, element-level visibility, and per-client folder access.
  *
- * On localhost: runs in dev mode with simulated users and a role-switcher toolbar.
+ * On localhost: runs in dev mode with simulated users (no real auth needed).
  * On production: uses GoTrue JS to authenticate against Netlify Identity.
+ * Admin users get a role switcher dropdown to preview the site as any role.
  *
  * Auth gating: protected pages redirect to /auth/login.html instead of
  * showing an inline overlay. The login page handles all auth flows
@@ -73,6 +74,32 @@
       }
     }
     return highest;
+  }
+
+  //------- Role Switching (Admin) -------//
+
+  function getActiveRole() {
+    var role = sessionStorage.getItem('active-role');
+    if (!role || ROLE_HIERARCHY.indexOf(role) === -1) return null;
+    return role;
+  }
+
+  function getActiveClient() {
+    return sessionStorage.getItem('active-client') || '';
+  }
+
+  function buildRoleUser(realUser, role) {
+    var user = {
+      email: realUser.email,
+      app_metadata: {
+        roles: [role]
+      },
+      user_metadata: realUser.user_metadata || {}
+    };
+    if (role === 'client') {
+      user.app_metadata.clientFolder = getActiveClient();
+    }
+    return user;
   }
 
   function getRequiredRole() {
@@ -231,10 +258,17 @@
 
   //------- UI Functions -------//
 
+  var contentShown = false;
+
   function showContent() {
+    if (contentShown) return;
+    contentShown = true;
     document.body.classList.remove('auth-loading');
     document.body.classList.add('auth-ready');
   }
+
+  // Safety: always show content within 2 seconds, even if theme CSS fails to load
+  setTimeout(showContent, 2000);
 
   function redirectAccessDenied() {
     var currentPage = getCurrentPagePath();
@@ -510,7 +544,7 @@
       if (IS_DEV) {
         setTimeout(function () {
           var devConfig = AUTH_CONFIG.devMode || {};
-          sessionStorage.setItem('auth-dev-role', devConfig.defaultRole || 'admin');
+          sessionStorage.setItem('active-role', devConfig.defaultRole || 'admin');
           var redirect = getRedirectTarget();
           window.location.href = redirect ? redirect : '/';
         }, 500);
@@ -630,7 +664,12 @@
     + '<path d="M10.0378 22V16H12.0378V18C12.0378 19.1046 12.9333 20 14.0378 20H18.0378C19.1424 20 20.0378 19.1046 20.0378 18V6C20.0378 4.89543 19.1424 4 18.0378 4H14.0378C12.9333 4 12.0378 4.89543 12.0378 6V8H10.0378V2H22.0378V22H10.0378Z" fill="currentColor"></path>'
     + '</svg>';
 
-  function renderAuthHeaderDropdown(user) {
+  /**
+   * Render the combined account + role switcher dropdown.
+   * @param {object|null} user — current user (null = logged out)
+   * @param {string|null} activeRole — when set, shows role switcher sections (admin only)
+   */
+  function renderAuthHeaderDropdown(user, activeRole) {
     var container = document.querySelector('.auth-header-container');
     if (!container) return;
 
@@ -644,13 +683,25 @@
       var fullName = userMeta.full_name || '';
       var email = user.email || '';
       var initial = fullName ? fullName.charAt(0).toUpperCase() : email.charAt(0).toUpperCase();
+      var isAdmin = activeRole !== null && activeRole !== undefined;
+
+      // Resolve toggle label (current role or client name)
+      var toggleLabel = displayRole.charAt(0).toUpperCase() + displayRole.slice(1);
+      if (isAdmin) {
+        var savedClient = getActiveClient();
+        if (activeRole === 'client' && savedClient && typeof THEME_CONFIG !== 'undefined' && THEME_CONFIG.themes && THEME_CONFIG.themes[savedClient]) {
+          toggleLabel = THEME_CONFIG.themes[savedClient].label;
+        } else {
+          toggleLabel = activeRole.charAt(0).toUpperCase() + activeRole.slice(1);
+        }
+      }
 
       // Dropdown wrapper
       var dropdown = document.createElement('div');
       dropdown.id = 'auth-header-dropdown';
       dropdown.className = 'header-dropdown';
 
-      // Toggle
+      // Toggle — user icon + role label + chevron
       var toggle = document.createElement('div');
       toggle.className = 'header-link';
       toggle.setAttribute('role', 'button');
@@ -658,6 +709,7 @@
       toggle.setAttribute('aria-label', 'Account menu');
       toggle.setAttribute('aria-expanded', 'false');
       toggle.innerHTML = '<div class="icn-svg" data-icon="user">' + ICON_USER + '</div>'
+        + '<span>' + toggleLabel + '</span>'
         + '<div class="icn-svg header-link-chevron" data-icon="chevron-down">' + ICON_CHEVRON + '</div>';
       dropdown.appendChild(toggle);
 
@@ -665,14 +717,13 @@
       var menu = document.createElement('div');
       menu.className = 'header-dropdown-menu';
 
-      // Role label
+      // -- User info section --
       var roleLabel = document.createElement('div');
       roleLabel.className = 'header-dropdown-label';
       roleLabel.style.textTransform = 'capitalize';
       roleLabel.textContent = 'Role: ' + displayRole;
       menu.appendChild(roleLabel);
 
-      // User info
       var userInfo = document.createElement('div');
       userInfo.className = 'header-link';
       userInfo.style.pointerEvents = 'none';
@@ -686,21 +737,106 @@
       }
       menu.appendChild(userInfo);
 
-      // Divider
-      var divider = document.createElement('div');
-      divider.className = 'header-dropdown-divider';
-      menu.appendChild(divider);
+      // -- Role switcher section (admin only) --
+      if (isAdmin) {
+        var navMount = document.getElementById('site-nav');
+        var basePath = navMount ? (navMount.getAttribute('data-base') || '') : '';
 
-      // Account link
-      var navMount = document.getElementById('site-nav');
-      var basePath = navMount ? (navMount.getAttribute('data-base') || '') : '';
+        var ICON_CHECK = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
+          + '<path d="M9.55 18L3.85 12.3L5.275 10.875L9.55 15.15L18.725 5.975L20.15 7.4L9.55 18Z" fill="currentColor"/>'
+          + '</svg>';
+
+        // Switch Role
+        var roleDivider = document.createElement('div');
+        roleDivider.className = 'header-dropdown-divider';
+        menu.appendChild(roleDivider);
+
+        var switchLabel = document.createElement('div');
+        switchLabel.className = 'header-dropdown-label';
+        switchLabel.textContent = 'Switch Role';
+        menu.appendChild(switchLabel);
+
+        function addRoleItem(displayName, isActive, clickFn) {
+          var item = document.createElement('div');
+          item.className = 'header-link';
+          item.setAttribute('role', 'button');
+          item.setAttribute('tabindex', '0');
+
+          var icon = document.createElement('div');
+          icon.className = 'icn-svg';
+          icon.setAttribute('data-icon', 'check');
+          if (isActive) {
+            icon.innerHTML = ICON_CHECK;
+          } else {
+            icon.style.display = 'none';
+          }
+          item.appendChild(icon);
+
+          var text = document.createElement('span');
+          text.textContent = displayName;
+          item.appendChild(text);
+
+          item.addEventListener('click', clickFn);
+          menu.appendChild(item);
+        }
+
+        var systemRoles = ['admin', 'team', 'public'];
+        systemRoles.forEach(function (role) {
+          addRoleItem(role.charAt(0).toUpperCase() + role.slice(1), role === activeRole, function () {
+            sessionStorage.setItem('active-role', role);
+            sessionStorage.removeItem('active-client');
+            if (role === 'public') {
+              window.location.reload();
+            } else {
+              window.location.href = basePath + 'index.html';
+            }
+          });
+        });
+
+        // Switch Client
+        if (typeof THEME_CONFIG !== 'undefined' && THEME_CONFIG.themes) {
+          var themeKeys = Object.keys(THEME_CONFIG.themes);
+          if (themeKeys.length > 0) {
+            var clientDivider = document.createElement('div');
+            clientDivider.className = 'header-dropdown-divider';
+            menu.appendChild(clientDivider);
+
+            var clientLabel = document.createElement('div');
+            clientLabel.className = 'header-dropdown-label';
+            clientLabel.textContent = 'Switch Client';
+            menu.appendChild(clientLabel);
+
+            themeKeys.forEach(function (key) {
+              var theme = THEME_CONFIG.themes[key];
+              var isActive = activeRole === 'client' && savedClient === key;
+              addRoleItem(theme.label, isActive, function () {
+                sessionStorage.setItem('active-role', 'client');
+                sessionStorage.setItem('active-client', key);
+                window.location.href = basePath + key + '/index.html';
+              });
+            });
+          }
+        }
+      }
+
+      // -- Account & Logout section --
+      var accountDivider = document.createElement('div');
+      accountDivider.className = 'header-dropdown-divider';
+      menu.appendChild(accountDivider);
+
+      var navMountForAccount = document.getElementById('site-nav');
+      var basePathForAccount = navMountForAccount ? (navMountForAccount.getAttribute('data-base') || '') : '';
       var accountLink = document.createElement('a');
       accountLink.className = 'header-link';
-      accountLink.href = basePath + 'auth/account.html';
-      accountLink.textContent = 'Account';
+      accountLink.href = basePathForAccount + 'auth/account.html';
+      accountLink.innerHTML = '<div class="icn-svg" data-icon="settings">'
+        + '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
+        + '<path fill-rule="evenodd" clip-rule="evenodd" d="M12 8C14.2091 8 16 9.79086 16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8ZM12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10Z" fill="currentColor"/>'
+        + '<path fill-rule="evenodd" clip-rule="evenodd" d="M15.1504 5.2002C15.3669 5.28349 15.5712 5.38341 15.7627 5.5C15.9543 5.61664 16.1419 5.74171 16.3252 5.875L19.2998 4.625L22.0498 9.375L19.4746 11.3252C19.4912 11.4417 19.5 11.5539 19.5 11.6621V12.3379C19.5 12.446 19.4834 12.5584 19.4502 12.6748L22.0254 14.625L19.2754 19.375L16.3252 18.125C16.1419 18.2583 15.95 18.3833 15.75 18.5C15.5501 18.6166 15.3502 18.7165 15.1504 18.7998L14.75 22H9.25L8.84961 18.7998C8.63308 18.7165 8.42886 18.6166 8.2373 18.5C8.04568 18.3834 7.8581 18.2583 7.6748 18.125L4.7002 19.375L1.9502 14.625L4.52539 12.6748C4.50876 12.5583 4.50002 12.4461 4.5 12.3379V11.6621C4.50002 11.5539 4.50876 11.4417 4.52539 11.3252L1.9502 9.375L4.7002 4.625L7.6748 5.875C7.85814 5.74167 8.05 5.61667 8.25 5.5C8.44987 5.38341 8.64974 5.28349 8.84961 5.2002L9.25 2H14.75L15.1504 5.2002ZM10.6748 6.65039C10.1582 6.78372 9.67891 6.97901 9.2373 7.2373C8.79577 7.49556 8.39197 7.80828 8.02539 8.1748L5.5498 7.15039L4.5752 8.84961L6.72461 10.4502C6.64133 10.7001 6.58313 10.9503 6.5498 11.2002C6.51649 11.4501 6.5 11.7167 6.5 12C6.5 12.2667 6.51647 12.5254 6.5498 12.7754C6.58315 13.0253 6.64132 13.2755 6.72461 13.5254L4.5752 15.1504L5.5498 16.8496L8.02539 15.7998C8.39202 16.1831 8.79569 16.5044 9.2373 16.7627C9.67891 17.021 10.1582 17.2163 10.6748 17.3496L11 20H12.9746L13.3252 17.3496C13.8417 17.2163 14.3211 17.021 14.7627 16.7627C15.2042 16.5044 15.608 16.1917 15.9746 15.8252L18.4502 16.8496L19.4248 15.1504L17.2754 13.5254C17.3587 13.2921 17.4169 13.0454 17.4502 12.7871C17.4835 12.5289 17.5 12.2665 17.5 12C17.5 11.7335 17.4835 11.4711 17.4502 11.2129C17.4169 10.9546 17.3587 10.7079 17.2754 10.4746L19.4248 8.84961L18.4502 7.15039L15.9746 8.2002C15.608 7.81692 15.2043 7.49561 14.7627 7.2373C14.3211 6.97903 13.8417 6.78372 13.3252 6.65039L13 4H11.0254L10.6748 6.65039Z" fill="currentColor"/>'
+        + '</svg></div>'
+        + '<span>Account</span>';
       menu.appendChild(accountLink);
 
-      // Logout
       var logoutItem = document.createElement('div');
       logoutItem.className = 'header-link';
       logoutItem.setAttribute('role', 'button');
@@ -708,8 +844,10 @@
       logoutItem.innerHTML = '<div class="icn-svg" data-icon="logout">' + ICON_LOGOUT + '</div>'
         + '<span>Log out</span>';
       logoutItem.addEventListener('click', function () {
+        sessionStorage.removeItem('active-role');
+        sessionStorage.removeItem('active-client');
         if (IS_DEV) {
-          sessionStorage.setItem('auth-dev-role', 'logged-out');
+          sessionStorage.setItem('active-role', 'logged-out');
           window.location.reload();
         } else {
           handleLogout();
@@ -862,7 +1000,7 @@
   function checkAuth() {
     var requiredRole = getRequiredRole();
 
-    // Public pages: show content immediately (except account page requires login)
+    // Public pages: show content once theme is ready (or immediately if no theme)
     if (requiredRole === 'public') {
       if (isAccountPage()) {
         if (gotrueAuth) {
@@ -874,22 +1012,37 @@
         }
       }
       setRoleClass('public');
-      showContent();
+      var hasThemeCache = false;
+      try { hasThemeCache = !!localStorage.getItem('bdd-client-theme'); } catch (e) {}
       if (gotrueAuth) {
         var user = gotrueAuth.currentUser();
         if (user) {
           var metadata = user.app_metadata || {};
           var userRole = getEffectiveRole(metadata.roles || []);
+          var realRole = userRole;
+          if (userRole === 'admin') {
+            var switchedRole = getActiveRole();
+            if (switchedRole) {
+              user = buildRoleUser(user, switchedRole);
+              userRole = switchedRole;
+            }
+          }
           setRoleClass(userRole);
-          if (typeof initThemeForUser === 'function') initThemeForUser(user);
-          renderAuthHeaderDropdown(user);
+          renderAuthHeaderDropdown(user, realRole === 'admin' ? userRole : null);
           initAccountPage(user);
           filterNavLinks(userRole, user);
+          if (typeof initThemeForUser === 'function') {
+            initThemeForUser(user, function () { showContent(); });
+          } else {
+            showContent();
+          }
         } else {
           renderAuthHeaderDropdown(null);
+          showContent();
         }
       } else {
         renderAuthHeaderDropdown(null);
+        showContent();
       }
       return;
     }
@@ -915,8 +1068,19 @@
       return;
     }
 
+    var realRole = userRole;
+    if (userRole === 'admin') {
+      var switchedRole = getActiveRole();
+      if (switchedRole) {
+        user = buildRoleUser(user, switchedRole);
+        userRole = switchedRole;
+      }
+    }
+
+    var adminActiveRole = realRole === 'admin' ? userRole : null;
+
     if (!hasAccessForValue(userRole, requiredRole, user)) {
-      renderAuthHeaderDropdown(user);
+      renderAuthHeaderDropdown(user, adminActiveRole);
       setRoleClass(userRole);
       redirectAccessDenied();
       return;
@@ -924,7 +1088,7 @@
 
     var pagePath = getCurrentPagePath();
     if (!hasClientFolderAccess(user, pagePath)) {
-      renderAuthHeaderDropdown(user);
+      renderAuthHeaderDropdown(user, adminActiveRole);
       setRoleClass(userRole);
       redirectAccessDenied();
       return;
@@ -932,11 +1096,14 @@
 
     // Access granted
     setRoleClass(userRole);
-    if (typeof initThemeForUser === 'function') initThemeForUser(user);
-    renderAuthHeaderDropdown(user);
+    renderAuthHeaderDropdown(user, adminActiveRole);
     filterNavLinks(userRole, user);
     initAccountPage(user);
-    showContent();
+    if (typeof initThemeForUser === 'function') {
+      initThemeForUser(user, function () { showContent(); });
+    } else {
+      showContent();
+    }
   }
 
   //------- Login Page Auth Check -------//
@@ -1101,177 +1268,23 @@
       }
     };
     if (role === 'client') {
-      var savedClientFolder = sessionStorage.getItem('auth-dev-client-folder');
+      var savedClientFolder = getActiveClient();
       user.app_metadata.clientFolder = savedClientFolder || devConfig.clientFolder || '';
     }
     return user;
   }
 
-  function renderDevToolbar(activeRole) {
-    var existing = document.getElementById('auth-dev-toolbar');
-    if (existing) existing.remove();
-
-    var container = document.querySelector('.auth-header-container');
-    if (!container) return;
-
-    // Dropdown wrapper
-    var dropdown = document.createElement('div');
-    dropdown.id = 'auth-dev-toolbar';
-    dropdown.className = 'header-dropdown';
-
-    // Toggle
-    var toggle = document.createElement('div');
-    toggle.className = 'header-link';
-    toggle.setAttribute('role', 'button');
-    toggle.setAttribute('tabindex', '0');
-    toggle.setAttribute('aria-label', 'Dev mode');
-    toggle.setAttribute('aria-expanded', 'false');
-    // Resolve display name for the active role
-    var savedClientFolder = sessionStorage.getItem('auth-dev-client-folder') || '';
-    var toggleLabel = activeRole.charAt(0).toUpperCase() + activeRole.slice(1);
-    if (activeRole === 'client' && savedClientFolder && typeof THEME_CONFIG !== 'undefined' && THEME_CONFIG.themes && THEME_CONFIG.themes[savedClientFolder]) {
-      toggleLabel = THEME_CONFIG.themes[savedClientFolder].label;
-    }
-
-    toggle.innerHTML = '<div class="icn-svg" data-icon="dev-mode">'
-      + '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
-      + '<path d="M6 17L1 12L6 7L7.4 8.4L4.87462 10.943C4.29375 11.528 4.29375 12.472 4.87462 13.057L7.4 15.6L6 17ZM10.45 20.3L8.55 19.7L13.55 3.7L15.45 4.3L10.45 20.3ZM18 17L16.6 15.6L19.1254 13.057C19.7062 12.472 19.7063 11.528 19.1254 10.943L16.6 8.4L18 7L23 12L18 17Z" fill="currentColor"/>'
-      + '</svg></div>'
-      + '<span>' + toggleLabel + '</span>'
-      + '<div class="icn-svg header-link-chevron" data-icon="chevron-down">'
-      + '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
-      + '<path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/>'
-      + '</svg></div>';
-    dropdown.appendChild(toggle);
-
-    // Dropdown menu
-    var menu = document.createElement('div');
-    menu.className = 'header-dropdown-menu';
-
-    var ICON_CHECK = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
-      + '<path d="M9.55 18L3.85 12.3L5.275 10.875L9.55 15.15L18.725 5.975L20.15 7.4L9.55 18Z" fill="currentColor"/>'
-      + '</svg>';
-
-    // Section label
-    var label = document.createElement('div');
-    label.className = 'header-dropdown-label';
-    label.textContent = 'Switch Role';
-    menu.appendChild(label);
-
-    // Role links (system roles)
-    function addRoleItem(roleName, displayName, isActive, clickFn) {
-      var item = document.createElement('div');
-      item.className = 'header-link';
-      item.setAttribute('role', 'button');
-      item.setAttribute('tabindex', '0');
-
-      var icon = document.createElement('div');
-      icon.className = 'icn-svg';
-      icon.setAttribute('data-icon', 'check');
-      if (isActive) {
-        icon.innerHTML = ICON_CHECK;
-      } else {
-        icon.style.display = 'none';
-      }
-      item.appendChild(icon);
-
-      var text = document.createElement('span');
-      text.textContent = displayName;
-      item.appendChild(text);
-
-      item.addEventListener('click', clickFn);
-      menu.appendChild(item);
-    }
-
-    var navMount = document.getElementById('site-nav');
-    var basePath = navMount ? (navMount.getAttribute('data-base') || '') : '';
-
-    var systemRoles = ['public', 'team', 'admin'];
-    systemRoles.forEach(function (role) {
-      var isActive = role === activeRole;
-      addRoleItem(role, role.charAt(0).toUpperCase() + role.slice(1), isActive, function () {
-        sessionStorage.setItem('auth-dev-role', role);
-        sessionStorage.removeItem('auth-dev-client-folder');
-        if (role === 'public') {
-          window.location.reload();
-        } else {
-          window.location.href = basePath + 'index.html';
-        }
-      });
-    });
-
-    // Client role links (one per theme config entry)
-    if (typeof THEME_CONFIG !== 'undefined' && THEME_CONFIG.themes) {
-      var themeKeys = Object.keys(THEME_CONFIG.themes);
-      if (themeKeys.length > 0) {
-        var clientDivider = document.createElement('div');
-        clientDivider.className = 'header-dropdown-divider';
-        menu.appendChild(clientDivider);
-
-        var clientLabel = document.createElement('div');
-        clientLabel.className = 'header-dropdown-label';
-        clientLabel.textContent = 'Switch Client';
-        menu.appendChild(clientLabel);
-
-        themeKeys.forEach(function (key) {
-          var theme = THEME_CONFIG.themes[key];
-          var isActive = activeRole === 'client' && savedClientFolder === key;
-          addRoleItem(key, theme.label, isActive, function () {
-            sessionStorage.setItem('auth-dev-role', 'client');
-            sessionStorage.setItem('auth-dev-client-folder', key);
-            window.location.href = basePath + key + '/index.html';
-          });
-        });
-      }
-    }
-
-    dropdown.appendChild(menu);
-
-    // Toggle open/close
-    toggle.addEventListener('click', function () {
-      var wasOpen = dropdown.classList.contains('is-open');
-      // Close all header dropdowns first
-      var allDropdowns = document.querySelectorAll('.header-dropdown');
-      for (var i = 0; i < allDropdowns.length; i++) {
-        allDropdowns[i].classList.remove('is-open');
-        var t = allDropdowns[i].querySelector('.header-link');
-        if (t) t.setAttribute('aria-expanded', 'false');
-      }
-      if (!wasOpen) {
-        dropdown.classList.add('is-open');
-        toggle.setAttribute('aria-expanded', 'true');
-      }
-    });
-
-    // Close on click outside
-    document.addEventListener('click', function (e) {
-      if (!dropdown.contains(e.target)) {
-        dropdown.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    // Close on Escape
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && dropdown.classList.contains('is-open')) {
-        dropdown.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.focus();
-      }
-    });
-
-    container.appendChild(dropdown);
-  }
-
   function initDevMode() {
     console.log('[Auth] Dev mode active (localhost detected)');
-    document.body.classList.add('is-dev-mode');
 
     var devConfig = AUTH_CONFIG.devMode || {};
-    var savedRole = sessionStorage.getItem('auth-dev-role');
+    var savedRole = sessionStorage.getItem('active-role');
     var activeRole = savedRole || devConfig.defaultRole || 'admin';
 
     initLoginForm();
+
+    // Dev user for header dropdown on login/token pages
+    var loginDevUser = createDevUser(activeRole);
 
     // On the login page in dev mode
     if (isLoginPage()) {
@@ -1285,12 +1298,12 @@
             return new Promise(function (resolve) {
               setTimeout(function () {
                 if (name) sessionStorage.setItem('auth-dev-name', name);
-                sessionStorage.setItem('auth-dev-role', devConfig.defaultRole || 'admin');
+                sessionStorage.setItem('active-role', devConfig.defaultRole || 'admin');
                 resolve();
               }, 500);
             });
           });
-          renderDevToolbar(activeRole);
+          renderAuthHeaderDropdown(loginDevUser, activeRole);
           return;
         }
         if (tokenInfo.type === 'recovery') {
@@ -1302,7 +1315,7 @@
               }, 500);
             });
           });
-          renderDevToolbar(activeRole);
+          renderAuthHeaderDropdown(loginDevUser, activeRole);
           return;
         }
         if (tokenInfo.type === 'confirmation') {
@@ -1312,7 +1325,7 @@
             successEl.style.display = 'block';
           }
           showContent();
-          renderDevToolbar(activeRole);
+          renderAuthHeaderDropdown(loginDevUser, activeRole);
           return;
         }
       }
@@ -1331,7 +1344,7 @@
         if (title) title.textContent = 'Forgot Password';
         if (subtitle) subtitle.textContent = 'Enter your email to receive a reset link.';
         showContent();
-        renderDevToolbar(activeRole);
+        renderAuthHeaderDropdown(loginDevUser, activeRole);
         return;
       }
 
@@ -1344,7 +1357,7 @@
         }
       }
       showContent();
-      renderDevToolbar(activeRole);
+      renderAuthHeaderDropdown(loginDevUser, activeRole);
       return;
     }
 
@@ -1352,13 +1365,12 @@
     if (activeRole === 'logged-out') {
       var requiredRole = getRequiredRole();
       if (requiredRole !== 'public' || isAccountPage()) {
-        renderDevToolbar('logged-out');
+        renderAuthHeaderDropdown(null);
         redirectToLogin();
         return;
       }
       renderAuthHeaderDropdown(null);
       showContent();
-      renderDevToolbar('logged-out');
       return;
     }
 
@@ -1367,26 +1379,28 @@
     var requiredRole = getRequiredRole();
 
     setRoleClass(activeRole);
-    if (typeof initThemeForUser === 'function') initThemeForUser(devUser);
-    renderAuthHeaderDropdown(devUser);
 
     if (requiredRole !== 'public' && !hasAccessForValue(activeRole, requiredRole, devUser)) {
-      renderDevToolbar(activeRole);
+      renderAuthHeaderDropdown(devUser, activeRole);
       redirectAccessDenied();
       return;
     }
 
     var pagePath = getCurrentPagePath();
     if (!hasClientFolderAccess(devUser, pagePath)) {
-      renderDevToolbar(activeRole);
+      renderAuthHeaderDropdown(devUser, activeRole);
       redirectAccessDenied();
       return;
     }
 
+    renderAuthHeaderDropdown(devUser, activeRole);
     filterNavLinks(activeRole, devUser);
     initAccountPage(devUser);
-    showContent();
-    renderDevToolbar(activeRole);
+    if (typeof initThemeForUser === 'function') {
+      initThemeForUser(devUser, function () { showContent(); });
+    } else {
+      showContent();
+    }
   }
 
   //------- Initialise -------//

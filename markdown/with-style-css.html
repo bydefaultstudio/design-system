@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Markdown CSS Comparison — style.css</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Design System Framework -->
+  <link rel="stylesheet" href="../assets/css/design-system.css" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- style.css only (markdown styles now baked in) -->
+  <link rel="stylesheet" href="../assets/css/style.css" />
+
+  <style>
+    body {
+      font-family: var(--font-primary);
+      font-size: var(--font-s);
+      color: var(--text-plain);
+      background-color: var(--background-plain);
+      margin: 0;
+      padding: var(--space-2xl);
+    }
+    .comparison-label {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #1a7f37;
+      color: #fff;
+      text-align: center;
+      padding: var(--space-xs) var(--space-m);
+      font-weight: 600;
+      font-size: var(--font-xs);
+      z-index: 100;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    article {
+      max-width: 860px;
+      margin: var(--space-3xl) auto 0;
+      padding: var(--space-2xl);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="comparison-label">Using: style.css (migrated styles)</div>
+
+  <article>
+
+    <!-- ============================================ -->
+    <!-- HEADINGS                                     -->
+    <!-- ============================================ -->
+
+    <h1>Heading 1</h1>
+    <h2>Heading 2</h2>
+    <h3>Heading 3</h3>
+    <h4>Heading 4</h4>
+    <h5>Heading 5</h5>
+    <h6>Heading 6</h6>
+
+    <hr>
+
+    <!-- ============================================ -->
+    <!-- PARAGRAPHS & INLINE ELEMENTS                 -->
+    <!-- ============================================ -->
+
+    <h2>Paragraphs & Inline Elements</h2>
+
+    <p>This is a regular paragraph with <strong>bold text</strong> and <em>italic text</em> and <del>strikethrough text</del>. Here is an <a href="#">inline link</a> and some <code>inline code</code> in the middle of a sentence.</p>
+
+    <p>Here is a <mark>highlighted word</mark> using the mark element. And here is a <kbd>Ctrl</kbd> + <kbd>S</kbd> keyboard shortcut using kbd elements.</p>
+
+    <p>Here is <small>small text</small>, a <sub>subscript</sub>, and a <sup>superscript</sup>. Also an <abbr title="Abbreviation">abbr</abbr> and a <dfn>definition term</dfn>.</p>
+
+    <p>And a <samp>sample output</samp> element for completeness.</p>
+
+    <hr>
+
+    <!-- ============================================ -->
+    <!-- BLOCKQUOTE                                   -->
+    <!-- ============================================ -->
+
+    <h2>Blockquote</h2>
+
+    <blockquote>
+      <p>This is a blockquote. It should have a left border and secondary text colour.</p>
+      <p>It can contain multiple paragraphs.</p>
+    </blockquote>
+
+    <hr>
+
+    <!-- ============================================ -->
+    <!-- LISTS                                        -->
+    <!-- ============================================ -->
+
+    <h2>Unordered List</h2>
+
+    <ul>
+      <li>First item</li>
+      <li>Second item
+        <ul>
+          <li>Nested item A</li>
+          <li>Nested item B
+            <ul>
+              <li>Deeply nested item</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Third item</li>
+    </ul>
+
+    <h2>Ordered List</h2>
+
+    <ol>
+      <li>First item</li>
+      <li>Second item
+        <ol>
+          <li>Nested item (should be lower-roman)</li>
+          <li>Another nested item
+            <ol>
+              <li>Deep nested (should be lower-alpha)</li>
+            </ol>
+          </li>
+        </ol>
+      </li>
+      <li>Third item</li>
+    </ol>
+
+    <h2>List with Paragraphs</h2>
+
+    <ul>
+      <li>
+        <p>Item with a paragraph inside it.</p>
+        <p>And a second paragraph.</p>
+      </li>
+      <li>
+        <p>Another item with paragraph content.</p>
+      </li>
+    </ul>
+
+    <hr>
+
+    <!-- ============================================ -->
+    <!-- DEFINITION LIST                              -->
+    <!-- ============================================ -->
+
+    <h2>Definition List</h2>
+
+    <dl>
+      <dt>Term One</dt>
+      <dd>Definition for term one. Should have left padding and bottom margin.</dd>
+
+      <dt>Term Two</dt>
+      <dd>Definition for term two. The term should be italic and semi-bold.</dd>
+
+      <dt>Term Three</dt>
+      <dd>Definition for term three.</dd>
+    </dl>
+
+    <hr>
+
+    <!-- ============================================ -->
+    <!-- INLINE CODE & CODE BLOCKS                    -->
+    <!-- ============================================ -->
+
+    <h2>Inline Code</h2>
+
+    <p>Use <code>var(--space-m)</code> for medium spacing. The <code>display: flex</code> property is useful for layouts.</p>
+
+    <h2>Code Block</h2>
+
+    <pre><code class="language-css">/* Example CSS */
+.markdown-body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--space-2xl);
+  background: var(--background-primary);
+}</code></pre>
+
+    <h2>Code in Headings</h2>
+
+    <h3>Using <code>var(--space-m)</code> in context</h3>
+
+    <h4>The <code>.markdown-body</code> wrapper</h4>
+
+    <hr>
+
+    <!-- ============================================ -->
+    <!-- TABLE                                        -->
+    <!-- ============================================ -->
+
+    <h2>Table</h2>
+
+    <div class="table-scroll">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Token</th>
+            <th>Value</th>
+            <th>Usage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--space-s</code></td>
+            <td>0.5rem</td>
+            <td>Small spacing between elements</td>
+          </tr>
+          <tr>
+            <td><code>--space-m</code></td>
+            <td>1rem</td>
+            <td>Default spacing</td>
+          </tr>
+          <tr>
+            <td><code>--space-l</code></td>
+            <td>1.5rem</td>
+            <td>Section-level spacing</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
+    <!-- ============================================ -->
+    <!-- IMAGES                                       -->
+    <!-- ============================================ -->
+
+    <h2>Image</h2>
+
+    <p>Images should be max-width 100% and use content-box sizing:</p>
+
+    <img src="https://placehold.co/600x200/e8e8e8/999?text=Responsive+Image" alt="Placeholder image">
+
+    <hr>
+
+    <!-- ============================================ -->
+    <!-- HORIZONTAL RULE                              -->
+    <!-- ============================================ -->
+
+    <h2>Horizontal Rule</h2>
+
+    <p>A horizontal rule appears above and below this section.</p>
+
+    <hr>
+
+    <!-- ============================================ -->
+    <!-- DETAILS / SUMMARY                            -->
+    <!-- ============================================ -->
+
+    <h2>Details / Summary</h2>
+
+    <details>
+      <summary>Click to expand this disclosure</summary>
+      <p>This is the content inside the details element. The summary should have a pointer cursor.</p>
+      <p>It can contain multiple paragraphs and other elements.</p>
+    </details>
+
+    <hr>
+
+    <!-- ============================================ -->
+    <!-- FOCUS STYLES                                 -->
+    <!-- ============================================ -->
+
+    <h2>Focus Styles</h2>
+
+    <p>Tab through these to test focus outlines:</p>
+
+    <p><a href="#">Focusable link</a></p>
+    <p><a href="#">Another focusable link</a></p>
+
+    <hr>
+
+    <!-- ============================================ -->
+    <!-- MARKDOWN ALERTS (Callouts)                   -->
+    <!-- ============================================ -->
+
+    <h2>Markdown Alerts</h2>
+
+    <div class="alert alert-note">
+      <p class="alert-title">Note</p>
+      <p>This is a note callout. Useful for highlighting information.</p>
+    </div>
+
+    <div class="alert alert-tip">
+      <p class="alert-title">Tip</p>
+      <p>This is a tip callout. Useful for helpful suggestions.</p>
+    </div>
+
+    <div class="alert alert-important">
+      <p class="alert-title">Important</p>
+      <p>This is an important callout. Key information the user should know.</p>
+    </div>
+
+    <div class="alert alert-warning">
+      <p class="alert-title">Warning</p>
+      <p>This is a warning callout. Something to watch out for.</p>
+    </div>
+
+    <div class="alert alert-caution">
+      <p class="alert-title">Caution</p>
+      <p>This is a caution callout. Potentially dangerous or destructive action.</p>
+    </div>
+
+    <hr>
+
+    <!-- ============================================ -->
+    <!-- KEYBOARD INPUT                               -->
+    <!-- ============================================ -->
+
+    <h2>Keyboard Input</h2>
+
+    <p>Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> to open the command palette.</p>
+    <p>Use <kbd>Tab</kbd> to navigate and <kbd>Enter</kbd> to confirm.</p>
+
+    <hr>
+
+    <!-- ============================================ -->
+    <!-- MIXED CONTENT                                -->
+    <!-- ============================================ -->
+
+    <h2>Mixed Content Block</h2>
+
+    <p>Below is a realistic mix of content as it would appear in a docs page:</p>
+
+    <h3>Installation</h3>
+
+    <p>Run the following command to install dependencies:</p>
+
+    <pre><code class="language-bash">npm install</code></pre>
+
+    <h3>Configuration</h3>
+
+    <p>Create a config file with the following structure:</p>
+
+    <pre><code class="language-json">{
+  "name": "my-project",
+  "version": "1.0.0",
+  "theme": "default"
+}</code></pre>
+
+    <blockquote>
+      <p><strong>Note:</strong> Make sure to update the <code>theme</code> field to match your project.</p>
+    </blockquote>
+
+    <h3>Available Options</h3>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>name</code></td>
+          <td>string</td>
+          <td>-</td>
+          <td>Project name (required)</td>
+        </tr>
+        <tr>
+          <td><code>version</code></td>
+          <td>string</td>
+          <td><code>"1.0.0"</code></td>
+          <td>Semantic version number</td>
+        </tr>
+        <tr>
+          <td><code>theme</code></td>
+          <td>string</td>
+          <td><code>"default"</code></td>
+          <td>Theme identifier</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="alert alert-warning">
+      <p class="alert-title">Warning</p>
+      <p>Changing the <code>name</code> after deployment will break existing links.</p>
+    </div>
+
+  </article>
+
+</body>
+</html>

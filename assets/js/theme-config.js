@@ -30,14 +30,17 @@ var THEME_CONFIG = {
   // Map of clientFolder → theme definition
   themes: {
 
-    'blank': {
-      label: 'Blank',
-      description: 'Brand guidelines and tools for Blank.',
-      css: 'blank/theme.css',
+    'client-template': {
+      label: 'Client Template',
+      description: 'Brand guidelines and tools for Client Template.',
+      css: 'client-template/theme.css',
       fonts: null,
       pages: [
-        { title: 'Home', href: 'blank/index.html' },
-        { title: 'Brand Book', href: 'blank/brand-book.html', section: 'Brand' }
+        { title: 'Home', href: 'client-template/index.html' },
+        { title: 'Brand Book', href: 'client-template/brand-book.html' },
+        { title: 'Overview', href: 'client-template/docs-overview.html', section: 'Docs' },
+        { title: 'Overview', href: 'client-template/tools-overview.html', section: 'Tools' },
+        { title: 'Welcome', href: 'client-template/welcome.html', section: 'Docs' }
       ],
       tools: ['cpm-calculator', 'display-ad-preview']
     },
@@ -46,10 +49,13 @@ var THEME_CONFIG = {
       label: 'Dianomi',
       description: 'Brand guidelines and tools for Dianomi.',
       css: 'dianomi/theme.css',
-      fonts: null,
+      fonts: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap',
       pages: [
         { title: 'Home', href: 'dianomi/index.html' },
-        { title: 'Brand Book', href: 'dianomi/brand-book.html', section: 'Brand' }
+        { title: 'Brand Book', href: 'dianomi/brand-book.html' },
+        { title: 'Overview', href: 'dianomi/docs-overview.html', section: 'Docs' },
+        { title: 'Overview', href: 'dianomi/tools-overview.html', section: 'Tools' },
+        { title: 'Welcome', href: 'dianomi/welcome.html', section: 'Docs' }
       ],
       tools: ['cpm-calculator', 'display-ad-preview']
     }
