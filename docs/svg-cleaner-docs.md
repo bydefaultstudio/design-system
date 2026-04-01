@@ -5,7 +5,7 @@ description: "Paste raw SVG code and get a cleaned, optimised version ready for 
 section: "Tools"
 order: 2
 access: "admin"
-toolUrl: "../svg-cleaner/index.html"
+toolUrl: "../svg-cleaner/"
 ---
 
 The SVG Cleaner is a browser-based tool for cleaning and optimising SVG code before adding it to the project. Paste raw SVG and get a cleaned version ready for the design system.

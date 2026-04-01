@@ -101,7 +101,7 @@
           </svg>
         </span>
       </summary>
-      <ul class="nav-list"><li><a href="tools/index.html" class="nav-link" data-access="team"><span>Overview</span></a></li><li><a href="cpm-calculator/index.html" class="nav-link" data-access="admin"><span>CPM Calculator</span></a></li><li><a href="svg-cleaner/index.html" class="nav-link" data-access="admin"><span>SVG Cleaner</span></a></li><li><a href="display-ad-preview/index.html" class="nav-link" data-access="admin"><span>Display Ad Preview</span></a></li></ul></details><details class="nav-section">
+      <ul class="nav-list"><li><a href="tools/index.html" class="nav-link" data-access="team"><span>Overview</span></a></li><li><a href="cpm-calculator/" class="nav-link" data-access="admin"><span>CPM Calculator</span></a></li><li><a href="svg-cleaner/" class="nav-link" data-access="admin"><span>SVG Cleaner</span></a></li><li><a href="display-ad-preview/" class="nav-link" data-access="admin"><span>Display Ad Preview</span></a></li></ul></details><details class="nav-section">
       <summary class="nav-section-toggle">
         <a href="docs/index.html" class="nav-section-icon"><div class="icn-svg" data-icon="docs"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 21V3H22V21H2ZM4 17C4 18.1046 4.89543 19 6 19H18C19.1046 19 20 18.1046 20 17V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V17ZM6 17H15V15H6V17ZM6 13H18V11H6V13ZM6 9H18V7H6V9Z" fill="currentColor"/></svg></div></a><span>Docs</span>
         <span class="nav-toggle-icon">
