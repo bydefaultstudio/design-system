@@ -143,6 +143,8 @@ Semantic colors map primitive tokens to **meaning and intent**, giving context a
 | `--text-faded` | ↳`--black-alpha-50` | Faded text |
 | `--text-accent` | ↳`--green` | Accent text |
 | `--text-link` | ↳`--green` | Link text color |
+| `--text-sidebar` | ↳`--text-primary` | Sidebar text color |
+| `--text-site-header` | ↳`--text-primary` | Site header text color |
 
 **Usage:**
 
@@ -160,6 +162,8 @@ h1 {
 | `--background-secondary` | ↳`--warm-white` | Secondary background |
 | `--background-plain` | ↳`--white` | True white background |
 | `--background-faded` | ↳`--black-alpha-5` | Faded background overlay |
+| `--background-sidebar` | ↳`--background-primary` | Sidebar background |
+| `--background-site-header` | ↳`--background-primary` | Site header background |
 
 **Usage:**
 
@@ -235,10 +239,14 @@ Every semantic token has a dark mode override. The key mappings:
 | `--text-accent` | `var(--green)` | `#5bb89a` |
 | `--text-link` | `var(--green)` | `#5bb89a` |
 | `--text-inverted` | `var(--off-white)` | `#1a1a1a` |
+| `--text-sidebar` | `var(--text-primary)` | `var(--text-primary)` |
+| `--text-site-header` | `var(--text-primary)` | `var(--text-primary)` |
 | `--background-primary` | `var(--off-white)` | `#1a1a1a` |
 | `--background-secondary` | `var(--warm-white)` | `#222222` |
 | `--background-plain` | `var(--white)` | `#2a2a2a` |
 | `--background-faded` | `var(--black-alpha-5)` | `rgba(255,255,255,0.06)` |
+| `--background-sidebar` | `var(--background-primary)` | `var(--background-primary)` |
+| `--background-site-header` | `var(--background-primary)` | `var(--background-primary)` |
 | `--border-primary` | `var(--text-primary)` | `#e8e6e3` |
 | `--border-secondary` | `var(--neutral-300)` | `#3a3a3a` |
 | `--border-faded` | `var(--black-alpha-15)` | `rgba(255,255,255,0.12)` |
