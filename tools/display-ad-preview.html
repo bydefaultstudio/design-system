@@ -55,115 +55,127 @@
 
     <!-- Toolbar -->
     <div class="adp-bar">
-      <!-- Row 1: Primary controls -->
       <div class="adp-bar-row">
-        <div class="adp-group">
-          <p class="eyebrow">Creative ID</p>
+        <!-- Creative ID -->
+        <div class="block row gap-xs" style="align-items: center;">
+          <label for="creativeId" class="text-size-small">Creative ID</label>
           <input type="text" id="creativeId" placeholder="e.g. 81e89b8a" aria-label="Creative ID">
         </div>
 
-        <div class="adp-divider" aria-hidden="true"></div>
+        <span class="divider--vertical" aria-hidden="true"></span>
 
-        <div class="adp-group">
-          <p class="eyebrow">Publisher</p>
+        <!-- Publisher -->
+        <div class="block row gap-xs" style="align-items: center;">
+          <label for="publisher" class="text-size-small">Publisher</label>
           <select id="publisher" aria-label="Publisher"></select>
         </div>
 
-        <div class="adp-divider" aria-hidden="true"></div>
+        <span class="divider--vertical" aria-hidden="true"></span>
 
-        <div class="adp-group">
-          <p class="eyebrow">Device</p>
-          <div class="segmented-control" id="deviceType">
-            <button type="button" class="segmented-control-btn is-icon is-active" data-value="Phone" aria-label="Phone">
-              <div class="icn-svg" data-icon="phone">
-                <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
-                  <path d="M7 2H17V22H7V2ZM9 4V18H15V4H9ZM11 19H13V20H11V19Z" fill="currentColor"/>
-                </svg>
-              </div>
-            </button>
-            <button type="button" class="segmented-control-btn is-icon" data-value="Tablet" aria-label="Tablet">
-              <div class="icn-svg" data-icon="tablet">
-                <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
-                  <path d="M5 2H19V22H5V2ZM7 4V18H17V4H7ZM11 19H13V20H11V19Z" fill="currentColor"/>
-                </svg>
-              </div>
-            </button>
-            <button type="button" class="segmented-control-btn is-icon" data-value="Desktop" aria-label="Desktop">
-              <div class="icn-svg" data-icon="desktop">
-                <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
-                  <path d="M2 3H22V17H2V3ZM4 5V15H20V5H4ZM8 21H16V19H13V17H11V19H8V21Z" fill="currentColor"/>
-                </svg>
-              </div>
-            </button>
+        <!-- Device -->
+        <div class="segmented-control" id="deviceType">
+          <button type="button" class="segmented-control-btn is-icon is-active" data-value="Desktop" aria-label="Desktop">
+            <div class="icn-svg" data-icon="desktop">
+              <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
+                <path d="M2 3H22V17H2V3ZM4 5V15H20V5H4ZM8 21H16V19H13V17H11V19H8V21Z" fill="currentColor"/>
+              </svg>
+            </div>
+          </button>
+          <button type="button" class="segmented-control-btn is-icon" data-value="Tablet" aria-label="Tablet">
+            <div class="icn-svg" data-icon="tablet">
+              <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
+                <path d="M5 2H19V22H5V2ZM7 4V18H17V4H7ZM11 19H13V20H11V19Z" fill="currentColor"/>
+              </svg>
+            </div>
+          </button>
+          <button type="button" class="segmented-control-btn is-icon" data-value="Phone" aria-label="Phone">
+            <div class="icn-svg" data-icon="phone">
+              <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
+                <path d="M7 2H17V22H7V2ZM9 4V18H15V4H9ZM11 19H13V20H11V19Z" fill="currentColor"/>
+              </svg>
+            </div>
+          </button>
+        </div>
+
+        <!-- Device size dropdown (conditional — Phone/Tablet only) -->
+        <div class="dropdown is-hidden" id="deviceSizeDropdown">
+          <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" id="deviceSizeLabel">
+            Size
+          </button>
+          <div class="dropdown-menu" role="menu" id="deviceSizeMenu">
+            <!-- Phone sizes -->
+            <div id="phoneSizeItems">
+              <button class="dropdown-item" role="menuitem" type="button" data-size="320">XS — 320px</button>
+              <button class="dropdown-item" role="menuitem" type="button" data-size="375">S — 375px</button>
+              <button class="dropdown-item is-active" role="menuitem" type="button" data-size="390">M — 390px</button>
+              <button class="dropdown-item" role="menuitem" type="button" data-size="428">L — 428px</button>
+            </div>
+            <!-- Tablet sizes -->
+            <div id="tabletSizeItems" class="is-hidden">
+              <button class="dropdown-item" role="menuitem" type="button" data-size="600">S — 600px</button>
+              <button class="dropdown-item is-active" role="menuitem" type="button" data-size="768">M — 768px</button>
+              <button class="dropdown-item" role="menuitem" type="button" data-size="800">L — 800px</button>
+            </div>
           </div>
         </div>
 
-        <!-- Phone size pills (conditional) -->
-        <div class="adp-group adp-conditional is-visible" id="phoneSizeSection">
-          <div class="segmented-control" id="phoneSize">
-            <button type="button" class="segmented-control-btn" data-value="320">XS</button>
-            <button type="button" class="segmented-control-btn" data-value="375">S</button>
-            <button type="button" class="segmented-control-btn is-active" data-value="390">M</button>
-            <button type="button" class="segmented-control-btn" data-value="428">L</button>
-          </div>
-          <span class="adp-device-info" id="phoneDeviceInfo">iPhone 14 / Galaxy S21+</span>
-        </div>
+        <!-- Settings dropdown (Preview, Fold, Position) -->
+        <span class="divider--vertical" aria-hidden="true"></span>
 
-        <!-- Tablet size pills (conditional) -->
-        <div class="adp-group adp-conditional" id="tabletSizeSection">
-          <div class="segmented-control" id="tabletSize">
-            <button type="button" class="segmented-control-btn" data-value="600">S</button>
-            <button type="button" class="segmented-control-btn is-active" data-value="768">M</button>
-            <button type="button" class="segmented-control-btn" data-value="800">L</button>
+        <div class="dropdown" id="settingsDropdown">
+          <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false">
+            <div class="icn-svg" data-icon="settings">
+              <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M11 15H22V17H11V19H5V17H2V15H5V13H11V15ZM7 17H9V15H7V17Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M19 7H22V9H19V11H13V9H2V7H13V5H19V7ZM15 9H17V7H15V9Z" fill="currentColor"/></svg>
+            </div>
+            Settings
+          </button>
+          <div class="dropdown-menu is-right" role="menu" style="min-width: 240px; padding: var(--space-m);">
+            <div class="block gap-m">
+              <!-- Preview mode -->
+              <div class="block gap-xs">
+                <label class="text-size-small">Preview</label>
+                <div class="segmented-control" id="stickyMode">
+                  <button type="button" class="segmented-control-btn is-active" data-value="inline">Inline</button>
+                  <button type="button" class="segmented-control-btn" data-value="top">Sticky Top</button>
+                  <button type="button" class="segmented-control-btn" data-value="bottom">Sticky Btm</button>
+                  <button type="button" class="segmented-control-btn" data-value="fullscreen">Fullscreen</button>
+                </div>
+              </div>
+
+              <!-- Fold position -->
+              <div class="block gap-xs">
+                <label class="text-size-small">Fold</label>
+                <div class="segmented-control" id="foldPosition">
+                  <button type="button" class="segmented-control-btn is-active" data-value="above">Above</button>
+                  <button type="button" class="segmented-control-btn" data-value="below">Below</button>
+                </div>
+              </div>
+
+              <!-- Creative position (Desktop only) -->
+              <div class="block gap-xs" id="positionSection">
+                <label class="text-size-small">Position</label>
+                <div class="segmented-control" id="creativePosition">
+                  <button type="button" class="segmented-control-btn is-active" data-value="top">Top</button>
+                  <button type="button" class="segmented-control-btn" data-value="left">Left</button>
+                  <button type="button" class="segmented-control-btn" data-value="right">Right</button>
+                </div>
+              </div>
+            </div>
           </div>
-          <span class="adp-device-info" id="tabletDeviceInfo">iPad / Nexus 7</span>
         </div>
 
         <!-- Actions (right-aligned) -->
-        <div class="adp-actions">
-          <a class="adp-open-link" id="openLink" href="#" target="_blank" style="display:none;">Open in tab</a>
-          <button class="button" id="copyBtn" style="display:none;">
+        <div style="margin-left: auto; display: flex; align-items: center; gap: var(--space-m);">
+          <a id="openLink" href="#" target="_blank" class="text-size-small is-hidden">Open in tab</a>
+          <button class="button is-small copy-btn is-hidden" id="copyBtn" data-copy="" type="button">
             <div class="icn-svg" data-icon="copy">
               <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
                 <path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/>
               </svg>
             </div>
-            Copy URL
+            <span class="copy-btn-label-default">Copy URL</span>
+            <span class="copy-btn-label-copied">Copied!</span>
           </button>
-        </div>
-      </div>
-
-      <!-- Row 2: Display settings -->
-      <div class="adp-bar-row">
-        <div class="adp-group">
-          <p class="eyebrow">Preview</p>
-          <div class="segmented-control" id="stickyMode">
-            <button type="button" class="segmented-control-btn is-active" data-value="inline">Inline</button>
-            <button type="button" class="segmented-control-btn" data-value="top">Sticky Top</button>
-            <button type="button" class="segmented-control-btn" data-value="bottom">Sticky Btm</button>
-            <button type="button" class="segmented-control-btn" data-value="fullscreen">Fullscreen</button>
-          </div>
-        </div>
-
-        <div class="adp-divider" aria-hidden="true"></div>
-
-        <div class="adp-group">
-          <p class="eyebrow">Fold</p>
-          <div class="segmented-control" id="foldPosition">
-            <button type="button" class="segmented-control-btn is-active" data-value="above">Above</button>
-            <button type="button" class="segmented-control-btn" data-value="below">Below</button>
-          </div>
-        </div>
-
-        <!-- Creative Position (Desktop only) -->
-        <div class="adp-divider adp-conditional" id="positionDivider" aria-hidden="true"></div>
-        <div class="adp-group adp-conditional" id="positionSection">
-          <p class="eyebrow">Position</p>
-          <div class="segmented-control" id="creativePosition">
-            <button type="button" class="segmented-control-btn is-active" data-value="top">Top</button>
-            <button type="button" class="segmented-control-btn" data-value="left">Left</button>
-            <button type="button" class="segmented-control-btn" data-value="right">Right</button>
-          </div>
         </div>
       </div>
     </div>
@@ -237,7 +249,7 @@
     var state = {
       creativeId: '',
       publisher: 'none',
-      deviceType: 'Phone',
+      deviceType: 'Desktop',
       phoneSize: '390',
       tabletSize: '768',
       stickyMode: 'inline',
@@ -296,13 +308,9 @@
       document.getElementById('creativeId').value = state.creativeId;
       document.getElementById('publisher').value = state.publisher;
       syncSegmented('deviceType', state.deviceType);
-      syncSegmented('phoneSize', state.phoneSize);
-      syncSegmented('tabletSize', state.tabletSize);
       syncSegmented('stickyMode', state.stickyMode);
       syncSegmented('foldPosition', state.foldPosition);
       syncSegmented('creativePosition', state.creativePosition);
-      document.getElementById('phoneDeviceInfo').textContent = phoneDevices[state.phoneSize] || '';
-      document.getElementById('tabletDeviceInfo').textContent = tabletDevices[state.tabletSize] || '';
       updateDeviceSections();
     }
 
@@ -329,12 +337,30 @@
         updateNavBar();
       }
 
-      if (groupId === 'phoneSize') {
-        document.getElementById('phoneDeviceInfo').textContent = phoneDevices[state.phoneSize] || '';
-      } else if (groupId === 'tabletSize') {
-        document.getElementById('tabletDeviceInfo').textContent = tabletDevices[state.tabletSize] || '';
-      }
+      buildURL();
+    }
 
+    // Handle device size dropdown clicks
+    function handleDeviceSizeClick(btn) {
+      var size = btn.dataset.size;
+      if (!size) return;
+      var device = state.deviceType;
+      if (device === 'Phone') state.phoneSize = size;
+      if (device === 'Tablet') state.tabletSize = size;
+
+      // Update active state in dropdown
+      btn.closest('[id$="SizeItems"]').querySelectorAll('.dropdown-item').forEach(function(item) {
+        item.classList.remove('is-active');
+      });
+      btn.classList.add('is-active');
+
+      // Update trigger label
+      document.getElementById('deviceSizeLabel').textContent = size + 'px';
+
+      // Close dropdown and rebuild
+      var dd = document.getElementById('deviceSizeDropdown');
+      if (dd) dd.classList.remove('is-open');
+      updateHash();
       buildURL();
     }
 
@@ -346,10 +372,27 @@
 
     function updateDeviceSections() {
       var device = state.deviceType;
-      document.getElementById('phoneSizeSection').classList.toggle('is-visible', device === 'Phone');
-      document.getElementById('tabletSizeSection').classList.toggle('is-visible', device === 'Tablet');
-      document.getElementById('positionSection').classList.toggle('is-visible', device === 'Desktop');
-      document.getElementById('positionDivider').classList.toggle('is-visible', device === 'Desktop');
+      var sizeDropdown = document.getElementById('deviceSizeDropdown');
+      var phoneSizeItems = document.getElementById('phoneSizeItems');
+      var tabletSizeItems = document.getElementById('tabletSizeItems');
+      var positionSection = document.getElementById('positionSection');
+      var sizeLabel = document.getElementById('deviceSizeLabel');
+
+      // Show/hide device size dropdown
+      if (device === 'Phone' || device === 'Tablet') {
+        sizeDropdown.classList.remove('is-hidden');
+        phoneSizeItems.classList.toggle('is-hidden', device !== 'Phone');
+        tabletSizeItems.classList.toggle('is-hidden', device !== 'Tablet');
+        // Update dropdown trigger label
+        var size = device === 'Phone' ? state.phoneSize : state.tabletSize;
+        var devices = device === 'Phone' ? phoneDevices : tabletDevices;
+        sizeLabel.textContent = size + 'px';
+      } else {
+        sizeDropdown.classList.add('is-hidden');
+      }
+
+      // Show/hide creative position (Desktop only)
+      positionSection.classList.toggle('is-hidden', device !== 'Desktop');
     }
 
     // ── URL building & preview ──
@@ -359,8 +402,8 @@
       updateHash();
 
       if (!state.creativeId) {
-        document.getElementById('copyBtn').style.display = 'none';
-        document.getElementById('openLink').style.display = 'none';
+        document.getElementById('copyBtn').classList.add('is-hidden');
+        document.getElementById('openLink').classList.add('is-hidden');
         currentURL = '';
         showPlaceholder();
         return;
@@ -387,8 +430,9 @@
 
       currentURL = 'https://preview-sandbox.celtra.com/preview/' + state.creativeId + '/frame?' + params.toString();
 
-      document.getElementById('copyBtn').style.display = 'flex';
-      document.getElementById('openLink').style.display = 'flex';
+      document.getElementById('copyBtn').classList.remove('is-hidden');
+      document.getElementById('copyBtn').setAttribute('data-copy', currentURL);
+      document.getElementById('openLink').classList.remove('is-hidden');
       document.getElementById('openLink').href = currentURL;
 
       clearTimeout(debounceTimer);
@@ -543,18 +587,7 @@
       }
     }
 
-    function copyURL() {
-      if (!currentURL) return;
-      navigator.clipboard.writeText(currentURL).then(function() {
-        var btn = document.getElementById('copyBtn');
-        btn.classList.add('is-copied');
-        btn.childNodes[btn.childNodes.length - 1].textContent = ' Copied!';
-        setTimeout(function() {
-          btn.childNodes[btn.childNodes.length - 1].textContent = ' Copy URL';
-          btn.classList.remove('is-copied');
-        }, 2000);
-      });
-    }
+    // Copy handled by copy-button.js via data-copy attribute
 
     // ── Mobile: redirect to Celtra native preview ──
 
@@ -576,11 +609,16 @@
         setPublisher(this.value);
       });
 
-      // Copy button
-      document.getElementById('copyBtn').addEventListener('click', copyURL);
+      // Copy button handled by copy-button.js
+
+      // Device size dropdown
+      document.getElementById('deviceSizeMenu').addEventListener('click', function(e) {
+        var btn = e.target.closest('[data-size]');
+        if (btn) handleDeviceSizeClick(btn);
+      });
 
       // All segmented controls
-      var groups = ['deviceType', 'phoneSize', 'tabletSize', 'stickyMode', 'foldPosition', 'creativePosition'];
+      var groups = ['deviceType', 'stickyMode', 'foldPosition', 'creativePosition'];
       groups.forEach(function(groupId) {
         var el = document.getElementById(groupId);
         if (!el) return;
@@ -627,6 +665,10 @@
       }
     }
   </script>
+
+  <!-- Component JS -->
+  <script src="../assets/js/dropdown.js"></script>
+  <script src="../assets/js/copy-button.js"></script>
 
   <!-- Site Navigation -->
   <script src="../assets/js/nav.js"></script>

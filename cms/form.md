@@ -385,6 +385,96 @@ Use `.is-icon` on a segment button for icon-only options:
 
 ---
 
+## Slider
+
+`input[type="range"]` is styled with design system tokens. Use `.slider-wrapper` for a labelled slider with live value display. See the [Slider](slider.html) docs for full details.
+
+<div class="demo-preview">
+  <div class="slider-wrapper">
+    <div class="slider-header">
+      <label for="form-demo-slider">Opacity</label>
+      <span class="slider-value" id="form-demo-slider-val">75%</span>
+    </div>
+    <input type="range" id="form-demo-slider" min="0" max="100" value="75" oninput="document.getElementById('form-demo-slider-val').textContent = this.value + '%'">
+  </div>
+</div>
+
+```html
+<div class="slider-wrapper">
+  <div class="slider-header">
+    <label for="opacity">Opacity</label>
+    <span class="slider-value" id="opacity-val">75%</span>
+  </div>
+  <input type="range" id="opacity" min="0" max="100" value="75"
+    oninput="document.getElementById('opacity-val').textContent = this.value + '%'">
+</div>
+```
+
+---
+
+## Number Input
+
+`.number-input` wraps a native number input with decrement/increment buttons. See the [Number Input](number-input.html) docs for full details.
+
+<div class="demo-preview">
+  <div class="number-input" role="group" aria-label="Quantity">
+    <button class="number-input-btn" data-number-decrement type="button" aria-label="Decrease">&minus;</button>
+    <input type="number" value="1" min="0" max="99" aria-label="Quantity">
+    <button class="number-input-btn" data-number-increment type="button" aria-label="Increase">+</button>
+  </div>
+</div>
+
+```html
+<div class="number-input" role="group" aria-label="Quantity">
+  <button class="number-input-btn" data-number-decrement type="button" aria-label="Decrease">&minus;</button>
+  <input type="number" value="1" min="0" max="99" aria-label="Quantity">
+  <button class="number-input-btn" data-number-increment type="button" aria-label="Increase">+</button>
+</div>
+```
+
+Requires `assets/js/number-input.js`.
+
+---
+
+## Radio Group
+
+`.radio-group` wraps multiple radio inputs with consistent spacing. Supports vertical (default) and horizontal (`.is-horizontal`) layouts. See the [Radio Group](radio-group.html) docs for full details.
+
+<div class="demo-preview">
+  <fieldset>
+    <legend class="radio-group-label">Shipping method</legend>
+    <div class="radio-group">
+      <div class="form-check">
+        <input type="radio" name="form-demo-shipping" id="form-demo-std" checked>
+        <label for="form-demo-std">Standard (5-7 days)</label>
+      </div>
+      <div class="form-check">
+        <input type="radio" name="form-demo-shipping" id="form-demo-exp">
+        <label for="form-demo-exp">Express (2-3 days)</label>
+      </div>
+      <div class="form-check">
+        <input type="radio" name="form-demo-shipping" id="form-demo-next">
+        <label for="form-demo-next">Next day</label>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
+```html
+<fieldset>
+  <legend class="radio-group-label">Shipping method</legend>
+  <div class="radio-group">
+    <div class="form-check">
+      <input type="radio" name="shipping" id="std" checked>
+      <label for="std">Standard (5-7 days)</label>
+    </div>
+    ...
+  </div>
+</fieldset>
+```
+
+---
+
 ## Rules
 
 | Do | Don't |

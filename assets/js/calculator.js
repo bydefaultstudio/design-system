@@ -684,23 +684,7 @@ function escapeHTML(str) {
 //------- Dropdown -------//
 //
 
-function toggleDropdown() {
-  var dropdown = document.getElementById('calculator-dropdown');
-  if (!dropdown) return;
-
-  var isOpen = dropdown.classList.toggle('is-open');
-  var trigger = dropdown.querySelector(':scope > .header-link');
-  if (trigger) trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-}
-
-function closeDropdown() {
-  var dropdown = document.getElementById('calculator-dropdown');
-  if (!dropdown) return;
-
-  dropdown.classList.remove('is-open');
-  var trigger = dropdown.querySelector(':scope > .header-link');
-  if (trigger) trigger.setAttribute('aria-expanded', 'false');
-}
+// Dropdown open/close now handled by dropdown.js
 
 //
 //------- Currency -------//
@@ -913,17 +897,7 @@ function setupEventListeners() {
     }
   });
 
-  // Dropdown trigger — first .header-link child of the dropdown
-  var dropdown = document.getElementById('calculator-dropdown');
-  if (dropdown) {
-    var dropdownTrigger = dropdown.querySelector(':scope > .header-link');
-    if (dropdownTrigger) {
-      dropdownTrigger.addEventListener('click', function(e) {
-        e.stopPropagation();
-        toggleDropdown();
-      });
-    }
-  }
+  // Dropdown trigger now handled by dropdown.js
 
   // Currency toggle
   var currencyToggle = document.getElementById('currency-toggle');
@@ -963,13 +937,7 @@ function setupEventListeners() {
     });
   }
 
-  // Close dropdown on outside click
-  document.addEventListener('click', function(e) {
-    var dropdown = document.getElementById('calculator-dropdown');
-    if (dropdown && dropdown.classList.contains('is-open') && !dropdown.contains(e.target)) {
-      closeDropdown();
-    }
-  });
+  // Close dropdown on outside click — now handled by dropdown.js
 }
 
 //

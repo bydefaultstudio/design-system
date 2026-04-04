@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divider - By Default Brand OS</title>
+    <meta name="description" content="How to use the divider component for visual separation between content sections.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Divider - By Default Brand OS">
+    <meta property="og:description" content="How to use the divider component for visual separation between content sections.">
+    <meta property="og:image" content="../assets/images/og/og-default.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Design System Framework (path set in cms/docs.config.js) -->
+    <link rel="stylesheet" href="../assets/css/design-system.css" id="design-system-css"
+          onerror="document.getElementById('ds-missing-banner').style.display='flex'">
+    
+
+    <!-- Google Fonts (configured in cms/docs.config.js) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Markdown CSS -->
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    
+
+    <!-- Early theme loader: apply cached client theme before first paint -->
+    <script>
+    (function(){try{if(document.documentElement.getAttribute('data-client-theme'))return;var c=localStorage.getItem('bdd-client-theme');if(!c)return;var p=c.split('|'),k=p[0],css=p[1],fonts=p[2];if(!k||!css)return;var b='../';var l=document.createElement('link');l.id='client-theme-css';l.rel='stylesheet';l.href=b+css;document.head.appendChild(l);document.documentElement.setAttribute('data-client-theme',k);if(fonts){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://fonts.googleapis.com';pc.id='client-theme-fonts-preconnect';document.head.appendChild(pc);var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';pc2.id='client-theme-fonts-preconnect2';document.head.appendChild(pc2);var fl=document.createElement('link');fl.id='client-theme-fonts';fl.rel='stylesheet';fl.href=fonts;document.head.appendChild(fl)}}catch(e){}})();
+    </script>
+
+    <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
+    <script>
+      window._gotrueReady = (function() {
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0') {
+          return Promise.resolve(null);
+        }
+        return import('https://cdn.jsdelivr.net/npm/gotrue-js@0.9.29/+esm')
+          .then(function(m) { var G = m.default && m.default.default ? m.default.default : m.default; window.GoTrue = G; return G; })
+          .catch(function(e) { console.error('[Auth] GoTrue load failed:', e); return null; });
+      })();
+    </script>
+</head>
+<body class="auth-loading" data-access="team">
+
+    <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
+    <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
+        <span>⚠️</span>
+        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">cms/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
+        <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
+    </div>
+
+    <!-- Site Navigation (header + sidebar injected by nav.js) -->
+    <div id="site-nav" data-base="../"></div>
+
+    <div class="docs-main-area">
+        <!-- Page Header (full width, outside grid) -->
+        <div class="page-header">
+      <div class="container-small">
+        <h1>Divider</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">Horizontal and vertical separators</p>
+        
+      </div>
+    </div>
+
+        <!-- Sticky Bar (breadcrumbs + actions) -->
+        <div class="sticky-bar">
+      <div class="sticky-bar-inner">
+        <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
+          <a href="../design-system/index.html">Design System</a>
+          <span class="breadcrumb-separator">/</span>
+          <span>Divider</span>
+        </nav>
+        <div class="sticky-bar-actions">
+          <div class="dropdown">
+            <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Markdown source options">
+              <div class="icn-svg" data-icon="more-horizontal"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
+            </button>
+            <div class="dropdown-menu is-right">
+              <a href="../cms/divider.md" class="dropdown-item" download>
+                <div class="icn-svg" data-icon="download"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
+                <span>Download .md file</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="../cms/divider.md" class="dropdown-item" target="_blank" rel="noopener noreferrer">
+                <div class="icn-svg" data-icon="open-full"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div>
+                <span>Open .md in new tab</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Main Content + TOC grid -->
+        <div class="docs-content-grid padding-global">
+            <!-- Main Content -->
+            <main class="docs-main">
+                <article>
+                    <p>Dividers create visual separation between content sections. They use semantic tokens for colour and thickness, and support horizontal, vertical, subtle, and strong variants.</p>
+<hr>
+<h2 id="tokens">Tokens</h2>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Default</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--divider-color</code></td>
+<td><code>var(--border-faded)</code></td>
+<td>Line colour</td>
+</tr>
+<tr>
+<td><code>--divider-thickness</code></td>
+<td><code>var(--border-s)</code></td>
+<td>Line thickness</td>
+</tr>
+<tr>
+<td><code>--divider-spacing</code></td>
+<td><code>var(--space-xl)</code></td>
+<td>Vertical margin</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="basic-usage">Basic usage</h2>
+<div class="demo-preview">
+  <p>Content above the divider.</p>
+  <hr class="divider">
+  <p>Content below the divider.</p>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-o0ufuwq0n" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-o0ufuwq0n" class="language-html">&lt;hr class=&quot;divider&quot;&gt;
+</code></pre>
+      </div>
+    
+<p>The bare <code>&lt;hr&gt;</code> element is also styled to match <code>.divider</code> by default.</p>
+<hr>
+<h2 id="subtle-variant">Subtle variant</h2>
+<div class="demo-preview">
+  <p>First section.</p>
+  <hr class="divider divider--subtle">
+  <p>Second section with a lighter divider above.</p>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-bv75o5z4r" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-bv75o5z4r" class="language-html">&lt;hr class=&quot;divider divider--subtle&quot;&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="strong-variant">Strong variant</h2>
+<div class="demo-preview">
+  <p>Important section boundary.</p>
+  <hr class="divider divider--strong">
+  <p>Next section with a heavier divider above.</p>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-2xw36118t" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-2xw36118t" class="language-html">&lt;hr class=&quot;divider divider--strong&quot;&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="vertical-divider">Vertical divider</h2>
+<p>Use <code>.divider--vertical</code> inside a flex row to separate inline content.</p>
+<div class="demo-preview">
+  <div style="display: flex; align-items: center; gap: 0;">
+    <span>Left content</span>
+    <span class="divider--vertical" style="height: 1.5em;"></span>
+    <span>Right content</span>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-j3pztgx3h" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-j3pztgx3h" class="language-html">&lt;div style=&quot;display: flex; align-items: center;&quot;&gt;
+  &lt;span&gt;Left content&lt;/span&gt;
+  &lt;span class=&quot;divider--vertical&quot;&gt;&lt;/span&gt;
+  &lt;span&gt;Right content&lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="accessibility-notes">Accessibility notes</h2>
+<ul>
+<li>Use <code>&lt;hr&gt;</code> for semantic section breaks that screen readers should announce</li>
+<li>For purely decorative dividers, add <code>role=&quot;presentation&quot;</code> or use a <code>&lt;div class=&quot;divider&quot;&gt;</code> instead</li>
+<li>Vertical dividers should use <code>role=&quot;separator&quot;</code> when they represent meaningful boundaries</li>
+</ul>
+<hr>
+<h2 id="do-don39t">Do / Don&#39;t</h2>
+<p><strong>Do:</strong></p>
+<ul>
+<li>Use dividers to separate distinct content groups</li>
+<li>Use <code>--subtle</code> for minor separation within a section</li>
+<li>Use <code>--strong</code> for major section boundaries</li>
+</ul>
+<p><strong>Don&#39;t:</strong></p>
+<ul>
+<li>Don&#39;t use dividers where spacing alone provides sufficient separation</li>
+<li>Don&#39;t use dividers between every element — they should be intentional</li>
+</ul>
+
+                </article>
+            </main>
+
+            <!-- Table of Contents -->
+            <aside class="docs-toc">
+      <span class="toc-header">On this page</span>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#tokens" class="toc-link">Tokens</a></li><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#subtle-variant" class="toc-link">Subtle variant</a></li><li class="toc-item toc-level-2"><a href="#strong-variant" class="toc-link">Strong variant</a></li><li class="toc-item toc-level-2"><a href="#vertical-divider" class="toc-link">Vertical divider</a></li><li class="toc-item toc-level-2"><a href="#accessibility-notes" class="toc-link">Accessibility notes</a></li><li class="toc-item toc-level-2"><a href="#do-don39t" class="toc-link">Do / Don&#39;t</a></li></ul></nav></div>
+    </aside>
+        </div>
+
+        <!-- Page Navigation (Previous / Next) -->
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="sticky-bar.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <h3 class="page-nav-title">Sticky Bar</h3>
+      </span>
+    </a><a href="dropdown.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <h3 class="page-nav-title">Dropdown</h3>
+      </span>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+    </a></div></nav>
+
+        <!-- Page Feedback -->
+        <section class="page-feedback" aria-label="Page feedback">
+            <div class="page-feedback-inner padding-global">
+                <h3 class="page-feedback-prompt">Was this page helpful?</h3>
+                <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
+                <div class="button-group">
+                    <button class="button is-small" data-feedback="yes" type="button">Yes</button>
+                    <button class="button is-small is-outline is-faded" data-feedback="no" type="button">No</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Modal -->
+        <dialog class="feedback-modal" aria-label="Send feedback">
+            <div class="feedback-modal-content">
+                <h3 class="feedback-modal-title">Send feedback</h3>
+                <p class="feedback-modal-subtitle"></p>
+                <form class="feedback-form" name="page-feedback" data-netlify="true">
+                    <input type="hidden" name="form-name" value="page-feedback">
+                    <input type="hidden" name="sentiment" value="">
+                    <input type="hidden" name="page" value="">
+                    <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
+                    <div class="button-group feedback-modal-actions">
+                        <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>
+                        <button type="submit" class="button is-small">Send feedback</button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
+
+        <!-- Footer -->
+        <footer class="docs-footer">
+            <div class="docs-footer-inner padding-global">
+                <p class="docs-footer-text">© 2026 By Default BrandOS</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- Initialize Highlight.js, Copy, and TOC -->
+    <script>
+        (function() {
+            'use strict';
+
+            function initHighlight() {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+
+            function copyToClipboard(text) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    return navigator.clipboard.writeText(text);
+                }
+                var textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                return Promise.resolve();
+            }
+
+            var copyIconPath = 'M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z';
+            var checkIconPath = 'M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z';
+
+            function initClipboard() {
+                const buttons = document.querySelectorAll('.copy-code-btn');
+
+                buttons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const targetId = this.getAttribute('data-clipboard-target');
+                        const codeElement = document.querySelector(targetId);
+
+                        if (codeElement) {
+                            const text = codeElement.textContent;
+                            const textSpan = this.querySelector('.copy-text');
+                            const btnPath = this.querySelector('path');
+
+                            copyToClipboard(text).then(() => {
+                                if (btnPath) {
+                                    btnPath.setAttribute('d', checkIconPath);
+                                }
+                                if (textSpan) {
+                                    textSpan.textContent = 'Copied!';
+                                }
+                                setTimeout(() => {
+                                    if (btnPath) {
+                                        btnPath.setAttribute('d', copyIconPath);
+                                    }
+                                    if (textSpan) {
+                                        textSpan.textContent = 'Copy';
+                                    }
+                                }, 1500);
+                            });
+                        }
+                    });
+                });
+            }
+
+            function initTOCActiveState() {
+                const tocLinks = document.querySelectorAll('.toc-link');
+                const headings = document.querySelectorAll('h1[id], h2[id]');
+
+                if (tocLinks.length === 0 || headings.length === 0) return;
+
+                const linkMap = new Map();
+                tocLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        const id = href.substring(1);
+                        linkMap.set(id, link);
+                    }
+                });
+
+                const observerOptions = {
+                    rootMargin: '-20% 0px -70% 0px',
+                    threshold: 0
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const id = entry.target.id;
+                        const link = linkMap.get(id);
+
+                        if (entry.isIntersecting) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            if (link) {
+                                link.classList.add('toc-link-active');
+                            }
+                        }
+                    });
+                }, observerOptions);
+
+                headings.forEach(heading => {
+                    if (heading.id) {
+                        observer.observe(heading);
+                    }
+                });
+
+                function setInitialActive() {
+                    let activeHeading = null;
+                    let maxTop = -Infinity;
+
+                    headings.forEach(heading => {
+                        const rect = heading.getBoundingClientRect();
+                        if (rect.top <= 100 && rect.top > maxTop) {
+                            maxTop = rect.top;
+                            activeHeading = heading;
+                        }
+                    });
+
+                    if (activeHeading && activeHeading.id) {
+                        const link = linkMap.get(activeHeading.id);
+                        if (link) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            link.classList.add('toc-link-active');
+                        }
+                    }
+                }
+
+                setInitialActive();
+
+                let scrollTimeout;
+                window.addEventListener('scroll', () => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(setInitialActive, 100);
+                });
+            }
+
+            function init() {
+                initHighlight();
+                initClipboard();
+                initTOCActiveState();
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+
+    <!-- Back to Top -->
+    <div class="back-to-top-wrapper">
+      <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
+        <div class="icn-svg" data-icon="arrow-top"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M4 4V2H20V4H4Z" fill="currentColor"/><path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/></svg></div>
+      </button>
+    </div>
+    <script>
+      (function() {
+        var btn = document.querySelector('.back-to-top-wrapper');
+        if (!btn) return;
+        window.addEventListener('scroll', function() {
+          btn.classList.toggle('is-visible', window.scrollY > 300);
+        });
+        btn.querySelector('button').addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+
+    <!-- Dropdown -->
+    <script src="../assets/js/dropdown.js"></script>
+
+    <!-- Site Navigation -->
+    <script src="../assets/js/nav.js"></script>
+    <!-- Auth -->
+    <script src="../assets/js/auth-config.js"></script>
+    <!-- Theme -->
+    <script src="../assets/js/theme-config.js"></script>
+    <script src="../assets/js/theme-loader.js"></script>
+    <!-- Auth (must load after theme scripts) -->
+    <script src="../assets/js/auth.js"></script>
+    <!-- Feedback -->
+    <script src="../assets/js/feedback.js"></script>
+
+    <script>
+      /* Table scroll overflow hint */
+      (function initTableScroll() {
+        var wrappers = document.querySelectorAll('.table-scroll');
+        if (!wrappers.length) return;
+
+        function checkOverflow(wrapper) {
+          var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
+          var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
+          wrapper.classList.toggle('is-overflowing', isOverflowing);
+          wrapper.classList.toggle('is-scrolled-end', isAtEnd);
+        }
+
+        wrappers.forEach(function(wrapper) {
+          checkOverflow(wrapper);
+          wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+        });
+
+        window.addEventListener('resize', function() {
+          wrappers.forEach(checkOverflow);
+        });
+      })();
+    </script>
+</body>
+</html>

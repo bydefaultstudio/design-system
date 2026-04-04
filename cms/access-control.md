@@ -158,7 +158,19 @@ Available roles: `admin`, `team`, `client`.
 
 ### Client Folder Access
 
-Client users are restricted to their own folder via the `clientFolder` field in their `app_metadata`:
+Client users need a role that identifies which client folder they belong to. The simplest way is to add the **client folder name as a role tag** in the Netlify UI:
+
+**Option A — Single tag (recommended)**
+
+Add just the client name as a role tag (e.g. `dianomi`). The system automatically treats any non-hierarchy role as a client folder name and assigns the `client` access level.
+
+**Option B — Two tags (explicit)**
+
+Add both `client` and the client name as tags (e.g. `client` + `dianomi`). This is more explicit but functionally identical.
+
+**Option C — API (app_metadata)**
+
+If using the Netlify API, you can set `clientFolder` explicitly:
 
 ```json
 {
@@ -167,7 +179,7 @@ Client users are restricted to their own folder via the `clientFolder` field in 
 }
 ```
 
-This user will only be able to access pages with `data-access="client:dianomi"` (or `public`). They cannot see pages scoped to other clients.
+All three options produce the same result: the user can access pages with `data-access="client:dianomi"` (or `public`). They cannot see pages scoped to other clients.
 
 Team and admin users can access all client folders.
 
@@ -260,9 +272,9 @@ This would require storing allowed emails in Netlify Identity metadata and check
 - Verify the user's `app_metadata` contains a valid `roles` array
 
 ### User sees "Access Denied" unexpectedly
-- Check the user's role in the Netlify Identity dashboard
+- Check the user's role tags in the Netlify Identity dashboard
 - Verify the page's `data-access` attribute matches the user's role
-- For client users, ensure `clientFolder` matches the client name in `data-access="client:name"`
+- For client users, ensure one of their role tags matches the client name in `data-access="client:name"` (e.g. a user with the `dianomi` tag can access `data-access="client:dianomi"`)
 
 ### Auth not working locally
 - Netlify Identity requires a deployed Netlify site. Use `netlify dev` for local testing with Identity support.

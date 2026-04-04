@@ -33,6 +33,79 @@ const GOOGLE_FONTS_HTML = PROJECT_CONFIG.googleFontsUrl
     <link href="${PROJECT_CONFIG.googleFontsUrl}" rel="stylesheet">`
   : '';
 
+//------- Icon Map -------//
+
+const ICONS_DIR = path.join(OUTPUT_DIR, 'assets', 'images', 'svg-icons');
+let ICON_MAP = {};
+
+/**
+ * Scan assets/images/svg-icons/ and build icon-name → normalised SVG string map.
+ * Called once at the start of generateDocs().
+ */
+function buildIconMap() {
+  const files = fs.readdirSync(ICONS_DIR).filter(f => f.endsWith('.svg'));
+  const map = {};
+  const seen = {};
+
+  for (const file of files) {
+    const key = file.replace(/\.svg$/i, '').toLowerCase().replace(/\s+/g, '-');
+
+    // Handle duplicates — prefer capitalised filename, warn on collision
+    if (seen[key]) {
+      console.warn(`⚠️  Duplicate icon key "${key}" — "${file}" collides with "${seen[key]}". Keeping first.`);
+      continue;
+    }
+    seen[key] = file;
+
+    let svg = fs.readFileSync(path.join(ICONS_DIR, file), 'utf8')
+      .replace(/\n\s*/g, '') // collapse to single line
+      .trim();
+
+    // Normalise: replace fixed width/height with 100%
+    svg = svg.replace(/(<svg[^>]*)\s+width=["']\d+["']/i, '$1 width="100%"');
+    svg = svg.replace(/(<svg[^>]*)\s+height=["']\d+["']/i, '$1 height="100%"');
+
+    // Add aria-hidden if not present
+    if (!svg.includes('aria-hidden')) {
+      svg = svg.replace(/<svg/, '<svg aria-hidden="true"');
+    }
+
+    map[key] = svg;
+  }
+
+  ICON_MAP = map;
+  console.log(`🎨 Icon map built: ${Object.keys(map).length} icons`);
+}
+
+/**
+ * Return icon wrapped in the standard .icn-svg container.
+ * @param {string} name - kebab-case icon key
+ * @returns {string} HTML string
+ */
+function getIcon(name) {
+  const svg = ICON_MAP[name];
+  if (!svg) {
+    console.warn(`⚠️  Unknown icon: "${name}"`);
+    return `<!-- unknown icon: ${name} -->`;
+  }
+  return `<div class="icn-svg" data-icon="${name}">${svg}</div>`;
+}
+
+/**
+ * Return raw SVG string (no wrapper). For contexts that build their own wrapper,
+ * such as nav.js where icons have additional classes.
+ * @param {string} name - kebab-case icon key
+ * @returns {string} SVG string
+ */
+function getRawIcon(name) {
+  const svg = ICON_MAP[name];
+  if (!svg) {
+    console.warn(`⚠️  Unknown icon (raw): "${name}"`);
+    return `<!-- unknown icon: ${name} -->`;
+  }
+  return svg;
+}
+
 //------- Section-to-Folder Mapping -------//
 
 const SECTION_FOLDERS = {
@@ -49,7 +122,7 @@ const FILENAME_OVERRIDES = {
   'display-ad-preview-docs.md': { folder: 'docs', name: 'display-ad-preview.html' },
   'css-code-struture.md': { folder: 'docs', name: 'css.html' },
   'js-code-structure.md': { folder: 'docs', name: 'javascript.html' },
-  'design-system-overview.md': { folder: 'design-system', name: 'design-system.html' },
+
   'markdown-style.md': { folder: 'docs', name: 'markdown-style.html' },
   'seo-best-practices.md': { folder: 'docs', name: 'seo-best-practices.html' },
   'access-control.md': { folder: 'docs', name: 'access-control.html' },
@@ -245,11 +318,18 @@ function markdownToHtml(markdown) {
 
     return `
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#${codeId}" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#${codeId}" type="button" aria-label="Copy code">${getIcon('copy')} <span class="copy-text">Copy</span></button>
         <pre><code id="${codeId}"${attributes}>${code}</code></pre>
       </div>
     `;
   });
+
+  // Expand icon shorthand: {{icon:name}} (skip matches inside <code> or <pre> blocks)
+  html = html.replace(/(<code[^>]*>[\s\S]*?<\/code>)|(<pre[^>]*>[\s\S]*?<\/pre>)|\{\{icon:([a-z0-9-]+)\}\}/g,
+    (match, code, pre, name) => {
+      if (code || pre) return match; // preserve code blocks as-is
+      return getIcon(name);
+    });
 
   return html;
 }
@@ -329,7 +409,7 @@ function generateIndexPage(template, filesBySection) {
     .replaceAll('{{PAGE_TITLE}}', 'Home')
     .replaceAll('{{META_DESCRIPTION}}', PROJECT_CONFIG.indexDescription)
     .replace('{{PAGE_HEADER}}', '') // Index page doesn't need a header
-    .replace('{{PAGE_SUBBAR}}', '')
+    .replace('{{PAGE_STICKY_BAR}}', '')
     .replace('{{PAGE_CONTENT}}', indexContent)
     .replace('{{TOC_SECTION}}', '')
     .replace('{{DESIGN_SYSTEM_PATH}}', PROJECT_CONFIG.designSystemPath)
@@ -436,11 +516,17 @@ function generateSectionIndexPage(section, template, files, filesBySection) {
     if (section === 'Brand') {
       cards += `<a href="visual-identity.html" class="docs-card"><h3 class="docs-card-title">Visual Identity</h3><p class="docs-card-subtitle" data-text-wrap="pretty">Visual brand identity — logo, palette, typography, and icons</p></a>`;
     }
-    if (section === 'Design System') {
-      cards += `<a href="style-guide.html" class="docs-card"><h3 class="docs-card-title">Style Guide</h3><p class="docs-card-subtitle" data-text-wrap="pretty">Live preview of all design system tokens and components</p></a>`;
-    }
 
     cards += `</div></div>`;
+  }
+
+  // Design System section: use custom template with embedded style guide
+  if (section === 'Design System') {
+    var customTemplatePath = path.join(__dirname, 'design-system-index.html');
+    if (fs.existsSync(customTemplatePath)) {
+      var customHtml = fs.readFileSync(customTemplatePath, 'utf8');
+      return customHtml.replace('{{SECTION_CARDS}}', cards);
+    }
   }
 
   const pageContent = `<div class="docs-hero"><h1 class="docs-hero-title">${section}</h1></div>${cards}`;
@@ -450,7 +536,7 @@ function generateSectionIndexPage(section, template, files, filesBySection) {
     .replaceAll('{{PAGE_TITLE}}', `${section} — Overview`)
     .replaceAll('{{META_DESCRIPTION}}', `Overview of all ${section} pages.`)
     .replace('{{PAGE_HEADER}}', '')
-    .replace('{{PAGE_SUBBAR}}', '')
+    .replace('{{PAGE_STICKY_BAR}}', '')
     .replace('{{PAGE_CONTENT}}', pageContent)
     .replace('{{TOC_SECTION}}', '')
     .replace('{{DESIGN_SYSTEM_PATH}}', navBase + PROJECT_CONFIG.designSystemPath)
@@ -519,8 +605,8 @@ function generatePageNav(file, pageOrder) {
     return '../' + target.htmlPath;
   }
 
-  const arrowLeft = `<div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>`;
-  const arrowRight = `<div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>`;
+  const arrowLeft = `<div class="icn-svg page-nav-arrow" data-icon="chevron-left-large">${getRawIcon('chevron-left-large')}</div>`;
+  const arrowRight = `<div class="icn-svg page-nav-arrow" data-icon="chevron-right-large">${getRawIcon('chevron-right-large')}</div>`;
 
   let html = '<nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global">';
 
@@ -586,29 +672,26 @@ function generatePage(file, template, pageOrder) {
   let pageSubbar = '';
   if (frontmatter.title && file.htmlFolder) {
     const sectionLabel = file.section || file.htmlFolder.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(' ');
-    const moreHorizontalSvg = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg>';
-    const downloadSvg = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg>';
-    const openFullSvg = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21V3H9V5H7C5.89543 5 5 5.89543 5 7V17C5 18.1046 5.89543 19 7 19H17C18.1046 19 19 18.1046 19 17V15H21V21H3ZM9.7 15.7L8.3 14.3L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H12V3H21V12H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L9.7 15.7Z" fill="currentColor"/></svg>';
-    pageSubbar = `<div class="page-subbar">
-      <div class="page-subbar-inner">
-        <nav class="page-subbar-breadcrumbs" aria-label="Breadcrumb">
+    pageSubbar = `<div class="sticky-bar">
+      <div class="sticky-bar-inner">
+        <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
           <a href="../${file.htmlFolder}/index.html">${sectionLabel}</a>
           <span class="breadcrumb-separator">/</span>
           <span>${frontmatter.title}</span>
         </nav>
-        <div class="page-subbar-actions">
-          <div class="subbar-dropdown">
-            <button class="header-link" type="button" aria-expanded="false" aria-label="Markdown source options">
-              <div class="icn-svg" data-icon="more-horizontal">${moreHorizontalSvg}</div>
+        <div class="sticky-bar-actions">
+          <div class="dropdown">
+            <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Markdown source options">
+              ${getIcon('more-horizontal')}
             </button>
-            <div class="subbar-dropdown-menu">
-              <a href="../cms/${file.markdownPath}" class="header-link" download>
-                <div class="icn-svg" data-icon="download">${downloadSvg}</div>
+            <div class="dropdown-menu is-right">
+              <a href="../cms/${file.markdownPath}" class="dropdown-item" download>
+                ${getIcon('download')}
                 <span>Download .md file</span>
               </a>
-              <div class="header-dropdown-divider"></div>
-              <a href="../cms/${file.markdownPath}" class="header-link" target="_blank" rel="noopener noreferrer">
-                <div class="icn-svg" data-icon="open-full">${openFullSvg}</div>
+              <div class="dropdown-divider"></div>
+              <a href="../cms/${file.markdownPath}" class="dropdown-item" target="_blank" rel="noopener noreferrer">
+                ${getIcon('open-full')}
                 <span>Open .md in new tab</span>
               </a>
             </div>
@@ -622,7 +705,7 @@ function generatePage(file, template, pageOrder) {
     .replaceAll('{{PAGE_TITLE}}', frontmatter.title || 'Untitled')
     .replaceAll('{{META_DESCRIPTION}}', frontmatter.description || '')
     .replace('{{PAGE_HEADER}}', pageHeader)
-    .replace('{{PAGE_SUBBAR}}', pageSubbar)
+    .replace('{{PAGE_STICKY_BAR}}', pageSubbar)
     .replace('{{PAGE_CONTENT}}', htmlContent)
     .replace('{{TOC_SECTION}}', `<aside class="docs-toc">
       <span class="toc-header">On this page</span>
@@ -653,7 +736,7 @@ function generateNavJs(filesBySection) {
   const navSectionsHtml = buildNavSectionsHtml(filesBySection);
 
   // Escape backticks and backslashes for embedding in a JS template literal
-  const esc = (s) => s.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\$/g, '\\$');
+  const esc = (s) => s.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\$/g, '\\$').replace(/'/g, "\\'");
 
   const script = `/**
  * nav.js — Auto-generated by cms/generator/generate-docs.js
@@ -669,15 +752,15 @@ function generateNavJs(filesBySection) {
   var base = mount.getAttribute('data-base') || '';
   var hasSidebar = mount.getAttribute('data-sidebar') !== 'false';
 
-  // ── Shared SVG icons ──
-  var ICON_HAMBURGER = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 18V16H21V18H3ZM3 13V11H21V13H3ZM3 8V6H21V8H3Z" fill="currentColor"/></svg>';
-  var ICON_CLOSE = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/></svg>';
-  var ICON_COLLAPSE = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5.6 12L9.6 8L11 9.4L9.81421 10.5858C9.03316 11.3668 9.03316 12.6332 9.81421 13.4142L11 14.6L9.6 16L5.6 12Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22 22H2V2H22V22ZM4 18C4 19.1046 4.89543 20 6 20H12C13.1046 20 14 19.1046 14 18V6C14 4.89543 13.1046 4 12 4H6C4.89543 4 4 4.89543 4 6V18ZM16 18C16 19.1046 16.8954 20 18 20C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4C16.8954 4 16 4.89543 16 6V18Z" fill="currentColor"/></svg>';
-  var ICON_EXPAND = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12.4 12L8.4 16L7 14.6L8.18579 13.4142C8.96684 12.6332 8.96684 11.3668 8.18579 10.5858L7 9.4L8.4 8L12.4 12Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22 22H2V2H22V22ZM4 18C4 19.1046 4.89543 20 6 20H12C13.1046 20 14 19.1046 14 18V6C14 4.89543 13.1046 4 12 4H6C4.89543 4 4 4.89543 4 6V18ZM16 18C16 19.1046 16.8954 20 18 20C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4C16.8954 4 16 4.89543 16 6V18Z" fill="currentColor"/></svg>';
-  var ICON_BACK = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 18V15C18 13.8954 17.1046 13 16 13H10.2392C9.34831 13 8.90214 14.0771 9.53211 14.7071L11.425 16.6L10.025 18.025L4 12L10 6L11.425 7.425L9.54652 9.29043C8.91317 9.91938 9.35857 11 10.2512 11H20V18H18Z" fill="currentColor"/></svg>';
-  var ICON_HOME = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V10L13.2 6.4C12.4889 5.86667 11.5111 5.86667 10.8 6.4L6 10V17ZM4 21V9L12 3L20 9V21H4Z" fill="currentColor"/></svg>';
-  var ICON_SUN = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15ZM12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17ZM11 1H13V4H11V1ZM11 20H13V23H11V20ZM3.51472 4.92893L4.92893 3.51472L7.05025 5.63604L5.63604 7.05025L3.51472 4.92893ZM16.9497 18.364L18.364 16.9497L20.4853 19.0711L19.0711 20.4853L16.9497 18.364ZM1 13V11H4V13H1ZM20 13V11H23V13H20ZM3.51472 19.0711L5.63604 16.9497L7.05025 18.364L4.92893 20.4853L3.51472 19.0711ZM16.9497 5.63604L19.0711 3.51472L20.4853 4.92893L18.364 7.05025L16.9497 5.63604Z" fill="currentColor"/></svg>';
-  var ICON_MOON = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15.1625 17.6625C16.7208 16.1042 17.5 14.2167 17.5 12C17.5 9.78333 16.7208 7.89583 15.1625 6.3375C13.9817 5.15672 12.1597 4.35602 10.402 4.10029C9.60391 3.98418 9.20482 4.89906 9.63374 5.58204C10.0596 6.26022 10.4192 6.97871 10.7125 7.7375C11.2375 9.09583 11.5 10.5167 11.5 12C11.5 13.4833 11.2375 14.9042 10.7125 16.2625C10.4462 16.9516 10.1252 17.6074 9.74945 18.23C9.31198 18.955 9.78479 19.9392 10.6206 19.8035C12.371 19.5193 14.0025 18.8225 15.1625 17.6625ZM9.5 22C8.61667 22 7.75417 21.8875 6.9125 21.6625C6.07083 21.4375 5.26667 21.1 4.5 20.65C6.05 19.75 7.27083 18.5333 8.1625 17C9.05417 15.4667 9.5 13.8 9.5 12C9.5 10.2 9.05417 8.53333 8.1625 7C7.27083 5.46667 6.05 4.25 4.5 3.35C5.26667 2.9 6.07083 2.5625 6.9125 2.3375C7.75417 2.1125 8.61667 2 9.5 2C10.8833 2 12.1833 2.2625 13.4 2.7875C14.6167 3.3125 15.675 4.025 16.575 4.925C17.475 5.825 18.1875 6.88333 18.7125 8.1C19.2375 9.31667 19.5 10.6167 19.5 12C19.5 13.3833 19.2375 14.6833 18.7125 15.9C18.1875 17.1167 17.475 18.175 16.575 19.075C15.675 19.975 14.6167 20.6875 13.4 21.2125C12.1833 21.7375 10.8833 22 9.5 22Z" fill="currentColor"/></svg>';
+  // ── Shared SVG icons (loaded from assets/images/svg-icons/) ──
+  var ICON_HAMBURGER = '${esc(getRawIcon('menu'))}';
+  var ICON_CLOSE = '${esc(getRawIcon('close'))}';
+  var ICON_COLLAPSE = '${esc(getRawIcon('sidebar-open'))}';
+  var ICON_EXPAND = '${esc(getRawIcon('sidebar-close'))}';
+  var ICON_BACK = '${esc(getRawIcon('back-arrow'))}';
+  var ICON_HOME = '${esc(getRawIcon('home'))}';
+  var ICON_SUN = '${esc(getRawIcon('sun-1'))}';
+  var ICON_MOON = '${esc(getRawIcon('dark-mode'))}';
 
   // ── Build header HTML ──
   var headerLeft = '<div class="site-header-left">';
@@ -704,7 +787,7 @@ function generateNavJs(filesBySection) {
     + '</svg></div>'
     + '</a></div>';
 
-  var ICON_CHEVRON_DOWN = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/></svg>';
+  var ICON_CHEVRON_DOWN = '${esc(getRawIcon('chevron-down'))}';
 
   var headerRight = '<div class="site-header-right">'
     + '<div class="auth-header-container"></div>'
@@ -869,43 +952,7 @@ function generateNavJs(filesBySection) {
     });
   }
 
-  // ── Header dropdown toggles ──
-  var headerDropdowns = mount.querySelectorAll('.header-dropdown');
-  for (var d = 0; d < headerDropdowns.length; d++) {
-    (function(dd) {
-      var ddToggle = dd.querySelector('.header-link');
-      if (!ddToggle) return;
-
-      ddToggle.addEventListener('click', function() {
-        var wasOpen = dd.classList.contains('is-open');
-        // Close all header dropdowns first
-        for (var k = 0; k < headerDropdowns.length; k++) {
-          headerDropdowns[k].classList.remove('is-open');
-          var t = headerDropdowns[k].querySelector('.header-link');
-          if (t) t.setAttribute('aria-expanded', 'false');
-        }
-        if (!wasOpen) {
-          dd.classList.add('is-open');
-          ddToggle.setAttribute('aria-expanded', 'true');
-        }
-      });
-
-      document.addEventListener('click', function(e) {
-        if (!dd.contains(e.target)) {
-          dd.classList.remove('is-open');
-          ddToggle.setAttribute('aria-expanded', 'false');
-        }
-      });
-
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && dd.classList.contains('is-open')) {
-          dd.classList.remove('is-open');
-          ddToggle.setAttribute('aria-expanded', 'false');
-          ddToggle.focus();
-        }
-      });
-    })(headerDropdowns[d]);
-  }
+  // Header dropdown toggles handled by dropdown.js
 
   // Signal that nav is ready
   document.body.classList.add('nav-ready');
@@ -921,17 +968,12 @@ function generateNavJs(filesBySection) {
 function buildNavSectionsHtml(filesBySection) {
   let html = '';
 
-  // Section icons — inline SVGs for sidebar nav toggles
-  const ICON_BRAND_BOOK = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><g clip-path="url(#clip0_14540_880)"><path d="M18 6.99953V5.18605L7.45312 6.99953H18ZM3 18.4644L5.30273 19.9995H21V8.99953H5.7998L3 7.83351V18.4644ZM6.91211 5.06203L12 4.188V2.97121L6.91211 5.06203ZM23 6.99953V21.9995H4.69727L1 19.5347V5.32961L14 -0.0121918V3.84425L20 2.813V6.99953H23Z" fill="currentColor"/></g><defs><clipPath id="clip0_14540_880"><rect width="100%" height="100%" fill="white"/></clipPath></defs></svg>';
-  const ICON_DESIGN_SYSTEM = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M21 21H13V13H21V21ZM15 19H19V15H15V19Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22.2998 7.34961L16.6504 13L11 7.34961L16.6504 1.7002L22.2998 7.34961ZM13.8496 7.375L16.6748 10.2002L19.5 7.375L16.6748 4.5498L13.8496 7.375Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M11 11H3V3H11V11ZM5 9H9V5H5V9Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M8 11C10.7614 11 13 13.2386 13 16C13 18.7614 10.7614 21 8 21C5.23858 21 3 18.7614 3 16C3 13.2386 5.23858 11 8 11ZM8 13C6.34315 13 5 14.3431 5 16C5 17.6569 6.34315 19 8 19C9.65685 19 11 17.6569 11 16C11 14.3431 9.65685 13 8 13Z" fill="currentColor"/></svg>';
-  const ICON_DOCS = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 21V3H22V21H2ZM4 17C4 18.1046 4.89543 19 6 19H18C19.1046 19 20 18.1046 20 17V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V17ZM6 17H15V15H6V17ZM6 13H18V11H6V13ZM6 9H18V7H6V9Z" fill="currentColor"/></svg>';
-  const ICON_TOOLS = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10.9013 18.1151L16.0763 11.9151H12.0763L12.8013 6.2401L8.17632 12.9151H11.6513L10.9013 18.1151ZM8.35132 21.9151L9.35132 14.9151H4.35132L13.3513 1.9151H15.3513L14.3513 9.9151H20.3513L10.3513 21.9151H8.35132Z" fill="currentColor"/></svg>';
-
+  // Section icons — loaded from assets/images/svg-icons/
   const sectionIconMap = {
-    'Brand': { icon: ICON_BRAND_BOOK, name: 'brand' },
-    'Design System': { icon: ICON_DESIGN_SYSTEM, name: 'design-system' },
-    'Docs': { icon: ICON_DOCS, name: 'docs' },
-    'Tools': { icon: ICON_TOOLS, name: 'tools' },
+    'Brand': { icon: getRawIcon('brand-book'), name: 'brand' },
+    'Design System': { icon: getRawIcon('design-system'), name: 'design-system' },
+    'Docs': { icon: getRawIcon('docs'), name: 'docs' },
+    'Tools': { icon: getRawIcon('tools'), name: 'tools' },
   };
 
   // Read ordering from _defaults.md (configurable per directory)
@@ -1037,10 +1079,6 @@ function buildNavSectionsHtml(filesBySection) {
       }
     }
 
-    if (section === 'Design System') {
-      html += `<li><a href="../design-system/style-guide.html" class="nav-link" data-access="team"><span>Style Guide</span></a></li>`;
-    }
-
     if (section === 'Brand') {
       html += `<li><a href="../brand/visual-identity.html" class="nav-link" data-access="team"><span>Visual Identity</span></a></li>`;
     }
@@ -1128,30 +1166,27 @@ function generateClientDocs(template) {
       if (title && frontmatter.section) {
         const sectionLabel = frontmatter.section;
         const overviewHref = 'index.html';
-        const moreHorizontalSvg = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg>';
-        const downloadSvg = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg>';
-        const openFullSvg = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21V3H9V5H7C5.89543 5 5 5.89543 5 7V17C5 18.1046 5.89543 19 7 19H17C18.1046 19 19 18.1046 19 17V15H21V21H3ZM9.7 15.7L8.3 14.3L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H12V3H21V12H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L9.7 15.7Z" fill="currentColor"/></svg>';
         const mdPath = `${navBase}cms/clients/${clientKey}/${filename}`;
-        pageSubbar = `<div class="page-subbar">
-          <div class="page-subbar-inner">
-            <nav class="page-subbar-breadcrumbs" aria-label="Breadcrumb">
+        pageSubbar = `<div class="sticky-bar">
+          <div class="sticky-bar-inner">
+            <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
               <a href="${overviewHref}">${sectionLabel}</a>
               <span class="breadcrumb-separator">/</span>
               <span>${title}</span>
             </nav>
-            <div class="page-subbar-actions">
-              <div class="subbar-dropdown">
-                <button class="header-link" type="button" aria-expanded="false" aria-label="Markdown source options">
-                  <div class="icn-svg" data-icon="more-horizontal">${moreHorizontalSvg}</div>
+            <div class="sticky-bar-actions">
+              <div class="dropdown">
+                <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Markdown source options">
+                  ${getIcon('more-horizontal')}
                 </button>
-                <div class="subbar-dropdown-menu">
-                  <a href="${mdPath}" class="header-link" download>
-                    <div class="icn-svg" data-icon="download">${downloadSvg}</div>
+                <div class="dropdown-menu is-right">
+                  <a href="${mdPath}" class="dropdown-item" download>
+                    ${getIcon('download')}
                     <span>Download .md file</span>
                   </a>
-                  <div class="header-dropdown-divider"></div>
-                  <a href="${mdPath}" class="header-link" target="_blank" rel="noopener noreferrer">
-                    <div class="icn-svg" data-icon="open-full">${openFullSvg}</div>
+                  <div class="dropdown-divider"></div>
+                  <a href="${mdPath}" class="dropdown-item" target="_blank" rel="noopener noreferrer">
+                    ${getIcon('open-full')}
                     <span>Open .md in new tab</span>
                   </a>
                 </div>
@@ -1174,7 +1209,7 @@ function generateClientDocs(template) {
         .replaceAll('{{PAGE_TITLE}}', `${theme.label} — ${title}`)
         .replaceAll('{{META_DESCRIPTION}}', frontmatter.description || '')
         .replace('{{PAGE_HEADER}}', pageHeader)
-        .replace('{{PAGE_SUBBAR}}', pageSubbar)
+        .replace('{{PAGE_STICKY_BAR}}', pageSubbar)
         .replace('{{PAGE_CONTENT}}', htmlContent)
         .replace('{{TOC_SECTION}}', tableOfContents
           ? `<aside class="docs-toc"><span class="toc-header">On this page</span><div class="toc-wrapper">${tableOfContents}</div></aside>`
@@ -1360,7 +1395,7 @@ function generateClientSectionOverviews(template) {
         .replace(/\{\{NAV_BASE\}\}/g, base)
         .replace(/\{\{PAGE_ACCESS\}\}/g, deriveDataAccess(loadDefaults(path.join(DOCS_DIR, 'clients', clientKey))))
         .replace('{{PAGE_HEADER}}', '')
-        .replace('{{PAGE_SUBBAR}}', '')
+        .replace('{{PAGE_STICKY_BAR}}', '')
         .replace('{{PAGE_CONTENT}}', content)
         .replace('{{TOC_SECTION}}', '')
         .replace('{{PAGE_NAV}}', '')
@@ -1556,7 +1591,7 @@ function generateClientIndexPages(template) {
       .replace(/\{\{NAV_BASE\}\}/g, navBase)
       .replace(/\{\{PAGE_ACCESS\}\}/g, deriveDataAccess(loadDefaults(path.join(DOCS_DIR, 'clients', clientKey))))
       .replace('{{PAGE_HEADER}}', '')
-      .replace('{{PAGE_SUBBAR}}', '')
+      .replace('{{PAGE_STICKY_BAR}}', '')
       .replace('{{PAGE_CONTENT}}', contentHtml)
       .replace('{{TOC_SECTION}}', '')
       .replace('{{PAGE_NAV}}', '')
@@ -1584,8 +1619,15 @@ function generateClientIndexPages(template) {
 async function generateDocs() {
   console.log('🚀 Starting documentation generation...');
 
+  // Build icon map from SVG files
+  buildIconMap();
+
   // Load template
-  const template = fs.readFileSync(TEMPLATE_FILE, 'utf8');
+  let template = fs.readFileSync(TEMPLATE_FILE, 'utf8');
+
+  // Pre-process template icon placeholders
+  template = template.replace(/\{\{icon:([a-z0-9-]+)\}\}/g, (match, name) => getIcon(name));
+
   console.log('✅ Template loaded');
 
   // Find all markdown files (exclude generator folder and README files)

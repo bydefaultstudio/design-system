@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Design System - By Default Brand OS</title>
-    <meta name="description" content="Learn what a design system is and what it contains.">
+    <title>Tabs - By Default Brand OS</title>
+    <meta name="description" content="How to use the tabs component for switching between content panels.">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
     <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Design System - By Default Brand OS">
-    <meta property="og:description" content="Learn what a design system is and what it contains.">
+    <meta property="og:title" content="Tabs - By Default Brand OS">
+    <meta property="og:description" content="How to use the tabs component for switching between content panels.">
     <meta property="og:image" content="../assets/images/og/og-default.jpg">
     <meta property="og:type" content="website">
 
@@ -66,35 +66,33 @@
         <!-- Page Header (full width, outside grid) -->
         <div class="page-header">
       <div class="container-small">
-        <h1>Design System</h1>
-        <p class="page-subtitle" data-text-wrap="pretty">Introduction to the design system</p>
-        <div class="button-group justify-center">
-        <a href="../design-system/style-guide.html" class="button is-small page-source-link">Open Style Guide</a>
-      </div>
+        <h1>Tabs</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">Tabbed content navigation</p>
+        
       </div>
     </div>
 
-        <!-- Page Sub-bar (breadcrumbs + actions) -->
-        <div class="page-subbar">
-      <div class="page-subbar-inner">
-        <nav class="page-subbar-breadcrumbs" aria-label="Breadcrumb">
+        <!-- Sticky Bar (breadcrumbs + actions) -->
+        <div class="sticky-bar">
+      <div class="sticky-bar-inner">
+        <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
           <a href="../design-system/index.html">Design System</a>
           <span class="breadcrumb-separator">/</span>
-          <span>Design System</span>
+          <span>Tabs</span>
         </nav>
-        <div class="page-subbar-actions">
-          <div class="subbar-dropdown">
-            <button class="header-link" type="button" aria-expanded="false" aria-label="Markdown source options">
-              <div class="icn-svg" data-icon="more-horizontal"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
+        <div class="sticky-bar-actions">
+          <div class="dropdown">
+            <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Markdown source options">
+              <div class="icn-svg" data-icon="more-horizontal"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
             </button>
-            <div class="subbar-dropdown-menu">
-              <a href="../cms/design-system-overview.md" class="header-link" download>
-                <div class="icn-svg" data-icon="download"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
+            <div class="dropdown-menu is-right">
+              <a href="../cms/tabs.md" class="dropdown-item" download>
+                <div class="icn-svg" data-icon="download"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
                 <span>Download .md file</span>
               </a>
-              <div class="header-dropdown-divider"></div>
-              <a href="../cms/design-system-overview.md" class="header-link" target="_blank" rel="noopener noreferrer">
-                <div class="icn-svg" data-icon="open-full"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21V3H9V5H7C5.89543 5 5 5.89543 5 7V17C5 18.1046 5.89543 19 7 19H17C18.1046 19 19 18.1046 19 17V15H21V21H3ZM9.7 15.7L8.3 14.3L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H12V3H21V12H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L9.7 15.7Z" fill="currentColor"/></svg></div>
+              <div class="dropdown-divider"></div>
+              <a href="../cms/tabs.md" class="dropdown-item" target="_blank" rel="noopener noreferrer">
+                <div class="icn-svg" data-icon="open-full"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div>
                 <span>Open .md in new tab</span>
               </a>
             </div>
@@ -108,25 +106,140 @@
             <!-- Main Content -->
             <main class="docs-main">
                 <article>
-                    <h2 id="what-is-a-design-system">What Is a Design System?</h2>
-<p>A <strong>Design System</strong> is your team&#39;s shared toolkit for creating <strong>consistent, high‑quality digital products and brand experiences</strong>.</p>
-<p>Think of it as a <strong>well‑organised box of Lego bricks,</strong> but instead of plastic pieces, you get reusable components, brand assets, design rules, and clear guidelines.</p>
-<p>It serves as a <strong>single source of truth</strong> for both <strong>product teams and brand guardians</strong>, so no one wastes time reinventing elements or guessing which visual style to use.</p>
-<p>Whether you&#39;re designing an app screen, a marketing campaign, or a customer touchpoint, the Design System ensures everything looks, feels, and behaves like it comes from the same brand.</p>
+                    <p>Tabs organise content into panels that the user switches between. The component requires JavaScript (<code>assets/js/tabs.js</code>) for interaction and follows the WAI-ARIA tabs pattern.</p>
 <hr>
-<h2 id="what39s-inside-a-design-system">What&#39;s Inside a Design System?</h2>
+<h2 id="tokens">Tokens</h2>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Default</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--tab-active-color</code></td>
+<td><code>var(--text-primary)</code></td>
+<td>Active tab text colour</td>
+</tr>
+<tr>
+<td><code>--tab-inactive-color</code></td>
+<td><code>var(--text-faded)</code></td>
+<td>Inactive tab text colour</td>
+</tr>
+<tr>
+<td><code>--tab-indicator-color</code></td>
+<td><code>var(--text-primary)</code></td>
+<td>Bottom border indicator</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="basic-usage">Basic usage</h2>
+<div class="demo-preview">
+  <div class="tabs" role="tablist" aria-label="Demo tabs">
+    <button class="tab is-active" role="tab" aria-selected="true" aria-controls="demo-panel-1" id="demo-tab-1">Tab One</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="demo-panel-2" id="demo-tab-2">Tab Two</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="demo-panel-3" id="demo-tab-3">Tab Three</button>
+  </div>
+  <div class="tab-panel" id="demo-panel-1" role="tabpanel" aria-labelledby="demo-tab-1">
+    <p>Panel 1 content</p>
+  </div>
+  <div class="tab-panel is-hidden" id="demo-panel-2" role="tabpanel" aria-labelledby="demo-tab-2">
+    <p>Panel 2 content</p>
+  </div>
+  <div class="tab-panel is-hidden" id="demo-panel-3" role="tabpanel" aria-labelledby="demo-tab-3">
+    <p>Panel 3 content</p>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-5r0humgdr" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-5r0humgdr" class="language-html">&lt;div class=&quot;tabs&quot; role=&quot;tablist&quot; aria-label=&quot;Section name&quot;&gt;
+  &lt;button class=&quot;tab is-active&quot; role=&quot;tab&quot; aria-selected=&quot;true&quot; aria-controls=&quot;panel-1&quot; id=&quot;tab-1&quot;&gt;Tab One&lt;/button&gt;
+  &lt;button class=&quot;tab&quot; role=&quot;tab&quot; aria-selected=&quot;false&quot; aria-controls=&quot;panel-2&quot; id=&quot;tab-2&quot;&gt;Tab Two&lt;/button&gt;
+  &lt;button class=&quot;tab&quot; role=&quot;tab&quot; aria-selected=&quot;false&quot; aria-controls=&quot;panel-3&quot; id=&quot;tab-3&quot;&gt;Tab Three&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;tab-panel&quot; id=&quot;panel-1&quot; role=&quot;tabpanel&quot; aria-labelledby=&quot;tab-1&quot;&gt;
+  Panel 1 content
+&lt;/div&gt;
+&lt;div class=&quot;tab-panel is-hidden&quot; id=&quot;panel-2&quot; role=&quot;tabpanel&quot; aria-labelledby=&quot;tab-2&quot;&gt;
+  Panel 2 content
+&lt;/div&gt;
+&lt;div class=&quot;tab-panel is-hidden&quot; id=&quot;panel-3&quot; role=&quot;tabpanel&quot; aria-labelledby=&quot;tab-3&quot;&gt;
+  Panel 3 content
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="javascript">JavaScript</h2>
+<p>Include <code>assets/js/tabs.js</code> on any page that uses tabs. The script automatically initialises all <code>[role=&quot;tablist&quot;]</code> elements on the page.</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-9bdmgqlla" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-9bdmgqlla" class="language-html">&lt;script src=&quot;/assets/js/tabs.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+      </div>
+    
+<p>No manual initialisation is required.</p>
+<hr>
+<h2 id="keyboard-interactions">Keyboard interactions</h2>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Key</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Tab</code></td>
+<td>Moves focus to the active tab, then to the panel</td>
+</tr>
+<tr>
+<td><code>ArrowRight</code></td>
+<td>Moves focus to the next tab</td>
+</tr>
+<tr>
+<td><code>ArrowLeft</code></td>
+<td>Moves focus to the previous tab</td>
+</tr>
+<tr>
+<td><code>Home</code></td>
+<td>Moves focus to the first tab</td>
+</tr>
+<tr>
+<td><code>End</code></td>
+<td>Moves focus to the last tab</td>
+</tr>
+<tr>
+<td><code>Enter</code> / <code>Space</code></td>
+<td>Activates the focused tab (via click)</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="accessibility-notes">Accessibility notes</h2>
 <ul>
-<li><strong>Design tokens</strong> – Core values like color palettes, spacing, typography scales, and animations that power both design and code.</li>
-<li><strong>Typography</strong> – Rules for fonts, sizes, and spacing to ensure readability and brand voice.</li>
-<li><strong>Components</strong> – Reusable interface elements like buttons, forms, and menus.</li>
-<li><strong>Brand assets</strong> – Logos, imagery, and iconography for consistent marketing and product use.</li>
-<li><strong>Layout principles</strong> – Guidelines for arranging content in a clear, intuitive way.</li>
+<li>The tab list uses <code>role=&quot;tablist&quot;</code> with a descriptive <code>aria-label</code></li>
+<li>Each tab uses <code>role=&quot;tab&quot;</code> with <code>aria-selected</code> and <code>aria-controls</code></li>
+<li>Each panel uses <code>role=&quot;tabpanel&quot;</code> with <code>aria-labelledby</code></li>
+<li>Hidden panels use <code>.is-hidden</code> (<code>display: none</code>) so they are removed from the tab order</li>
+<li>Focus ring appears on <code>focus-visible</code></li>
 </ul>
-<p>By following a Design System, teams can <strong>move faster, collaborate better, and maintain consistency across every brand interaction, whether it&#39;s in-app, on the web, or in the real world</strong>.</p>
 <hr>
-<h2 id="style-guide">Style Guide</h2>
-<p>For a visual, interactive showcase of all design tokens, components, and layout primitives, visit the <a href="../design-system/index.html">Design System Styleguide</a>.</p>
-<p>To see the current brand identity applied, visit the <a href="../brand/index.html">Brand Book</a>.</p>
+<h2 id="do-don39t">Do / Don&#39;t</h2>
+<p><strong>Do:</strong></p>
+<ul>
+<li>Use unique IDs for tabs and panels on each page</li>
+<li>Set one tab as <code>is-active</code> and <code>aria-selected=&quot;true&quot;</code> by default</li>
+<li>Provide a descriptive <code>aria-label</code> on the tablist</li>
+</ul>
+<p><strong>Don&#39;t:</strong></p>
+<ul>
+<li>Don&#39;t use tabs for sequential steps (use a stepper pattern instead)</li>
+<li>Don&#39;t nest tablists inside tab panels</li>
+</ul>
 
                 </article>
             </main>
@@ -134,25 +247,25 @@
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#what-is-a-design-system" class="toc-link">What Is a Design System?</a></li><li class="toc-item toc-level-2"><a href="#what39s-inside-a-design-system" class="toc-link">What&#39;s Inside a Design System?</a></li><li class="toc-item toc-level-2"><a href="#style-guide" class="toc-link">Style Guide</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#tokens" class="toc-link">Tokens</a></li><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#javascript" class="toc-link">JavaScript</a></li><li class="toc-item toc-level-2"><a href="#keyboard-interactions" class="toc-link">Keyboard interactions</a></li><li class="toc-item toc-level-2"><a href="#accessibility-notes" class="toc-link">Accessibility notes</a></li><li class="toc-item toc-level-2"><a href="#do-don39t" class="toc-link">Do / Don&#39;t</a></li></ul></nav></div>
     </aside>
         </div>
 
         <!-- Page Navigation (Previous / Next) -->
-        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="../brand/tone-of-voice.html" class="page-nav-link page-nav-prev" rel="prev">
-      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="breadcrumb.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
       <span class="page-nav-text">
         <span class="page-nav-label">Previous</span>
-        <span class="page-nav-section">Brand</span>
-        <h3 class="page-nav-title">Tone of Voice</h3>
+        
+        <h3 class="page-nav-title">Breadcrumb</h3>
       </span>
-    </a><a href="color.html" class="page-nav-link page-nav-next" rel="next">
+    </a><a href="progress.html" class="page-nav-link page-nav-next" rel="next">
       <span class="page-nav-text">
         <span class="page-nav-label">Next</span>
         
-        <h3 class="page-nav-title">Color</h3>
+        <h3 class="page-nav-title">Progress</h3>
       </span>
-      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
     </a></div></nav>
 
         <!-- Page Feedback -->
@@ -346,10 +459,7 @@
     <!-- Back to Top -->
     <div class="back-to-top-wrapper">
       <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
-        <div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M4 4V2H20V4H4Z" fill="currentColor"/>
-          <path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/>
-        </svg></div>
+        <div class="icn-svg" data-icon="arrow-top"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M4 4V2H20V4H4Z" fill="currentColor"/><path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/></svg></div>
       </button>
     </div>
     <script>
@@ -365,44 +475,8 @@
       })();
     </script>
 
-    <!-- Sub-bar dropdown toggle -->
-    <script>
-      (function() {
-        var dropdowns = document.querySelectorAll('.subbar-dropdown');
-        dropdowns.forEach(function(dd) {
-          var toggle = dd.querySelector(':scope > .header-link');
-          if (!toggle) return;
-
-          toggle.addEventListener('click', function() {
-            var wasOpen = dd.classList.contains('is-open');
-            dropdowns.forEach(function(d) {
-              d.classList.remove('is-open');
-              var t = d.querySelector(':scope > .header-link');
-              if (t) t.setAttribute('aria-expanded', 'false');
-            });
-            if (!wasOpen) {
-              dd.classList.add('is-open');
-              toggle.setAttribute('aria-expanded', 'true');
-            }
-          });
-
-          document.addEventListener('click', function(e) {
-            if (!dd.contains(e.target)) {
-              dd.classList.remove('is-open');
-              toggle.setAttribute('aria-expanded', 'false');
-            }
-          });
-
-          document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && dd.classList.contains('is-open')) {
-              dd.classList.remove('is-open');
-              toggle.setAttribute('aria-expanded', 'false');
-              toggle.focus();
-            }
-          });
-        });
-      })();
-    </script>
+    <!-- Dropdown -->
+    <script src="../assets/js/dropdown.js"></script>
 
     <!-- Site Navigation -->
     <script src="../assets/js/nav.js"></script>

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Components - By Default Brand OS</title>
+    <meta name="description" content="Master specification for all design system components — naming, tokens, accessibility, and build process.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Components - By Default Brand OS">
+    <meta property="og:description" content="Master specification for all design system components — naming, tokens, accessibility, and build process.">
+    <meta property="og:image" content="../assets/images/og/og-default.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Design System Framework (path set in cms/docs.config.js) -->
+    <link rel="stylesheet" href="../assets/css/design-system.css" id="design-system-css"
+          onerror="document.getElementById('ds-missing-banner').style.display='flex'">
+    
+
+    <!-- Google Fonts (configured in cms/docs.config.js) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Markdown CSS -->
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    
+
+    <!-- Early theme loader: apply cached client theme before first paint -->
+    <script>
+    (function(){try{if(document.documentElement.getAttribute('data-client-theme'))return;var c=localStorage.getItem('bdd-client-theme');if(!c)return;var p=c.split('|'),k=p[0],css=p[1],fonts=p[2];if(!k||!css)return;var b='../';var l=document.createElement('link');l.id='client-theme-css';l.rel='stylesheet';l.href=b+css;document.head.appendChild(l);document.documentElement.setAttribute('data-client-theme',k);if(fonts){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://fonts.googleapis.com';pc.id='client-theme-fonts-preconnect';document.head.appendChild(pc);var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';pc2.id='client-theme-fonts-preconnect2';document.head.appendChild(pc2);var fl=document.createElement('link');fl.id='client-theme-fonts';fl.rel='stylesheet';fl.href=fonts;document.head.appendChild(fl)}}catch(e){}})();
+    </script>
+
+    <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
+    <script>
+      window._gotrueReady = (function() {
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0') {
+          return Promise.resolve(null);
+        }
+        return import('https://cdn.jsdelivr.net/npm/gotrue-js@0.9.29/+esm')
+          .then(function(m) { var G = m.default && m.default.default ? m.default.default : m.default; window.GoTrue = G; return G; })
+          .catch(function(e) { console.error('[Auth] GoTrue load failed:', e); return null; });
+      })();
+    </script>
+</head>
+<body class="auth-loading" data-access="team">
+
+    <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
+    <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
+        <span>⚠️</span>
+        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">cms/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
+        <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
+    </div>
+
+    <!-- Site Navigation (header + sidebar injected by nav.js) -->
+    <div id="site-nav" data-base="../"></div>
+
+    <div class="docs-main-area">
+        <!-- Page Header (full width, outside grid) -->
+        <div class="page-header">
+      <div class="container-small">
+        <h1>Components</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">Component specification and build rules</p>
+        
+      </div>
+    </div>
+
+        <!-- Sticky Bar (breadcrumbs + actions) -->
+        <div class="sticky-bar">
+      <div class="sticky-bar-inner">
+        <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
+          <a href="../docs/index.html">Docs</a>
+          <span class="breadcrumb-separator">/</span>
+          <span>Components</span>
+        </nav>
+        <div class="sticky-bar-actions">
+          <div class="dropdown">
+            <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Markdown source options">
+              <div class="icn-svg" data-icon="more-horizontal"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
+            </button>
+            <div class="dropdown-menu is-right">
+              <a href="../cms/components.md" class="dropdown-item" download>
+                <div class="icn-svg" data-icon="download"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
+                <span>Download .md file</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="../cms/components.md" class="dropdown-item" target="_blank" rel="noopener noreferrer">
+                <div class="icn-svg" data-icon="open-full"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div>
+                <span>Open .md in new tab</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Main Content + TOC grid -->
+        <div class="docs-content-grid padding-global">
+            <!-- Main Content -->
+            <main class="docs-main">
+                <article>
+                    <p>This document defines the rules and conventions for building components in the By Default design system. All contributors must follow these patterns to keep the system consistent and predictable.</p>
+<hr>
+<h2 id="naming-convention">Naming convention</h2>
+<ul>
+<li><strong>Base class:</strong> <code>.component-name</code> (e.g. <code>.badge</code>, <code>.card</code>, <code>.toast</code>)</li>
+<li><strong>Modifiers:</strong> <code>.component-name--modifier</code> (e.g. <code>.badge--success</code>, <code>.card--flush</code>)</li>
+<li><strong>State classes:</strong> <code>.is-state</code> (e.g. <code>.is-active</code>, <code>.is-open</code>, <code>.is-disabled</code>, <code>.is-hidden</code>, <code>.is-loading</code>) — shared across components</li>
+<li><strong>Utility overrides:</strong> use <code>!important</code> only on utility classes (e.g. <code>.gap-m</code>)</li>
+<li><strong>JS hooks:</strong> use <code>data-*</code> attributes, never CSS class names</li>
+</ul>
+<p><strong>Legacy note:</strong> The button component uses <code>.is-outline</code>, <code>.is-faded</code>, <code>.is-small</code>, <code>.is-xsmall</code>, <code>.is-icon</code> as modifiers. These predate the <code>--modifier</code> convention and are kept for backward compatibility. New components must use <code>--modifier</code> syntax.</p>
+<hr>
+<h2 id="token-rule">Token rule</h2>
+<p>Every visual value in component CSS must reference a CSS custom property defined in <code>:root</code>. Never hardcode hex values, pixel values (except structural ones like <code>border-radius: 50%</code>), or raw font values.</p>
+<p>Component tokens follow this pattern:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-1nj5b60n6" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-1nj5b60n6" class="language-css">--component-property: var(--semantic-token);
+</code></pre>
+      </div>
+    
+<p>Example:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-j2wgolg7h" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-j2wgolg7h" class="language-css">--card-background: var(--background-primary);
+--card-border: var(--border-faded);
+--card-radius: var(--radius-m);
+--card-padding: var(--space-xl);
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="file-rule">File rule</h2>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>What</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Component CSS</td>
+<td><code>assets/css/design-system.css</code> under a numbered section heading</td>
+</tr>
+<tr>
+<td>Component JS (if needed)</td>
+<td><code>assets/js/component-name.js</code></td>
+</tr>
+<tr>
+<td>Documentation source</td>
+<td><code>cms/component-name.md</code></td>
+</tr>
+<tr>
+<td>Generated docs page</td>
+<td><code>design-system/component-name.html</code></td>
+</tr>
+</tbody></table></div>
+<p>Section headings in <code>design-system.css</code> follow the format:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-ykvnkj7hp" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-ykvnkj7hp" class="language-css">/* ------ 16. BADGE ------ */
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="accessibility-rule">Accessibility rule</h2>
+<p>Every interactive component must include:</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ARIA roles</td>
+<td>Correct <code>role</code> attribute (e.g. <code>role=&quot;tablist&quot;</code>, <code>role=&quot;tab&quot;</code>, <code>role=&quot;tabpanel&quot;</code>)</td>
+</tr>
+<tr>
+<td>ARIA attributes</td>
+<td><code>aria-selected</code>, <code>aria-controls</code>, <code>aria-labelledby</code>, <code>aria-current</code>, <code>aria-label</code> as needed</td>
+</tr>
+<tr>
+<td>Keyboard support</td>
+<td>Tab to focus, Enter/Space to activate, Escape to dismiss (where applicable), Arrow keys for navigation (tabs, menus)</td>
+</tr>
+<tr>
+<td>Focus indicator</td>
+<td><code>box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus), transparent 75%)</code></td>
+</tr>
+<tr>
+<td>Screen reader text</td>
+<td>Use <code>aria-label</code> or visually hidden text for icon-only actions</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="component-status">Component status</h2>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Component</th>
+<th>CSS class</th>
+<th>Needs JS</th>
+<th>Docs page</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Button</td>
+<td><code>.button</code></td>
+<td>No</td>
+<td><code>button.md</code></td>
+</tr>
+<tr>
+<td>Form elements</td>
+<td><code>.form-group</code>, <code>.form-check</code>, <code>.form-toggle</code>, <code>.segmented-control</code></td>
+<td>No</td>
+<td><code>form.md</code></td>
+</tr>
+<tr>
+<td>Callout</td>
+<td><code>.callout</code></td>
+<td>No</td>
+<td><code>callout.md</code></td>
+</tr>
+<tr>
+<td>Disclosure</td>
+<td><code>details</code>/<code>summary</code></td>
+<td>No</td>
+<td><code>disclosure.md</code></td>
+</tr>
+<tr>
+<td>Badge</td>
+<td><code>.badge</code></td>
+<td>No</td>
+<td><code>badge.md</code></td>
+</tr>
+<tr>
+<td>Card</td>
+<td><code>.card</code></td>
+<td>No</td>
+<td><code>card.md</code></td>
+</tr>
+<tr>
+<td>Breadcrumb</td>
+<td><code>.breadcrumb</code></td>
+<td>No</td>
+<td><code>breadcrumb.md</code></td>
+</tr>
+<tr>
+<td>Tabs</td>
+<td><code>.tabs</code>, <code>.tab</code></td>
+<td>Yes (<code>tabs.js</code>)</td>
+<td><code>tabs.md</code></td>
+</tr>
+<tr>
+<td>Progress</td>
+<td><code>.progress-bar</code></td>
+<td>No</td>
+<td><code>progress.md</code></td>
+</tr>
+<tr>
+<td>Tooltip</td>
+<td><code>[data-tooltip]</code></td>
+<td>No</td>
+<td><code>tooltip.md</code></td>
+</tr>
+<tr>
+<td>Toast</td>
+<td><code>.toast</code></td>
+<td>Yes (<code>toast.js</code>)</td>
+<td><code>toast.md</code></td>
+</tr>
+<tr>
+<td>Code / Pre / Kbd</td>
+<td><code>code</code>, <code>pre</code>, <code>kbd</code></td>
+<td>No</td>
+<td><code>code.md</code></td>
+</tr>
+<tr>
+<td>Mark / Abbr / Figure</td>
+<td><code>mark</code>, <code>abbr</code>, <code>figure</code></td>
+<td>No</td>
+<td><code>mark.md</code></td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="dark-mode-rule">Dark mode rule</h2>
+<p>Components must <strong>not</strong> contain dark-mode-specific CSS. They rely entirely on semantic token overrides in <code>[data-theme=&quot;dark&quot;]</code> and <code>@media (prefers-color-scheme: dark)</code>.</p>
+<p>The only exception is when a component uses brand-palette tokens directly (avoid this). If unavoidable, add the override to both the <code>[data-theme=&quot;dark&quot;]</code> block and the <code>@media</code> fallback block.</p>
+<p>Current exceptions:</p>
+<ul>
+<li><code>mark</code> element — uses <code>--yellow-light</code> directly, requires dark mode override</li>
+<li>Scrollbar — uses neutral scale tokens directly, requires dark mode override</li>
+</ul>
+<hr>
+<h2 id="how-to-add-a-new-component">How to add a new component</h2>
+<ol>
+<li><p><strong>Define tokens</strong> in <code>:root</code> (in <code>design-system.css</code>, after existing component tokens):</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-royqu249z" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-royqu249z" class="language-css">/* -- Component tokens -- */
+--component-property: var(--semantic-token);
+</code></pre>
+      </div>
+    
+</li>
+<li><p><strong>Add dark mode overrides</strong> if the component uses non-semantic tokens — add to both <code>[data-theme=&quot;dark&quot;]</code> and <code>@media (prefers-color-scheme: dark)</code> blocks.</p>
+</li>
+<li><p><strong>Write CSS</strong> in <code>design-system.css</code> under a new numbered section:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-g2lttfyaj" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-g2lttfyaj" class="language-css">/* ------ N. COMPONENT NAME ------ */
+</code></pre>
+      </div>
+    
+</li>
+<li><p><strong>Write JS</strong> (only if needed) in <code>assets/js/component-name.js</code>. Follow the existing pattern: IIFE, named functions, version logged to console.</p>
+</li>
+<li><p><strong>Write documentation</strong> in <code>cms/component-name.md</code> following the standard frontmatter and content structure.</p>
+</li>
+<li><p><strong>Update this spec file</strong> — add the component to the status table above.</p>
+</li>
+<li><p><strong>Regenerate docs:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-a1bfc4o63" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-a1bfc4o63" class="language-bash">cd cms/generator &amp;&amp; npm run docgen
+</code></pre>
+      </div>
+    
+</li>
+</ol>
+
+                </article>
+            </main>
+
+            <!-- Table of Contents -->
+            <aside class="docs-toc">
+      <span class="toc-header">On this page</span>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#naming-convention" class="toc-link">Naming convention</a></li><li class="toc-item toc-level-2"><a href="#token-rule" class="toc-link">Token rule</a></li><li class="toc-item toc-level-2"><a href="#file-rule" class="toc-link">File rule</a></li><li class="toc-item toc-level-2"><a href="#accessibility-rule" class="toc-link">Accessibility rule</a></li><li class="toc-item toc-level-2"><a href="#component-status" class="toc-link">Component status</a></li><li class="toc-item toc-level-2"><a href="#dark-mode-rule" class="toc-link">Dark mode rule</a></li><li class="toc-item toc-level-2"><a href="#how-to-add-a-new-component" class="toc-link">How to add a new component</a></li></ul></nav></div>
+    </aside>
+        </div>
+
+        <!-- Page Navigation (Previous / Next) -->
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="markdown-style.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <h3 class="page-nav-title">Markdown</h3>
+      </span>
+    </a><span class="page-nav-link page-nav-placeholder"></span></div></nav>
+
+        <!-- Page Feedback -->
+        <section class="page-feedback" aria-label="Page feedback">
+            <div class="page-feedback-inner padding-global">
+                <h3 class="page-feedback-prompt">Was this page helpful?</h3>
+                <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
+                <div class="button-group">
+                    <button class="button is-small" data-feedback="yes" type="button">Yes</button>
+                    <button class="button is-small is-outline is-faded" data-feedback="no" type="button">No</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Modal -->
+        <dialog class="feedback-modal" aria-label="Send feedback">
+            <div class="feedback-modal-content">
+                <h3 class="feedback-modal-title">Send feedback</h3>
+                <p class="feedback-modal-subtitle"></p>
+                <form class="feedback-form" name="page-feedback" data-netlify="true">
+                    <input type="hidden" name="form-name" value="page-feedback">
+                    <input type="hidden" name="sentiment" value="">
+                    <input type="hidden" name="page" value="">
+                    <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
+                    <div class="button-group feedback-modal-actions">
+                        <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>
+                        <button type="submit" class="button is-small">Send feedback</button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
+
+        <!-- Footer -->
+        <footer class="docs-footer">
+            <div class="docs-footer-inner padding-global">
+                <p class="docs-footer-text">© 2026 By Default BrandOS</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- Initialize Highlight.js, Copy, and TOC -->
+    <script>
+        (function() {
+            'use strict';
+
+            function initHighlight() {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+
+            function copyToClipboard(text) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    return navigator.clipboard.writeText(text);
+                }
+                var textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                return Promise.resolve();
+            }
+
+            var copyIconPath = 'M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z';
+            var checkIconPath = 'M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z';
+
+            function initClipboard() {
+                const buttons = document.querySelectorAll('.copy-code-btn');
+
+                buttons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const targetId = this.getAttribute('data-clipboard-target');
+                        const codeElement = document.querySelector(targetId);
+
+                        if (codeElement) {
+                            const text = codeElement.textContent;
+                            const textSpan = this.querySelector('.copy-text');
+                            const btnPath = this.querySelector('path');
+
+                            copyToClipboard(text).then(() => {
+                                if (btnPath) {
+                                    btnPath.setAttribute('d', checkIconPath);
+                                }
+                                if (textSpan) {
+                                    textSpan.textContent = 'Copied!';
+                                }
+                                setTimeout(() => {
+                                    if (btnPath) {
+                                        btnPath.setAttribute('d', copyIconPath);
+                                    }
+                                    if (textSpan) {
+                                        textSpan.textContent = 'Copy';
+                                    }
+                                }, 1500);
+                            });
+                        }
+                    });
+                });
+            }
+
+            function initTOCActiveState() {
+                const tocLinks = document.querySelectorAll('.toc-link');
+                const headings = document.querySelectorAll('h1[id], h2[id]');
+
+                if (tocLinks.length === 0 || headings.length === 0) return;
+
+                const linkMap = new Map();
+                tocLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        const id = href.substring(1);
+                        linkMap.set(id, link);
+                    }
+                });
+
+                const observerOptions = {
+                    rootMargin: '-20% 0px -70% 0px',
+                    threshold: 0
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const id = entry.target.id;
+                        const link = linkMap.get(id);
+
+                        if (entry.isIntersecting) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            if (link) {
+                                link.classList.add('toc-link-active');
+                            }
+                        }
+                    });
+                }, observerOptions);
+
+                headings.forEach(heading => {
+                    if (heading.id) {
+                        observer.observe(heading);
+                    }
+                });
+
+                function setInitialActive() {
+                    let activeHeading = null;
+                    let maxTop = -Infinity;
+
+                    headings.forEach(heading => {
+                        const rect = heading.getBoundingClientRect();
+                        if (rect.top <= 100 && rect.top > maxTop) {
+                            maxTop = rect.top;
+                            activeHeading = heading;
+                        }
+                    });
+
+                    if (activeHeading && activeHeading.id) {
+                        const link = linkMap.get(activeHeading.id);
+                        if (link) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            link.classList.add('toc-link-active');
+                        }
+                    }
+                }
+
+                setInitialActive();
+
+                let scrollTimeout;
+                window.addEventListener('scroll', () => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(setInitialActive, 100);
+                });
+            }
+
+            function init() {
+                initHighlight();
+                initClipboard();
+                initTOCActiveState();
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+
+    <!-- Back to Top -->
+    <div class="back-to-top-wrapper">
+      <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
+        <div class="icn-svg" data-icon="arrow-top"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M4 4V2H20V4H4Z" fill="currentColor"/><path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/></svg></div>
+      </button>
+    </div>
+    <script>
+      (function() {
+        var btn = document.querySelector('.back-to-top-wrapper');
+        if (!btn) return;
+        window.addEventListener('scroll', function() {
+          btn.classList.toggle('is-visible', window.scrollY > 300);
+        });
+        btn.querySelector('button').addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+
+    <!-- Dropdown -->
+    <script src="../assets/js/dropdown.js"></script>
+
+    <!-- Site Navigation -->
+    <script src="../assets/js/nav.js"></script>
+    <!-- Auth -->
+    <script src="../assets/js/auth-config.js"></script>
+    <!-- Theme -->
+    <script src="../assets/js/theme-config.js"></script>
+    <script src="../assets/js/theme-loader.js"></script>
+    <!-- Auth (must load after theme scripts) -->
+    <script src="../assets/js/auth.js"></script>
+    <!-- Feedback -->
+    <script src="../assets/js/feedback.js"></script>
+
+    <script>
+      /* Table scroll overflow hint */
+      (function initTableScroll() {
+        var wrappers = document.querySelectorAll('.table-scroll');
+        if (!wrappers.length) return;
+
+        function checkOverflow(wrapper) {
+          var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
+          var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
+          wrapper.classList.toggle('is-overflowing', isOverflowing);
+          wrapper.classList.toggle('is-scrolled-end', isAtEnd);
+        }
+
+        wrappers.forEach(function(wrapper) {
+          checkOverflow(wrapper);
+          wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+        });
+
+        window.addEventListener('resize', function() {
+          wrappers.forEach(checkOverflow);
+        });
+      })();
+    </script>
+</body>
+</html>

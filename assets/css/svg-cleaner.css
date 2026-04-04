@@ -1,36 +1,10 @@
 /* ------ SVG CLEANER STYLES ------ */
 
-/* -- Sticky bar -- */
-.svgc-bar {
-  position: sticky;
-  top: var(--header-height);
-  z-index: 40;
-  background: var(--background-primary);
-}
-
-.svgc-bar-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+/* -- Sticky bar overrides -- */
+.sticky-bar-inner {
   max-width: 960px;
   margin: 0 auto;
-  padding: 0 0 0 var(--space-m);
-  border-bottom: var(--border-s) solid var(--border-faded);
-}
-
-.svgc-bar .header-dropdown {
-  align-self: stretch;
-}
-
-.svgc-bar-inner .eyebrow {
-  margin: 0;
-
-}
-/* -- Toggle row (wraps on small screens) -- */
-.svgc-toggles {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-m) var(--space-l);
+  padding: 0 var(--space-m);
 }
 
 /* -- Disabled toggle state -- */
@@ -39,30 +13,10 @@
   pointer-events: none;
 }
 
-/* -- CSS format row (wraps on small screens) -- */
-.svgc-css-formats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-m) var(--space-l);
-}
-
-/* -- Dropdown trigger -- */
-.svgc-dropdown-trigger {
-  display: flex;
-  align-items: center;
-  gap: var(--space-s);
-}
-
-.svgc-dropdown-label {
-  font-size: var(--font-s);
-  font-weight: var(--font-weight-semi-bold);
-  white-space: nowrap;
-}
-
 /* -- Textarea overrides -- */
 #svg-input,
 #svg-output {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--font-tertiary);
   font-size: var(--font-s);
   min-height: 200px;
   resize: vertical;
@@ -70,8 +24,7 @@
 
 /* -- Mobile responsive -- */
 @media (max-width: 768px) {
-  .svgc-bar-inner {
+  .sticky-bar-inner {
     padding: var(--space-m) var(--space-l);
   }
-
 }

@@ -67,7 +67,7 @@
         <!-- Page Header (full width, outside grid) -->
         
 
-        <!-- Page Sub-bar (breadcrumbs + actions) -->
+        <!-- Sticky Bar (breadcrumbs + actions) -->
         
 
         <!-- Main Content + TOC grid -->
@@ -277,10 +277,7 @@
     <!-- Back to Top -->
     <div class="back-to-top-wrapper">
       <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
-        <div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M4 4V2H20V4H4Z" fill="currentColor"/>
-          <path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/>
-        </svg></div>
+        <div class="icn-svg" data-icon="arrow-top"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M4 4V2H20V4H4Z" fill="currentColor"/><path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/></svg></div>
       </button>
     </div>
     <script>
@@ -296,44 +293,8 @@
       })();
     </script>
 
-    <!-- Sub-bar dropdown toggle -->
-    <script>
-      (function() {
-        var dropdowns = document.querySelectorAll('.subbar-dropdown');
-        dropdowns.forEach(function(dd) {
-          var toggle = dd.querySelector(':scope > .header-link');
-          if (!toggle) return;
-
-          toggle.addEventListener('click', function() {
-            var wasOpen = dd.classList.contains('is-open');
-            dropdowns.forEach(function(d) {
-              d.classList.remove('is-open');
-              var t = d.querySelector(':scope > .header-link');
-              if (t) t.setAttribute('aria-expanded', 'false');
-            });
-            if (!wasOpen) {
-              dd.classList.add('is-open');
-              toggle.setAttribute('aria-expanded', 'true');
-            }
-          });
-
-          document.addEventListener('click', function(e) {
-            if (!dd.contains(e.target)) {
-              dd.classList.remove('is-open');
-              toggle.setAttribute('aria-expanded', 'false');
-            }
-          });
-
-          document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && dd.classList.contains('is-open')) {
-              dd.classList.remove('is-open');
-              toggle.setAttribute('aria-expanded', 'false');
-              toggle.focus();
-            }
-          });
-        });
-      })();
-    </script>
+    <!-- Dropdown -->
+    <script src="../../assets/js/dropdown.js"></script>
 
     <!-- Site Navigation -->
     <script src="../../assets/js/nav.js"></script>
