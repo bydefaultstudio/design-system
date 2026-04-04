@@ -16,15 +16,15 @@
     <meta property="og:image" content="../assets/images/og/og-default.jpg">
     <meta property="og:type" content="website">
 
-    <!-- Design System Framework (path set in docs/docs.config.js) -->
+    <!-- Design System Framework (path set in cms/docs.config.js) -->
     <link rel="stylesheet" href="../assets/css/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     
 
-    <!-- Google Fonts (configured in docs/docs.config.js) -->
+    <!-- Google Fonts (configured in cms/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- Markdown CSS -->
 
@@ -55,7 +55,7 @@
     <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
     <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
         <span>⚠️</span>
-        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">docs/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
+        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">cms/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
         <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
     </div>
 
@@ -86,12 +86,12 @@
               <div class="icn-svg" data-icon="more-horizontal"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
             </button>
             <div class="subbar-dropdown-menu">
-              <a href="../docs/color.md" class="header-link" download>
+              <a href="../cms/color.md" class="header-link" download>
                 <div class="icn-svg" data-icon="download"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
                 <span>Download .md file</span>
               </a>
               <div class="header-dropdown-divider"></div>
-              <a href="../docs/color.md" class="header-link" target="_blank" rel="noopener noreferrer">
+              <a href="../cms/color.md" class="header-link" target="_blank" rel="noopener noreferrer">
                 <div class="icn-svg" data-icon="open-full"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21V3H9V5H7C5.89543 5 5 5.89543 5 7V17C5 18.1046 5.89543 19 7 19H17C18.1046 19 19 18.1046 19 17V15H21V21H3ZM9.7 15.7L8.3 14.3L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H12V3H21V12H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L9.7 15.7Z" fill="currentColor"/></svg></div>
                 <span>Open .md in new tab</span>
               </a>
@@ -135,11 +135,24 @@
 <td>Accent brand color</td>
 </tr>
 </tbody></table></div>
-<p><strong>Usage:</strong></p>
+<div class="demo-preview is-joined">
+  <div class="block row gap-m" style="flex-wrap: wrap;">
+    <div style="background: var(--warm-black); color: var(--off-white); padding: var(--space-l) var(--space-xl); min-width: 8rem; text-align: center;">
+      <strong>--warm-black</strong>
+    </div>
+    <div style="background: var(--off-white); color: var(--warm-black); padding: var(--space-l) var(--space-xl); min-width: 8rem; text-align: center; border: var(--border-s) solid var(--border-faded);">
+      <strong>--off-white</strong>
+    </div>
+    <div style="background: var(--green); color: var(--off-white); padding: var(--space-l) var(--space-xl); min-width: 8rem; text-align: center;">
+      <strong>--green</strong>
+    </div>
+  </div>
+</div>
+
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-7pfhvfqnu" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-7pfhvfqnu" class="language-css">:root {
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-qe9xgny29" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-qe9xgny29" class="language-css">:root {
   /* You can use default names or rename tokens to match your brand */
   --warm-black: #1a1a1a; /* Replace with your brand color */
   
@@ -233,11 +246,25 @@
 <td>95% opacity</td>
 </tr>
 </tbody></table></div>
-<p><strong>Usage:</strong></p>
+<div class="demo-preview is-joined" style="display: flex; flex-wrap: wrap; gap: var(--space-xs);">
+  <div style="background: var(--black); width: 3rem; height: 3rem; " title="--black"></div>
+  <div style="background: var(--black-alpha-90); width: 3rem; height: 3rem; " title="--black-alpha-90"></div>
+  <div style="background: var(--black-alpha-80); width: 3rem; height: 3rem; " title="--black-alpha-80"></div>
+  <div style="background: var(--black-alpha-70); width: 3rem; height: 3rem; " title="--black-alpha-70"></div>
+  <div style="background: var(--black-alpha-60); width: 3rem; height: 3rem; " title="--black-alpha-60"></div>
+  <div style="background: var(--black-alpha-50); width: 3rem; height: 3rem; " title="--black-alpha-50"></div>
+  <div style="background: var(--black-alpha-40); width: 3rem; height: 3rem; " title="--black-alpha-40"></div>
+  <div style="background: var(--black-alpha-30); width: 3rem; height: 3rem; " title="--black-alpha-30"></div>
+  <div style="background: var(--black-alpha-20); width: 3rem; height: 3rem; " title="--black-alpha-20"></div>
+  <div style="background: var(--black-alpha-15); width: 3rem; height: 3rem; " title="--black-alpha-15"></div>
+  <div style="background: var(--black-alpha-10); width: 3rem; height: 3rem; " title="--black-alpha-10"></div>
+  <div style="background: var(--black-alpha-5); width: 3rem; height: 3rem; " title="--black-alpha-5"></div>
+</div>
+
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-snzppe5jy" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-snzppe5jy" class="language-css">.shadow {
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-gqdnr5ljt" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-gqdnr5ljt" class="language-css">.shadow {
   box-shadow: 0 4px 6px var(--black-alpha-30);
 }
 </code></pre>
@@ -319,11 +346,26 @@
 <td>95% opacity</td>
 </tr>
 </tbody></table></div>
-<p><strong>Usage:</strong></p>
+<div class="demo-preview is-joined" style="display: flex; flex-wrap: wrap; gap: var(--space-xs); background: var(--neutral-800); padding: var(--space-xl);">
+  <div style="background: var(--white); width: 3rem; height: 3rem; " title="--white"></div>
+  <div style="background: var(--white-alpha-95); width: 3rem; height: 3rem; " title="--white-alpha-95"></div>
+  <div style="background: var(--white-alpha-90); width: 3rem; height: 3rem; " title="--white-alpha-90"></div>
+  <div style="background: var(--white-alpha-80); width: 3rem; height: 3rem; " title="--white-alpha-80"></div>
+  <div style="background: var(--white-alpha-70); width: 3rem; height: 3rem; " title="--white-alpha-70"></div>
+  <div style="background: var(--white-alpha-60); width: 3rem; height: 3rem; " title="--white-alpha-60"></div>
+  <div style="background: var(--white-alpha-50); width: 3rem; height: 3rem; " title="--white-alpha-50"></div>
+  <div style="background: var(--white-alpha-40); width: 3rem; height: 3rem; " title="--white-alpha-40"></div>
+  <div style="background: var(--white-alpha-30); width: 3rem; height: 3rem; " title="--white-alpha-30"></div>
+  <div style="background: var(--white-alpha-20); width: 3rem; height: 3rem; " title="--white-alpha-20"></div>
+  <div style="background: var(--white-alpha-15); width: 3rem; height: 3rem; " title="--white-alpha-15"></div>
+  <div style="background: var(--white-alpha-10); width: 3rem; height: 3rem; " title="--white-alpha-10"></div>
+  <div style="background: var(--white-alpha-5); width: 3rem; height: 3rem; " title="--white-alpha-5"></div>
+</div>
+
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-9506v4pzh" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-9506v4pzh" class="language-css">.highlight {
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-gmi572zbc" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-gmi572zbc" class="language-css">.highlight {
   background-color: var(--white-alpha-30);
 }
 </code></pre>
@@ -391,11 +433,26 @@
 <td>#0F0E0E</td>
 </tr>
 </tbody></table></div>
-<p><strong>Usage:</strong></p>
+<div class="demo-preview is-joined" style="display: flex; flex-wrap: wrap; gap: var(--space-xs);">
+  <div style="background: var(--neutral-50); width: 3rem; height: 3rem;  border: var(--border-s) solid var(--border-faded);" title="--neutral-50"></div>
+  <div style="background: var(--neutral-100); width: 3rem; height: 3rem; " title="--neutral-100"></div>
+  <div style="background: var(--neutral-150); width: 3rem; height: 3rem; " title="--neutral-150"></div>
+  <div style="background: var(--neutral-200); width: 3rem; height: 3rem; " title="--neutral-200"></div>
+  <div style="background: var(--neutral-300); width: 3rem; height: 3rem; " title="--neutral-300"></div>
+  <div style="background: var(--neutral-400); width: 3rem; height: 3rem; " title="--neutral-400"></div>
+  <div style="background: var(--neutral-500); width: 3rem; height: 3rem; " title="--neutral-500"></div>
+  <div style="background: var(--neutral-600); width: 3rem; height: 3rem; " title="--neutral-600"></div>
+  <div style="background: var(--neutral-700); width: 3rem; height: 3rem; " title="--neutral-700"></div>
+  <div style="background: var(--neutral-800); width: 3rem; height: 3rem; " title="--neutral-800"></div>
+  <div style="background: var(--neutral-900); width: 3rem; height: 3rem; " title="--neutral-900"></div>
+  <div style="background: var(--neutral-950); width: 3rem; height: 3rem; " title="--neutral-950"></div>
+  <div style="background: var(--neutral-990); width: 3rem; height: 3rem; " title="--neutral-990"></div>
+</div>
+
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-bdnps4yd6" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-bdnps4yd6" class="language-css">.text {
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-l5vaypiyj" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-l5vaypiyj" class="language-css">.text {
   color: var(--neutral-800);
 }
 </code></pre>
@@ -454,11 +511,19 @@
 <td>Site header text color</td>
 </tr>
 </tbody></table></div>
-<p><strong>Usage:</strong></p>
+<div class="demo-preview is-joined">
+  <p style="color: var(--text-primary); margin-bottom: var(--space-s);">Primary text color</p>
+  <p style="color: var(--text-secondary); margin-bottom: var(--space-s);">Secondary text color</p>
+  <p style="color: var(--text-plain); margin-bottom: var(--space-s);">True black text</p>
+  <p style="color: var(--text-faded); margin-bottom: var(--space-s);">Faded text</p>
+  <p style="color: var(--text-accent); margin-bottom: var(--space-s);">Accent text</p>
+  <p style="color: var(--text-link);">Link text color</p>
+</div>
+
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-qbsscxsqm" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-qbsscxsqm" class="language-css">h1 {
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-sfwvps0s2" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-sfwvps0s2" class="language-css">h1 {
   color: var(--text-primary);
 }
 </code></pre>
@@ -504,11 +569,27 @@
 <td>Site header background</td>
 </tr>
 </tbody></table></div>
-<p><strong>Usage:</strong></p>
+<div class="demo-preview is-joined">
+  <div class="block row gap-m" style="flex-wrap: wrap;">
+    <div style="background: var(--background-primary); padding: var(--space-l) var(--space-xl); border: var(--border-s) solid var(--border-faded); min-width: 10rem; text-align: center;">
+      <strong>--background-primary</strong>
+    </div>
+    <div style="background: var(--background-secondary); padding: var(--space-l) var(--space-xl); border: var(--border-s) solid var(--border-faded); min-width: 10rem; text-align: center;">
+      <strong>--background-secondary</strong>
+    </div>
+    <div style="background: var(--background-plain); padding: var(--space-l) var(--space-xl); border: var(--border-s) solid var(--border-faded); min-width: 10rem; text-align: center;">
+      <strong>--background-plain</strong>
+    </div>
+    <div style="background: var(--background-faded); padding: var(--space-l) var(--space-xl); border: var(--border-s) solid var(--border-faded); min-width: 10rem; text-align: center;">
+      <strong>--background-faded</strong>
+    </div>
+  </div>
+</div>
+
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-0oz6wavyl" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-0oz6wavyl" class="language-css">.card {
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-7xy69b0yf" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-7xy69b0yf" class="language-css">.card {
   background-color: var(--background-plain);
 }
 </code></pre>
@@ -539,11 +620,24 @@
 <td>Faded border</td>
 </tr>
 </tbody></table></div>
-<p><strong>Usage:</strong></p>
+<div class="demo-preview is-joined">
+  <div class="block row gap-m" style="flex-wrap: wrap;">
+    <div style="border: var(--border-m) solid var(--border-primary); padding: var(--space-l) var(--space-xl); min-width: 10rem; text-align: center;">
+      <strong>--border-primary</strong>
+    </div>
+    <div style="border: var(--border-m) solid var(--border-secondary); padding: var(--space-l) var(--space-xl); min-width: 10rem; text-align: center;">
+      <strong>--border-secondary</strong>
+    </div>
+    <div style="border: var(--border-m) solid var(--border-faded); padding: var(--space-l) var(--space-xl); min-width: 10rem; text-align: center;">
+      <strong>--border-faded</strong>
+    </div>
+  </div>
+</div>
+
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-3guu8jnkb" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-3guu8jnkb" class="language-css">.card {
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-nqq18sgt2" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-nqq18sgt2" class="language-css">.card {
   border-color: var(--border-primary);
 }
 </code></pre>
@@ -563,18 +657,39 @@
 <p>The toggle handles this automatically. When dark mode is active:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-9vbrv1kd2" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-9vbrv1kd2" class="language-html">&lt;html data-theme=&quot;dark&quot;&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-588ehkbqm" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-588ehkbqm" class="language-html">&lt;html data-theme=&quot;dark&quot;&gt;
 </code></pre>
       </div>
     
 <p>When light mode is active, the attribute is removed and <code>:root</code> defaults apply.</p>
 <h3 id="scoped-usage">Scoped Usage</h3>
 <p>You can apply dark mode to any element, not just the page:</p>
+<div class="demo-preview is-joined">
+  <div class="grid">
+    <div style="background: var(--background-primary); color: var(--text-primary); padding: var(--space-xl); border: var(--border-s) solid var(--border-secondary);">
+      <div class="block gap-xs">
+        <p class="eyebrow">Light mode</p>
+        <p>Primary text</p>
+        <p style="color: var(--text-faded);">Faded text</p>
+        <p style="color: var(--text-accent);">Accent text</p>
+      </div>
+    </div>
+    <div data-theme="dark" style="background: var(--background-primary); color: var(--text-primary); padding: var(--space-xl); border: var(--border-s) solid var(--border-secondary);">
+      <div class="block gap-xs">
+        <p class="eyebrow">Dark mode</p>
+        <p>Primary text</p>
+        <p style="color: var(--text-faded);">Faded text</p>
+        <p style="color: var(--text-accent);">Accent text</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-pwbf6almc" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-pwbf6almc" class="language-html">&lt;!-- Dark card on a light page --&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-drlnmanwb" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-drlnmanwb" class="language-html">&lt;!-- Dark card on a light page --&gt;
 &lt;div data-theme=&quot;dark&quot; class=&quot;card&quot;&gt;
   &lt;p&gt;This section uses dark mode tokens&lt;/p&gt;
 &lt;/div&gt;
@@ -697,6 +812,23 @@
     </aside>
         </div>
 
+        <!-- Page Navigation (Previous / Next) -->
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="design-system.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <h3 class="page-nav-title">Design System</h3>
+      </span>
+    </a><a href="typography.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <h3 class="page-nav-title">Typography</h3>
+      </span>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+    </a></div></nav>
+
         <!-- Page Feedback -->
         <section class="page-feedback" aria-label="Page feedback">
             <div class="page-feedback-inner padding-global">
@@ -726,23 +858,6 @@
                 </form>
             </div>
         </dialog>
-
-        <!-- Page Navigation (Previous / Next) -->
-        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="design-system.html" class="page-nav-link page-nav-prev" rel="prev">
-      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
-      <span class="page-nav-text">
-        <span class="page-nav-label">Previous</span>
-        
-        <h3 class="page-nav-title">Design System</h3>
-      </span>
-    </a><a href="typography.html" class="page-nav-link page-nav-next" rel="next">
-      <span class="page-nav-text">
-        <span class="page-nav-label">Next</span>
-        
-        <h3 class="page-nav-title">Typography</h3>
-      </span>
-      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
-    </a></div></nav>
 
         <!-- Footer -->
         <footer class="docs-footer">

@@ -1,0 +1,3 @@
+---
+access: "client:client-template"
+---

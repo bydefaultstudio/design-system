@@ -127,6 +127,15 @@
    * Team and admin always pass (higher in hierarchy than client).
    */
   function hasAccessForValue(userRole, accessValue, user) {
+    // Composite access: "admin+client:dianomi" → pass if user matches ANY part
+    if (accessValue.indexOf('+') !== -1) {
+      var parts = accessValue.split('+');
+      for (var i = 0; i < parts.length; i++) {
+        if (hasAccessForValue(userRole, parts[i], user)) return true;
+      }
+      return false;
+    }
+
     // Standard hierarchy role (public, client, team, admin)
     if (ROLE_HIERARCHY.indexOf(accessValue) !== -1) {
       return hasAccess(userRole, accessValue);
@@ -155,36 +164,9 @@
     return false;
   }
 
-  function hasClientFolderAccess(user, pagePath) {
-    var metadata = user.app_metadata || {};
-    var userRole = getEffectiveRole(metadata.roles || []);
-
-    // Team and admin can access everything
-    if (userRole === 'team' || userRole === 'admin') return true;
-
-    var clientFolder = metadata.clientFolder;
-    if (!clientFolder) return true;
-
-    // Own client folder
-    if (pagePath.indexOf(clientFolder + '/') === 0) return true;
-
-    // Granted tool UIs only (not doc pages)
-    if (typeof THEME_CONFIG !== 'undefined' && THEME_CONFIG.themes && THEME_CONFIG.themes[clientFolder]) {
-      var grantedTools = THEME_CONFIG.themes[clientFolder].tools || [];
-      for (var i = 0; i < grantedTools.length; i++) {
-        if (pagePath === grantedTools[i] + '/index.html') return true;
-      }
-    }
-
-    // Auth pages
-    if (pagePath.indexOf('auth/') === 0 || pagePath === 'access-denied.html') return true;
-
-    // Root index (role-filtered cards handle visibility)
-    if (pagePath === 'index.html' || pagePath === '') return true;
-
-    // Deny everything else (doc pages, other client folders, etc.)
-    return false;
-  }
+  // hasClientFolderAccess removed — access is now enforced entirely via
+  // data-access attributes on each page (e.g. "client:dianomi").
+  // The hasAccessForValue() check handles all role and client scoping.
 
   //------- URL & Redirect Helpers -------//
 
@@ -1086,14 +1068,6 @@
       return;
     }
 
-    var pagePath = getCurrentPagePath();
-    if (!hasClientFolderAccess(user, pagePath)) {
-      renderAuthHeaderDropdown(user, adminActiveRole);
-      setRoleClass(userRole);
-      redirectAccessDenied();
-      return;
-    }
-
     // Access granted
     setRoleClass(userRole);
     renderAuthHeaderDropdown(user, adminActiveRole);
@@ -1381,13 +1355,6 @@
     setRoleClass(activeRole);
 
     if (requiredRole !== 'public' && !hasAccessForValue(activeRole, requiredRole, devUser)) {
-      renderAuthHeaderDropdown(devUser, activeRole);
-      redirectAccessDenied();
-      return;
-    }
-
-    var pagePath = getCurrentPagePath();
-    if (!hasClientFolderAccess(devUser, pagePath)) {
       renderAuthHeaderDropdown(devUser, activeRole);
       redirectAccessDenied();
       return;

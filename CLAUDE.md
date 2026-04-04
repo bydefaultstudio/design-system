@@ -17,22 +17,22 @@ You are a Senior Front-End Developer working inside this project's **Design Syst
 Before generating or modifying code, treat the following files as authoritative:
 
 1. `PROJECT_BRIEF.md` — project intent and constraints
-2. `docs/layout.md` — HTML layout hierarchy and structure
-3. `docs/css-code-struture.md` — CSS organization and commenting
-4. `docs/js-code-structure.md` — JavaScript patterns and structure
-5. `docs/color.md` — color tokens and usage
-6. `docs/typography.md` — typography tokens and usage
-7. `docs/spacing.md` — spacing tokens and usage
-8. `docs/border.md` — border strategy and composable classes
-9. `docs/button.md` — button component usage
-10. `docs/disclosure.md` — details/summary disclosure component
-11. `docs/seo-best-practices.md` — SEO meta tags and social sharing
-12. `docs/folder-structure.md` — file organization rules
-13. `docs/setup.md` — project setup and customization
+2. `cms/layout.md` — HTML layout hierarchy and structure
+3. `cms/css-code-struture.md` — CSS organization and commenting
+4. `cms/js-code-structure.md` — JavaScript patterns and structure
+5. `cms/color.md` — color tokens and usage
+6. `cms/typography.md` — typography tokens and usage
+7. `cms/spacing.md` — spacing tokens and usage
+8. `cms/border.md` — border strategy and composable classes
+9. `cms/button.md` — button component usage
+10. `cms/disclosure.md` — details/summary disclosure component
+11. `cms/seo-best-practices.md` — SEO meta tags and social sharing
+12. `cms/folder-structure.md` — file organization rules
+13. `cms/setup.md` — project setup and customization
 
 If any instruction conflicts with these documents, **the documents take precedence**.
 
-Use Explore sub-agents to read multiple docs files in parallel before starting work.
+Use Explore sub-agents to read multiple cms files in parallel before starting work.
 
 ---
 
@@ -62,7 +62,7 @@ If something cannot be implemented cleanly using existing patterns, **pause and 
 ## 4. Quick Reference
 
 ### Layout Hierarchy
-See `docs/layout.md` for complete details.
+See `cms/layout.md` for complete details.
 
 ```
 body → page-wrapper → page-content → section → padding-global → container/max-width → block
@@ -75,7 +75,7 @@ body → page-wrapper → page-content → section → padding-global → contai
 - Never mix responsibilities across layers
 
 ### Design Tokens
-See `docs/color.md`, `docs/typography.md`, `docs/spacing.md` for complete token reference.
+See `cms/color.md`, `cms/typography.md`, `cms/spacing.md` for complete token reference.
 
 **Critical rules:**
 - Use semantic tokens, not primitives
@@ -83,7 +83,7 @@ See `docs/color.md`, `docs/typography.md`, `docs/spacing.md` for complete token 
 - Semantic tokens (e.g., `--text-primary`, `--background-faded`) are always preferred
 
 ### CSS Structure
-See `docs/css-code-struture.md` for complete organization guidelines.
+See `cms/css-code-struture.md` for complete organization guidelines.
 
 **Critical rules:**
 - Design system CSS (`assets/css/design-system.css`) is the single source of truth
@@ -93,7 +93,7 @@ See `docs/css-code-struture.md` for complete organization guidelines.
 - Never hardcode values that should use tokens
 
 ### JavaScript Structure
-See `docs/js-code-structure.md` for complete patterns.
+See `cms/js-code-structure.md` for complete patterns.
 
 **Critical rules:**
 - One responsibility per file
@@ -104,7 +104,7 @@ See `docs/js-code-structure.md` for complete patterns.
 - Log version and init success
 
 ### Border Strategy
-See `docs/border.md` for complete composable architecture.
+See `cms/border.md` for complete composable architecture.
 
 **Critical rules:**
 - Structural classes define position (`.border`, `.border-top`, etc.)
@@ -112,7 +112,7 @@ See `docs/border.md` for complete composable architecture.
 - Never create classes like `.border-top-m` or hardcode border values
 
 ### Iconography
-See `docs/iconography.md` for complete icon guidelines.
+See `cms/iconography.md` for complete icon guidelines.
 
 **Critical rules:**
 - Always wrap icons in `<div class="icn-svg" data-icon="name">` — never use bare `<svg>`, `<span>`, or `<img>`
@@ -120,10 +120,10 @@ See `docs/iconography.md` for complete icon guidelines.
 - SVGs must use `fill="none"` on the `<svg>` element; paths use `fill="currentColor"`
 - Strip `xmlns` from inline SVGs
 - Include `data-icon` with a descriptive kebab-case name
-- Use the SVG Cleaner (`svg-cleaner/svg-clean.js`) to prepare icons
+- Use the SVG Cleaner (`assets/js/svg-clean.js`) to prepare icons
 
 ### Components
-See `docs/button.md` for button usage and modifiers.
+See `cms/button.md` for button usage and modifiers.
 
 ---
 
@@ -131,12 +131,12 @@ See `docs/button.md` for button usage and modifiers.
 
 ### Page Template
 - Always use `templates/page-template.html` as the base
-- Include all SEO meta tags (see `docs/seo-best-practices.md`)
+- Include all SEO meta tags (see `cms/seo-best-practices.md`)
 - Use semantic HTML structure
-- Follow the layout hierarchy (see `docs/layout.md`)
+- Follow the layout hierarchy (see `cms/layout.md`)
 
 ### SEO Meta Tags
-See `docs/seo-best-practices.md` for complete requirements.
+See `cms/seo-best-practices.md` for complete requirements.
 
 Every page must include:
 - Viewport meta tag
@@ -151,7 +151,7 @@ Every page must include:
 
 ## 6. File Organization
 
-See `docs/folder-structure.md` for complete directory structure.
+See `cms/folder-structure.md` for complete directory structure.
 
 **Key locations:**
 - `assets/` — all project assets (CSS, fonts, icons, images, video)
@@ -160,7 +160,8 @@ See `docs/folder-structure.md` for complete directory structure.
 - `src/js/` — JavaScript files
 - `src/pages/` — HTML pages
 - `templates/` — reusable templates
-- `docs/` — documentation markdown source and generator
+- `cms/` — documentation markdown source and generator
+- `tools/` — live tool apps (CPM calculator, SVG cleaner, display ad preview)
 
 ---
 
@@ -178,9 +179,9 @@ You must:
 - explain why the change exists
 - keep code and documentation in sync
 
-After updating any `docs/*.md` file, regenerate the HTML docs:
+After updating any `cms/*.md` file, regenerate the HTML docs:
 ```bash
-cd docs/generator && npm run docgen
+cd cms/generator && npm run docgen
 ```
 
 ---
@@ -281,7 +282,7 @@ After gathering answers:
    - `README.md` → replace `[Your Project Name]` in the heading
    - `index.html` → update `<title>` and eyebrow text
    - `templates/page-template.html` → replace `Site Name` in title, OG `og:site_name`, and `yoursite.com` placeholder URLs
-   - `docs/docs.config.js` → update `footerText` and `indexDescription`
+   - `cms/docs.config.js` → update `footerText` and `indexDescription`
    - `PROJECT_BRIEF.md` → add project name at the top
 3. Update brand tokens in `assets/css/design-system.css` (Brand Tokens section) with any known brand values (fonts, colours)
 
@@ -309,9 +310,9 @@ Use sub-agents liberally to keep the main context window clean. Offload research
 - For complex problems, throw more compute at it via parallel agents
 
 Example: before building a new section, launch simultaneously:
-- `docs/layout.md` + `docs/spacing.md` (layout agent)
-- `docs/color.md` + `docs/typography.md` (tokens agent)
-- `docs/css-code-struture.md` (CSS patterns agent)
+- `cms/layout.md` + `cms/spacing.md` (layout agent)
+- `cms/color.md` + `cms/typography.md` (tokens agent)
+- `cms/css-code-struture.md` (CSS patterns agent)
 
 ### Task Tracking
 Use **TodoWrite** for any multi-step task:
@@ -325,7 +326,7 @@ Never mark a task complete without proving it works:
 - Ask yourself: "Would a staff engineer approve this?"
 - Diff the behaviour before and after your changes when relevant
 - Check that docs are updated if you changed any patterns
-- Run the doc generator if any `docs/*.md` files changed
+- Run the doc generator if any `cms/*.md` files changed
 
 ### Autonomous Bug Fixing
 When given a bug report — just fix it:
@@ -374,7 +375,7 @@ The following MCP tools are available for this project:
 
 ## 15. SVG Processing
 
-Use `svg-cleaner/svg-clean.js` to clean SVGs before adding them to the project. The tool reads from stdin and writes to stdout (or a file with `-o`).
+Use `assets/js/svg-clean.js` to clean SVGs before adding them to the project. The tool reads from stdin and writes to stdout (or a file with `-o`).
 
 ### What it does (always)
 - Strips `xmlns` and `xmlns:xlink` from root `<svg>`
@@ -390,7 +391,7 @@ Use `svg-cleaner/svg-clean.js` to clean SVGs before adding them to the project. 
 When a user pastes SVG code in the chat, clean it and save it:
 
 ```bash
-node svg-cleaner/svg-clean.js --current-color --strip-comments -o assets/images/illustrations/filename.svg <<'SVGEOF'
+node assets/js/svg-clean.js --current-color --strip-comments -o assets/images/illustrations/filename.svg <<'SVGEOF'
 <svg>...pasted code...</svg>
 SVGEOF
 ```
@@ -405,4 +406,4 @@ Use heredoc syntax (`<<'SVGEOF'`) to avoid shell escaping issues with quotes in 
 - `assets/images/svg-icons/` — SVG component icons
 
 ### Browser UI
-`svg-cleaner/index.html` provides a visual SVG cleaner — open it in a browser for manual paste-and-copy workflows.
+`tools/svg-cleaner.html` provides a visual SVG cleaner — open it in a browser for manual paste-and-copy workflows.

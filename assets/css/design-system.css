@@ -24,7 +24,7 @@
   /* -- Typography -- */
   --font-primary: "Inclusive Sans", sans-serif;
   --font-secondary: "RecifeText", Georgia, serif;
-  --font-tertiary: "JetBrains Mono", monospace;
+  --font-tertiary: "IBM Plex Mono", monospace;
 
   /* -- Palette -- */
   --off-white: #fff7f1;
@@ -56,8 +56,11 @@
   --font-6xl: 4rem;      /* 64px */
   --font-7xl: 4.5rem;    /* 72px */
 
+  /* -- Semantic font sizes -- */
+  --text-body: var(--font-m);
+
   /* -- UI font sizes -- */
-  --button-font-size: var(--font-m);
+  --button-font-size: var(--text-body);
   --button-font-size-small: var(--font-2xs);
 
   /* -- Line height tokens -- */
@@ -79,8 +82,8 @@
   /* -- Letter spacing tokens (em-based for proportional scaling) -- */
   --letter-spacing-s: 0.03em;
   --letter-spacing-m: 0.06em;
-  --letter-spacing-l: 0.08em;
-  --letter-spacing-xl: 0.11em;
+  --letter-spacing-l: 0.12em;
+  --letter-spacing-xl: 0.24em;
 }
 
 /* ------ 2. SYSTEM TOKENS - COLORS ------ */
@@ -148,6 +151,8 @@
   --background-secondary: var(--warm-white);
   --background-plain: var(--white);
   --background-faded: var(--black-alpha-5);
+  --background-darker: var(--black-alpha-10);
+  --background-lighter: var(--white-alpha-10);
   --background-modal: rgba(0, 0, 0, 0.75);
   --background-sidebar: var(--background-primary);
   --background-site-header: var(--background-primary);
@@ -183,14 +188,20 @@
 
   /* -- Form semantic tokens -- */
   --input-border: var(--border-secondary);
-  --input-background: var(--black-alpha-10);
+  --input-background: var(--black-alpha-5);
   --input-text: var(--text-plain);
   --input-placeholder: var(--text-faded);
   --input-focus: var(--green);
   --input-disabled-bg: var(--background-faded);
   --input-disabled-text: var(--text-faded);
   --checkbox-background: var(--neutral-100);
-  --checkbox-selected: var(--green);
+  --checkbox-selected: var(--text-primary);
+  --checkbox-border: var(--border-faded);
+  --checkbox-checkmark: var(--off-white);
+  --toggle-track: var(--black-alpha-3);
+  --toggle-knob: var(--neutral-500);
+  --toggle-selected: var(--text-primary);
+  --toggle-knob-selected: var(--off-white);
 
   /* -- Selection -- */
   --selection-text: var(--background-primary);
@@ -218,6 +229,7 @@
   --background-secondary: #222222;
   --background-plain: #2a2a2a;
   --background-faded: rgba(255, 255, 255, 0.06);
+  --background-darker: rgba(255, 255, 255, 0.12);
   --background-modal: rgba(0, 0, 0, 0.5);
   --background-sidebar: var(--background-primary);
   --background-site-header: var(--background-primary);
@@ -258,7 +270,13 @@
   --input-disabled-bg: rgba(255, 255, 255, 0.06);
   --input-disabled-text: rgba(255, 255, 255, 0.3);
   --checkbox-background: #3a3a3a;
-  --checkbox-selected: #5bb89a;
+  --checkbox-selected: #e8e6e3;
+  --checkbox-border: #555;
+  --checkbox-checkmark: #1a1a1a;
+  --toggle-track: #444;
+  --toggle-knob: #888;
+  --toggle-selected: #e8e6e3;
+  --toggle-knob-selected: #1a1a1a;
 
   color-scheme: dark;
 }
@@ -282,6 +300,7 @@
     --background-secondary: #222222;
     --background-plain: #2a2a2a;
     --background-faded: rgba(255, 255, 255, 0.06);
+    --background-darker: rgba(255, 255, 255, 0.12);
     --background-sidebar: var(--background-primary);
     --background-site-header: var(--background-primary);
 
@@ -316,7 +335,13 @@
     --input-disabled-bg: rgba(255, 255, 255, 0.06);
     --input-disabled-text: rgba(255, 255, 255, 0.3);
     --checkbox-background: #3a3a3a;
-    --checkbox-selected: #5bb89a;
+    --checkbox-selected: #e8e6e3;
+    --checkbox-border: #555;
+    --checkbox-checkmark: #1a1a1a;
+    --toggle-track: #444;
+    --toggle-knob: #888;
+    --toggle-selected: #e8e6e3;
+    --toggle-knob-selected: #1a1a1a;
 
     color-scheme: dark;
   }
@@ -412,6 +437,7 @@
   --border-color: var(--border-primary);
 
   /* -- Border radius tokens -- */
+  --radius-xs: 6px;
   --radius-s: 10px;
   --radius-pill: 999px;
 }
@@ -1085,7 +1111,7 @@ input[type="tel"],
 textarea,
 select {
   font-family: var(--font-primary);
-  font-size: var(--font-m);
+  font-size: var(--text-body);
   line-height: var(--line-height-l);
   color: var(--input-text);
   background-color: var(--input-background);
@@ -1108,6 +1134,17 @@ select:focus {
   outline: none;
   border-color: var(--input-focus);
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus), transparent 75%);
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 input::placeholder,
@@ -1158,11 +1195,78 @@ legend {
 /* -- Checkbox & radio -- */
 input[type="checkbox"],
 input[type="radio"] {
-  width: var(--space-l);
-  height: var(--space-l);
+  -webkit-appearance: none;
+  appearance: none;
+  width: var(--space-xl);
+  height: var(--space-xl);
   margin: 0;
   cursor: pointer;
-  accent-color: var(--input-focus);
+  background-color: var(--checkbox-background);
+  border: var(--border-s) solid var(--checkbox-border);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+  flex-shrink: 0;
+  position: relative;
+}
+
+input[type="radio"] {
+  border-radius: 50%;
+}
+
+input[type="checkbox"]:checked {
+  background-color: var(--checkbox-selected);
+  border-color: var(--checkbox-selected);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 12 10 18 20 6'/%3E%3C/svg%3E");
+  background-size: 14px 14px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+input[type="radio"]:checked {
+  background-color: var(--checkbox-selected);
+  border-color: var(--checkbox-selected);
+}
+
+input[type="radio"]:checked::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  background-color: var(--checkbox-checkmark);
+}
+
+input[type="checkbox"]:focus-visible,
+input[type="radio"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus), transparent 75%);
+}
+
+input[type="checkbox"]:disabled,
+input[type="radio"]:disabled {
+  background-color: var(--input-disabled-bg);
+  border-color: var(--input-disabled-bg);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+input[type="checkbox"]:disabled:checked {
+  background-color: var(--input-disabled-text);
+  border-color: var(--input-disabled-text);
+}
+
+input[type="radio"]:disabled:checked {
+  background-color: var(--input-disabled-text);
+  border-color: var(--input-disabled-text);
+}
+
+/* Dark mode checkmark */
+[data-theme="dark"] input[type="checkbox"]:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231a1a1a' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 12 10 18 20 6'/%3E%3C/svg%3E");
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) input[type="checkbox"]:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231a1a1a' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 12 10 18 20 6'/%3E%3C/svg%3E");
+  }
 }
 
 /* -- Inline label + checkbox/radio pattern -- */
@@ -1177,6 +1281,123 @@ input[type="radio"] {
   margin-bottom: 0;
   font-weight: var(--font-weight-regular);
   cursor: pointer;
+}
+
+/* -- Segmented control (single-select button group) -- */
+.segmented-control {
+  display: inline-flex;
+  background-color: var(--background-faded);
+  border-radius: var(--radius-m);
+  padding: 3px;
+  gap: 2px;
+}
+
+.segmented-control-btn {
+  padding: var(--space-s) var(--space-l);
+  font-size: var(--font-s);
+  font-weight: var(--font-weight-semi-bold);
+  border-radius: calc(var(--radius-m) - 2px);
+  border: none;
+  background: transparent;
+  color: var(--text-faded);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.segmented-control-btn:hover {
+  color: var(--text-primary);
+  background-color: color-mix(in srgb, var(--background-primary), transparent 50%);
+}
+
+.segmented-control-btn.is-active {
+  background-color: var(--text-primary);
+  color: var(--background-primary);
+}
+
+.segmented-control-btn:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
+}
+
+.segmented-control-btn.is-icon {
+  padding: var(--space-s);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* -- Toggle / switch -- */
+.form-toggle {
+  --toggle-width: 44px;
+  --toggle-height: var(--space-xl);
+  --toggle-knob-size: 18px;
+  --toggle-knob-offset: 3px;
+
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+}
+
+.form-toggle label {
+  display: inline;
+  margin-bottom: 0;
+  font-weight: var(--font-weight-regular);
+  cursor: pointer;
+  order: -1;
+  white-space: nowrap;
+}
+
+.form-toggle.is-label-right label {
+  order: 1;
+}
+
+.form-toggle input[type="checkbox"] {
+  width: var(--toggle-width);
+  height: var(--toggle-height);
+  background-color: var(--toggle-track);
+  border: var(--border-s) solid var(--border-faded);
+  border-radius: var(--radius-pill);
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.form-toggle input[type="checkbox"]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: var(--toggle-knob-offset);
+  transform: translateY(-50%);
+  width: var(--toggle-knob-size);
+  height: var(--toggle-knob-size);
+  border-radius: 50%;
+  background-color: var(--toggle-knob);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.form-toggle input[type="checkbox"]:checked {
+  background-color: var(--toggle-selected);
+  background-image: none;
+}
+
+.form-toggle input[type="checkbox"]:checked::after {
+  transform: translateY(-50%) translateX(calc(var(--toggle-width) - var(--toggle-knob-size) - var(--toggle-knob-offset) * 2 - var(--border-s) * 2));
+  background-color: var(--toggle-knob-selected);
+}
+
+.form-toggle input[type="checkbox"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus), transparent 75%);
+}
+
+.form-toggle input[type="checkbox"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.form-toggle input[type="checkbox"]:disabled + label {
+  cursor: not-allowed;
 }
 
 /* -- Form group (label + input pair) -- */
