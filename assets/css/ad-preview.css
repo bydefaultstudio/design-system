@@ -1,0 +1,251 @@
+/* ------ DISPLAY AD PREVIEW STYLES ------ */
+
+/* -- Layout -- */
+.adp-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding-top: var(--header-height);
+  overflow: hidden;
+}
+
+/* -- Sticky toolbar -- */
+.adp-bar {
+  background: var(--background-secondary);
+  border-bottom: var(--border-s) solid var(--border-secondary);
+  padding: 0 var(--space-xl);
+  flex-shrink: 0;
+}
+
+.adp-bar-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-l);
+  padding: var(--space-m) 0;
+  flex-wrap: wrap;
+}
+
+.adp-bar-row + .adp-bar-row {
+  border-top: var(--border-s) solid var(--border-faded);
+}
+
+/* -- Control groups -- */
+.adp-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  flex-shrink: 0;
+}
+
+.adp-divider {
+  width: var(--border-s);
+  height: var(--space-2xl);
+  background: var(--border-secondary);
+  flex-shrink: 0;
+}
+
+/* -- Creative ID input (compact) -- */
+#creativeId {
+  font-family: var(--font-tertiary);
+  width: 160px;
+}
+
+/* -- Device info hint -- */
+.adp-device-info {
+  font-size: var(--font-2xs);
+  color: var(--text-faded);
+  font-style: italic;
+  white-space: nowrap;
+}
+
+/* -- Hero actions (right-aligned) -- */
+.adp-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+}
+
+.adp-open-link {
+  font-size: var(--font-xs);
+  color: var(--text-faded);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+}
+
+.adp-open-link:hover {
+  color: var(--text-primary);
+}
+
+/* -- Copy button states -- */
+.button.is-copied {
+  background: var(--status-success);
+  border-color: var(--status-success);
+  color: var(--off-white);
+}
+
+.button.is-copied:hover {
+  background: var(--status-success);
+  color: var(--off-white);
+  transform: none;
+}
+
+/* -- Preview area -- */
+.adp-preview {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+  background: var(--background-primary);
+  overflow: hidden;
+  position: relative;
+}
+
+.adp-placeholder {
+  text-align: center;
+  color: var(--text-faded);
+}
+
+.adp-placeholder .icon {
+  font-size: var(--font-4xl);
+  margin-bottom: var(--space-m);
+}
+
+.adp-placeholder p {
+  font-size: var(--font-xs);
+}
+
+/* -- Preview wrapper -- */
+.adp-wrapper {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* -- Device frame -- */
+.adp-device {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.adp-device iframe {
+  border: var(--border-s) solid var(--border-secondary);
+  background: var(--white);
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.adp-device.desktop iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.adp-device.phone iframe,
+.adp-device.tablet iframe {
+  height: 100%;
+  max-height: 100%;
+}
+
+/* -- Viewport label -- */
+.adp-viewport {
+  position: absolute;
+  bottom: var(--space-s);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--font-2xs);
+  color: var(--text-faded);
+  background: var(--background-secondary);
+  padding: var(--space-xs) var(--space-m);
+  white-space: nowrap;
+}
+
+/* -- Publisher nav overlay -- */
+.adp-nav {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-l);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.adp-nav .pub-logo {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.adp-nav.desktop-nav .pub-logo {
+  justify-content: center;
+}
+
+.adp-nav .pub-logo img {
+  height: 24px;
+  width: auto;
+  display: block;
+}
+
+.adp-nav .pub-logo-text {
+  font-size: var(--font-xs);
+  font-weight: var(--font-weight-semi-bold);
+  letter-spacing: var(--letter-spacing-s);
+}
+
+.adp-nav .pub-burger {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}
+
+.adp-nav .pub-burger span {
+  display: block;
+  width: 20px;
+  height: 2px;
+}
+
+/* -- Conditional visibility -- */
+.adp-conditional {
+  display: none;
+}
+
+.adp-conditional.is-visible {
+  display: flex;
+}
+
+/* -- Mobile -- */
+@media (max-width: 768px) {
+  .adp-bar {
+    padding: 0 var(--space-l);
+  }
+
+  .adp-bar-row {
+    gap: var(--space-m);
+  }
+
+  .adp-divider {
+    display: none;
+  }
+
+  .adp-actions {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .adp-preview {
+    padding: var(--space-m);
+  }
+}

@@ -17,14 +17,14 @@
 }
 
 html {
-  font-size: clamp(14px, 0.5rem + 1vw, 16px);
+  font-size: 16px;
 }
 
 body {
   margin: 0;
   font-family: var(--font-primary);
   color: var(--text-primary);
-  font-size: var(--font-m);
+  font-size: var(--text-body);
   font-weight: var(--font-weight-regular);
   background: var(--background-primary);
   line-height: var(--line-height-l);
@@ -207,16 +207,15 @@ kbd,
 pre,
 samp {
   font-family: var(--font-tertiary);
-  font-size: var(--font-s);
+  font-size:  calc(var(--text-body) - 1.5px);
 }
 
 /* -- Code (inline) -- */
 code {
   padding: var(--space-2xs) var(--space-s);
   margin: 0;
-  white-space: break-spaces;
+  white-space: nowrap;
   background-color: var(--background-faded);
-  border-radius: 6px;
 }
 
 code br {
@@ -228,7 +227,7 @@ del code {
 }
 
 samp {
-  font-size: var(--font-xs);
+  font-size: var(--text-body);
 }
 
 /* -- Code (blocks) -- */
@@ -239,9 +238,10 @@ pre {
   padding: var(--space-l);
   overflow: auto;
   line-height: var(--line-height-2xl);
-  background-color: var(--background-faded);
-  border: var(--border-s) solid transparent;
+  background-color: var(--background-darker);
+  border: var(--border-s) solid var(--border-faded);
   transition: border-color 0.3s ease;
+  min-height: 67px;
 }
 
 pre:hover {
@@ -283,8 +283,9 @@ h6 code {
 kbd {
   display: inline-block;
   padding: var(--space-xs);
-  font: 11px var(--font-tertiary);
-  line-height: 10px;
+  font-family: var(--font-tertiary);
+  font-size: var(--text-body);
+  line-height: var(--line-height-m);
   color: var(--text-plain);
   vertical-align: middle;
   background-color: var(--background-faded);
@@ -431,7 +432,7 @@ a:not([href]) {
 .color-row {
   display: flex;
   align-items: center;
-  padding: var(--space-4xl) var(--space-xl);
+  padding: var(--space-xl) var(--space-xl);
   font-size: var(--font-m);
   font-weight: var(--font-weight-medium);
   cursor: default;
@@ -515,12 +516,14 @@ a:not([href]) {
   width: fit-content;
   max-width: 100%;
   font-variant: tabular-nums;
-  font-size: var(--font-s);
+  font-size: var(--text-body);
+  margin-bottom: var(--space-2xl);
 }
 
 .table th {
   font-weight: var(--font-weight-bold);
   text-align: left;
+  min-width: 130px;
 }
 
 .table th,
@@ -553,7 +556,7 @@ a:not([href]) {
 
 /* -- Table modifier: header background -- */
 .table-header-filled th {
-  background-color: var(--background-secondary);
+  background-color: var(--background-faded);
   font-weight: var(--font-weight-semi-bold);
   color: var(--text-primary);
 }
@@ -604,7 +607,7 @@ a:not([href]) {
 
 :root {
   --header-height: 80px;
-  --subbar-height: 60px;
+  --subbar-height: 70px;
   --sidebar-width: 280px;
   --sidebar-collapsed-width: 64px;
   --toc-width: 220px;
@@ -716,12 +719,7 @@ body.no-sidebar .page-wrapper.has-sidebar {
   color: var(--text-plain);
 }
 
-.nav-logo img {
-  max-width: none;
-}
-
-.svg-logo.nav-logo svg,
-.svg-logo.nav-logo img {
+.svg-logo.nav-logo svg {
   height: 100%;
   width: auto;
   object-fit: contain;
@@ -785,7 +783,7 @@ body.no-sidebar .page-wrapper.has-sidebar {
   position: absolute;
   top: 100%;
   right: 0;
-  min-width: 180px;
+  min-width: 250px;
   background: var(--background-primary);
   border: var(--border-s) solid var(--border-faded);
   border-top: none;
@@ -1338,8 +1336,8 @@ h2[id] {
 
 .page-header {
   width: 100%;
-  padding-top: var(--section-m);
-  padding-bottom: var(--section-m);
+  padding-top: var(--section-l);
+  padding-bottom: var(--section-l);
   background: var(--background-faded);
   border-bottom: var(--border-s) solid var(--border-secondary);
 }
@@ -1525,7 +1523,29 @@ h2[id] {
 }
 
 
-/* ------ 5. CODE BLOCKS ------ */
+/* ------ 5. DEMO PREVIEW ------ */
+
+.demo-preview {
+  padding: var(--space-xl);
+  border: var(--border-s) solid var(--border-faded);
+  margin-bottom: 1rem;
+}
+
+.demo-preview.is-joined {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.demo-preview.is-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-xl);
+}
+
+
+/* ------ 6. CODE BLOCKS ------ */
 
 .code-block-wrapper {
   position: relative;
@@ -1548,7 +1568,7 @@ h2[id] {
 }
 
 
-/* ------ 6. DOCS CARDS (Index Page) ------ */
+/* ------ 7. DOCS CARDS (Index Page) ------ */
 
 .docs-hero {
   text-align: center;
@@ -1607,7 +1627,7 @@ h2[id] {
 }
 
 
-/* ------ 7. RESPONSIVE ------ */
+/* ------ 8. RESPONSIVE ------ */
 
 /* ---- Tablet: TOC below content ---- */
 @media (max-width: 1024px) {
@@ -1642,7 +1662,6 @@ h2[id] {
   .table th,
   .table td {
     padding: var(--space-s) var(--space-m);
-    font-size: var(--font-xs);
   }
 
   /* Header: remove side padding, show hamburger */

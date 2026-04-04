@@ -16,15 +16,15 @@
     <meta property="og:image" content="../assets/images/og/og-default.jpg">
     <meta property="og:type" content="website">
 
-    <!-- Design System Framework (path set in docs/docs.config.js) -->
+    <!-- Design System Framework (path set in cms/docs.config.js) -->
     <link rel="stylesheet" href="../assets/css/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     
 
-    <!-- Google Fonts (configured in docs/docs.config.js) -->
+    <!-- Google Fonts (configured in cms/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- Markdown CSS -->
 
@@ -55,7 +55,7 @@
     <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
     <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
         <span>⚠️</span>
-        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">docs/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
+        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">cms/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
         <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
     </div>
 
@@ -86,12 +86,12 @@
               <div class="icn-svg" data-icon="more-horizontal"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
             </button>
             <div class="subbar-dropdown-menu">
-              <a href="../docs/upgrading-docs.md" class="header-link" download>
+              <a href="../cms/upgrading-docs.md" class="header-link" download>
                 <div class="icn-svg" data-icon="download"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
                 <span>Download .md file</span>
               </a>
               <div class="header-dropdown-divider"></div>
-              <a href="../docs/upgrading-docs.md" class="header-link" target="_blank" rel="noopener noreferrer">
+              <a href="../cms/upgrading-docs.md" class="header-link" target="_blank" rel="noopener noreferrer">
                 <div class="icn-svg" data-icon="open-full"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21V3H9V5H7C5.89543 5 5 5.89543 5 7V17C5 18.1046 5.89543 19 7 19H17C18.1046 19 19 18.1046 19 17V15H21V21H3ZM9.7 15.7L8.3 14.3L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H12V3H21V12H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L9.7 15.7Z" fill="currentColor"/></svg></div>
                 <span>Open .md in new tab</span>
               </a>
@@ -117,11 +117,11 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>docs/*.md</code></td>
+<td><code>cms/*.md</code></td>
 <td>All documentation content</td>
 </tr>
 <tr>
-<td><code>docs/docs.config.js</code></td>
+<td><code>cms/docs.config.js</code></td>
 <td>Design system path, fonts, footer text, index description</td>
 </tr>
 <tr>
@@ -131,20 +131,20 @@
 </tbody></table></div>
 <hr>
 <h2 id="what-gets-replaced-on-upgrade">What Gets Replaced on Upgrade</h2>
-<p>Everything inside <code>docs/generator/</code> is the engine. Replace this folder to upgrade.</p>
-<p>Check <code>docs/generator/VERSION</code> to see which version a project is running.</p>
+<p>Everything inside <code>cms/generator/</code> is the engine. Replace this folder to upgrade.</p>
+<p>Check <code>cms/generator/VERSION</code> to see which version a project is running.</p>
 <hr>
 <h2 id="how-to-upgrade-a-project">How to Upgrade a Project</h2>
 <ol>
 <li>Open the <strong>Project Template</strong> — this is always where engine improvements happen first</li>
-<li>Copy the <code>docs/generator/</code> folder from the template</li>
-<li>Paste it into the target project, replacing the existing <code>docs/generator/</code> folder</li>
+<li>Copy the <code>cms/generator/</code> folder from the template</li>
+<li>Paste it into the target project, replacing the existing <code>cms/generator/</code> folder</li>
 <li>Open a terminal in the target project and run:</li>
 </ol>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-qejz7vxuh" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-qejz7vxuh" class="language-bash">cd docs/generator
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-gieldubw8" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-gieldubw8" class="language-bash">cd cms/generator
 npm install
 npm run docgen
 </code></pre>
@@ -155,11 +155,11 @@ npm run docgen
 </ol>
 <hr>
 <h2 id="customising-a-project39s-doc-site">Customising a Project&#39;s Doc Site</h2>
-<p>Edit <code>docs/docs.config.js</code> in the project:</p>
+<p>Edit <code>cms/docs.config.js</code> in the project:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-huw12ad7t" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-huw12ad7t" class="language-js">module.exports = {
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-5adzibsl8" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-5adzibsl8" class="language-js">module.exports = {
   // Path to design system CSS, relative from project root
   designSystemPath: &#39;../../assets/css/design-system.css&#39;,
 
@@ -181,25 +181,25 @@ npm run docgen
 <p>Replace the logo by swapping <code>assets/images/logos/logo.svg</code>.<br>Replace favicons by swapping <code>assets/icons/favicon.svg</code> and <code>assets/icons/favicon.ico</code>.</p>
 <hr>
 <h2 id="design-system-css-convention">Design System CSS Convention</h2>
-<p>The design system CSS lives at <code>assets/css/design-system.css</code> and includes brand tokens directly. Its path is referenced in <code>docs/docs.config.js</code> and used by every generated doc page.</p>
+<p>The design system CSS lives at <code>assets/css/design-system.css</code> and includes brand tokens directly. Its path is referenced in <code>cms/docs.config.js</code> and used by every generated doc page.</p>
 <p><strong>If the path is wrong or the file is missing</strong>, every doc page will show a friendly amber banner at the top:</p>
 <blockquote>
-<p>Design system CSS not found. Check the path in <code>docs/docs.config.js</code> → <code>designSystemPath</code>, then re-run <code>npm run docgen</code>.</p>
+<p>Design system CSS not found. Check the path in <code>cms/docs.config.js</code> → <code>designSystemPath</code>, then re-run <code>npm run docgen</code>.</p>
 </blockquote>
 <p>To fix it:</p>
 <ol>
 <li>Confirm where your design system CSS lives</li>
-<li>Update <code>designSystemPath</code> in <code>docs/docs.config.js</code></li>
+<li>Update <code>designSystemPath</code> in <code>cms/docs.config.js</code></li>
 <li>Run <code>npm run docgen</code></li>
 </ol>
 <p>The banner disappears as soon as the CSS loads correctly.</p>
 <hr>
 <h2 id="doc-generator-commands">Doc Generator Commands</h2>
-<p>Run these from inside <code>docs/generator/</code>:</p>
+<p>Run these from inside <code>cms/generator/</code>:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-nuxjt5tq2" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-nuxjt5tq2" class="language-bash">npm run docgen     # Generate HTML from markdown
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-rhfxt83p1" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-rhfxt83p1" class="language-bash">npm run docgen     # Generate HTML from markdown
 npm run serve      # View locally in browser
 npm run docwatch   # Auto-regenerate on markdown changes
 npm run docfull    # Generate + serve + watch (all at once)
@@ -219,6 +219,23 @@ npm run docfull    # Generate + serve + watch (all at once)
       <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#what-stays-per-project-never-touch-these" class="toc-link">What Stays Per-Project (Never Touch These)</a></li><li class="toc-item toc-level-2"><a href="#what-gets-replaced-on-upgrade" class="toc-link">What Gets Replaced on Upgrade</a></li><li class="toc-item toc-level-2"><a href="#how-to-upgrade-a-project" class="toc-link">How to Upgrade a Project</a></li><li class="toc-item toc-level-2"><a href="#customising-a-project39s-doc-site" class="toc-link">Customising a Project&#39;s Doc Site</a></li><li class="toc-item toc-level-2"><a href="#design-system-css-convention" class="toc-link">Design System CSS Convention</a></li><li class="toc-item toc-level-2"><a href="#doc-generator-commands" class="toc-link">Doc Generator Commands</a></li><li class="toc-item toc-level-2"><a href="#when-to-update-the-template-first" class="toc-link">When to Update the Template First</a></li></ul></nav></div>
     </aside>
         </div>
+
+        <!-- Page Navigation (Previous / Next) -->
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="layout.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <h3 class="page-nav-title">HTML Layout</h3>
+      </span>
+    </a><a href="login-scenarios.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <h3 class="page-nav-title">Login Scenarios</h3>
+      </span>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+    </a></div></nav>
 
         <!-- Page Feedback -->
         <section class="page-feedback" aria-label="Page feedback">
@@ -249,23 +266,6 @@ npm run docfull    # Generate + serve + watch (all at once)
                 </form>
             </div>
         </dialog>
-
-        <!-- Page Navigation (Previous / Next) -->
-        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="folder-structure.html" class="page-nav-link page-nav-prev" rel="prev">
-      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
-      <span class="page-nav-text">
-        <span class="page-nav-label">Previous</span>
-        
-        <h3 class="page-nav-title">Folders</h3>
-      </span>
-    </a><a href="login-scenarios.html" class="page-nav-link page-nav-next" rel="next">
-      <span class="page-nav-text">
-        <span class="page-nav-label">Next</span>
-        
-        <h3 class="page-nav-title">Login Scenarios</h3>
-      </span>
-      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
-    </a></div></nav>
 
         <!-- Footer -->
         <footer class="docs-footer">

@@ -1,486 +1,645 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVG Cleaner - By Default Brand OS</title>
-    <meta name="description" content="Paste raw SVG code and get a cleaned, optimised version ready for the design system.">
+  <!-- Essential -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SVG Cleaner</title>
+  <meta name="description" content="Paste raw SVG code and get a cleaned, optimised version ready for the design system." />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="SVG Cleaner - By Default Brand OS">
-    <meta property="og:description" content="Paste raw SVG code and get a cleaned, optimised version ready for the design system.">
-    <meta property="og:image" content="../assets/images/og/og-default.jpg">
-    <meta property="og:type" content="website">
+  <!-- Open Graph -->
+  <meta property="og:title" content="SVG Cleaner - By Default Brand OS">
+  <meta property="og:description" content="Paste raw SVG code and get a cleaned, optimised version ready for the design system.">
+  <meta property="og:image" content="../assets/images/og/og-default.jpg">
+  <meta property="og:type" content="website">
 
-    <!-- Design System Framework (path set in docs/docs.config.js) -->
-    <link rel="stylesheet" href="../assets/css/design-system.css" id="design-system-css"
-          onerror="document.getElementById('ds-missing-banner').style.display='flex'">
-    
+  <!-- Robots -->
+  <meta name="robots" content="noindex, nofollow" />
 
-    <!-- Google Fonts (configured in docs/docs.config.js) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Design System Framework -->
+  <link rel="stylesheet" href="../assets/css/design-system.css" />
+  <!-- Site styles -->
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <!-- SVG Cleaner Styles (last) -->
+  <link rel="stylesheet" href="../assets/css/svg-cleaner.css" />
 
-    <!-- Markdown CSS -->
+  <!-- GoTrue JS (skipped on localhost) -->
+  <script>
+    window._gotrueReady = (function() {
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0') {
+        return Promise.resolve(null);
+      }
+      return import('https://cdn.jsdelivr.net/npm/gotrue-js@0.9.29/+esm')
+        .then(function(m) { var G = m.default && m.default.default ? m.default.default : m.default; window.GoTrue = G; return G; })
+        .catch(function(e) { console.error('[Auth] GoTrue load failed:', e); return null; });
+    })();
+  </script>
 
-    <!-- Site styles -->
-    <link rel="stylesheet" href="../assets/css/style.css">
-
-    
-
-    <!-- Early theme loader: apply cached client theme before first paint -->
-    <script>
-    (function(){try{if(document.documentElement.getAttribute('data-client-theme'))return;var c=localStorage.getItem('bdd-client-theme');if(!c)return;var p=c.split('|'),k=p[0],css=p[1],fonts=p[2];if(!k||!css)return;var b='../';var l=document.createElement('link');l.id='client-theme-css';l.rel='stylesheet';l.href=b+css;document.head.appendChild(l);document.documentElement.setAttribute('data-client-theme',k);if(fonts){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://fonts.googleapis.com';pc.id='client-theme-fonts-preconnect';document.head.appendChild(pc);var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';pc2.id='client-theme-fonts-preconnect2';document.head.appendChild(pc2);var fl=document.createElement('link');fl.id='client-theme-fonts';fl.rel='stylesheet';fl.href=fonts;document.head.appendChild(fl)}}catch(e){}})();
-    </script>
-
-    <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
-    <script>
-      window._gotrueReady = (function() {
-        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0') {
-          return Promise.resolve(null);
-        }
-        return import('https://cdn.jsdelivr.net/npm/gotrue-js@0.9.29/+esm')
-          .then(function(m) { var G = m.default && m.default.default ? m.default.default : m.default; window.GoTrue = G; return G; })
-          .catch(function(e) { console.error('[Auth] GoTrue load failed:', e); return null; });
-      })();
-    </script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
-<body class="auth-loading" data-access="admin">
 
-    <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
-    <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
-        <span>⚠️</span>
-        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">docs/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
-        <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
-    </div>
+<body class="auth-loading" data-access="team">
 
-    <!-- Site Navigation (header + sidebar injected by nav.js) -->
-    <div id="site-nav" data-base="../"></div>
+  <!-- Site Navigation -->
+  <div id="site-nav" data-base="../"></div>
 
-    <div class="docs-main-area">
-        <!-- Page Header (full width, outside grid) -->
-        <div class="page-header">
-      <div class="container-small">
-        <h1>SVG Cleaner</h1>
-        <p class="page-subtitle" data-text-wrap="pretty">How to use the SVG Cleaner tool</p>
-        <div class="button-group justify-center">
-        <a href="../svg-cleaner/" class="button is-small page-source-link">Open Tool</a>
+  <div class="page-wrapper has-sidebar">
+    <div class="page-content">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="container-small">
+          <h1>SVG Cleaner</h1>
+          <p class="page-subtitle" data-text-wrap="pretty">Paste your SVG code, get clean optimised output.</p>
+        </div>
       </div>
-      </div>
-    </div>
 
-        <!-- Page Sub-bar (breadcrumbs + actions) -->
-        <div class="page-subbar">
-      <div class="page-subbar-inner">
-        <nav class="page-subbar-breadcrumbs" aria-label="Breadcrumb">
-          <a href="../tools/index.html">Tools</a>
-          <span class="breadcrumb-separator">/</span>
-          <span>SVG Cleaner</span>
-        </nav>
-        <div class="page-subbar-actions">
-          <div class="subbar-dropdown">
-            <button class="header-link" type="button" aria-expanded="false" aria-label="Markdown source options">
-              <div class="icn-svg" data-icon="more-horizontal"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
-            </button>
-            <div class="subbar-dropdown-menu">
-              <a href="../docs/svg-cleaner-docs.md" class="header-link" download>
-                <div class="icn-svg" data-icon="download"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
-                <span>Download .md file</span>
-              </a>
-              <div class="header-dropdown-divider"></div>
-              <a href="../docs/svg-cleaner-docs.md" class="header-link" target="_blank" rel="noopener noreferrer">
-                <div class="icn-svg" data-icon="open-full"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21V3H9V5H7C5.89543 5 5 5.89543 5 7V17C5 18.1046 5.89543 19 7 19H17C18.1046 19 19 18.1046 19 17V15H21V21H3ZM9.7 15.7L8.3 14.3L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H12V3H21V12H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L9.7 15.7Z" fill="currentColor"/></svg></div>
-                <span>Open .md in new tab</span>
-              </a>
+      <!-- Sticky Bar -->
+      <div class="svgc-bar">
+        <div class="svgc-bar-inner">
+          <div class="block row gap-m" style="align-items: center; padding: var(--space-l) 0;">
+            <p class="eyebrow">Output as</p>
+            <div class="segmented-control" id="mode-selector">
+              <button type="button" class="segmented-control-btn" data-mode="icon">Icon</button>
+              <button type="button" class="segmented-control-btn" data-mode="logo">Logo</button>
+              <button type="button" class="segmented-control-btn" data-mode="image">Image</button>
+              <button type="button" class="segmented-control-btn" data-mode="css">CSS</button>
+            </div>
+          </div>
+
+          <!-- Dropdown: Advanced -->
+          <div class="header-dropdown" id="svgc-dropdown">
+            <div class="header-link" role="button" tabindex="0" aria-label="Advanced settings" aria-expanded="false">
+              <div class="svgc-dropdown-trigger">
+                <div class="icn-svg" data-icon="settings">
+                  <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M11 15H22V17H11V19H5V17H2V15H5V13H11V15ZM7 17H9V15H7V17Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M19 7H22V9H19V11H13V9H2V7H13V5H19V7ZM15 9H17V7H15V9Z" fill="currentColor"/></svg>
+                </div>
+                <span class="svgc-dropdown-label">Advanced</span>
+              </div>
+            </div>
+            <div class="header-dropdown-menu">
+              <p class="text-size-small" style="padding: var(--space-m); color: var(--text-faded);">More coming soon</p>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-        <!-- Main Content + TOC grid -->
-        <div class="docs-content-grid padding-global">
-            <!-- Main Content -->
-            <main class="docs-main">
-                <article>
-                    <p>The SVG Cleaner is a browser-based tool for cleaning and optimising SVG code before adding it to the project. Paste raw SVG and get a cleaned version ready for the design system.</p>
-<hr>
-<h2 id="what-it-does-always">What It Does (Always)</h2>
-<ul>
-<li>Strips <code>xmlns</code> and <code>xmlns:xlink</code> from the root <code>&lt;svg&gt;</code> element</li>
-</ul>
-<hr>
-<h2 id="optional-flags">Optional Flags</h2>
-<div class="table-scroll"><table class="table">
-<thead>
-<tr>
-<th>Flag</th>
-<th>Effect</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>--current-color</code></td>
-<td>Sets all <code>&lt;path&gt;</code> fill attributes to <code>currentColor</code></td>
-</tr>
-<tr>
-<td><code>--size</code></td>
-<td>Removes width/height, adds <code>width=&quot;100%&quot; height=&quot;100%&quot;</code></td>
-</tr>
-<tr>
-<td><code>--strip-comments</code></td>
-<td>Removes XML/HTML comments</td>
-</tr>
-<tr>
-<td><code>--minify</code></td>
-<td>Collapses output to a single line</td>
-</tr>
-</tbody></table></div>
-<hr>
-<h2 id="browser-ui">Browser UI</h2>
-<p>Open the SVG Cleaner tool in your browser to use the visual paste-and-copy workflow:</p>
-<ol>
-<li>Paste your raw SVG code into the input area</li>
-<li>Select the cleaning options you need</li>
-<li>Copy the cleaned output</li>
-</ol>
-<hr>
-<h2 id="cli-usage">CLI Usage</h2>
-<p>The tool also works from the command line via <code>svg-cleaner/svg-clean.js</code>:</p>
+      <!-- Main Tool Content -->
+      <section class="top-medium bottom-large">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-l">
 
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-2ec4ga5eo" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-2ec4ga5eo" class="language-bash">node svg-cleaner/svg-clean.js --current-color --strip-comments -o assets/images/illustrations/filename.svg &lt;&lt;&#39;SVGEOF&#39;
-&lt;svg&gt;...pasted code...&lt;/svg&gt;
-SVGEOF
-</code></pre>
-      </div>
-    
-<p>Use heredoc syntax (<code>&lt;&lt;&#39;SVGEOF&#39;</code>) to avoid shell escaping issues with quotes in SVG attributes.</p>
-<hr>
-<h2 id="file-locations">File Locations</h2>
-<ul>
-<li><code>assets/icons/</code> — favicons and app icons</li>
-<li><code>assets/images/logos/</code> — site and publication logos</li>
-<li><code>assets/images/og/</code> — Open Graph social sharing images</li>
-<li><code>assets/images/illustrations/</code> — decorative and UI illustrations</li>
-<li><code>assets/images/svg-icons/</code> — SVG component icons</li>
-</ul>
-
-                </article>
-            </main>
-
-            <!-- Table of Contents -->
-            <aside class="docs-toc">
-      <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#what-it-does-always" class="toc-link">What It Does (Always)</a></li><li class="toc-item toc-level-2"><a href="#optional-flags" class="toc-link">Optional Flags</a></li><li class="toc-item toc-level-2"><a href="#browser-ui" class="toc-link">Browser UI</a></li><li class="toc-item toc-level-2"><a href="#cli-usage" class="toc-link">CLI Usage</a></li><li class="toc-item toc-level-2"><a href="#file-locations" class="toc-link">File Locations</a></li></ul></nav></div>
-    </aside>
-        </div>
-
-        <!-- Page Feedback -->
-        <section class="page-feedback" aria-label="Page feedback">
-            <div class="page-feedback-inner padding-global">
-                <h3 class="page-feedback-prompt">Was this page helpful?</h3>
-                <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
-                <div class="button-group">
-                    <button class="button is-small" data-feedback="yes" type="button">Yes</button>
-                    <button class="button is-small is-outline is-faded" data-feedback="no" type="button">No</button>
+              <!-- Output Options -->
+              <div class="block gap-s">
+                <p class="eyebrow">Output Options</p>
+                <div class="svgc-toggles">
+                  <div class="form-toggle" id="toggle-size">
+                    <input type="checkbox" id="opt-size">
+                    <label for="opt-size">Size 100%</label>
+                  </div>
+                  <div class="form-toggle" id="toggle-color">
+                    <input type="checkbox" id="opt-current-color" checked>
+                    <label for="opt-current-color">currentColor</label>
+                  </div>
+                  <div class="form-toggle" id="toggle-minify">
+                    <input type="checkbox" id="opt-minify">
+                    <label for="opt-minify">Minify</label>
+                  </div>
+                  <div class="form-toggle" id="toggle-strip-comments">
+                    <input type="checkbox" id="opt-strip-comments" checked>
+                    <label for="opt-strip-comments">Strip Comments</label>
+                  </div>
+                  <div class="form-toggle" id="toggle-strip-metadata">
+                    <input type="checkbox" id="opt-strip-metadata">
+                    <label for="opt-strip-metadata">Strip Metadata</label>
+                  </div>
+                  <div class="form-toggle" id="toggle-round-decimals">
+                    <input type="checkbox" id="opt-round-decimals">
+                    <label for="opt-round-decimals">Round Decimals</label>
+                  </div>
                 </div>
-            </div>
-        </section>
+              </div>
 
-        <!-- Feedback Modal -->
-        <dialog class="feedback-modal" aria-label="Send feedback">
-            <div class="feedback-modal-content">
-                <h3 class="feedback-modal-title">Send feedback</h3>
-                <p class="feedback-modal-subtitle"></p>
-                <form class="feedback-form" name="page-feedback" data-netlify="true">
-                    <input type="hidden" name="form-name" value="page-feedback">
-                    <input type="hidden" name="sentiment" value="">
-                    <input type="hidden" name="page" value="">
-                    <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
-                    <div class="button-group feedback-modal-actions">
-                        <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>
-                        <button type="submit" class="button is-small">Send feedback</button>
-                    </div>
-                </form>
-            </div>
-        </dialog>
+              <!-- CSS format radios (shown when CSS selected) -->
+              <div id="ctx-css" class="svgc-css-formats" style="display: none;">
+                <div class="form-check">
+                  <input type="radio" id="css-url" name="css-format" value="url" checked>
+                  <label for="css-url">URL wrapper</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" id="css-basic" name="css-format" value="basic">
+                  <label for="css-basic">Basic background-image</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" id="css-advanced" name="css-format" value="advanced">
+                  <label for="css-advanced">Advanced background-image</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" id="css-bullets" name="css-format" value="bullets">
+                  <label for="css-bullets">CSS bullets</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" id="css-class" name="css-format" value="class">
+                  <label for="css-class">Inside class</label>
+                </div>
+              </div>
 
-        <!-- Page Navigation (Previous / Next) -->
-        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="cpm-calculator.html" class="page-nav-link page-nav-prev" rel="prev">
-      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
-      <span class="page-nav-text">
-        <span class="page-nav-label">Previous</span>
-        
-        <h3 class="page-nav-title">CPM Calculator</h3>
-      </span>
-    </a><a href="display-ad-preview.html" class="page-nav-link page-nav-next" rel="next">
-      <span class="page-nav-text">
-        <span class="page-nav-label">Next</span>
-        
-        <h3 class="page-nav-title">Display Ad Preview</h3>
-      </span>
-      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
-    </a></div></nav>
+              <!-- Mode name inputs (shown when Icon/Logo/Image selected) -->
+              <input type="text" id="opt-icon-name" placeholder="Icon name (e.g. arrow-right)" style="display: none;">
+              <input type="text" id="opt-logo-name" placeholder="Logo name (e.g. brand)" style="display: none;">
+              <input type="text" id="opt-image-filename" placeholder="Filename (e.g. logo-brand)" style="display: none;">
 
-        <!-- Footer -->
-        <footer class="docs-footer">
-            <div class="docs-footer-inner padding-global">
-                <p class="docs-footer-text">© 2026 By Default BrandOS</p>
+              <!-- Input -->
+              <div class="block gap-s">
+                <label for="svg-input">Paste SVG Code</label>
+                <textarea id="svg-input" placeholder="<svg viewBox=&quot;0 0 24 24&quot;>&#10;  <path d=&quot;M12 2...&quot; fill=&quot;#000&quot;/>&#10;</svg>"></textarea>
+              </div>
+
+              <!-- Save Image (only visible in Image mode) -->
+              <div id="save-group" style="display: none;">
+                <button class="button" id="save-btn">Save Image</button>
+              </div>
+
+              <!-- Output -->
+              <div id="output-group" class="block gap-s">
+                <label for="svg-output">Output</label>
+                <textarea id="svg-output" readonly placeholder="Cleaned SVG will appear here..."></textarea>
+              </div>
+
+              <!-- Copy Button -->
+              <div id="copy-group">
+                <button class="button is-outline copy-btn" id="copy-btn" disabled>
+                  <div class="icn-svg" data-icon="copy">
+                    <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
+                      <path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  Copy
+                </button>
+              </div>
+
             </div>
-        </footer>
+          </div>
+        </div>
+      </section>
+
     </div>
 
-    <!-- Highlight.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <!-- Page Feedback -->
+    <section class="page-feedback" aria-label="Page feedback">
+      <div class="page-feedback-inner padding-global">
+        <h3 class="page-feedback-prompt">Was this page helpful?</h3>
+        <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
+        <div class="button-group">
+          <button class="button is-small" data-feedback="yes" type="button">Yes</button>
+          <button class="button is-small is-outline is-faded" data-feedback="no" type="button">No</button>
+        </div>
+      </div>
+    </section>
 
-    <!-- Initialize Highlight.js, Copy, and TOC -->
-    <script>
-        (function() {
-            'use strict';
+    <!-- Feedback Modal -->
+    <dialog class="feedback-modal" aria-label="Send feedback">
+      <div class="feedback-modal-content">
+        <h3 class="feedback-modal-title">Send feedback</h3>
+        <p class="feedback-modal-subtitle"></p>
+        <form class="feedback-form" name="page-feedback" data-netlify="true">
+          <input type="hidden" name="form-name" value="page-feedback">
+          <input type="hidden" name="sentiment" value="">
+          <input type="hidden" name="page" value="">
+          <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
+          <div class="button-group feedback-modal-actions">
+            <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>
+            <button type="submit" class="button is-small">Send feedback</button>
+          </div>
+        </form>
+      </div>
+    </dialog>
 
-            function initHighlight() {
-                document.querySelectorAll('pre code').forEach((block) => {
-                    hljs.highlightElement(block);
-                });
-            }
+    <!-- Footer -->
+    <footer class="docs-footer">
+      <div class="docs-footer-inner padding-global">
+        <p class="docs-footer-text">&copy; 2026 By Default BrandOS</p>
+      </div>
+    </footer>
 
-            function copyToClipboard(text) {
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    return navigator.clipboard.writeText(text);
-                }
-                var textarea = document.createElement('textarea');
-                textarea.value = text;
-                textarea.style.position = 'fixed';
-                textarea.style.opacity = '0';
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                return Promise.resolve();
-            }
+  </div>
 
-            var copyIconPath = 'M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z';
-            var checkIconPath = 'M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z';
+  <script>
+    /**
+     * Script Purpose: SVG Cleaner browser UI
+     * Author: By Default Studio
+     * Version: 3.1.0
+     * Last Updated: 2026-04-02
+     */
 
-            function initClipboard() {
-                const buttons = document.querySelectorAll('.copy-code-btn');
+    console.log('SVG Cleaner UI v3.1.0');
 
-                buttons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        const targetId = this.getAttribute('data-clipboard-target');
-                        const codeElement = document.querySelector(targetId);
+    //
+    //------- Utility Functions -------//
+    //
 
-                        if (codeElement) {
-                            const text = codeElement.textContent;
-                            const textSpan = this.querySelector('.copy-text');
-                            const btnPath = this.querySelector('path');
+    function stripComments(svg) {
+      return svg.replace(/<!--[\s\S]*?-->/g, '');
+    }
 
-                            copyToClipboard(text).then(() => {
-                                if (btnPath) {
-                                    btnPath.setAttribute('d', checkIconPath);
-                                }
-                                if (textSpan) {
-                                    textSpan.textContent = 'Copied!';
-                                }
-                                setTimeout(() => {
-                                    if (btnPath) {
-                                        btnPath.setAttribute('d', copyIconPath);
-                                    }
-                                    if (textSpan) {
-                                        textSpan.textContent = 'Copy';
-                                    }
-                                }, 1500);
-                            });
-                        }
-                    });
-                });
-            }
+    function stripMetadata(svg) {
+      var result = svg;
+      result = result.replace(/\s+data-name="[^"]*"/g, '');
+      result = result.replace(/\s+data-id="[^"]*"/g, '');
+      result = result.replace(/\s+class="(?:cls|st)-?\d+"/g, '');
+      return result;
+    }
 
-            function initTOCActiveState() {
-                const tocLinks = document.querySelectorAll('.toc-link');
-                const headings = document.querySelectorAll('h1[id], h2[id]');
+    function roundDecimals(svg, precision) {
+      return svg.replace(/(\d+\.\d+)/g, function (_match, num) {
+        return parseFloat(parseFloat(num).toFixed(precision)).toString();
+      });
+    }
 
-                if (tocLinks.length === 0 || headings.length === 0) return;
+    function optimisePathData(svg) {
+      return svg.replace(/\s+d="([^"]*)"/g, function (_match, pathData) {
+        var optimised = pathData;
+        optimised = optimised.replace(/,/g, ' ');
+        optimised = optimised.replace(/\s{2,}/g, ' ');
+        optimised = optimised.replace(/([A-Za-z])\s+/g, '$1');
+        optimised = optimised.replace(/\s+(-)/g, '$1');
+        return ' d="' + optimised.trim() + '"';
+      });
+    }
 
-                const linkMap = new Map();
-                tocLinks.forEach(link => {
-                    const href = link.getAttribute('href');
-                    if (href && href.startsWith('#')) {
-                        const id = href.substring(1);
-                        linkMap.set(id, link);
-                    }
-                });
+    function minifySVG(svg) {
+      var result = optimisePathData(svg);
+      result = result.replace(/\n/g, '').replace(/\s{2,}/g, ' ').replace(/>\s+</g, '><').trim();
+      return result;
+    }
 
-                const observerOptions = {
-                    rootMargin: '-20% 0px -70% 0px',
-                    threshold: 0
-                };
+    function sanitiseName(name) {
+      return name.toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-{2,}/g, '-').replace(/^-|-$/g, '');
+    }
 
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        const id = entry.target.id;
-                        const link = linkMap.get(id);
+    //
+    //------- SVG-to-CSS -------//
+    //
 
-                        if (entry.isIntersecting) {
-                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
-                            if (link) {
-                                link.classList.add('toc-link-active');
-                            }
-                        }
-                    });
-                }, observerOptions);
+    function svgToDataURI(svg) {
+      var encoded = svg.replace(/#/g, '%23').replace(/\?/g, '%3F').replace(/[\t\n\r]/gm, '')
+        .replace(/\s\s+/g, ' ').replace(/'/g, '"').replace(/> </g, '><');
+      return "url('data:image/svg+xml," + encoded + "')";
+    }
 
-                headings.forEach(heading => {
-                    if (heading.id) {
-                        observer.observe(heading);
-                    }
-                });
+    function wrapCSSHelper(dataURI, format) {
+      switch (format) {
+        case 'basic':
+          return 'background-image: ' + dataURI + ';';
+        case 'advanced':
+          return '/* background-color: #FFFFFF; */\n'
+            + 'background-image: ' + dataURI + ';\n'
+            + '/* background-attachment: fixed | scroll; */\n'
+            + '/* background-size: auto | cover | contain | 500px 250px; */\n'
+            + '/* background-position: center | right 30px bottom 15px; */\n'
+            + '/* background-repeat: no-repeat | repeat | repeat-x; */\n'
+            + '/* background-origin: border-box | padding-box | content-box; */\n'
+            + '/* background-clip: border-box | padding-box | content-box; */\n'
+            + '/* background-blend-mode: multiply | screen | overlay; */';
+        case 'bullets':
+          return 'li {\n  list-style-image: ' + dataURI + ';\n}\nli::marker {\n  font-size: 1.5em;\n  line-height: 0.1em;\n}';
+        case 'class':
+          return '.your-class {\n  background-image: ' + dataURI + ';\n}';
+        default:
+          return dataURI;
+      }
+    }
 
-                function setInitialActive() {
-                    let activeHeading = null;
-                    let maxTop = -Infinity;
+    //
+    //------- Core Processing -------//
+    //
 
-                    headings.forEach(heading => {
-                        const rect = heading.getBoundingClientRect();
-                        if (rect.top <= 100 && rect.top > maxTop) {
-                            maxTop = rect.top;
-                            activeHeading = heading;
-                        }
-                    });
+    function processSVG(svgCode, options) {
+      var code = svgCode;
+      var svgMatch = code.match(/<svg[\s\S]*<\/svg>/i);
+      if (svgMatch) code = svgMatch[0];
 
-                    if (activeHeading && activeHeading.id) {
-                        const link = linkMap.get(activeHeading.id);
-                        if (link) {
-                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
-                            link.classList.add('toc-link-active');
-                        }
-                    }
-                }
+      var origW = null, origH = null;
+      if (options.logo) {
+        var wm = code.match(/<svg[^>]*?\s+width="([^"]*?)"/i);
+        var hm = code.match(/<svg[^>]*?\s+height="([^"]*?)"/i);
+        if (wm) origW = wm[1];
+        if (hm) origH = hm[1];
+      }
 
-                setInitialActive();
+      code = code.replace(/<svg([^>]*?)\s+xmlns(?::xlink)?="[^"]*"([^>]*?)>/g, '<svg$1$2>');
+      code = code.replace(/<svg([^>]*?)\s+xmlns(?::xlink)?="[^"]*"([^>]*?)>/g, '<svg$1$2>');
 
-                let scrollTimeout;
-                window.addEventListener('scroll', () => {
-                    clearTimeout(scrollTimeout);
-                    scrollTimeout = setTimeout(setInitialActive, 100);
-                });
-            }
-
-            function init() {
-                initHighlight();
-                initClipboard();
-                initTOCActiveState();
-            }
-
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', init);
-            } else {
-                init();
-            }
-        })();
-    </script>
-
-    <!-- Back to Top -->
-    <div class="back-to-top-wrapper">
-      <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
-        <div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M4 4V2H20V4H4Z" fill="currentColor"/>
-          <path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/>
-        </svg></div>
-      </button>
-    </div>
-    <script>
-      (function() {
-        var btn = document.querySelector('.back-to-top-wrapper');
-        if (!btn) return;
-        window.addEventListener('scroll', function() {
-          btn.classList.toggle('is-visible', window.scrollY > 300);
-        });
-        btn.querySelector('button').addEventListener('click', function() {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-      })();
-    </script>
-
-    <!-- Sub-bar dropdown toggle -->
-    <script>
-      (function() {
-        var dropdowns = document.querySelectorAll('.subbar-dropdown');
-        dropdowns.forEach(function(dd) {
-          var toggle = dd.querySelector(':scope > .header-link');
-          if (!toggle) return;
-
-          toggle.addEventListener('click', function() {
-            var wasOpen = dd.classList.contains('is-open');
-            dropdowns.forEach(function(d) {
-              d.classList.remove('is-open');
-              var t = d.querySelector(':scope > .header-link');
-              if (t) t.setAttribute('aria-expanded', 'false');
-            });
-            if (!wasOpen) {
-              dd.classList.add('is-open');
-              toggle.setAttribute('aria-expanded', 'true');
-            }
-          });
-
-          document.addEventListener('click', function(e) {
-            if (!dd.contains(e.target)) {
-              dd.classList.remove('is-open');
-              toggle.setAttribute('aria-expanded', 'false');
-            }
-          });
-
-          document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && dd.classList.contains('is-open')) {
-              dd.classList.remove('is-open');
-              toggle.setAttribute('aria-expanded', 'false');
-              toggle.focus();
-            }
-          });
-        });
-      })();
-    </script>
-
-    <!-- Site Navigation -->
-    <script src="../assets/js/nav.js"></script>
-    <!-- Auth -->
-    <script src="../assets/js/auth-config.js"></script>
-    <!-- Theme -->
-    <script src="../assets/js/theme-config.js"></script>
-    <script src="../assets/js/theme-loader.js"></script>
-    <!-- Auth (must load after theme scripts) -->
-    <script src="../assets/js/auth.js"></script>
-    <!-- Feedback -->
-    <script src="../assets/js/feedback.js"></script>
-
-    <script>
-      /* Table scroll overflow hint */
-      (function initTableScroll() {
-        var wrappers = document.querySelectorAll('.table-scroll');
-        if (!wrappers.length) return;
-
-        function checkOverflow(wrapper) {
-          var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
-          var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
-          wrapper.classList.toggle('is-overflowing', isOverflowing);
-          wrapper.classList.toggle('is-scrolled-end', isAtEnd);
+      var applySize = options.size || options.logo || options.icon;
+      code = code.replace(/<svg([^>]*?)>/, function (_m, attrs) {
+        var a = attrs;
+        if (applySize) {
+          a = a.replace(/\s+width="[^"]*"/gi, '').replace(/\s+height="[^"]*"/gi, '');
+          a += ' width="100%" height="100%"';
         }
+        if (options.standalone || options.css) a += ' xmlns="http://www.w3.org/2000/svg"';
+        return '<svg' + a + '>';
+      });
 
-        wrappers.forEach(function(wrapper) {
-          checkOverflow(wrapper);
-          wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+      if (options.currentColor) {
+        code = code.replace(/<path([^>]*?)>/g, function (_m, attrs) {
+          if (attrs.includes('fill=')) attrs = attrs.replace(/fill="[^"]*"/g, 'fill="currentColor"');
+          else attrs += ' fill="currentColor"';
+          if (attrs.includes('style=')) {
+            attrs = attrs.replace(/style="([^"]*?)"/g, function (_sm, s) {
+              var ns = s.replace(/fill\s*:\s*[^;]+/g, 'fill: currentColor');
+              if (!s.includes('fill:')) return 'style="' + s + '; fill: currentColor"';
+              return 'style="' + ns + '"';
+            });
+          }
+          return '<path' + attrs + '>';
         });
+      }
 
-        window.addEventListener('resize', function() {
-          wrappers.forEach(checkOverflow);
-        });
-      })();
-    </script>
+      if (options.stripComments) code = stripComments(code);
+      if (options.stripMetadata) code = stripMetadata(code);
+      if (options.precision !== null) code = roundDecimals(code, options.precision);
+      if (options.minify) code = minifySVG(code);
+
+      var result = code.trim();
+      if (options.standalone) result = '<?xml version="1.0" encoding="UTF-8"?>\n' + result;
+
+      if (options.logo) {
+        var ln = sanitiseName(options.logoName || 'default');
+        var as = (origW && origH) ? ' style="aspect-ratio: ' + origW + ' / ' + origH + '"' : '';
+        result = '<div class="svg-logo-' + ln + '"' + as + '>\n  ' + result + '\n</div>';
+      }
+
+      if (options.icon && !options.logo) {
+        var da = options.iconName ? ' data-icon="' + sanitiseName(options.iconName) + '"' : '';
+        result = '<div class="icn-svg"' + da + '>\n  ' + result + '\n</div>';
+      }
+
+      if (options.css) {
+        var uri = svgToDataURI(result);
+        result = wrapCSSHelper(uri, options.cssFormat);
+      }
+
+      return result;
+    }
+
+    //
+    //------- UI -------//
+    //
+
+    var MODE_BUTTONS = null;
+
+    function getActiveMode() {
+      var active = document.querySelector('#mode-selector .segmented-control-btn.is-active');
+      return active ? active.getAttribute('data-mode') : null;
+    }
+
+    function updateContext() {
+      var mode = getActiveMode();
+      document.getElementById('opt-icon-name').style.display = mode === 'icon' ? '' : 'none';
+      document.getElementById('opt-logo-name').style.display = mode === 'logo' ? '' : 'none';
+      document.getElementById('opt-image-filename').style.display = mode === 'image' ? '' : 'none';
+      document.getElementById('ctx-css').style.display = mode === 'css' ? '' : 'none';
+    }
+
+    function applyLocks() {
+      var mode = getActiveMode();
+      var size = document.getElementById('opt-size');
+      var color = document.getElementById('opt-current-color');
+      var comments = document.getElementById('opt-strip-comments');
+      var sizeW = document.getElementById('toggle-size');
+      var colorW = document.getElementById('toggle-color');
+      var commentsW = document.getElementById('toggle-strip-comments');
+
+      size.disabled = false; color.disabled = false; comments.disabled = false;
+      sizeW.classList.remove('is-disabled');
+      colorW.classList.remove('is-disabled');
+      commentsW.classList.remove('is-disabled');
+
+      if (mode === 'icon' || mode === 'logo') {
+        size.checked = true; size.disabled = true; sizeW.classList.add('is-disabled');
+        color.checked = true; color.disabled = true; colorW.classList.add('is-disabled');
+        comments.checked = true; comments.disabled = true; commentsW.classList.add('is-disabled');
+      } else if (mode === 'image') {
+        color.checked = false; color.disabled = true; colorW.classList.add('is-disabled');
+        size.checked = false; size.disabled = true; sizeW.classList.add('is-disabled');
+      } else if (mode === 'css') {
+        color.checked = false; color.disabled = true; colorW.classList.add('is-disabled');
+      } else {
+        color.checked = true;
+        comments.checked = true;
+      }
+    }
+
+    function updateUI() {
+      var mode = getActiveMode();
+      var saveGroup = document.getElementById('save-group');
+      var outGroup = document.getElementById('output-group');
+      var copyGroup = document.getElementById('copy-group');
+
+      if (mode === 'image') {
+        saveGroup.style.display = '';
+        outGroup.style.display = 'none';
+        copyGroup.style.display = 'none';
+      } else {
+        saveGroup.style.display = 'none';
+        outGroup.style.display = '';
+        copyGroup.style.display = '';
+      }
+    }
+
+    // Auto-clean: process SVG and update output (skips Image mode — that needs a button click)
+    function autoClean() {
+      var mode = getActiveMode();
+      if (mode === 'image') return;
+
+      var input = document.getElementById('svg-input').value;
+      var output = document.getElementById('svg-output');
+      var copyBtn = document.getElementById('copy-btn');
+
+      if (!input.trim()) { output.value = ''; copyBtn.disabled = true; return; }
+
+      var fmt = document.querySelector('input[name="css-format"]:checked');
+
+      var result = processSVG(input, {
+        currentColor: document.getElementById('opt-current-color').checked,
+        icon: mode === 'icon',
+        iconName: document.getElementById('opt-icon-name').value.trim() || null,
+        logo: mode === 'logo',
+        logoName: document.getElementById('opt-logo-name').value.trim() || null,
+        size: document.getElementById('opt-size').checked,
+        standalone: false,
+        css: mode === 'css',
+        cssFormat: fmt ? fmt.value : 'url',
+        stripComments: document.getElementById('opt-strip-comments').checked,
+        stripMetadata: document.getElementById('opt-strip-metadata').checked,
+        precision: document.getElementById('opt-round-decimals').checked ? 2 : null,
+        minify: document.getElementById('opt-minify').checked,
+      });
+
+      output.value = result;
+      copyBtn.disabled = false;
+    }
+
+    // Save Image (Image mode only — triggered by button click)
+    function handleSaveImage() {
+      var input = document.getElementById('svg-input').value;
+      if (!input.trim()) return;
+
+      var result = processSVG(input, {
+        currentColor: document.getElementById('opt-current-color').checked,
+        icon: false, iconName: null, logo: false, logoName: null,
+        size: document.getElementById('opt-size').checked,
+        standalone: true, css: false, cssFormat: 'url',
+        stripComments: document.getElementById('opt-strip-comments').checked,
+        stripMetadata: document.getElementById('opt-strip-metadata').checked,
+        precision: document.getElementById('opt-round-decimals').checked ? 2 : null,
+        minify: document.getElementById('opt-minify').checked,
+      });
+
+      var fn = sanitiseName(document.getElementById('opt-image-filename').value.trim() || 'image');
+      var blob = new Blob([result], { type: 'image/svg+xml' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = fn + '.svg'; a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function handleModeClick(btn) {
+      var wasActive = btn.classList.contains('is-active');
+      MODE_BUTTONS.forEach(function(b) { b.classList.remove('is-active'); });
+      if (!wasActive) btn.classList.add('is-active');
+      updateContext();
+      applyLocks();
+      updateUI();
+      autoClean();
+    }
+
+    function handleCopy() {
+      var output = document.getElementById('svg-output');
+      var btn = document.getElementById('copy-btn');
+      if (!output.value) return;
+
+      navigator.clipboard.writeText(output.value).then(function () {
+        btn.classList.add('is-copied');
+        btn.childNodes[btn.childNodes.length - 1].textContent = ' Copied!';
+        setTimeout(function () {
+          btn.childNodes[btn.childNodes.length - 1].textContent = ' Copy';
+          btn.classList.remove('is-copied');
+        }, 1500);
+      });
+    }
+
+    //
+    //------- Dropdown -------//
+    //
+
+    function toggleDropdown() {
+      var dd = document.getElementById('svgc-dropdown');
+      if (!dd) return;
+      var open = dd.classList.toggle('is-open');
+      var t = dd.querySelector(':scope > .header-link');
+      if (t) t.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    function closeDropdown() {
+      var dd = document.getElementById('svgc-dropdown');
+      if (!dd) return;
+      dd.classList.remove('is-open');
+      var t = dd.querySelector(':scope > .header-link');
+      if (t) t.setAttribute('aria-expanded', 'false');
+    }
+
+    //
+    //------- Init -------//
+    //
+
+    document.addEventListener('DOMContentLoaded', function () {
+      MODE_BUTTONS = document.querySelectorAll('#mode-selector .segmented-control-btn');
+
+      // Save Image button (Image mode only)
+      document.getElementById('save-btn').addEventListener('click', handleSaveImage);
+      document.getElementById('copy-btn').addEventListener('click', handleCopy);
+
+      // Segmented control
+      MODE_BUTTONS.forEach(function(btn) {
+        btn.addEventListener('click', function() { handleModeClick(btn); });
+      });
+
+      // Auto-clean on SVG input
+      document.getElementById('svg-input').addEventListener('input', autoClean);
+
+      // Auto-clean on any toggle change
+      var toggles = document.querySelectorAll('.form-toggle input[type="checkbox"]');
+      toggles.forEach(function(toggle) {
+        toggle.addEventListener('change', autoClean);
+      });
+
+      // Auto-clean on CSS format change
+      var cssRadios = document.querySelectorAll('input[name="css-format"]');
+      cssRadios.forEach(function(radio) {
+        radio.addEventListener('change', autoClean);
+      });
+
+      // Auto-clean on name input change
+      document.getElementById('opt-icon-name').addEventListener('input', autoClean);
+      document.getElementById('opt-logo-name').addEventListener('input', autoClean);
+
+      // Dropdown
+      var dd = document.getElementById('svgc-dropdown');
+      if (dd) {
+        var trigger = dd.querySelector(':scope > .header-link');
+        if (trigger) {
+          trigger.addEventListener('click', function(e) { e.stopPropagation(); toggleDropdown(); });
+          trigger.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); toggleDropdown(); }
+          });
+        }
+      }
+
+      document.addEventListener('click', function(e) {
+        var d = document.getElementById('svgc-dropdown');
+        if (d && d.classList.contains('is-open') && !d.contains(e.target)) closeDropdown();
+      });
+    });
+  </script>
+
+  <!-- Back to Top -->
+  <div class="back-to-top-wrapper">
+    <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
+      <div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 4V2H20V4H4Z" fill="currentColor"/>
+        <path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/>
+      </svg></div>
+    </button>
+  </div>
+  <script>
+    (function() {
+      var btn = document.querySelector('.back-to-top-wrapper');
+      if (!btn) return;
+      window.addEventListener('scroll', function() { btn.classList.toggle('is-visible', window.scrollY > 300); });
+      btn.querySelector('button').addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    })();
+  </script>
+
+  <!-- Site Navigation -->
+  <script src="../assets/js/nav.js"></script>
+  <!-- Auth -->
+  <script src="../assets/js/auth-config.js"></script>
+  <script src="../assets/js/theme-config.js"></script>
+  <script src="../assets/js/theme-loader.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <!-- Feedback -->
+  <script src="../assets/js/feedback.js"></script>
 </body>
+
 </html>

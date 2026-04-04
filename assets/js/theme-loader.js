@@ -147,7 +147,11 @@
 
     var basePath = getBasePath();
     var logoPath = basePath + 'assets/images/logos/' + clientFolder + '.svg';
-    container.innerHTML = '<img src="' + logoPath + '" alt="Logo">';
+    fetch(logoPath)
+      .then(function(response) { return response.text(); })
+      .then(function(svgText) {
+        container.innerHTML = svgText;
+      });
   }
 
   //------- Home Link -------//
@@ -202,6 +206,13 @@
   }
 
   /**
+   * Normalize a pathname for comparison: treat /path/ and /path/index.html as equal.
+   */
+  function normalizePath(p) {
+    return p.replace(/\/index\.html$/, '/').replace(/\/$/, '');
+  }
+
+  /**
    * Build a nav link <li> element.
    */
   function buildNavLink(href, title) {
@@ -211,11 +222,11 @@
     a.className = 'nav-link';
     a.innerHTML = '<span>' + title + '</span>';
 
-    // Match against the resolved absolute path (handles ../ prefixes)
-    var currentPath = window.location.pathname;
-    var resolved = a.href; // browser resolves to absolute URL
-    var resolvedPath = new URL(resolved, window.location.href).pathname;
-    if (currentPath === resolvedPath) {
+    // Match against the resolved absolute path (handles ../ prefixes and index.html variants)
+    var currentNorm = normalizePath(window.location.pathname);
+    var resolvedPath = new URL(a.href, window.location.href).pathname;
+    var resolvedNorm = normalizePath(resolvedPath);
+    if (currentNorm === resolvedNorm) {
       a.classList.add('nav-link-active');
       a.setAttribute('aria-current', 'page');
     }
@@ -273,19 +284,6 @@
     return details;
   }
 
-  /**
-   * Build tool link items for a client's granted tools.
-   */
-  function buildToolLinks(toolKeys, basePath) {
-    var globalTools = (typeof THEME_CONFIG !== 'undefined' && THEME_CONFIG.tools) ? THEME_CONFIG.tools : {};
-    var links = [];
-    (toolKeys || []).forEach(function (toolKey) {
-      var tool = globalTools[toolKey];
-      if (!tool) return;
-      links.push(buildNavLink(basePath + toolKey + '/index.html', tool.title));
-    });
-    return links;
-  }
 
   /**
    * Inject grouped nav sections for a single client into the sidebar.
@@ -296,8 +294,8 @@
    * @param {string} fallbackLabel — label for pages without a section key
    */
   function injectClientSections(container, theme, clientKey, basePath) {
-    // Exclude Tools-section pages — tools are handled separately from the tools array
-    var pages = (theme.pages || []).filter(function (p) { return p.section !== 'Tools'; });
+    // All pages including Tools — tool access is now managed via pages array
+    var pages = theme.pages || [];
     var grouped = groupPagesBySection(pages);
 
     grouped.order.forEach(function (sectionName) {
@@ -312,10 +310,10 @@
           var iconHtml = LINK_ICONS[page.title] || '';
           a.innerHTML = iconHtml + '<span>' + page.title + '</span>';
 
-          // Active link detection
-          var currentPath = window.location.pathname;
-          var resolvedPath = new URL(a.href, window.location.href).pathname;
-          if (currentPath === resolvedPath) {
+          // Active link detection (normalize index.html / trailing slash)
+          var currentNorm = normalizePath(window.location.pathname);
+          var resolvedNorm = normalizePath(new URL(a.href, window.location.href).pathname);
+          if (currentNorm === resolvedNorm) {
             a.classList.add('nav-link-active');
             a.setAttribute('aria-current', 'page');
           }
@@ -340,20 +338,6 @@
       }
     });
 
-    // Tools section (auto-generated from tools array)
-    var toolLinks = buildToolLinks(theme.tools, basePath);
-    if (toolLinks.length > 0) {
-      // Find tools overview in pages
-      var allPages = theme.pages || [];
-      var toolsOverview = allPages.find(function (p) { return p.title === 'Overview' && p.section === 'Tools'; });
-      var toolsIconHref = toolsOverview ? basePath + toolsOverview.href : '';
-
-      // Prepend overview link to tools
-      if (toolsOverview) {
-        toolLinks.unshift(buildNavLink(basePath + toolsOverview.href, 'Overview'));
-      }
-      container.appendChild(buildNavSection('Tools', toolLinks, clientKey, toolsIconHref));
-    }
   }
 
 

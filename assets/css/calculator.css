@@ -1,68 +1,167 @@
 /* ------ CALCULATOR STYLES ------ */
 
-/* -- Toggle buttons (option selectors) -- */
+/* -- Sticky toggle bar -- */
+.calculator-sticky-bar {
+  position: sticky;
+  top: var(--header-height);
+  z-index: 40;
+  background: var(--background-primary);
+}
+
+.calculator-sticky-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 960px;
+  margin: 0 auto;
+  height: auto;
+  padding: 0 0 0 var(--space-m);
+  border-bottom: var(--border-s) solid var(--border-faded);
+}
+
+.calculator-sticky-bar .header-dropdown {
+  align-self: stretch;
+}
+
+
+
+/* -- Toggle group (form-toggle switches) -- */
 .calculator-toggle-group {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--space-l);
+  padding: var(--space-l) 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.calculator-toggle-group::-webkit-scrollbar {
+  display: none;
+}
+
+.calculator-toggle-group .form-toggle {
+  flex-shrink: 0;
+}
+
+.calculator-toggle-group .form-toggle label {
+  white-space: nowrap;
+  font-size: var(--font-s);
+  font-weight: var(--font-weight-semi-bold);
+}
+
+/* -- Currency toggle row -- */
+.calculator-currency-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+  padding: var(--space-m);
+}
+
+.calculator-currency-label {
+  font-size: var(--font-xs);
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--text-faded);
+}
+
+.calculator-currency-label.is-active {
+  color: var(--text-primary);
+}
+
+/* -- Saved configs list (inside header-dropdown) -- */
+.calculator-saves-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.calculator-save-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding: var(--space-s) var(--space-m);
+  cursor: pointer;
+  font-size: var(--font-s);
+  color: var(--text-primary);
+}
+
+.calculator-save-item:hover {
+  background: var(--background-faded);
+}
+
+.calculator-save-delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xs);
+  background: none;
+  border: none;
+  color: var(--text-faded);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.calculator-save-delete:hover {
+  color: var(--text-primary);
+}
+
+.calculator-save-delete .icn-svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* -- Input grid -- */
+.calculator-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: var(--space-m);
 }
 
-.calculator-toggle {
-  position: relative;
+.calculator-grid > .grid-full {
+  grid-column: 1 / -1;
 }
 
-.calculator-toggle input[type="checkbox"] {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-.calculator-toggle-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-s);
-  padding: var(--space-m) var(--space-l);
-  border: var(--border-s) solid var(--border-secondary);
-  background-color: var(--background-primary);
-  color: var(--text-primary);
-  font-size: var(--font-s);
-  font-weight: var(--font-weight-semi-bold);
-  cursor: pointer;
-  user-select: none;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-}
-
-.calculator-toggle-btn:hover {
-  border-color: var(--text-primary);
-}
-
-.calculator-toggle-icon {
-  display: none;
-  flex-shrink: 0;
-
-}
-
-/* Active state */
-.calculator-toggle input[type="checkbox"]:checked + .calculator-toggle-btn {
-  background-color: var(--text-primary);
-  color: var(--background-primary);
-  border-color: var(--text-primary);
-}
-
-.calculator-toggle input[type="checkbox"]:checked + .calculator-toggle-btn .calculator-toggle-icon {
+.calculator-grid-field {
   display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
 }
 
-/* Focus state */
-.calculator-toggle input[type="checkbox"]:focus-visible + .calculator-toggle-btn {
-  outline: 2px solid var(--text-primary);
-  outline-offset: 2px;
+.calculator-grid-divider {
+  grid-column: 1 / -1;
+  height: 0;
+  border: none;
+  border-top: var(--border-s) solid var(--border-faded);
+  margin: 0;
+}
+
+/* -- Results row -- */
+.calculator-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: var(--space-xl);
+  padding: var(--space-l) 0 var(--space-xl) 0;
+  border-top: var(--border-s) solid var(--border-faded);
+  border-bottom: var(--border-s) solid var(--border-faded);
+}
+
+.calculator-result-label {
+  display: block;
+  font-size: var(--font-s);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xs);
+}
+
+.calculator-result-value {
+  display: block;
+  font-family: var(--font-secondary);
+  font-size: var(--font-3xl);
+  color: var(--text-primary);
+  line-height: 1.1;
 }
 
 /* -- Input overrides -- */
@@ -71,13 +170,27 @@
   font-size: var(--font-s);
 }
 
-.calculator-output {
-  background-color: var(--input-disabled-bg);
-  color: var(--input-disabled-text);
-  cursor: not-allowed;
+/* -- Table overrides (base styles in design-system.css) -- */
+.calculator-table {
+  width: 100%;
+  table-layout: auto;
 }
 
-/* -- Table overrides (base styles in design-system.css) -- */
+.calculator-table th,
+.calculator-table td {
+  min-width: 120px;
+}
+
+.calculator-table th:first-child,
+.calculator-table td:first-child {
+  min-width: 100px;
+}
+
+.calculator-table th:nth-child(2),
+.calculator-table td:nth-child(2) {
+  min-width: 160px;
+}
+
 .calculator-table tbody tr {
   border-bottom-color: var(--border-secondary);
 }
@@ -90,7 +203,6 @@
 /* -- Output cells -- */
 .calculator-output-cell {
   color: var(--text-secondary);
-  font-family: var(--font-tertiary);
 }
 
 /* -- Totals row -- */
@@ -98,4 +210,37 @@
 .calculator-totals-row td {
   padding-top: var(--space-xl);
   padding-bottom: var(--space-xl);
+}
+
+/* -- Month abbreviation -- */
+.month-abbr {
+  display: none;
+}
+
+/* -- Mobile responsive -- */
+@media (max-width: 768px) {
+  .calculator-sticky-bar-inner {
+    padding: 0 0 0 var(--space-l);
+  }
+
+  .calculator-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .calculator-results {
+    grid-template-columns: 1fr;
+    gap: var(--space-l);
+  }
+
+  .calculator-result-value {
+    font-size: var(--font-3xl);
+  }
+
+  .month-full {
+    display: none;
+  }
+
+  .month-abbr {
+    display: inline;
+  }
 }

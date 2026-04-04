@@ -16,15 +16,15 @@
     <meta property="og:image" content="../assets/images/og/og-default.jpg">
     <meta property="og:type" content="website">
 
-    <!-- Design System Framework (path set in docs/docs.config.js) -->
+    <!-- Design System Framework (path set in cms/docs.config.js) -->
     <link rel="stylesheet" href="../assets/css/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     
 
-    <!-- Google Fonts (configured in docs/docs.config.js) -->
+    <!-- Google Fonts (configured in cms/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- Markdown CSS -->
 
@@ -55,7 +55,7 @@
     <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
     <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
         <span>⚠️</span>
-        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">docs/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
+        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">cms/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
         <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
     </div>
 
@@ -86,12 +86,12 @@
               <div class="icn-svg" data-icon="more-horizontal"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
             </button>
             <div class="subbar-dropdown-menu">
-              <a href="../docs/disclosure.md" class="header-link" download>
+              <a href="../cms/disclosure.md" class="header-link" download>
                 <div class="icn-svg" data-icon="download"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
                 <span>Download .md file</span>
               </a>
               <div class="header-dropdown-divider"></div>
-              <a href="../docs/disclosure.md" class="header-link" target="_blank" rel="noopener noreferrer">
+              <a href="../cms/disclosure.md" class="header-link" target="_blank" rel="noopener noreferrer">
                 <div class="icn-svg" data-icon="open-full"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21V3H9V5H7C5.89543 5 5 5.89543 5 7V17C5 18.1046 5.89543 19 7 19H17C18.1046 19 19 18.1046 19 17V15H21V21H3ZM9.7 15.7L8.3 14.3L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H12V3H21V12H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L9.7 15.7Z" fill="currentColor"/></svg></div>
                 <span>Open .md in new tab</span>
               </a>
@@ -119,10 +119,19 @@
 </ul>
 <hr>
 <h2 id="basic-usage">Basic Usage</h2>
+<div class="demo-preview is-joined">
+  <details>
+    <summary>Show details</summary>
+    <div class="disclosure-content">
+      <p>Content revealed when expanded.</p>
+    </div>
+  </details>
+</div>
+
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-lbm375qh6" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-lbm375qh6" class="language-html">&lt;details&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-o80zp8xn3" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-o80zp8xn3" class="language-html">&lt;details&gt;
   &lt;summary&gt;Show details&lt;/summary&gt;
   &lt;div class=&quot;disclosure-content&quot;&gt;
     &lt;p&gt;Content revealed when expanded.&lt;/p&gt;
@@ -134,10 +143,26 @@
 <hr>
 <h2 id="key-value-table-pattern">Key-Value Table Pattern</h2>
 <p>Use <code>.disclosure-table</code> with a <code>&lt;dl&gt;</code> to display property-value pairs:</p>
+<div class="demo-preview is-joined">
+  <details>
+    <summary>Show details</summary>
+    <div class="disclosure-content">
+      <dl class="disclosure-table">
+        <dt>Font size</dt>
+        <dd>var(--font-4xl) <span class="token-tag">40px</span></dd>
+        <dt>Line height</dt>
+        <dd>var(--line-height-s) <span class="token-tag">1</span></dd>
+        <dt>Weight</dt>
+        <dd>var(--font-weight-regular) <span class="token-tag">400</span></dd>
+      </dl>
+    </div>
+  </details>
+</div>
+
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-qjg58pudz" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-qjg58pudz" class="language-html">&lt;details&gt;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-l1evt1wa7" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-l1evt1wa7" class="language-html">&lt;details&gt;
   &lt;summary&gt;Show details&lt;/summary&gt;
   &lt;div class=&quot;disclosure-content&quot;&gt;
     &lt;dl class=&quot;disclosure-table&quot;&gt;
@@ -159,8 +184,8 @@
 <p>Add a <code>.copy-btn</code> inside <code>.disclosure-content</code> with a <code>data-copy</code> attribute containing the text to copy:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-4ka6jnccl" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-4ka6jnccl" class="language-html">&lt;button class=&quot;button is-small is-faded copy-btn&quot;
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-bb2u4d3pq" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-bb2u4d3pq" class="language-html">&lt;button class=&quot;button is-small is-faded copy-btn&quot;
   data-copy=&quot;font-size: var(--font-4xl);&amp;#10;line-height: var(--line-height-s);&quot;
   aria-label=&quot;Copy CSS for Heading 1&quot;&gt;
   Copy CSS
@@ -171,8 +196,8 @@
 <p>Use <code>&amp;#10;</code> for newlines in the <code>data-copy</code> value. The button requires a small JS handler:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-fbne5e8wq" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-fbne5e8wq" class="language-js">document.addEventListener(&#39;click&#39;, function (event) {
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-tdeugs9ww" type="button" aria-label="Copy code"><div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-tdeugs9ww" class="language-js">document.addEventListener(&#39;click&#39;, function (event) {
   var button = event.target.closest(&#39;.copy-btn&#39;);
   if (!button) return;
   var text = button.getAttribute(&#39;data-copy&#39;);
@@ -324,6 +349,23 @@
     </aside>
         </div>
 
+        <!-- Page Navigation (Previous / Next) -->
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="callout.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <h3 class="page-nav-title">Callout</h3>
+      </span>
+    </a><a href="form.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <h3 class="page-nav-title">Form</h3>
+      </span>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+    </a></div></nav>
+
         <!-- Page Feedback -->
         <section class="page-feedback" aria-label="Page feedback">
             <div class="page-feedback-inner padding-global">
@@ -353,23 +395,6 @@
                 </form>
             </div>
         </dialog>
-
-        <!-- Page Navigation (Previous / Next) -->
-        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="callout.html" class="page-nav-link page-nav-prev" rel="prev">
-      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
-      <span class="page-nav-text">
-        <span class="page-nav-label">Previous</span>
-        
-        <h3 class="page-nav-title">Callout</h3>
-      </span>
-    </a><a href="form.html" class="page-nav-link page-nav-next" rel="next">
-      <span class="page-nav-text">
-        <span class="page-nav-label">Next</span>
-        
-        <h3 class="page-nav-title">Form</h3>
-      </span>
-      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
-    </a></div></nav>
 
         <!-- Footer -->
         <footer class="docs-footer">

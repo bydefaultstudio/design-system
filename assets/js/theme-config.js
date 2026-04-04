@@ -1,30 +1,31 @@
 /**
  * Theme Configuration
- * Registry of available client themes and tools for dynamic loading.
+ * Registry of available client themes for dynamic loading.
  *
  * Each theme entry maps a clientFolder name (from Netlify Identity app_metadata)
- * to its theme CSS path, Google Fonts URL, sidebar pages, and granted tools.
+ * to its theme CSS path, Google Fonts URL, and sidebar pages.
  *
- * Each tool entry defines the tool UI metadata and access level.
+ * Tool access is managed via frontmatter in cms/*.md files (toolAccess field),
+ * NOT in this config. See cms/access-control.md for details.
  *
  * To add a new client theme:
- *   1. Copy blank/ folder → your-client/
+ *   1. Copy client-template/ folder → your-client/
  *   2. Customise token values in theme.css
  *   3. Add an entry below with the clientFolder key
- *   4. See admin/client-setup.html for the full guide
+ *   4. Create cms/clients/your-client/_defaults.md with access: "client:your-client"
+ *   5. See docs/client-setup.html for the full guide
  *
- * @version 2.0.0
+ * @version 3.0.0
  * @author By Default
  */
 
 var THEME_CONFIG = {
 
-  // Global tool registry — maps tool folder to metadata
-  // access: controls data-access on the tool UI page (public/client/team/admin)
+  // Global tool registry — metadata only (access controlled via cms/*.md frontmatter)
   tools: {
-    'cpm-calculator':     { title: 'CPM Calculator',     subtitle: 'CPM & Spend Calculator',        access: 'public' },
-    'svg-cleaner':        { title: 'SVG Cleaner',        subtitle: 'SVG cleaning and optimisation', access: 'team' },
-    'display-ad-preview': { title: 'Display Ad Preview', subtitle: 'Celtra ad preview sandbox',     access: 'client' }
+    'cpm-calculator':     { title: 'CPM Calculator',     subtitle: 'CPM & Spend Calculator' },
+    'svg-cleaner':        { title: 'SVG Cleaner',        subtitle: 'SVG cleaning and optimisation' },
+    'display-ad-preview': { title: 'Display Ad Preview', subtitle: 'Celtra ad preview sandbox' }
   },
 
   // Map of clientFolder → theme definition
@@ -37,12 +38,13 @@ var THEME_CONFIG = {
       fonts: null,
       pages: [
         { title: 'Home', href: 'client-template/index.html' },
-        { title: 'Brand Book', href: 'client-template/brand-book.html' },
-        { title: 'Overview', href: 'client-template/docs-overview.html', section: 'Docs' },
-        { title: 'Overview', href: 'client-template/tools-overview.html', section: 'Tools' },
-        { title: 'Welcome', href: 'client-template/welcome.html', section: 'Docs' }
-      ],
-      tools: ['cpm-calculator', 'display-ad-preview']
+        { title: 'Brand Book', href: 'client-template/brand-book.html', subtitle: 'Visual identity, logo, palette, and typography' },
+        { title: 'Overview', href: 'client-template/docs/index.html', section: 'Docs' },
+        { title: 'Overview', href: 'client-template/tools/index.html', section: 'Tools' },
+        { title: 'CPM Calculator', href: 'tools/cpm-calculator.html', section: 'Tools' },
+        { title: 'Display Ad Preview', href: 'tools/display-ad-preview.html', section: 'Tools' },
+        { title: 'Welcome', href: 'client-template/docs/welcome.html', subtitle: 'How to use this site', section: 'Docs' }
+      ]
     },
 
     'dianomi': {
@@ -52,12 +54,13 @@ var THEME_CONFIG = {
       fonts: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap',
       pages: [
         { title: 'Home', href: 'dianomi/index.html' },
-        { title: 'Brand Book', href: 'dianomi/brand-book.html' },
-        { title: 'Overview', href: 'dianomi/docs-overview.html', section: 'Docs' },
-        { title: 'Overview', href: 'dianomi/tools-overview.html', section: 'Tools' },
-        { title: 'Welcome', href: 'dianomi/welcome.html', section: 'Docs' }
-      ],
-      tools: ['cpm-calculator', 'display-ad-preview']
+        { title: 'Brand Book', href: 'dianomi/brand-book.html', subtitle: 'Visual identity, logo, palette, and typography' },
+        { title: 'Overview', href: 'dianomi/docs/index.html', section: 'Docs' },
+        { title: 'Overview', href: 'dianomi/tools/index.html', section: 'Tools' },
+        { title: 'CPM Calculator', href: 'tools/cpm-calculator.html', section: 'Tools' },
+        { title: 'Display Ad Preview', href: 'tools/display-ad-preview.html', section: 'Tools' },
+        { title: 'Welcome', href: 'dianomi/docs/welcome.html', subtitle: 'How to use this site', section: 'Docs' }
+      ]
     }
 
   }

@@ -21,8 +21,8 @@ The core restructure: split the monolithic `src/css/design-system.css` into two 
 - [x] Create `brand-book/` folder with `brand-book.css` (brand tokens using `--brand-` prefix)
 - [x] Create `brand-book/index.html` — brand preview page (logo, palette, typography, icons)
 - [x] Update `templates/page-template.html` to load both CSS files
-- [x] Update `docs/docs.config.js` with new paths
-- [x] Update `docs/generator/template.html` with new paths
+- [x] Update `cms/docs.config.js` with new paths
+- [x] Update `cms/generator/template.html` with new paths
 - [x] Remove old `styleguide/` folder
 - [x] Remove old `ds-files/` folder
 - [x] Remove old `src/css/design-system.css`
@@ -33,9 +33,9 @@ The core restructure: split the monolithic `src/css/design-system.css` into two 
 
 ### To Do
 - [x] Delete orphaned doc site pages (architecture.html, components-utilities.html, design-system.html, development-standards.html, layout-primitives.html, quick-reference.html)
-- [x] Update `docs/setup.md` — references `src/css/design-system.css`, needs to reference `brand-book/brand-book.css`
-- [x] Update `docs/folder-structure.md` — still lists `styleguide/`, `src/css/`, old structure
-- [x] Update `docs/upgrading-docs.md` — references `src/css/design-system.css` convention, stale config example
+- [x] Update `cms/setup.md` — references `src/css/design-system.css`, needs to reference `brand-book/brand-book.css`
+- [x] Update `cms/folder-structure.md` — still lists `styleguide/`, `src/css/`, old structure
+- [x] Update `cms/upgrading-docs.md` — references `src/css/design-system.css` convention, stale config example
 - [x] Update `CLAUDE.md` — references `src/css/design-system.css` as single source of truth
 - [x] Regenerate docs after all md updates
 - [x] Add smooth scroll for anchor links in docs site (already existed in docs.css)

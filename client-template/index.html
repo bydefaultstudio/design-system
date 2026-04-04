@@ -16,15 +16,15 @@
     <meta property="og:image" content="../assets/images/og/og-default.jpg">
     <meta property="og:type" content="website">
 
-    <!-- Design System Framework (path set in docs/docs.config.js) -->
+    <!-- Design System Framework (path set in cms/docs.config.js) -->
     <link rel="stylesheet" href="../assets/css/design-system.css" id="design-system-css"
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     
 
-    <!-- Google Fonts (configured in docs/docs.config.js) -->
+    <!-- Google Fonts (configured in cms/docs.config.js) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- Markdown CSS -->
 
@@ -51,12 +51,12 @@
       })();
     </script>
 </head>
-<body class="auth-loading" data-access="client">
+<body class="auth-loading" data-access="client:client-template">
 
     <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
     <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
         <span>⚠️</span>
-        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">docs/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
+        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">cms/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
         <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
     </div>
 
@@ -82,20 +82,20 @@
       <h2 class="eyebrow">Client Template</h2>
       <div class="grid cols-3 gap-xl"><a href="brand-book.html" class="docs-card">
           <h3 class="docs-card-title">Brand Book</h3>
+          <p class="docs-card-subtitle" data-text-wrap="pretty">Visual identity, logo, palette, and typography</p>
         </a></div></div><div class="docs-section">
       <h2 class="eyebrow">Docs</h2>
-      <div class="grid cols-3 gap-xl"><a href="docs-overview.html" class="docs-card">
-          <h3 class="docs-card-title">Overview</h3>
-        </a><a href="welcome.html" class="docs-card">
+      <div class="grid cols-3 gap-xl"><a href="docs/welcome.html" class="docs-card">
           <h3 class="docs-card-title">Welcome</h3>
+          <p class="docs-card-subtitle" data-text-wrap="pretty">How to use this site</p>
         </a></div></div><div class="docs-section">
       <h2 class="eyebrow">Tools</h2>
-      <div class="grid cols-3 gap-xl"><a href="tools-overview.html" class="docs-card"><h3 class="docs-card-title">Overview</h3></a><a href="../cpm-calculator/index.html" class="docs-card">
+      <div class="grid cols-3 gap-xl"><a href="tools/index.html" class="docs-card"><h3 class="docs-card-title">Overview</h3><p class="docs-card-subtitle" data-text-wrap="pretty">All available tools and utilities</p></a><a href="../tools/cpm-calculator.html" class="docs-card">
           <h3 class="docs-card-title">CPM Calculator</h3>
-          <p class="docs-card-subtitle" data-text-wrap="pretty">CPM & Spend Calculator</p>
-        </a><a href="../display-ad-preview/index.html" class="docs-card">
+          <p class="docs-card-subtitle" data-text-wrap="pretty">How to use the CPM & Spend Calculator</p>
+        </a><a href="../tools/display-ad-preview.html" class="docs-card">
           <h3 class="docs-card-title">Display Ad Preview</h3>
-          <p class="docs-card-subtitle" data-text-wrap="pretty">Celtra ad preview sandbox</p>
+          <p class="docs-card-subtitle" data-text-wrap="pretty">How to use the Display Ad Preview tool</p>
         </a></div></div>
                 </article>
             </main>
@@ -103,6 +103,9 @@
             <!-- Table of Contents -->
             
         </div>
+
+        <!-- Page Navigation (Previous / Next) -->
+        
 
         <!-- Page Feedback -->
         <section class="page-feedback" aria-label="Page feedback">
@@ -133,9 +136,6 @@
                 </form>
             </div>
         </dialog>
-
-        <!-- Page Navigation (Previous / Next) -->
-        
 
         <!-- Footer -->
         <footer class="docs-footer">
