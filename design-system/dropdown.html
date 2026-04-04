@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown - By Default Brand OS</title>
+    <meta name="description" content="How to use the dropdown component for contextual menus, action lists, settings panels, and navigation.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Dropdown - By Default Brand OS">
+    <meta property="og:description" content="How to use the dropdown component for contextual menus, action lists, settings panels, and navigation.">
+    <meta property="og:image" content="../assets/images/og/og-default.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Design System Framework (path set in cms/docs.config.js) -->
+    <link rel="stylesheet" href="../assets/css/design-system.css" id="design-system-css"
+          onerror="document.getElementById('ds-missing-banner').style.display='flex'">
+    
+
+    <!-- Google Fonts (configured in cms/docs.config.js) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Markdown CSS -->
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    
+
+    <!-- Early theme loader: apply cached client theme before first paint -->
+    <script>
+    (function(){try{if(document.documentElement.getAttribute('data-client-theme'))return;var c=localStorage.getItem('bdd-client-theme');if(!c)return;var p=c.split('|'),k=p[0],css=p[1],fonts=p[2];if(!k||!css)return;var b='../';var l=document.createElement('link');l.id='client-theme-css';l.rel='stylesheet';l.href=b+css;document.head.appendChild(l);document.documentElement.setAttribute('data-client-theme',k);if(fonts){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://fonts.googleapis.com';pc.id='client-theme-fonts-preconnect';document.head.appendChild(pc);var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';pc2.id='client-theme-fonts-preconnect2';document.head.appendChild(pc2);var fl=document.createElement('link');fl.id='client-theme-fonts';fl.rel='stylesheet';fl.href=fonts;document.head.appendChild(fl)}}catch(e){}})();
+    </script>
+
+    <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
+    <script>
+      window._gotrueReady = (function() {
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0') {
+          return Promise.resolve(null);
+        }
+        return import('https://cdn.jsdelivr.net/npm/gotrue-js@0.9.29/+esm')
+          .then(function(m) { var G = m.default && m.default.default ? m.default.default : m.default; window.GoTrue = G; return G; })
+          .catch(function(e) { console.error('[Auth] GoTrue load failed:', e); return null; });
+      })();
+    </script>
+</head>
+<body class="auth-loading" data-access="team">
+
+    <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
+    <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
+        <span>⚠️</span>
+        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">cms/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
+        <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
+    </div>
+
+    <!-- Site Navigation (header + sidebar injected by nav.js) -->
+    <div id="site-nav" data-base="../"></div>
+
+    <div class="docs-main-area">
+        <!-- Page Header (full width, outside grid) -->
+        <div class="page-header">
+      <div class="container-small">
+        <h1>Dropdown</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">Contextual menus and action lists</p>
+        
+      </div>
+    </div>
+
+        <!-- Sticky Bar (breadcrumbs + actions) -->
+        <div class="sticky-bar">
+      <div class="sticky-bar-inner">
+        <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
+          <a href="../design-system/index.html">Design System</a>
+          <span class="breadcrumb-separator">/</span>
+          <span>Dropdown</span>
+        </nav>
+        <div class="sticky-bar-actions">
+          <div class="dropdown">
+            <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Markdown source options">
+              <div class="icn-svg" data-icon="more-horizontal"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
+            </button>
+            <div class="dropdown-menu is-right">
+              <a href="../cms/dropdown.md" class="dropdown-item" download>
+                <div class="icn-svg" data-icon="download"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
+                <span>Download .md file</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="../cms/dropdown.md" class="dropdown-item" target="_blank" rel="noopener noreferrer">
+                <div class="icn-svg" data-icon="open-full"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div>
+                <span>Open .md in new tab</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Main Content + TOC grid -->
+        <div class="docs-content-grid padding-global">
+            <!-- Main Content -->
+            <main class="docs-main">
+                <article>
+                    <p>Dropdowns show a contextual menu when a trigger is clicked. They are the universal menu pattern — used in the site header, sticky bars, tool toolbars, and page content. One component, same classes everywhere.</p>
+<hr>
+<h2 id="tokens">Tokens</h2>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Default</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--dropdown-background</code></td>
+<td><code>var(--background-primary)</code></td>
+<td>Menu background</td>
+</tr>
+<tr>
+<td><code>--dropdown-border</code></td>
+<td><code>var(--border-faded)</code></td>
+<td>Menu and divider border</td>
+</tr>
+<tr>
+<td><code>--dropdown-item-hover</code></td>
+<td><code>var(--background-faded)</code></td>
+<td>Item hover background</td>
+</tr>
+<tr>
+<td><code>--dropdown-item-padding-y</code></td>
+<td><code>var(--space-l)</code></td>
+<td>Item vertical padding</td>
+</tr>
+<tr>
+<td><code>--dropdown-item-padding-x</code></td>
+<td><code>var(--space-m)</code></td>
+<td>Item horizontal padding</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="trigger-patterns">Trigger patterns</h2>
+<p>The trigger is the element that opens the dropdown. <code>.dropdown-trigger</code> provides built-in styling — no additional classes needed.</p>
+<h3 id="icon-text-chevron">Icon + text + chevron</h3>
+<p>The most common trigger. The <code>.dropdown-chevron</code> rotates 180 degrees when the dropdown is open.</p>
+<div class="demo-preview">
+  <div class="dropdown">
+    <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false">
+      <div class="icn-svg" data-icon="user"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 12C10.9 12 9.95833 11.6083 9.175 10.825C8.39167 10.0417 8 9.1 8 8C8 6.9 8.39167 5.95833 9.175 5.175C9.95833 4.39167 10.9 4 12 4C13.1 4 14.0417 4.39167 14.825 5.175C15.6083 5.95833 16 6.9 16 8C16 9.1 15.6083 10.0417 14.825 10.825C14.0417 11.6083 13.1 12 12 12ZM4 20V17.2C4 16.6333 4.14583 16.1125 4.4375 15.6375C4.72917 15.1625 5.11667 14.8 5.6 14.55C6.63333 14.0333 7.68333 13.6458 8.75 13.3875C9.81667 13.1292 10.9 13 12 13C13.1 13 14.1833 13.1292 15.25 13.3875C16.3167 13.6458 17.3667 14.0333 18.4 14.55C18.8833 14.8 19.2708 15.1625 19.5625 15.6375C19.8542 16.1125 20 16.6333 20 17.2V20H4Z" fill="currentColor"/></svg></div>
+      <span>Account</span>
+      <div class="icn-svg dropdown-chevron" data-icon="chevron-down"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/></svg></div>
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" role="menuitem" type="button">Profile</button>
+      <button class="dropdown-item" role="menuitem" type="button">Settings</button>
+      <div class="dropdown-divider" role="separator"></div>
+      <button class="dropdown-item dropdown-item--danger" role="menuitem" type="button">Sign out</button>
+    </div>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-30i1efc04" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-30i1efc04" class="language-html">&lt;div class=&quot;dropdown&quot;&gt;
+  &lt;button class=&quot;dropdown-trigger&quot; type=&quot;button&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+    &lt;div class=&quot;icn-svg&quot; data-icon=&quot;user&quot;&gt;&lt;!-- svg --&gt;&lt;/div&gt;
+    &lt;span&gt;Account&lt;/span&gt;
+    &lt;div class=&quot;icn-svg dropdown-chevron&quot; data-icon=&quot;chevron-down&quot;&gt;&lt;!-- svg --&gt;&lt;/div&gt;
+  &lt;/button&gt;
+  &lt;div class=&quot;dropdown-menu&quot;&gt;
+    &lt;!-- items --&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="icon-only-trigger">Icon-only trigger</h3>
+<p>For toolbars and compact contexts. No text, no chevron — the icon alone signals &quot;click for options.&quot;</p>
+<div class="demo-preview">
+  <div class="dropdown">
+    <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="More options">
+      <div class="icn-svg" data-icon="more-horizontal"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
+    </button>
+    <div class="dropdown-menu is-right">
+      <button class="dropdown-item" role="menuitem" type="button">Edit</button>
+      <button class="dropdown-item" role="menuitem" type="button">Duplicate</button>
+      <div class="dropdown-divider" role="separator"></div>
+      <button class="dropdown-item dropdown-item--danger" role="menuitem" type="button">Delete</button>
+    </div>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-hyy2nlh6z" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-hyy2nlh6z" class="language-html">&lt;button class=&quot;dropdown-trigger&quot; type=&quot;button&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot; aria-label=&quot;More options&quot;&gt;
+  &lt;div class=&quot;icn-svg&quot; data-icon=&quot;more-horizontal&quot;&gt;&lt;!-- svg --&gt;&lt;/div&gt;
+&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<h3 id="button-trigger">Button trigger</h3>
+<p>For page content where the trigger should look like a standard button.</p>
+<div class="demo-preview">
+  <div class="dropdown">
+    <button class="dropdown-trigger button is-outline" type="button" aria-haspopup="true" aria-expanded="false">
+      Options
+      <div class="icn-svg dropdown-chevron" data-icon="chevron-down"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/></svg></div>
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" role="menuitem" type="button">Option A</button>
+      <button class="dropdown-item" role="menuitem" type="button">Option B</button>
+      <button class="dropdown-item" role="menuitem" type="button">Option C</button>
+    </div>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-kripnyh81" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-kripnyh81" class="language-html">&lt;button class=&quot;dropdown-trigger button is-outline&quot; type=&quot;button&quot; ...&gt;
+  Options
+  &lt;div class=&quot;icn-svg dropdown-chevron&quot;&gt;&lt;!-- chevron svg --&gt;&lt;/div&gt;
+&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="when-to-use-a-chevron">When to use a chevron</h2>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Chevron?</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Selector-style trigger (choosing a value)</td>
+<td>Yes</td>
+<td>Signals &quot;pick from a list&quot;</td>
+</tr>
+<tr>
+<td>Navigation dropdown (Account, Profile)</td>
+<td>Yes</td>
+<td>Shows the menu expands downward</td>
+</tr>
+<tr>
+<td>Icon-only trigger (⋯ more, settings gear)</td>
+<td>No</td>
+<td>The icon itself implies a menu</td>
+</tr>
+<tr>
+<td>Button trigger with label</td>
+<td>Optional</td>
+<td>Use when the button looks like a selector</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="menu-alignment">Menu alignment</h2>
+<p>Menus open left-aligned by default. Add <code>.is-right</code> to right-align from the trigger.</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-o89nvb2p5" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-o89nvb2p5" class="language-html">&lt;div class=&quot;dropdown-menu is-right&quot;&gt;
+</code></pre>
+      </div>
+    
+<p>Use <code>.is-right</code> when the dropdown is near the right edge of the viewport to prevent overflow.</p>
+<hr>
+<h2 id="item-patterns">Item patterns</h2>
+<h3 id="text-only-item">Text-only item</h3>
+<p>The simplest item — just a label with no icon.</p>
+<div class="demo-preview">
+  <div class="dropdown">
+    <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false">
+      <span>Roles</span>
+      <div class="icn-svg dropdown-chevron" data-icon="chevron-down"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/></svg></div>
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" role="menuitem" type="button">Admin</button>
+      <button class="dropdown-item" role="menuitem" type="button">Team</button>
+      <button class="dropdown-item" role="menuitem" type="button">Public</button>
+    </div>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-e1v4ib2b0" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-e1v4ib2b0" class="language-html">&lt;button class=&quot;dropdown-item&quot; role=&quot;menuitem&quot; type=&quot;button&quot;&gt;Admin&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<h3 id="icon-left-item">Icon-left item</h3>
+<p>An icon before the text reinforces the action. Use for action verbs like Edit, Download, Delete.</p>
+<div class="demo-preview">
+  <div class="dropdown">
+    <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions">
+      <div class="icn-svg" data-icon="more-horizontal"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" role="menuitem" type="button">
+        <div class="icn-svg" data-icon="settings"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M11 15H22V17H11V19H5V17H2V15H5V13H11V15ZM7 17H9V15H7V17Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M19 7H22V9H19V11H13V9H2V7H13V5H19V7ZM15 9H17V7H15V9Z" fill="currentColor"/></svg></div>
+        <span>Settings</span>
+      </button>
+      <button class="dropdown-item" role="menuitem" type="button">
+        <div class="icn-svg" data-icon="download"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
+        <span>Download</span>
+      </button>
+      <div class="dropdown-divider" role="separator"></div>
+      <button class="dropdown-item dropdown-item--danger" role="menuitem" type="button">
+        <div class="icn-svg" data-icon="close"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/></svg></div>
+        <span>Delete</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-a5h44qohg" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-a5h44qohg" class="language-html">&lt;button class=&quot;dropdown-item&quot; role=&quot;menuitem&quot; type=&quot;button&quot;&gt;
+  &lt;div class=&quot;icn-svg&quot; data-icon=&quot;settings&quot;&gt;&lt;!-- svg --&gt;&lt;/div&gt;
+  &lt;span&gt;Settings&lt;/span&gt;
+&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<h3 id="icon-right-item-trailing-content">Icon-right item (trailing content)</h3>
+<p>Use <code>.dropdown-item-end</code> to push trailing content to the right edge. Ideal for keyboard shortcuts, badges, status indicators, or chevrons hinting at sub-menus.</p>
+<div class="demo-preview">
+  <div class="dropdown">
+    <button class="dropdown-trigger button is-outline" type="button" aria-haspopup="true" aria-expanded="false">
+      Edit
+      <div class="icn-svg dropdown-chevron" data-icon="chevron-down"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/></svg></div>
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" role="menuitem" type="button">
+        <span>Undo</span>
+        <span class="dropdown-item-end"><kbd>Ctrl+Z</kbd></span>
+      </button>
+      <button class="dropdown-item" role="menuitem" type="button">
+        <span>Redo</span>
+        <span class="dropdown-item-end"><kbd>Ctrl+Y</kbd></span>
+      </button>
+      <div class="dropdown-divider" role="separator"></div>
+      <button class="dropdown-item" role="menuitem" type="button">
+        <span>Cut</span>
+        <span class="dropdown-item-end"><kbd>Ctrl+X</kbd></span>
+      </button>
+      <button class="dropdown-item" role="menuitem" type="button">
+        <span>Copy</span>
+        <span class="dropdown-item-end"><kbd>Ctrl+C</kbd></span>
+      </button>
+      <button class="dropdown-item" role="menuitem" type="button">
+        <span>Paste</span>
+        <span class="dropdown-item-end"><kbd>Ctrl+V</kbd></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-76k5rhzla" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-76k5rhzla" class="language-html">&lt;button class=&quot;dropdown-item&quot; role=&quot;menuitem&quot; type=&quot;button&quot;&gt;
+  &lt;span&gt;Undo&lt;/span&gt;
+  &lt;span class=&quot;dropdown-item-end&quot;&gt;&lt;kbd&gt;Ctrl+Z&lt;/kbd&gt;&lt;/span&gt;
+&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<h3 id="item-with-description">Item with description</h3>
+<p>Use <code>.dropdown-desc</code> for supporting text below the label.</p>
+<div class="demo-preview">
+  <div class="dropdown">
+    <button class="dropdown-trigger button is-outline" type="button" aria-haspopup="true" aria-expanded="false">
+      New
+      <div class="icn-svg dropdown-chevron" data-icon="chevron-down"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/></svg></div>
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" role="menuitem" type="button">
+        <div>
+          <div>Blank project</div>
+          <div class="dropdown-desc">Start from scratch with an empty project</div>
+        </div>
+      </button>
+      <button class="dropdown-item" role="menuitem" type="button">
+        <div>
+          <div>From template</div>
+          <div class="dropdown-desc">Choose from pre-built project templates</div>
+        </div>
+      </button>
+      <button class="dropdown-item" role="menuitem" type="button">
+        <div>
+          <div>Import</div>
+          <div class="dropdown-desc">Import an existing project from a file or URL</div>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-hxs0k0kd4" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-hxs0k0kd4" class="language-html">&lt;button class=&quot;dropdown-item&quot; role=&quot;menuitem&quot; type=&quot;button&quot;&gt;
+  &lt;div&gt;
+    &lt;div&gt;From template&lt;/div&gt;
+    &lt;div class=&quot;dropdown-desc&quot;&gt;Choose from pre-built project templates&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<h3 id="avatar-item">Avatar item</h3>
+<p>For user menus showing the logged-in user&#39;s identity.</p>
+<div class="demo-preview">
+  <div class="dropdown">
+    <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false">
+      <span class="auth-user-avatar" style="width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--background-darker); display: flex; align-items: center; justify-content: center; font-size: var(--font-2xs); font-weight: var(--font-weight-semi-bold); flex-shrink: 0;">E</span>
+      <span>Erlen</span>
+      <div class="icn-svg dropdown-chevron" data-icon="chevron-down"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/></svg></div>
+    </button>
+    <div class="dropdown-menu is-right">
+      <div class="dropdown-item" style="pointer-events: none;">
+        <span class="auth-user-avatar" style="width: 2rem; height: 2rem; border-radius: 50%; background: var(--background-darker); display: flex; align-items: center; justify-content: center; font-size: var(--font-xs); font-weight: var(--font-weight-semi-bold); flex-shrink: 0;">E</span>
+        <div>
+          <div>Erlen Masson</div>
+          <div class="dropdown-desc">erlen@bydefault.studio</div>
+        </div>
+      </div>
+      <div class="dropdown-divider" role="separator"></div>
+      <button class="dropdown-item" role="menuitem" type="button">
+        <div class="icn-svg" data-icon="settings"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M11 15H22V17H11V19H5V17H2V15H5V13H11V15ZM7 17H9V15H7V17Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M19 7H22V9H19V11H13V9H2V7H13V5H19V7ZM15 9H17V7H15V9Z" fill="currentColor"/></svg></div>
+        <span>Account</span>
+      </button>
+      <button class="dropdown-item dropdown-item--danger" role="menuitem" type="button">
+        <div class="icn-svg" data-icon="logout"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H12V5H5V19H12V21H5ZM16 17L14.625 15.55L17.175 13H9V11H17.175L14.625 8.45L16 7L21 12L16 17Z" fill="currentColor"/></svg></div>
+        <span>Log out</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<hr>
+<h2 id="section-labels">Section labels</h2>
+<p>Use <code>.dropdown-label</code> to create non-interactive section headers that group items.</p>
+<div class="demo-preview">
+  <div class="dropdown">
+    <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false">
+      <span>Project</span>
+      <div class="icn-svg dropdown-chevron" data-icon="chevron-down"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/></svg></div>
+    </button>
+    <div class="dropdown-menu">
+      <div class="dropdown-label">Actions</div>
+      <button class="dropdown-item" role="menuitem" type="button">Rename</button>
+      <button class="dropdown-item" role="menuitem" type="button">Duplicate</button>
+      <button class="dropdown-item" role="menuitem" type="button">Archive</button>
+      <div class="dropdown-divider" role="separator"></div>
+      <div class="dropdown-label">Danger zone</div>
+      <button class="dropdown-item dropdown-item--danger" role="menuitem" type="button">Delete project</button>
+    </div>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-96i0b8v54" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-96i0b8v54" class="language-html">&lt;div class=&quot;dropdown-label&quot;&gt;Actions&lt;/div&gt;
+&lt;button class=&quot;dropdown-item&quot; role=&quot;menuitem&quot; type=&quot;button&quot;&gt;Rename&lt;/button&gt;
+...
+&lt;div class=&quot;dropdown-divider&quot; role=&quot;separator&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;dropdown-label&quot;&gt;Danger zone&lt;/div&gt;
+&lt;button class=&quot;dropdown-item dropdown-item--danger&quot; role=&quot;menuitem&quot; type=&quot;button&quot;&gt;Delete project&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="disabled-item">Disabled item</h2>
+<div class="demo-preview">
+  <div class="dropdown">
+    <button class="dropdown-trigger button is-outline" type="button" aria-haspopup="true" aria-expanded="false">File</button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" role="menuitem" type="button">Save</button>
+      <button class="dropdown-item is-disabled" role="menuitem" type="button" disabled aria-disabled="true">Save as...</button>
+      <button class="dropdown-item" role="menuitem" type="button">Export</button>
+    </div>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-j1m8j5cb3" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-j1m8j5cb3" class="language-html">&lt;button class=&quot;dropdown-item is-disabled&quot; role=&quot;menuitem&quot; type=&quot;button&quot; disabled aria-disabled=&quot;true&quot;&gt;
+  Save as...
+&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="when-to-use-what">When to use what</h2>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Pattern</th>
+<th>When to use</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Icon-left</td>
+<td>Action verbs — the icon reinforces what the action does</td>
+<td>Edit, Download, Delete, Settings</td>
+</tr>
+<tr>
+<td>Icon-right (<code>.dropdown-item-end</code>)</td>
+<td>Trailing metadata — keyboard shortcuts, badges, status</td>
+<td>Undo <code>Ctrl+Z</code>, Status <code>Active</code></td>
+</tr>
+<tr>
+<td>No icon</td>
+<td>Simple value selection — the text is self-explanatory</td>
+<td>Role names, client names, sizes</td>
+</tr>
+<tr>
+<td>Avatar</td>
+<td>User identification — profile menus</td>
+<td>Account dropdown</td>
+</tr>
+<tr>
+<td>Description (<code>.dropdown-desc</code>)</td>
+<td>Items that need explanation</td>
+<td>&quot;From template — Choose from pre-built...&quot;</td>
+</tr>
+<tr>
+<td>Section label (<code>.dropdown-label</code>)</td>
+<td>Grouping related items under a heading</td>
+<td>&quot;Switch Role&quot;, &quot;Danger zone&quot;</td>
+</tr>
+<tr>
+<td>Divider (<code>.dropdown-divider</code>)</td>
+<td>Separating logical groups</td>
+<td>Between actions and danger items</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="javascript">JavaScript</h2>
+<p>Include <code>assets/js/dropdown.js</code> on any page. It auto-initialises all <code>.dropdown</code> elements — no setup needed.</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-egi1r9jje" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
+        <pre><code id="code-egi1r9jje" class="language-html">&lt;script src=&quot;/assets/js/dropdown.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+      </div>
+    
+<p>Clicking a <code>.dropdown-trigger</code> toggles <code>.is-open</code> on the parent <code>.dropdown</code>. Clicking outside or pressing Escape closes all open dropdowns.</p>
+<hr>
+<h2 id="keyboard-interactions">Keyboard interactions</h2>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Key</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Enter</code> / <code>Space</code></td>
+<td>Opens the dropdown (on trigger), activates item (on item)</td>
+</tr>
+<tr>
+<td><code>ArrowDown</code></td>
+<td>Moves focus to the next item</td>
+</tr>
+<tr>
+<td><code>ArrowUp</code></td>
+<td>Moves focus to the previous item</td>
+</tr>
+<tr>
+<td><code>Escape</code></td>
+<td>Closes the dropdown and returns focus to the trigger</td>
+</tr>
+<tr>
+<td><code>Tab</code></td>
+<td>Moves focus out of the dropdown</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="accessibility-notes">Accessibility notes</h2>
+<ul>
+<li>Trigger: <code>aria-haspopup=&quot;true&quot;</code>, <code>aria-expanded=&quot;false&quot;</code> (JS updates to <code>&quot;true&quot;</code> on open)</li>
+<li>Icon-only triggers: add <code>aria-label</code> describing the action</li>
+<li>Menu: <code>role=&quot;menu&quot;</code></li>
+<li>Items: <code>role=&quot;menuitem&quot;</code> on buttons, or just <code>&lt;a&gt;</code> for link items</li>
+<li>Dividers: <code>role=&quot;separator&quot;</code></li>
+<li>Disabled items: <code>disabled</code> attribute + <code>aria-disabled=&quot;true&quot;</code></li>
+</ul>
+<hr>
+<h2 id="structure-reference">Structure reference</h2>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Element</th>
+<th>Class</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Container</td>
+<td><code>.dropdown</code></td>
+<td>Positioning context</td>
+</tr>
+<tr>
+<td>Trigger</td>
+<td><code>.dropdown-trigger</code></td>
+<td>Clickable element that opens the menu</td>
+</tr>
+<tr>
+<td>Chevron</td>
+<td><code>.dropdown-chevron</code></td>
+<td>Rotating arrow indicator (on trigger)</td>
+</tr>
+<tr>
+<td>Menu</td>
+<td><code>.dropdown-menu</code></td>
+<td>The panel that appears</td>
+</tr>
+<tr>
+<td>Menu (right)</td>
+<td><code>.dropdown-menu .is-right</code></td>
+<td>Right-aligned from trigger</td>
+</tr>
+<tr>
+<td>Item</td>
+<td><code>.dropdown-item</code></td>
+<td>Clickable row</td>
+</tr>
+<tr>
+<td>Item (danger)</td>
+<td><code>.dropdown-item .dropdown-item--danger</code></td>
+<td>Destructive action</td>
+</tr>
+<tr>
+<td>Item (disabled)</td>
+<td><code>.dropdown-item .is-disabled</code></td>
+<td>Unavailable action</td>
+</tr>
+<tr>
+<td>Trailing content</td>
+<td><code>.dropdown-item-end</code></td>
+<td>Right-aligned metadata inside an item</td>
+</tr>
+<tr>
+<td>Description</td>
+<td><code>.dropdown-desc</code></td>
+<td>Supporting text under item label</td>
+</tr>
+<tr>
+<td>Label</td>
+<td><code>.dropdown-label</code></td>
+<td>Non-interactive section header</td>
+</tr>
+<tr>
+<td>Divider</td>
+<td><code>.dropdown-divider</code></td>
+<td>Separator line between groups</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="do-don39t">Do / Don&#39;t</h2>
+<p><strong>Do:</strong></p>
+<ul>
+<li>Use dropdowns for contextual actions and selections</li>
+<li>Group related items with labels and dividers</li>
+<li>Use icon-left for actions, icon-right for metadata</li>
+<li>Add <code>aria-label</code> on icon-only triggers</li>
+<li>Use <code>.is-right</code> near the right viewport edge</li>
+</ul>
+<p><strong>Don&#39;t:</strong></p>
+<ul>
+<li>Don&#39;t use dropdowns for primary navigation — use tabs or links</li>
+<li>Don&#39;t nest dropdowns inside dropdowns</li>
+<li>Don&#39;t use dropdowns for form field selection — use <code>&lt;select&gt;</code> instead</li>
+<li>Don&#39;t put more than 10 items in a single dropdown — break into sections or use a different pattern</li>
+</ul>
+
+                </article>
+            </main>
+
+            <!-- Table of Contents -->
+            <aside class="docs-toc">
+      <span class="toc-header">On this page</span>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#tokens" class="toc-link">Tokens</a></li><li class="toc-item toc-level-2"><a href="#trigger-patterns" class="toc-link">Trigger patterns</a></li><li class="toc-item toc-level-2"><a href="#when-to-use-a-chevron" class="toc-link">When to use a chevron</a></li><li class="toc-item toc-level-2"><a href="#menu-alignment" class="toc-link">Menu alignment</a></li><li class="toc-item toc-level-2"><a href="#item-patterns" class="toc-link">Item patterns</a></li><li class="toc-item toc-level-2"><a href="#section-labels" class="toc-link">Section labels</a></li><li class="toc-item toc-level-2"><a href="#disabled-item" class="toc-link">Disabled item</a></li><li class="toc-item toc-level-2"><a href="#when-to-use-what" class="toc-link">When to use what</a></li><li class="toc-item toc-level-2"><a href="#javascript" class="toc-link">JavaScript</a></li><li class="toc-item toc-level-2"><a href="#keyboard-interactions" class="toc-link">Keyboard interactions</a></li><li class="toc-item toc-level-2"><a href="#accessibility-notes" class="toc-link">Accessibility notes</a></li><li class="toc-item toc-level-2"><a href="#structure-reference" class="toc-link">Structure reference</a></li><li class="toc-item toc-level-2"><a href="#do-don39t" class="toc-link">Do / Don&#39;t</a></li></ul></nav></div>
+    </aside>
+        </div>
+
+        <!-- Page Navigation (Previous / Next) -->
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="divider.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <h3 class="page-nav-title">Divider</h3>
+      </span>
+    </a><a href="tag.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <h3 class="page-nav-title">Tag</h3>
+      </span>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+    </a></div></nav>
+
+        <!-- Page Feedback -->
+        <section class="page-feedback" aria-label="Page feedback">
+            <div class="page-feedback-inner padding-global">
+                <h3 class="page-feedback-prompt">Was this page helpful?</h3>
+                <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
+                <div class="button-group">
+                    <button class="button is-small" data-feedback="yes" type="button">Yes</button>
+                    <button class="button is-small is-outline is-faded" data-feedback="no" type="button">No</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Modal -->
+        <dialog class="feedback-modal" aria-label="Send feedback">
+            <div class="feedback-modal-content">
+                <h3 class="feedback-modal-title">Send feedback</h3>
+                <p class="feedback-modal-subtitle"></p>
+                <form class="feedback-form" name="page-feedback" data-netlify="true">
+                    <input type="hidden" name="form-name" value="page-feedback">
+                    <input type="hidden" name="sentiment" value="">
+                    <input type="hidden" name="page" value="">
+                    <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
+                    <div class="button-group feedback-modal-actions">
+                        <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>
+                        <button type="submit" class="button is-small">Send feedback</button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
+
+        <!-- Footer -->
+        <footer class="docs-footer">
+            <div class="docs-footer-inner padding-global">
+                <p class="docs-footer-text">© 2026 By Default BrandOS</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- Initialize Highlight.js, Copy, and TOC -->
+    <script>
+        (function() {
+            'use strict';
+
+            function initHighlight() {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+
+            function copyToClipboard(text) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    return navigator.clipboard.writeText(text);
+                }
+                var textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                return Promise.resolve();
+            }
+
+            var copyIconPath = 'M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z';
+            var checkIconPath = 'M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z';
+
+            function initClipboard() {
+                const buttons = document.querySelectorAll('.copy-code-btn');
+
+                buttons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const targetId = this.getAttribute('data-clipboard-target');
+                        const codeElement = document.querySelector(targetId);
+
+                        if (codeElement) {
+                            const text = codeElement.textContent;
+                            const textSpan = this.querySelector('.copy-text');
+                            const btnPath = this.querySelector('path');
+
+                            copyToClipboard(text).then(() => {
+                                if (btnPath) {
+                                    btnPath.setAttribute('d', checkIconPath);
+                                }
+                                if (textSpan) {
+                                    textSpan.textContent = 'Copied!';
+                                }
+                                setTimeout(() => {
+                                    if (btnPath) {
+                                        btnPath.setAttribute('d', copyIconPath);
+                                    }
+                                    if (textSpan) {
+                                        textSpan.textContent = 'Copy';
+                                    }
+                                }, 1500);
+                            });
+                        }
+                    });
+                });
+            }
+
+            function initTOCActiveState() {
+                const tocLinks = document.querySelectorAll('.toc-link');
+                const headings = document.querySelectorAll('h1[id], h2[id]');
+
+                if (tocLinks.length === 0 || headings.length === 0) return;
+
+                const linkMap = new Map();
+                tocLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        const id = href.substring(1);
+                        linkMap.set(id, link);
+                    }
+                });
+
+                const observerOptions = {
+                    rootMargin: '-20% 0px -70% 0px',
+                    threshold: 0
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const id = entry.target.id;
+                        const link = linkMap.get(id);
+
+                        if (entry.isIntersecting) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            if (link) {
+                                link.classList.add('toc-link-active');
+                            }
+                        }
+                    });
+                }, observerOptions);
+
+                headings.forEach(heading => {
+                    if (heading.id) {
+                        observer.observe(heading);
+                    }
+                });
+
+                function setInitialActive() {
+                    let activeHeading = null;
+                    let maxTop = -Infinity;
+
+                    headings.forEach(heading => {
+                        const rect = heading.getBoundingClientRect();
+                        if (rect.top <= 100 && rect.top > maxTop) {
+                            maxTop = rect.top;
+                            activeHeading = heading;
+                        }
+                    });
+
+                    if (activeHeading && activeHeading.id) {
+                        const link = linkMap.get(activeHeading.id);
+                        if (link) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            link.classList.add('toc-link-active');
+                        }
+                    }
+                }
+
+                setInitialActive();
+
+                let scrollTimeout;
+                window.addEventListener('scroll', () => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(setInitialActive, 100);
+                });
+            }
+
+            function init() {
+                initHighlight();
+                initClipboard();
+                initTOCActiveState();
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+
+    <!-- Back to Top -->
+    <div class="back-to-top-wrapper">
+      <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
+        <div class="icn-svg" data-icon="arrow-top"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M4 4V2H20V4H4Z" fill="currentColor"/><path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/></svg></div>
+      </button>
+    </div>
+    <script>
+      (function() {
+        var btn = document.querySelector('.back-to-top-wrapper');
+        if (!btn) return;
+        window.addEventListener('scroll', function() {
+          btn.classList.toggle('is-visible', window.scrollY > 300);
+        });
+        btn.querySelector('button').addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+
+    <!-- Dropdown -->
+    <script src="../assets/js/dropdown.js"></script>
+
+    <!-- Site Navigation -->
+    <script src="../assets/js/nav.js"></script>
+    <!-- Auth -->
+    <script src="../assets/js/auth-config.js"></script>
+    <!-- Theme -->
+    <script src="../assets/js/theme-config.js"></script>
+    <script src="../assets/js/theme-loader.js"></script>
+    <!-- Auth (must load after theme scripts) -->
+    <script src="../assets/js/auth.js"></script>
+    <!-- Feedback -->
+    <script src="../assets/js/feedback.js"></script>
+
+    <script>
+      /* Table scroll overflow hint */
+      (function initTableScroll() {
+        var wrappers = document.querySelectorAll('.table-scroll');
+        if (!wrappers.length) return;
+
+        function checkOverflow(wrapper) {
+          var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
+          var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
+          wrapper.classList.toggle('is-overflowing', isOverflowing);
+          wrapper.classList.toggle('is-scrolled-end', isAtEnd);
+        }
+
+        wrappers.forEach(function(wrapper) {
+          checkOverflow(wrapper);
+          wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+        });
+
+        window.addEventListener('resize', function() {
+          wrappers.forEach(checkOverflow);
+        });
+      })();
+    </script>
+</body>
+</html>

@@ -27,7 +27,8 @@ Before generating or modifying code, treat the following files as authoritative:
 9. `cms/button.md` — button component usage
 10. `cms/disclosure.md` — details/summary disclosure component
 11. `cms/components.md` — master component spec (naming, tokens, accessibility, build rules)
-12. `cms/seo-best-practices.md` — SEO meta tags and social sharing
+12. `cms/icon-registry.md` — complete catalog of brand icons (check before using any icon)
+13. `cms/seo-best-practices.md` — SEO meta tags and social sharing
 13. `cms/folder-structure.md` — file organization rules
 14. `cms/setup.md` — project setup and customization
 
@@ -54,6 +55,7 @@ Use Explore sub-agents to read multiple cms files in parallel before starting wo
 - Do not bypass layout primitives
 - Do not create new utilities without updating the design system documentation
 - Do not use primitive color tokens directly (use semantic tokens)
+- Do not use external icon libraries (Material Design, Font Awesome, Heroicons, etc.) — only brand icons from `assets/images/svg-icons/` are permitted. Check `cms/icon-registry.md` for available icons. If none fits, request a new icon from the design team.
 - Always use design system tokens for spacing, colors, and typography
 
 If something cannot be implemented cleanly using existing patterns, **pause and ask for clarification**.
@@ -114,8 +116,10 @@ See `cms/border.md` for complete composable architecture.
 
 ### Iconography
 See `cms/iconography.md` for complete icon guidelines.
+See `cms/icon-registry.md` for the full catalog of available brand icons.
 
 **Critical rules:**
+- **Brand icons only** — never use Material Design, Font Awesome, Heroicons, Feather, or any external icon library. Always check `cms/icon-registry.md` first. If no brand icon exists for the need, flag it and request one from the design team — do not invent or substitute.
 - Always wrap icons in `<div class="icn-svg" data-icon="name">` — never use bare `<svg>`, `<span>`, or `<img>`
 - SVGs must use `width="100%" height="100%"` — the `.icn-svg` wrapper controls sizing
 - SVGs must use `fill="none"` on the `<svg>` element; paths use `fill="currentColor"`

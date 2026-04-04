@@ -66,14 +66,45 @@
 
   function getEffectiveRole(roles) {
     if (!roles || !roles.length) return null;
-    var highest = roles[0].toLowerCase();
-    for (var i = 1; i < roles.length; i++) {
+    var highest = null;
+    for (var i = 0; i < roles.length; i++) {
       var r = roles[i].toLowerCase();
-      if (getRoleRank(r) > getRoleRank(highest)) {
-        highest = r;
+      if (getRoleRank(r) !== -1) {
+        if (highest === null || getRoleRank(r) > getRoleRank(highest)) {
+          highest = r;
+        }
       }
     }
+    // If no recognized hierarchy role found but non-hierarchy roles exist
+    // (e.g. ["dianomi"]), treat the user as a client
+    if (highest === null && roles.length > 0) {
+      highest = 'client';
+    }
     return highest;
+  }
+
+  /**
+   * Derive clientFolder from the roles array.
+   * Any role tag that is NOT in the hierarchy (e.g. "dianomi") is treated as
+   * the client folder name. This lets admins set roles via the Netlify UI
+   * (e.g. tags "client" + "dianomi") without needing the API to set app_metadata.
+   */
+  function getClientFolderFromRoles(roles) {
+    if (!roles || !roles.length) return '';
+    for (var i = 0; i < roles.length; i++) {
+      var r = roles[i].toLowerCase();
+      if (ROLE_HIERARCHY.indexOf(r) === -1) return r;
+    }
+    return '';
+  }
+
+  /**
+   * Resolve clientFolder from metadata — uses explicit app_metadata.clientFolder
+   * if set, otherwise derives it from the roles array.
+   */
+  function resolveClientFolder(metadata) {
+    if (metadata.clientFolder) return metadata.clientFolder;
+    return getClientFolderFromRoles(metadata.roles || []);
   }
 
   //------- Role Switching (Admin) -------//
@@ -152,7 +183,7 @@
       // Check if user's clientFolder matches any listed folder
       var allowedFolders = accessValue.substring(7).split(',');
       var metadata = user ? (user.app_metadata || {}) : {};
-      var clientFolder = metadata.clientFolder || '';
+      var clientFolder = resolveClientFolder(metadata);
 
       for (var i = 0; i < allowedFolders.length; i++) {
         if (allowedFolders[i].trim() === clientFolder) return true;
@@ -681,33 +712,34 @@
       // Dropdown wrapper
       var dropdown = document.createElement('div');
       dropdown.id = 'auth-header-dropdown';
-      dropdown.className = 'header-dropdown';
+      dropdown.className = 'dropdown';
 
       // Toggle — user icon + role label + chevron
       var toggle = document.createElement('div');
-      toggle.className = 'header-link';
+      toggle.className = 'dropdown-trigger';
       toggle.setAttribute('role', 'button');
       toggle.setAttribute('tabindex', '0');
       toggle.setAttribute('aria-label', 'Account menu');
+      toggle.setAttribute('aria-haspopup', 'true');
       toggle.setAttribute('aria-expanded', 'false');
       toggle.innerHTML = '<div class="icn-svg" data-icon="user">' + ICON_USER + '</div>'
         + '<span>' + toggleLabel + '</span>'
-        + '<div class="icn-svg header-link-chevron" data-icon="chevron-down">' + ICON_CHEVRON + '</div>';
+        + '<div class="icn-svg dropdown-chevron" data-icon="chevron-down">' + ICON_CHEVRON + '</div>';
       dropdown.appendChild(toggle);
 
       // Dropdown menu
       var menu = document.createElement('div');
-      menu.className = 'header-dropdown-menu';
+      menu.className = 'dropdown-menu is-right';
 
       // -- User info section --
       var roleLabel = document.createElement('div');
-      roleLabel.className = 'header-dropdown-label';
+      roleLabel.className = 'dropdown-label';
       roleLabel.style.textTransform = 'capitalize';
       roleLabel.textContent = 'Role: ' + displayRole;
       menu.appendChild(roleLabel);
 
       var userInfo = document.createElement('div');
-      userInfo.className = 'header-link';
+      userInfo.className = 'dropdown-item';
       userInfo.style.pointerEvents = 'none';
       if (fullName) {
         userInfo.innerHTML = '<span class="auth-user-avatar">' + initial + '</span>'
@@ -730,17 +762,17 @@
 
         // Switch Role
         var roleDivider = document.createElement('div');
-        roleDivider.className = 'header-dropdown-divider';
+        roleDivider.className = 'dropdown-divider';
         menu.appendChild(roleDivider);
 
         var switchLabel = document.createElement('div');
-        switchLabel.className = 'header-dropdown-label';
+        switchLabel.className = 'dropdown-label';
         switchLabel.textContent = 'Switch Role';
         menu.appendChild(switchLabel);
 
         function addRoleItem(displayName, isActive, clickFn) {
           var item = document.createElement('div');
-          item.className = 'header-link';
+          item.className = 'dropdown-item';
           item.setAttribute('role', 'button');
           item.setAttribute('tabindex', '0');
 
@@ -780,11 +812,11 @@
           var themeKeys = Object.keys(THEME_CONFIG.themes);
           if (themeKeys.length > 0) {
             var clientDivider = document.createElement('div');
-            clientDivider.className = 'header-dropdown-divider';
+            clientDivider.className = 'dropdown-divider';
             menu.appendChild(clientDivider);
 
             var clientLabel = document.createElement('div');
-            clientLabel.className = 'header-dropdown-label';
+            clientLabel.className = 'dropdown-label';
             clientLabel.textContent = 'Switch Client';
             menu.appendChild(clientLabel);
 
@@ -803,13 +835,13 @@
 
       // -- Account & Logout section --
       var accountDivider = document.createElement('div');
-      accountDivider.className = 'header-dropdown-divider';
+      accountDivider.className = 'dropdown-divider';
       menu.appendChild(accountDivider);
 
       var navMountForAccount = document.getElementById('site-nav');
       var basePathForAccount = navMountForAccount ? (navMountForAccount.getAttribute('data-base') || '') : '';
       var accountLink = document.createElement('a');
-      accountLink.className = 'header-link';
+      accountLink.className = 'dropdown-item';
       accountLink.href = basePathForAccount + 'auth/account.html';
       accountLink.innerHTML = '<div class="icn-svg" data-icon="settings">'
         + '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
@@ -820,7 +852,7 @@
       menu.appendChild(accountLink);
 
       var logoutItem = document.createElement('div');
-      logoutItem.className = 'header-link';
+      logoutItem.className = 'dropdown-item';
       logoutItem.setAttribute('role', 'button');
       logoutItem.setAttribute('tabindex', '0');
       logoutItem.innerHTML = '<div class="icn-svg" data-icon="logout">' + ICON_LOGOUT + '</div>'
@@ -839,37 +871,7 @@
 
       dropdown.appendChild(menu);
 
-      // Toggle open/close
-      toggle.addEventListener('click', function () {
-        var wasOpen = dropdown.classList.contains('is-open');
-        var allDropdowns = document.querySelectorAll('.header-dropdown');
-        for (var i = 0; i < allDropdowns.length; i++) {
-          allDropdowns[i].classList.remove('is-open');
-          var t = allDropdowns[i].querySelector('.header-link');
-          if (t) t.setAttribute('aria-expanded', 'false');
-        }
-        if (!wasOpen) {
-          dropdown.classList.add('is-open');
-          toggle.setAttribute('aria-expanded', 'true');
-        }
-      });
-
-      // Close on click outside
-      document.addEventListener('click', function (e) {
-        if (!dropdown.contains(e.target)) {
-          dropdown.classList.remove('is-open');
-          toggle.setAttribute('aria-expanded', 'false');
-        }
-      });
-
-      // Close on Escape
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && dropdown.classList.contains('is-open')) {
-          dropdown.classList.remove('is-open');
-          toggle.setAttribute('aria-expanded', 'false');
-          toggle.focus();
-        }
-      });
+      // Toggle open/close handled by dropdown.js
 
       container.appendChild(dropdown);
 

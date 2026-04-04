@@ -276,3 +276,25 @@ Add `.justify-end` to push buttons to the right.
 * Use icon buttons **only** when the icon meaning is clear
 
 If a button feels too prominent or too quiet, change the modifier — not the base styles.
+
+---
+
+## Copy Button
+
+The `.copy-btn` extends `.button` with clipboard copy functionality and "Copied!" feedback. See the [Copy Button](copy-button.html) docs for full details.
+
+<div class="demo-preview">
+  <button class="button is-outline is-small copy-btn" data-copy="var(--button-primary)" type="button">
+    <span class="copy-btn-label-default">Copy token</span>
+    <span class="copy-btn-label-copied">Copied!</span>
+  </button>
+</div>
+
+```html
+<button class="button is-outline is-small copy-btn" data-copy="var(--button-primary)" type="button">
+  <span class="copy-btn-label-default">Copy token</span>
+  <span class="copy-btn-label-copied">Copied!</span>
+</button>
+```
+
+Requires `assets/js/copy-button.js`.

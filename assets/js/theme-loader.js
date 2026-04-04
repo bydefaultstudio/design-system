@@ -17,6 +17,24 @@
   var STORAGE_KEY = 'admin-theme-preview';
   var CACHE_KEY = 'bdd-client-theme';
 
+  //------- Utility -------//
+
+  /**
+   * Derive clientFolder from the roles array.
+   * Any role tag not in the hierarchy (e.g. "dianomi") is the client folder name.
+   */
+  function getClientFolderFromRoles(roles) {
+    if (!roles || !roles.length) return '';
+    var hierarchy = (typeof AUTH_CONFIG !== 'undefined' && AUTH_CONFIG.roleHierarchy)
+      ? AUTH_CONFIG.roleHierarchy
+      : ['public', 'client', 'team', 'admin'];
+    for (var i = 0; i < roles.length; i++) {
+      var r = roles[i].toLowerCase();
+      if (hierarchy.indexOf(r) === -1) return r;
+    }
+    return '';
+  }
+
   //------- Path Resolution -------//
 
   function getBasePath() {
@@ -372,24 +390,28 @@
 
     var metadata = user.app_metadata || {};
     var roles = metadata.roles || [];
-    var effectiveRole = roles.length ? roles[0].toLowerCase() : null;
+    var hierarchy = (typeof AUTH_CONFIG !== 'undefined' && AUTH_CONFIG.roleHierarchy)
+      ? AUTH_CONFIG.roleHierarchy
+      : ['public', 'client', 'team', 'admin'];
 
-    // Find the highest role (matches getEffectiveRole logic in auth.js)
-    if (typeof AUTH_CONFIG !== 'undefined' && AUTH_CONFIG.roleHierarchy) {
-      var hierarchy = AUTH_CONFIG.roleHierarchy;
-      var highest = effectiveRole;
-      for (var i = 1; i < roles.length; i++) {
-        var r = roles[i].toLowerCase();
-        if (hierarchy.indexOf(r) > hierarchy.indexOf(highest)) {
-          highest = r;
+    // Find the highest recognized hierarchy role (matches getEffectiveRole in auth.js)
+    var effectiveRole = null;
+    for (var i = 0; i < roles.length; i++) {
+      var r = roles[i].toLowerCase();
+      if (hierarchy.indexOf(r) !== -1) {
+        if (effectiveRole === null || hierarchy.indexOf(r) > hierarchy.indexOf(effectiveRole)) {
+          effectiveRole = r;
         }
       }
-      effectiveRole = highest;
+    }
+    // Non-hierarchy roles only (e.g. ["dianomi"]) → treat as client
+    if (effectiveRole === null && roles.length > 0) {
+      effectiveRole = 'client';
     }
 
     // Client users: load their theme, set home link, logo, and inject their nav section
     if (effectiveRole === 'client') {
-      var clientFolder = metadata.clientFolder;
+      var clientFolder = metadata.clientFolder || getClientFolderFromRoles(roles);
       if (clientFolder) {
         setHomeLink(clientFolder);
         setLogo(clientFolder);

@@ -179,21 +179,16 @@ If using local fonts instead, define them with `@font-face` in the theme CSS fil
 
 ## Step 5: Create the Netlify Identity User
 
-In the Netlify Identity dashboard, create a new user and set their `app_metadata`:
+In the Netlify Identity dashboard, create a new user and add their client name as a **role tag** (e.g. `your-client`). The system automatically recognises non-hierarchy role tags as client folder names.
 
-```json
-{
-  "roles": ["client"],
-  "clientFolder": "your-client"
-}
-```
+You can also add `client` as a second tag for clarity, but it's not required — a single tag like `your-client` is sufficient.
 
-| Field | Value | Purpose |
-|-------|-------|---------|
-| `roles` | `["client"]` | Grants client-level access (can view `client` and `public` pages) |
-| `clientFolder` | `"your-client"` | Maps to the client folder name, theme config key, and logo filename |
+| Tag | Required? | Purpose |
+|-----|-----------|---------|
+| `your-client` | Yes | Maps to the client folder name, theme config key, and logo filename |
+| `client` | Optional | Explicitly sets the access level (auto-inferred if omitted) |
 
-The `clientFolder` value is the single identifier that ties everything together:
+The client name tag is the single identifier that ties everything together:
 - Theme CSS: `your-client/theme.css`
 - Logo: `assets/images/logos/your-client.svg`
 - Home link: `your-client/index.html`

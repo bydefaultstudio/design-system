@@ -1,54 +1,10 @@
 /* ------ CALCULATOR STYLES ------ */
 
-/* -- Sticky toggle bar -- */
-.calculator-sticky-bar {
-  position: sticky;
-  top: var(--header-height);
-  z-index: 40;
-  background: var(--background-primary);
-}
-
-.calculator-sticky-bar-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+/* -- Sticky bar overrides -- */
+.sticky-bar-inner {
   max-width: 960px;
   margin: 0 auto;
-  height: auto;
-  padding: 0 0 0 var(--space-m);
-  border-bottom: var(--border-s) solid var(--border-faded);
-}
-
-.calculator-sticky-bar .header-dropdown {
-  align-self: stretch;
-}
-
-
-
-/* -- Toggle group (form-toggle switches) -- */
-.calculator-toggle-group {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: var(--space-l);
-  padding: var(--space-l) 0;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-
-.calculator-toggle-group::-webkit-scrollbar {
-  display: none;
-}
-
-.calculator-toggle-group .form-toggle {
-  flex-shrink: 0;
-}
-
-.calculator-toggle-group .form-toggle label {
-  white-space: nowrap;
-  font-size: var(--font-s);
-  font-weight: var(--font-weight-semi-bold);
+  padding: 0 var(--space-m);
 }
 
 /* -- Currency toggle row -- */
@@ -57,7 +13,6 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-m);
-  padding: var(--space-m);
 }
 
 .calculator-currency-label {
@@ -70,7 +25,7 @@
   color: var(--text-primary);
 }
 
-/* -- Saved configs list (inside header-dropdown) -- */
+/* -- Saved configs list -- */
 .calculator-saves-list {
   display: flex;
   flex-direction: column;
@@ -131,14 +86,6 @@
   gap: var(--space-s);
 }
 
-.calculator-grid-divider {
-  grid-column: 1 / -1;
-  height: 0;
-  border: none;
-  border-top: var(--border-s) solid var(--border-faded);
-  margin: 0;
-}
-
 /* -- Results row -- */
 .calculator-results {
   display: grid;
@@ -170,7 +117,7 @@
   font-size: var(--font-s);
 }
 
-/* -- Table overrides (base styles in design-system.css) -- */
+/* -- Table overrides -- */
 .calculator-table {
   width: 100%;
   table-layout: auto;
@@ -219,8 +166,8 @@
 
 /* -- Mobile responsive -- */
 @media (max-width: 768px) {
-  .calculator-sticky-bar-inner {
-    padding: 0 0 0 var(--space-l);
+  .sticky-bar-inner {
+    padding: 0 var(--space-l);
   }
 
   .calculator-grid {

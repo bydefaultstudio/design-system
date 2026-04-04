@@ -63,9 +63,9 @@
       </div>
 
       <!-- Sticky Toggle Bar -->
-      <div class="calculator-sticky-bar">
-        <div class="calculator-sticky-bar-inner">
-          <div class="calculator-toggle-group">
+      <div class="sticky-bar">
+        <div class="sticky-bar-inner">
+          <div class="block row gap-m" style="overflow-x: auto; flex-shrink: 0;">
             <div class="form-toggle">
               <input type="checkbox" id="opt-af">
               <label for="opt-af">Creative Fee</label>
@@ -81,48 +81,52 @@
           </div>
 
           <!-- Dropdown actions -->
-          <div class="header-dropdown" id="calculator-dropdown">
-            <div class="header-link" role="button" tabindex="0" aria-label="Calculator settings" aria-expanded="false">
+          <div class="dropdown" id="calculator-dropdown">
+            <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false">
               <div class="icn-svg" data-icon="settings">
                 <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M11 15H22V17H11V19H5V17H2V15H5V13H11V15ZM7 17H9V15H7V17Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M19 7H22V9H19V11H13V9H2V7H13V5H19V7ZM15 9H17V7H15V9Z" fill="currentColor"/></svg>
               </div>
-            </div>
-            <div class="header-dropdown-menu">
-              <div class="header-dropdown-label">Currency</div>
-              <div class="calculator-currency-row">
-                <span class="calculator-currency-label" id="currency-label-gbp">GBP (£)</span>
+            </button>
+            <div class="dropdown-menu is-right" role="menu">
+              <div class="dropdown-item" style="cursor: default;">
+                <label class="text-size-small">Currency</label>
+              </div>
+              <div class="dropdown-item calculator-currency-row" style="cursor: default;">
+                <span class="calculator-currency-label" id="currency-label-gbp">GBP (&pound;)</span>
                 <div class="form-toggle">
                   <input type="checkbox" id="currency-toggle" aria-label="Toggle currency between GBP and USD">
                 </div>
                 <span class="calculator-currency-label" id="currency-label-usd">USD ($)</span>
               </div>
-              <div class="header-dropdown-divider"></div>
-              <div class="header-link" role="button" tabindex="0" id="btn-save">
+              <div class="dropdown-divider" role="separator"></div>
+              <button class="dropdown-item" role="menuitem" type="button" id="btn-save">
                 <div class="icn-svg" data-icon="bookmark">
                   <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M19 3V21L12 17L5 21V3H19ZM7 15.83C7 16.6 7.83 17.08 8.5 16.7L12 14.7L15.5 16.7C16.17 17.08 17 16.6 17 15.83V5H7V15.83Z" fill="currentColor"/></svg>
                 </div>
                 <span>Save</span>
-              </div>
-              <div class="header-link" role="button" tabindex="0" id="btn-copy-url">
+              </button>
+              <button class="dropdown-item" role="menuitem" type="button" id="btn-copy-url">
                 <div class="icn-svg" data-icon="link">
                   <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M14.83 16.24L8.46 22.61L1.39 15.54L7.76 9.17L9.17 10.59L5.64 14.12C4.85 14.9 4.85 16.17 5.64 16.95L7.05 18.36C7.83 19.14 9.1 19.14 9.88 18.36L13.41 14.83L14.83 16.24ZM9.17 16.24L7.76 14.83L14.83 7.76L16.24 9.17L9.17 16.24ZM16.24 14.83L14.83 13.41L18.36 9.88C19.14 9.1 19.14 7.83 18.36 7.05L16.95 5.64C16.17 4.85 14.9 4.85 14.12 5.64L10.59 9.17L9.17 7.76L15.54 1.39L22.61 8.46L16.24 14.83Z" fill="currentColor"/></svg>
                 </div>
                 <span>Copy URL</span>
-              </div>
+              </button>
               <div id="saves-section" style="display:none">
-                <div class="header-dropdown-divider"></div>
-                <div class="header-dropdown-label">Saved</div>
+                <div class="dropdown-divider" role="separator"></div>
+                <div class="dropdown-item" style="cursor: default;">
+                  <label class="text-size-small">Saved</label>
+                </div>
                 <div class="calculator-saves-list" id="saves-list">
                   <!-- Saved configs rendered by JS -->
                 </div>
               </div>
-              <div class="header-dropdown-divider"></div>
-              <div class="header-link" role="button" tabindex="0" id="btn-reset">
+              <div class="dropdown-divider" role="separator"></div>
+              <button class="dropdown-item dropdown-item--danger" role="menuitem" type="button" id="btn-reset">
                 <div class="icn-svg" data-icon="reset">
                   <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M12 20C9.76667 20 7.875 19.225 6.325 17.675C4.775 16.125 4 14.2333 4 12C4 9.76667 4.775 7.875 6.325 6.325C7.875 4.775 9.76667 4 12 4C13.15 4 14.25 4.2375 15.3 4.7125C16.1007 5.07473 16.8142 5.55568 17.4404 6.15537C17.6421 6.34848 18 6.21237 18 5.93315V4H20V11H13V9H15.4768C16.2446 9 16.7011 8.17477 16.1456 7.6447C15.8078 7.32236 15.4301 7.0408 15.0125 6.8C14.0875 6.26667 13.0833 6 12 6C10.3333 6 8.91667 6.58333 7.75 7.75C6.58333 8.91667 6 10.3333 6 12C6 13.6667 6.58333 15.0833 7.75 16.25C8.91667 17.4167 10.3333 18 12 18C13.2833 18 14.4417 17.6333 15.475 16.9C16.5083 16.1667 17.2333 15.2 17.65 14H19.75C19.2833 15.7667 18.3333 17.2083 16.9 18.325C15.4667 19.4417 13.8333 20 12 20Z" fill="currentColor"/></svg>
                 </div>
                 <span>Reset</span>
-              </div>
+              </button>
             </div>
           </div>
         </div>
@@ -159,7 +163,7 @@
                 </div>
 
                 <!-- Partner fields -->
-                <hr class="calculator-grid-divider" data-opt="pf">
+                <hr class="divider" data-opt="pf">
 
                 <div class="calculator-grid-field grid-full" data-opt="pf">
                   <label for="partner-name"><strong>Partner Name</strong></label>
@@ -280,6 +284,7 @@
   </div>
 
   <script src="../assets/js/calculator.js"></script>
+  <script src="../assets/js/dropdown.js"></script>
 
   <!-- Back to Top -->
   <div class="back-to-top-wrapper">
