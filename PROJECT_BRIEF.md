@@ -94,3 +94,46 @@ None known at this time
 ## 9. Open Questions
 
 - Final brand tokens (fonts, colors) to be confirmed during build
+
+---
+
+## 10. Component Roadmap
+
+### Completed
+
+- Foundation token system (colours, spacing, typography, radius)
+- Dark mode system (`data-theme` + `prefers-color-scheme` fallback)
+- Layout primitives (grid, blocks, sections, containers)
+- Border utilities (composable architecture)
+- Button component (`.button` with modifiers)
+- Form elements (inputs, select, textarea, checkbox, radio, toggle, segmented control)
+- Callout component (`.callout` with status variants)
+- Disclosure component (native `details`/`summary`)
+- Badge component (`.badge` with status variants)
+- Card component (`.card` with flush and interactive variants)
+- Breadcrumb component (`.breadcrumb`)
+- Tabs component (`.tabs` / `.tab` with JS)
+- Progress bar component (`.progress-bar` with status variants)
+- Tooltip component (`data-tooltip` CSS-only)
+- Toast component (`.toast` with JS)
+- Code / Pre / Kbd styling
+- Mark / Abbr / Figure styling
+- Scrollbar styling
+- Text selection styling
+
+### Next Priorities
+
+- Modal / Dialog component (native `<dialog>` element with JS open/close)
+- Dropdown menu component
+- Navigation components (top nav, sidebar nav — currently docs-specific in style.css)
+- Data table enhancements (sortable, selectable rows)
+- Skeleton loading state
+- Avatar / initials component
+- Layout templates (documented full-page layouts using the grid and block system)
+
+### Long-term Architectural Goals
+
+- Migrate docs generator to support component status tracking
+- Add a component playground page (live editable demos)
+- Token export pipeline (generate tokens as JSON for use in other tools / native apps)
+- Consider shadcn/ui migration path when React projects begin — document token mapping

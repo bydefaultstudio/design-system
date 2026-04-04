@@ -14,11 +14,15 @@ client: "internal"
 Buttons are interactive elements used to trigger actions.  
 They size to their content by default and should communicate **clear intent and hierarchy**.
 
+**Important:** The `.button` class is required for styled buttons. The bare `<button>` element has only a minimal reset (no background, border, or padding) — it does not inherit button component styling. Always add `class="button"` to get the full button appearance.
+
+**Naming note:** Button modifiers use the legacy `.is-*` pattern (`.is-outline`, `.is-faded`, etc.). New components in the design system use the `.component--modifier` pattern. The `.is-*` modifiers on buttons are kept for backward compatibility.
+
 ---
 
 ## Base Button
 
-`.button` (or the `button` element) is the default and most commonly used button.
+`.button` is the default and most commonly used button.
 
 Use this when you want to highlight a **primary action**.
 

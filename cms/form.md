@@ -341,6 +341,50 @@ Use `<fieldset>` and `<legend>` to group related form controls:
 
 ---
 
+## Segmented Control
+
+`.segmented-control` is a button group that acts like a single-select input — similar to a group of radio buttons but with a tab-like appearance.
+
+<div class="demo-preview is-joined">
+  <div class="segmented-control">
+    <button class="segmented-control-btn is-active">Option A</button>
+    <button class="segmented-control-btn">Option B</button>
+    <button class="segmented-control-btn">Option C</button>
+  </div>
+</div>
+
+```html
+<div class="segmented-control">
+  <button class="segmented-control-btn is-active">Option A</button>
+  <button class="segmented-control-btn">Option B</button>
+  <button class="segmented-control-btn">Option C</button>
+</div>
+```
+
+### Icon variant
+
+Use `.is-icon` on a segment button for icon-only options:
+
+```html
+<button class="segmented-control-btn is-icon" aria-label="Grid view">
+  <div class="icn-svg" data-icon="grid"><!-- SVG --></div>
+</button>
+```
+
+### Styling
+
+- **Track:** `var(--background-faded)` with `var(--radius-m)` corners
+- **Active segment:** `var(--text-primary)` background with `var(--background-primary)` text
+- **Focus:** 2px outline with offset
+
+### Accessibility
+
+- Add `role="group"` and `aria-label` to the container
+- Use `aria-pressed="true"` on the active segment button
+- Toggle `is-active` and `aria-pressed` via JavaScript on click
+
+---
+
 ## Rules
 
 | Do | Don't |

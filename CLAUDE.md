@@ -26,9 +26,10 @@ Before generating or modifying code, treat the following files as authoritative:
 8. `cms/border.md` — border strategy and composable classes
 9. `cms/button.md` — button component usage
 10. `cms/disclosure.md` — details/summary disclosure component
-11. `cms/seo-best-practices.md` — SEO meta tags and social sharing
-12. `cms/folder-structure.md` — file organization rules
-13. `cms/setup.md` — project setup and customization
+11. `cms/components.md` — master component spec (naming, tokens, accessibility, build rules)
+12. `cms/seo-best-practices.md` — SEO meta tags and social sharing
+13. `cms/folder-structure.md` — file organization rules
+14. `cms/setup.md` — project setup and customization
 
 If any instruction conflicts with these documents, **the documents take precedence**.
 
@@ -123,7 +124,31 @@ See `cms/iconography.md` for complete icon guidelines.
 - Use the SVG Cleaner (`assets/js/svg-clean.js`) to prepare icons
 
 ### Components
-See `cms/button.md` for button usage and modifiers.
+See `cms/components.md` for the master component spec.
+
+**Naming convention:**
+- New components: `.component-name` base, `.component-name--modifier` for variants
+- Legacy (button only): `.is-outline`, `.is-faded`, `.is-small` etc. — kept for compatibility
+- State classes: `.is-active`, `.is-open`, `.is-disabled`, `.is-hidden` — shared across components
+
+**The bare `<button>` element is a minimal reset only** — no background, border, or padding. Always add `class="button"` for styled buttons.
+
+**Border radius scale:** `--radius-xs` (4px), `--radius-s` (6px), `--radius-m` (10px), `--radius-l` (16px), `--radius-xl` (24px), `--radius-pill` (999px)
+
+**Available components:**
+- Button (`.button`) — `cms/button.md`
+- Form elements — `cms/form.md`
+- Callout (`.callout`) — `cms/callout.md`
+- Disclosure (`details`/`summary`) — `cms/disclosure.md`
+- Badge (`.badge`) — `cms/badge.md`
+- Card (`.card`) — `cms/card.md`
+- Breadcrumb (`.breadcrumb`) — `cms/breadcrumb.md`
+- Tabs (`.tabs`) — `cms/tabs.md` — requires `assets/js/tabs.js`
+- Progress (`.progress-bar`) — `cms/progress.md`
+- Tooltip (`data-tooltip`) — `cms/tooltip.md`
+- Toast (`.toast`) — `cms/toast.md` — requires `assets/js/toast.js`
+- Code / Pre / Kbd — `cms/code.md`
+- Mark / Abbr / Figure — `cms/mark.md`
 
 ---
 
