@@ -1545,6 +1545,75 @@ h2[id] {
 }
 
 
+/* ------ DOCS UTILITIES ------ */
+/* Docs-specific display classes — not part of the design system */
+
+/* -- Token labels -- */
+.token-tag {
+  display: inline-block;
+  font-size: var(--font-2xs);
+  font-family: var(--font-tertiary);
+  color: var(--text-plain);
+  background-color: var(--background-faded);
+  padding: var(--2xs) var(--s);
+  align-self: flex-start;
+  margin-bottom: var(--space-m);
+}
+
+.token-block {
+  padding: var(--space-s) 0;
+}
+
+/* -- Demo specific styles -- */
+.type-demo > h1,
+.type-demo > h2,
+.type-demo > h3,
+.type-demo > h4,
+.type-demo > h5,
+.type-demo > h6 {
+  margin-top: var(--space-none);
+  margin-bottom: var(--space-xl);
+}
+
+.type-demo > details {
+  margin-bottom: var(--space-2xl);
+}
+
+.type-demo > details .token-tag {
+  margin-bottom: var(--space-none);
+  padding: var(--space-none) var(--space-2xs);
+}
+
+.button-demo > .button {
+  margin-top: var(--space-none);
+  margin-bottom: var(--space-l);
+}
+
+.button-demo > .token-tag {
+  margin-top: var(--space-none);
+  margin-bottom: var(--space-none);
+}
+
+/* -- Demo state classes -- */
+.demo-hover.button {
+  transform: scale(1.05);
+}
+
+.demo-active.button {
+  transform: scale3d(1.0, 1.0, 1.0);
+}
+
+/* -- Copy button -- */
+.copy-btn {
+  margin-top: var(--space-s);
+}
+
+.copy-btn.is-copied {
+  color: var(--status-success);
+  border-color: var(--status-success);
+}
+
+
 /* ------ 6. CODE BLOCKS ------ */
 
 .code-block-wrapper {

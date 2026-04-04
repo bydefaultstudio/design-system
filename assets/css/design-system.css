@@ -207,6 +207,40 @@
   --selection-text: var(--background-primary);
   --selection-background: var(--text-primary);
 
+  /* -- Badge tokens -- */
+  --badge-font-size: var(--font-2xs);
+  --badge-padding-y: var(--space-2xs);
+  --badge-padding-x: var(--space-s);
+  --badge-radius: var(--radius-pill);
+
+  /* -- Card tokens -- */
+  --card-background: var(--background-primary);
+  --card-border: var(--border-faded);
+  --card-radius: var(--radius-m);
+  --card-padding: var(--space-xl);
+
+  /* -- Tooltip tokens -- */
+  --tooltip-background: var(--warm-black);
+  --tooltip-text: var(--off-white);
+  --tooltip-radius: var(--radius-s);
+  --tooltip-font-size: var(--font-xs);
+
+  /* -- Toast tokens -- */
+  --toast-background: var(--warm-black);
+  --toast-text: var(--off-white);
+  --toast-radius: var(--radius-m);
+
+  /* -- Tab tokens -- */
+  --tab-active-color: var(--text-primary);
+  --tab-inactive-color: var(--text-faded);
+  --tab-indicator-color: var(--text-primary);
+
+  /* -- Progress tokens -- */
+  --progress-track: var(--background-darker);
+  --progress-fill: var(--text-primary);
+  --progress-radius: var(--radius-pill);
+  --progress-height: var(--space-s);
+
 }
 
 /* ------ 2b. THEME TOKENS - DARK MODE ------ */
@@ -278,6 +312,16 @@
   --toggle-selected: #e8e6e3;
   --toggle-knob-selected: #1a1a1a;
 
+  /* -- Card -- */
+  --card-background: var(--background-secondary);
+  --card-border: var(--border-faded);
+
+  /* -- Tooltip / Toast -- */
+  --tooltip-background: var(--neutral-100);
+  --tooltip-text: var(--warm-black);
+  --toast-background: var(--neutral-100);
+  --toast-text: var(--warm-black);
+
   color-scheme: dark;
 }
 
@@ -342,6 +386,16 @@
     --toggle-knob: #888;
     --toggle-selected: #e8e6e3;
     --toggle-knob-selected: #1a1a1a;
+
+    /* -- Card -- */
+    --card-background: var(--background-secondary);
+    --card-border: var(--border-faded);
+
+    /* -- Tooltip / Toast -- */
+    --tooltip-background: var(--neutral-100);
+    --tooltip-text: var(--warm-black);
+    --toast-background: var(--neutral-100);
+    --toast-text: var(--warm-black);
 
     color-scheme: dark;
   }
@@ -437,8 +491,11 @@
   --border-color: var(--border-primary);
 
   /* -- Border radius tokens -- */
-  --radius-xs: 6px;
-  --radius-s: 10px;
+  --radius-xs: 4px;
+  --radius-s: 6px;
+  --radius-m: 10px;
+  --radius-l: 16px;
+  --radius-xl: 24px;
   --radius-pill: 999px;
 }
 
@@ -799,22 +856,6 @@ section {
   text-wrap: pretty;
 }
 
-/* -- Token labels -- */
-.token-tag {
-  display: inline-block;
-  font-size: var(--font-2xs);
-  font-family: var(--font-tertiary);
-  color: var(--text-plain);
-  background-color: var(--background-faded);
-  padding: var(--2xs) var(--s);
-  align-self: flex-start;
-  margin-bottom: var(--space-m);
-}
-
-.token-block {
-  padding: var(--space-s) 0;
-}
-
 /* -- Eyebrow text -- */
 .eyebrow {
   font-family: var(--font-primary);
@@ -825,10 +866,23 @@ section {
   text-transform: uppercase;
 }
 
-/* -- Button -- */
-
-.button,
+/* -- Button reset (bare element) -- */
 button {
+  font-family: var(--font-primary);
+  font-size: inherit;
+  line-height: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-s);
+}
+
+/* -- Button component -- */
+.button {
   font-family: var(--font-primary);
   font-size: var(--button-font-size);
   line-height: var(--line-height-m);
@@ -839,33 +893,23 @@ button {
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  display: inline-block;
   align-self: flex-start;
   padding: var(--space-l) var(--space-2xl);
   background-color: var(--button-primary);
   color: var(--button-text);
   border: var(--border-s) solid var(--button-primary);
   cursor: pointer;
-  transform: scale3d(1none, 1none, 1none);
-  transform-style: preserve-3d;
   transition: all .15s ease-in-out;
   display: flex;
   gap: var(--space-s);
 }
 
 .button:hover,
-.is-outline.is-faded:hover,
-.demo-hover.button {
+.is-outline.is-faded:hover {
   transform: scale(1.05);
-  /* background-color: var(--button-text);
-  color: var(--button-primary);
-  border: var(--border-s) solid var(--button-primary);
-  text-decoration: none; */
-
 }
 
-.button:active,
-.demo-active.button {
+.button:active {
   transform: scale3d(1.0, 1.0, 1.0);
 }
 
@@ -937,37 +981,6 @@ button {
   align-items: center;
   display: flex;
 }
-
-/* -- Demo specific styles -- */
-.type-demo > h1,
-.type-demo > h2,
-.type-demo > h3,
-.type-demo > h4,
-.type-demo > h5,
-.type-demo > h6 {
-  margin-top: var(--space-none);
-  margin-bottom: var(--space-xl);
-}
-
-.type-demo > details {
-  margin-bottom: var(--space-2xl);
-}
-
-.type-demo > details .token-tag {
-  margin-bottom: var(--space-none);
-  padding: var(--space-none) var(--space-2xs);
-}
-
-.button-demo > button {
-  margin-top: var(--space-none);
-  margin-bottom: var(--space-l);
-}
-
-.button-demo > .token-tag {
-  margin-top: var(--space-none);
-  margin-bottom: var(--space-none);
-}
-
 
 /* ------ 10. BACKGROUND UTILITIES ------ */
 
@@ -1481,78 +1494,448 @@ details .disclosure-content {
   margin: 0;
 }
 
-/* -- Copy button -- */
-.copy-btn {
-  margin-top: var(--space-s);
+
+/* ------ 16. BADGE ------ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-tertiary);
+  font-size: var(--badge-font-size);
+  font-weight: var(--font-weight-semi-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-l);
+  padding: var(--badge-padding-y) var(--badge-padding-x);
+  border-radius: var(--badge-radius);
+  background: var(--background-darker);
+  color: var(--text-primary);
+  white-space: nowrap;
+  line-height: var(--line-height-m);
 }
 
-.copy-btn.is-copied {
+.badge--success {
+  background: color-mix(in srgb, var(--status-success), transparent 85%);
   color: var(--status-success);
-  border-color: var(--status-success);
+}
+
+.badge--warning {
+  background: color-mix(in srgb, var(--status-warning), transparent 85%);
+  color: var(--status-warning);
+}
+
+.badge--danger {
+  background: color-mix(in srgb, var(--status-danger), transparent 85%);
+  color: var(--status-danger);
+}
+
+.badge--info {
+  background: color-mix(in srgb, var(--status-info), transparent 85%);
+  color: var(--status-info);
+}
+
+.badge--accent {
+  background: color-mix(in srgb, var(--status-accent), transparent 85%);
+  color: var(--status-accent);
 }
 
 
+/* ------ 17. CARD ------ */
 
-/* ------ 15. FUTURE COMPONENTS ------ */
+.card {
+  background: var(--card-background);
+  border: var(--border-s) solid var(--card-border);
+  border-radius: var(--card-radius);
+  padding: var(--card-padding);
+}
 
+.card--flush {
+  padding: 0;
+}
+
+.card--interactive {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.15s ease-in-out;
+}
+
+.card--interactive:hover {
+  box-shadow: 0 4px 12px var(--black-alpha-10);
+}
+
+.card--interactive:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus), transparent 75%);
+}
+
+
+/* ------ 18. BREADCRUMB ------ */
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  font-size: var(--font-xs);
+  color: var(--text-faded);
+}
+
+.breadcrumb a {
+  color: var(--text-faded);
+  text-decoration: none;
+  transition: color 0.15s ease-in-out;
+}
+
+.breadcrumb a:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+.breadcrumb [aria-current="page"] {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.breadcrumb-separator {
+  color: var(--text-faded);
+  user-select: none;
+}
+
+
+/* ------ 19. TABS ------ */
+
+.tabs {
+  display: flex;
+  border-bottom: var(--border-s) solid var(--border-faded);
+  gap: var(--space-none);
+}
+
+.tab {
+  position: relative;
+  background: none;
+  border: none;
+  padding: var(--space-m) var(--space-l);
+  color: var(--tab-inactive-color);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-s);
+  cursor: pointer;
+  transition: color 0.15s ease-in-out;
+}
+
+.tab:hover {
+  color: var(--text-secondary);
+}
+
+.tab.is-active {
+  color: var(--tab-active-color);
+}
+
+.tab.is-active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--tab-indicator-color);
+}
+
+.tab:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus), transparent 75%);
+}
+
+.tab-panel.is-hidden {
+  display: none;
+}
+
+
+/* ------ 20. PROGRESS ------ */
+
+progress.progress-bar {
+  width: 100%;
+  height: var(--progress-height);
+  border-radius: var(--progress-radius);
+  border: none;
+  overflow: hidden;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+progress.progress-bar::-webkit-progress-bar {
+  background: var(--progress-track);
+  border-radius: var(--progress-radius);
+}
+
+progress.progress-bar::-webkit-progress-value {
+  background: var(--progress-fill);
+  border-radius: var(--progress-radius);
+  transition: width 0.3s ease-in-out;
+}
+
+progress.progress-bar::-moz-progress-bar {
+  background: var(--progress-fill);
+  border-radius: var(--progress-radius);
+}
+
+/* -- Progress status variants -- */
+progress.progress-bar--success::-webkit-progress-value { background: var(--status-success); }
+progress.progress-bar--success::-moz-progress-bar { background: var(--status-success); }
+
+progress.progress-bar--warning::-webkit-progress-value { background: var(--status-warning); }
+progress.progress-bar--warning::-moz-progress-bar { background: var(--status-warning); }
+
+progress.progress-bar--danger::-webkit-progress-value { background: var(--status-danger); }
+progress.progress-bar--danger::-moz-progress-bar { background: var(--status-danger); }
+
+
+/* ------ 21. TOOLTIP ------ */
+
+[data-tooltip] {
+  position: relative;
+  cursor: help;
+}
+
+[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + var(--space-xs));
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--tooltip-background);
+  color: var(--tooltip-text);
+  font-size: var(--tooltip-font-size);
+  border-radius: var(--tooltip-radius);
+  padding: var(--space-xs) var(--space-s);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+  z-index: 800;
+}
+
+[data-tooltip]:hover::before,
+[data-tooltip]:focus-visible::before {
+  opacity: 1;
+}
+
+/* -- Tooltip positions -- */
+[data-tooltip-position="bottom"]::before {
+  bottom: auto;
+  top: calc(100% + var(--space-xs));
+}
+
+[data-tooltip-position="left"]::before {
+  bottom: auto;
+  top: 50%;
+  left: auto;
+  right: calc(100% + var(--space-xs));
+  transform: translateY(-50%);
+}
+
+[data-tooltip-position="right"]::before {
+  bottom: auto;
+  top: 50%;
+  left: calc(100% + var(--space-xs));
+  transform: translateY(-50%);
+}
+
+/* -- Interactive elements override cursor -- */
+button[data-tooltip],
+a[data-tooltip],
+.button[data-tooltip] {
+  cursor: pointer;
+}
+
+
+/* ------ 22. TOAST ------ */
+
+.toast-container {
+  position: fixed;
+  bottom: var(--space-xl);
+  right: var(--space-xl);
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: all;
+  background: var(--toast-background);
+  color: var(--toast-text);
+  border-radius: var(--toast-radius);
+  padding: var(--space-m) var(--space-l);
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  max-width: 360px;
+  font-size: var(--font-s);
+  transition: opacity 0.3s ease-in-out;
+}
+
+.toast--success { border-left: var(--border-l) solid var(--status-success); }
+.toast--warning { border-left: var(--border-l) solid var(--status-warning); }
+.toast--danger { border-left: var(--border-l) solid var(--status-danger); }
+.toast--info { border-left: var(--border-l) solid var(--status-info); }
+
+.toast-message {
+  flex: 1;
+}
+
+.toast-close {
+  color: var(--toast-text);
+  font-size: var(--font-l);
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.toast-close:hover {
+  opacity: 1;
+}
+
+
+/* ------ 23. CODE ------ */
+
+/* -- Inline code -- */
+code {
+  font-family: var(--font-tertiary);
+  font-size: 0.9em;
+  background: var(--background-darker);
+  padding: var(--space-2xs) var(--space-xs);
+  border-radius: var(--radius-xs);
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+/* -- Code block -- */
+pre {
+  background: var(--background-secondary);
+  border: var(--border-s) solid var(--border-faded);
+  padding: var(--space-l);
+  overflow-x: auto;
+  font-family: var(--font-tertiary);
+  font-size: var(--font-xs);
+  line-height: var(--line-height-xl);
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+  word-break: normal;
+}
+
+/* -- Keyboard shortcut -- */
+kbd {
+  font-family: var(--font-tertiary);
+  font-size: var(--font-2xs);
+  background: var(--background-secondary);
+  border: var(--border-s) solid var(--border-secondary);
+  border-radius: var(--radius-xs);
+  padding: var(--space-2xs) var(--space-xs);
+  box-shadow: 0 1px 0 var(--border-secondary);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* -- Highlighted text -- */
+mark {
+  background: var(--yellow-light);
+  color: var(--warm-black);
+  padding: 0 var(--space-2xs);
+  border-radius: var(--radius-xs);
+}
+
+[data-theme="dark"] mark {
+  background: color-mix(in srgb, var(--yellow), transparent 60%);
+  color: var(--off-white);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) mark {
+    background: color-mix(in srgb, var(--yellow), transparent 60%);
+    color: var(--off-white);
+  }
+}
+
+/* -- Figure / Figcaption -- */
+figure {
+  margin: var(--space-xl) 0;
+  padding: 0;
+}
+
+figcaption {
+  font-size: var(--font-xs);
+  color: var(--text-faded);
+  margin-top: var(--space-s);
+  line-height: var(--line-height-xl);
+  font-style: italic;
+}
+
+/* -- Abbreviation -- */
+abbr[title] {
+  text-decoration: underline dotted var(--text-faded);
+  text-underline-offset: 2px;
+  cursor: help;
+}
+
+
+/* ------ 24. SCROLLBAR ------ */
+
+/* -- Custom scrollbar (webkit) -- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neutral-300);
+  border-radius: var(--radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neutral-400);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--neutral-700);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--neutral-600);
+}
+
+
+/* ------ 15. COMPONENTS IN PROGRESS ------ */
 /*
- * The following elements are candidates for future design system styling.
- * They are currently unstyled globally (some exist in markdown.css only).
- * When implementing, add semantic tokens to :root and follow the
- * composable pattern used by borders, buttons, and callouts.
+ * The following components are actively being built.
+ * Remove each item from this list as it is implemented above.
+ * See cms/components.md for the full component spec and build rules.
  *
- * -- Inline code & code blocks --
- * - code (inline)
- * - pre (code blocks)
- * - Syntax highlighting tokens
+ * REMAINING:
+ * (all components implemented)
  *
- * -- Keyboard shortcuts --
- * - kbd element
- *
- * -- Highlighted text --
- * - mark element
- *
- * -- Disclosure -- IMPLEMENTED (see section 13a below)
- *
- * -- Media captions --
- * - figure / figcaption elements
- *
- * -- Badges & pills --
- * - Status labels, version tags, category indicators
- * - Composable: .badge + .badge-info, .badge-success, etc.
- * - Should reuse --status-* tokens
- *
- * -- Text selection --
- * - ::selection pseudo-element
- * - Brand-aligned highlight color
- *
- * -- Scrollbar styling --
- * - Custom scrollbar for overflow containers
- * - Subtle, consistent with design system colors
- *
- * -- Abbreviations --
- * - abbr element
- * - Dotted underline with tooltip-style title
- *
- * -- Breadcrumbs --
- * - Navigation trail component
- * - .breadcrumb + .breadcrumb-item pattern
- *
- * -- Tabs (CSS-only) --
- * - Tab navigation pattern using radio inputs
- * - .tabs + .tab-item pattern
- *
- * -- Progress indicators (CSS-only) --
- * - progress element styling
- * - .progress-bar component
- * - Should reuse --status-* tokens
- *
- * -- Tooltips (CSS-only) --
- * - data-tooltip attribute pattern
- * - Pure CSS with ::before/::after
- *
- * -- Toast / notification --
- * - Notification bar component
- * - Should reuse callout/status tokens
+ * IMPLEMENTED IN THIS FILE:
+ * - [x] Button (.button)
+ * - [x] Form elements (inputs, select, textarea, checkbox, radio, toggle, segmented control)
+ * - [x] Callout (.callout)
+ * - [x] Disclosure (details/summary)
+ * - [x] Badge (.badge) — Stage 2
+ * - [x] Card (.card) — Stage 2
+ * - [x] Tabs (.tabs) — Stage 2
+ * - [x] Progress (.progress-bar) — Stage 2
+ * - [x] Tooltip (data-tooltip) — Stage 2
+ * - [x] Toast (.toast) — Stage 2
+ * - [x] Breadcrumb (.breadcrumb) — Stage 2
+ * - [x] code / pre — Stage 2
  */
 
