@@ -3,8 +3,8 @@ title: "Dialog"
 subtitle: "Modal dialogs using native dialog element"
 description: "How to use the dialog component for modal windows, confirmations, and form overlays."
 section: "Design System"
-subsection: ""
-order: 27
+subsection: "Content"
+order: 4
 slug: "dialog"
 status: "published"
 access: "team"
@@ -20,9 +20,6 @@ Dialogs are modal windows built on the native `<dialog>` element. They trap focu
 | Token | Default (Light) | Default (Dark) | Purpose |
 |-------|-----------------|----------------|---------|
 | `--dialog-background` | `var(--background-primary)` | `var(--background-secondary)` | Dialog surface |
-| `--dialog-border` | `var(--border-faded)` | — | Border colour |
-| `--dialog-radius` | `var(--radius-l)` | — | Corner radius |
-| `--dialog-padding` | `var(--space-2xl)` | — | Internal padding |
 | `--dialog-max-width` | `560px` | — | Maximum width |
 | `--dialog-shadow` | `0 8px 32px var(--black-alpha-20)` | `0 8px 40px var(--black-alpha-60)` | Drop shadow |
 | `--dialog-backdrop` | `rgba(0, 0, 0, 0.6)` | — | Backdrop overlay |

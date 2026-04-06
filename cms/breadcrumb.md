@@ -3,8 +3,8 @@ title: "Breadcrumb"
 subtitle: "Navigation trail component"
 description: "How to use the breadcrumb component for showing navigation hierarchy."
 section: "Design System"
-subsection: ""
-order: 16
+subsection: "Content"
+order: 1
 slug: "breadcrumb"
 status: "published"
 access: "team"

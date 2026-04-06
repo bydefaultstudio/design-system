@@ -1,196 +1,322 @@
 ---
 title: "Spacing"
-subtitle: "Spacing tokens and units"
-description: "Complete reference for spacing tokens including units, space tokens, section spacing, and border tokens."
+subtitle: "Spacing tokens and utilities"
+description: "Complete reference for spacing tokens including units, space tokens, section spacing, gaps, and padding utilities."
 section: "Design System"
 subsection: ""
-order: 4
+order: 5
 slug: "spacing"
 status: "published"
 access: "team"
 client: "internal"
 ---
 
-Spacing tokens define **distance**, not intent. They are reused for gaps, padding, and margins depending on context.
+Spacing tokens define **distance**, not intent. They are reused for gaps, padding, and margins depending on context. For the full list of spacing token values, see the [Tokens](tokens.html) page.
 
-## Unit Tokens
+The system is built in layers: **unit tokens** (raw values) → **space tokens** (semantic aliases) → **utility classes** (applied in HTML). Always use space tokens or utility classes — never hardcode pixel values.
 
-Units act as the basic measure for spacing, typography, and layout tokens.
+---
 
-They represent neutral values and best used in **semantic tokens and utility classes**, rather than applied directly in layouts or components. Using units in this way ensures spacing and sizing stay consistent, predictable, and easy to update across the system without creating individual values.
+## Space Scale
 
-| Unit | px | rem |
+The space scale provides a visual reference for the spacing tokens used throughout the system.
+
+| Token | Value | px Equivalent |
 | --- | --- | --- |
-| `none` | 0 | 0 |
-| `2xs` | 2 | 0.125 |
-| `xs` | 4 | 0.25 |
-| `s` | 8 | 0.5 |
-| `m` | 12 | 0.75 |
-| `l` | 16 | 1 |
-| `xl` | 24 | 1.5 |
-| `2xl` | 32 | 2 |
-| `3xl` | 40 | 2.5 |
-| `4xl` | 48 | 3 |
-| `5xl` | 56 | 3.5 |
-| `6xl` | 64 | 4 |
-| `7xl` | 72 | 4.5 |
-| `8xl` | 80 | 5 |
-| `9xl` | 88 | 5.5 |
-| `10xl` | 96 | 6 |
-| `11xl` | 104 | 6.5 |
-| `12xl` | 112 | 7 |
-| `13xl` | 120 | 7.5 |
-| `14xl` | 160 | 10 |
+| `--space-none` | 0 | 0px |
+| `--space-2xs` | 0.125rem | 2px |
+| `--space-xs` | 0.25rem | 4px |
+| `--space-s` | 0.5rem | 8px |
+| `--space-m` | 0.75rem | 12px |
+| `--space-l` | 1rem | 16px |
+| `--space-xl` | 1.5rem | 24px |
+| `--space-2xl` | 2rem | 32px |
+| `--space-3xl` | 2.5rem | 40px |
+| `--space-4xl` | 3rem | 48px |
+| `--space-5xl` | 3.5rem | 56px |
+| `--space-6xl` | 4rem | 64px |
+| `--space-7xl` | 4.5rem | 72px |
+| `--space-8xl` | 5rem | 80px |
+| `--space-9xl` | 5.5rem | 88px |
+| `--space-10xl` | 6rem | 96px |
 
 <div class="demo-preview is-joined">
-  <div style="display: flex; align-items: center; gap: var(--space-m); margin-bottom: var(--space-xs);">
-    <span style="font-size: var(--font-xs); width: 3rem; text-align: right; color: var(--text-faded);">2xs</span>
-    <div style="height: var(--2xs); width: var(--2xs); background: var(--text-primary);"></div>
-  </div>
-  <div style="display: flex; align-items: center; gap: var(--space-m); margin-bottom: var(--space-xs);">
-    <span style="font-size: var(--font-xs); width: 3rem; text-align: right; color: var(--text-faded);">xs</span>
-    <div style="height: var(--xs); width: var(--xs); background: var(--text-primary);"></div>
-  </div>
-  <div style="display: flex; align-items: center; gap: var(--space-m); margin-bottom: var(--space-xs);">
-    <span style="font-size: var(--font-xs); width: 3rem; text-align: right; color: var(--text-faded);">s</span>
-    <div style="height: var(--s); width: var(--s); background: var(--text-primary);"></div>
-  </div>
-  <div style="display: flex; align-items: center; gap: var(--space-m); margin-bottom: var(--space-xs);">
-    <span style="font-size: var(--font-xs); width: 3rem; text-align: right; color: var(--text-faded);">m</span>
-    <div style="height: var(--m); width: var(--m); background: var(--text-primary);"></div>
-  </div>
-  <div style="display: flex; align-items: center; gap: var(--space-m); margin-bottom: var(--space-xs);">
-    <span style="font-size: var(--font-xs); width: 3rem; text-align: right; color: var(--text-faded);">l</span>
-    <div style="height: var(--l); width: var(--l); background: var(--text-primary);"></div>
-  </div>
-  <div style="display: flex; align-items: center; gap: var(--space-m); margin-bottom: var(--space-xs);">
-    <span style="font-size: var(--font-xs); width: 3rem; text-align: right; color: var(--text-faded);">xl</span>
-    <div style="height: var(--xl); width: var(--xl); background: var(--text-primary);"></div>
-  </div>
-  <div style="display: flex; align-items: center; gap: var(--space-m); margin-bottom: var(--space-xs);">
-    <span style="font-size: var(--font-xs); width: 3rem; text-align: right; color: var(--text-faded);">2xl</span>
-    <div style="height: var(--2xl); width: var(--2xl); background: var(--text-primary);"></div>
-  </div>
-  <div style="display: flex; align-items: center; gap: var(--space-m); margin-bottom: var(--space-xs);">
-    <span style="font-size: var(--font-xs); width: 3rem; text-align: right; color: var(--text-faded);">3xl</span>
-    <div style="height: var(--3xl); width: var(--3xl); background: var(--text-primary);"></div>
-  </div>
-  <div style="display: flex; align-items: center; gap: var(--space-m); margin-bottom: var(--space-xs);">
-    <span style="font-size: var(--font-xs); width: 3rem; text-align: right; color: var(--text-faded);">4xl</span>
-    <div style="height: var(--4xl); width: var(--4xl); background: var(--text-primary);"></div>
-  </div>
-  <div style="display: flex; align-items: center; gap: var(--space-m); margin-bottom: var(--space-xs);">
-    <span style="font-size: var(--font-xs); width: 3rem; text-align: right; color: var(--text-faded);">5xl</span>
-    <div style="height: var(--5xl); width: var(--5xl); background: var(--text-primary);"></div>
-  </div>
-  <div style="display: flex; align-items: center; gap: var(--space-m); margin-bottom: var(--space-xs);">
-    <span style="font-size: var(--font-xs); width: 3rem; text-align: right; color: var(--text-faded);">6xl</span>
-    <div style="height: var(--6xl); width: var(--6xl); background: var(--text-primary);"></div>
-  </div>
-  <div style="display: flex; align-items: center; gap: var(--space-m); margin-bottom: var(--space-xs);">
-    <span style="font-size: var(--font-xs); width: 3rem; text-align: right; color: var(--text-faded);">7xl</span>
-    <div style="height: var(--7xl); width: var(--7xl); background: var(--text-primary);"></div>
-  </div>
-  <div style="display: flex; align-items: center; gap: var(--space-m);">
-    <span style="font-size: var(--font-xs); width: 3rem; text-align: right; color: var(--text-faded);">8xl</span>
-    <div style="height: var(--8xl); width: var(--8xl); background: var(--text-primary);"></div>
+  <div class="block gap-l">
+    <div class="block gap-s">
+      <p class="demo-eyebrow">2xs · 2px</p>
+      <div style="height: var(--2xs); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">xs · 4px</p>
+      <div style="height: var(--xs); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">s · 8px</p>
+      <div style="height: var(--s); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">m · 12px</p>
+      <div style="height: var(--m); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">l · 16px</p>
+      <div style="height: var(--l); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">xl · 24px</p>
+      <div style="height: var(--xl); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">2xl · 32px</p>
+      <div style="height: var(--2xl); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">3xl · 40px</p>
+      <div style="height: var(--3xl); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">4xl · 48px</p>
+      <div style="height: var(--4xl); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">6xl · 64px</p>
+      <div style="height: var(--6xl); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">8xl · 80px</p>
+      <div style="height: var(--8xl); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">10xl · 96px</p>
+      <div style="height: var(--10xl); width: 100%; background: var(--background-darker);"></div>
+    </div>
   </div>
 </div>
 
 ```css
-:root {
-  --space-m: var(--m);
-  --space-l: var(--l);
-}
+padding: var(--space-m);
+gap: var(--space-xl);
+margin-bottom: var(--space-l);
 ```
 
 ---
 
-## Space Tokens
+## Gap
 
-Space tokens provide responsive spacing values that scale between desktop and mobile devices. They are used for gaps, padding, and margins to maintain consistent spacing throughout the interface.
-
-| Token | Desktop | Mobile |
-| --- | --- | --- |
-| `--space-xs` | `XS` | `XS` |
-| `--space-s` | `S` | `XS` |
-| `--space-m` | `M` | `S` |
-| `--space-l` | `L` | `M` |
-| `--space-xl` | `XL` | `L` |
-| `--space-2xl` | `2XL` | `XL` |
-| `--space-3xl` | `3XL` | `2XL` |
-| `--space-4xl` | `4XL` | `2XL` |
-| `--space-6xl` | `6XL` | `4XL` |
-
-```css
-.card {
-  padding: var(--space-m);
-  margin-bottom: var(--space-l);
-}
-```
-
----
-
-## Padding
-
-Padding utilities apply internal padding to elements. These are convenience utilities for quick spacing adjustments.
-
-| Class | Spacing |
-| --- | --- |
-| `.padding-s` | `var(--space-s)` |
-| `.padding-m` | `var(--space-m)` |
-| `.padding-l` | `var(--space-l)` |
-| `.padding-xl` | `var(--space-xl)` |
-| `.padding-2xl` | `var(--space-2xl)` |
-| `.padding-3xl` | `var(--space-3xl)` |
+Gap modifiers control the space between child elements inside a `.block`. The default gap is `--space-m`.
 
 <div class="demo-preview is-joined">
-  <div class="block row gap-m" style="flex-wrap: wrap;">
-    <div class="padding-s" style="background: var(--background-faded);">
-      <div style="background: var(--background-primary); padding: var(--space-s); text-align: center; white-space: nowrap;">.padding-s</div>
+  <div class="block gap-xl">
+    <div class="block gap-m">
+      <p class="demo-eyebrow">No gap</p>
+      <div class="block padding-l border border-faded border-dashed">
+        <div class="block gap-none">
+          <div style="padding: var(--space-s); background: var(--background-faded);">First item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Second item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Third item</div>
+        </div>
+      </div>
     </div>
-    <div class="padding-m" style="background: var(--background-faded);">
-      <div style="background: var(--background-primary); padding: var(--space-s); text-align: center; white-space: nowrap;">.padding-m</div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Extra Small</p>
+      <div class="block padding-l border border-faded border-dashed">
+        <div class="block gap-xs">
+          <div style="padding: var(--space-s); background: var(--background-faded);">First item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Second item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Third item</div>
+        </div>
+      </div>
     </div>
-    <div class="padding-l" style="background: var(--background-faded);">
-      <div style="background: var(--background-primary); padding: var(--space-s); text-align: center; white-space: nowrap;">.padding-l</div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Small</p>
+      <div class="block padding-l border border-faded border-dashed">
+        <div class="block gap-s">
+          <div style="padding: var(--space-s); background: var(--background-faded);">First item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Second item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Third item</div>
+        </div>
+      </div>
     </div>
-    <div class="padding-xl" style="background: var(--background-faded);">
-      <div style="background: var(--background-primary); padding: var(--space-s); text-align: center; white-space: nowrap;">.padding-xl</div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Default gap</p>
+      <div class="block padding-l border border-faded border-dashed">
+        <div class="block gap-m">
+          <div style="padding: var(--space-s); background: var(--background-faded);">First item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Second item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Third item</div>
+        </div>
+      </div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Large</p>
+      <div class="block padding-l border border-faded border-dashed">
+        <div class="block gap-l">
+          <div style="padding: var(--space-s); background: var(--background-faded);">First item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Second item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Third item</div>
+        </div>
+      </div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Extra Large</p>
+      <div class="block padding-l border border-faded border-dashed">
+        <div class="block gap-xl">
+          <div style="padding: var(--space-s); background: var(--background-faded);">First item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Second item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Third item</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 ```html
-<div class="padding-m">
-  <!-- Content with medium padding on all sides -->
+<div class="block gap-l">
+  <div>Item one</div>
+  <div>Item two</div>
+  <div>Item three</div>
 </div>
 ```
 
-**Important**
+| Class | Value | px Equivalent |
+| --- | --- | --- |
+| `.gap-none` | 0 | 0px |
+| `.gap-xs` | `--space-xs` | 4px |
+| `.gap-s` | `--space-s` | 8px |
+| `.gap-m` | `--space-m` | 12px |
+| `.gap-l` | `--space-l` | 16px |
+| `.gap-xl` | `--space-xl` | 24px |
+| `.gap-2xl` | `--space-2xl` | 32px |
+| `.gap-3xl` | `--space-3xl` | 40px |
 
-- These utilities apply internal padding only (all sides).
-- They are convenience utilities for quick spacing adjustments.
-- They do not replace section spacing or layout primitives.
-- For section-level spacing, use section spacing combo classes (see Layout).
-- For component-level spacing, prefer blocks with gap modifiers.
+---
+
+## Padding
+
+Padding utilities apply internal spacing to an element on all sides.
+
+<div class="demo-preview is-joined">
+  <div class="block gap-xl">
+    <div class="block gap-m">
+      <p class="demo-eyebrow">.padding-s</p>
+      <div class="padding-s" style="background: var(--background-faded);">
+        <div style="background: var(--background-primary); padding: var(--space-s);">Content</div>
+      </div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">.padding-m</p>
+      <div class="padding-m" style="background: var(--background-faded);">
+        <div style="background: var(--background-primary); padding: var(--space-s);">Content</div>
+      </div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">.padding-l</p>
+      <div class="padding-l" style="background: var(--background-faded);">
+        <div style="background: var(--background-primary); padding: var(--space-s);">Content</div>
+      </div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">.padding-xl</p>
+      <div class="padding-xl" style="background: var(--background-faded);">
+        <div style="background: var(--background-primary); padding: var(--space-s);">Content</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+```html
+<div class="padding-l">
+  <!-- Content with large padding on all sides -->
+</div>
+```
+
+| Class | Value | px Equivalent |
+| --- | --- | --- |
+| `.padding-s` | `--space-s` | 8px |
+| `.padding-m` | `--space-m` | 12px |
+| `.padding-l` | `--space-l` | 16px |
+| `.padding-xl` | `--space-xl` | 24px |
+| `.padding-2xl` | `--space-2xl` | 32px |
+| `.padding-3xl` | `--space-3xl` | 40px |
 
 ---
 
 ## Section Spacing
 
-Section spacing tokens control the **vertical rhythm between sections**. They scale responsively between desktop and mobile.
+Section spacing controls the vertical rhythm between major page sections. Apply `.top-*` and `.bottom-*` classes to `<section>` elements. These scale responsively between desktop and mobile.
 
-| Token | Desktop | Mobile |
-| --- | --- | --- |
-| `--section-xs` | XL | L |
-| `--section-s` | 2XL | XL |
-| `--section-m` | 6XL | 2XL |
-| `--section-l` | 10XL | 5XL |
-| `--section-xl` | 14XL | 8XL |
+<div class="demo-preview is-joined">
+  <div class="grid cols-2 gap-l">
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Top spacing</p>
+      <div class="block gap-m">
+        <div class="block gap-none border border-faded border-dashed">
+          <div class="top-small bg-faded"></div>
+          <div style="padding: var(--space-m);">
+            <p class="text-size-xsmall text-faded" style="margin: 0;"><code>.top-small</code></p>
+          </div>
+        </div>
+        <div class="block gap-none border border-faded border-dashed">
+          <div class="top-medium bg-faded"></div>
+          <div style="padding: var(--space-m);">
+            <p class="text-size-xsmall text-faded" style="margin: 0;"><code>.top-medium</code></p>
+          </div>
+        </div>
+        <div class="block gap-none border border-faded border-dashed">
+          <div class="top-large bg-faded"></div>
+          <div style="padding: var(--space-m);">
+            <p class="text-size-xsmall text-faded" style="margin: 0;"><code>.top-large</code></p>
+          </div>
+        </div>
+        <div class="block gap-none border border-faded border-dashed">
+          <div class="top-xl bg-faded"></div>
+          <div style="padding: var(--space-m);">
+            <p class="text-size-xsmall text-faded" style="margin: 0;"><code>.top-xl</code></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Bottom spacing</p>
+      <div class="block gap-m">
+        <div class="block gap-none border border-faded border-dashed">
+          <div style="padding: var(--space-m);">
+            <p class="text-size-xsmall text-faded" style="margin: 0;"><code>.bottom-small</code></p>
+          </div>
+          <div class="bottom-small bg-faded"></div>
+        </div>
+        <div class="block gap-none border border-faded border-dashed">
+          <div style="padding: var(--space-m);">
+            <p class="text-size-xsmall text-faded" style="margin: 0;"><code>.bottom-medium</code></p>
+          </div>
+          <div class="bottom-medium bg-faded"></div>
+        </div>
+        <div class="block gap-none border border-faded border-dashed">
+          <div style="padding: var(--space-m);">
+            <p class="text-size-xsmall text-faded" style="margin: 0;"><code>.bottom-large</code></p>
+          </div>
+          <div class="bottom-large bg-faded"></div>
+        </div>
+        <div class="block gap-none border border-faded border-dashed">
+          <div style="padding: var(--space-m);">
+            <p class="text-size-xsmall text-faded" style="margin: 0;"><code>.bottom-xl</code></p>
+          </div>
+          <div class="bottom-xl bg-faded"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-```css
-.top-small {
-  padding-top: var(--section-s);
-}
+```html
+<section class="top-medium bottom-medium">
+  <!-- Section content -->
+</section>
 ```
+
+| Class | Token | Desktop | Mobile |
+| --- | --- | --- | --- |
+| `.top-small` / `.bottom-small` | `--section-s` | 32px | 24px |
+| `.top-medium` / `.bottom-medium` | `--section-m` | 64px | 32px |
+| `.top-large` / `.bottom-large` | `--section-l` | 96px | 56px |
+| `.top-xl` / `.bottom-xl` | `--section-xl` | 160px | 80px |

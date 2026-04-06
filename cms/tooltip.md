@@ -3,8 +3,8 @@ title: "Tooltip"
 subtitle: "CSS-only contextual hints"
 description: "How to use the tooltip component for showing additional context on hover."
 section: "Design System"
-subsection: ""
-order: 19
+subsection: "Feedback"
+order: 7
 slug: "tooltip"
 status: "published"
 access: "team"

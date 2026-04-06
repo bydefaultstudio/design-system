@@ -3,8 +3,8 @@ title: "Slider"
 subtitle: "Range input with styled track and thumb"
 description: "How to use the slider component for range selection with live value display."
 section: "Design System"
-subsection: ""
-order: 28
+subsection: "Data Entry"
+order: 6
 slug: "slider"
 status: "published"
 access: "team"

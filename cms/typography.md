@@ -4,7 +4,7 @@ subtitle: "Typography tokens and text components"
 description: "Complete reference for typography tokens including font scale, line height, font weight, and letter spacing."
 section: "Design System"
 subsection: ""
-order: 3
+order: 4
 slug: "typography"
 status: "published"
 access: "team"
@@ -13,66 +13,17 @@ client: "internal"
 
 Typography tokens provide a **consistent, modular system** for all text across the products. They are designed for **clarity, readability, and hierarchy**, while remaining flexible across devices.
 
-The system uses three font families — a primary sans-serif for body and UI, a secondary serif for headings, and a tertiary monospace for code and labels. Each text element is composed from a deliberate combination of size, weight, line height, and spacing tokens. This means you never set raw CSS values for text — you always reference a token.
+The system uses three font families — a primary sans-serif for body and UI, a secondary serif for headings, and a tertiary monospace for code and labels. For the full list of typography token values, see the [Tokens](tokens.html) page.
 
 ---
 
-## Element Reference
+## Font Sizes
 
-This table shows the complete token set applied to each text element in the design system. Use it as a quick lookup when building or reviewing layouts.
+The full type scale used across the system. Reference these tokens when setting font sizes on any element.
 
-| Element | Font Size | Line Height | Weight | Family | Extra |
-| --- | --- | --- | --- | --- | --- |
-| **h1** | `--font-6xl` (4rem) | `--line-height-s` (1) | `--font-weight-regular` (400) | `--font-secondary` | — |
-| **h2** | `--font-5xl` (3.4375rem) | `--line-height-s` (1) | `--font-weight-regular` (400) | `--font-secondary` | — |
-| **h3** | `--font-4xl` (3rem) | `1.1` | `--font-weight-regular` (400) | `--font-secondary` | — |
-| **h4** | `--font-3xl` (2.5rem) | `1.1` | `--font-weight-regular` (400) | `--font-secondary` | — |
-| **h5** | `--font-2xl` (2rem) | `--line-height-s` (1) | `--font-weight-regular` (400) | `--font-secondary` | — |
-| **h6** | `--font-l` (1.375rem) | `--line-height-l` (1.4) | `--font-weight-regular` (400) | `--font-secondary` | — |
-| **body / p** | `--font-m` (1.125rem) | `--line-height-l` (1.4) | `--font-weight-regular` (400) | `--font-primary` | — |
-| **.text-size-small** | `--font-s` (1rem) | `--line-height-xl` (1.6) | `--font-weight-regular` (400) | `--font-primary` | — |
-| **.text-size-xsmall** | `--font-xs` (0.875rem) | `--line-height-xl` (1.6) | `--font-weight-regular` (400) | `--font-primary` | — |
-| **.eyebrow** | `--font-xs` (0.875rem) | `--line-height-m` (1.3) | `--font-weight-extra-bold` (800) | `--font-primary` | `letter-spacing: --letter-spacing-xl` · `text-transform: uppercase` |
-| **blockquote** | inherits body | inherits body | inherits body | `--font-secondary` | `border-left` · `padding-left` |
-
-<div class="demo-preview is-joined type-demo">
-  <h1>Heading 1</h1>
-  <h2>Heading 2</h2>
-  <h3>Heading 3</h3>
-  <h4>Heading 4</h4>
-  <h5>Heading 5</h5>
-  <h6>Heading 6</h6>
-  <p>Body text — the default paragraph style used for all running content.</p>
-  <p class="text-size-small">Small text — used for secondary content and supporting details.</p>
-  <p class="text-size-xsmall">Extra small text — used for captions, footnotes, and metadata.</p>
-  <p class="eyebrow">Eyebrow Label</p>
-  <blockquote>Blockquote — used for pullquotes and highlighted passages.</blockquote>
-</div>
-
-```html
-<h1>Heading 1</h1>
-<h2>Heading 2</h2>
-<h3>Heading 3</h3>
-<h4>Heading 4</h4>
-<h5>Heading 5</h5>
-<h6>Heading 6</h6>
-<p>Body text paragraph.</p>
-<p class="text-size-small">Small text.</p>
-<p class="text-size-xsmall">Extra small text.</p>
-<p class="eyebrow">Eyebrow Label</p>
-<blockquote>Blockquote text.</blockquote>
-```
-
-> All headings (h1–h6) share `margin-top: --space-xl` and `margin-bottom: --space-l`. Body text color is `--text-primary` for all elements.
-
----
-
-## Font Size
-
-Font size tokens define the typographic scale for all text elements. They use `rem` units and scale with the root font-size (16px).
-
-| Token | Value (rem) | Pixel equivalent |
+| Token | Value | px Equivalent |
 | --- | --- | --- |
+| `--font-3xs` | 0.625rem | 10px |
 | `--font-2xs` | 0.75rem | 12px |
 | `--font-xs` | 0.875rem | 14px |
 | `--font-s` | 1rem | 16px |
@@ -86,170 +37,352 @@ Font size tokens define the typographic scale for all text elements. They use `r
 | `--font-6xl` | 4rem | 64px |
 | `--font-7xl` | 4.5rem | 72px |
 
-<div class="demo-preview is-joined">
-  <div class="block gap-s">
-    <div style="font-size: var(--font-2xs);">--font-2xs (0.75rem / 12px)</div>
-    <div style="font-size: var(--font-xs);">--font-xs (0.875rem / 14px)</div>
-    <div style="font-size: var(--font-s);">--font-s (1rem / 16px)</div>
-    <div style="font-size: var(--font-m);">--font-m (1.125rem / 18px)</div>
-    <div style="font-size: var(--font-l);">--font-l (1.375rem / 22px)</div>
-    <div style="font-size: var(--font-xl);">--font-xl (1.75rem / 28px)</div>
-    <div style="font-size: var(--font-2xl);">--font-2xl (2rem / 32px)</div>
-    <div style="font-size: var(--font-3xl);">--font-3xl (2.5rem / 40px)</div>
-    <div style="font-size: var(--font-4xl);">--font-4xl (3rem / 48px)</div>
-    <div style="font-size: var(--font-5xl);">--font-5xl (3.4375rem / 55px)</div>
-    <div style="font-size: var(--font-6xl);">--font-6xl (4rem / 64px)</div>
-    <div style="font-size: var(--font-7xl);">--font-7xl (4.5rem / 72px)</div>
-  </div>
-</div>
-
-```css
-h1 {
-  font-size: var(--font-3xl);
-}
-```
-
 ---
 
-## Body Text Token
+## Headings
 
-`--text-body` is a semantic token that controls the font size for all body-level text: paragraphs, code, inputs, tables, and buttons. Changing this single token updates all of them at once.
-
-| Token | Default value | Applies to |
-| --- | --- | --- |
-| `--text-body` | `var(--font-m)` (18px) | body, code, pre, kbd, samp, inputs, textarea, select, buttons |
-
-**To change body text size globally**, edit one line in `design-system.css`:
-
-```css
---text-body: var(--font-l); /* bump all body text to 22px */
-```
-
-Elements with independent sizing (headings, labels, legends, small button variants, display classes) are not affected.
-
----
-
-## Line Height
-
-Line height tokens control the vertical rhythm of text, ensuring consistent spacing between lines. They help establish visual hierarchy and improve readability.
-
-| Token | Value | Usage |
-| --- | --- | --- |
-| `--line-height-s` | 1 | Tight line height for headings (H1, H2) |
-| `--line-height-m` | 1.3 | Medium line height for subheadings and UI elements |
-| `--line-height-l` | 1.4 | Loose line height for body text and paragraphs |
-| `--line-height-xl` | 1.6 | Extra loose line height |
-| `--line-height-2xl` | 1.8 | Maximum line height for spacious text |
+All headings use `--font-secondary` (RecifeText) at `--font-weight-regular` (400). Each level steps down in size to create a clear visual hierarchy.
 
 <div class="demo-preview is-joined">
-  <div class="block row gap-xl" style="flex-wrap: wrap; align-items: flex-start;">
-    <div style="line-height: var(--line-height-s); max-width: 18rem; padding: var(--space-m); background: var(--background-faded);">
-      <p class="eyebrow" style="margin-bottom: var(--space-xs);">line-height-s (1)</p>
-      Typography tokens provide a consistent, modular system for all text across the products. They are designed for clarity, readability, and hierarchy.
+  <div class="block gap-xl">
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Heading 1</p>
+      <h1 style="margin: 0;">Build systems that scale with your ambition</h1>
     </div>
-    <div style="line-height: var(--line-height-m); max-width: 18rem; padding: var(--space-m); background: var(--background-faded);">
-      <p class="eyebrow" style="margin-bottom: var(--space-xs);">line-height-m (1.3)</p>
-      Typography tokens provide a consistent, modular system for all text across the products. They are designed for clarity, readability, and hierarchy.
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Heading 2</p>
+      <h2 style="margin: 0;">Every detail contributes to the whole</h2>
     </div>
-    <div style="line-height: var(--line-height-l); max-width: 18rem; padding: var(--space-m); background: var(--background-faded);">
-      <p class="eyebrow" style="margin-bottom: var(--space-xs);">line-height-l (1.4)</p>
-      Typography tokens provide a consistent, modular system for all text across the products. They are designed for clarity, readability, and hierarchy.
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Heading 3</p>
+      <h3 style="margin: 0;">Structure creates clarity in complexity</h3>
     </div>
-    <div style="line-height: var(--line-height-xl); max-width: 18rem; padding: var(--space-m); background: var(--background-faded);">
-      <p class="eyebrow" style="margin-bottom: var(--space-xs);">line-height-xl (1.6)</p>
-      Typography tokens provide a consistent, modular system for all text across the products. They are designed for clarity, readability, and hierarchy.
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Heading 4</p>
+      <h4 style="margin: 0;">Good defaults eliminate guesswork</h4>
     </div>
-    <div style="line-height: var(--line-height-2xl); max-width: 18rem; padding: var(--space-m); background: var(--background-faded);">
-      <p class="eyebrow" style="margin-bottom: var(--space-xs);">line-height-2xl (1.8)</p>
-      Typography tokens provide a consistent, modular system for all text across the products. They are designed for clarity, readability, and hierarchy.
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Heading 5</p>
+      <h5 style="margin: 0;">Constraints unlock creative freedom</h5>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Heading 6</p>
+      <h6 style="margin: 0;">Small decisions compound over time</h6>
     </div>
   </div>
 </div>
 
-```css
-h1 {
-  line-height: var(--line-height-s);
-}
-
-p {
-  line-height: var(--line-height-l);
-}
+```html
+<h1>Build systems that scale with your ambition</h1>
+<h2>Every detail contributes to the whole</h2>
+<h3>Structure creates clarity in complexity</h3>
 ```
+
+| Element | Token | Line Height |
+| --- | --- | --- |
+| `h1` | `--font-5xl` | `--line-height-s` (1) |
+| `h2` | `--font-3xl` | `--line-height-s` (1) |
+| `h3` | `--font-2xl` | `--line-height-s` (1) |
+| `h4` | `--font-xl` | `--line-height-s` (1) |
+| `h5` | `--font-l` | `--line-height-s` (1) |
+| `h6` | `--font-l` | `--line-height-l` (1.4) |
+
+---
+
+## Body Text
+
+The default paragraph style used for all running content. The `--text-body` token controls the base size globally — changing it updates paragraphs, inputs, code, tables, and buttons at once. Size modifier classes let you step up or down from the default.
+
+<div class="demo-preview is-joined">
+  <div class="block gap-xl">
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Extra Large</p>
+      <p class="text-size-xlarge" style="margin: 0;">Lead paragraphs and hero text that needs to stand out from regular body copy.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Large</p>
+      <p class="text-size-large" style="margin: 0;">Introductory text and section summaries that sit between headings and body text in the hierarchy.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Medium (default)</p>
+      <p style="margin: 0;">The default body text size. This is what you get without adding any size class — the baseline for all running content.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Small</p>
+      <p class="text-size-small" style="margin: 0;">Secondary content, supporting details, and supplementary information that doesn't need to compete with body text for attention.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Extra Small</p>
+      <p class="text-size-xsmall" style="margin: 0;">Captions, footnotes, metadata, and fine print — available but not prominent.</p>
+    </div>
+  </div>
+</div>
+
+```html
+<p class="text-size-xlarge">Lead paragraph text.</p>
+<p class="text-size-large">Introductory text.</p>
+<p>Default body text (no class needed).</p>
+<p class="text-size-small">Smaller supporting text.</p>
+<p class="text-size-xsmall">Captions and metadata.</p>
+```
+
+| Element | Token | Line Height |
+| --- | --- | --- |
+| `.text-size-xlarge` | `--font-xl` | `--line-height-l` (1.4) |
+| `.text-size-large` | `--font-l` | `--line-height-l` (1.4) |
+| `p` (default) | `--font-m` | `--line-height-l` (1.4) |
+| `.text-size-small` | `--font-s` | `--line-height-xl` (1.6) |
+| `.text-size-xsmall` | `--font-xs` | `--line-height-xl` (1.6) |
+
+---
+
+## Eyebrow
+
+A small, uppercase label used to provide context above headings, within sections, or inline with other content. The `.eyebrow` class works on any element — `<p>`, `<span>`, `<h2>`, or anything else.
+
+<div class="demo-preview is-joined">
+  <div class="block gap-xl">
+    <div class="block gap-s">
+      <p class="eyebrow" style="margin: 0;">Case Study</p>
+      <h2 style="margin: 0; color: var(--text-faded);">Building a design system from the ground up</h2>
+      <p style="margin: 0; color: var(--text-faded);">A design system is more than a collection of components — it is a shared language between design and engineering.</p>
+    </div>
+    <div class="block gap-s">
+      <span class="eyebrow">Latest Update</span>
+      <h3 style="margin: 0; color: var(--text-faded);">New components added to the library</h3>
+    </div>
+    <div class="block gap-s">
+      <h2 class="eyebrow" style="margin: 0;">Section Label</h2>
+      <p style="margin: 0; color: var(--text-faded);">An eyebrow on an h2 resets it to the small uppercase style, useful when you need heading semantics without heading size.</p>
+    </div>
+  </div>
+</div>
+
+```html
+<!-- On a paragraph -->
+<p class="eyebrow">Case Study</p>
+<h2>Building a design system from the ground up</h2>
+
+<!-- On a span (inline) -->
+<span class="eyebrow">Latest Update</span>
+
+<!-- On a heading (semantic heading, eyebrow style) -->
+<h2 class="eyebrow">Section Label</h2>
+
+```
+
+| Element | Token | Line Height |
+| --- | --- | --- |
+| `.eyebrow` | `--font-xs` | `--line-height-m` (1.3) |
+
+---
+
+## Blockquote
+
+Used for pullquotes and highlighted passages. Renders in the secondary serif font with a left border accent.
+
+<div class="demo-preview is-joined">
+  <div class="block gap-xl">
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Short quote</p>
+      <blockquote style="margin: 0;">
+        <p>Good typography is invisible. Bad typography is everywhere.</p>
+      </blockquote>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Long quote</p>
+      <blockquote style="margin: 0;">
+        <p>A design system is more than a collection of components — it is a shared language between design and engineering. When done well, it reduces inconsistency, speeds up delivery, and creates a foundation that scales with the product.</p>
+      </blockquote>
+    </div>
+  </div>
+</div>
+
+```html
+<blockquote>
+  <p>Good typography is invisible. Bad typography is everywhere.</p>
+</blockquote>
+```
+
+| Element | Token | Line Height |
+| --- | --- | --- |
+| `blockquote` | `--font-m` | `--line-height-l` (1.4) |
+
+---
+
+## Font Families
+
+The system uses four font stacks, each with a distinct role.
+
+<div class="demo-preview is-joined">
+  <div class="block gap-xl">
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Primary — Inclusive Sans</p>
+      <p style="margin: 0; font-family: var(--font-primary); font-size: var(--font-xl);">Typography is the voice of design</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Secondary — RecifeText</p>
+      <p style="margin: 0; font-family: var(--font-secondary); font-size: var(--font-xl);">Typography is the voice of design</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Tertiary — IBM Plex Mono</p>
+      <p style="margin: 0; font-family: var(--font-tertiary); font-size: var(--font-xl);">Typography is the voice of design</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Quaternary — Bugrino</p>
+      <p style="margin: 0; font-family: var(--font-quaternary); font-size: var(--font-xl);">Typography is the voice of design</p>
+    </div>
+  </div>
+</div>
+
+```css
+body { font-family: var(--font-primary); }
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-secondary); }
+code, pre, kbd { font-family: var(--font-tertiary); }
+```
+
+| Token | Font | Used For |
+| --- | --- | --- |
+| `--font-primary` | Inclusive Sans | Body text, UI, labels |
+| `--font-secondary` | RecifeText | Headings, blockquotes |
+| `--font-tertiary` | IBM Plex Mono | Code, pre, kbd |
+| `--font-quaternary` | Bugrino | TBD |
 
 ---
 
 ## Font Weight
 
-Font weight tokens provide a consistent scale for text emphasis and hierarchy. They enable precise control over typographic weight across the design system.
-
-| Token | Value | Description |
-| --- | --- | --- |
-| `--font-weight-light` | 300 | Light weight |
-| `--font-weight-regular` | 400 | Regular/normal weight |
-| `--font-weight-medium` | 500 | Medium weight |
-| `--font-weight-semi-bold` | 600 | Semi-bold weight |
-| `--font-weight-bold` | 700 | Bold weight |
-| `--font-weight-extra-bold` | 800 | Extra-bold weight |
-| `--font-weight-black` | 900 | Black/heavy weight |
+Available weight values from light to black. All headings default to regular weight.
 
 <div class="demo-preview is-joined">
-  <div class="block gap-s" style="font-size: var(--font-l);">
-    <div style="font-weight: var(--font-weight-light);">Light (300) — The quick brown fox</div>
-    <div style="font-weight: var(--font-weight-regular);">Regular (400) — The quick brown fox</div>
-    <div style="font-weight: var(--font-weight-medium);">Medium (500) — The quick brown fox</div>
-    <div style="font-weight: var(--font-weight-semi-bold);">Semi-Bold (600) — The quick brown fox</div>
-    <div style="font-weight: var(--font-weight-bold);">Bold (700) — The quick brown fox</div>
-    <div style="font-weight: var(--font-weight-extra-bold);">Extra-Bold (800) — The quick brown fox</div>
-    <div style="font-weight: var(--font-weight-black);">Black (900) — The quick brown fox</div>
+  <div class="block gap-s">
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Light</p>
+      <div class="font-2xl" style="font-weight: var(--font-weight-light);">Design is not just what it looks like</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Regular</p>
+      <div class="font-2xl" style="font-weight: var(--font-weight-regular);">Systems scale when decisions are shared</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Medium</p>
+      <div class="font-2xl" style="font-weight: var(--font-weight-medium);">Tokens turn intention into consistency</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Semi-Bold</p>
+      <div class="font-2xl" style="font-weight: var(--font-weight-semi-bold);">Structure creates clarity in complexity</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Bold</p>
+      <div class="font-2xl" style="font-weight: var(--font-weight-bold);">Good defaults eliminate guesswork</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Extra-Bold</p>
+      <div class="font-2xl" style="font-weight: var(--font-weight-extra-bold);">Constraints unlock creative freedom</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Black</p>
+      <div class="font-2xl" style="font-weight: var(--font-weight-black);">Build with purpose, not by accident</div>
+    </div>
   </div>
 </div>
 
 ```css
-body {
-  font-weight: var(--font-weight-regular);
-}
-
-h1 {
-  font-weight: var(--font-weight-bold);
-}
+font-weight: var(--font-weight-bold);
 ```
+
+| Token | Value |
+| --- | --- |
+| `--font-weight-light` | 300 |
+| `--font-weight-regular` | 400 |
+| `--font-weight-medium` | 500 |
+| `--font-weight-semi-bold` | 600 |
+| `--font-weight-bold` | 700 |
+| `--font-weight-extra-bold` | 800 |
+| `--font-weight-black` | 900 |
+
+---
+
+## Line Height
+
+Vertical rhythm values from tight display text to loose body copy. Headings use tighter values; body text uses looser values for readability.
+
+<div class="demo-preview is-joined">
+  <div class="block gap-xl">
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Extra Small</p>
+      <p class="text-size-large" style="margin: 0; line-height: var(--line-height-xs);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Small</p>
+      <p class="text-size-large" style="margin: 0; line-height: var(--line-height-s);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Medium</p>
+      <p class="text-size-large" style="margin: 0; line-height: var(--line-height-m);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Large</p>
+      <p class="text-size-large" style="margin: 0; line-height: var(--line-height-l);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Extra Large</p>
+      <p class="text-size-large" style="margin: 0; line-height: var(--line-height-xl);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">2X Large</p>
+      <p class="text-size-large" style="margin: 0; line-height: var(--line-height-2xl);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+    </div>
+  </div>
+</div>
+
+```css
+line-height: var(--line-height-l);
+```
+
+| Token | Value | Used For |
+| --- | --- | --- |
+| `--line-height-xs` | 0.7 | Tight display text |
+| `--line-height-s` | 1 | Headings |
+| `--line-height-m` | 1.3 | Subheadings, eyebrows |
+| `--line-height-l` | 1.4 | Body text, paragraphs |
+| `--line-height-xl` | 1.6 | Small text, captions |
+| `--line-height-2xl` | 1.8 | Spacious body text |
 
 ---
 
 ## Letter Spacing
 
-Letter spacing tokens control the horizontal spacing between characters. They use em-based values for proportional scaling with font size, ensuring consistent spacing regardless of the font size used.
-
-| Token | Value | Description |
-| --- | --- | --- |
-| `--letter-spacing-s` | 0.03em | Small letter spacing |
-| `--letter-spacing-m` | 0.06em | Medium letter spacing |
-| `--letter-spacing-l` | 0.08em | Large letter spacing |
-| `--letter-spacing-xl` | 0.11em | Extra large letter spacing |
+Tracking values used for labels, eyebrows, and display text. Values are em-based so they scale proportionally with font size.
 
 <div class="demo-preview is-joined">
   <div class="block gap-l">
-    <div>
-      <p class="eyebrow" style="margin-bottom: var(--space-xs);">letter-spacing-s (0.03em)</p>
-      <div style="letter-spacing: var(--letter-spacing-s); font-size: var(--font-l); text-transform: uppercase;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Small</p>
+      <div style="letter-spacing: var(--letter-spacing-s); font-size: var(--font-m); text-transform: uppercase; font-weight: var(--font-weight-semi-bold);">Design System Components</div>
     </div>
-    <div>
-      <p class="eyebrow" style="margin-bottom: var(--space-xs);">letter-spacing-m (0.06em)</p>
-      <div style="letter-spacing: var(--letter-spacing-m); font-size: var(--font-l); text-transform: uppercase;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Medium</p>
+      <div style="letter-spacing: var(--letter-spacing-m); font-size: var(--font-m); text-transform: uppercase; font-weight: var(--font-weight-semi-bold);">Design System Components</div>
     </div>
-    <div>
-      <p class="eyebrow" style="margin-bottom: var(--space-xs);">letter-spacing-l (0.08em)</p>
-      <div style="letter-spacing: var(--letter-spacing-l); font-size: var(--font-l); text-transform: uppercase;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Large</p>
+      <div style="letter-spacing: var(--letter-spacing-l); font-size: var(--font-m); text-transform: uppercase; font-weight: var(--font-weight-semi-bold);">Design System Components</div>
     </div>
-    <div>
-      <p class="eyebrow" style="margin-bottom: var(--space-xs);">letter-spacing-xl (0.11em)</p>
-      <div style="letter-spacing: var(--letter-spacing-xl); font-size: var(--font-l); text-transform: uppercase;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Extra Large</p>
+      <div style="letter-spacing: var(--letter-spacing-xl); font-size: var(--font-m); text-transform: uppercase; font-weight: var(--font-weight-semi-bold);">Design System Components</div>
     </div>
   </div>
 </div>
 
 ```css
-.eyebrow {
-  letter-spacing: var(--letter-spacing-m);
-}
+letter-spacing: var(--letter-spacing-xl);
 ```
+
+| Token | Value | Used For |
+| --- | --- | --- |
+| `--letter-spacing-s` | 0.03em | Subtle tracking |
+| `--letter-spacing-m` | 0.06em | Medium tracking |
+| `--letter-spacing-l` | 0.12em | Wide tracking |
+| `--letter-spacing-xl` | 0.24em | Eyebrows, labels |

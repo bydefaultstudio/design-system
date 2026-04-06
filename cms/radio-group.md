@@ -3,8 +3,8 @@ title: "Radio Group"
 subtitle: "Grouped radio options with label and hint"
 description: "How to use the radio group component for single-selection option lists."
 section: "Design System"
-subsection: ""
-order: 32
+subsection: "Data Entry"
+order: 5
 slug: "radio-group"
 status: "published"
 access: "team"

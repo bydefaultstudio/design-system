@@ -3,8 +3,8 @@ title: "Tag"
 subtitle: "Dismissible labels and filter chips"
 description: "How to use the tag component for labels, filters, and categorisation."
 section: "Design System"
-subsection: ""
-order: 26
+subsection: "Feedback"
+order: 5
 slug: "tag"
 status: "published"
 access: "team"
@@ -67,16 +67,16 @@ Add a `.tag-remove` button inside the tag. Clicking it removes the tag from the 
 
 <div class="demo-preview">
   <div class="tag-group">
-    <span class="tag">Design <button class="tag-remove" aria-label="Remove Design tag" type="button">&times;</button></span>
-    <span class="tag tag--info">Active <button class="tag-remove" aria-label="Remove Active tag" type="button">&times;</button></span>
-    <span class="tag tag--success">Published <button class="tag-remove" aria-label="Remove Published tag" type="button">&times;</button></span>
+    <span class="tag">Design <button class="tag-remove" aria-label="Remove Design tag" type="button">{{icon:close}}</button></span>
+    <span class="tag tag--info">Active <button class="tag-remove" aria-label="Remove Active tag" type="button">{{icon:close}}</button></span>
+    <span class="tag tag--success">Published <button class="tag-remove" aria-label="Remove Published tag" type="button">{{icon:close}}</button></span>
   </div>
 </div>
 
 ```html
 <span class="tag">
   Design
-  <button class="tag-remove" aria-label="Remove Design tag" type="button">&times;</button>
+  <button class="tag-remove" aria-label="Remove Design tag" type="button">{{icon:close}}</button>
 </span>
 ```
 
@@ -112,9 +112,9 @@ Use `.tag-group` to wrap multiple tags with consistent spacing.
   <div class="block gap-s">
     <p class="text-size-small">Active filters:</p>
     <div class="tag-group">
-      <span class="tag">Status: Active <button class="tag-remove" aria-label="Remove filter" type="button">&times;</button></span>
-      <span class="tag">Type: Component <button class="tag-remove" aria-label="Remove filter" type="button">&times;</button></span>
-      <span class="tag">Version: 2.0 <button class="tag-remove" aria-label="Remove filter" type="button">&times;</button></span>
+      <span class="tag">Status: Active <button class="tag-remove" aria-label="Remove filter" type="button">{{icon:close}}</button></span>
+      <span class="tag">Type: Component <button class="tag-remove" aria-label="Remove filter" type="button">{{icon:close}}</button></span>
+      <span class="tag">Version: 2.0 <button class="tag-remove" aria-label="Remove filter" type="button">{{icon:close}}</button></span>
     </div>
   </div>
 </div>

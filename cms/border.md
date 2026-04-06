@@ -4,159 +4,234 @@ subtitle: "Composable border system"
 description: "Guide to using the composable border architecture for flexible border styling."
 section: "Design System"
 subsection: ""
-order: 5
+order: 6
 slug: "border"
 status: "published"
 access: "team"
 client: "internal"
 ---
 
-Borders use a **composable architecture** that separates structural positioning from styling concerns. This approach keeps the system extensible without class explosion.
-
-## Core Principles
-
-
-- All border styling resolves through CSS variables
-
-- **Structural** where the border appears (.border, .border-top, .border-bottom)
-- **Width** how thick the border is (`.border-s`, `.border-m`, `.border-l`)
-- **Style** how the line is drawn (`.border-solid`, `.border-dashed`, `.border-dotted`)
-- **Color** what the border represents (`.border-primary`, `.border-secondary`, `.border-faded`)
-
-All border styles resolve through CSS variables to keep behaviour consistent across the system.
-Do not create combined classes like `.border-top-m` or hardcode border values inside structural classes.
+Borders use a **composable architecture** that separates positioning from styling. Structural classes define where the border appears, and combo classes modify width, style, and color independently. For border token values, see the [Tokens](tokens.html) page.
 
 ---
 
-## Border Structure
+## Structure
 
-Structural classes define **where** the border appears, not how it looks.
+Structural classes define **where** the border appears. By default, borders use `--border-s` width, solid style, and `--border-primary` color.
+
+<div class="demo-preview is-joined">
+  <div class="block gap-xl">
+    <div class="block gap-m">
+      <p class="demo-eyebrow">All sides</p>
+      <div class="border padding-l">Content with border on all sides</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Top</p>
+      <div class="border-top padding-l">Content with top border</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Bottom</p>
+      <div class="border-bottom padding-l">Content with bottom border</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Left</p>
+      <div class="border-left padding-l">Content with left border</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Right</p>
+      <div class="border-right padding-l">Content with right border</div>
+    </div>
+  </div>
+</div>
+
+```html
+<div class="border">All sides</div>
+<div class="border-top">Top only</div>
+<div class="border-bottom">Bottom only</div>
+<div class="border-left">Left only</div>
+<div class="border-right">Right only</div>
+```
 
 | Class | Effect |
 | --- | --- |
 | `.border` | Border on all sides |
-| `.border-top` | Border on top only |
-| `.border-bottom` | Border on bottom only |
-| `.border-left` | Border on left only |
-| `.border-right` | Border on right only |
-
-<div class="demo-preview is-joined">
-  <div class="block row gap-m" style="flex-wrap: wrap;">
-    <div class="border" style="padding: var(--space-l) var(--space-xl); text-align: center; min-width: 8rem;">.border</div>
-    <div class="border-top" style="padding: var(--space-l) var(--space-xl); text-align: center; min-width: 8rem;">.border-top</div>
-    <div class="border-bottom" style="padding: var(--space-l) var(--space-xl); text-align: center; min-width: 8rem;">.border-bottom</div>
-    <div class="border-left" style="padding: var(--space-l) var(--space-xl); text-align: center; min-width: 8rem;">.border-left</div>
-    <div class="border-right" style="padding: var(--space-l) var(--space-xl); text-align: center; min-width: 8rem;">.border-right</div>
-  </div>
-</div>
-
-#### Example
-
-```html
-<section class="border-bottom">
-  <!-- Content with bottom border -->
-</section>
-```
+| `.border-top` | Top only |
+| `.border-bottom` | Bottom only |
+| `.border-left` | Left only |
+| `.border-right` | Right only |
 
 ---
 
-## Border Width
+## Width
 
-Width combo classes modify the border thickness.
+Width classes modify the border thickness. The default is `--border-s`.
 
-| Class | Width | Description |
+<div class="demo-preview is-joined">
+  <div class="block gap-xl">
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Small (default)</p>
+      <div class="border border-s padding-l">1.5px border</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Medium</p>
+      <div class="border border-m padding-l">2px border</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Large</p>
+      <div class="border border-l padding-l">4px border</div>
+    </div>
+  </div>
+</div>
+
+```html
+<div class="border border-m">Medium border on all sides</div>
+```
+
+| Class | Token | px Equivalent |
 | --- | --- | --- |
-| `.border-s` | 1px | Small border (default) |
-| `.border-m` | 2px | Medium border |
-| `.border-l` | 4px | Large border |
+| `.border-s` | `--border-s` | 1.5px |
+| `.border-m` | `--border-m` | 2px |
+| `.border-l` | `--border-l` | 4px |
+
+---
+
+## Style
+
+Style classes modify the border appearance. The default is solid.
 
 <div class="demo-preview is-joined">
-  <div class="block row gap-m" style="flex-wrap: wrap;">
-    <div class="border border-s" style="padding: var(--space-l) var(--space-xl); text-align: center; min-width: 8rem;">.border-s (1px)</div>
-    <div class="border border-m" style="padding: var(--space-l) var(--space-xl); text-align: center; min-width: 8rem;">.border-m (2px)</div>
-    <div class="border border-l" style="padding: var(--space-l) var(--space-xl); text-align: center; min-width: 8rem;">.border-l (4px)</div>
+  <div class="block gap-xl">
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Solid (default)</p>
+      <div class="border border-solid padding-l">Solid border</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Dashed</p>
+      <div class="border border-dashed padding-l">Dashed border</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Dotted</p>
+      <div class="border border-dotted padding-l">Dotted border</div>
+    </div>
   </div>
 </div>
 
-#### Example
-
 ```html
-<div class="border border-m">
-  <!-- Content with medium border on all sides -->
-</div>
+<div class="border border-dashed">Dashed border</div>
 ```
+
+| Class | Style |
+| --- | --- |
+| `.border-solid` | Solid (default) |
+| `.border-dashed` | Dashed |
+| `.border-dotted` | Dotted |
 
 ---
 
-## Border Style
+## Color
 
-Style combo classes modify the border appearance.
-
-| Class | Style | Description |
-| --- | --- | --- |
-| `.border-solid` | solid | Solid border (default) |
-| `.border-dashed` | dashed | Dashed border |
-| `.border-dotted` | dotted | Dotted border |
+Color classes modify the border color using semantic tokens.
 
 <div class="demo-preview is-joined">
-  <div class="block row gap-m" style="flex-wrap: wrap;">
-    <div class="border border-solid" style="padding: var(--space-l) var(--space-xl); text-align: center; min-width: 8rem;">.border-solid</div>
-    <div class="border border-dashed" style="padding: var(--space-l) var(--space-xl); text-align: center; min-width: 8rem;">.border-dashed</div>
-    <div class="border border-dotted" style="padding: var(--space-l) var(--space-xl); text-align: center; min-width: 8rem;">.border-dotted</div>
+  <div class="block gap-xl">
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Primary (default)</p>
+      <div class="border border-primary padding-l">Strong, prominent border</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Secondary</p>
+      <div class="border border-secondary padding-l">Medium, neutral border</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Faded</p>
+      <div class="border border-faded padding-l">Subtle, light border</div>
+    </div>
   </div>
 </div>
 
-#### Example
-
 ```html
-<div class="border border-dashed">
-  <!-- Content with dashed border -->
-</div>
+<div class="border border-faded">Subtle border</div>
 ```
+
+| Class | Token |
+| --- | --- |
+| `.border-primary` | `--border-primary` |
+| `.border-secondary` | `--border-secondary` |
+| `.border-faded` | `--border-faded` |
 
 ---
 
-## Boder Color
+## Radius
 
-Color combo classes modify the border color using semantic tokens.
-
-| Class | Color | Description |
-| --- | --- | --- |
-| `.border-primary` | `var(--border-primary)` | Strong border (default) |
-| `.border-secondary` | `var(--border-secondary)` | Secondary color border |
-| `.border-faded` | `var(--border-faded)` | Faded border |
+Border radius tokens control corner rounding. Apply them directly via CSS — there are no utility classes for radius.
 
 <div class="demo-preview is-joined">
-  <div class="block row gap-m" style="flex-wrap: wrap;">
-    <div class="border border-primary" style="padding: var(--space-l) var(--space-xl); text-align: center; min-width: 8rem;">.border-primary</div>
-    <div class="border border-secondary" style="padding: var(--space-l) var(--space-xl); text-align: center; min-width: 8rem;">.border-secondary</div>
-    <div class="border border-faded" style="padding: var(--space-l) var(--space-xl); text-align: center; min-width: 8rem;">.border-faded</div>
+  <div class="block gap-xl">
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Extra Small</p>
+      <div class="border border-faded padding-l" style="border-radius: var(--radius-xs);">4px radius</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Small</p>
+      <div class="border border-faded padding-l" style="border-radius: var(--radius-s);">6px radius</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Medium</p>
+      <div class="border border-faded padding-l" style="border-radius: var(--radius-m);">10px radius</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Large</p>
+      <div class="border border-faded padding-l" style="border-radius: var(--radius-l);">16px radius</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Extra Large</p>
+      <div class="border border-faded padding-l" style="border-radius: var(--radius-xl);">24px radius</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Pill</p>
+      <div class="border border-faded padding-l" style="border-radius: var(--radius-pill);">Fully rounded</div>
+    </div>
   </div>
 </div>
 
-#### Example
-
-```html
-<div class="border border-secondary">
-  <!-- Content with subtle border -->
-</div>
+```css
+border-radius: var(--radius-m);
 ```
 
+| Token | Value |
+| --- | --- |
+| `--radius-xs` | 4px |
+| `--radius-s` | 6px |
+| `--radius-m` | 10px |
+| `--radius-l` | 16px |
+| `--radius-xl` | 24px |
+| `--radius-pill` | 999px |
+
 ---
 
-## Limitations
+## Composing Borders
 
-Native CSS dashed/dotted borders do not support adjustable dash spacing. This system intentionally avoids SVG or background-based borders to maintain simplicity and performance.
+Combine structural, width, style, and color classes to build any border you need. Each class modifies a single concern.
 
----
+<div class="demo-preview is-joined">
+  <div class="block gap-xl">
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Top + medium + dashed + secondary</p>
+      <div class="border-top border-m border-dashed border-secondary padding-l">Composed border</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Bottom + large + primary</p>
+      <div class="border-bottom border-l border-primary padding-l">Composed border</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">All sides + faded + dotted</p>
+      <div class="border border-faded border-dotted padding-l">Composed border</div>
+    </div>
+  </div>
+</div>
 
-## Rules
-
-- Use the smallest possible number of classes
-- Prefer semantic color tokens
-- Keep the system extensible without class explosion
-- Structural classes define position only
-- Combo classes modify one concern each
-- All styling resolves through CSS variables
-
-
+```html
+<div class="border-top border-m border-dashed border-secondary">
+  Composed: top + medium + dashed + secondary
+</div>
+```

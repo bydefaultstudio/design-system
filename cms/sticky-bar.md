@@ -3,8 +3,8 @@ title: "Sticky Bar"
 subtitle: "Sticky contextual toolbar for page-level controls"
 description: "How to use the sticky bar component for breadcrumbs, actions, dropdowns, tabs, toggles, and contextual navigation."
 section: "Design System"
-subsection: ""
-order: 23
+subsection: "Content"
+order: 11
 slug: "sticky-bar"
 status: "published"
 access: "team"
@@ -27,7 +27,7 @@ The sticky bar uses existing design system tokens. No component-specific tokens 
 | `top` | `0` | Default position (override to sit below a fixed header) |
 | `z-index` | `40` | Sits above page content, below modals |
 | `background` | `var(--background-primary)` | Matches the page background |
-| `border-bottom` | `var(--border-s) solid var(--border-faded)` | Subtle bottom border on inner |
+| `border-bottom` | `var(--border-s) solid var(--border-faded)` | Subtle bottom border on container |
 
 ---
 
@@ -37,7 +37,24 @@ The most common usage — breadcrumb navigation inside the bar.
 
 <div class="demo-preview">
   <div class="sticky-bar" style="position: relative;">
-    <div class="sticky-bar-inner">
+    <div class="sticky-bar-container">
+      <div class="sticky-bar-content">
+        <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
+          <a href="#">Home</a>
+          <span class="breadcrumb-separator">/</span>
+          <a href="#">Design System</a>
+          <span class="breadcrumb-separator">/</span>
+          <span>Button</span>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+```html
+<div class="sticky-bar">
+  <div class="sticky-bar-container">
+    <div class="sticky-bar-content">
       <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
         <a href="#">Home</a>
         <span class="breadcrumb-separator">/</span>
@@ -46,19 +63,6 @@ The most common usage — breadcrumb navigation inside the bar.
         <span>Button</span>
       </nav>
     </div>
-  </div>
-</div>
-
-```html
-<div class="sticky-bar">
-  <div class="sticky-bar-inner">
-    <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
-      <a href="#">Home</a>
-      <span class="breadcrumb-separator">/</span>
-      <a href="#">Design System</a>
-      <span class="breadcrumb-separator">/</span>
-      <span>Button</span>
-    </nav>
   </div>
 </div>
 ```
@@ -71,11 +75,13 @@ Tab-style anchor links for page section navigation. Inside a `.sticky-bar`, tabs
 
 <div class="demo-preview">
   <div class="sticky-bar" style="position: relative;">
-    <div class="sticky-bar-inner">
-      <div class="tabs">
-        <a href="#" class="tab is-active">Overview</a>
-        <a href="#" class="tab">Components</a>
-        <a href="#" class="tab">Tokens</a>
+    <div class="sticky-bar-container">
+      <div class="sticky-bar-content">
+        <div class="tabs">
+          <a href="#" class="tab is-active">Overview</a>
+          <a href="#" class="tab">Components</a>
+          <a href="#" class="tab">Tokens</a>
+        </div>
       </div>
     </div>
   </div>
@@ -83,11 +89,13 @@ Tab-style anchor links for page section navigation. Inside a `.sticky-bar`, tabs
 
 ```html
 <div class="sticky-bar">
-  <div class="sticky-bar-inner">
-    <div class="tabs">
-      <a href="#section-1" class="tab is-active">Overview</a>
-      <a href="#section-2" class="tab">Components</a>
-      <a href="#section-3" class="tab">Tokens</a>
+  <div class="sticky-bar-container">
+    <div class="sticky-bar-content">
+      <div class="tabs">
+        <a href="#section-1" class="tab is-active">Overview</a>
+        <a href="#section-2" class="tab">Components</a>
+        <a href="#section-3" class="tab">Tokens</a>
+      </div>
     </div>
   </div>
 </div>
@@ -97,16 +105,18 @@ Tab-style anchor links for page section navigation. Inside a `.sticky-bar`, tabs
 
 ## Dropdown
 
-Dropdowns inside the sticky bar use the standard `.dropdown` component. The trigger gets tighter horizontal padding automatically when inside a `.sticky-bar`.
+Dropdowns inside the sticky bar use the standard `.dropdown` component. The trigger gets tighter horizontal padding automatically when inside a `.sticky-bar`. Place the dropdown inside `.sticky-bar-actions` to keep it outside the scrollable content area.
 
 <div class="demo-preview">
   <div class="sticky-bar" style="position: relative;">
-    <div class="sticky-bar-inner">
-      <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
-        <a href="#">Design System</a>
-        <span class="breadcrumb-separator">/</span>
-        <span>Color</span>
-      </nav>
+    <div class="sticky-bar-container">
+      <div class="sticky-bar-content">
+        <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
+          <a href="#">Design System</a>
+          <span class="breadcrumb-separator">/</span>
+          <span>Color</span>
+        </nav>
+      </div>
       <div class="sticky-bar-actions">
         <div class="dropdown">
           <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="More options">
@@ -125,8 +135,10 @@ Dropdowns inside the sticky bar use the standard `.dropdown` component. The trig
 
 ```html
 <div class="sticky-bar">
-  <div class="sticky-bar-inner">
-    <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">...</nav>
+  <div class="sticky-bar-container">
+    <div class="sticky-bar-content">
+      <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">...</nav>
+    </div>
     <div class="sticky-bar-actions">
       <div class="dropdown">
         <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="More options">
@@ -153,24 +165,28 @@ Form toggles centre vertically inside the bar automatically.
 
 <div class="demo-preview">
   <div class="sticky-bar" style="position: relative;">
-    <div class="sticky-bar-inner">
-      <span class="text-size-small">Dark mode</span>
-      <label class="form-toggle">
-        <input type="checkbox" role="switch">
-        <span class="form-toggle-track"></span>
-      </label>
+    <div class="sticky-bar-container">
+      <div class="sticky-bar-content">
+        <span class="text-size-small">Dark mode</span>
+        <label class="form-toggle">
+          <input type="checkbox" role="switch">
+          <span class="form-toggle-track"></span>
+        </label>
+      </div>
     </div>
   </div>
 </div>
 
 ```html
 <div class="sticky-bar">
-  <div class="sticky-bar-inner">
-    <span>Dark mode</span>
-    <label class="form-toggle">
-      <input type="checkbox" role="switch">
-      <span class="form-toggle-track"></span>
-    </label>
+  <div class="sticky-bar-container">
+    <div class="sticky-bar-content">
+      <span>Dark mode</span>
+      <label class="form-toggle">
+        <input type="checkbox" role="switch">
+        <span class="form-toggle-track"></span>
+      </label>
+    </div>
   </div>
 </div>
 ```
@@ -183,12 +199,14 @@ Segmented controls centre vertically inside the bar automatically.
 
 <div class="demo-preview">
   <div class="sticky-bar" style="position: relative;">
-    <div class="sticky-bar-inner">
-      <span class="text-size-small">View</span>
-      <div class="segmented-control" role="group" aria-label="View mode">
-        <button class="segmented-control-btn is-active" type="button">Grid</button>
-        <button class="segmented-control-btn" type="button">List</button>
-        <button class="segmented-control-btn" type="button">Table</button>
+    <div class="sticky-bar-container">
+      <div class="sticky-bar-content">
+        <span class="text-size-small">View</span>
+        <div class="segmented-control" role="group" aria-label="View mode">
+          <button class="segmented-control-btn is-active" type="button">Grid</button>
+          <button class="segmented-control-btn" type="button">List</button>
+          <button class="segmented-control-btn" type="button">Table</button>
+        </div>
       </div>
     </div>
   </div>
@@ -196,12 +214,14 @@ Segmented controls centre vertically inside the bar automatically.
 
 ```html
 <div class="sticky-bar">
-  <div class="sticky-bar-inner">
-    <span>View</span>
-    <div class="segmented-control" role="group" aria-label="View mode">
-      <button class="segmented-control-btn is-active" type="button">Grid</button>
-      <button class="segmented-control-btn" type="button">List</button>
-      <button class="segmented-control-btn" type="button">Table</button>
+  <div class="sticky-bar-container">
+    <div class="sticky-bar-content">
+      <span>View</span>
+      <div class="segmented-control" role="group" aria-label="View mode">
+        <button class="segmented-control-btn is-active" type="button">Grid</button>
+        <button class="segmented-control-btn" type="button">List</button>
+        <button class="segmented-control-btn" type="button">Table</button>
+      </div>
     </div>
   </div>
 </div>
@@ -211,15 +231,17 @@ Segmented controls centre vertically inside the bar automatically.
 
 ## Combined
 
-A realistic example combining breadcrumbs, tabs, and a dropdown action menu in one bar.
+A realistic example combining tabs and a dropdown action menu in one bar. The `.sticky-bar-content` area scrolls horizontally on mobile while the dropdown stays pinned.
 
 <div class="demo-preview">
   <div class="sticky-bar" style="position: relative;">
-    <div class="sticky-bar-inner">
-      <div class="tabs">
-        <a href="#" class="tab is-active">Overview</a>
-        <a href="#" class="tab">Settings</a>
-        <a href="#" class="tab">Activity</a>
+    <div class="sticky-bar-container">
+      <div class="sticky-bar-content">
+        <div class="tabs">
+          <a href="#" class="tab is-active">Overview</a>
+          <a href="#" class="tab">Settings</a>
+          <a href="#" class="tab">Activity</a>
+        </div>
       </div>
       <div class="sticky-bar-actions">
         <div class="dropdown">
@@ -238,11 +260,13 @@ A realistic example combining breadcrumbs, tabs, and a dropdown action menu in o
 
 ```html
 <div class="sticky-bar">
-  <div class="sticky-bar-inner">
-    <div class="tabs">
-      <a href="#overview" class="tab is-active">Overview</a>
-      <a href="#settings" class="tab">Settings</a>
-      <a href="#activity" class="tab">Activity</a>
+  <div class="sticky-bar-container">
+    <div class="sticky-bar-content">
+      <div class="tabs">
+        <a href="#overview" class="tab is-active">Overview</a>
+        <a href="#settings" class="tab">Settings</a>
+        <a href="#activity" class="tab">Activity</a>
+      </div>
     </div>
     <div class="sticky-bar-actions">
       <div class="dropdown">
@@ -282,10 +306,21 @@ Any of these components automatically adapt when placed inside a `.sticky-bar`:
 | Element | Class | Purpose |
 |---------|-------|---------|
 | Outer wrapper | `.sticky-bar` | Sticky positioning and background |
-| Content wrapper | `.sticky-bar-inner` | Flexbox layout, border, padding |
-| Breadcrumbs | `.sticky-bar-breadcrumbs` | Breadcrumb navigation (docs variant) |
-| Actions | `.sticky-bar-actions` | Right-aligned action group |
+| Layout container | `.sticky-bar-container` | Flexbox layout, border |
+| Scrollable content | `.sticky-bar-content` | Holds left-side content (breadcrumbs, tabs, toggles etc.), scrolls horizontally on mobile |
+| Actions | `.sticky-bar-actions` | Right-aligned action group, sits outside the scrollable area |
 | Dropdown | `.dropdown` | Standard dropdown component (see [Dropdown docs](dropdown.html)) |
+
+```
+.sticky-bar
+  .sticky-bar-container
+    .sticky-bar-content          ← scrolls horizontally on mobile
+      [breadcrumbs / tabs / toggles / segmented-control / labels]
+    .sticky-bar-actions          ← pinned, never clipped
+      .dropdown
+```
+
+**`.sticky-bar-content` is always required** — even when there is no dropdown. This keeps the structure consistent and ensures horizontal scrolling works when needed.
 
 ---
 
@@ -298,14 +333,14 @@ On the documentation site, `style.css` overrides the default `top: 0` to sit bel
   top: var(--header-height);
 }
 
-.sticky-bar-inner {
+.sticky-bar-container {
   max-width: 1080px;
   margin: 0 auto;
   height: var(--sticky-bar-height);
 }
 ```
 
-Tool pages (calculator, SVG cleaner) may set their own `max-width` and `padding` on `.sticky-bar-inner` to match their layout.
+Tool pages (calculator, SVG cleaner) may set their own `max-width` and `padding` on `.sticky-bar-container` to match their layout.
 
 ---
 
@@ -324,8 +359,10 @@ Tool pages (calculator, SVG cleaner) may set their own `max-width` and `padding`
 - Use the sticky bar for page-level contextual controls
 - Combine children freely — tabs + dropdown, breadcrumbs + toggle, etc.
 - Override `top` when the bar needs to sit below a fixed header
+- Always use `.sticky-bar-content` to wrap the left-side content
 
 **Don't:**
 - Don't put primary page content in the sticky bar
 - Don't stack multiple sticky bars on the same page
 - Don't use the sticky bar as a replacement for the main site navigation
+- Don't place dropdowns inside `.sticky-bar-content` — use `.sticky-bar-actions` so the menu isn't clipped by overflow

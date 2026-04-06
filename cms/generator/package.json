@@ -5,8 +5,10 @@
   "main": "generate-docs.js",
   "scripts": {
     "docgen": "node generate-docs.js",
+    "docgen:file": "node generate-docs.js",
     "docwatch": "node watch-docs.js",
     "serve": "python3 -m http.server 8080 -d ../site",
+    "generate-ai-ref": "cd ../.. && node tools/generate-ai-reference.js",
     "docfull": "npm run docgen && npm run serve & npm run docwatch"
   },
   "keywords": [

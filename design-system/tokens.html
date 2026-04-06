@@ -1,0 +1,2017 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokens - By Default Brand OS</title>
+    <meta name="description" content="Every design token in one place — colors, typography, spacing, borders, and component tokens.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Tokens - By Default Brand OS">
+    <meta property="og:description" content="Every design token in one place — colors, typography, spacing, borders, and component tokens.">
+    <meta property="og:image" content="../assets/images/og/og-default.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Design System Framework (path set in cms/docs.config.js) -->
+    <link rel="stylesheet" href="../assets/css/design-system.css" id="design-system-css"
+          onerror="document.getElementById('ds-missing-banner').style.display='flex'">
+    
+
+    <!-- Google Fonts (configured in cms/docs.config.js) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Markdown CSS -->
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    
+
+    <!-- Early theme loader: apply cached client theme before first paint -->
+    <script>
+    (function(){try{if(document.documentElement.getAttribute('data-client-theme'))return;var c=localStorage.getItem('bdd-client-theme');if(!c)return;var p=c.split('|'),k=p[0],css=p[1],fonts=p[2];if(!k||!css)return;var b='../';var l=document.createElement('link');l.id='client-theme-css';l.rel='stylesheet';l.href=b+css;document.head.appendChild(l);document.documentElement.setAttribute('data-client-theme',k);if(fonts){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://fonts.googleapis.com';pc.id='client-theme-fonts-preconnect';document.head.appendChild(pc);var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';pc2.id='client-theme-fonts-preconnect2';document.head.appendChild(pc2);var fl=document.createElement('link');fl.id='client-theme-fonts';fl.rel='stylesheet';fl.href=fonts;document.head.appendChild(fl)}}catch(e){}})();
+    </script>
+
+    <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
+    <script>
+      window._gotrueReady = (function() {
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0') {
+          return Promise.resolve(null);
+        }
+        return import('https://cdn.jsdelivr.net/npm/gotrue-js@0.9.29/+esm')
+          .then(function(m) { var G = m.default && m.default.default ? m.default.default : m.default; window.GoTrue = G; return G; })
+          .catch(function(e) { console.error('[Auth] GoTrue load failed:', e); return null; });
+      })();
+    </script>
+</head>
+<body class="auth-loading" data-access="team">
+
+    <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
+    <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
+        <span>⚠️</span>
+        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">cms/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
+        <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
+    </div>
+
+    <!-- Site Navigation (header + sidebar injected by nav.js) -->
+    <div id="site-nav" data-base="../"></div>
+
+    <div class="docs-main-area">
+        <!-- Page Header (full width, outside grid) -->
+        <div class="page-header">
+      <div class="container-small">
+        <h1>Tokens</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">Complete reference for all design tokens</p>
+        
+      </div>
+    </div>
+
+        <!-- Sticky Bar (breadcrumbs + actions) -->
+        <div class="sticky-bar">
+      <div class="sticky-bar-container">
+        <div class="sticky-bar-content">
+          <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
+            <a href="../design-system/index.html">Design System</a>
+            <span class="breadcrumb-separator">/</span>
+            <span>Tokens</span>
+          </nav>
+        </div>
+        <div class="sticky-bar-actions">
+          <div class="dropdown">
+            <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Markdown source options">
+              <div class="icn-svg" data-icon="more-horizontal" data-file="more-horizontal.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
+            </button>
+            <div class="dropdown-menu is-right">
+              <button type="button" class="dropdown-item js-copy-url" aria-label="Copy page link to clipboard">
+                <div class="icn-svg" data-icon="link" data-file="link.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M14.8284 16.2426L8.46446 22.6066L1.39339 15.5355L7.75735 9.17158L9.17156 10.5858L5.63603 14.1213C4.85498 14.9024 4.85498 16.1687 5.63603 16.9498L7.05024 18.364C7.83129 19.145 9.09762 19.145 9.87867 18.364L13.4142 14.8284L14.8284 16.2426ZM9.17156 16.2426L7.75735 14.8284L14.8284 7.75736L16.2426 9.17158L9.17156 16.2426ZM16.2426 14.8284L14.8284 13.4142L18.3639 9.87868C19.145 9.09763 19.145 7.8313 18.3639 7.05026L16.9497 5.63604C16.1687 4.85499 14.9024 4.85499 14.1213 5.63604L10.5858 9.17158L9.17156 7.75736L15.5355 1.3934L22.6066 8.46447L16.2426 14.8284Z" fill="currentColor"/></svg></div>
+                <span>Copy link</span>
+              </button>
+              <div data-auth-role="team">
+                <div class="dropdown-divider"></div>
+                <a href="../cms/tokens.md" class="dropdown-item js-md-download" download>
+                  <div class="icn-svg" data-icon="download" data-file="download.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
+                  <span>Download .md file</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="../cms/tokens.md" class="dropdown-item js-md-open" target="_blank" rel="noopener noreferrer">
+                  <div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div>
+                  <span>Open .md in new tab</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Main Content + TOC grid -->
+        <div class="docs-content-grid padding-global">
+            <!-- Main Content -->
+            <main class="docs-main">
+                <article>
+                    <p>Design tokens are the single source of truth for every visual decision in the system. They capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync. This page lists every token defined in <code>design-system.css</code> for quick reference.</p>
+<p>Tokens are organised into two layers: <strong>primitive tokens</strong> (raw values) and <strong>semantic tokens</strong> (intent-based aliases that reference primitives). Always prefer semantic tokens in production code.</p>
+<hr>
+<h2 id="brand-tokens">Brand Tokens</h2>
+<h3 id="font-families">Font Families</h3>
+<p>The three typeface stacks used across the system.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--font-primary</code></td>
+<td>&quot;Inclusive Sans&quot;, sans-serif</td>
+<td>Body text and UI</td>
+</tr>
+<tr>
+<td><code>--font-secondary</code></td>
+<td>&quot;RecifeText&quot;, Georgia, serif</td>
+<td>Headings and display</td>
+</tr>
+<tr>
+<td><code>--font-tertiary</code></td>
+<td>&quot;IBM Plex Mono&quot;, monospace</td>
+<td>Code and monospace</td>
+</tr>
+</tbody></table></div>
+<h3 id="brand-colors">Brand Colors</h3>
+<p>Core palette colors that define the brand identity.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--off-white</code></td>
+<td><button type="button" class="color-copy" data-copy="#fff7f1" aria-label="Copy #fff7f1">#fff7f1<span class="color-swatch" style="background:#fff7f1;" aria-hidden="true"></span></button></td>
+<td>Light brand color</td>
+</tr>
+<tr>
+<td><code>--warm-white</code></td>
+<td><button type="button" class="color-copy" data-copy="#f5ebe3" aria-label="Copy #f5ebe3">#f5ebe3<span class="color-swatch" style="background:#f5ebe3;" aria-hidden="true"></span></button></td>
+<td>Warm light tone</td>
+</tr>
+<tr>
+<td><code>--warm-black</code></td>
+<td><button type="button" class="color-copy" data-copy="#221f1c" aria-label="Copy #221f1c">#221f1c<span class="color-swatch" style="background:#221f1c;" aria-hidden="true"></span></button></td>
+<td>Dark brand color</td>
+</tr>
+<tr>
+<td><code>--off-black</code></td>
+<td><button type="button" class="color-copy" data-copy="#0f0e0e" aria-label="Copy #0f0e0e">#0f0e0e<span class="color-swatch" style="background:#0f0e0e;" aria-hidden="true"></span></button></td>
+<td>Near-black</td>
+</tr>
+<tr>
+<td><code>--red-lighter</code></td>
+<td><button type="button" class="color-copy" data-copy="#FFE8E3" aria-label="Copy #FFE8E3">#FFE8E3<span class="color-swatch" style="background:#FFE8E3;" aria-hidden="true"></span></button></td>
+<td>Lighter red (backgrounds)</td>
+</tr>
+<tr>
+<td><code>--red-light</code></td>
+<td><button type="button" class="color-copy" data-copy="#FFD6CD" aria-label="Copy #FFD6CD">#FFD6CD<span class="color-swatch" style="background:#FFD6CD;" aria-hidden="true"></span></button></td>
+<td>Light red</td>
+</tr>
+<tr>
+<td><code>--red</code></td>
+<td><button type="button" class="color-copy" data-copy="#D92A27" aria-label="Copy #D92A27">#D92A27<span class="color-swatch" style="background:#D92A27;" aria-hidden="true"></span></button></td>
+<td>Accent red</td>
+</tr>
+<tr>
+<td><code>--red-dark</code></td>
+<td><button type="button" class="color-copy" data-copy="#99333D" aria-label="Copy #99333D">#99333D<span class="color-swatch" style="background:#99333D;" aria-hidden="true"></span></button></td>
+<td>Dark red</td>
+</tr>
+<tr>
+<td><code>--blue-lighter</code></td>
+<td><button type="button" class="color-copy" data-copy="#D5F3FF" aria-label="Copy #D5F3FF">#D5F3FF<span class="color-swatch" style="background:#D5F3FF;" aria-hidden="true"></span></button></td>
+<td>Lighter blue (backgrounds)</td>
+</tr>
+<tr>
+<td><code>--blue-light</code></td>
+<td><button type="button" class="color-copy" data-copy="#B1E6FC" aria-label="Copy #B1E6FC">#B1E6FC<span class="color-swatch" style="background:#B1E6FC;" aria-hidden="true"></span></button></td>
+<td>Light blue</td>
+</tr>
+<tr>
+<td><code>--blue</code></td>
+<td><button type="button" class="color-copy" data-copy="#1A54D6" aria-label="Copy #1A54D6">#1A54D6<span class="color-swatch" style="background:#1A54D6;" aria-hidden="true"></span></button></td>
+<td>Accent blue</td>
+</tr>
+<tr>
+<td><code>--blue-dark</code></td>
+<td><button type="button" class="color-copy" data-copy="#152F57" aria-label="Copy #152F57">#152F57<span class="color-swatch" style="background:#152F57;" aria-hidden="true"></span></button></td>
+<td>Dark blue</td>
+</tr>
+<tr>
+<td><code>--yellow-lighter</code></td>
+<td><button type="button" class="color-copy" data-copy="#FFF3B8" aria-label="Copy #FFF3B8">#FFF3B8<span class="color-swatch" style="background:#FFF3B8;" aria-hidden="true"></span></button></td>
+<td>Lighter yellow (backgrounds)</td>
+</tr>
+<tr>
+<td><code>--yellow-light</code></td>
+<td><button type="button" class="color-copy" data-copy="#FFEA83" aria-label="Copy #FFEA83">#FFEA83<span class="color-swatch" style="background:#FFEA83;" aria-hidden="true"></span></button></td>
+<td>Light yellow (replaces yellow-light)</td>
+</tr>
+<tr>
+<td><code>--yellow</code></td>
+<td><button type="button" class="color-copy" data-copy="#FFB533" aria-label="Copy #FFB533">#FFB533<span class="color-swatch" style="background:#FFB533;" aria-hidden="true"></span></button></td>
+<td>Accent yellow (replaces yellow)</td>
+</tr>
+<tr>
+<td><code>--yellow-dark</code></td>
+<td><button type="button" class="color-copy" data-copy="#7E5700" aria-label="Copy #7E5700">#7E5700<span class="color-swatch" style="background:#7E5700;" aria-hidden="true"></span></button></td>
+<td>Dark yellow</td>
+</tr>
+<tr>
+<td><code>--green-lighter</code></td>
+<td><button type="button" class="color-copy" data-copy="#DBF7CC" aria-label="Copy #DBF7CC">#DBF7CC<span class="color-swatch" style="background:#DBF7CC;" aria-hidden="true"></span></button></td>
+<td>Lighter green (backgrounds)</td>
+</tr>
+<tr>
+<td><code>--green-light</code></td>
+<td><button type="button" class="color-copy" data-copy="#B6D6A5" aria-label="Copy #B6D6A5">#B6D6A5<span class="color-swatch" style="background:#B6D6A5;" aria-hidden="true"></span></button></td>
+<td>Light green</td>
+</tr>
+<tr>
+<td><code>--green</code></td>
+<td><button type="button" class="color-copy" data-copy="#167255" aria-label="Copy #167255">#167255<span class="color-swatch" style="background:#167255;" aria-hidden="true"></span></button></td>
+<td>Accent green</td>
+</tr>
+<tr>
+<td><code>--green-dark</code></td>
+<td><button type="button" class="color-copy" data-copy="#094C45" aria-label="Copy #094C45">#094C45<span class="color-swatch" style="background:#094C45;" aria-hidden="true"></span></button></td>
+<td>Dark green</td>
+</tr>
+<tr>
+<td><code>--purple-lighter</code></td>
+<td><button type="button" class="color-copy" data-copy="#F9E2FF" aria-label="Copy #F9E2FF">#F9E2FF<span class="color-swatch" style="background:#F9E2FF;" aria-hidden="true"></span></button></td>
+<td>Lighter purple (backgrounds)</td>
+</tr>
+<tr>
+<td><code>--purple-light</code></td>
+<td><button type="button" class="color-copy" data-copy="#F5CDFF" aria-label="Copy #F5CDFF">#F5CDFF<span class="color-swatch" style="background:#F5CDFF;" aria-hidden="true"></span></button></td>
+<td>Light purple</td>
+</tr>
+<tr>
+<td><code>--purple</code></td>
+<td><button type="button" class="color-copy" data-copy="#AA4FE3" aria-label="Copy #AA4FE3">#AA4FE3<span class="color-swatch" style="background:#AA4FE3;" aria-hidden="true"></span></button></td>
+<td>Accent purple</td>
+</tr>
+<tr>
+<td><code>--purple-dark</code></td>
+<td><button type="button" class="color-copy" data-copy="#600E83" aria-label="Copy #600E83">#600E83<span class="color-swatch" style="background:#600E83;" aria-hidden="true"></span></button></td>
+<td>Dark purple</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="typography">Typography</h2>
+<h3 id="font-sizes">Font Sizes</h3>
+<p>The full type scale from 10px to 72px, defined in rem.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>px Equivalent</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--font-3xs</code></td>
+<td>0.625rem</td>
+<td>10px</td>
+</tr>
+<tr>
+<td><code>--font-2xs</code></td>
+<td>0.75rem</td>
+<td>12px</td>
+</tr>
+<tr>
+<td><code>--font-xs</code></td>
+<td>0.875rem</td>
+<td>14px</td>
+</tr>
+<tr>
+<td><code>--font-s</code></td>
+<td>1rem</td>
+<td>16px</td>
+</tr>
+<tr>
+<td><code>--font-m</code></td>
+<td>1.125rem</td>
+<td>18px</td>
+</tr>
+<tr>
+<td><code>--font-l</code></td>
+<td>1.375rem</td>
+<td>22px</td>
+</tr>
+<tr>
+<td><code>--font-xl</code></td>
+<td>1.75rem</td>
+<td>28px</td>
+</tr>
+<tr>
+<td><code>--font-2xl</code></td>
+<td>2rem</td>
+<td>32px</td>
+</tr>
+<tr>
+<td><code>--font-3xl</code></td>
+<td>2.5rem</td>
+<td>40px</td>
+</tr>
+<tr>
+<td><code>--font-4xl</code></td>
+<td>3rem</td>
+<td>48px</td>
+</tr>
+<tr>
+<td><code>--font-5xl</code></td>
+<td>3.4375rem</td>
+<td>55px</td>
+</tr>
+<tr>
+<td><code>--font-6xl</code></td>
+<td>4rem</td>
+<td>64px</td>
+</tr>
+<tr>
+<td><code>--font-7xl</code></td>
+<td>4.5rem</td>
+<td>72px</td>
+</tr>
+</tbody></table></div>
+<h3 id="semantic-font-sizes">Semantic Font Sizes</h3>
+<p>Named aliases that map to the type scale for specific UI roles.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--text-body</code></td>
+<td>var(--font-m)</td>
+<td>Global body text size</td>
+</tr>
+<tr>
+<td><code>--button-font-size</code></td>
+<td>var(--text-body)</td>
+<td>Default button text</td>
+</tr>
+<tr>
+<td><code>--button-font-size-small</code></td>
+<td>var(--font-2xs)</td>
+<td>Small button text</td>
+</tr>
+</tbody></table></div>
+<h3 id="line-heights">Line Heights</h3>
+<p>Vertical rhythm values from tight display text to loose body copy.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--line-height-xs</code></td>
+<td>0.7</td>
+<td>Tight display text</td>
+</tr>
+<tr>
+<td><code>--line-height-s</code></td>
+<td>1</td>
+<td>Compact headings</td>
+</tr>
+<tr>
+<td><code>--line-height-m</code></td>
+<td>1.3</td>
+<td>Default headings</td>
+</tr>
+<tr>
+<td><code>--line-height-l</code></td>
+<td>1.4</td>
+<td>Short paragraphs</td>
+</tr>
+<tr>
+<td><code>--line-height-xl</code></td>
+<td>1.6</td>
+<td>Body text</td>
+</tr>
+<tr>
+<td><code>--line-height-2xl</code></td>
+<td>1.8</td>
+<td>Loose body text</td>
+</tr>
+</tbody></table></div>
+<h3 id="font-weights">Font Weights</h3>
+<p>Available weight values from light to black.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--font-weight-light</code></td>
+<td>300</td>
+<td>Light</td>
+</tr>
+<tr>
+<td><code>--font-weight-regular</code></td>
+<td>400</td>
+<td>Regular</td>
+</tr>
+<tr>
+<td><code>--font-weight-medium</code></td>
+<td>500</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td><code>--font-weight-semi-bold</code></td>
+<td>600</td>
+<td>Semi-bold</td>
+</tr>
+<tr>
+<td><code>--font-weight-bold</code></td>
+<td>700</td>
+<td>Bold</td>
+</tr>
+<tr>
+<td><code>--font-weight-extra-bold</code></td>
+<td>800</td>
+<td>Extra-bold</td>
+</tr>
+<tr>
+<td><code>--font-weight-black</code></td>
+<td>900</td>
+<td>Black</td>
+</tr>
+</tbody></table></div>
+<h3 id="letter-spacing">Letter Spacing</h3>
+<p>Tracking values for labels, eyebrows, and display text.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--letter-spacing-s</code></td>
+<td>0.03em</td>
+<td>Subtle tracking</td>
+</tr>
+<tr>
+<td><code>--letter-spacing-m</code></td>
+<td>0.06em</td>
+<td>Medium tracking</td>
+</tr>
+<tr>
+<td><code>--letter-spacing-l</code></td>
+<td>0.12em</td>
+<td>Wide tracking</td>
+</tr>
+<tr>
+<td><code>--letter-spacing-xl</code></td>
+<td>0.24em</td>
+<td>Extra-wide (eyebrows, labels)</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="colors">Colors</h2>
+<h3 id="neutral-scale">Neutral Scale</h3>
+<p>Warm grey ramp from lightest (50) to near-black (990).</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--neutral-50</code></td>
+<td><button type="button" class="color-copy" data-copy="#fff7f1" aria-label="Copy #fff7f1">#fff7f1<span class="color-swatch" style="background:#fff7f1;" aria-hidden="true"></span></button></td>
+</tr>
+<tr>
+<td><code>--neutral-100</code></td>
+<td><button type="button" class="color-copy" data-copy="#e8e1dc" aria-label="Copy #e8e1dc">#e8e1dc<span class="color-swatch" style="background:#e8e1dc;" aria-hidden="true"></span></button></td>
+</tr>
+<tr>
+<td><code>--neutral-150</code></td>
+<td><button type="button" class="color-copy" data-copy="#ddd6d1" aria-label="Copy #ddd6d1">#ddd6d1<span class="color-swatch" style="background:#ddd6d1;" aria-hidden="true"></span></button></td>
+</tr>
+<tr>
+<td><code>--neutral-200</code></td>
+<td><button type="button" class="color-copy" data-copy="#d2cbc6" aria-label="Copy #d2cbc6">#d2cbc6<span class="color-swatch" style="background:#d2cbc6;" aria-hidden="true"></span></button></td>
+</tr>
+<tr>
+<td><code>--neutral-300</code></td>
+<td><button type="button" class="color-copy" data-copy="#bbb5b1" aria-label="Copy #bbb5b1">#bbb5b1<span class="color-swatch" style="background:#bbb5b1;" aria-hidden="true"></span></button></td>
+</tr>
+<tr>
+<td><code>--neutral-400</code></td>
+<td><button type="button" class="color-copy" data-copy="#a59f9b" aria-label="Copy #a59f9b">#a59f9b<span class="color-swatch" style="background:#a59f9b;" aria-hidden="true"></span></button></td>
+</tr>
+<tr>
+<td><code>--neutral-500</code></td>
+<td><button type="button" class="color-copy" data-copy="#8e8986" aria-label="Copy #8e8986">#8e8986<span class="color-swatch" style="background:#8e8986;" aria-hidden="true"></span></button></td>
+</tr>
+<tr>
+<td><code>--neutral-600</code></td>
+<td><button type="button" class="color-copy" data-copy="#777371" aria-label="Copy #777371">#777371<span class="color-swatch" style="background:#777371;" aria-hidden="true"></span></button></td>
+</tr>
+<tr>
+<td><code>--neutral-700</code></td>
+<td><button type="button" class="color-copy" data-copy="#615d5b" aria-label="Copy #615d5b">#615d5b<span class="color-swatch" style="background:#615d5b;" aria-hidden="true"></span></button></td>
+</tr>
+<tr>
+<td><code>--neutral-800</code></td>
+<td><button type="button" class="color-copy" data-copy="#4a4846" aria-label="Copy #4a4846">#4a4846<span class="color-swatch" style="background:#4a4846;" aria-hidden="true"></span></button></td>
+</tr>
+<tr>
+<td><code>--neutral-900</code></td>
+<td><button type="button" class="color-copy" data-copy="#343230" aria-label="Copy #343230">#343230<span class="color-swatch" style="background:#343230;" aria-hidden="true"></span></button></td>
+</tr>
+<tr>
+<td><code>--neutral-950</code></td>
+<td><button type="button" class="color-copy" data-copy="#1d1c1b" aria-label="Copy #1d1c1b">#1d1c1b<span class="color-swatch" style="background:#1d1c1b;" aria-hidden="true"></span></button></td>
+</tr>
+<tr>
+<td><code>--neutral-990</code></td>
+<td><button type="button" class="color-copy" data-copy="#0f0e0e" aria-label="Copy #0f0e0e">#0f0e0e<span class="color-swatch" style="background:#0f0e0e;" aria-hidden="true"></span></button></td>
+</tr>
+</tbody></table></div>
+<h3 id="black-alpha-scale">Black Alpha Scale</h3>
+<p>Semi-transparent black values for overlays, borders, and tints.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Opacity</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--black</code></td>
+<td><button type="button" class="color-copy" data-copy="#000000" aria-label="Copy #000000">#000000<span class="color-swatch" style="background:#000000;" aria-hidden="true"></span></button></td>
+<td>100%</td>
+</tr>
+<tr>
+<td><code>--black-alpha-3</code></td>
+<td><button type="button" class="color-copy" data-copy="#00000008" aria-label="Copy #00000008">#00000008<span class="color-swatch" style="background:#00000008;" aria-hidden="true"></span></button></td>
+<td>3%</td>
+</tr>
+<tr>
+<td><code>--black-alpha-5</code></td>
+<td><button type="button" class="color-copy" data-copy="#0000000d" aria-label="Copy #0000000d">#0000000d<span class="color-swatch" style="background:#0000000d;" aria-hidden="true"></span></button></td>
+<td>5%</td>
+</tr>
+<tr>
+<td><code>--black-alpha-10</code></td>
+<td><button type="button" class="color-copy" data-copy="#0000001a" aria-label="Copy #0000001a">#0000001a<span class="color-swatch" style="background:#0000001a;" aria-hidden="true"></span></button></td>
+<td>10%</td>
+</tr>
+<tr>
+<td><code>--black-alpha-15</code></td>
+<td><button type="button" class="color-copy" data-copy="#00000026" aria-label="Copy #00000026">#00000026<span class="color-swatch" style="background:#00000026;" aria-hidden="true"></span></button></td>
+<td>15%</td>
+</tr>
+<tr>
+<td><code>--black-alpha-20</code></td>
+<td><button type="button" class="color-copy" data-copy="#00000033" aria-label="Copy #00000033">#00000033<span class="color-swatch" style="background:#00000033;" aria-hidden="true"></span></button></td>
+<td>20%</td>
+</tr>
+<tr>
+<td><code>--black-alpha-30</code></td>
+<td><button type="button" class="color-copy" data-copy="#0000004d" aria-label="Copy #0000004d">#0000004d<span class="color-swatch" style="background:#0000004d;" aria-hidden="true"></span></button></td>
+<td>30%</td>
+</tr>
+<tr>
+<td><code>--black-alpha-40</code></td>
+<td><button type="button" class="color-copy" data-copy="#00000066" aria-label="Copy #00000066">#00000066<span class="color-swatch" style="background:#00000066;" aria-hidden="true"></span></button></td>
+<td>40%</td>
+</tr>
+<tr>
+<td><code>--black-alpha-50</code></td>
+<td><button type="button" class="color-copy" data-copy="#00000080" aria-label="Copy #00000080">#00000080<span class="color-swatch" style="background:#00000080;" aria-hidden="true"></span></button></td>
+<td>50%</td>
+</tr>
+<tr>
+<td><code>--black-alpha-60</code></td>
+<td><button type="button" class="color-copy" data-copy="#00000099" aria-label="Copy #00000099">#00000099<span class="color-swatch" style="background:#00000099;" aria-hidden="true"></span></button></td>
+<td>60%</td>
+</tr>
+<tr>
+<td><code>--black-alpha-70</code></td>
+<td><button type="button" class="color-copy" data-copy="#000000b3" aria-label="Copy #000000b3">#000000b3<span class="color-swatch" style="background:#000000b3;" aria-hidden="true"></span></button></td>
+<td>70%</td>
+</tr>
+<tr>
+<td><code>--black-alpha-80</code></td>
+<td><button type="button" class="color-copy" data-copy="#000000cc" aria-label="Copy #000000cc">#000000cc<span class="color-swatch" style="background:#000000cc;" aria-hidden="true"></span></button></td>
+<td>80%</td>
+</tr>
+<tr>
+<td><code>--black-alpha-90</code></td>
+<td><button type="button" class="color-copy" data-copy="#000000e6" aria-label="Copy #000000e6">#000000e6<span class="color-swatch" style="background:#000000e6;" aria-hidden="true"></span></button></td>
+<td>90%</td>
+</tr>
+<tr>
+<td><code>--black-alpha-95</code></td>
+<td><button type="button" class="color-copy" data-copy="#000000f2" aria-label="Copy #000000f2">#000000f2<span class="color-swatch" style="background:#000000f2;" aria-hidden="true"></span></button></td>
+<td>95%</td>
+</tr>
+</tbody></table></div>
+<h3 id="white-alpha-scale">White Alpha Scale</h3>
+<p>Semi-transparent white values for highlights and light overlays.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Opacity</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--white</code></td>
+<td><button type="button" class="color-copy" data-copy="#ffffff" aria-label="Copy #ffffff">#ffffff<span class="color-swatch" style="background:#ffffff;" aria-hidden="true"></span></button></td>
+<td>100%</td>
+</tr>
+<tr>
+<td><code>--white-alpha-5</code></td>
+<td><button type="button" class="color-copy" data-copy="#ffffff0d" aria-label="Copy #ffffff0d">#ffffff0d<span class="color-swatch" style="background:#ffffff0d;" aria-hidden="true"></span></button></td>
+<td>5%</td>
+</tr>
+<tr>
+<td><code>--white-alpha-10</code></td>
+<td><button type="button" class="color-copy" data-copy="#ffffff1a" aria-label="Copy #ffffff1a">#ffffff1a<span class="color-swatch" style="background:#ffffff1a;" aria-hidden="true"></span></button></td>
+<td>10%</td>
+</tr>
+<tr>
+<td><code>--white-alpha-15</code></td>
+<td><button type="button" class="color-copy" data-copy="#ffffff26" aria-label="Copy #ffffff26">#ffffff26<span class="color-swatch" style="background:#ffffff26;" aria-hidden="true"></span></button></td>
+<td>15%</td>
+</tr>
+<tr>
+<td><code>--white-alpha-20</code></td>
+<td><button type="button" class="color-copy" data-copy="#ffffff33" aria-label="Copy #ffffff33">#ffffff33<span class="color-swatch" style="background:#ffffff33;" aria-hidden="true"></span></button></td>
+<td>20%</td>
+</tr>
+<tr>
+<td><code>--white-alpha-30</code></td>
+<td><button type="button" class="color-copy" data-copy="#ffffff4d" aria-label="Copy #ffffff4d">#ffffff4d<span class="color-swatch" style="background:#ffffff4d;" aria-hidden="true"></span></button></td>
+<td>30%</td>
+</tr>
+<tr>
+<td><code>--white-alpha-40</code></td>
+<td><button type="button" class="color-copy" data-copy="#ffffff66" aria-label="Copy #ffffff66">#ffffff66<span class="color-swatch" style="background:#ffffff66;" aria-hidden="true"></span></button></td>
+<td>40%</td>
+</tr>
+<tr>
+<td><code>--white-alpha-50</code></td>
+<td><button type="button" class="color-copy" data-copy="#ffffff80" aria-label="Copy #ffffff80">#ffffff80<span class="color-swatch" style="background:#ffffff80;" aria-hidden="true"></span></button></td>
+<td>50%</td>
+</tr>
+<tr>
+<td><code>--white-alpha-60</code></td>
+<td><button type="button" class="color-copy" data-copy="#ffffff99" aria-label="Copy #ffffff99">#ffffff99<span class="color-swatch" style="background:#ffffff99;" aria-hidden="true"></span></button></td>
+<td>60%</td>
+</tr>
+<tr>
+<td><code>--white-alpha-70</code></td>
+<td><button type="button" class="color-copy" data-copy="#ffffffb3" aria-label="Copy #ffffffb3">#ffffffb3<span class="color-swatch" style="background:#ffffffb3;" aria-hidden="true"></span></button></td>
+<td>70%</td>
+</tr>
+<tr>
+<td><code>--white-alpha-80</code></td>
+<td><button type="button" class="color-copy" data-copy="#ffffffcc" aria-label="Copy #ffffffcc">#ffffffcc<span class="color-swatch" style="background:#ffffffcc;" aria-hidden="true"></span></button></td>
+<td>80%</td>
+</tr>
+<tr>
+<td><code>--white-alpha-90</code></td>
+<td><button type="button" class="color-copy" data-copy="#ffffffe6" aria-label="Copy #ffffffe6">#ffffffe6<span class="color-swatch" style="background:#ffffffe6;" aria-hidden="true"></span></button></td>
+<td>90%</td>
+</tr>
+<tr>
+<td><code>--white-alpha-95</code></td>
+<td><button type="button" class="color-copy" data-copy="#fffffff2" aria-label="Copy #fffffff2">#fffffff2<span class="color-swatch" style="background:#fffffff2;" aria-hidden="true"></span></button></td>
+<td>95%</td>
+</tr>
+</tbody></table></div>
+<h3 id="color-mix-alpha-scale">Color-Mix Alpha Scale</h3>
+<p>Transparency values used with <code>color-mix()</code> to create translucent variants of any color.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--alpha-5</code></td>
+<td>transparent 5%</td>
+</tr>
+<tr>
+<td><code>--alpha-10</code></td>
+<td>transparent 10%</td>
+</tr>
+<tr>
+<td><code>--alpha-15</code></td>
+<td>transparent 15%</td>
+</tr>
+<tr>
+<td><code>--alpha-20</code></td>
+<td>transparent 20%</td>
+</tr>
+<tr>
+<td><code>--alpha-25</code></td>
+<td>transparent 25%</td>
+</tr>
+<tr>
+<td><code>--alpha-30</code></td>
+<td>transparent 30%</td>
+</tr>
+<tr>
+<td><code>--alpha-35</code></td>
+<td>transparent 35%</td>
+</tr>
+<tr>
+<td><code>--alpha-40</code></td>
+<td>transparent 40%</td>
+</tr>
+<tr>
+<td><code>--alpha-45</code></td>
+<td>transparent 45%</td>
+</tr>
+<tr>
+<td><code>--alpha-50</code></td>
+<td>transparent 50%</td>
+</tr>
+<tr>
+<td><code>--alpha-55</code></td>
+<td>transparent 55%</td>
+</tr>
+<tr>
+<td><code>--alpha-60</code></td>
+<td>transparent 60%</td>
+</tr>
+<tr>
+<td><code>--alpha-65</code></td>
+<td>transparent 65%</td>
+</tr>
+<tr>
+<td><code>--alpha-70</code></td>
+<td>transparent 70%</td>
+</tr>
+<tr>
+<td><code>--alpha-75</code></td>
+<td>transparent 75%</td>
+</tr>
+<tr>
+<td><code>--alpha-80</code></td>
+<td>transparent 80%</td>
+</tr>
+<tr>
+<td><code>--alpha-85</code></td>
+<td>transparent 85%</td>
+</tr>
+<tr>
+<td><code>--alpha-90</code></td>
+<td>transparent 90%</td>
+</tr>
+<tr>
+<td><code>--alpha-95</code></td>
+<td>transparent 95%</td>
+</tr>
+</tbody></table></div>
+<h3 id="text-colors">Text Colors</h3>
+<p>Semantic tokens that control text color by intent, not by value.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--text-primary</code></td>
+<td>var(--warm-black)</td>
+<td>Primary body text</td>
+</tr>
+<tr>
+<td><code>--text-secondary</code></td>
+<td>var(--neutral-800)</td>
+<td>Secondary/supporting text</td>
+</tr>
+<tr>
+<td><code>--text-plain</code></td>
+<td>var(--black)</td>
+<td>Pure black text</td>
+</tr>
+<tr>
+<td><code>--text-faded</code></td>
+<td>var(--black-alpha-50)</td>
+<td>De-emphasised text</td>
+</tr>
+<tr>
+<td><code>--text-accent</code></td>
+<td>var(--green)</td>
+<td>Accent/highlight text</td>
+</tr>
+<tr>
+<td><code>--text-link</code></td>
+<td>var(--green)</td>
+<td>Link text</td>
+</tr>
+<tr>
+<td><code>--text-inverted</code></td>
+<td>var(--off-white)</td>
+<td>Text on dark backgrounds</td>
+</tr>
+<tr>
+<td><code>--text-sidebar</code></td>
+<td>var(--text-primary)</td>
+<td>Sidebar navigation text</td>
+</tr>
+<tr>
+<td><code>--text-site-header</code></td>
+<td>var(--text-primary)</td>
+<td>Site header text</td>
+</tr>
+</tbody></table></div>
+<h3 id="background-colors">Background Colors</h3>
+<p>Semantic tokens for surface fills, from primary to overlays.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--background-primary</code></td>
+<td>var(--off-white)</td>
+<td>Main page background</td>
+</tr>
+<tr>
+<td><code>--background-secondary</code></td>
+<td>var(--warm-white)</td>
+<td>Secondary/alternate background</td>
+</tr>
+<tr>
+<td><code>--background-plain</code></td>
+<td>var(--white)</td>
+<td>Clean white background</td>
+</tr>
+<tr>
+<td><code>--background-faded</code></td>
+<td>var(--black-alpha-5)</td>
+<td>Subtle tinted background</td>
+</tr>
+<tr>
+<td><code>--background-darker</code></td>
+<td>var(--black-alpha-10)</td>
+<td>Darker tinted background</td>
+</tr>
+<tr>
+<td><code>--background-lighter</code></td>
+<td>var(--white-alpha-10)</td>
+<td>Lighter overlay background</td>
+</tr>
+<tr>
+<td><code>--background-modal</code></td>
+<td>rgba(0, 0, 0, 0.75)</td>
+<td>Modal backdrop</td>
+</tr>
+<tr>
+<td><code>--background-sidebar</code></td>
+<td>var(--background-primary)</td>
+<td>Sidebar background</td>
+</tr>
+<tr>
+<td><code>--background-site-header</code></td>
+<td>var(--background-primary)</td>
+<td>Site header background</td>
+</tr>
+</tbody></table></div>
+<h3 id="border-colors">Border Colors</h3>
+<p>Semantic tokens for border color by visual weight.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--border-primary</code></td>
+<td>var(--text-primary)</td>
+<td>Strong/prominent borders</td>
+</tr>
+<tr>
+<td><code>--border-secondary</code></td>
+<td>var(--neutral-300)</td>
+<td>Medium borders</td>
+</tr>
+<tr>
+<td><code>--border-faded</code></td>
+<td>var(--black-alpha-15)</td>
+<td>Subtle/light borders</td>
+</tr>
+</tbody></table></div>
+<h3 id="selection-colors">Selection Colors</h3>
+<p>Text and background colors applied to user-selected content.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--selection-text</code></td>
+<td>var(--background-primary)</td>
+<td>Text color when selected</td>
+</tr>
+<tr>
+<td><code>--selection-background</code></td>
+<td>var(--text-primary)</td>
+<td>Highlight color when selected</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="component-tokens">Component Tokens</h2>
+<h3 id="button">Button</h3>
+<p>Fill and text colors for primary, secondary, and ghost button variants.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--button-primary</code></td>
+<td>var(--text-primary)</td>
+<td>Primary button background</td>
+</tr>
+<tr>
+<td><code>--button-text</code></td>
+<td>var(--off-white)</td>
+<td>Primary button text</td>
+</tr>
+<tr>
+<td><code>--button-secondary</code></td>
+<td>var(--black)</td>
+<td>Secondary button background</td>
+</tr>
+<tr>
+<td><code>--button-secondary-text</code></td>
+<td>var(--off-white)</td>
+<td>Secondary button text</td>
+</tr>
+<tr>
+<td><code>--button-faded</code></td>
+<td>var(--black-alpha-15)</td>
+<td>Faded/ghost button background</td>
+</tr>
+</tbody></table></div>
+<h3 id="status">Status</h3>
+<p>Semantic colors for informational, success, warning, danger, and accent states.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--status-info</code></td>
+<td>var(--blue)</td>
+<td>Informational</td>
+</tr>
+<tr>
+<td><code>--status-info-bg</code></td>
+<td>var(--blue-lighter)</td>
+<td>Info background</td>
+</tr>
+<tr>
+<td><code>--status-success</code></td>
+<td>var(--green)</td>
+<td>Success</td>
+</tr>
+<tr>
+<td><code>--status-success-bg</code></td>
+<td>var(--green-lighter)</td>
+<td>Success background</td>
+</tr>
+<tr>
+<td><code>--status-warning</code></td>
+<td>var(--yellow-darker)</td>
+<td>Warning</td>
+</tr>
+<tr>
+<td><code>--status-warning-bg</code></td>
+<td>var(--yellow-lighter)</td>
+<td>Warning background</td>
+</tr>
+<tr>
+<td><code>--status-danger</code></td>
+<td>var(--red)</td>
+<td>Danger/error</td>
+</tr>
+<tr>
+<td><code>--status-danger-bg</code></td>
+<td>var(--red-lighter)</td>
+<td>Danger background</td>
+</tr>
+<tr>
+<td><code>--status-accent</code></td>
+<td>var(--purple)</td>
+<td>Accent/highlight</td>
+</tr>
+<tr>
+<td><code>--status-accent-bg</code></td>
+<td>var(--purple-lighter)</td>
+<td>Accent background</td>
+</tr>
+</tbody></table></div>
+<h3 id="form">Form</h3>
+<p>Colors for inputs, checkboxes, and toggle switches across all states.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--input-border</code></td>
+<td>var(--border-secondary)</td>
+<td>Input border</td>
+</tr>
+<tr>
+<td><code>--input-background</code></td>
+<td>var(--black-alpha-5)</td>
+<td>Input background</td>
+</tr>
+<tr>
+<td><code>--input-text</code></td>
+<td>var(--text-plain)</td>
+<td>Input text</td>
+</tr>
+<tr>
+<td><code>--input-placeholder</code></td>
+<td>var(--text-faded)</td>
+<td>Placeholder text</td>
+</tr>
+<tr>
+<td><code>--input-focus</code></td>
+<td>var(--green)</td>
+<td>Focus ring color</td>
+</tr>
+<tr>
+<td><code>--input-disabled-bg</code></td>
+<td>var(--background-faded)</td>
+<td>Disabled input background</td>
+</tr>
+<tr>
+<td><code>--input-disabled-text</code></td>
+<td>var(--text-faded)</td>
+<td>Disabled input text</td>
+</tr>
+<tr>
+<td><code>--checkbox-background</code></td>
+<td>var(--neutral-100)</td>
+<td>Checkbox background</td>
+</tr>
+<tr>
+<td><code>--checkbox-selected</code></td>
+<td>var(--text-primary)</td>
+<td>Checkbox selected fill</td>
+</tr>
+<tr>
+<td><code>--checkbox-border</code></td>
+<td>var(--border-faded)</td>
+<td>Checkbox border</td>
+</tr>
+<tr>
+<td><code>--checkbox-checkmark</code></td>
+<td>var(--off-white)</td>
+<td>Checkmark color</td>
+</tr>
+<tr>
+<td><code>--toggle-track</code></td>
+<td>var(--black-alpha-3)</td>
+<td>Toggle track background</td>
+</tr>
+<tr>
+<td><code>--toggle-knob</code></td>
+<td>var(--neutral-500)</td>
+<td>Toggle knob</td>
+</tr>
+<tr>
+<td><code>--toggle-selected</code></td>
+<td>var(--text-primary)</td>
+<td>Toggle selected track</td>
+</tr>
+<tr>
+<td><code>--toggle-knob-selected</code></td>
+<td>var(--off-white)</td>
+<td>Toggle selected knob</td>
+</tr>
+</tbody></table></div>
+<h3 id="card">Card</h3>
+<p>Surface, border, and hover colors for the card component.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--card-background</code></td>
+<td>var(--background-primary)</td>
+<td>Card background</td>
+</tr>
+<tr>
+<td><code>--card-border</code></td>
+<td>var(--border-faded)</td>
+<td>Card border</td>
+</tr>
+<tr>
+<td><code>--card-border-hover</code></td>
+<td>var(--border-primary)</td>
+<td>Card border on hover</td>
+</tr>
+</tbody></table></div>
+<h3 id="tooltip">Tooltip</h3>
+<p>Background and text colors for tooltip popups.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--tooltip-background</code></td>
+<td>var(--warm-black)</td>
+<td>Tooltip background</td>
+</tr>
+<tr>
+<td><code>--tooltip-text</code></td>
+<td>var(--off-white)</td>
+<td>Tooltip text</td>
+</tr>
+</tbody></table></div>
+<h3 id="toast">Toast</h3>
+<p>Background and text colors for toast notifications.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--toast-background</code></td>
+<td>var(--warm-black)</td>
+<td>Toast background</td>
+</tr>
+<tr>
+<td><code>--toast-text</code></td>
+<td>var(--off-white)</td>
+<td>Toast text</td>
+</tr>
+</tbody></table></div>
+<h3 id="tabs">Tabs</h3>
+<p>Active, inactive, and indicator colors for the tab component.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--tab-active-color</code></td>
+<td>var(--text-primary)</td>
+<td>Active tab text</td>
+</tr>
+<tr>
+<td><code>--tab-inactive-color</code></td>
+<td>var(--text-faded)</td>
+<td>Inactive tab text</td>
+</tr>
+<tr>
+<td><code>--tab-indicator-color</code></td>
+<td>var(--text-primary)</td>
+<td>Tab underline indicator</td>
+</tr>
+</tbody></table></div>
+<h3 id="progress">Progress</h3>
+<p>Track and fill colors for the progress bar.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--progress-track</code></td>
+<td>var(--background-darker)</td>
+<td>Track background</td>
+</tr>
+<tr>
+<td><code>--progress-fill</code></td>
+<td>var(--text-primary)</td>
+<td>Fill/bar color</td>
+</tr>
+</tbody></table></div>
+<h3 id="divider">Divider</h3>
+<p>Line color for horizontal dividers.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--divider-color</code></td>
+<td>var(--border-faded)</td>
+<td>Divider line color</td>
+</tr>
+</tbody></table></div>
+<h3 id="dropdown">Dropdown</h3>
+<p>Surface, border, and hover colors for dropdown menus.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--dropdown-background</code></td>
+<td>var(--background-primary)</td>
+<td>Dropdown background</td>
+</tr>
+<tr>
+<td><code>--dropdown-border</code></td>
+<td>var(--border-faded)</td>
+<td>Dropdown border</td>
+</tr>
+<tr>
+<td><code>--dropdown-item-hover</code></td>
+<td>var(--background-faded)</td>
+<td>Hovered item background</td>
+</tr>
+</tbody></table></div>
+<h3 id="tag">Tag</h3>
+<p>Background and border colors for inline tags.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--tag-background</code></td>
+<td>var(--background-darker)</td>
+<td>Tag background</td>
+</tr>
+<tr>
+<td><code>--tag-border</code></td>
+<td>var(--border-faded)</td>
+<td>Tag border</td>
+</tr>
+</tbody></table></div>
+<h3 id="dialog">Dialog</h3>
+<p>Surface, border, shadow, and backdrop colors for modal dialogs.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--dialog-background</code></td>
+<td>var(--background-primary)</td>
+<td>Dialog background</td>
+</tr>
+<tr>
+<td><code>--dialog-max-width</code></td>
+<td>560px</td>
+<td>Dialog maximum width</td>
+</tr>
+<tr>
+<td><code>--dialog-shadow</code></td>
+<td>0 8px 32px var(--black-alpha-20)</td>
+<td>Dialog drop shadow</td>
+</tr>
+<tr>
+<td><code>--dialog-backdrop</code></td>
+<td>rgba(0, 0, 0, 0.6)</td>
+<td>Dialog backdrop overlay</td>
+</tr>
+</tbody></table></div>
+<h3 id="slider">Slider</h3>
+<p>Track, fill, and thumb colors for range sliders.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--slider-track-background</code></td>
+<td>var(--background-darker)</td>
+<td>Slider track</td>
+</tr>
+<tr>
+<td><code>--slider-fill</code></td>
+<td>var(--text-primary)</td>
+<td>Slider filled portion</td>
+</tr>
+<tr>
+<td><code>--slider-thumb-background</code></td>
+<td>var(--text-primary)</td>
+<td>Thumb fill</td>
+</tr>
+<tr>
+<td><code>--slider-thumb-border</code></td>
+<td>var(--background-primary)</td>
+<td>Thumb border</td>
+</tr>
+</tbody></table></div>
+<h3 id="rating">Rating</h3>
+<p>Star colors and sizing for the rating component.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--rating-color</code></td>
+<td>var(--yellow)</td>
+<td>Filled star color</td>
+</tr>
+<tr>
+<td><code>--rating-color-empty</code></td>
+<td>var(--background-faded)</td>
+<td>Empty star color</td>
+</tr>
+<tr>
+<td><code>--rating-size</code></td>
+<td>1.5rem</td>
+<td>Star size</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="spacing">Spacing</h2>
+<h3 id="unit-scale">Unit Scale</h3>
+<p>The base spacing ramp from 0 to 160px, used as building blocks for all spacing.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>px Equivalent</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--none</code></td>
+<td>0</td>
+<td>0px</td>
+</tr>
+<tr>
+<td><code>--2xs</code></td>
+<td>0.125rem</td>
+<td>2px</td>
+</tr>
+<tr>
+<td><code>--xs</code></td>
+<td>0.25rem</td>
+<td>4px</td>
+</tr>
+<tr>
+<td><code>--s</code></td>
+<td>0.5rem</td>
+<td>8px</td>
+</tr>
+<tr>
+<td><code>--m</code></td>
+<td>0.75rem</td>
+<td>12px</td>
+</tr>
+<tr>
+<td><code>--l</code></td>
+<td>1rem</td>
+<td>16px</td>
+</tr>
+<tr>
+<td><code>--xl</code></td>
+<td>1.5rem</td>
+<td>24px</td>
+</tr>
+<tr>
+<td><code>--2xl</code></td>
+<td>2rem</td>
+<td>32px</td>
+</tr>
+<tr>
+<td><code>--3xl</code></td>
+<td>2.5rem</td>
+<td>40px</td>
+</tr>
+<tr>
+<td><code>--4xl</code></td>
+<td>3rem</td>
+<td>48px</td>
+</tr>
+<tr>
+<td><code>--5xl</code></td>
+<td>3.5rem</td>
+<td>56px</td>
+</tr>
+<tr>
+<td><code>--6xl</code></td>
+<td>4rem</td>
+<td>64px</td>
+</tr>
+<tr>
+<td><code>--7xl</code></td>
+<td>4.5rem</td>
+<td>72px</td>
+</tr>
+<tr>
+<td><code>--8xl</code></td>
+<td>5rem</td>
+<td>80px</td>
+</tr>
+<tr>
+<td><code>--9xl</code></td>
+<td>5.5rem</td>
+<td>88px</td>
+</tr>
+<tr>
+<td><code>--10xl</code></td>
+<td>6rem</td>
+<td>96px</td>
+</tr>
+<tr>
+<td><code>--11xl</code></td>
+<td>6.5rem</td>
+<td>104px</td>
+</tr>
+<tr>
+<td><code>--12xl</code></td>
+<td>7rem</td>
+<td>112px</td>
+</tr>
+<tr>
+<td><code>--13xl</code></td>
+<td>7.5rem</td>
+<td>120px</td>
+</tr>
+<tr>
+<td><code>--14xl</code></td>
+<td>10rem</td>
+<td>160px</td>
+</tr>
+</tbody></table></div>
+<h3 id="space-tokens">Space Tokens</h3>
+<p>Semantic spacing aliases that reference the unit scale — use these in layouts and components.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>px Equivalent</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--space-none</code></td>
+<td>var(--none)</td>
+<td>0px</td>
+</tr>
+<tr>
+<td><code>--space-2xs</code></td>
+<td>var(--2xs)</td>
+<td>2px</td>
+</tr>
+<tr>
+<td><code>--space-xs</code></td>
+<td>var(--xs)</td>
+<td>4px</td>
+</tr>
+<tr>
+<td><code>--space-s</code></td>
+<td>var(--s)</td>
+<td>8px</td>
+</tr>
+<tr>
+<td><code>--space-m</code></td>
+<td>var(--m)</td>
+<td>12px</td>
+</tr>
+<tr>
+<td><code>--space-l</code></td>
+<td>var(--l)</td>
+<td>16px</td>
+</tr>
+<tr>
+<td><code>--space-xl</code></td>
+<td>var(--xl)</td>
+<td>24px</td>
+</tr>
+<tr>
+<td><code>--space-2xl</code></td>
+<td>var(--2xl)</td>
+<td>32px</td>
+</tr>
+<tr>
+<td><code>--space-3xl</code></td>
+<td>var(--3xl)</td>
+<td>40px</td>
+</tr>
+<tr>
+<td><code>--space-4xl</code></td>
+<td>var(--4xl)</td>
+<td>48px</td>
+</tr>
+<tr>
+<td><code>--space-5xl</code></td>
+<td>var(--5xl)</td>
+<td>56px</td>
+</tr>
+<tr>
+<td><code>--space-6xl</code></td>
+<td>var(--6xl)</td>
+<td>64px</td>
+</tr>
+<tr>
+<td><code>--space-7xl</code></td>
+<td>var(--7xl)</td>
+<td>72px</td>
+</tr>
+<tr>
+<td><code>--space-8xl</code></td>
+<td>var(--8xl)</td>
+<td>80px</td>
+</tr>
+<tr>
+<td><code>--space-9xl</code></td>
+<td>var(--9xl)</td>
+<td>88px</td>
+</tr>
+<tr>
+<td><code>--space-10xl</code></td>
+<td>var(--10xl)</td>
+<td>96px</td>
+</tr>
+<tr>
+<td><code>--space-11xl</code></td>
+<td>var(--11xl)</td>
+<td>104px</td>
+</tr>
+<tr>
+<td><code>--space-12xl</code></td>
+<td>var(--12xl)</td>
+<td>112px</td>
+</tr>
+<tr>
+<td><code>--space-13xl</code></td>
+<td>var(--13xl)</td>
+<td>120px</td>
+</tr>
+<tr>
+<td><code>--space-14xl</code></td>
+<td>var(--14xl)</td>
+<td>160px</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-spacing">Section Spacing</h3>
+<p>Vertical rhythm tokens for macro-level section padding.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>px Equivalent</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--section-xs</code></td>
+<td>var(--space-xl)</td>
+<td>24px</td>
+</tr>
+<tr>
+<td><code>--section-s</code></td>
+<td>var(--space-2xl)</td>
+<td>32px</td>
+</tr>
+<tr>
+<td><code>--section-m</code></td>
+<td>var(--space-6xl)</td>
+<td>64px</td>
+</tr>
+<tr>
+<td><code>--section-l</code></td>
+<td>var(--space-10xl)</td>
+<td>96px</td>
+</tr>
+<tr>
+<td><code>--section-xl</code></td>
+<td>var(--space-14xl)</td>
+<td>160px</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="borders">Borders</h2>
+<h3 id="border-widths">Border Widths</h3>
+<p>Available thickness values for the composable border system.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--border-s</code></td>
+<td>1.5px</td>
+<td>Default/thin border</td>
+</tr>
+<tr>
+<td><code>--border-m</code></td>
+<td>2px</td>
+<td>Medium border</td>
+</tr>
+<tr>
+<td><code>--border-l</code></td>
+<td>4px</td>
+<td>Thick/accent border</td>
+</tr>
+</tbody></table></div>
+<h3 id="border-composition">Border Composition</h3>
+<p>Default values applied when using structural border classes like <code>.border</code> or <code>.border-top</code>.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--border-width</code></td>
+<td>var(--border-s)</td>
+<td>Default border width</td>
+</tr>
+<tr>
+<td><code>--border-style</code></td>
+<td>solid</td>
+<td>Default border style</td>
+</tr>
+<tr>
+<td><code>--border-color</code></td>
+<td>var(--border-primary)</td>
+<td>Default border color</td>
+</tr>
+</tbody></table></div>
+<h3 id="border-radius">Border Radius</h3>
+<p>Rounding scale from subtle corners to fully rounded pills.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--radius-xs</code></td>
+<td>4px</td>
+<td>Subtle rounding</td>
+</tr>
+<tr>
+<td><code>--radius-s</code></td>
+<td>6px</td>
+<td>Small rounding</td>
+</tr>
+<tr>
+<td><code>--radius-m</code></td>
+<td>10px</td>
+<td>Medium rounding</td>
+</tr>
+<tr>
+<td><code>--radius-l</code></td>
+<td>16px</td>
+<td>Large rounding</td>
+</tr>
+<tr>
+<td><code>--radius-xl</code></td>
+<td>24px</td>
+<td>Extra-large rounding</td>
+</tr>
+<tr>
+<td><code>--radius-pill</code></td>
+<td>999px</td>
+<td>Fully rounded / pill shape</td>
+</tr>
+</tbody></table></div>
+
+                </article>
+            </main>
+
+            <!-- Table of Contents -->
+            <aside class="docs-toc">
+      <span class="toc-header">On this page</span>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#brand-tokens" class="toc-link">Brand Tokens</a></li><li class="toc-item toc-level-2"><a href="#typography" class="toc-link">Typography</a></li><li class="toc-item toc-level-2"><a href="#colors" class="toc-link">Colors</a></li><li class="toc-item toc-level-2"><a href="#component-tokens" class="toc-link">Component Tokens</a></li><li class="toc-item toc-level-2"><a href="#spacing" class="toc-link">Spacing</a></li><li class="toc-item toc-level-2"><a href="#borders" class="toc-link">Borders</a></li></ul></nav></div>
+    </aside>
+        </div>
+
+        <!-- Page Navigation (Previous / Next) -->
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="what-is-a-design-system.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <h3 class="page-nav-title">What is a Design System?</h3>
+      </span>
+    </a><a href="color.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <h3 class="page-nav-title">Color</h3>
+      </span>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+    </a></div></nav>
+
+        <!-- Page Feedback -->
+        <section class="page-feedback" aria-label="Page feedback">
+            <div class="page-feedback-inner padding-global">
+                <h3 class="page-feedback-prompt">Was this page helpful?</h3>
+                <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
+                <div class="button-group">
+                    <button class="button" data-feedback="yes" type="button"><div class="icn-svg" data-icon="thumbs-up" data-file="thumbs-up.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 3L14.5 8H23V12.5L19.5 21H2V8H7L14 1L16 3ZM9.29289 8.53426C9.10536 8.72179 9 8.97615 9 9.24136V17C9 18.1046 9.89543 19 11 19H16.8208C17.6312 19 18.3616 18.5109 18.6701 17.7615L21 12.1035V11C21 10.4477 20.5523 10 20 10H13.1555C12.4856 10 12.0052 9.35431 12.1976 8.71271L13.2907 5.06833C13.3504 4.86932 13.1046 4.72254 12.9577 4.86945L9.29289 8.53426ZM5 10C4.44772 10 4 10.4477 4 11V18C4 18.5523 4.44772 19 5 19H6C6.55228 19 7 18.5523 7 18V11C7 10.4477 6.55228 10 6 10H5Z" fill="currentColor"/></svg></div> Yes</button>
+                    <button class="button is-outline is-faded" data-feedback="no" type="button"><div class="icn-svg" data-icon="thumbs-down" data-file="thumbs-down.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21L9.5 16H1L1 11.5L4.5 3L22 3L22 16L17 16L10 23L8 21ZM14.7071 15.4657C14.8946 15.2782 15 15.0239 15 14.7586L15 7C15 5.89543 14.1046 5 13 5L7.17921 5C6.36877 5 5.63845 5.48908 5.32986 6.23847L3 11.8965L3 13C3 13.5523 3.44772 14 4 14L10.8445 14C11.5144 14 11.9948 14.6457 11.8024 15.2873L10.7093 18.9317C10.6496 19.1307 10.8954 19.2775 11.0423 19.1305L14.7071 15.4657ZM19 14C19.5523 14 20 13.5523 20 13V6C20 5.44772 19.5523 5 19 5H18C17.4477 5 17 5.44772 17 6V13C17 13.5523 17.4477 14 18 14H19Z" fill="currentColor"/></svg></div> No</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Modal -->
+        <dialog class="feedback-modal" aria-label="Send feedback">
+            <div class="feedback-modal-content">
+                <h3 class="feedback-modal-title">Send feedback</h3>
+                <p class="feedback-modal-subtitle"></p>
+                <form class="feedback-form" name="page-feedback" data-netlify="true">
+                    <input type="hidden" name="form-name" value="page-feedback">
+                    <input type="hidden" name="sentiment" value="">
+                    <input type="hidden" name="page" value="">
+                    <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
+                    <div class="button-group feedback-modal-actions">
+                        <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>
+                        <button type="submit" class="button is-small">Send feedback</button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
+
+        <!-- Footer -->
+        <footer class="docs-footer">
+            <div class="docs-footer-inner padding-global">
+                <p class="docs-footer-text">© 2026 By Default BrandOS</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- Initialize Highlight.js, Copy, and TOC -->
+    <script>
+        (function() {
+            'use strict';
+
+            function initHighlight() {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+
+            function initTOCActiveState() {
+                const tocLinks = document.querySelectorAll('.toc-link');
+                const headings = document.querySelectorAll('h1[id], h2[id]');
+
+                if (tocLinks.length === 0 || headings.length === 0) return;
+
+                const linkMap = new Map();
+                tocLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        const id = href.substring(1);
+                        linkMap.set(id, link);
+                    }
+                });
+
+                const observerOptions = {
+                    rootMargin: '-20% 0px -70% 0px',
+                    threshold: 0
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const id = entry.target.id;
+                        const link = linkMap.get(id);
+
+                        if (entry.isIntersecting) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            if (link) {
+                                link.classList.add('toc-link-active');
+                            }
+                        }
+                    });
+                }, observerOptions);
+
+                headings.forEach(heading => {
+                    if (heading.id) {
+                        observer.observe(heading);
+                    }
+                });
+
+                function setInitialActive() {
+                    let activeHeading = null;
+                    let maxTop = -Infinity;
+
+                    headings.forEach(heading => {
+                        const rect = heading.getBoundingClientRect();
+                        if (rect.top <= 100 && rect.top > maxTop) {
+                            maxTop = rect.top;
+                            activeHeading = heading;
+                        }
+                    });
+
+                    if (activeHeading && activeHeading.id) {
+                        const link = linkMap.get(activeHeading.id);
+                        if (link) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            link.classList.add('toc-link-active');
+                        }
+                    }
+                }
+
+                setInitialActive();
+
+                let scrollTimeout;
+                window.addEventListener('scroll', () => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(setInitialActive, 100);
+                });
+            }
+
+            function init() {
+                initHighlight();
+                initTOCActiveState();
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+
+    <!-- Back to Top -->
+    <div class="back-to-top-wrapper">
+      <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
+        <div class="icn-svg" data-icon="arrow-top" data-file="arrow-top.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M4 4V2H20V4H4Z" fill="currentColor"/><path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/></svg></div>
+      </button>
+    </div>
+    <script>
+      (function() {
+        var btn = document.querySelector('.back-to-top-wrapper');
+        if (!btn) return;
+        window.addEventListener('scroll', function() {
+          btn.classList.toggle('is-visible', window.scrollY > 300);
+        });
+        btn.querySelector('button').addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+
+    <!-- Dropdown -->
+    <script src="../assets/js/dropdown.js"></script>
+
+    <!-- Site Navigation -->
+    <script src="../assets/js/nav.js"></script>
+    <!-- Auth -->
+    <script src="../assets/js/auth-config.js"></script>
+    <!-- Theme -->
+    <script src="../assets/js/theme-config.js"></script>
+    <script src="../assets/js/theme-loader.js"></script>
+    <!-- Auth (must load after theme scripts) -->
+    <script src="../assets/js/auth.js"></script>
+    <!-- Feedback -->
+    <script src="../assets/js/feedback.js"></script>
+    <!-- Copy to clipboard -->
+    <script src="../assets/js/copy-button.js"></script>
+    <!-- Number input stepper -->
+    <script src="../assets/js/number-input.js"></script>
+    <!-- Tabs -->
+    <script src="../assets/js/tabs.js"></script>
+    <!-- Toast notifications -->
+    <script src="../assets/js/toast.js"></script>
+    <!-- Dialog -->
+    <script src="../assets/js/dialog.js"></script>
+    <!-- Rating -->
+    <script src="../assets/js/rating.js"></script>
+    <!-- Markdown download/open — strips frontmatter and block HTML -->
+    <script src="../assets/js/md-strip.js"></script>
+
+    <script>
+      /* Tag dismiss */
+      document.addEventListener('click', function (e) {
+        var removeBtn = e.target.closest('.tag-remove');
+        if (removeBtn) {
+          var tag = removeBtn.closest('.tag');
+          if (tag) tag.remove();
+        }
+      });
+
+      /* Table scroll overflow hint */
+      (function initTableScroll() {
+        var wrappers = document.querySelectorAll('.table-scroll');
+        if (!wrappers.length) return;
+
+        function checkOverflow(wrapper) {
+          var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
+          var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
+          wrapper.classList.toggle('is-overflowing', isOverflowing);
+          wrapper.classList.toggle('is-scrolled-end', isAtEnd);
+        }
+
+        wrappers.forEach(function(wrapper) {
+          checkOverflow(wrapper);
+          wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+        });
+
+        window.addEventListener('resize', function() {
+          wrappers.forEach(checkOverflow);
+        });
+      })();
+    </script>
+</body>
+</html>

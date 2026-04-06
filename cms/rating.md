@@ -3,8 +3,8 @@ title: "Rating"
 subtitle: "Interactive and read-only star ratings"
 description: "How to use the rating component for star-based ratings and reviews."
 section: "Design System"
-subsection: ""
-order: 29
+subsection: "Feedback"
+order: 4
 slug: "rating"
 status: "published"
 access: "team"

@@ -26,7 +26,7 @@
   <!-- Site styles (auth UI) -->
   <link rel="stylesheet" href="../assets/css/style.css" />
   <!-- Calculator Styles (last for override specificity) -->
-  <link rel="stylesheet" href="../assets/css/calculator.css" />
+  <link rel="stylesheet" href="../assets/css/tools.css" />
 
   <!-- GoTrue JS (skipped on localhost) -->
   <script>
@@ -64,8 +64,8 @@
 
       <!-- Sticky Toggle Bar -->
       <div class="sticky-bar">
-        <div class="sticky-bar-inner">
-          <div class="block row gap-m" style="overflow-x: auto; flex-shrink: 0;">
+        <div class="sticky-bar-container">
+          <div class="sticky-bar-content">
             <div class="form-toggle">
               <input type="checkbox" id="opt-af">
               <label for="opt-af">Creative Fee</label>
@@ -79,9 +79,8 @@
               <label for="opt-pf">Add Partner</label>
             </div>
           </div>
-
-          <!-- Dropdown actions -->
-          <div class="dropdown" id="calculator-dropdown">
+          <div class="sticky-bar-actions">
+            <div class="dropdown" id="calculator-dropdown">
             <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false">
               <div class="icn-svg" data-icon="settings">
                 <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M11 15H22V17H11V19H5V17H2V15H5V13H11V15ZM7 17H9V15H7V17Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M19 7H22V9H19V11H13V9H2V7H13V5H19V7ZM15 9H17V7H15V9Z" fill="currentColor"/></svg>
@@ -105,7 +104,7 @@
                 </div>
                 <span>Save</span>
               </button>
-              <button class="dropdown-item" role="menuitem" type="button" id="btn-copy-url">
+              <button class="dropdown-item js-copy-url" role="menuitem" type="button" id="btn-copy-url">
                 <div class="icn-svg" data-icon="link">
                   <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M14.83 16.24L8.46 22.61L1.39 15.54L7.76 9.17L9.17 10.59L5.64 14.12C4.85 14.9 4.85 16.17 5.64 16.95L7.05 18.36C7.83 19.14 9.1 19.14 9.88 18.36L13.41 14.83L14.83 16.24ZM9.17 16.24L7.76 14.83L14.83 7.76L16.24 9.17L9.17 16.24ZM16.24 14.83L14.83 13.41L18.36 9.88C19.14 9.1 19.14 7.83 18.36 7.05L16.95 5.64C16.17 4.85 14.9 4.85 14.12 5.64L10.59 9.17L9.17 7.76L15.54 1.39L22.61 8.46L16.24 14.83Z" fill="currentColor"/></svg>
                 </div>
@@ -129,6 +128,7 @@
               </button>
             </div>
           </div>
+          </div>
         </div>
       </div>
 
@@ -139,43 +139,43 @@
             <div class="block gap-l">
               <h2>Campaign Overview</h2>
 
-              <div class="calculator-grid">
+              <div class="tool-grid">
                 <!-- Always visible: Campaign Spend + CPM -->
-                <div class="calculator-grid-field">
+                <div class="tool-grid-field">
                   <label for="total-campaign-spend"><strong>Campaign Spend (<span class="currency-symbol">£</span>)</strong></label>
                   <input type="number" id="total-campaign-spend" name="total-campaign-spend" min="0" value="300000" />
                 </div>
 
-                <div class="calculator-grid-field">
+                <div class="tool-grid-field">
                   <label for="campaign-cpm"><strong>Campaign CPM (<span class="currency-symbol">£</span>)</strong></label>
                   <input type="number" id="campaign-cpm" name="campaign-cpm" min="0" value="15" />
                 </div>
 
                 <!-- Fee inputs: side by side when both on, full width when solo -->
-                <div class="calculator-grid-field" data-opt="af" id="field-af">
+                <div class="tool-grid-field" data-opt="af" id="field-af">
                   <label for="agency-fee-cpm"><strong>Creative Fee (CPM, <span class="currency-symbol">£</span>)</strong></label>
                   <input type="number" id="agency-fee-cpm" name="agency-fee-cpm" min="0" value="1" />
                 </div>
 
-                <div class="calculator-grid-field" data-opt="ah" id="field-ah">
+                <div class="tool-grid-field" data-opt="ah" id="field-ah">
                   <label for="ad-hosting-fee-cpm"><strong>Ad Hosting Fee (CPM, <span class="currency-symbol">£</span>)</strong></label>
                   <input type="number" id="ad-hosting-fee-cpm" name="ad-hosting-fee-cpm" min="0" value="1" />
                 </div>
 
                 <!-- Partner fields -->
-                <hr class="divider" data-opt="pf">
+                <hr class="divider grid-full" data-opt="pf">
 
-                <div class="calculator-grid-field grid-full" data-opt="pf">
+                <div class="tool-grid-field grid-full" data-opt="pf">
                   <label for="partner-name"><strong>Partner Name</strong></label>
                   <input type="text" id="partner-name" name="partner-name" placeholder="e.g. Vouge" value="" />
                 </div>
 
-                <div class="calculator-grid-field" data-opt="pf">
+                <div class="tool-grid-field" data-opt="pf">
                   <label for="publisher-payout"><strong>Partner Share (%)</strong></label>
                   <input type="number" id="publisher-payout" name="publisher-payout" min="0" max="100" value="70" />
                 </div>
 
-                <div class="calculator-grid-field" data-opt="pf">
+                <div class="tool-grid-field" data-opt="pf">
                   <label for="partner-margin-payout"><strong>Net (%)</strong></label>
                   <input type="number" id="partner-margin-payout" name="partner-margin-payout" min="0" max="100" value="30" />
                 </div>
@@ -283,8 +283,8 @@
 
   </div>
 
-  <script src="../assets/js/calculator.js"></script>
   <script src="../assets/js/dropdown.js"></script>
+  <script src="../assets/js/calculator.js"></script>
 
   <!-- Back to Top -->
   <div class="back-to-top-wrapper">

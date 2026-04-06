@@ -1,7 +1,7 @@
 ---
 title: "Color"
 subtitle: "Color tokens and semantic colors"
-description: "Complete reference for all color tokens including primitive colors and semantic color mappings."
+description: "Visual reference for all color tokens — brand palette, primitive scales, and semantic mappings."
 section: "Design System"
 subsection: ""
 order: 2
@@ -11,298 +11,193 @@ access: "team"
 client: "internal"
 ---
 
-Color tokens are the foundation of the design system's color system. They define the shared, reusable color values that power both design and code. By standardising these decisions in one place, tokens keep the experience consistent, reduce duplication, and make global updates safe and fast.
+Color tokens define the shared, reusable color values that power both design and code. This page shows what each color looks like. For the full token list with values, see the [Tokens](tokens.html) page.
 
-## Primitive Colors
+Colors are organised into two layers: **primitive tokens** (raw values) and **semantic tokens** (intent-based aliases). Always use semantic tokens in production code — primitives are the building blocks that semantic tokens reference.
 
-Primitive colors are the raw color values used as building blocks for all other color tokens. They can be used directly in layouts or components, but it's **preferred to use semantic tokens** instead.
+---
 
-### Brand Colors
+## Brand Palette
 
-Brand tokens are project-level overrides and may change per project. **You can rename the token names** to anything relating to your brand (e.g., `--primary`, `--off-white`, `--charcoal`, `--hero-blue`, etc.). This personalizes the system and makes it more intuitive for your team.
+The core brand colors that define the project identity. These are set per-project in the Brand Tokens section of `design-system.css`.
 
-| Token | Value | Description |
-| --- | --- | --- |
-| `--warm-black` | #brand-hex1 | Dark brand color |
-| `--off-white` | #brand-hex2 | Light brand color |
-| `--green` | #brand-hex3 | Accent brand color |
+<div class="color-list border border-faded">
+  <div class="color-row" style="background-color: var(--off-white);" data-token="--off-white"><span class="color-row-name">off-white</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--warm-white);" data-token="--warm-white"><span class="color-row-name">warm-white</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--warm-black);" data-token="--warm-black"><span class="color-row-name">warm-black</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--off-black);" data-token="--off-black"><span class="color-row-name">off-black</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+</div>
 
-<div class="demo-preview is-joined">
-  <div class="block row gap-m" style="flex-wrap: wrap;">
-    <div style="background: var(--warm-black); color: var(--off-white); padding: var(--space-l) var(--space-xl); min-width: 8rem; text-align: center;">
-      <strong>--warm-black</strong>
-    </div>
-    <div style="background: var(--off-white); color: var(--warm-black); padding: var(--space-l) var(--space-xl); min-width: 8rem; text-align: center; border: var(--border-s) solid var(--border-faded);">
-      <strong>--off-white</strong>
-    </div>
-    <div style="background: var(--green); color: var(--off-white); padding: var(--space-l) var(--space-xl); min-width: 8rem; text-align: center;">
-      <strong>--green</strong>
-    </div>
+### Accent Colors
+
+<div class="grid cols-2 gap-m">
+  <div class="color-list border border-faded">
+    <div class="color-row" style="background-color: var(--red-lighter);" data-token="--red-lighter"><span class="color-row-name">red-lighter</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row" style="background-color: var(--red-light);" data-token="--red-light"><span class="color-row-name">red-light</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row is-text-light" style="background-color: var(--red);" data-token="--red"><span class="color-row-name">red</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row is-text-light" style="background-color: var(--red-dark);" data-token="--red-dark"><span class="color-row-name">red-dark</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  </div>
+  <div class="color-list border border-faded">
+    <div class="color-row" style="background-color: var(--blue-lighter);" data-token="--blue-lighter"><span class="color-row-name">blue-lighter</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row" style="background-color: var(--blue-light);" data-token="--blue-light"><span class="color-row-name">blue-light</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row is-text-light" style="background-color: var(--blue);" data-token="--blue"><span class="color-row-name">blue</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row is-text-light" style="background-color: var(--blue-dark);" data-token="--blue-dark"><span class="color-row-name">blue-dark</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  </div>
+  <div class="color-list border border-faded">
+    <div class="color-row" style="background-color: var(--yellow-lighter);" data-token="--yellow-lighter"><span class="color-row-name">yellow-lighter</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row" style="background-color: var(--yellow-light);" data-token="--yellow-light"><span class="color-row-name">yellow-light</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row is-text-light" style="background-color: var(--yellow);" data-token="--yellow"><span class="color-row-name">yellow</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row is-text-light" style="background-color: var(--yellow-dark);" data-token="--yellow-dark"><span class="color-row-name">yellow-dark</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  </div>
+  <div class="color-list border border-faded">
+    <div class="color-row" style="background-color: var(--green-lighter);" data-token="--green-lighter"><span class="color-row-name">green-lighter</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row" style="background-color: var(--green-light);" data-token="--green-light"><span class="color-row-name">green-light</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row is-text-light" style="background-color: var(--green);" data-token="--green"><span class="color-row-name">green</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row is-text-light" style="background-color: var(--green-dark);" data-token="--green-dark"><span class="color-row-name">green-dark</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  </div>
+  <div class="color-list border border-faded">
+    <div class="color-row" style="background-color: var(--purple-lighter);" data-token="--purple-lighter"><span class="color-row-name">purple-lighter</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row" style="background-color: var(--purple-light);" data-token="--purple-light"><span class="color-row-name">purple-light</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row is-text-light" style="background-color: var(--purple);" data-token="--purple"><span class="color-row-name">purple</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row is-text-light" style="background-color: var(--purple-dark);" data-token="--purple-dark"><span class="color-row-name">purple-dark</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
   </div>
 </div>
 
-```css
-:root {
-  /* You can use default names or rename tokens to match your brand */
-  --warm-black: #1a1a1a; /* Replace with your brand color */
-  
-  /* Or use custom names that make sense for your project */
-  --charcoal: #1a1a1a;
-  --off-white: #f5f5f5;
-  --hero-blue: #0066cc;
-}
+---
 
-.div {
-  color: var(--warm-black);
-  /* Or use your custom token name */
-  /* color: var(--charcoal); */
-}
-```
+## Primitive Scales
 
-### Black
+### Neutral
 
-Black tokens provide true black and black with varying opacity levels for overlays, shadows, and faded text.
+Warm grey ramp from lightest to near-black, used for backgrounds, borders, and secondary text.
 
-| Token | Value | Description |
-| --- | --- | --- |
-| `--black` | #000000 | True black |
-| `--black-alpha-5` | #0000000D | 5% opacity |
-| `--black-alpha-10` | #0000001A | 10% opacity |
-| `--black-alpha-15` | #00000026 | 15% opacity |
-| `--black-alpha-20` | #00000033 | 20% opacity |
-| `--black-alpha-30` | #0000004D | 30% opacity |
-| `--black-alpha-40` | #00000066 | 40% opacity |
-| `--black-alpha-50` | #00000080 | 50% opacity |
-| `--black-alpha-60` | #00000099 | 60% opacity |
-| `--black-alpha-70` | #000000B3 | 70% opacity |
-| `--black-alpha-80` | #000000CC | 80% opacity |
-| `--black-alpha-90` | #000000E6 | 90% opacity |
-| `--black-alpha-95` | #000000F2 | 95% opacity |
-
-<div class="demo-preview is-joined" style="display: flex; flex-wrap: wrap; gap: var(--space-xs);">
-  <div style="background: var(--black); width: 3rem; height: 3rem; " title="--black"></div>
-  <div style="background: var(--black-alpha-90); width: 3rem; height: 3rem; " title="--black-alpha-90"></div>
-  <div style="background: var(--black-alpha-80); width: 3rem; height: 3rem; " title="--black-alpha-80"></div>
-  <div style="background: var(--black-alpha-70); width: 3rem; height: 3rem; " title="--black-alpha-70"></div>
-  <div style="background: var(--black-alpha-60); width: 3rem; height: 3rem; " title="--black-alpha-60"></div>
-  <div style="background: var(--black-alpha-50); width: 3rem; height: 3rem; " title="--black-alpha-50"></div>
-  <div style="background: var(--black-alpha-40); width: 3rem; height: 3rem; " title="--black-alpha-40"></div>
-  <div style="background: var(--black-alpha-30); width: 3rem; height: 3rem; " title="--black-alpha-30"></div>
-  <div style="background: var(--black-alpha-20); width: 3rem; height: 3rem; " title="--black-alpha-20"></div>
-  <div style="background: var(--black-alpha-15); width: 3rem; height: 3rem; " title="--black-alpha-15"></div>
-  <div style="background: var(--black-alpha-10); width: 3rem; height: 3rem; " title="--black-alpha-10"></div>
-  <div style="background: var(--black-alpha-5); width: 3rem; height: 3rem; " title="--black-alpha-5"></div>
+<div class="color-list border border-faded">
+  <div class="color-row" style="background-color: var(--neutral-50);" data-token="--neutral-50"><span class="color-row-name">neutral-50</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--neutral-100);" data-token="--neutral-100"><span class="color-row-name">neutral-100</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--neutral-150);" data-token="--neutral-150"><span class="color-row-name">neutral-150</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--neutral-200);" data-token="--neutral-200"><span class="color-row-name">neutral-200</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--neutral-300);" data-token="--neutral-300"><span class="color-row-name">neutral-300</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--neutral-400);" data-token="--neutral-400"><span class="color-row-name">neutral-400</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--neutral-500);" data-token="--neutral-500"><span class="color-row-name">neutral-500</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--neutral-600);" data-token="--neutral-600"><span class="color-row-name">neutral-600</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--neutral-700);" data-token="--neutral-700"><span class="color-row-name">neutral-700</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--neutral-800);" data-token="--neutral-800"><span class="color-row-name">neutral-800</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--neutral-900);" data-token="--neutral-900"><span class="color-row-name">neutral-900</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--neutral-950);" data-token="--neutral-950"><span class="color-row-name">neutral-950</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--neutral-990);" data-token="--neutral-990"><span class="color-row-name">neutral-990</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
 </div>
 
-```css
-.shadow {
-  box-shadow: 0 4px 6px var(--black-alpha-30);
-}
-```
+### Black Alpha
 
-### White
+Semi-transparent black values for overlays, shadows, borders, and tints.
 
-White tokens provide true white and white with varying opacity levels for overlays and backgrounds.
-
-| Token | Value | Description |
-| --- | --- | --- |
-| `--white` | #FFFFFF | True white |
-| `--white-alpha-5` | #FFFFFF0D | 5% opacity |
-| `--white-alpha-10` | #FFFFFF1A | 10% opacity |
-| `--white-alpha-15` | #FFFFFF26 | 15% opacity |
-| `--white-alpha-20` | #FFFFFF33 | 20% opacity |
-| `--white-alpha-30` | #FFFFFF4D | 30% opacity |
-| `--white-alpha-40` | #FFFFFF66 | 40% opacity |
-| `--white-alpha-50` | #FFFFFF80 | 50% opacity |
-| `--white-alpha-60` | #FFFFFF99 | 60% opacity |
-| `--white-alpha-70` | #FFFFFFB3 | 70% opacity |
-| `--white-alpha-80` | #FFFFFFCC | 80% opacity |
-| `--white-alpha-90` | #FFFFFFE6 | 90% opacity |
-| `--white-alpha-95` | #FFFFFFF2 | 95% opacity |
-
-<div class="demo-preview is-joined" style="display: flex; flex-wrap: wrap; gap: var(--space-xs); background: var(--neutral-800); padding: var(--space-xl);">
-  <div style="background: var(--white); width: 3rem; height: 3rem; " title="--white"></div>
-  <div style="background: var(--white-alpha-95); width: 3rem; height: 3rem; " title="--white-alpha-95"></div>
-  <div style="background: var(--white-alpha-90); width: 3rem; height: 3rem; " title="--white-alpha-90"></div>
-  <div style="background: var(--white-alpha-80); width: 3rem; height: 3rem; " title="--white-alpha-80"></div>
-  <div style="background: var(--white-alpha-70); width: 3rem; height: 3rem; " title="--white-alpha-70"></div>
-  <div style="background: var(--white-alpha-60); width: 3rem; height: 3rem; " title="--white-alpha-60"></div>
-  <div style="background: var(--white-alpha-50); width: 3rem; height: 3rem; " title="--white-alpha-50"></div>
-  <div style="background: var(--white-alpha-40); width: 3rem; height: 3rem; " title="--white-alpha-40"></div>
-  <div style="background: var(--white-alpha-30); width: 3rem; height: 3rem; " title="--white-alpha-30"></div>
-  <div style="background: var(--white-alpha-20); width: 3rem; height: 3rem; " title="--white-alpha-20"></div>
-  <div style="background: var(--white-alpha-15); width: 3rem; height: 3rem; " title="--white-alpha-15"></div>
-  <div style="background: var(--white-alpha-10); width: 3rem; height: 3rem; " title="--white-alpha-10"></div>
-  <div style="background: var(--white-alpha-5); width: 3rem; height: 3rem; " title="--white-alpha-5"></div>
+<div class="color-list border border-faded">
+  <div class="color-row is-text-light" style="background-color: var(--black);" data-token="--black"><span class="color-row-name">black</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--black-alpha-95);" data-token="--black-alpha-95"><span class="color-row-name">black-alpha-95</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--black-alpha-90);" data-token="--black-alpha-90"><span class="color-row-name">black-alpha-90</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--black-alpha-80);" data-token="--black-alpha-80"><span class="color-row-name">black-alpha-80</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--black-alpha-70);" data-token="--black-alpha-70"><span class="color-row-name">black-alpha-70</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--black-alpha-60);" data-token="--black-alpha-60"><span class="color-row-name">black-alpha-60</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--black-alpha-50);" data-token="--black-alpha-50"><span class="color-row-name">black-alpha-50</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--black-alpha-40);" data-token="--black-alpha-40"><span class="color-row-name">black-alpha-40</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--black-alpha-30);" data-token="--black-alpha-30"><span class="color-row-name">black-alpha-30</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--black-alpha-20);" data-token="--black-alpha-20"><span class="color-row-name">black-alpha-20</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--black-alpha-15);" data-token="--black-alpha-15"><span class="color-row-name">black-alpha-15</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--black-alpha-10);" data-token="--black-alpha-10"><span class="color-row-name">black-alpha-10</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--black-alpha-5);" data-token="--black-alpha-5"><span class="color-row-name">black-alpha-5</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--black-alpha-3);" data-token="--black-alpha-3"><span class="color-row-name">black-alpha-3</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
 </div>
 
-```css
-.highlight {
-  background-color: var(--white-alpha-30);
-}
-```
+### White Alpha
 
-### Neutral Colors
+Semi-transparent white values for highlights and light overlays. Shown on a dark background for visibility.
 
-Neutral colors provide a grayscale palette from light to dark for backgrounds, borders, and text.
-
-| Token | Value |
-| --- | --- |
-| `--neutral-50` | #FFF7F1 |
-| `--neutral-100` | #E3E0DE |
-| `--neutral-150` | #DDD6D1 |
-| `--neutral-200` | #CECCCA |
-| `--neutral-300` | #BAB8B6 |
-| `--neutral-400` | #A5A4A2 |
-| `--neutral-500` | #918F8E |
-| `--neutral-600` | #7D7B7B |
-| `--neutral-700` | #686767 |
-| `--neutral-800` | #545353 |
-| `--neutral-900` | #3F3F3F |
-| `--neutral-950` | #1D1C1B |
-| `--neutral-990` | #0F0E0E |
-
-<div class="demo-preview is-joined" style="display: flex; flex-wrap: wrap; gap: var(--space-xs);">
-  <div style="background: var(--neutral-50); width: 3rem; height: 3rem;  border: var(--border-s) solid var(--border-faded);" title="--neutral-50"></div>
-  <div style="background: var(--neutral-100); width: 3rem; height: 3rem; " title="--neutral-100"></div>
-  <div style="background: var(--neutral-150); width: 3rem; height: 3rem; " title="--neutral-150"></div>
-  <div style="background: var(--neutral-200); width: 3rem; height: 3rem; " title="--neutral-200"></div>
-  <div style="background: var(--neutral-300); width: 3rem; height: 3rem; " title="--neutral-300"></div>
-  <div style="background: var(--neutral-400); width: 3rem; height: 3rem; " title="--neutral-400"></div>
-  <div style="background: var(--neutral-500); width: 3rem; height: 3rem; " title="--neutral-500"></div>
-  <div style="background: var(--neutral-600); width: 3rem; height: 3rem; " title="--neutral-600"></div>
-  <div style="background: var(--neutral-700); width: 3rem; height: 3rem; " title="--neutral-700"></div>
-  <div style="background: var(--neutral-800); width: 3rem; height: 3rem; " title="--neutral-800"></div>
-  <div style="background: var(--neutral-900); width: 3rem; height: 3rem; " title="--neutral-900"></div>
-  <div style="background: var(--neutral-950); width: 3rem; height: 3rem; " title="--neutral-950"></div>
-  <div style="background: var(--neutral-990); width: 3rem; height: 3rem; " title="--neutral-990"></div>
+<div class="color-list border border-faded" style="background: var(--neutral-800);">
+  <div class="color-row is-text-light" style="background-color: var(--white);" data-token="--white"><span class="color-row-name">white</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-95);" data-token="--white-alpha-95"><span class="color-row-name">white-alpha-95</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-90);" data-token="--white-alpha-90"><span class="color-row-name">white-alpha-90</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-80);" data-token="--white-alpha-80"><span class="color-row-name">white-alpha-80</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-70);" data-token="--white-alpha-70"><span class="color-row-name">white-alpha-70</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-60);" data-token="--white-alpha-60"><span class="color-row-name">white-alpha-60</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-50);" data-token="--white-alpha-50"><span class="color-row-name">white-alpha-50</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-40);" data-token="--white-alpha-40"><span class="color-row-name">white-alpha-40</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-30);" data-token="--white-alpha-30"><span class="color-row-name">white-alpha-30</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-20);" data-token="--white-alpha-20"><span class="color-row-name">white-alpha-20</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-15);" data-token="--white-alpha-15"><span class="color-row-name">white-alpha-15</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-10);" data-token="--white-alpha-10"><span class="color-row-name">white-alpha-10</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-5);" data-token="--white-alpha-5"><span class="color-row-name">white-alpha-5</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
 </div>
-
-```css
-.text {
-  color: var(--neutral-800);
-}
-```
 
 ---
 
 ## Semantic Colors
 
-Semantic colors map primitive tokens to **meaning and intent**, giving context and purpose to how colors are used. This makes it easier to implement consistent styling across components and ensures colors are used appropriately throughout the interface.
+Semantic colors map primitive tokens to **meaning and intent**. Use these in layouts and components — never use primitives directly.
 
-### Text Colors
+### Text
 
-| **Name** | Value | Description |
-| --- | --- | --- |
-| `--text-primary` | ↳`--warm-black` | Primary text color |
-| `--text-secondary` | ↳`--text-secondary-brand` | Secondary text color |
-| `--text-plain` | ↳`--black` | True black text |
-| `--text-faded` | ↳`--black-alpha-50` | Faded text |
-| `--text-accent` | ↳`--green` | Accent text |
-| `--text-link` | ↳`--green` | Link text color |
-| `--text-sidebar` | ↳`--text-primary` | Sidebar text color |
-| `--text-site-header` | ↳`--text-primary` | Site header text color |
-
-<div class="demo-preview is-joined">
-  <p style="color: var(--text-primary); margin-bottom: var(--space-s);">Primary text color</p>
-  <p style="color: var(--text-secondary); margin-bottom: var(--space-s);">Secondary text color</p>
-  <p style="color: var(--text-plain); margin-bottom: var(--space-s);">True black text</p>
-  <p style="color: var(--text-faded); margin-bottom: var(--space-s);">Faded text</p>
-  <p style="color: var(--text-accent); margin-bottom: var(--space-s);">Accent text</p>
-  <p style="color: var(--text-link);">Link text color</p>
+<div class="color-list border border-faded">
+  <div class="color-row is-text-light" style="background-color: var(--text-primary);" data-token="--text-primary"><span class="color-row-name">text-primary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--text-secondary);" data-token="--text-secondary"><span class="color-row-name">text-secondary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--text-plain);" data-token="--text-plain"><span class="color-row-name">text-plain</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--text-faded);" data-token="--text-faded"><span class="color-row-name">text-faded</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--text-accent);" data-token="--text-accent"><span class="color-row-name">text-accent</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--text-link);" data-token="--text-link"><span class="color-row-name">text-link</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--text-inverted);" data-token="--text-inverted"><span class="color-row-name">text-inverted</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
 </div>
 
-```css
-h1 {
-  color: var(--text-primary);
-}
-```
+### Background
 
-### Background Colors
-
-| **Name** | **Value** | **Description** |
-| --- | --- | --- |
-| `--background-primary` | ↳`--off-white` | Default background |
-| `--background-secondary` | ↳`--warm-white` | Secondary background |
-| `--background-plain` | ↳`--white` | True white background |
-| `--background-faded` | ↳`--black-alpha-5` | Faded background overlay |
-| `--background-sidebar` | ↳`--background-primary` | Sidebar background |
-| `--background-site-header` | ↳`--background-primary` | Site header background |
-
-<div class="demo-preview is-joined">
-  <div class="block row gap-m" style="flex-wrap: wrap;">
-    <div style="background: var(--background-primary); padding: var(--space-l) var(--space-xl); border: var(--border-s) solid var(--border-faded); min-width: 10rem; text-align: center;">
-      <strong>--background-primary</strong>
-    </div>
-    <div style="background: var(--background-secondary); padding: var(--space-l) var(--space-xl); border: var(--border-s) solid var(--border-faded); min-width: 10rem; text-align: center;">
-      <strong>--background-secondary</strong>
-    </div>
-    <div style="background: var(--background-plain); padding: var(--space-l) var(--space-xl); border: var(--border-s) solid var(--border-faded); min-width: 10rem; text-align: center;">
-      <strong>--background-plain</strong>
-    </div>
-    <div style="background: var(--background-faded); padding: var(--space-l) var(--space-xl); border: var(--border-s) solid var(--border-faded); min-width: 10rem; text-align: center;">
-      <strong>--background-faded</strong>
-    </div>
-  </div>
+<div class="color-list border border-faded">
+  <div class="color-row" style="background-color: var(--background-primary);" data-token="--background-primary"><span class="color-row-name">background-primary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--background-secondary);" data-token="--background-secondary"><span class="color-row-name">background-secondary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--background-plain);" data-token="--background-plain"><span class="color-row-name">background-plain</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--background-faded);" data-token="--background-faded"><span class="color-row-name">background-faded</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--background-darker);" data-token="--background-darker"><span class="color-row-name">background-darker</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
 </div>
 
-```css
-.card {
-  background-color: var(--background-plain);
-}
-```
+### Border
 
-### Border Colors
-
-| **Name** | **Value** | **Description** |
-| --- | --- | --- |
-| `--border-primary` | ↳`--border-primary-brand` | Default border|
-| `--border-secondary` | ↳`--border-secondary-brand` | Second border |
-| `--border-faded` | ↳`--black-alpha-15` | Faded border |
-
-<div class="demo-preview is-joined">
-  <div class="block row gap-m" style="flex-wrap: wrap;">
-    <div style="border: var(--border-m) solid var(--border-primary); padding: var(--space-l) var(--space-xl); min-width: 10rem; text-align: center;">
-      <strong>--border-primary</strong>
-    </div>
-    <div style="border: var(--border-m) solid var(--border-secondary); padding: var(--space-l) var(--space-xl); min-width: 10rem; text-align: center;">
-      <strong>--border-secondary</strong>
-    </div>
-    <div style="border: var(--border-m) solid var(--border-faded); padding: var(--space-l) var(--space-xl); min-width: 10rem; text-align: center;">
-      <strong>--border-faded</strong>
-    </div>
-  </div>
+<div class="color-list border border-faded">
+  <div class="color-row is-text-light" style="background-color: var(--border-primary);" data-token="--border-primary"><span class="color-row-name">border-primary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--border-secondary);" data-token="--border-secondary"><span class="color-row-name">border-secondary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--border-faded);" data-token="--border-faded"><span class="color-row-name">border-faded</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
 </div>
 
-```css
-.card {
-  border-color: var(--border-primary);
-}
-```
+### Button
+
+<div class="color-list border border-faded">
+  <div class="color-row is-text-light" style="background-color: var(--button-primary);" data-token="--button-primary"><span class="color-row-name">button-primary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--button-text);" data-token="--button-text"><span class="color-row-name">button-text</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--button-secondary);" data-token="--button-secondary"><span class="color-row-name">button-secondary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--button-faded);" data-token="--button-faded"><span class="color-row-name">button-faded</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+</div>
+
+### Status
+
+Status tokens now reference the dark shade of each accent colour family. `--status-info` maps to `var(--blue-dark)` (previously `var(--green)`), aligning with the conventional use of blue for informational states. In dark mode, status tokens flip to the light shades for readability.
+
+<div class="color-list border border-faded">
+  <div class="color-row is-text-light" style="background-color: var(--status-info);" data-token="--status-info"><span class="color-row-name">status-info</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--status-success);" data-token="--status-success"><span class="color-row-name">status-success</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--status-warning);" data-token="--status-warning"><span class="color-row-name">status-warning</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--status-danger);" data-token="--status-danger"><span class="color-row-name">status-danger</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--status-accent);" data-token="--status-accent"><span class="color-row-name">status-accent</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+</div>
 
 ---
 
 ## Dark Mode
 
-The design system uses a `data-theme` attribute to switch between light and dark modes. Light mode is the default (defined in `:root`). Dark mode activates when `data-theme="dark"` is set on any element.
+The design system uses a `data-theme` attribute to switch between light and dark modes. Light mode is the default. Dark mode activates when `data-theme="dark"` is set on any element.
 
 ### How It Works
 
-- **`:root`** — light mode tokens (always present, the default)
-- **`[data-theme="dark"]`** — overrides semantic tokens with dark-appropriate values
-- **`@media (prefers-color-scheme: dark)`** — no-JS fallback for users with dark OS preference
+- **`:root`** — light mode tokens (always present)
+- **`[data-theme="dark"]`** — overrides semantic tokens with dark values
+- **`@media (prefers-color-scheme: dark)`** — no-JS fallback for users with a dark OS preference
 
 The toggle button in the site header sets `data-theme="dark"` on `<html>` and persists the choice in `localStorage`.
-
-### Page-Level Usage
-
-The toggle handles this automatically. When dark mode is active:
-
-```html
-<html data-theme="dark">
-```
-
-When light mode is active, the attribute is removed and `:root` defaults apply.
 
 ### Scoped Usage
 
@@ -310,17 +205,17 @@ You can apply dark mode to any element, not just the page:
 
 <div class="demo-preview is-joined">
   <div class="grid">
-    <div style="background: var(--background-primary); color: var(--text-primary); padding: var(--space-xl); border: var(--border-s) solid var(--border-secondary);">
+    <div style="background: var(--background-faded); color: var(--text-primary); padding: var(--space-xl); border: var(--border-s) solid var(--border-secondary); font-size: var(--font-l);">
       <div class="block gap-xs">
-        <p class="eyebrow">Light mode</p>
-        <p>Primary text</p>
-        <p style="color: var(--text-faded);">Faded text</p>
-        <p style="color: var(--text-accent);">Accent text</p>
+        <h4>Light mode</h4>
+        <span>Primary text</span>
+        <span style="color: var(--text-faded);">Faded text</span>
+        <span style="color: var(--text-accent);">Accent text</span>
       </div>
     </div>
     <div data-theme="dark" style="background: var(--background-primary); color: var(--text-primary); padding: var(--space-xl); border: var(--border-s) solid var(--border-secondary);">
       <div class="block gap-xs">
-        <p class="eyebrow">Dark mode</p>
+        <h4>Dark mode</h4>
         <p>Primary text</p>
         <p style="color: var(--text-faded);">Faded text</p>
         <p style="color: var(--text-accent);">Accent text</p>
@@ -336,36 +231,8 @@ You can apply dark mode to any element, not just the page:
 </div>
 ```
 
-All semantic tokens inside that element will resolve to their dark values via CSS custom property inheritance.
+All semantic tokens inside that element resolve to their dark values via CSS custom property inheritance.
 
-### Dark Mode Token Overrides
+### Customizing Dark Mode
 
-Every semantic token has a dark mode override. The key mappings:
-
-| Token | Light Value | Dark Value |
-| --- | --- | --- |
-| `--text-primary` | `var(--warm-black)` | `#e8e6e3` |
-| `--text-secondary` | `var(--neutral-800)` | `#a8a5a2` |
-| `--text-plain` | `var(--black)` | `#f0eeeb` |
-| `--text-faded` | `var(--black-alpha-50)` | `rgba(255,255,255,0.45)` |
-| `--text-accent` | `var(--green)` | `#5bb89a` |
-| `--text-link` | `var(--green)` | `#5bb89a` |
-| `--text-inverted` | `var(--off-white)` | `#1a1a1a` |
-| `--text-sidebar` | `var(--text-primary)` | `var(--text-primary)` |
-| `--text-site-header` | `var(--text-primary)` | `var(--text-primary)` |
-| `--background-primary` | `var(--off-white)` | `#1a1a1a` |
-| `--background-secondary` | `var(--warm-white)` | `#222222` |
-| `--background-plain` | `var(--white)` | `#2a2a2a` |
-| `--background-faded` | `var(--black-alpha-5)` | `rgba(255,255,255,0.06)` |
-| `--background-sidebar` | `var(--background-primary)` | `var(--background-primary)` |
-| `--background-site-header` | `var(--background-primary)` | `var(--background-primary)` |
-| `--border-primary` | `var(--text-primary)` | `#e8e6e3` |
-| `--border-secondary` | `var(--neutral-300)` | `#3a3a3a` |
-| `--border-faded` | `var(--black-alpha-15)` | `rgba(255,255,255,0.12)` |
-
-Button, status, and form tokens also have dark overrides. See `assets/css/design-system.css` section 2b for the complete list.
-
-### Customizing Dark Mode Colors
-
-Edit the `[data-theme="dark"]` block in `assets/css/design-system.css`. When changing a value, also update the `@media (prefers-color-scheme: dark)` fallback block (section 2c) to keep them in sync.
-
+Edit the `[data-theme="dark"]` block in `design-system.css` (section 2b). When changing a value, also update the `@media (prefers-color-scheme: dark)` fallback (section 2c) to keep them in sync.

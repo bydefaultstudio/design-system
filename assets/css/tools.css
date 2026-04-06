@@ -1,8 +1,7 @@
-/* ------ CALCULATOR STYLES ------ */
+/* ------ TOOL STYLES ------ */
 
 /* -- Sticky bar overrides -- */
-.sticky-bar-inner {
-  max-width: 960px;
+.sticky-bar-container {
   margin: 0 auto;
   padding: 0 var(--space-m);
 }
@@ -69,18 +68,18 @@
   height: 1.25rem;
 }
 
-/* -- Input grid -- */
-.calculator-grid {
+/* -- Input grid (shared across tools) -- */
+.tool-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-m);
 }
 
-.calculator-grid > .grid-full {
+.tool-grid > .grid-full {
   grid-column: 1 / -1;
 }
 
-.calculator-grid-field {
+.tool-grid-field {
   display: flex;
   flex-direction: column;
   gap: var(--space-s);
@@ -166,11 +165,11 @@
 
 /* -- Mobile responsive -- */
 @media (max-width: 768px) {
-  .sticky-bar-inner {
+  .sticky-bar-container {
     padding: 0 var(--space-l);
   }
 
-  .calculator-grid {
+  .tool-grid {
     grid-template-columns: 1fr;
   }
 
@@ -190,4 +189,5 @@
   .month-abbr {
     display: inline;
   }
+
 }

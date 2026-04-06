@@ -2,7 +2,7 @@
 title: "Mission, Vision & Purpose"
 subtitle: "The why behind the brand"
 description: "The mission, vision, and purpose that define why the brand exists and where it is going."
-section: "Brand"
+section: "Brand Book"
 subsection: ""
 order: 1
 slug: "brand-mission-vision-purpose"
@@ -15,7 +15,9 @@ client: "internal"
 
 **What do we do to achieve our ambition?**
 
-We build interactive brand experiences by designing with culture, taste, inclusivity as our default starting point. That's how we stand out by breaking traditional storytelling patterns to create work that speaks to more people, connects deeply and sparks bigger, bolder new ideas.
+We build the ads, content, and activations that turn audiences into participants.
+
+Every brief starts with behaviour — how the audience moves, where the decision moments are, what makes them stop. The creative follows from that. We don't just build things your audience sees. We build things they do.
 
 ---
 
@@ -23,13 +25,9 @@ We build interactive brand experiences by designing with culture, taste, inclusi
 
 **What do we want? What's our highest ambition?**
 
-To reshape the creative workplace around supporting neurodiverse talent —
+To own the conversation around interactive advertising. To be the agency CMOs, media buyers, and publishers think of first when interactivity comes up. To have a body of work that proves the argument we're making.
 
-and make inclusive design, accessibility, and culture the new standard for innovation.
-
-We want to build a world that welcomes different perspectives, embraces new ways of working, and creates space for divergent thinkers to thrive — not mask.
-
-A world where creative work reflects more people, includes more minds, and sees difference as the most valuable asset in the creator economy.
+Not the biggest agency. The most respected one in this space.
 
 **By default.**
 
@@ -39,12 +37,12 @@ A world where creative work reflects more people, includes more minds, and sees 
 
 **Why do we exist?**
 
-We exist to centre the people and cultures the industry often overlooks — and tell their stories in the beauty it deserves, in new formats and styles.
+Most brands have a gap between how they look and how they feel to interact with digitally. The identity is right. The values are defined. The visual language is consistent. Then someone clicks an ad, lands on a page, watches a video — and the experience feels flat. Generic. Like every other brand in the category.
 
-To design new systems, spaces, and brand experiences that work *with* different brains, not against them.
+That gap is where trust breaks down.
 
-To throw out the old workplace rulebook — the one that never worked for most of us — and write a new one that sees being neurodiverse as a gift, not a disability.
+Interactive advertising, built properly, closes that gap. It makes the digital experience feel like the brand, not just look like it. When every touchpoint compounds in the same direction, trust builds. Trust builds decisions. Decisions build commerce.
 
-**We're not here to fit in, we're wired differently.**
+**That's why we exist.**
 
-So we let our work speak for itself with the aim of leaving the world a little more inclusive than we found it.
+We built By Default to work differently. For clients who want something different. With a team that thinks differently. Our founders are neurodivergent — not as a diversity statement, but as a creative advantage. We see connections other people miss. We approach briefs from angles that don't come from a standard agency playbook. The work is different because the thinking is different.

@@ -3,8 +3,8 @@ title: "Card"
 subtitle: "Contained content surfaces"
 description: "How to use the card component for grouping related content in a contained surface."
 section: "Design System"
-subsection: ""
-order: 15
+subsection: "Content"
+order: 2
 slug: "card"
 status: "published"
 access: "team"
@@ -66,17 +66,43 @@ Remove internal padding with `.card--flush` — useful when the card contains a 
 
 Wrap in an `<a>` tag with `.card--interactive` for clickable cards. Adds hover shadow and focus ring.
 
+### Clickable card
+
 <div class="demo-preview">
   <a class="card card--interactive" href="#">
-    <p><strong>Clickable card</strong></p>
-    <p>This entire card is a link.</p>
+    <h3 class="card-title">Clickable card</h3>
+    <p class="card-description">This entire card is a link.</p>
   </a>
 </div>
 
 ```html
 <a class="card card--interactive" href="#">
-  <p><strong>Clickable card</strong></p>
-  <p>This entire card is a link.</p>
+  <h3 class="card-title">Clickable card</h3>
+  <p class="card-description">This entire card is a link.</p>
+</a>
+```
+
+### Image card
+
+Combine `.card--flush` with `.card--interactive` to create a clickable card with a full-bleed image. The `.img` and `.card-image` classes handle display and border-radius. Use a padded inner wrapper for the text content.
+
+<div class="demo-preview">
+  <a class="card card--flush card--interactive" href="#" style="max-width: 320px;">
+    <img class="img img-16x9 card-image" src="../assets/images/og/og-default.jpg" alt="Example image">
+    <div style="padding: var(--card-padding);">
+      <h3 class="card-title">Card with image</h3>
+      <p class="card-description">Supporting text below the image.</p>
+    </div>
+  </a>
+</div>
+
+```html
+<a class="card card--flush card--interactive" href="#">
+  <img class="img img-16x9 card-image" src="image.jpg" alt="Description">
+  <div style="padding: var(--card-padding);">
+    <h3 class="card-title">Card with image</h3>
+    <p class="card-description">Supporting text below the image.</p>
+  </div>
 </a>
 ```
 

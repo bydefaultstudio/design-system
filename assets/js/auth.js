@@ -319,7 +319,7 @@
       }
     });
 
-    var docCards = document.querySelectorAll('.docs-card[data-access]');
+    var docCards = document.querySelectorAll('.card[data-access]');
     docCards.forEach(function (card) {
       var requiredAccess = card.getAttribute('data-access');
       if (requiredAccess && !hasAccessForValue(userRole, requiredAccess, user)) {
@@ -353,7 +353,7 @@
         return;
       }
       // Fallback: hide if all child cards are hidden
-      var visibleCards = section.querySelectorAll('.docs-card');
+      var visibleCards = section.querySelectorAll('.card');
       var allHidden = true;
       visibleCards.forEach(function (card) {
         if (card.style.display !== 'none') allHidden = false;

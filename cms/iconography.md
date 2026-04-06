@@ -1,7 +1,7 @@
 ---
-title: "Iconography"
-subtitle: "Icon usage, sizing, and integration guidelines"
-description: "How to use icons in the design system — SVG standards, wrapper classes, accessibility, and tooling."
+title: "Icon"
+subtitle: "Icon usage, guidelines, and complete icon catalog"
+description: "How to use icons in the design system — SVG standards, wrapper classes, accessibility, tooling, and the full registry of brand icons."
 section: "Design System"
 subsection: ""
 order: 7
@@ -21,6 +21,7 @@ Icons are inline SVG elements wrapped in a container class. They inherit colour 
 - **`currentColor` always** — all icon `<path>` elements must use `fill="currentColor"` so the icon inherits the parent's text colour. This keeps icons visually consistent across themes and contexts.
 - **No `xmlns`** — strip `xmlns` and `xmlns:xlink` attributes from inline SVGs. They are only needed for standalone `.svg` files, not inline usage.
 - **Square aspect ratio** — icons are always 1:1. Use `viewBox` to define the coordinate system, not `width`/`height`.
+- **Brand icons only** — do not use Material Design, Font Awesome, Heroicons, Feather, or any other third-party icon source. Use the brand icons from `assets/images/svg-icons/`. If no icon exists for your need, request one from the design team.
 
 ---
 
@@ -216,6 +217,22 @@ Icons inherit colour through `currentColor`. To change an icon's colour, change 
 
 ---
 
+## Icon Shorthand
+
+Use `{{icon:name}}` in any markdown file processed by the doc generator to render an inline icon. The shorthand is expanded at build time — the actual SVG is read from `assets/images/svg-icons/` and injected as a standard `.icn-svg` wrapper.
+
+```
+{{icon:check}}         → renders the check icon
+{{icon:arrow-right}}   → renders the arrow-right icon
+{{icon:t-shirt}}       → renders the t-shirt icon
+```
+
+The `name` must match a key from the icon registry below. If the name is not found, a warning is logged during generation and an HTML comment is output instead.
+
+This shorthand only works in files processed by `cms/generator/generate-docs.js` — it does not work in standalone HTML pages.
+
+---
+
 ## SVG Cleaner Tool
 
 Use the [SVG Cleaner](../tools/svg-cleaner.html) to prepare icons before adding them to the codebase. The tool automates the required cleanup:
@@ -231,36 +248,6 @@ For CLI usage:
 ```bash
 echo '<svg>...</svg>' | node assets/js/svg-clean.js --current-color --icon --icon-name arrow-right --strip-comments
 ```
-
----
-
-## Brand Icons Only
-
-This project uses a custom brand icon set — **no external icon libraries are permitted**. Do not use Material Design, Font Awesome, Heroicons, Feather, or any other third-party icon source.
-
-Before adding any icon to a page:
-
-1. **Check the [Icon Registry](icon-registry.html)** — it lists every available brand icon with its `data-icon` name and intended usage
-2. **Use the matching brand icon** — copy the SVG from `assets/images/svg-icons/`
-3. **If no icon exists for your need** — request one from the design team. Do not substitute a generic icon.
-
-This ensures visual consistency across the entire site. A mismatched icon from an external library breaks the brand language even if it "looks close enough."
-
----
-
-## Icon Shorthand
-
-Use `{{icon:name}}` in any markdown file processed by the doc generator to render an inline icon. The shorthand is expanded at build time — the actual SVG is read from `assets/images/svg-icons/` and injected as a standard `.icn-svg` wrapper.
-
-```
-{{icon:check}}         → renders the check icon
-{{icon:arrow-right}}   → renders the arrow-right icon
-{{icon:t-shirt}}       → renders the t-shirt icon
-```
-
-The `name` must match a key from the [Icon Registry](icon-registry.html). If the name is not found, a warning is logged during generation and an HTML comment is output instead.
-
-This shorthand only works in files processed by `cms/generator/generate-docs.js` — it does not work in standalone HTML pages.
 
 ---
 
@@ -289,3 +276,17 @@ This shorthand only works in files processed by `cms/generator/generate-docs.js`
 | Use `width="100%" height="100%"` on SVGs | Use fixed pixel/rem sizes on the SVG element |
 | Use `fill="none"` on the `<svg>` element | Omit `fill` on `<svg>` (defaults to black) |
 | Use `.icn-svg` wrapper to control icon size | Size icons via `width`/`height` on the SVG |
+| Check the registry before using any icon | Use external icon libraries as a fallback |
+
+---
+
+## Requesting a New Icon
+
+If you need an icon that is not in the brand icon set:
+
+1. **Check the brand book** — the icon you need may exist under a different name. See the Visual Identity page for the full icon grid.
+2. **Document the request** — describe the concept, intended size, and where it will be used
+3. **Submit to the design team** — new icons must match the existing style (24x24 grid, single-colour, rounded corners)
+4. **Do not use a placeholder** — wait for the brand icon to be designed rather than shipping with a generic substitute
+
+Maintaining a consistent icon language across the site is more important than shipping fast with mismatched icons.

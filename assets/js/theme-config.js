@@ -43,6 +43,7 @@ var THEME_CONFIG = {
         { title: 'Overview', href: 'client-template/tools/index.html', section: 'Tools' },
         { title: 'CPM Calculator', href: 'tools/cpm-calculator.html', section: 'Tools' },
         { title: 'Display Ad Preview', href: 'tools/display-ad-preview.html', section: 'Tools' },
+        { title: 'Image Placeholder', href: 'tools/image-placeholder.html', section: 'Tools' },
         { title: 'Welcome', href: 'client-template/docs/welcome.html', subtitle: 'How to use this site', section: 'Docs' }
       ]
     },
@@ -59,6 +60,7 @@ var THEME_CONFIG = {
         { title: 'Overview', href: 'dianomi/tools/index.html', section: 'Tools' },
         { title: 'CPM Calculator', href: 'tools/cpm-calculator.html', section: 'Tools' },
         { title: 'Display Ad Preview', href: 'tools/display-ad-preview.html', section: 'Tools' },
+        { title: 'Image Placeholder', href: 'tools/image-placeholder.html', section: 'Tools' },
         { title: 'Welcome', href: 'dianomi/docs/welcome.html', subtitle: 'How to use this site', section: 'Docs' }
       ]
     }

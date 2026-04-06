@@ -3,7 +3,7 @@ title: "Table"
 subtitle: "Composable table styling"
 description: "Guide to using the table component with base styles and modifier classes."
 section: "Design System"
-subsection: ""
+subsection: "Content"
 order: 12
 slug: "table"
 status: "published"

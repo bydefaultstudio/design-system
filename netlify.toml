@@ -1,6 +1,7 @@
 [build]
-  command = "cd cms/generator && npm install && npm run docgen"
+  command = "cd cms/generator && npm install && npm run docgen && cd ../.. && node tools/generate-ai-reference.js"
   publish = "."
+  functions = "netlify/functions"
 
 [[headers]]
   for = "/assets/*"
@@ -11,3 +12,14 @@
   for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/ai-reference.md"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[redirects]]
+  from = "/image/*"
+  to = "/.netlify/functions/image"
+  status = 200

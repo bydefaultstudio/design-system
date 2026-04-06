@@ -3,8 +3,8 @@ title: "Form"
 subtitle: "Form element styling and patterns"
 description: "How to use form elements, labels, inputs, and layout patterns in the design system."
 section: "Design System"
-subsection: ""
-order: 11
+subsection: "Data Entry"
+order: 3
 slug: "form"
 status: "published"
 access: "team"
@@ -139,6 +139,28 @@ Selects use a custom dropdown arrow via an inline SVG background:
 ```
 
 **Properties:** `appearance: none`, custom caret, right padding for arrow space.
+
+---
+
+## Colour Input
+
+The native colour picker is styled to match other form inputs. Browser chrome is removed so the colour swatch fills the entire element. Use alongside a text input for hex/named colour entry.
+
+<div class="demo-preview is-joined">
+  <div class="block row gap-s align-center">
+    <input type="color" id="demo-color" value="#ffa500">
+    <input type="text" value="ffa500" placeholder="hex or name">
+  </div>
+</div>
+
+```html
+<div class="block row gap-s align-center">
+  <input type="color" id="color-picker" value="#ffa500">
+  <input type="text" value="ffa500" placeholder="hex or name">
+</div>
+```
+
+**Properties:** `appearance: none`, `aspect-ratio: 1 / 1`, `align-self: stretch` (matches sibling height), `padding: var(--space-xs)`, swatch wrapper padding removed. Same border and focus styles as text inputs.
 
 ---
 
@@ -346,10 +368,10 @@ Use `<fieldset>` and `<legend>` to group related form controls:
 `.segmented-control` is a button group that acts like a single-select input — similar to a group of radio buttons but with a tab-like appearance.
 
 <div class="demo-preview is-joined">
-  <div class="segmented-control">
-    <button class="segmented-control-btn is-active">Option A</button>
-    <button class="segmented-control-btn">Option B</button>
-    <button class="segmented-control-btn">Option C</button>
+  <div class="segmented-control" role="group" aria-label="Options">
+    <button class="segmented-control-btn is-active" aria-pressed="true" onclick="this.parentElement.querySelectorAll('.segmented-control-btn').forEach(function(b){b.classList.remove('is-active');b.setAttribute('aria-pressed','false')});this.classList.add('is-active');this.setAttribute('aria-pressed','true')">Option A</button>
+    <button class="segmented-control-btn" aria-pressed="false" onclick="this.parentElement.querySelectorAll('.segmented-control-btn').forEach(function(b){b.classList.remove('is-active');b.setAttribute('aria-pressed','false')});this.classList.add('is-active');this.setAttribute('aria-pressed','true')">Option B</button>
+    <button class="segmented-control-btn" aria-pressed="false" onclick="this.parentElement.querySelectorAll('.segmented-control-btn').forEach(function(b){b.classList.remove('is-active');b.setAttribute('aria-pressed','false')});this.classList.add('is-active');this.setAttribute('aria-pressed','true')">Option C</button>
   </div>
 </div>
 

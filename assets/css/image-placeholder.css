@@ -1,0 +1,46 @@
+/* ------ IMAGE PLACEHOLDER STYLES ------ */
+
+/* -- Preview frame -- */
+.image-preview-frame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background-faded);
+  padding: var(--space-l);
+}
+
+.image-preview-frame img {
+  max-height: 50vh;
+  max-width: 100%;
+  height: auto;
+}
+
+/* -- URL row -- */
+.image-url-row {
+  display: flex;
+  gap: var(--space-s);
+  align-items: center;
+}
+
+.image-url-row input {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ------ RESPONSIVE ------ */
+
+/* -- Mobile -- */
+@media (max-width: 768px) {
+  .image-preview-frame {
+    padding: var(--space-m);
+  }
+
+  .image-url-row {
+    flex-direction: column;
+  }
+
+  .image-url-row .copy-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

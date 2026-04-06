@@ -3,8 +3,8 @@ title: "Progress"
 subtitle: "Progress bar indicators"
 description: "How to use the progress bar component for showing completion status."
 section: "Design System"
-subsection: ""
-order: 18
+subsection: "Feedback"
+order: 3
 slug: "progress"
 status: "published"
 access: "team"

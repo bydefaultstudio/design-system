@@ -1,28 +1,75 @@
 /* ------ DISPLAY AD PREVIEW STYLES ------ */
 
 /* -- Layout -- */
-.adp-layout {
+.preview-layout {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  padding-top: var(--header-height);
+  height: calc(100vh - var(--header-height));
   overflow: hidden;
 }
 
 /* -- Toolbar -- */
-.adp-bar {
-  background: var(--background-secondary);
-  border-bottom: var(--border-s) solid var(--border-secondary);
+.preview-toolbar {
+  background: var(--background-primary);
+  border-bottom: var(--border-s) solid var(--border-faded);
   padding: 0 var(--space-xl);
   flex-shrink: 0;
 }
 
-.adp-bar-row {
+.preview-toolbar-row {
   display: flex;
   align-items: center;
   gap: var(--space-l);
-  padding: var(--space-m) 0;
+  padding: 0;
   flex-wrap: wrap;
+}
+
+.preview-toolbar-row .block.row {
+  align-items: center;
+}
+
+/* -- Actions (right-aligned) -- */
+.preview-toolbar-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  padding: var(--space-s);
+}
+
+.preview-toolbar-btn {
+  border-radius: 0;
+  padding: var(--space-xs);
+}
+
+.preview-toolbar-btn:hover {
+  color: var(--button-text);
+}
+
+.preview-toolbar select, .preview-toolbar input {
+  padding-top: var(--space-xs);
+  padding-bottom: var(--space-xs);
+
+}
+
+.preview-toolbar-btn .icn-svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.preview-toolbar .divider--vertical {
+      margin: 0 var(--space-s);
+}
+
+/* -- Fold toggle row -- */
+.preview-fold-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+}
+
+.preview-fold-label {
+  font-size: var(--font-xs);
 }
 
 /* -- Creative ID input (compact) -- */
@@ -32,33 +79,34 @@
 }
 
 /* -- Preview area -- */
-.adp-preview {
+.preview-area {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--space-xl);
-  background: var(--background-primary);
+  background: var(--background-faded);
   overflow: hidden;
   position: relative;
 }
 
-.adp-placeholder {
+.preview-placeholder {
   text-align: center;
   color: var(--text-faded);
 }
 
-.adp-placeholder .icon {
-  font-size: var(--font-4xl);
-  margin-bottom: var(--space-m);
+.preview-placeholder .icn-svg {
+  width: var(--font-4xl);
+  height: var(--font-4xl);
+  margin: 0 auto var(--space-m);
 }
 
-.adp-placeholder p {
+.preview-placeholder p {
   font-size: var(--font-xs);
 }
 
 /* -- Preview wrapper -- */
-.adp-wrapper {
+.preview-wrapper {
   position: relative;
   flex: 1;
   display: flex;
@@ -69,7 +117,7 @@
 }
 
 /* -- Device frame -- */
-.adp-device {
+.preview-device {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -77,43 +125,30 @@
   height: 100%;
 }
 
-.adp-device iframe {
+.preview-device iframe {
   border: var(--border-s) solid var(--border-secondary);
   background: var(--white);
   transition: width 0.3s ease, height 0.3s ease;
 }
 
-.adp-device.desktop iframe {
+.preview-device.desktop iframe {
   width: 100%;
   height: 100%;
 }
 
-.adp-device.phone iframe,
-.adp-device.tablet iframe {
+.preview-device.phone iframe,
+.preview-device.tablet iframe {
   height: 100%;
   max-height: 100%;
 }
 
-/* -- Viewport label -- */
-.adp-viewport {
-  position: absolute;
-  bottom: var(--space-s);
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: var(--font-2xs);
-  color: var(--text-faded);
-  background: var(--background-secondary);
-  padding: var(--space-xs) var(--space-m);
-  white-space: nowrap;
-}
-
 /* -- Publisher nav overlay -- */
-.adp-nav {
+.preview-pub-nav {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  height: 56px;
+  height: 48px;
   display: flex;
   align-items: center;
   padding: 0 var(--space-l);
@@ -121,37 +156,37 @@
   pointer-events: none;
 }
 
-.adp-nav .pub-logo {
+.preview-pub-nav .pub-logo {
   flex: 1;
   display: flex;
   align-items: center;
   height: 100%;
 }
 
-.adp-nav.desktop-nav .pub-logo {
+.preview-pub-nav.desktop-nav .pub-logo {
   justify-content: center;
 }
 
-.adp-nav .pub-logo img {
+.preview-pub-nav .pub-logo img {
   height: 24px;
   width: auto;
   display: block;
 }
 
-.adp-nav .pub-logo-text {
+.preview-pub-nav .pub-logo-text {
   font-size: var(--font-xs);
   font-weight: var(--font-weight-semi-bold);
   letter-spacing: var(--letter-spacing-s);
 }
 
-.adp-nav .pub-burger {
+.preview-pub-nav .pub-burger {
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
   flex-shrink: 0;
 }
 
-.adp-nav .pub-burger span {
+.preview-pub-nav .pub-burger span {
   display: block;
   width: 20px;
   height: 2px;
@@ -159,15 +194,15 @@
 
 /* -- Mobile -- */
 @media (max-width: 768px) {
-  .adp-bar {
+  .preview-toolbar {
     padding: 0 var(--space-l);
   }
 
-  .adp-bar-row {
+  .preview-toolbar-row {
     gap: var(--space-m);
   }
 
-  .adp-preview {
+  .preview-area {
     padding: var(--space-m);
   }
 }

@@ -48,50 +48,51 @@
 
 <body class="auth-loading" data-access="client:dianomi,client-template">
 
-  <!-- Site Navigation (header only, no sidebar) -->
-  <div id="site-nav" data-base="../" data-sidebar="false"></div>
+  <!-- Site Navigation (sidebar always collapsed on load) -->
+  <div id="site-nav" data-base="../" data-sidebar-default="force-collapsed"></div>
 
-  <div class="adp-layout">
+  <div class="page-wrapper has-sidebar">
+    <div class="page-content">
+      <div class="preview-layout">
 
     <!-- Toolbar -->
-    <div class="adp-bar">
-      <div class="adp-bar-row">
+    <div class="preview-toolbar">
+      <div class="preview-toolbar-row">
         <!-- Creative ID -->
-        <div class="block row gap-xs" style="align-items: center;">
+        <div class="block row gap-m">
           <label for="creativeId" class="text-size-small">Creative ID</label>
           <input type="text" id="creativeId" placeholder="e.g. 81e89b8a" aria-label="Creative ID">
         </div>
 
-        <span class="divider--vertical" aria-hidden="true"></span>
 
         <!-- Publisher -->
-        <div class="block row gap-xs" style="align-items: center;">
+        <div class="block row gap-m">
           <label for="publisher" class="text-size-small">Publisher</label>
           <select id="publisher" aria-label="Publisher"></select>
         </div>
 
-        <span class="divider--vertical" aria-hidden="true"></span>
-
         <!-- Device -->
         <div class="segmented-control" id="deviceType">
-          <button type="button" class="segmented-control-btn is-icon is-active" data-value="Desktop" aria-label="Desktop">
+          <button type="button" class="segmented-control-btn is-icon is-active" data-value="Desktop" aria-label="Desktop" data-tooltip="Desktop" data-tooltip-position="bottom">
             <div class="icn-svg" data-icon="desktop">
               <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
-                <path d="M2 3H22V17H2V3ZM4 5V15H20V5H4ZM8 21H16V19H13V17H11V19H8V21Z" fill="currentColor"/>
+                <path d="M6 21V19H11V17H2V2H22V17H13V19H18V21H6ZM4 13C4 14.1046 4.89543 15 6 15H18C19.1046 15 20 14.1046 20 13V6C20 4.89543 19.1046 4 18 4H6C4.89543 4 4 4.89543 4 6V13Z" fill="currentColor"/>
               </svg>
             </div>
           </button>
-          <button type="button" class="segmented-control-btn is-icon" data-value="Tablet" aria-label="Tablet">
+          <button type="button" class="segmented-control-btn is-icon" data-value="Tablet" aria-label="Tablet" data-tooltip="Tablet" data-tooltip-position="bottom">
             <div class="icn-svg" data-icon="tablet">
               <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
-                <path d="M5 2H19V22H5V2ZM7 4V18H17V4H7ZM11 19H13V20H11V19Z" fill="currentColor"/>
+                <path d="M12 17C12.5523 17 13 17.4477 13 18C13 18.5523 12.5523 19 12 19C11.4477 19 11 18.5523 11 18C11 17.4477 11.4477 17 12 17Z" fill="currentColor"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M19 22H5V2H19V22ZM9 4C7.89543 4 7 4.89543 7 6V18C7 19.1046 7.89543 20 9 20H15C16.1046 20 17 19.1046 17 18V6C17 4.89543 16.1046 4 15 4H9Z" fill="currentColor"/>
               </svg>
             </div>
           </button>
-          <button type="button" class="segmented-control-btn is-icon" data-value="Phone" aria-label="Phone">
-            <div class="icn-svg" data-icon="phone">
+          <button type="button" class="segmented-control-btn is-icon" data-value="Phone" aria-label="Mobile" data-tooltip="Mobile" data-tooltip-position="bottom">
+            <div class="icn-svg" data-icon="mobile">
               <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
-                <path d="M7 2H17V22H7V2ZM9 4V18H15V4H9ZM11 19H13V20H11V19Z" fill="currentColor"/>
+                <path d="M13 7H11V6H13V7Z" fill="currentColor"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M18 21H6V3H18V21ZM10 5C8.89543 5 8 5.89543 8 7V17C8 18.1046 8.89543 19 10 19H14C15.1046 19 16 18.1046 16 17V7C16 5.89543 15.1046 5 14 5H10Z" fill="currentColor"/>
               </svg>
             </div>
           </button>
@@ -100,7 +101,12 @@
         <!-- Device size dropdown (conditional — Phone/Tablet only) -->
         <div class="dropdown is-hidden" id="deviceSizeDropdown">
           <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" id="deviceSizeLabel">
-            Size
+            <span id="deviceSizeLabelText">Size</span>
+            <div class="icn-svg dropdown-chevron" data-icon="chevron-down">
+              <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
+                <path d="M12 16.4L6 10.4L7.4 9L10.5858 12.1858C11.3668 12.9668 12.6332 12.9668 13.4142 12.1858L16.6 9L18 10.4L12 16.4Z" fill="currentColor"/>
+              </svg>
+            </div>
           </button>
           <div class="dropdown-menu" role="menu" id="deviceSizeMenu">
             <!-- Phone sizes -->
@@ -119,75 +125,155 @@
           </div>
         </div>
 
-        <!-- Settings dropdown (Preview, Fold, Position) -->
-        <span class="divider--vertical" aria-hidden="true"></span>
+        <!-- Creative position dropdown (Desktop only) -->
+        <div class="dropdown" id="positionSection">
+          <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" id="positionLabel">
+            <div class="icn-svg" data-icon="ad-top">
+              <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
+                <path d="M17 5V10H7V5H17ZM22 23H2V1H22V23ZM6 3C4.9 3 4 3.9 4 5V19C4 20.1 4.9 21 6 21H18C19.1 21 20 20.1 20 19V5C20 3.9 19.1 3 18 3H6Z" fill="currentColor"/>
+                <path opacity="0.2" d="M6 14H18V12H6V14ZM18 18H6V16H18V18Z" fill="currentColor"/>
+              </svg>
+            </div>
+            <span id="positionLabelText">Top</span>
+            <div class="icn-svg dropdown-chevron" data-icon="chevron-down">
+              <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
+                <path d="M12 16.4L6 10.4L7.4 9L10.5858 12.1858C11.3668 12.9668 12.6332 12.9668 13.4142 12.1858L16.6 9L18 10.4L12 16.4Z" fill="currentColor"/>
+              </svg>
+            </div>
+          </button>
+          <div class="dropdown-menu" role="menu" id="positionMenu">
+            <button class="dropdown-item is-active" role="menuitem" type="button" data-position="top">
+              <div class="icn-svg" data-icon="ad-top">
+                <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
+                  <path d="M17 5V10H7V5H17ZM22 23H2V1H22V23ZM6 3C4.9 3 4 3.9 4 5V19C4 20.1 4.9 21 6 21H18C19.1 21 20 20.1 20 19V5C20 3.9 19.1 3 18 3H6Z" fill="currentColor"/>
+                  <path opacity="0.2" d="M6 14H18V12H6V14ZM18 18H6V16H18V18Z" fill="currentColor"/>
+                </svg>
+              </div>
+              Top
+              <div class="dropdown-item-end">
+                <div class="icn-svg" data-icon="check">
+                  <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
+                    <path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/>
+                  </svg>
+                </div>
+              </div>
+            </button>
+            <button class="dropdown-item" role="menuitem" type="button" data-position="right">
+              <div class="icn-svg" data-icon="ad-right">
+                <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
+                  <path d="M18 5V11H14V5H18ZM22 23H2V1H22V23ZM6 3C4.9 3 4 3.9 4 5V19C4 20.1 4.9 21 6 21H18C19.1 21 20 20.1 20 19V5C20 3.9 19.1 3 18 3H6Z" fill="currentColor"/>
+                  <path opacity="0.2" d="M6 15H18V13H6V15ZM6 11H12V9H6V11ZM6 7H12V5H6V7ZM18 19H6V17H18V19Z" fill="currentColor"/>
+                </svg>
+              </div>
+              Sidebar Right
+              <div class="dropdown-item-end is-hidden">
+                <div class="icn-svg" data-icon="check">
+                  <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
+                    <path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/>
+                  </svg>
+                </div>
+              </div>
+            </button>
+            <button class="dropdown-item" role="menuitem" type="button" data-position="left">
+              <div class="icn-svg" data-icon="ad-left">
+                <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
+                  <path d="M10 5V11H6V5H10ZM22 23H2V1H22V23ZM6 3C4.9 3 4 3.9 4 5V19C4 20.1 4.9 21 6 21H18C19.1 21 20 20.1 20 19V5C20 3.9 19.1 3 18 3H6Z" fill="currentColor"/>
+                  <path opacity="0.2" d="M6 15H18V13H6V15ZM12 11H18V9H12V11ZM12 7H18V5H12V7ZM18 19H6V17H18V19Z" fill="currentColor"/>
+                </svg>
+              </div>
+              Sidebar Left
+              <div class="dropdown-item-end is-hidden">
+                <div class="icn-svg" data-icon="check">
+                  <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
+                    <path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/>
+                  </svg>
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
 
+        <!-- Settings dropdown (Preview, Fold) -->
         <div class="dropdown" id="settingsDropdown">
           <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false">
             <div class="icn-svg" data-icon="settings">
               <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M11 15H22V17H11V19H5V17H2V15H5V13H11V15ZM7 17H9V15H7V17Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M19 7H22V9H19V11H13V9H2V7H13V5H19V7ZM15 9H17V7H15V9Z" fill="currentColor"/></svg>
             </div>
             Settings
+            <div class="icn-svg dropdown-chevron" data-icon="chevron-down">
+              <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
+                <path d="M12 16.4L6 10.4L7.4 9L10.5858 12.1858C11.3668 12.9668 12.6332 12.9668 13.4142 12.1858L16.6 9L18 10.4L12 16.4Z" fill="currentColor"/>
+              </svg>
+            </div>
           </button>
-          <div class="dropdown-menu is-right" role="menu" style="min-width: 240px; padding: var(--space-m);">
-            <div class="block gap-m">
-              <!-- Preview mode -->
-              <div class="block gap-xs">
-                <label class="text-size-small">Preview</label>
-                <div class="segmented-control" id="stickyMode">
-                  <button type="button" class="segmented-control-btn is-active" data-value="inline">Inline</button>
-                  <button type="button" class="segmented-control-btn" data-value="top">Sticky Top</button>
-                  <button type="button" class="segmented-control-btn" data-value="bottom">Sticky Btm</button>
-                  <button type="button" class="segmented-control-btn" data-value="fullscreen">Fullscreen</button>
-                </div>
+          <div class="dropdown-menu is-right" role="menu" id="settingsMenu">
+            <div class="dropdown-label">Preview</div>
+            <button class="dropdown-item is-active" role="menuitem" type="button" data-sticky="inline">
+              Inline
+              <div class="dropdown-item-end"><div class="icn-svg" data-icon="check"><svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></div>
+            </button>
+            <button class="dropdown-item" role="menuitem" type="button" data-sticky="top">
+              <div class="icn-svg" data-icon="sticky-top"><svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M18 6V9H6V6H18ZM22 22H2V2H22V22ZM6 4C4.9 4 4 4.9 4 6V18C4 19.1 4.9 20 6 20H18C19.1 20 20 19.1 20 18V6C20 4.9 19.1 4 18 4H6Z" fill="currentColor"/></svg></div>
+              Sticky Top
+              <div class="dropdown-item-end is-hidden"><div class="icn-svg" data-icon="check"><svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></div>
+            </button>
+            <button class="dropdown-item" role="menuitem" type="button" data-sticky="bottom">
+              <div class="icn-svg" data-icon="sticky-bottom"><svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M18 15V18H6V15H18ZM22 22H2V2H22V22ZM6 4C4.9 4 4 4.9 4 6V18C4 19.1 4.9 20 6 20H18C19.1 20 20 19.1 20 18V6C20 4.9 19.1 4 18 4H6Z" fill="currentColor"/></svg></div>
+              Sticky Bottom
+              <div class="dropdown-item-end is-hidden"><div class="icn-svg" data-icon="check"><svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></div>
+            </button>
+            <button class="dropdown-item" role="menuitem" type="button" data-sticky="fullscreen">
+              Fullscreen
+              <div class="dropdown-item-end is-hidden"><div class="icn-svg" data-icon="check"><svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></div>
+            </button>
+            <hr class="dropdown-divider">
+            <div class="dropdown-label">Fold</div>
+            <div class="dropdown-item preview-fold-row" style="cursor: default;">
+              <span class="preview-fold-label" id="fold-label-above">Above</span>
+              <div class="form-toggle">
+                <input type="checkbox" id="fold-toggle" aria-label="Toggle fold position between above and below">
               </div>
-
-              <!-- Fold position -->
-              <div class="block gap-xs">
-                <label class="text-size-small">Fold</label>
-                <div class="segmented-control" id="foldPosition">
-                  <button type="button" class="segmented-control-btn is-active" data-value="above">Above</button>
-                  <button type="button" class="segmented-control-btn" data-value="below">Below</button>
-                </div>
-              </div>
-
-              <!-- Creative position (Desktop only) -->
-              <div class="block gap-xs" id="positionSection">
-                <label class="text-size-small">Position</label>
-                <div class="segmented-control" id="creativePosition">
-                  <button type="button" class="segmented-control-btn is-active" data-value="top">Top</button>
-                  <button type="button" class="segmented-control-btn" data-value="left">Left</button>
-                  <button type="button" class="segmented-control-btn" data-value="right">Right</button>
-                </div>
-              </div>
+              <span class="preview-fold-label" id="fold-label-below">Below</span>
             </div>
           </div>
         </div>
 
+        <button class="dropdown-trigger" type="button" id="resetSettings" aria-label="Reset settings">
+          <div class="icn-svg" data-icon="refresh"><svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M12 20C9.76667 20 7.875 19.225 6.325 17.675C4.775 16.125 4 14.2333 4 12C4 9.76667 4.775 7.875 6.325 6.325C7.875 4.775 9.76667 4 12 4C13.15 4 14.25 4.2375 15.3 4.7125C16.1007 5.07473 16.8142 5.55568 17.4404 6.15537C17.6421 6.34848 18 6.21237 18 5.93315V4H20V11H13V9H15.4768C16.2446 9 16.7011 8.17477 16.1456 7.6447C15.8078 7.32236 15.4301 7.0408 15.0125 6.8C14.0875 6.26667 13.0833 6 12 6C10.3333 6 8.91667 6.58333 7.75 7.75C6.58333 8.91667 6 10.3333 6 12C6 13.6667 6.58333 15.0833 7.75 16.25C8.91667 17.4167 10.3333 18 12 18C13.2833 18 14.4417 17.6333 15.475 16.9C16.5083 16.1667 17.2333 15.2 17.65 14H19.75C19.2833 15.7667 18.3333 17.2083 16.9 18.325C15.4667 19.4417 13.8333 20 12 20Z" fill="currentColor"/></svg></div>
+          Reset
+        </button>
+
         <!-- Actions (right-aligned) -->
-        <div style="margin-left: auto; display: flex; align-items: center; gap: var(--space-m);">
-          <a id="openLink" href="#" target="_blank" class="text-size-small is-hidden">Open in tab</a>
-          <button class="button is-small copy-btn is-hidden" id="copyBtn" data-copy="" type="button">
-            <div class="icn-svg" data-icon="copy">
+        <div class="preview-toolbar-actions">
+          <a id="openLink" href="#" target="_blank" class="button is-icon is-small preview-toolbar-btn is-hidden" aria-label="Open in tab" data-tooltip="Open in tab" data-tooltip-position="bottom">
+            <div class="icn-svg" data-icon="arrow-top-right">
               <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
-                <path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/>
+                <path d="M6 16.6066L12.9019 9.70468C13.5319 9.07472 13.0857 7.99758 12.1948 7.99758L7 7.99758L7.01768 6H18.0208V16.9823L16.0232 17V11.826C16.0232 10.9351 14.9461 10.4889 14.3161 11.1189L7.41421 18.0208L6 16.6066Z" fill="currentColor"/>
               </svg>
             </div>
-            <span class="copy-btn-label-default">Copy URL</span>
-            <span class="copy-btn-label-copied">Copied!</span>
+          </a>
+          <button class="button is-icon is-small preview-toolbar-btn copy-btn is-hidden" id="copyBtn" data-copy="" data-tooltip="Copy URL" data-tooltip-position="bottom" type="button" aria-label="Copy URL">
+            <span class="copy-btn-default"><div class="icn-svg" data-icon="copy"><svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
+            <span class="copy-btn-copied"><div class="icn-svg" data-icon="check"><svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
           </button>
         </div>
       </div>
     </div>
 
     <!-- Preview Area -->
-    <div class="adp-preview" id="previewArea">
-      <div class="adp-placeholder" id="placeholder">
-        <div class="icon">&#x1F50D;</div>
+    <div class="preview-area" id="previewArea">
+      <div class="preview-placeholder" id="placeholder">
+        <div class="icn-svg" data-icon="search-large">
+          <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M10 2C14.4183 2 18 5.58172 18 10C18 11.2201 17.7258 12.3755 17.2366 13.4096C16.805 14.322 16.8474 15.447 17.5611 16.1607L22 20.5996L20.5996 22L16.1607 17.5611C15.447 16.8474 14.322 16.805 13.4096 17.2366C12.3755 17.7258 11.2201 18 10 18C5.58172 18 2 14.4183 2 10C2 5.58172 5.58172 2 10 2ZM10 4C6.68629 4 4 6.68629 4 10C4 13.3137 6.68629 16 10 16C13.3137 16 16 13.3137 16 10C16 6.68629 13.3137 4 10 4Z" fill="currentColor"/>
+          </svg>
+        </div>
         <p>Enter a Creative ID to see a live preview</p>
       </div>
     </div>
 
+      </div>
+    </div>
   </div>
 
   <script>
@@ -308,9 +394,8 @@
       document.getElementById('creativeId').value = state.creativeId;
       document.getElementById('publisher').value = state.publisher;
       syncSegmented('deviceType', state.deviceType);
-      syncSegmented('stickyMode', state.stickyMode);
-      syncSegmented('foldPosition', state.foldPosition);
-      syncSegmented('creativePosition', state.creativePosition);
+      syncSettingsDropdown();
+      syncPositionDropdown(state.creativePosition);
       updateDeviceSections();
     }
 
@@ -320,6 +405,19 @@
       el.querySelectorAll('.segmented-control-btn').forEach(function(btn) {
         btn.classList.toggle('is-active', btn.dataset.value === value);
       });
+    }
+
+    function syncSettingsDropdown() {
+      var menu = document.getElementById('settingsMenu');
+      // Sync sticky mode items
+      menu.querySelectorAll('[data-sticky]').forEach(function(item) {
+        var isActive = item.dataset.sticky === state.stickyMode;
+        item.classList.toggle('is-active', isActive);
+        var checkEnd = item.querySelector('.dropdown-item-end');
+        if (checkEnd) checkEnd.classList.toggle('is-hidden', !isActive);
+      });
+      // Sync fold toggle
+      document.getElementById('fold-toggle').checked = state.foldPosition === 'below';
     }
 
     // ── Controls ──
@@ -340,6 +438,33 @@
       buildURL();
     }
 
+    function handleSettingsClick(btn) {
+      if (btn.dataset.sticky) {
+        state.stickyMode = btn.dataset.sticky;
+      }
+      syncSettingsDropdown();
+      updateHash();
+      buildURL();
+    }
+
+    function resetSettings() {
+      state.publisher = 'none';
+      state.deviceType = 'Desktop';
+      state.phoneSize = '390';
+      state.tabletSize = '768';
+      state.stickyMode = 'inline';
+      state.foldPosition = 'above';
+      state.creativePosition = 'top';
+      document.getElementById('publisher').value = 'none';
+      syncSegmented('deviceType', 'Desktop');
+      syncSettingsDropdown();
+      syncPositionDropdown('top');
+      updateDeviceSections();
+      updateNavBar();
+      updateHash();
+      buildURL();
+    }
+
     // Handle device size dropdown clicks
     function handleDeviceSizeClick(btn) {
       var size = btn.dataset.size;
@@ -355,10 +480,46 @@
       btn.classList.add('is-active');
 
       // Update trigger label
-      document.getElementById('deviceSizeLabel').textContent = size + 'px';
+      document.getElementById('deviceSizeLabelText').textContent = size + 'px';
 
       // Close dropdown and rebuild
       var dd = document.getElementById('deviceSizeDropdown');
+      if (dd) dd.classList.remove('is-open');
+      updateHash();
+      buildURL();
+    }
+
+    // Handle creative position dropdown clicks
+    var positionLabels = { top: 'Top', left: 'Sidebar Left', right: 'Sidebar Right' };
+    var positionIcons = {
+      top: '<svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M17 5V10H7V5H17ZM22 23H2V1H22V23ZM6 3C4.9 3 4 3.9 4 5V19C4 20.1 4.9 21 6 21H18C19.1 21 20 20.1 20 19V5C20 3.9 19.1 3 18 3H6Z" fill="currentColor"/><path opacity="0.2" d="M6 14H18V12H6V14ZM18 18H6V16H18V18Z" fill="currentColor"/></svg>',
+      left: '<svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M10 5V11H6V5H10ZM22 23H2V1H22V23ZM6 3C4.9 3 4 3.9 4 5V19C4 20.1 4.9 21 6 21H18C19.1 21 20 20.1 20 19V5C20 3.9 19.1 3 18 3H6Z" fill="currentColor"/><path opacity="0.2" d="M6 15H18V13H6V15ZM12 11H18V9H12V11ZM12 7H18V5H12V7ZM18 19H6V17H18V19Z" fill="currentColor"/></svg>',
+      right: '<svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M18 5V11H14V5H18ZM22 23H2V1H22V23ZM6 3C4.9 3 4 3.9 4 5V19C4 20.1 4.9 21 6 21H18C19.1 21 20 20.1 20 19V5C20 3.9 19.1 3 18 3H6Z" fill="currentColor"/><path opacity="0.2" d="M6 15H18V13H6V15ZM6 11H12V9H6V11ZM6 7H12V5H6V7ZM18 19H6V17H18V19Z" fill="currentColor"/></svg>'
+    };
+
+    function syncPositionDropdown(value) {
+      var menu = document.getElementById('positionMenu');
+      menu.querySelectorAll('.dropdown-item').forEach(function(item) {
+        var isActive = item.dataset.position === value;
+        item.classList.toggle('is-active', isActive);
+        var checkEnd = item.querySelector('.dropdown-item-end');
+        if (checkEnd) checkEnd.classList.toggle('is-hidden', !isActive);
+      });
+      // Update trigger icon and label
+      document.getElementById('positionLabelText').textContent = positionLabels[value] || value;
+      var triggerIcon = document.querySelector('#positionLabel > .icn-svg[data-icon^="ad-"]');
+      if (triggerIcon) {
+        triggerIcon.setAttribute('data-icon', 'ad-' + value);
+        triggerIcon.innerHTML = positionIcons[value] || '';
+      }
+    }
+
+    function handlePositionClick(btn) {
+      var position = btn.dataset.position;
+      if (!position) return;
+      state.creativePosition = position;
+      syncPositionDropdown(position);
+      var dd = document.getElementById('positionSection');
       if (dd) dd.classList.remove('is-open');
       updateHash();
       buildURL();
@@ -386,7 +547,7 @@
         // Update dropdown trigger label
         var size = device === 'Phone' ? state.phoneSize : state.tabletSize;
         var devices = device === 'Phone' ? phoneDevices : tabletDevices;
-        sizeLabel.textContent = size + 'px';
+        document.getElementById('deviceSizeLabelText').textContent = size + 'px';
       } else {
         sizeDropdown.classList.add('is-hidden');
       }
@@ -445,43 +606,36 @@
       var placeholder = document.getElementById('placeholder');
       if (placeholder) placeholder.remove();
 
-      var existing = area.querySelector('.adp-wrapper');
+      var existing = area.querySelector('.preview-wrapper');
       if (existing) existing.remove();
 
       var wrapper = document.createElement('div');
-      wrapper.className = 'adp-wrapper';
+      wrapper.className = 'preview-wrapper';
 
       var frame = document.createElement('div');
-      frame.className = 'adp-device';
+      frame.className = 'preview-device';
 
       var iframe = document.createElement('iframe');
       iframe.src = url;
       iframe.setAttribute('allow', 'autoplay; encrypted-media');
       iframe.setAttribute('allowfullscreen', '');
 
-      var label = document.createElement('div');
-      label.className = 'adp-viewport';
-
       if (state.deviceType === 'Phone') {
         var w = parseInt(state.phoneSize);
         iframe.style.width = w + 'px';
         iframe.style.maxWidth = '100%';
         frame.classList.add('phone');
-        label.textContent = w + 'px \u2014 ' + (phoneDevices[state.phoneSize] || '');
       } else if (state.deviceType === 'Tablet') {
         var tw = parseInt(state.tabletSize);
         iframe.style.width = tw + 'px';
         iframe.style.maxWidth = '100%';
         frame.classList.add('tablet');
-        label.textContent = tw + 'px \u2014 ' + (tabletDevices[state.tabletSize] || '');
       } else {
         frame.classList.add('desktop');
-        label.textContent = 'Desktop \u2014 full width';
       }
 
       frame.appendChild(iframe);
       wrapper.appendChild(frame);
-      wrapper.appendChild(label);
       area.appendChild(wrapper);
 
       updateNavBar();
@@ -501,17 +655,17 @@
     }
 
     function updateNavBar() {
-      var frame = document.querySelector('.adp-device');
+      var frame = document.querySelector('.preview-device');
       if (!frame) return;
 
-      var existing = frame.querySelector('.adp-nav');
+      var existing = frame.querySelector('.preview-pub-nav');
       if (existing) existing.remove();
 
       var pub = publishers[state.publisher];
       if (!pub) return;
 
       var nav = document.createElement('div');
-      nav.className = 'adp-nav';
+      nav.className = 'preview-pub-nav';
       if (state.deviceType === 'Desktop') nav.classList.add('desktop-nav');
       nav.style.backgroundColor = pub.bgColor;
       nav.style.color = pub.textColor;
@@ -575,14 +729,14 @@
 
     function showPlaceholder() {
       var area = document.getElementById('previewArea');
-      var existing = area.querySelector('.adp-wrapper');
+      var existing = area.querySelector('.preview-wrapper');
       if (existing) existing.remove();
 
       if (!document.getElementById('placeholder')) {
         var div = document.createElement('div');
-        div.className = 'adp-placeholder';
+        div.className = 'preview-placeholder';
         div.id = 'placeholder';
-        div.innerHTML = '<div class="icon">&#x1F50D;</div><p>Enter a Creative ID to see a live preview</p>';
+        div.innerHTML = '<div class="icn-svg" data-icon="search-large"><svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 2C14.4183 2 18 5.58172 18 10C18 11.2201 17.7258 12.3755 17.2366 13.4096C16.805 14.322 16.8474 15.447 17.5611 16.1607L22 20.5996L20.5996 22L16.1607 17.5611C15.447 16.8474 14.322 16.805 13.4096 17.2366C12.3755 17.7258 11.2201 18 10 18C5.58172 18 2 14.4183 2 10C2 5.58172 5.58172 2 10 2ZM10 4C6.68629 4 4 6.68629 4 10C4 13.3137 6.68629 16 10 16C13.3137 16 16 13.3137 16 10C16 6.68629 13.3137 4 10 4Z" fill="currentColor"/></svg></div><p>Enter a Creative ID to see a live preview</p>';
         area.appendChild(div);
       }
     }
@@ -617,15 +771,33 @@
         if (btn) handleDeviceSizeClick(btn);
       });
 
-      // All segmented controls
-      var groups = ['deviceType', 'stickyMode', 'foldPosition', 'creativePosition'];
-      groups.forEach(function(groupId) {
-        var el = document.getElementById(groupId);
-        if (!el) return;
-        el.querySelectorAll('.segmented-control-btn').forEach(function(btn) {
-          btn.addEventListener('click', function() {
-            handleSegmentedClick(groupId, btn);
-          });
+      // Creative position dropdown
+      document.getElementById('positionMenu').addEventListener('click', function(e) {
+        var btn = e.target.closest('[data-position]');
+        if (btn) handlePositionClick(btn);
+      });
+
+      // Settings dropdown (sticky mode)
+      document.getElementById('settingsMenu').addEventListener('click', function(e) {
+        var btn = e.target.closest('[data-sticky]');
+        if (btn) handleSettingsClick(btn);
+      });
+
+      // Fold position toggle
+      document.getElementById('fold-toggle').addEventListener('change', function() {
+        state.foldPosition = this.checked ? 'below' : 'above';
+        updateHash();
+        buildURL();
+      });
+
+      // Reset settings
+      document.getElementById('resetSettings').addEventListener('click', resetSettings);
+
+      // Device type segmented control
+      var deviceEl = document.getElementById('deviceType');
+      deviceEl.querySelectorAll('.segmented-control-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          handleSegmentedClick('deviceType', btn);
         });
       });
     }

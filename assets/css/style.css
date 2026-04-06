@@ -1,36 +1,61 @@
-/* ─────────────────────────────
-   DOCUMENTATION SITE STYLES
-   ───────────────────────────── */
+/* ------ DOCUMENTATION SITE STYLES ------ */
 
-/* Note: Design system is linked separately in template.html */
-/* This file contains base styles, component styling, and docs-specific additions */
+/* Note: Design system is linked separately — base element styles live there */
+/* This file contains docs-specific layout, components, and overrides only */
 
 
-/* ========================================================================
-   BASE STYLES
-   ======================================================================== */
+/* ------ DOCS CODE OVERRIDES ------ */
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+/* Docs-specific code rendering for markdown content */
+code br {
+  display: none;
 }
 
-html {
-  font-size: 16px;
+del code {
+  text-decoration: inherit;
 }
 
-body {
-  margin: 0;
-  font-family: var(--font-primary);
-  color: var(--text-primary);
+samp {
+  font-family: var(--font-tertiary);
   font-size: var(--text-body);
-  font-weight: var(--font-weight-regular);
-  background: var(--background-primary);
-  line-height: var(--line-height-l);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+}
+
+/* -- Code blocks (docs overrides) -- */
+pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  word-wrap: normal;
+  line-height: var(--line-height-2xl);
+  background-color: var(--background-darker);
+  transition: border-color 0.3s ease;
+  min-height: 67px;
+}
+
+pre > code {
+  white-space: pre;
+}
+
+pre code {
+  display: inline;
+  overflow: visible;
+  line-height: var(--line-height-2xl);
+  word-wrap: normal;
+}
+
+/* -- Code inside headings -- */
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+  padding: 0 var(--space-2xs);
+  font-size: inherit;
+}
+
+/* -- Horizontal rules (docs spacing override) -- */
+hr {
+  margin: var(--space-2xl) 0;
 }
 
 /* -- Page layout structure -- */
@@ -42,388 +67,8 @@ body {
   width: 100%;
 }
 
-/* -- Headings -- */
-h1 {
-  font-size: var(--font-5xl);
-  line-height: var(--line-height-s);
-}
 
-h2 {
-  font-size: var(--font-3xl);
-  line-height: var(--line-height-s);
-}
-
-h3 {
-  font-size: var(--font-2xl);
-  line-height: 1.1;
-}
-
-h4 {
-  font-size: var(--font-xl);
-  line-height: 1.1;
-}
-
-h5 {
-  font-size: var(--font-l);
-  line-height: var(--line-height-s);
-}
-
-h6 {
-  font-size: var(--font-l);
-  line-height: var(--line-height-l);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-secondary);
-  font-weight: var(--font-weight-regular);
-  margin-top: var(--space-xl);
-  margin-bottom: var(--space-l);
-}
-
-/* -- Paragraphs -- */
-p {
-  margin-top: 0;
-  margin-bottom: var(--space-m);
-}
-
-/* -- Links -- */
-a {
-  color: var(--text-plain);
-  text-underline-offset: 2.5px;
-  text-decoration: underline;
-  -webkit-text-decoration-color: var(--text-link);
-  text-decoration-color: var(--text-link);
-  text-decoration-thickness: 1.5px;
-  transition: all 0.3s;
-}
-
-a:hover {
-  color: var(--text-link);
-  text-underline-offset: 4px;
-}
-
-/* -- Lists -- */
-ul,
-ol {
-  margin-top: 0;
-  margin-bottom: var(--space-m);
-  padding-left: var(--space-2xl);
-}
-
-li {
-  margin-top: var(--space-s);
-  margin-bottom: 0;
-}
-
-li:first-child {
-  margin-top: 0;
-}
-
-/* Nested lists */
-ul ul,
-ul ol,
-ol ul,
-ol ol {
-  margin-top: var(--space-s);
-  margin-bottom: 0;
-}
-
-ol ol,
-ul ol {
-  list-style-type: lower-roman;
-}
-
-ul ul ol,
-ul ol ol,
-ol ul ol,
-ol ol ol {
-  list-style-type: lower-alpha;
-}
-
-/* List items with paragraphs */
-li > p {
-  margin-top: var(--space-l);
-  margin-bottom: 0;
-}
-
-li > p:first-child {
-  margin-top: 0;
-}
-
-/* -- Blockquotes -- */
-blockquote {
-  margin: var(--space-xl) 0;
-  padding-left: var(--space-l);
-  border-left: var(--border-m) solid var(--border-secondary);
-  color: var(--text-secondary);
-  font-size: var(--font-m);
-  font-style: italic;
-}
-
-blockquote p {
-  margin-top: 0;
-  margin-bottom: var(--space-m);
-}
-
-blockquote p:last-child {
-  margin-bottom: 0;
-}
-
-/* -- Horizontal rules -- */
-hr {
-  margin: var(--space-2xl) 0;
-  border: 0;
-  border-top: var(--border-s) solid var(--border-secondary);
-  height: 0;
-}
-
-/* -- Bold -- */
-b,
-strong {
-  font-weight: var(--font-weight-semi-bold);
-}
-
-/* -- Mark (highlight) -- */
-mark {
-  background-color: var(--callout-warning-bg, #fff8c5);
-  color: var(--text-plain);
-}
-
-/* -- Images -- */
-img {
-  border-style: none;
-  max-width: 100%;
-  box-sizing: content-box;
-}
-
-/* -- Code (shared base) -- */
-code,
-kbd,
-pre,
-samp {
-  font-family: var(--font-tertiary);
-  font-size:  calc(var(--text-body) - 1.5px);
-}
-
-/* -- Code (inline) -- */
-code {
-  padding: var(--space-2xs) var(--space-s);
-  margin: 0;
-  white-space: nowrap;
-  background-color: var(--background-faded);
-}
-
-code br {
-  display: none;
-}
-
-del code {
-  text-decoration: inherit;
-}
-
-samp {
-  font-size: var(--text-body);
-}
-
-/* -- Code (blocks) -- */
-pre {
-  margin-top: 0;
-  margin-bottom: 0;
-  word-wrap: normal;
-  padding: var(--space-l);
-  overflow: auto;
-  line-height: var(--line-height-2xl);
-  background-color: var(--background-darker);
-  border: var(--border-s) solid var(--border-faded);
-  transition: border-color 0.3s ease;
-  min-height: 67px;
-}
-
-pre:hover {
-  border: var(--border-s) solid var(--border-faded);
-}
-
-pre > code {
-  padding: 0;
-  margin: 0;
-  word-break: normal;
-  white-space: pre;
-  background: transparent;
-  border: 0;
-}
-
-pre code {
-  display: inline;
-  max-width: auto;
-  padding: 0;
-  margin: 0;
-  overflow: visible;
-  line-height: var(--line-height-2xl);
-  word-wrap: normal;
-  background-color: transparent;
-  border: 0;
-}
-
-h1 code,
-h2 code,
-h3 code,
-h4 code,
-h5 code,
-h6 code {
-  padding: 0 var(--space-2xs);
-  font-size: inherit;
-}
-
-/* -- Keyboard input -- */
-kbd {
-  display: inline-block;
-  padding: var(--space-xs);
-  font-family: var(--font-tertiary);
-  font-size: var(--text-body);
-  line-height: var(--line-height-m);
-  color: var(--text-plain);
-  vertical-align: middle;
-  background-color: var(--background-faded);
-  border: solid var(--border-s) var(--border-faded);
-  border-bottom-color: var(--border-faded);
-  border-radius: 6px;
-  box-shadow: inset 0 -1px 0 var(--border-faded);
-}
-
-/* -- Definition lists -- */
-dl {
-  padding: 0;
-}
-
-dl dt {
-  padding: 0;
-  margin-top: var(--space-l);
-  font-size: var(--font-s);
-  font-style: italic;
-  font-weight: var(--font-weight-semi-bold);
-}
-
-dl dd {
-  padding: 0 var(--space-l);
-  margin-bottom: var(--space-l);
-}
-
-dd {
-  margin-left: 0;
-}
-
-/* -- Focus styles -- */
-a:focus,
-[role=button]:focus,
-input[type=radio]:focus,
-input[type=checkbox]:focus {
-  outline: 2px solid var(--status-info, #0969da);
-  outline-offset: -2px;
-  box-shadow: none;
-}
-
-a:focus:not(:focus-visible),
-[role=button]:focus:not(:focus-visible),
-input[type=radio]:focus:not(:focus-visible),
-input[type=checkbox]:focus:not(:focus-visible) {
-  outline: solid 1px transparent;
-}
-
-a:focus-visible,
-[role=button]:focus-visible,
-input[type=radio]:focus-visible,
-input[type=checkbox]:focus-visible {
-  outline: 2px solid var(--status-info, #0969da);
-  outline-offset: -2px;
-  box-shadow: none;
-}
-
-a:not([href]) {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* -- Alerts -- */
-.alert {
-  padding: var(--space-m) var(--space-l);
-  margin-bottom: var(--space-l);
-  color: inherit;
-  border-left: var(--border-l) solid var(--border-secondary);
-  background-color: var(--background-faded);
-}
-
-.alert > :first-child {
-  margin-top: 0;
-}
-
-.alert > :last-child {
-  margin-bottom: 0;
-}
-
-.alert-title {
-  display: flex;
-  font-weight: var(--font-weight-semi-bold);
-  align-items: center;
-  gap: var(--space-s);
-  line-height: var(--line-height-s);
-  margin-bottom: var(--space-s);
-  font-size: var(--font-s);
-}
-
-.alert-note {
-  border-left-color: var(--callout-info, var(--status-info, #0969da));
-  background-color: var(--callout-info-bg, var(--background-faded));
-}
-
-.alert-note .alert-title {
-  color: var(--callout-info, var(--text-link));
-}
-
-.alert-important {
-  border-left-color: var(--callout-accent, var(--status-accent, #8250df));
-  background-color: var(--callout-accent-bg, var(--background-faded));
-}
-
-.alert-important .alert-title {
-  color: var(--callout-accent, var(--status-accent, #8250df));
-}
-
-.alert-warning {
-  border-left-color: var(--callout-warning, var(--status-warning, #9a6700));
-  background-color: var(--callout-warning-bg, var(--background-faded));
-}
-
-.alert-warning .alert-title {
-  color: var(--callout-warning, var(--status-warning, #9a6700));
-}
-
-.alert-tip {
-  border-left-color: var(--callout-success, var(--status-success, #1a7f37));
-  background-color: var(--callout-success-bg, var(--background-faded));
-}
-
-.alert-tip .alert-title {
-  color: var(--callout-success, var(--status-success, #1a7f37));
-}
-
-.alert-caution {
-  border-left-color: var(--callout-danger, var(--status-danger, #cf222e));
-  background-color: var(--callout-danger-bg, var(--background-faded));
-}
-
-.alert-caution .alert-title {
-  color: var(--callout-danger, var(--status-danger, #cf222e));
-}
-
-
-/* ========================================================================
-   COLOR PALETTE (Styleguide)
-   ======================================================================== */
+/* ------ COLOR PALETTE (STYLEGUIDE) ------ */
 
 .color-list {
   overflow: hidden;
@@ -477,9 +122,7 @@ a:not([href]) {
 }
 
 
-/* ========================================================================
-   TABLES
-   ======================================================================== */
+/* ------ TABLES ------ */
 
 /* -- Table scroll wrapper -- */
 .table-scroll {
@@ -574,10 +217,10 @@ a:not([href]) {
   font-weight: var(--font-weight-semi-bold);
 }
 
-
-/* ========================================================================
-   BACK TO DOCS / BACK TO TOP BUTTONS
-   ======================================================================== */
+td .icn-svg {
+    display: inline-flex;
+}
+/* ------ BACK TO DOCS / BACK TO TOP ------ */
 
 .docs-back-btn-wrapper {
   position: fixed;
@@ -869,6 +512,7 @@ body.mobile-nav-open .site-sidebar-backdrop {
 body.sidebar-collapsed .site-sidebar {
   width: var(--sidebar-collapsed-width);
   padding: var(--space-m) 0;
+  overflow: visible;
 }
 
 body.sidebar-collapsed .site-sidebar-header {
@@ -879,6 +523,7 @@ body.sidebar-collapsed .site-sidebar-content {
   opacity: 1;
   pointer-events: auto;
   visibility: visible;
+  overflow: visible;
 }
 
 /* Collapsed: hide text, lists, toggle chevrons, labels */
@@ -900,11 +545,18 @@ body.sidebar-collapsed .nav-home {
   gap: 0;
 }
 
-
-
 /* Collapsed: remove open section background */
 body.sidebar-collapsed .nav-section[open] {
   background: none;
+}
+
+/* Sidebar tooltips: only visible when collapsed */
+.site-sidebar [data-tooltip]::before {
+  display: none;
+}
+body.sidebar-collapsed .site-sidebar [data-tooltip]:hover::before,
+body.sidebar-collapsed .site-sidebar [data-tooltip]:focus-visible::before {
+  display: block;
 }
 
 
@@ -942,7 +594,7 @@ body.sidebar-collapsed .nav-section[open] {
 }
 
 /* Override global disclosure chevron — nav uses its own SVG icon */
-.nav-section-toggle::after {
+.nav-section-toggle::before {
   display: none;
 }
 
@@ -983,10 +635,6 @@ body.sidebar-collapsed .nav-section[open] {
 .nav-section:not([open]) .nav-list {
   display: none;
 }
-
-
-
-
 
 .nav-section[open] {
   background: var(--background-faded);
@@ -1269,10 +917,12 @@ body:not(.sidebar-collapsed) .nav-section[open] .nav-list {
   overflow: hidden;
 }
 
-/* Offset headings for anchor links — accounts for fixed header + sticky bar */
+/* Offset anchor targets — accounts for fixed header + sticky bar */
 h1[id],
-h2[id] {
-  scroll-margin-top: calc(var(--header-height) + var(--sticky-bar-height) + var(--space-m));
+h2[id],
+h3[id],
+section[id] {
+  scroll-margin-top: calc(var(--header-height) + var(--sticky-bar-height));
 }
 
 .page-header {
@@ -1312,11 +962,10 @@ h2[id] {
   top: var(--header-height);
 }
 
-.sticky-bar-inner {
+.sticky-bar-container {
   max-width: 1080px;
   margin: 0 auto;
   height: var(--sticky-bar-height);
-  padding: 0 0 0 var(--space-l);
 }
 
 
@@ -1399,7 +1048,12 @@ h2[id] {
 
 .demo-preview .sticky-bar {
   top: 0;
+}
 
+.demo-eyebrow {
+  margin: 0;
+  font-size: var(--font-s);
+  color: var(--text-faded);
 }
 
 
@@ -1461,17 +1115,6 @@ h2[id] {
   transform: scale3d(1.0, 1.0, 1.0);
 }
 
-/* -- Copy button -- */
-.copy-btn {
-  margin-top: var(--space-s);
-}
-
-.copy-btn.is-copied {
-  color: var(--status-success);
-  border-color: var(--status-success);
-}
-
-
 /* ------ 6. CODE BLOCKS ------ */
 
 .code-block-wrapper {
@@ -1487,7 +1130,7 @@ h2[id] {
   font-family: inherit;
 }
 
-.copy-code-btn {
+.code-block-wrapper .copy-btn {
   position: absolute;
   top: var(--space-m);
   right: var(--space-m);
@@ -1521,38 +1164,6 @@ h2[id] {
   margin-bottom: var(--space-xl);
   color: var(--text-plain);
 }
-
-/* .docs-grid is now using design system classes: grid cols-3 gap-xl */
-
-.docs-card {
-  display: block;
-  padding: var(--space-xl);
-  background: var(--background-primary);
-  border: var(--border-s) solid var(--border-faded);
-  text-decoration: none;
-  color: var(--text-primary);
-  transition: border-color 0.15s ease, background-color 0.15s ease;
-}
-
-.docs-card:hover {
-  background: var(--background-faded);
-  border-color: var(--border-primary);
-  color: var(--text-primary);
-}
-
-.docs-card-title {
-  font-size: var(--font-2xl);
-  margin-bottom: var(--space-s);
-  margin-top: 0;
-  color: var(--text-plain);
-}
-
-.docs-card-subtitle {
-  font-size: var(--font-s);
-  color: var(--text-secondary);
-  margin: 0;
-}
-
 
 /* ------ 8. RESPONSIVE ------ */
 
@@ -1669,8 +1280,6 @@ h2[id] {
     gap: var(--space-s);
   }
 
-
-
   body.sidebar-collapsed .nav-section[open] {
     background: var(--background-faded);
   }
@@ -1772,11 +1381,6 @@ h2[id] {
     padding: var(--space-xl);
   }
 
-  /* Sticky bar: compact on mobile */
-  .sticky-bar-inner {
-    padding: var(--space-s) var(--space-l);
-  }
-
   /* Page header: taller hero on mobile */
   .page-header {
     min-height: 30vh;
@@ -1797,11 +1401,7 @@ h2[id] {
 }
 
 
-
-
-/* ========================================================================
-   AUTH — Login, Role Gating, Element Visibility
-   ======================================================================== */
+/* ------ AUTH ------ */
 
 /* --- Auth Loading State --- */
 
@@ -1883,6 +1483,14 @@ body.auth-role-admin [data-auth-role="admin"],
 body.auth-role-admin [data-auth-role="team"],
 body.auth-role-admin [data-auth-role="client"] {
   display: revert;
+}
+
+/* Public-only visitors: hide sidebar, keep header */
+body.auth-role-public:not(.auth-role-client) .site-sidebar {
+  display: none;
+}
+body.auth-role-public:not(.auth-role-client) .page-wrapper.has-sidebar {
+  margin-left: 0;
 }
 
 /* --- Login Overlay --- */

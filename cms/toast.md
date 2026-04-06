@@ -3,8 +3,8 @@ title: "Toast"
 subtitle: "Notification messages"
 description: "How to use the toast component for temporary notification messages."
 section: "Design System"
-subsection: ""
-order: 20
+subsection: "Feedback"
+order: 6
 slug: "toast"
 status: "published"
 access: "team"
@@ -41,6 +41,10 @@ Then call `showToast()` from JavaScript:
 showToast('Changes saved successfully.');
 ```
 
+<div class="demo-preview">
+  <button class="button" onclick="showToast('Changes saved successfully.')">Show default toast</button>
+</div>
+
 ---
 
 ## API
@@ -59,6 +63,34 @@ showToast(message, type, duration);
 
 ## Variants
 
+<div class="demo-preview">
+  <div class="block gap-s">
+    <div class="toast toast--success" role="alert" style="position: static; max-width: 100%;">
+      <span class="toast-message">Changes saved successfully.</span>
+      <button class="toast-close" aria-label="Dismiss">{{icon:close}}</button>
+    </div>
+    <div class="toast toast--warning" role="alert" style="position: static; max-width: 100%;">
+      <span class="toast-message">Your session will expire in 5 minutes.</span>
+      <button class="toast-close" aria-label="Dismiss">{{icon:close}}</button>
+    </div>
+    <div class="toast toast--danger" role="alert" style="position: static; max-width: 100%;">
+      <span class="toast-message">Failed to upload file. Please try again.</span>
+      <button class="toast-close" aria-label="Dismiss">{{icon:close}}</button>
+    </div>
+    <div class="toast toast--info" role="alert" style="position: static; max-width: 100%;">
+      <span class="toast-message">New comment on your project.</span>
+      <button class="toast-close" aria-label="Dismiss">{{icon:close}}</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-preview" style="display: flex; gap: var(--space-m); flex-wrap: wrap;">
+  <button class="button" onclick="showToast('Changes saved.', 'success')">Success</button>
+  <button class="button" onclick="showToast('Connection unstable.', 'warning')">Warning</button>
+  <button class="button" onclick="showToast('Failed to save.', 'danger')">Danger</button>
+  <button class="button" onclick="showToast('New version available.', 'info')">Info</button>
+</div>
+
 ```js
 showToast('Changes saved.', 'success');
 showToast('Connection unstable.', 'warning');
@@ -66,7 +98,7 @@ showToast('Failed to save.', 'danger');
 showToast('New version available.', 'info');
 ```
 
-Each variant adds a coloured left border using `--status-*` tokens.
+Each variant uses `--status-*` and `--status-*-bg` tokens for colour.
 
 ---
 
@@ -78,7 +110,9 @@ The JS creates this markup automatically:
 <div class="toast-container" aria-live="polite" aria-atomic="false">
   <div class="toast toast--success" role="alert">
     <span class="toast-message">Changes saved.</span>
-    <button class="toast-close" aria-label="Dismiss">&times;</button>
+    <button class="toast-close" aria-label="Dismiss">
+      <div class="icn-svg" data-icon="close">...</div>
+    </button>
   </div>
 </div>
 ```

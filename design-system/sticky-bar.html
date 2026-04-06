@@ -74,27 +74,36 @@
 
         <!-- Sticky Bar (breadcrumbs + actions) -->
         <div class="sticky-bar">
-      <div class="sticky-bar-inner">
-        <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
-          <a href="../design-system/index.html">Design System</a>
-          <span class="breadcrumb-separator">/</span>
-          <span>Sticky Bar</span>
-        </nav>
+      <div class="sticky-bar-container">
+        <div class="sticky-bar-content">
+          <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
+            <a href="../design-system/index.html">Design System</a>
+            <span class="breadcrumb-separator">/</span>
+            <span>Sticky Bar</span>
+          </nav>
+        </div>
         <div class="sticky-bar-actions">
           <div class="dropdown">
             <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Markdown source options">
-              <div class="icn-svg" data-icon="more-horizontal"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
+              <div class="icn-svg" data-icon="more-horizontal" data-file="more-horizontal.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
             </button>
             <div class="dropdown-menu is-right">
-              <a href="../cms/sticky-bar.md" class="dropdown-item" download>
-                <div class="icn-svg" data-icon="download"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
-                <span>Download .md file</span>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="../cms/sticky-bar.md" class="dropdown-item" target="_blank" rel="noopener noreferrer">
-                <div class="icn-svg" data-icon="open-full"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div>
-                <span>Open .md in new tab</span>
-              </a>
+              <button type="button" class="dropdown-item js-copy-url" aria-label="Copy page link to clipboard">
+                <div class="icn-svg" data-icon="link" data-file="link.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M14.8284 16.2426L8.46446 22.6066L1.39339 15.5355L7.75735 9.17158L9.17156 10.5858L5.63603 14.1213C4.85498 14.9024 4.85498 16.1687 5.63603 16.9498L7.05024 18.364C7.83129 19.145 9.09762 19.145 9.87867 18.364L13.4142 14.8284L14.8284 16.2426ZM9.17156 16.2426L7.75735 14.8284L14.8284 7.75736L16.2426 9.17158L9.17156 16.2426ZM16.2426 14.8284L14.8284 13.4142L18.3639 9.87868C19.145 9.09763 19.145 7.8313 18.3639 7.05026L16.9497 5.63604C16.1687 4.85499 14.9024 4.85499 14.1213 5.63604L10.5858 9.17158L9.17156 7.75736L15.5355 1.3934L22.6066 8.46447L16.2426 14.8284Z" fill="currentColor"/></svg></div>
+                <span>Copy link</span>
+              </button>
+              <div data-auth-role="team">
+                <div class="dropdown-divider"></div>
+                <a href="../cms/sticky-bar.md" class="dropdown-item js-md-download" download>
+                  <div class="icn-svg" data-icon="download" data-file="download.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
+                  <span>Download .md file</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="../cms/sticky-bar.md" class="dropdown-item js-md-open" target="_blank" rel="noopener noreferrer">
+                  <div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div>
+                  <span>Open .md in new tab</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -142,7 +151,7 @@
 <tr>
 <td><code>border-bottom</code></td>
 <td><code>var(--border-s) solid var(--border-faded)</code></td>
-<td>Subtle bottom border on inner</td>
+<td>Subtle bottom border on container</td>
 </tr>
 </tbody></table></div>
 <hr>
@@ -150,30 +159,34 @@
 <p>The most common usage — breadcrumb navigation inside the bar.</p>
 <div class="demo-preview">
   <div class="sticky-bar" style="position: relative;">
-    <div class="sticky-bar-inner">
-      <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
-        <a href="#">Home</a>
-        <span class="breadcrumb-separator">/</span>
-        <a href="#">Design System</a>
-        <span class="breadcrumb-separator">/</span>
-        <span>Button</span>
-      </nav>
+    <div class="sticky-bar-container">
+      <div class="sticky-bar-content">
+        <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
+          <a href="#">Home</a>
+          <span class="breadcrumb-separator">/</span>
+          <a href="#">Design System</a>
+          <span class="breadcrumb-separator">/</span>
+          <span>Button</span>
+        </nav>
+      </div>
     </div>
   </div>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-z2bmkfuef" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-z2bmkfuef" class="language-html">&lt;div class=&quot;sticky-bar&quot;&gt;
-  &lt;div class=&quot;sticky-bar-inner&quot;&gt;
-    &lt;nav class=&quot;sticky-bar-breadcrumbs&quot; aria-label=&quot;Breadcrumb&quot;&gt;
-      &lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;
-      &lt;span class=&quot;breadcrumb-separator&quot;&gt;/&lt;/span&gt;
-      &lt;a href=&quot;#&quot;&gt;Design System&lt;/a&gt;
-      &lt;span class=&quot;breadcrumb-separator&quot;&gt;/&lt;/span&gt;
-      &lt;span&gt;Button&lt;/span&gt;
-    &lt;/nav&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-lrbftq31u" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-lrbftq31u" class="language-html">&lt;div class=&quot;sticky-bar&quot;&gt;
+  &lt;div class=&quot;sticky-bar-container&quot;&gt;
+    &lt;div class=&quot;sticky-bar-content&quot;&gt;
+      &lt;nav class=&quot;sticky-bar-breadcrumbs&quot; aria-label=&quot;Breadcrumb&quot;&gt;
+        &lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;
+        &lt;span class=&quot;breadcrumb-separator&quot;&gt;/&lt;/span&gt;
+        &lt;a href=&quot;#&quot;&gt;Design System&lt;/a&gt;
+        &lt;span class=&quot;breadcrumb-separator&quot;&gt;/&lt;/span&gt;
+        &lt;span&gt;Button&lt;/span&gt;
+      &lt;/nav&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
@@ -184,11 +197,13 @@
 <p>Tab-style anchor links for page section navigation. Inside a <code>.sticky-bar</code>, tabs automatically stretch to the full bar height and the active indicator aligns with the bottom border.</p>
 <div class="demo-preview">
   <div class="sticky-bar" style="position: relative;">
-    <div class="sticky-bar-inner">
-      <div class="tabs">
-        <a href="#" class="tab is-active">Overview</a>
-        <a href="#" class="tab">Components</a>
-        <a href="#" class="tab">Tokens</a>
+    <div class="sticky-bar-container">
+      <div class="sticky-bar-content">
+        <div class="tabs">
+          <a href="#" class="tab is-active">Overview</a>
+          <a href="#" class="tab">Components</a>
+          <a href="#" class="tab">Tokens</a>
+        </div>
       </div>
     </div>
   </div>
@@ -196,13 +211,15 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-di0tjtnnx" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-di0tjtnnx" class="language-html">&lt;div class=&quot;sticky-bar&quot;&gt;
-  &lt;div class=&quot;sticky-bar-inner&quot;&gt;
-    &lt;div class=&quot;tabs&quot;&gt;
-      &lt;a href=&quot;#section-1&quot; class=&quot;tab is-active&quot;&gt;Overview&lt;/a&gt;
-      &lt;a href=&quot;#section-2&quot; class=&quot;tab&quot;&gt;Components&lt;/a&gt;
-      &lt;a href=&quot;#section-3&quot; class=&quot;tab&quot;&gt;Tokens&lt;/a&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-2dzpfy5so" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-2dzpfy5so" class="language-html">&lt;div class=&quot;sticky-bar&quot;&gt;
+  &lt;div class=&quot;sticky-bar-container&quot;&gt;
+    &lt;div class=&quot;sticky-bar-content&quot;&gt;
+      &lt;div class=&quot;tabs&quot;&gt;
+        &lt;a href=&quot;#section-1&quot; class=&quot;tab is-active&quot;&gt;Overview&lt;/a&gt;
+        &lt;a href=&quot;#section-2&quot; class=&quot;tab&quot;&gt;Components&lt;/a&gt;
+        &lt;a href=&quot;#section-3&quot; class=&quot;tab&quot;&gt;Tokens&lt;/a&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
@@ -211,15 +228,17 @@
     
 <hr>
 <h2 id="dropdown">Dropdown</h2>
-<p>Dropdowns inside the sticky bar use the standard <code>.dropdown</code> component. The trigger gets tighter horizontal padding automatically when inside a <code>.sticky-bar</code>.</p>
+<p>Dropdowns inside the sticky bar use the standard <code>.dropdown</code> component. The trigger gets tighter horizontal padding automatically when inside a <code>.sticky-bar</code>. Place the dropdown inside <code>.sticky-bar-actions</code> to keep it outside the scrollable content area.</p>
 <div class="demo-preview">
   <div class="sticky-bar" style="position: relative;">
-    <div class="sticky-bar-inner">
-      <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
-        <a href="#">Design System</a>
-        <span class="breadcrumb-separator">/</span>
-        <span>Color</span>
-      </nav>
+    <div class="sticky-bar-container">
+      <div class="sticky-bar-content">
+        <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
+          <a href="#">Design System</a>
+          <span class="breadcrumb-separator">/</span>
+          <span>Color</span>
+        </nav>
+      </div>
       <div class="sticky-bar-actions">
         <div class="dropdown">
           <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="More options">
@@ -238,10 +257,12 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-h10undiio" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-h10undiio" class="language-html">&lt;div class=&quot;sticky-bar&quot;&gt;
-  &lt;div class=&quot;sticky-bar-inner&quot;&gt;
-    &lt;nav class=&quot;sticky-bar-breadcrumbs&quot; aria-label=&quot;Breadcrumb&quot;&gt;...&lt;/nav&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-uncx9ygha" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-uncx9ygha" class="language-html">&lt;div class=&quot;sticky-bar&quot;&gt;
+  &lt;div class=&quot;sticky-bar-container&quot;&gt;
+    &lt;div class=&quot;sticky-bar-content&quot;&gt;
+      &lt;nav class=&quot;sticky-bar-breadcrumbs&quot; aria-label=&quot;Breadcrumb&quot;&gt;...&lt;/nav&gt;
+    &lt;/div&gt;
     &lt;div class=&quot;sticky-bar-actions&quot;&gt;
       &lt;div class=&quot;dropdown&quot;&gt;
         &lt;button class=&quot;dropdown-trigger&quot; type=&quot;button&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot; aria-label=&quot;More options&quot;&gt;
@@ -265,26 +286,30 @@
 <p>Form toggles centre vertically inside the bar automatically.</p>
 <div class="demo-preview">
   <div class="sticky-bar" style="position: relative;">
-    <div class="sticky-bar-inner">
-      <span class="text-size-small">Dark mode</span>
-      <label class="form-toggle">
-        <input type="checkbox" role="switch">
-        <span class="form-toggle-track"></span>
-      </label>
+    <div class="sticky-bar-container">
+      <div class="sticky-bar-content">
+        <span class="text-size-small">Dark mode</span>
+        <label class="form-toggle">
+          <input type="checkbox" role="switch">
+          <span class="form-toggle-track"></span>
+        </label>
+      </div>
     </div>
   </div>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-0ommmg4gp" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-0ommmg4gp" class="language-html">&lt;div class=&quot;sticky-bar&quot;&gt;
-  &lt;div class=&quot;sticky-bar-inner&quot;&gt;
-    &lt;span&gt;Dark mode&lt;/span&gt;
-    &lt;label class=&quot;form-toggle&quot;&gt;
-      &lt;input type=&quot;checkbox&quot; role=&quot;switch&quot;&gt;
-      &lt;span class=&quot;form-toggle-track&quot;&gt;&lt;/span&gt;
-    &lt;/label&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-5igia139m" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-5igia139m" class="language-html">&lt;div class=&quot;sticky-bar&quot;&gt;
+  &lt;div class=&quot;sticky-bar-container&quot;&gt;
+    &lt;div class=&quot;sticky-bar-content&quot;&gt;
+      &lt;span&gt;Dark mode&lt;/span&gt;
+      &lt;label class=&quot;form-toggle&quot;&gt;
+        &lt;input type=&quot;checkbox&quot; role=&quot;switch&quot;&gt;
+        &lt;span class=&quot;form-toggle-track&quot;&gt;&lt;/span&gt;
+      &lt;/label&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
@@ -295,12 +320,14 @@
 <p>Segmented controls centre vertically inside the bar automatically.</p>
 <div class="demo-preview">
   <div class="sticky-bar" style="position: relative;">
-    <div class="sticky-bar-inner">
-      <span class="text-size-small">View</span>
-      <div class="segmented-control" role="group" aria-label="View mode">
-        <button class="segmented-control-btn is-active" type="button">Grid</button>
-        <button class="segmented-control-btn" type="button">List</button>
-        <button class="segmented-control-btn" type="button">Table</button>
+    <div class="sticky-bar-container">
+      <div class="sticky-bar-content">
+        <span class="text-size-small">View</span>
+        <div class="segmented-control" role="group" aria-label="View mode">
+          <button class="segmented-control-btn is-active" type="button">Grid</button>
+          <button class="segmented-control-btn" type="button">List</button>
+          <button class="segmented-control-btn" type="button">Table</button>
+        </div>
       </div>
     </div>
   </div>
@@ -308,14 +335,16 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-9jfgg5v54" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-9jfgg5v54" class="language-html">&lt;div class=&quot;sticky-bar&quot;&gt;
-  &lt;div class=&quot;sticky-bar-inner&quot;&gt;
-    &lt;span&gt;View&lt;/span&gt;
-    &lt;div class=&quot;segmented-control&quot; role=&quot;group&quot; aria-label=&quot;View mode&quot;&gt;
-      &lt;button class=&quot;segmented-control-btn is-active&quot; type=&quot;button&quot;&gt;Grid&lt;/button&gt;
-      &lt;button class=&quot;segmented-control-btn&quot; type=&quot;button&quot;&gt;List&lt;/button&gt;
-      &lt;button class=&quot;segmented-control-btn&quot; type=&quot;button&quot;&gt;Table&lt;/button&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-munj62mtw" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-munj62mtw" class="language-html">&lt;div class=&quot;sticky-bar&quot;&gt;
+  &lt;div class=&quot;sticky-bar-container&quot;&gt;
+    &lt;div class=&quot;sticky-bar-content&quot;&gt;
+      &lt;span&gt;View&lt;/span&gt;
+      &lt;div class=&quot;segmented-control&quot; role=&quot;group&quot; aria-label=&quot;View mode&quot;&gt;
+        &lt;button class=&quot;segmented-control-btn is-active&quot; type=&quot;button&quot;&gt;Grid&lt;/button&gt;
+        &lt;button class=&quot;segmented-control-btn&quot; type=&quot;button&quot;&gt;List&lt;/button&gt;
+        &lt;button class=&quot;segmented-control-btn&quot; type=&quot;button&quot;&gt;Table&lt;/button&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
@@ -324,14 +353,16 @@
     
 <hr>
 <h2 id="combined">Combined</h2>
-<p>A realistic example combining breadcrumbs, tabs, and a dropdown action menu in one bar.</p>
+<p>A realistic example combining tabs and a dropdown action menu in one bar. The <code>.sticky-bar-content</code> area scrolls horizontally on mobile while the dropdown stays pinned.</p>
 <div class="demo-preview">
   <div class="sticky-bar" style="position: relative;">
-    <div class="sticky-bar-inner">
-      <div class="tabs">
-        <a href="#" class="tab is-active">Overview</a>
-        <a href="#" class="tab">Settings</a>
-        <a href="#" class="tab">Activity</a>
+    <div class="sticky-bar-container">
+      <div class="sticky-bar-content">
+        <div class="tabs">
+          <a href="#" class="tab is-active">Overview</a>
+          <a href="#" class="tab">Settings</a>
+          <a href="#" class="tab">Activity</a>
+        </div>
       </div>
       <div class="sticky-bar-actions">
         <div class="dropdown">
@@ -350,13 +381,15 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-fkyhlmrzw" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-fkyhlmrzw" class="language-html">&lt;div class=&quot;sticky-bar&quot;&gt;
-  &lt;div class=&quot;sticky-bar-inner&quot;&gt;
-    &lt;div class=&quot;tabs&quot;&gt;
-      &lt;a href=&quot;#overview&quot; class=&quot;tab is-active&quot;&gt;Overview&lt;/a&gt;
-      &lt;a href=&quot;#settings&quot; class=&quot;tab&quot;&gt;Settings&lt;/a&gt;
-      &lt;a href=&quot;#activity&quot; class=&quot;tab&quot;&gt;Activity&lt;/a&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-vi14iw7ey" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-vi14iw7ey" class="language-html">&lt;div class=&quot;sticky-bar&quot;&gt;
+  &lt;div class=&quot;sticky-bar-container&quot;&gt;
+    &lt;div class=&quot;sticky-bar-content&quot;&gt;
+      &lt;div class=&quot;tabs&quot;&gt;
+        &lt;a href=&quot;#overview&quot; class=&quot;tab is-active&quot;&gt;Overview&lt;/a&gt;
+        &lt;a href=&quot;#settings&quot; class=&quot;tab&quot;&gt;Settings&lt;/a&gt;
+        &lt;a href=&quot;#activity&quot; class=&quot;tab&quot;&gt;Activity&lt;/a&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class=&quot;sticky-bar-actions&quot;&gt;
       &lt;div class=&quot;dropdown&quot;&gt;
@@ -429,19 +462,19 @@
 <td>Sticky positioning and background</td>
 </tr>
 <tr>
-<td>Content wrapper</td>
-<td><code>.sticky-bar-inner</code></td>
-<td>Flexbox layout, border, padding</td>
+<td>Layout container</td>
+<td><code>.sticky-bar-container</code></td>
+<td>Flexbox layout, border</td>
 </tr>
 <tr>
-<td>Breadcrumbs</td>
-<td><code>.sticky-bar-breadcrumbs</code></td>
-<td>Breadcrumb navigation (docs variant)</td>
+<td>Scrollable content</td>
+<td><code>.sticky-bar-content</code></td>
+<td>Holds left-side content (breadcrumbs, tabs, toggles etc.), scrolls horizontally on mobile</td>
 </tr>
 <tr>
 <td>Actions</td>
 <td><code>.sticky-bar-actions</code></td>
-<td>Right-aligned action group</td>
+<td>Right-aligned action group, sits outside the scrollable area</td>
 </tr>
 <tr>
 <td>Dropdown</td>
@@ -449,17 +482,30 @@
 <td>Standard dropdown component (see <a href="dropdown.html">Dropdown docs</a>)</td>
 </tr>
 </tbody></table></div>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-x5mow94h4" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-x5mow94h4">.sticky-bar
+  .sticky-bar-container
+    .sticky-bar-content          ← scrolls horizontally on mobile
+      [breadcrumbs / tabs / toggles / segmented-control / labels]
+    .sticky-bar-actions          ← pinned, never clipped
+      .dropdown
+</code></pre>
+      </div>
+    
+<p><strong><code>.sticky-bar-content</code> is always required</strong> — even when there is no dropdown. This keeps the structure consistent and ensures horizontal scrolling works when needed.</p>
 <hr>
 <h2 id="docs-site-overrides">Docs site overrides</h2>
 <p>On the documentation site, <code>style.css</code> overrides the default <code>top: 0</code> to sit below the fixed site header:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-jnxmc59x7" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-jnxmc59x7" class="language-css">.sticky-bar {
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-oyr7a5oj7" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-oyr7a5oj7" class="language-css">.sticky-bar {
   top: var(--header-height);
 }
 
-.sticky-bar-inner {
+.sticky-bar-container {
   max-width: 1080px;
   margin: 0 auto;
   height: var(--sticky-bar-height);
@@ -467,7 +513,7 @@
 </code></pre>
       </div>
     
-<p>Tool pages (calculator, SVG cleaner) may set their own <code>max-width</code> and <code>padding</code> on <code>.sticky-bar-inner</code> to match their layout.</p>
+<p>Tool pages (calculator, SVG cleaner) may set their own <code>max-width</code> and <code>padding</code> on <code>.sticky-bar-container</code> to match their layout.</p>
 <hr>
 <h2 id="accessibility-notes">Accessibility notes</h2>
 <ul>
@@ -483,12 +529,14 @@
 <li>Use the sticky bar for page-level contextual controls</li>
 <li>Combine children freely — tabs + dropdown, breadcrumbs + toggle, etc.</li>
 <li>Override <code>top</code> when the bar needs to sit below a fixed header</li>
+<li>Always use <code>.sticky-bar-content</code> to wrap the left-side content</li>
 </ul>
 <p><strong>Don&#39;t:</strong></p>
 <ul>
 <li>Don&#39;t put primary page content in the sticky bar</li>
 <li>Don&#39;t stack multiple sticky bars on the same page</li>
 <li>Don&#39;t use the sticky bar as a replacement for the main site navigation</li>
+<li>Don&#39;t place dropdowns inside <code>.sticky-bar-content</code> — use <code>.sticky-bar-actions</code> so the menu isn&#39;t clipped by overflow</li>
 </ul>
 
                 </article>
@@ -503,19 +551,19 @@
 
         <!-- Page Navigation (Previous / Next) -->
         <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="mark.html" class="page-nav-link page-nav-prev" rel="prev">
-      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
       <span class="page-nav-text">
         <span class="page-nav-label">Previous</span>
         
         <h3 class="page-nav-title">Mark, Abbr & Figure</h3>
       </span>
-    </a><a href="divider.html" class="page-nav-link page-nav-next" rel="next">
+    </a><a href="table.html" class="page-nav-link page-nav-next" rel="next">
       <span class="page-nav-text">
         <span class="page-nav-label">Next</span>
         
-        <h3 class="page-nav-title">Divider</h3>
+        <h3 class="page-nav-title">Table</h3>
       </span>
-      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
     </a></div></nav>
 
         <!-- Page Feedback -->
@@ -524,8 +572,8 @@
                 <h3 class="page-feedback-prompt">Was this page helpful?</h3>
                 <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
                 <div class="button-group">
-                    <button class="button is-small" data-feedback="yes" type="button">Yes</button>
-                    <button class="button is-small is-outline is-faded" data-feedback="no" type="button">No</button>
+                    <button class="button" data-feedback="yes" type="button"><div class="icn-svg" data-icon="thumbs-up" data-file="thumbs-up.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 3L14.5 8H23V12.5L19.5 21H2V8H7L14 1L16 3ZM9.29289 8.53426C9.10536 8.72179 9 8.97615 9 9.24136V17C9 18.1046 9.89543 19 11 19H16.8208C17.6312 19 18.3616 18.5109 18.6701 17.7615L21 12.1035V11C21 10.4477 20.5523 10 20 10H13.1555C12.4856 10 12.0052 9.35431 12.1976 8.71271L13.2907 5.06833C13.3504 4.86932 13.1046 4.72254 12.9577 4.86945L9.29289 8.53426ZM5 10C4.44772 10 4 10.4477 4 11V18C4 18.5523 4.44772 19 5 19H6C6.55228 19 7 18.5523 7 18V11C7 10.4477 6.55228 10 6 10H5Z" fill="currentColor"/></svg></div> Yes</button>
+                    <button class="button is-outline is-faded" data-feedback="no" type="button"><div class="icn-svg" data-icon="thumbs-down" data-file="thumbs-down.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21L9.5 16H1L1 11.5L4.5 3L22 3L22 16L17 16L10 23L8 21ZM14.7071 15.4657C14.8946 15.2782 15 15.0239 15 14.7586L15 7C15 5.89543 14.1046 5 13 5L7.17921 5C6.36877 5 5.63845 5.48908 5.32986 6.23847L3 11.8965L3 13C3 13.5523 3.44772 14 4 14L10.8445 14C11.5144 14 11.9948 14.6457 11.8024 15.2873L10.7093 18.9317C10.6496 19.1307 10.8954 19.2775 11.0423 19.1305L14.7071 15.4657ZM19 14C19.5523 14 20 13.5523 20 13V6C20 5.44772 19.5523 5 19 5H18C17.4477 5 17 5.44772 17 6V13C17 13.5523 17.4477 14 18 14H19Z" fill="currentColor"/></svg></div> No</button>
                 </div>
             </div>
         </section>
@@ -567,58 +615,6 @@
             function initHighlight() {
                 document.querySelectorAll('pre code').forEach((block) => {
                     hljs.highlightElement(block);
-                });
-            }
-
-            function copyToClipboard(text) {
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    return navigator.clipboard.writeText(text);
-                }
-                var textarea = document.createElement('textarea');
-                textarea.value = text;
-                textarea.style.position = 'fixed';
-                textarea.style.opacity = '0';
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                return Promise.resolve();
-            }
-
-            var copyIconPath = 'M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z';
-            var checkIconPath = 'M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z';
-
-            function initClipboard() {
-                const buttons = document.querySelectorAll('.copy-code-btn');
-
-                buttons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        const targetId = this.getAttribute('data-clipboard-target');
-                        const codeElement = document.querySelector(targetId);
-
-                        if (codeElement) {
-                            const text = codeElement.textContent;
-                            const textSpan = this.querySelector('.copy-text');
-                            const btnPath = this.querySelector('path');
-
-                            copyToClipboard(text).then(() => {
-                                if (btnPath) {
-                                    btnPath.setAttribute('d', checkIconPath);
-                                }
-                                if (textSpan) {
-                                    textSpan.textContent = 'Copied!';
-                                }
-                                setTimeout(() => {
-                                    if (btnPath) {
-                                        btnPath.setAttribute('d', copyIconPath);
-                                    }
-                                    if (textSpan) {
-                                        textSpan.textContent = 'Copy';
-                                    }
-                                }, 1500);
-                            });
-                        }
-                    });
                 });
             }
 
@@ -694,7 +690,6 @@
 
             function init() {
                 initHighlight();
-                initClipboard();
                 initTOCActiveState();
             }
 
@@ -709,7 +704,7 @@
     <!-- Back to Top -->
     <div class="back-to-top-wrapper">
       <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
-        <div class="icn-svg" data-icon="arrow-top"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M4 4V2H20V4H4Z" fill="currentColor"/><path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/></svg></div>
+        <div class="icn-svg" data-icon="arrow-top" data-file="arrow-top.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M4 4V2H20V4H4Z" fill="currentColor"/><path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/></svg></div>
       </button>
     </div>
     <script>
@@ -739,8 +734,31 @@
     <script src="../assets/js/auth.js"></script>
     <!-- Feedback -->
     <script src="../assets/js/feedback.js"></script>
+    <!-- Copy to clipboard -->
+    <script src="../assets/js/copy-button.js"></script>
+    <!-- Number input stepper -->
+    <script src="../assets/js/number-input.js"></script>
+    <!-- Tabs -->
+    <script src="../assets/js/tabs.js"></script>
+    <!-- Toast notifications -->
+    <script src="../assets/js/toast.js"></script>
+    <!-- Dialog -->
+    <script src="../assets/js/dialog.js"></script>
+    <!-- Rating -->
+    <script src="../assets/js/rating.js"></script>
+    <!-- Markdown download/open — strips frontmatter and block HTML -->
+    <script src="../assets/js/md-strip.js"></script>
 
     <script>
+      /* Tag dismiss */
+      document.addEventListener('click', function (e) {
+        var removeBtn = e.target.closest('.tag-remove');
+        if (removeBtn) {
+          var tag = removeBtn.closest('.tag');
+          if (tag) tag.remove();
+        }
+      });
+
       /* Table scroll overflow hint */
       (function initTableScroll() {
         var wrappers = document.querySelectorAll('.table-scroll');

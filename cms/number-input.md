@@ -3,8 +3,8 @@ title: "Number Input"
 subtitle: "Stepper input with increment and decrement"
 description: "How to use the number input component with stepper buttons for precise numeric entry."
 section: "Design System"
-subsection: ""
-order: 31
+subsection: "Data Entry"
+order: 4
 slug: "number-input"
 status: "published"
 access: "team"

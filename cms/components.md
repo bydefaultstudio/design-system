@@ -103,7 +103,7 @@ Components must **not** contain dark-mode-specific CSS. They rely entirely on se
 The only exception is when a component uses brand-palette tokens directly (avoid this). If unavoidable, add the override to both the `[data-theme="dark"]` block and the `@media` fallback block.
 
 Current exceptions:
-- `mark` element — uses `--yellow-light` directly, requires dark mode override
+- `mark` element — uses `--yellow-light` via `--mark-background` token, requires dark mode override
 - Scrollbar — uses neutral scale tokens directly, requires dark mode override
 
 ---

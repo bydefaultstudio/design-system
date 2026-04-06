@@ -130,7 +130,7 @@ The theme file groups tokens by concern. Only uncomment and change what differs 
 ### Tokens you usually don't need to override
 
 - `--text-faded`, `--background-faded`, `--border-faded` — use alpha transparency, work across any theme
-- `--callout-*` — derived from status colours via `color-mix()`, update automatically
+- `--status-*-bg` — background tints derived from lighter accent primitives, used by callouts and badges
 - `--selection-*` — selection highlight, inherits from primary tokens
 
 ### Dark mode

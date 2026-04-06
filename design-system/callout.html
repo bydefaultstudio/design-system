@@ -74,27 +74,36 @@
 
         <!-- Sticky Bar (breadcrumbs + actions) -->
         <div class="sticky-bar">
-      <div class="sticky-bar-inner">
-        <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
-          <a href="../design-system/index.html">Design System</a>
-          <span class="breadcrumb-separator">/</span>
-          <span>Callout</span>
-        </nav>
+      <div class="sticky-bar-container">
+        <div class="sticky-bar-content">
+          <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
+            <a href="../design-system/index.html">Design System</a>
+            <span class="breadcrumb-separator">/</span>
+            <span>Callout</span>
+          </nav>
+        </div>
         <div class="sticky-bar-actions">
           <div class="dropdown">
             <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Markdown source options">
-              <div class="icn-svg" data-icon="more-horizontal"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
+              <div class="icn-svg" data-icon="more-horizontal" data-file="more-horizontal.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
             </button>
             <div class="dropdown-menu is-right">
-              <a href="../cms/callout.md" class="dropdown-item" download>
-                <div class="icn-svg" data-icon="download"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
-                <span>Download .md file</span>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="../cms/callout.md" class="dropdown-item" target="_blank" rel="noopener noreferrer">
-                <div class="icn-svg" data-icon="open-full"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div>
-                <span>Open .md in new tab</span>
-              </a>
+              <button type="button" class="dropdown-item js-copy-url" aria-label="Copy page link to clipboard">
+                <div class="icn-svg" data-icon="link" data-file="link.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M14.8284 16.2426L8.46446 22.6066L1.39339 15.5355L7.75735 9.17158L9.17156 10.5858L5.63603 14.1213C4.85498 14.9024 4.85498 16.1687 5.63603 16.9498L7.05024 18.364C7.83129 19.145 9.09762 19.145 9.87867 18.364L13.4142 14.8284L14.8284 16.2426ZM9.17156 16.2426L7.75735 14.8284L14.8284 7.75736L16.2426 9.17158L9.17156 16.2426ZM16.2426 14.8284L14.8284 13.4142L18.3639 9.87868C19.145 9.09763 19.145 7.8313 18.3639 7.05026L16.9497 5.63604C16.1687 4.85499 14.9024 4.85499 14.1213 5.63604L10.5858 9.17158L9.17156 7.75736L15.5355 1.3934L22.6066 8.46447L16.2426 14.8284Z" fill="currentColor"/></svg></div>
+                <span>Copy link</span>
+              </button>
+              <div data-auth-role="team">
+                <div class="dropdown-divider"></div>
+                <a href="../cms/callout.md" class="dropdown-item js-md-download" download>
+                  <div class="icn-svg" data-icon="download" data-file="download.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
+                  <span>Download .md file</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="../cms/callout.md" class="dropdown-item js-md-open" target="_blank" rel="noopener noreferrer">
+                  <div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div>
+                  <span>Open .md in new tab</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -117,7 +126,7 @@
 </ul>
 <hr>
 <h2 id="status-color-tokens">Status Color Tokens</h2>
-<p>Callout variants are powered by status color tokens defined in <code>:root</code>. These are project-customizable primitives:</p>
+<p>Callout variants are powered by status color tokens defined in <code>:root</code>. Each status has a foreground and background token:</p>
 <div class="table-scroll"><table class="table">
 <thead>
 <tr>
@@ -128,49 +137,70 @@
 </thead>
 <tbody><tr>
 <td><code>--status-info</code></td>
-<td><code>var(--green)</code></td>
+<td><code>var(--blue)</code></td>
 <td>Informational, notes</td>
 </tr>
 <tr>
+<td><code>--status-info-bg</code></td>
+<td><code>var(--blue-lighter)</code></td>
+<td>Info background</td>
+</tr>
+<tr>
 <td><code>--status-success</code></td>
-<td><code>#1a7f37</code></td>
+<td><code>var(--green)</code></td>
 <td>Tips, positive feedback</td>
 </tr>
 <tr>
+<td><code>--status-success-bg</code></td>
+<td><code>var(--green-lighter)</code></td>
+<td>Success background</td>
+</tr>
+<tr>
 <td><code>--status-warning</code></td>
-<td><code>#9a6700</code></td>
+<td><code>var(--yellow-darker)</code></td>
 <td>Warnings, attention needed</td>
 </tr>
 <tr>
+<td><code>--status-warning-bg</code></td>
+<td><code>var(--yellow-lighter)</code></td>
+<td>Warning background</td>
+</tr>
+<tr>
 <td><code>--status-danger</code></td>
-<td><code>#cf222e</code></td>
+<td><code>var(--red)</code></td>
 <td>Caution, destructive actions</td>
 </tr>
 <tr>
+<td><code>--status-danger-bg</code></td>
+<td><code>var(--red-lighter)</code></td>
+<td>Danger background</td>
+</tr>
+<tr>
 <td><code>--status-accent</code></td>
-<td><code>#8250df</code></td>
+<td><code>var(--purple)</code></td>
 <td>Important, emphasis</td>
 </tr>
+<tr>
+<td><code>--status-accent-bg</code></td>
+<td><code>var(--purple-lighter)</code></td>
+<td>Accent background</td>
+</tr>
 </tbody></table></div>
-<p>Each status color generates two semantic tokens:</p>
-<ul>
-<li><code>--callout-{type}</code> — the border/title color</li>
-<li><code>--callout-{type}-bg</code> — a 10% tint for the background</li>
-</ul>
+<p>Callouts, badges, and other components reference these tokens directly — no intermediate <code>--callout-*</code> layer needed.</p>
 <hr>
 <h2 id="base-callout">Base Callout</h2>
 <p>The <code>.callout</code> class provides the structural foundation:</p>
 <div class="demo-preview is-joined">
   <div class="callout">
-    <p>General-purpose highlighted content.</p>
+    <p class="callout-description">General-purpose highlighted content.</p>
   </div>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-q9w7afmow" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-q9w7afmow" class="language-html">&lt;div class=&quot;callout&quot;&gt;
-  &lt;p&gt;General-purpose highlighted content.&lt;/p&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-8g58yqwpo" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-8g58yqwpo" class="language-html">&lt;div class=&quot;callout&quot;&gt;
+  &lt;p class=&quot;callout-description&quot;&gt;General-purpose highlighted content.&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
       </div>
@@ -188,21 +218,112 @@
 <div class="demo-preview is-joined">
   <div class="callout callout-note">
     <div class="callout-title">Note</div>
-    <p>Content here.</p>
+    <p class="callout-description">Content here.</p>
   </div>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-9kzbkcw49" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-9kzbkcw49" class="language-html">&lt;div class=&quot;callout callout-note&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-ji3oguyqc" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-ji3oguyqc" class="language-html">&lt;div class=&quot;callout callout-note&quot;&gt;
   &lt;div class=&quot;callout-title&quot;&gt;Note&lt;/div&gt;
-  &lt;p&gt;Content here.&lt;/p&gt;
+  &lt;p class=&quot;callout-description&quot;&gt;Content here.&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
       </div>
     
 <p>The title inherits the variant&#39;s accent color automatically.</p>
+<hr>
+<h2 id="callout-with-icon">Callout with Icon</h2>
+<p>Icons are <strong>optional</strong>. Add <code>.callout--icon</code> to the <code>.callout</code> element to enable the icon layout. No wrapper div needed — the icon, title, and description are all direct children with their own classes.</p>
+<div class="demo-preview is-joined">
+  <div class="callout callout-note callout--icon">
+    <div class="icn-svg" data-icon="info" data-file="info.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_10237_468)"><path d="M13 18H11V10H13V18Z" fill="currentColor"/><path d="M12 6C12.35 6 12.646 6.12064 12.8877 6.3623C13.1294 6.60397 13.25 6.9 13.25 7.25C13.25 7.6 13.1294 7.89603 12.8877 8.1377C12.646 8.37936 12.35 8.5 12 8.5C11.65 8.5 11.354 8.37936 11.1123 8.1377C10.8706 7.89603 10.75 7.6 10.75 7.25C10.75 6.9 10.8706 6.60397 11.1123 6.3623C11.354 6.12064 11.65 6 12 6Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/></g><defs><clipPath id="clip0_10237_468"><rect width="24" height="24" fill="white"/></clipPath></defs></svg></div>
+    <div class="callout-title">Note</div>
+    <p class="callout-description">This callout has an icon for extra visual context.</p>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-z67o4athd" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-z67o4athd" class="language-html">&lt;div class=&quot;callout callout-note callout--icon&quot;&gt;
+  &lt;div class=&quot;icn-svg&quot; data-icon=&quot;info&quot;&gt;&lt;!-- info SVG --&gt;&lt;/div&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Note&lt;/div&gt;
+  &lt;p class=&quot;callout-description&quot;&gt;This callout has an icon for extra visual context.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<p><strong>How it works:</strong></p>
+<ul>
+<li><code>.callout--icon</code> switches the callout to a two-column CSS grid</li>
+<li>The <code>.icn-svg</code> is pinned to row 1, column 1 — vertically centered with the title via <code>align-self: center</code></li>
+<li><code>.callout-title</code> and <code>.callout-description</code> auto-flow into column 2</li>
+<li>The icon stays aligned with the title regardless of title font size (<code>font-s</code>, <code>h2</code>, <code>h3</code>, etc.)</li>
+<li>To remove the icon, drop <code>.callout--icon</code> and the <code>.icn-svg</code></li>
+</ul>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Class</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.callout--icon</code></td>
+<td>Enables two-column grid layout</td>
+</tr>
+<tr>
+<td><code>.icn-svg</code></td>
+<td>Icon (direct child, pinned to row 1, vertically centered with title)</td>
+</tr>
+<tr>
+<td><code>.callout-title</code></td>
+<td>Title text (row 1, column 2)</td>
+</tr>
+<tr>
+<td><code>.callout-description</code></td>
+<td>Description content (below title, column 2)</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="recommended-icons">Recommended Icons</h2>
+<p>Each variant has a suggested icon for visual consistency. These are recommendations — any brand icon can be used.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Variant</th>
+<th>Icon</th>
+<th>Shorthand</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.callout-note</code></td>
+<td><div class="icn-svg" data-icon="info" data-file="info.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_10237_468)"><path d="M13 18H11V10H13V18Z" fill="currentColor"/><path d="M12 6C12.35 6 12.646 6.12064 12.8877 6.3623C13.1294 6.60397 13.25 6.9 13.25 7.25C13.25 7.6 13.1294 7.89603 12.8877 8.1377C12.646 8.37936 12.35 8.5 12 8.5C11.65 8.5 11.354 8.37936 11.1123 8.1377C10.8706 7.89603 10.75 7.6 10.75 7.25C10.75 6.9 10.8706 6.60397 11.1123 6.3623C11.354 6.12064 11.65 6 12 6Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/></g><defs><clipPath id="clip0_10237_468"><rect width="24" height="24" fill="white"/></clipPath></defs></svg></div> Info circle</td>
+<td><code>{{icon:info}}</code></td>
+</tr>
+<tr>
+<td><code>.callout-tip</code></td>
+<td><div class="icn-svg" data-icon="bolt" data-file="bolt.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M10.9013 18.1151L16.0763 11.9151H12.0763L12.8013 6.2401L8.17632 12.9151H11.6513L10.9013 18.1151ZM8.35132 21.9151L9.35132 14.9151H4.35132L13.3513 1.9151H15.3513L14.3513 9.9151H20.3513L10.3513 21.9151H8.35132Z" fill="currentColor"/></svg></div> Lightning bolt</td>
+<td><code>{{icon:bolt}}</code></td>
+</tr>
+<tr>
+<td><code>.callout-warning</code></td>
+<td><div class="icn-svg" data-icon="warning" data-file="warning.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M13 16V18H11V16H13Z" fill="currentColor"/><path d="M13 14H11V10H13V14Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M23 21H1L12 2L23 21ZM12.8652 7.49512C12.4801 6.82991 11.5199 6.82991 11.1348 7.49512L5.34375 17.499C4.95794 18.1656 5.43888 18.9998 6.20898 19H17.791C18.5611 18.9998 19.0421 18.1656 18.6562 17.499L12.8652 7.49512Z" fill="currentColor"/></svg></div> Warning triangle</td>
+<td><code>{{icon:warning}}</code></td>
+</tr>
+<tr>
+<td><code>.callout-caution</code></td>
+<td><div class="icn-svg" data-icon="close-circled" data-file="close-circled.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M18 7.40039L14.8145 10.5859C14.0334 11.367 14.0334 12.633 14.8145 13.4141L18 16.5996L16.5996 18L13.4141 14.8145C12.633 14.0334 11.367 14.0334 10.5859 14.8145L7.40039 18L6 16.5996L9.18555 13.4141C9.9666 12.633 9.9666 11.367 9.18555 10.5859L6 7.40039L7.40039 6L10.5859 9.18555C11.367 9.9666 12.633 9.9666 13.4141 9.18555L16.5996 6L18 7.40039Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/></svg></div> Close circle</td>
+<td><code>{{icon:close-circled}}</code></td>
+</tr>
+<tr>
+<td><code>.callout-important</code></td>
+<td><div class="icn-svg" data-icon="exclamation" data-file="exclamation.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M13 7V14H11V7H13Z" fill="currentColor"/><path d="M12 18C12.35 18 12.6458 17.8792 12.8875 17.6375C13.1292 17.3958 13.25 17.1 13.25 16.75C13.25 16.4 13.1292 16.1042 12.8875 15.8625C12.6458 15.6208 12.35 15.5 12 15.5C11.65 15.5 11.3542 15.6208 11.1125 15.8625C10.8708 16.1042 10.75 16.4 10.75 16.75C10.75 17.1 10.8708 17.3958 11.1125 17.6375C11.3542 17.8792 11.65 18 12 18Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/></svg></div> Exclamation circle</td>
+<td><code>{{icon:exclamation}}</code></td>
+</tr>
+</tbody></table></div>
 <hr>
 <h2 id="variants">Variants</h2>
 <h3>Note (<code>.callout-note</code>)</h3>
@@ -210,16 +331,36 @@
 <div class="demo-preview is-joined">
   <div class="callout callout-note">
     <div class="callout-title">Note</div>
-    <p>Useful information that users should know.</p>
+    <p class="callout-description">Useful information that users should know.</p>
   </div>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-jeyi6fofl" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-jeyi6fofl" class="language-html">&lt;div class=&quot;callout callout-note&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-n1mnuw4lv" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-n1mnuw4lv" class="language-html">&lt;div class=&quot;callout callout-note&quot;&gt;
   &lt;div class=&quot;callout-title&quot;&gt;Note&lt;/div&gt;
-  &lt;p&gt;Useful information that users should know.&lt;/p&gt;
+  &lt;p class=&quot;callout-description&quot;&gt;Useful information that users should know.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<p>With icon:</p>
+<div class="demo-preview is-joined">
+  <div class="callout callout-note callout--icon">
+    <div class="icn-svg" data-icon="info" data-file="info.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_10237_468)"><path d="M13 18H11V10H13V18Z" fill="currentColor"/><path d="M12 6C12.35 6 12.646 6.12064 12.8877 6.3623C13.1294 6.60397 13.25 6.9 13.25 7.25C13.25 7.6 13.1294 7.89603 12.8877 8.1377C12.646 8.37936 12.35 8.5 12 8.5C11.65 8.5 11.354 8.37936 11.1123 8.1377C10.8706 7.89603 10.75 7.6 10.75 7.25C10.75 6.9 10.8706 6.60397 11.1123 6.3623C11.354 6.12064 11.65 6 12 6Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/></g><defs><clipPath id="clip0_10237_468"><rect width="24" height="24" fill="white"/></clipPath></defs></svg></div>
+    <div class="callout-title">Note</div>
+    <p class="callout-description">Useful information that users should know.</p>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-tuk8ffhfb" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-tuk8ffhfb" class="language-html">&lt;div class=&quot;callout callout-note callout--icon&quot;&gt;
+  &lt;div class=&quot;icn-svg&quot; data-icon=&quot;info&quot;&gt;&lt;!-- info SVG --&gt;&lt;/div&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Note&lt;/div&gt;
+  &lt;p class=&quot;callout-description&quot;&gt;Useful information that users should know.&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
       </div>
@@ -229,16 +370,36 @@
 <div class="demo-preview is-joined">
   <div class="callout callout-tip">
     <div class="callout-title">Tip</div>
-    <p>Helpful advice for doing things better.</p>
+    <p class="callout-description">Helpful advice for doing things better.</p>
   </div>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-g5smdgj68" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-g5smdgj68" class="language-html">&lt;div class=&quot;callout callout-tip&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-9nltqumnb" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-9nltqumnb" class="language-html">&lt;div class=&quot;callout callout-tip&quot;&gt;
   &lt;div class=&quot;callout-title&quot;&gt;Tip&lt;/div&gt;
-  &lt;p&gt;Helpful advice for doing things better.&lt;/p&gt;
+  &lt;p class=&quot;callout-description&quot;&gt;Helpful advice for doing things better.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<p>With icon:</p>
+<div class="demo-preview is-joined">
+  <div class="callout callout-tip callout--icon">
+    <div class="icn-svg" data-icon="bolt" data-file="bolt.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M10.9013 18.1151L16.0763 11.9151H12.0763L12.8013 6.2401L8.17632 12.9151H11.6513L10.9013 18.1151ZM8.35132 21.9151L9.35132 14.9151H4.35132L13.3513 1.9151H15.3513L14.3513 9.9151H20.3513L10.3513 21.9151H8.35132Z" fill="currentColor"/></svg></div>
+    <div class="callout-title">Tip</div>
+    <p class="callout-description">Helpful advice for doing things better.</p>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-b02lq2mic" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-b02lq2mic" class="language-html">&lt;div class=&quot;callout callout-tip callout--icon&quot;&gt;
+  &lt;div class=&quot;icn-svg&quot; data-icon=&quot;bolt&quot;&gt;&lt;!-- bolt SVG --&gt;&lt;/div&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Tip&lt;/div&gt;
+  &lt;p class=&quot;callout-description&quot;&gt;Helpful advice for doing things better.&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
       </div>
@@ -248,16 +409,36 @@
 <div class="demo-preview is-joined">
   <div class="callout callout-warning">
     <div class="callout-title">Warning</div>
-    <p>Urgent information to avoid problems.</p>
+    <p class="callout-description">Urgent information to avoid problems.</p>
   </div>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-jxanl09dm" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-jxanl09dm" class="language-html">&lt;div class=&quot;callout callout-warning&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-enspz2nlc" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-enspz2nlc" class="language-html">&lt;div class=&quot;callout callout-warning&quot;&gt;
   &lt;div class=&quot;callout-title&quot;&gt;Warning&lt;/div&gt;
-  &lt;p&gt;Urgent information to avoid problems.&lt;/p&gt;
+  &lt;p class=&quot;callout-description&quot;&gt;Urgent information to avoid problems.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<p>With icon:</p>
+<div class="demo-preview is-joined">
+  <div class="callout callout-warning callout--icon">
+    <div class="icn-svg" data-icon="warning" data-file="warning.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M13 16V18H11V16H13Z" fill="currentColor"/><path d="M13 14H11V10H13V14Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M23 21H1L12 2L23 21ZM12.8652 7.49512C12.4801 6.82991 11.5199 6.82991 11.1348 7.49512L5.34375 17.499C4.95794 18.1656 5.43888 18.9998 6.20898 19H17.791C18.5611 18.9998 19.0421 18.1656 18.6562 17.499L12.8652 7.49512Z" fill="currentColor"/></svg></div>
+    <div class="callout-title">Warning</div>
+    <p class="callout-description">Urgent information to avoid problems.</p>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-w5a8dy7kx" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-w5a8dy7kx" class="language-html">&lt;div class=&quot;callout callout-warning callout--icon&quot;&gt;
+  &lt;div class=&quot;icn-svg&quot; data-icon=&quot;warning&quot;&gt;&lt;!-- warning SVG --&gt;&lt;/div&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Warning&lt;/div&gt;
+  &lt;p class=&quot;callout-description&quot;&gt;Urgent information to avoid problems.&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
       </div>
@@ -267,16 +448,36 @@
 <div class="demo-preview is-joined">
   <div class="callout callout-caution">
     <div class="callout-title">Caution</div>
-    <p>Risks or negative outcomes of certain actions.</p>
+    <p class="callout-description">Risks or negative outcomes of certain actions.</p>
   </div>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-y1wljunum" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-y1wljunum" class="language-html">&lt;div class=&quot;callout callout-caution&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-kfkz8twv8" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-kfkz8twv8" class="language-html">&lt;div class=&quot;callout callout-caution&quot;&gt;
   &lt;div class=&quot;callout-title&quot;&gt;Caution&lt;/div&gt;
-  &lt;p&gt;Risks or negative outcomes of certain actions.&lt;/p&gt;
+  &lt;p class=&quot;callout-description&quot;&gt;Risks or negative outcomes of certain actions.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<p>With icon:</p>
+<div class="demo-preview is-joined">
+  <div class="callout callout-caution callout--icon">
+    <div class="icn-svg" data-icon="close-circled" data-file="close-circled.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M18 7.40039L14.8145 10.5859C14.0334 11.367 14.0334 12.633 14.8145 13.4141L18 16.5996L16.5996 18L13.4141 14.8145C12.633 14.0334 11.367 14.0334 10.5859 14.8145L7.40039 18L6 16.5996L9.18555 13.4141C9.9666 12.633 9.9666 11.367 9.18555 10.5859L6 7.40039L7.40039 6L10.5859 9.18555C11.367 9.9666 12.633 9.9666 13.4141 9.18555L16.5996 6L18 7.40039Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/></svg></div>
+    <div class="callout-title">Caution</div>
+    <p class="callout-description">Risks or negative outcomes of certain actions.</p>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-pzrzeukxc" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-pzrzeukxc" class="language-html">&lt;div class=&quot;callout callout-caution callout--icon&quot;&gt;
+  &lt;div class=&quot;icn-svg&quot; data-icon=&quot;close-circled&quot;&gt;&lt;!-- close-circled SVG --&gt;&lt;/div&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Caution&lt;/div&gt;
+  &lt;p class=&quot;callout-description&quot;&gt;Risks or negative outcomes of certain actions.&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
       </div>
@@ -286,16 +487,36 @@
 <div class="demo-preview is-joined">
   <div class="callout callout-important">
     <div class="callout-title">Important</div>
-    <p>Key information users need to know.</p>
+    <p class="callout-description">Key information users need to know.</p>
   </div>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-3j4aozjog" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-3j4aozjog" class="language-html">&lt;div class=&quot;callout callout-important&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-hf9ijylrm" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-hf9ijylrm" class="language-html">&lt;div class=&quot;callout callout-important&quot;&gt;
   &lt;div class=&quot;callout-title&quot;&gt;Important&lt;/div&gt;
-  &lt;p&gt;Key information users need to know.&lt;/p&gt;
+  &lt;p class=&quot;callout-description&quot;&gt;Key information users need to know.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<p>With icon:</p>
+<div class="demo-preview is-joined">
+  <div class="callout callout-important callout--icon">
+    <div class="icn-svg" data-icon="exclamation" data-file="exclamation.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M13 7V14H11V7H13Z" fill="currentColor"/><path d="M12 18C12.35 18 12.6458 17.8792 12.8875 17.6375C13.1292 17.3958 13.25 17.1 13.25 16.75C13.25 16.4 13.1292 16.1042 12.8875 15.8625C12.6458 15.6208 12.35 15.5 12 15.5C11.65 15.5 11.3542 15.6208 11.1125 15.8625C10.8708 16.1042 10.75 16.4 10.75 16.75C10.75 17.1 10.8708 17.3958 11.1125 17.6375C11.3542 17.8792 11.65 18 12 18Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/></svg></div>
+    <div class="callout-title">Important</div>
+    <p class="callout-description">Key information users need to know.</p>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-we92kmeqy" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-we92kmeqy" class="language-html">&lt;div class=&quot;callout callout-important callout--icon&quot;&gt;
+  &lt;div class=&quot;icn-svg&quot; data-icon=&quot;exclamation&quot;&gt;&lt;!-- exclamation SVG --&gt;&lt;/div&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Important&lt;/div&gt;
+  &lt;p class=&quot;callout-description&quot;&gt;Key information users need to know.&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
       </div>
@@ -322,6 +543,10 @@
 <td>Use headings (h1–h6) inside callouts</td>
 </tr>
 <tr>
+<td>Use recommended icons for visual consistency</td>
+<td>Add icons to every callout — use them when they add clarity</td>
+</tr>
+<tr>
 <td>Customize <code>--status-*</code> tokens per project</td>
 <td>Hardcode colors on individual callouts</td>
 </tr>
@@ -337,25 +562,25 @@
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#core-principles" class="toc-link">Core Principles</a></li><li class="toc-item toc-level-2"><a href="#status-color-tokens" class="toc-link">Status Color Tokens</a></li><li class="toc-item toc-level-2"><a href="#base-callout" class="toc-link">Base Callout</a></li><li class="toc-item toc-level-2"><a href="#callout-title" class="toc-link">Callout Title</a></li><li class="toc-item toc-level-2"><a href="#variants" class="toc-link">Variants</a></li><li class="toc-item toc-level-2"><a href="#rules" class="toc-link">Rules</a></li><li class="toc-item toc-level-2"><a href="#relationship-to-alerts" class="toc-link">Relationship to Alerts</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#core-principles" class="toc-link">Core Principles</a></li><li class="toc-item toc-level-2"><a href="#status-color-tokens" class="toc-link">Status Color Tokens</a></li><li class="toc-item toc-level-2"><a href="#base-callout" class="toc-link">Base Callout</a></li><li class="toc-item toc-level-2"><a href="#callout-title" class="toc-link">Callout Title</a></li><li class="toc-item toc-level-2"><a href="#callout-with-icon" class="toc-link">Callout with Icon</a></li><li class="toc-item toc-level-2"><a href="#recommended-icons" class="toc-link">Recommended Icons</a></li><li class="toc-item toc-level-2"><a href="#variants" class="toc-link">Variants</a></li><li class="toc-item toc-level-2"><a href="#rules" class="toc-link">Rules</a></li><li class="toc-item toc-level-2"><a href="#relationship-to-alerts" class="toc-link">Relationship to Alerts</a></li></ul></nav></div>
     </aside>
         </div>
 
         <!-- Page Navigation (Previous / Next) -->
-        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="icon-registry.html" class="page-nav-link page-nav-prev" rel="prev">
-      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="badge.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
       <span class="page-nav-text">
         <span class="page-nav-label">Previous</span>
         
-        <h3 class="page-nav-title">Icon Registry</h3>
+        <h3 class="page-nav-title">Badge</h3>
       </span>
-    </a><a href="disclosure.html" class="page-nav-link page-nav-next" rel="next">
+    </a><a href="progress.html" class="page-nav-link page-nav-next" rel="next">
       <span class="page-nav-text">
         <span class="page-nav-label">Next</span>
         
-        <h3 class="page-nav-title">Disclosure</h3>
+        <h3 class="page-nav-title">Progress</h3>
       </span>
-      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
     </a></div></nav>
 
         <!-- Page Feedback -->
@@ -364,8 +589,8 @@
                 <h3 class="page-feedback-prompt">Was this page helpful?</h3>
                 <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
                 <div class="button-group">
-                    <button class="button is-small" data-feedback="yes" type="button">Yes</button>
-                    <button class="button is-small is-outline is-faded" data-feedback="no" type="button">No</button>
+                    <button class="button" data-feedback="yes" type="button"><div class="icn-svg" data-icon="thumbs-up" data-file="thumbs-up.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 3L14.5 8H23V12.5L19.5 21H2V8H7L14 1L16 3ZM9.29289 8.53426C9.10536 8.72179 9 8.97615 9 9.24136V17C9 18.1046 9.89543 19 11 19H16.8208C17.6312 19 18.3616 18.5109 18.6701 17.7615L21 12.1035V11C21 10.4477 20.5523 10 20 10H13.1555C12.4856 10 12.0052 9.35431 12.1976 8.71271L13.2907 5.06833C13.3504 4.86932 13.1046 4.72254 12.9577 4.86945L9.29289 8.53426ZM5 10C4.44772 10 4 10.4477 4 11V18C4 18.5523 4.44772 19 5 19H6C6.55228 19 7 18.5523 7 18V11C7 10.4477 6.55228 10 6 10H5Z" fill="currentColor"/></svg></div> Yes</button>
+                    <button class="button is-outline is-faded" data-feedback="no" type="button"><div class="icn-svg" data-icon="thumbs-down" data-file="thumbs-down.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21L9.5 16H1L1 11.5L4.5 3L22 3L22 16L17 16L10 23L8 21ZM14.7071 15.4657C14.8946 15.2782 15 15.0239 15 14.7586L15 7C15 5.89543 14.1046 5 13 5L7.17921 5C6.36877 5 5.63845 5.48908 5.32986 6.23847L3 11.8965L3 13C3 13.5523 3.44772 14 4 14L10.8445 14C11.5144 14 11.9948 14.6457 11.8024 15.2873L10.7093 18.9317C10.6496 19.1307 10.8954 19.2775 11.0423 19.1305L14.7071 15.4657ZM19 14C19.5523 14 20 13.5523 20 13V6C20 5.44772 19.5523 5 19 5H18C17.4477 5 17 5.44772 17 6V13C17 13.5523 17.4477 14 18 14H19Z" fill="currentColor"/></svg></div> No</button>
                 </div>
             </div>
         </section>
@@ -407,58 +632,6 @@
             function initHighlight() {
                 document.querySelectorAll('pre code').forEach((block) => {
                     hljs.highlightElement(block);
-                });
-            }
-
-            function copyToClipboard(text) {
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    return navigator.clipboard.writeText(text);
-                }
-                var textarea = document.createElement('textarea');
-                textarea.value = text;
-                textarea.style.position = 'fixed';
-                textarea.style.opacity = '0';
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                return Promise.resolve();
-            }
-
-            var copyIconPath = 'M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z';
-            var checkIconPath = 'M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z';
-
-            function initClipboard() {
-                const buttons = document.querySelectorAll('.copy-code-btn');
-
-                buttons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        const targetId = this.getAttribute('data-clipboard-target');
-                        const codeElement = document.querySelector(targetId);
-
-                        if (codeElement) {
-                            const text = codeElement.textContent;
-                            const textSpan = this.querySelector('.copy-text');
-                            const btnPath = this.querySelector('path');
-
-                            copyToClipboard(text).then(() => {
-                                if (btnPath) {
-                                    btnPath.setAttribute('d', checkIconPath);
-                                }
-                                if (textSpan) {
-                                    textSpan.textContent = 'Copied!';
-                                }
-                                setTimeout(() => {
-                                    if (btnPath) {
-                                        btnPath.setAttribute('d', copyIconPath);
-                                    }
-                                    if (textSpan) {
-                                        textSpan.textContent = 'Copy';
-                                    }
-                                }, 1500);
-                            });
-                        }
-                    });
                 });
             }
 
@@ -534,7 +707,6 @@
 
             function init() {
                 initHighlight();
-                initClipboard();
                 initTOCActiveState();
             }
 
@@ -549,7 +721,7 @@
     <!-- Back to Top -->
     <div class="back-to-top-wrapper">
       <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
-        <div class="icn-svg" data-icon="arrow-top"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M4 4V2H20V4H4Z" fill="currentColor"/><path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/></svg></div>
+        <div class="icn-svg" data-icon="arrow-top" data-file="arrow-top.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M4 4V2H20V4H4Z" fill="currentColor"/><path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/></svg></div>
       </button>
     </div>
     <script>
@@ -579,8 +751,31 @@
     <script src="../assets/js/auth.js"></script>
     <!-- Feedback -->
     <script src="../assets/js/feedback.js"></script>
+    <!-- Copy to clipboard -->
+    <script src="../assets/js/copy-button.js"></script>
+    <!-- Number input stepper -->
+    <script src="../assets/js/number-input.js"></script>
+    <!-- Tabs -->
+    <script src="../assets/js/tabs.js"></script>
+    <!-- Toast notifications -->
+    <script src="../assets/js/toast.js"></script>
+    <!-- Dialog -->
+    <script src="../assets/js/dialog.js"></script>
+    <!-- Rating -->
+    <script src="../assets/js/rating.js"></script>
+    <!-- Markdown download/open — strips frontmatter and block HTML -->
+    <script src="../assets/js/md-strip.js"></script>
 
     <script>
+      /* Tag dismiss */
+      document.addEventListener('click', function (e) {
+        var removeBtn = e.target.closest('.tag-remove');
+        if (removeBtn) {
+          var tag = removeBtn.closest('.tag');
+          if (tag) tag.remove();
+        }
+      });
+
       /* Table scroll overflow hint */
       (function initTableScroll() {
         var wrappers = document.querySelectorAll('.table-scroll');

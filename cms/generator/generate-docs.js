@@ -70,7 +70,7 @@ function buildIconMap() {
       svg = svg.replace(/<svg/, '<svg aria-hidden="true"');
     }
 
-    map[key] = svg;
+    map[key] = { svg: svg, file: file };
   }
 
   ICON_MAP = map;
@@ -83,12 +83,12 @@ function buildIconMap() {
  * @returns {string} HTML string
  */
 function getIcon(name) {
-  const svg = ICON_MAP[name];
-  if (!svg) {
+  const entry = ICON_MAP[name];
+  if (!entry) {
     console.warn(`⚠️  Unknown icon: "${name}"`);
     return `<!-- unknown icon: ${name} -->`;
   }
-  return `<div class="icn-svg" data-icon="${name}">${svg}</div>`;
+  return `<div class="icn-svg" data-icon="${name}" data-file="${entry.file}">${entry.svg}</div>`;
 }
 
 /**
@@ -98,18 +98,18 @@ function getIcon(name) {
  * @returns {string} SVG string
  */
 function getRawIcon(name) {
-  const svg = ICON_MAP[name];
-  if (!svg) {
+  const entry = ICON_MAP[name];
+  if (!entry) {
     console.warn(`⚠️  Unknown icon (raw): "${name}"`);
     return `<!-- unknown icon: ${name} -->`;
   }
-  return svg;
+  return entry.svg;
 }
 
 //------- Section-to-Folder Mapping -------//
 
 const SECTION_FOLDERS = {
-  'Brand': 'brand',
+  'Brand Book': 'brand',
   'Design System': 'design-system',
   'Docs': 'docs',
   'Tools': 'tools'
@@ -222,6 +222,18 @@ function parseList(value, fallback) {
 }
 
 /**
+ * Get subsection ordering for a given section.
+ * Looks for a section-specific key first (e.g. "design-system-subsection-order"),
+ * then falls back to the generic "subsection-order" key.
+ */
+function getSubsectionOrder(defaults, section) {
+  const slug = section.toLowerCase().replace(/\s+/g, '-');
+  const key = `${slug}-subsection-order`;
+  if (defaults[key]) return parseList(defaults[key], []);
+  return parseList(defaults['subsection-order'], []);
+}
+
+/**
  * Parse frontmatter from markdown content
  */
 function parseFrontmatter(content) {
@@ -308,9 +320,16 @@ function markdownToHtml(markdown) {
     return match;
   });
 
-  // Wrap tables in a scroll container for horizontal scrolling on mobile
-  html = html.replace(/<table>/g, '<div class="table-scroll"><table class="table">');
-  html = html.replace(/<\/table>/g, '</table></div>');
+  // Wrap bare tables (markdown-generated) in a scroll container — skip demo tables that already have classes
+  html = html.replace(/<table>([\s\S]*?)<\/table>/g, '<div class="table-scroll"><table class="table">$1</table></div>');
+
+  // Inject clickable color swatches next to hex codes inside table cells
+  html = html.replace(/<td>([^<]*#[0-9a-fA-F]{3,8}[^<]*)<\/td>/g, (match, inner) => {
+    const replaced = inner.replace(/(#[0-9a-fA-F]{6,8}|#[0-9a-fA-F]{3,4})\b/g,
+      (hex) => `<button type="button" class="color-copy" data-copy="${hex}" aria-label="Copy ${hex}">${hex}<span class="color-swatch" style="background:${hex};" aria-hidden="true"></span></button>`
+    );
+    return `<td>${replaced}</td>`;
+  });
 
   // Add copy buttons to code blocks
   html = html.replace(/<pre><code([^>]*)>([\s\S]*?)<\/code><\/pre>/g, (match, attributes, code) => {
@@ -318,7 +337,7 @@ function markdownToHtml(markdown) {
 
     return `
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#${codeId}" type="button" aria-label="Copy code">${getIcon('copy')} <span class="copy-text">Copy</span></button>
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#${codeId}" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default">${getIcon('copy')}</span><span class="copy-btn-copied">${getIcon('check')}</span></button>
         <pre><code id="${codeId}"${attributes}>${code}</code></pre>
       </div>
     `;
@@ -374,7 +393,7 @@ function generateTableOfContents(html) {
 function generateIndexPage(template, filesBySection) {
   // Simplified index: one card per section in a 2-column grid
   const sectionCards = [
-    { title: 'Brand', href: 'brand/', subtitle: 'Brand identity, values, positioning, and visual guidelines', access: '' },
+    { title: 'Brand Book', href: 'brand/', subtitle: 'Brand identity, values, positioning, and visual guidelines', access: '' },
     { title: 'Design System', href: 'design-system/', subtitle: 'Tokens, components, and styling patterns', access: '' },
     { title: 'Tools', href: 'tools/', subtitle: 'Utilities for ad operations, SVG processing, and more', access: ' data-access="team"' },
     { title: 'Documentation', href: 'docs/', subtitle: 'Technical docs for layout, CSS, JavaScript, and project setup', access: '' },
@@ -385,9 +404,9 @@ function generateIndexPage(template, filesBySection) {
 
   for (const card of sectionCards) {
     cards += `
-        <a href="${card.href}" class="docs-card"${card.access}>
-          <h3 class="docs-card-title">${card.title}</h3>
-          <p class="docs-card-subtitle" data-text-wrap="pretty">${card.subtitle}</p>
+        <a href="${card.href}" class="card card--interactive"${card.access}>
+          <h3 class="card-title">${card.title}</h3>
+          <p class="card-description" data-text-wrap="pretty">${card.subtitle}</p>
         </a>`;
   }
 
@@ -440,83 +459,72 @@ function generateSectionIndexPage(section, template, files, filesBySection) {
 
   let cards = '';
 
-  // Docs section: group by subsection
-  if (section === 'Docs') {
-    const defaults = loadDefaults(DOCS_DIR);
-    const subsectionOrder = parseList(defaults['subsection-order'], ['Code Standards', 'Dev', 'Site Management']);
-    const ungrouped = sorted.filter(f => !f.frontmatter.subsection);
-    const grouped = {};
-    for (const file of sorted) {
-      const sub = file.frontmatter.subsection;
-      if (sub) {
-        if (!grouped[sub]) grouped[sub] = [];
-        grouped[sub].push(file);
-      }
+  // Generic subsection grouping (works for all sections)
+  const defaults = loadDefaults(DOCS_DIR);
+  const subsectionOrder = getSubsectionOrder(defaults, section);
+  const ungrouped = sorted.filter(f => !f.frontmatter.subsection);
+  const grouped = {};
+  for (const file of sorted) {
+    const sub = file.frontmatter.subsection;
+    if (sub) {
+      if (!grouped[sub]) grouped[sub] = [];
+      grouped[sub].push(file);
     }
+  }
 
-    // Ungrouped first
-    if (ungrouped.length > 0) {
-      cards += `<div class="docs-section"><div class="grid cols-3 gap-xl">`;
-      for (const file of ungrouped) {
-        const cardAccess = deriveDataAccess(file.frontmatter);
-        cards += `<a href="${file.htmlName}" class="docs-card" data-access="${cardAccess}"><h3 class="docs-card-title">${file.title}</h3>${file.frontmatter.subtitle ? `<p class="docs-card-subtitle" data-text-wrap="pretty">${file.frontmatter.subtitle}</p>` : ''}</a>`;
-      }
-      cards += `</div></div>`;
-    }
-
-    // Subsections in order
-    const subs = Object.keys(grouped).sort((a, b) => {
-      const idxA = subsectionOrder.indexOf(a);
-      const idxB = subsectionOrder.indexOf(b);
-      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
-      if (idxA !== -1) return -1;
-      if (idxB !== -1) return 1;
-      return a.localeCompare(b);
-    });
-
-    for (const sub of subs) {
-      cards += `<div class="docs-section"><h2 class="eyebrow">${sub}</h2><div class="grid cols-3 gap-xl">`;
-      for (const file of grouped[sub]) {
-        const cardAccess = deriveDataAccess(file.frontmatter);
-        cards += `<a href="${file.htmlName}" class="docs-card" data-access="${cardAccess}"><h3 class="docs-card-title">${file.title}</h3>${file.frontmatter.subtitle ? `<p class="docs-card-subtitle" data-text-wrap="pretty">${file.frontmatter.subtitle}</p>` : ''}</a>`;
-      }
-      cards += `</div></div>`;
-    }
-
-    // Add Tools documentation as a subsection of Docs
-    if (filesBySection && filesBySection['Tools']) {
-      const toolFiles = [...filesBySection['Tools']].sort((a, b) => {
-        const orderA = a.frontmatter.order || 999;
-        const orderB = b.frontmatter.order || 999;
-        if (orderA !== orderB) return orderA - orderB;
-        return a.title.localeCompare(b.title);
-      });
-      cards += `<div class="docs-section"><h2 class="eyebrow">Tools</h2><div class="grid cols-3 gap-xl">`;
-      for (const file of toolFiles) {
-        const cardAccess = deriveDataAccess(file.frontmatter);
-        cards += `<a href="../${file.htmlPath}" class="docs-card" data-access="${cardAccess}"><h3 class="docs-card-title">${file.title}</h3>${file.frontmatter.subtitle ? `<p class="docs-card-subtitle" data-text-wrap="pretty">${file.frontmatter.subtitle}</p>` : ''}</a>`;
-      }
-      cards += `</div></div>`;
-    }
-  } else {
-    // Standard section: flat card grid
+  // Ungrouped files first
+  if (ungrouped.length > 0) {
     cards += `<div class="docs-section"><div class="grid cols-3 gap-xl">`;
-    for (const file of sorted) {
-      // For Tools section: link to actual tool app, use toolAccess for visibility
+    for (const file of ungrouped) {
       let cardHref = file.htmlName;
       let cardAccess = deriveDataAccess(file.frontmatter);
       if (section === 'Tools' && file.frontmatter.toolUrl) {
         cardHref = file.frontmatter.toolUrl;
         cardAccess = file.frontmatter.toolAccess || 'client';
       }
-      cards += `<a href="${cardHref}" class="docs-card" data-access="${cardAccess}"><h3 class="docs-card-title">${file.title}</h3>${file.frontmatter.subtitle ? `<p class="docs-card-subtitle" data-text-wrap="pretty">${file.frontmatter.subtitle}</p>` : ''}</a>`;
+      cards += `<a href="${cardHref}" class="card card--interactive" data-access="${cardAccess}"><h3 class="card-title">${file.title}</h3>${file.frontmatter.subtitle ? `<p class="card-description" data-text-wrap="pretty">${file.frontmatter.subtitle}</p>` : ''}</a>`;
     }
 
-    // Append special cards
-    if (section === 'Brand') {
-      cards += `<a href="visual-identity.html" class="docs-card"><h3 class="docs-card-title">Visual Identity</h3><p class="docs-card-subtitle" data-text-wrap="pretty">Visual brand identity — logo, palette, typography, and icons</p></a>`;
+    // Append special cards for Brand
+    if (section === 'Brand Book') {
+      cards += `<a href="visual-identity.html" class="card card--interactive"><h3 class="card-title">Visual Identity</h3><p class="card-description" data-text-wrap="pretty">Visual brand identity — logo, palette, typography, and icons</p></a>`;
     }
 
+    cards += `</div></div>`;
+  }
+
+  // Subsections in configured order
+  const subs = Object.keys(grouped).sort((a, b) => {
+    const idxA = subsectionOrder.indexOf(a);
+    const idxB = subsectionOrder.indexOf(b);
+    if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+    if (idxA !== -1) return -1;
+    if (idxB !== -1) return 1;
+    return a.localeCompare(b);
+  });
+
+  for (const sub of subs) {
+    cards += `<div class="docs-section"><h2 class="eyebrow">${sub}</h2><div class="grid cols-3 gap-xl">`;
+    for (const file of grouped[sub]) {
+      const cardAccess = deriveDataAccess(file.frontmatter);
+      cards += `<a href="${file.htmlName}" class="card card--interactive" data-access="${cardAccess}"><h3 class="card-title">${file.title}</h3>${file.frontmatter.subtitle ? `<p class="card-description" data-text-wrap="pretty">${file.frontmatter.subtitle}</p>` : ''}</a>`;
+    }
+    cards += `</div></div>`;
+  }
+
+  // Docs-only: add Tools documentation as a subsection
+  if (section === 'Docs' && filesBySection && filesBySection['Tools']) {
+    const toolFiles = [...filesBySection['Tools']].sort((a, b) => {
+      const orderA = a.frontmatter.order || 999;
+      const orderB = b.frontmatter.order || 999;
+      if (orderA !== orderB) return orderA - orderB;
+      return a.title.localeCompare(b.title);
+    });
+    cards += `<div class="docs-section"><h2 class="eyebrow">Tools</h2><div class="grid cols-3 gap-xl">`;
+    for (const file of toolFiles) {
+      const cardAccess = deriveDataAccess(file.frontmatter);
+      cards += `<a href="../${file.htmlPath}" class="card card--interactive" data-access="${cardAccess}"><h3 class="card-title">${file.title}</h3>${file.frontmatter.subtitle ? `<p class="card-description" data-text-wrap="pretty">${file.frontmatter.subtitle}</p>` : ''}</a>`;
+    }
     cards += `</div></div>`;
   }
 
@@ -555,7 +563,7 @@ function generateSectionIndexPage(section, template, files, filesBySection) {
  */
 function buildPageOrder(filesBySection) {
   const defaults = loadDefaults(DOCS_DIR);
-  const sectionOrder = parseList(defaults['section-order'], ['Brand', 'Design System', 'Tools', 'Docs']);
+  const sectionOrder = parseList(defaults['section-order'], ['Brand Book', 'Design System', 'Tools', 'Docs']);
   const hiddenSections = [];
   const sortedSections = Object.keys(filesBySection)
     .filter(s => !hiddenSections.includes(s))
@@ -568,16 +576,41 @@ function buildPageOrder(filesBySection) {
     return a.localeCompare(b);
   });
 
+  const sortByOrder = (a, b) => {
+    const orderA = a.frontmatter.order || 999;
+    const orderB = b.frontmatter.order || 999;
+    if (orderA !== orderB) return orderA - orderB;
+    return a.title.localeCompare(b.title);
+  };
+
   const ordered = [];
   for (const section of sortedSections) {
-    const files = [...filesBySection[section]].sort((a, b) => {
-      const orderA = a.frontmatter.order || 999;
-      const orderB = b.frontmatter.order || 999;
-      if (orderA !== orderB) return orderA - orderB;
-      return a.title.localeCompare(b.title);
-    });
+    const files = [...filesBySection[section]];
+    const subsectionOrder = getSubsectionOrder(defaults, section);
+
+    // Ungrouped files first (no subsection), matching nav sidebar order
+    const ungrouped = files.filter(f => !f.frontmatter.subsection).sort(sortByOrder);
+    ordered.push(...ungrouped);
+
+    // Then subsection groups in configured order
+    const grouped = {};
     for (const file of files) {
-      ordered.push(file);
+      const sub = file.frontmatter.subsection;
+      if (sub) {
+        if (!grouped[sub]) grouped[sub] = [];
+        grouped[sub].push(file);
+      }
+    }
+    const subsections = Object.keys(grouped).sort((a, b) => {
+      const idxA = subsectionOrder.indexOf(a);
+      const idxB = subsectionOrder.indexOf(b);
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+      if (idxA !== -1) return -1;
+      if (idxB !== -1) return 1;
+      return a.localeCompare(b);
+    });
+    for (const sub of subsections) {
+      ordered.push(...grouped[sub].sort(sortByOrder));
     }
   }
   return ordered;
@@ -673,27 +706,36 @@ function generatePage(file, template, pageOrder) {
   if (frontmatter.title && file.htmlFolder) {
     const sectionLabel = file.section || file.htmlFolder.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(' ');
     pageSubbar = `<div class="sticky-bar">
-      <div class="sticky-bar-inner">
-        <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
-          <a href="../${file.htmlFolder}/index.html">${sectionLabel}</a>
-          <span class="breadcrumb-separator">/</span>
-          <span>${frontmatter.title}</span>
-        </nav>
+      <div class="sticky-bar-container">
+        <div class="sticky-bar-content">
+          <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
+            <a href="../${file.htmlFolder}/index.html">${sectionLabel}</a>
+            <span class="breadcrumb-separator">/</span>
+            <span>${frontmatter.title}</span>
+          </nav>
+        </div>
         <div class="sticky-bar-actions">
           <div class="dropdown">
             <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Markdown source options">
               ${getIcon('more-horizontal')}
             </button>
             <div class="dropdown-menu is-right">
-              <a href="../cms/${file.markdownPath}" class="dropdown-item" download>
-                ${getIcon('download')}
-                <span>Download .md file</span>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="../cms/${file.markdownPath}" class="dropdown-item" target="_blank" rel="noopener noreferrer">
-                ${getIcon('open-full')}
-                <span>Open .md in new tab</span>
-              </a>
+              <button type="button" class="dropdown-item js-copy-url" aria-label="Copy page link to clipboard">
+                ${getIcon('link')}
+                <span>Copy link</span>
+              </button>
+              <div data-auth-role="team">
+                <div class="dropdown-divider"></div>
+                <a href="../cms/${file.markdownPath}" class="dropdown-item js-md-download" download>
+                  ${getIcon('download')}
+                  <span>Download .md file</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="../cms/${file.markdownPath}" class="dropdown-item js-md-open" target="_blank" rel="noopener noreferrer">
+                  ${getIcon('open-full')}
+                  <span>Open .md in new tab</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -760,7 +802,7 @@ function generateNavJs(filesBySection) {
   var ICON_BACK = '${esc(getRawIcon('back-arrow'))}';
   var ICON_HOME = '${esc(getRawIcon('home'))}';
   var ICON_SUN = '${esc(getRawIcon('sun-1'))}';
-  var ICON_MOON = '${esc(getRawIcon('dark-mode'))}';
+  var ICON_MOON = '${esc(getRawIcon('moon'))}';
 
   // ── Build header HTML ──
   var headerLeft = '<div class="site-header-left">';
@@ -875,8 +917,10 @@ function generateNavJs(filesBySection) {
   if (hasSidebar) {
     var sidebarToggle = mount.querySelector('.site-sidebar-toggle');
 
-    // Restore saved state
-    if (localStorage.getItem(SIDEBAR_KEY) === 'true') {
+    // Restore saved state (respect page-level default when no user preference saved)
+    var savedCollapsed = localStorage.getItem(SIDEBAR_KEY);
+    var defaultCollapsed = mount.getAttribute('data-sidebar-default') === 'collapsed';
+    if (savedCollapsed === 'true' || (savedCollapsed === null && defaultCollapsed)) {
       document.body.classList.add('sidebar-collapsed');
       if (sidebarToggle) sidebarToggle.setAttribute('aria-label', 'Expand sidebar');
     }
@@ -970,7 +1014,7 @@ function buildNavSectionsHtml(filesBySection) {
 
   // Section icons — loaded from assets/images/svg-icons/
   const sectionIconMap = {
-    'Brand': { icon: getRawIcon('brand-book'), name: 'brand' },
+    'Brand Book': { icon: getRawIcon('brand-book'), name: 'brand' },
     'Design System': { icon: getRawIcon('design-system'), name: 'design-system' },
     'Docs': { icon: getRawIcon('docs'), name: 'docs' },
     'Tools': { icon: getRawIcon('tools'), name: 'tools' },
@@ -978,8 +1022,7 @@ function buildNavSectionsHtml(filesBySection) {
 
   // Read ordering from _defaults.md (configurable per directory)
   const defaults = loadDefaults(DOCS_DIR);
-  const subsectionOrder = parseList(defaults['subsection-order'], ['Code Standards', 'Dev', 'Site Management']);
-  const sectionOrder = parseList(defaults['section-order'], ['Brand', 'Design System', 'Tools', 'Docs']);
+  const sectionOrder = parseList(defaults['section-order'], ['Brand Book', 'Design System', 'Tools', 'Docs']);
   const sortedSections = Object.keys(filesBySection)
     .sort((a, b) => {
       const indexA = sectionOrder.indexOf(a);
@@ -992,6 +1035,7 @@ function buildNavSectionsHtml(filesBySection) {
 
   for (const section of sortedSections) {
     const files = [...filesBySection[section]];
+    const subsectionOrder = getSubsectionOrder(defaults, section);
 
     files.sort((a, b) => {
       const orderA = a.frontmatter.order || 999;
@@ -1079,7 +1123,7 @@ function buildNavSectionsHtml(filesBySection) {
       }
     }
 
-    if (section === 'Brand') {
+    if (section === 'Brand Book') {
       html += `<li><a href="../brand/visual-identity.html" class="nav-link" data-access="team"><span>Visual Identity</span></a></li>`;
     }
 
@@ -1168,27 +1212,36 @@ function generateClientDocs(template) {
         const overviewHref = 'index.html';
         const mdPath = `${navBase}cms/clients/${clientKey}/${filename}`;
         pageSubbar = `<div class="sticky-bar">
-          <div class="sticky-bar-inner">
-            <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
-              <a href="${overviewHref}">${sectionLabel}</a>
-              <span class="breadcrumb-separator">/</span>
-              <span>${title}</span>
-            </nav>
+          <div class="sticky-bar-container">
+            <div class="sticky-bar-content">
+              <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
+                <a href="${overviewHref}">${sectionLabel}</a>
+                <span class="breadcrumb-separator">/</span>
+                <span>${title}</span>
+              </nav>
+            </div>
             <div class="sticky-bar-actions">
               <div class="dropdown">
                 <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Markdown source options">
                   ${getIcon('more-horizontal')}
                 </button>
                 <div class="dropdown-menu is-right">
-                  <a href="${mdPath}" class="dropdown-item" download>
-                    ${getIcon('download')}
-                    <span>Download .md file</span>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a href="${mdPath}" class="dropdown-item" target="_blank" rel="noopener noreferrer">
-                    ${getIcon('open-full')}
-                    <span>Open .md in new tab</span>
-                  </a>
+                  <button type="button" class="dropdown-item js-copy-url" aria-label="Copy page link to clipboard">
+                    ${getIcon('link')}
+                    <span>Copy link</span>
+                  </button>
+                  <div data-auth-role="team">
+                    <div class="dropdown-divider"></div>
+                    <a href="${mdPath}" class="dropdown-item js-md-download" download>
+                      ${getIcon('download')}
+                      <span>Download .md file</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="${mdPath}" class="dropdown-item js-md-open" target="_blank" rel="noopener noreferrer">
+                      ${getIcon('open-full')}
+                      <span>Open .md in new tab</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1414,7 +1467,7 @@ function generateClientSectionOverviews(template) {
       for (const page of docsPages) {
         // Extract just the filename — overview and pages are in the same directory
         const href = page.href.split('/').pop();
-        cards += `<a href="${href}" class="docs-card"><h3 class="docs-card-title">${page.title}</h3>${page.subtitle ? `<p class="docs-card-subtitle" data-text-wrap="pretty">${page.subtitle}</p>` : ''}</a>`;
+        cards += `<a href="${href}" class="card card--interactive"><h3 class="card-title">${page.title}</h3>${page.subtitle ? `<p class="card-description" data-text-wrap="pretty">${page.subtitle}</p>` : ''}</a>`;
       }
       cards += '</div></div>';
       const docsDir = path.join(dir, 'docs');
@@ -1429,7 +1482,7 @@ function generateClientSectionOverviews(template) {
       let cards = '<div class="docs-section"><div class="grid cols-3 gap-xl">';
       for (const toolKey of clientToolKeys) {
         const tool = toolRegistry[toolKey];
-        cards += `<a href="../../tools/${toolKey}.html" class="docs-card"><h3 class="docs-card-title">${tool.title}</h3><p class="docs-card-subtitle" data-text-wrap="pretty">${tool.subtitle}</p></a>`;
+        cards += `<a href="../../tools/${toolKey}.html" class="card card--interactive"><h3 class="card-title">${tool.title}</h3><p class="card-description" data-text-wrap="pretty">${tool.subtitle}</p></a>`;
       }
       cards += '</div></div>';
       const toolsDir = path.join(dir, 'tools');
@@ -1544,9 +1597,9 @@ function generateClientIndexPages(template) {
         const href = page.href.startsWith(clientKey + '/')
           ? page.href.replace(clientKey + '/', '')
           : page.href;
-        contentHtml += `<a href="${href}" class="docs-card">
-          <h3 class="docs-card-title">${page.title}</h3>
-          ${page.subtitle ? `<p class="docs-card-subtitle" data-text-wrap="pretty">${page.subtitle}</p>` : ''}
+        contentHtml += `<a href="${href}" class="card card--interactive">
+          <h3 class="card-title">${page.title}</h3>
+          ${page.subtitle ? `<p class="card-description" data-text-wrap="pretty">${page.subtitle}</p>` : ''}
         </a>`;
       }
       contentHtml += `</div></div>`;
@@ -1562,13 +1615,13 @@ function generateClientIndexPages(template) {
       const toolsOverviewPage = (theme.pages || []).find(p => p.section === 'Tools' && p.title === 'Overview');
       if (toolsOverviewPage) {
         const overviewHref = toolsOverviewPage.href.startsWith(clientKey + '/') ? toolsOverviewPage.href.replace(clientKey + '/', '') : toolsOverviewPage.href;
-        contentHtml += `<a href="${overviewHref}" class="docs-card"><h3 class="docs-card-title">Overview</h3><p class="docs-card-subtitle" data-text-wrap="pretty">All available tools and utilities</p></a>`;
+        contentHtml += `<a href="${overviewHref}" class="card card--interactive"><h3 class="card-title">Overview</h3><p class="card-description" data-text-wrap="pretty">All available tools and utilities</p></a>`;
       }
       for (const toolKey of clientToolKeys) {
         const tool = toolRegistry[toolKey];
-        contentHtml += `<a href="../tools/${toolKey}.html" class="docs-card">
-          <h3 class="docs-card-title">${tool.title}</h3>
-          <p class="docs-card-subtitle" data-text-wrap="pretty">${tool.subtitle}</p>
+        contentHtml += `<a href="../tools/${toolKey}.html" class="card card--interactive">
+          <h3 class="card-title">${tool.title}</h3>
+          <p class="card-description" data-text-wrap="pretty">${tool.subtitle}</p>
         </a>`;
       }
       contentHtml += `</div></div>`;
@@ -1614,10 +1667,43 @@ function generateClientIndexPages(template) {
 }
 
 /**
+ * Parse CLI arguments for single-file generation.
+ * Accepts filenames with or without .md extension, e.g.:
+ *   node generate-docs.js color
+ *   node generate-docs.js color.md typography spacing
+ *
+ * Returns null for full build, or a Set of normalised .md filenames.
+ */
+function parseCliFilter() {
+  const args = process.argv.slice(2);
+  if (args.length === 0) return null;
+
+  const filter = new Set();
+  for (const arg of args) {
+    const name = arg.endsWith('.md') ? arg : arg + '.md';
+    // Verify file exists
+    const filePath = path.join(DOCS_DIR, name);
+    if (!fs.existsSync(filePath)) {
+      console.error(`❌ File not found: cms/${name}`);
+      process.exit(1);
+    }
+    filter.add(name);
+  }
+  return filter;
+}
+
+/**
  * Main generation function
  */
 async function generateDocs() {
-  console.log('🚀 Starting documentation generation...');
+  const filter = parseCliFilter();
+  const isSingleFile = filter !== null;
+
+  if (isSingleFile) {
+    console.log(`🎯 Generating: ${[...filter].join(', ')}`);
+  } else {
+    console.log('🚀 Starting full documentation generation...');
+  }
 
   // Build icon map from SVG files
   buildIconMap();
@@ -1631,6 +1717,7 @@ async function generateDocs() {
   console.log('✅ Template loaded');
 
   // Find all markdown files (exclude generator folder and README files)
+  // We always parse ALL files to build navigation, even for single-file mode
   const markdownFiles = fs.readdirSync(DOCS_DIR)
     .filter(file => {
       const filePath = path.join(DOCS_DIR, file);
@@ -1691,16 +1778,23 @@ async function generateDocs() {
 
   console.log(`📂 Found sections: ${Object.keys(filesBySection).join(', ')}`);
 
-  // Generate index.html (at project root)
-  const indexContent = generateIndexPage(template, filesBySection);
-  fs.writeFileSync(path.join(OUTPUT_DIR, 'index.html'), indexContent);
-  console.log('📄 Generated: index.html');
-
   // Build ordered page list for prev/next navigation
   const pageOrder = buildPageOrder(filesBySection);
 
-  // Generate HTML for each file in its subfolder
-  for (const file of allFiles) {
+  // Determine which files to write
+  const filesToWrite = isSingleFile
+    ? allFiles.filter(f => filter.has(f.filename))
+    : allFiles;
+
+  // Generate index and section pages only during full build
+  if (!isSingleFile) {
+    const indexContent = generateIndexPage(template, filesBySection);
+    fs.writeFileSync(path.join(OUTPUT_DIR, 'index.html'), indexContent);
+    console.log('📄 Generated: index.html');
+  }
+
+  // Generate HTML for target files
+  for (const file of filesToWrite) {
     const pageContent = generatePage(file, template, pageOrder);
 
     // Ensure output directory exists
@@ -1714,38 +1808,42 @@ async function generateDocs() {
     console.log(`📄 Generated: ${file.htmlPath}`);
   }
 
-  // Generate section overview index pages
-  for (const section of Object.keys(filesBySection)) {
-    const sectionFolder = SECTION_FOLDERS[section];
-    if (!sectionFolder) continue;
-    const sectionIndexHtml = generateSectionIndexPage(section, template, filesBySection[section], filesBySection);
-    if (sectionIndexHtml) {
-      const dir = path.join(OUTPUT_DIR, sectionFolder);
-      fs.mkdirSync(dir, { recursive: true });
-      fs.writeFileSync(path.join(dir, 'index.html'), sectionIndexHtml);
-      console.log(`📄 Generated: ${sectionFolder}/index.html`);
+  // Section index pages — only during full build
+  if (!isSingleFile) {
+    for (const section of Object.keys(filesBySection)) {
+      const sectionFolder = SECTION_FOLDERS[section];
+      if (!sectionFolder) continue;
+      const sectionIndexHtml = generateSectionIndexPage(section, template, filesBySection[section], filesBySection);
+      if (sectionIndexHtml) {
+        const dir = path.join(OUTPUT_DIR, sectionFolder);
+        fs.mkdirSync(dir, { recursive: true });
+        fs.writeFileSync(path.join(dir, 'index.html'), sectionIndexHtml);
+        console.log(`📄 Generated: ${sectionFolder}/index.html`);
+      }
     }
   }
 
-  // Generate nav.js
+  // Always regenerate nav.js (sidebar needs to stay current)
   const navJs = generateNavJs(filesBySection);
   const navJsPath = path.join(OUTPUT_DIR, 'assets', 'js', 'nav.js');
   fs.writeFileSync(navJsPath, navJs);
   console.log('📄 Generated: assets/js/nav.js');
 
-  // Generate client doc pages from cms/clients/{clientFolder}/*.md
-  const generatedClientPages = generateClientDocs(template);
-  updateThemeConfigPages(generatedClientPages);
+  // Client docs — only during full build
+  if (!isSingleFile) {
+    const generatedClientPages = generateClientDocs(template);
+    updateThemeConfigPages(generatedClientPages);
+    generateClientSectionOverviews(template);
+    generateClientIndexPages(template);
+  }
 
-  // Generate client section overview pages + update theme-config with overview entries
-  generateClientSectionOverviews(template);
-
-  // Generate client index pages from theme-config.js (after config is updated)
-  generateClientIndexPages(template);
-
-  console.log('✅ Documentation generation complete!');
-  console.log(`📊 Generated ${allFiles.length + 1} HTML pages + nav.js`);
-  console.log(`📁 Output directory: ${OUTPUT_DIR}`);
+  if (isSingleFile) {
+    console.log(`✅ Done — regenerated ${filesToWrite.length} page(s) + nav.js`);
+  } else {
+    console.log('✅ Documentation generation complete!');
+    console.log(`📊 Generated ${allFiles.length + 1} HTML pages + nav.js`);
+    console.log(`📁 Output directory: ${OUTPUT_DIR}`);
+  }
 }
 
 // Run the generator

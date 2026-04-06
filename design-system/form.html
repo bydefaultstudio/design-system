@@ -74,27 +74,36 @@
 
         <!-- Sticky Bar (breadcrumbs + actions) -->
         <div class="sticky-bar">
-      <div class="sticky-bar-inner">
-        <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
-          <a href="../design-system/index.html">Design System</a>
-          <span class="breadcrumb-separator">/</span>
-          <span>Form</span>
-        </nav>
+      <div class="sticky-bar-container">
+        <div class="sticky-bar-content">
+          <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
+            <a href="../design-system/index.html">Design System</a>
+            <span class="breadcrumb-separator">/</span>
+            <span>Form</span>
+          </nav>
+        </div>
         <div class="sticky-bar-actions">
           <div class="dropdown">
             <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Markdown source options">
-              <div class="icn-svg" data-icon="more-horizontal"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
+              <div class="icn-svg" data-icon="more-horizontal" data-file="more-horizontal.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
             </button>
             <div class="dropdown-menu is-right">
-              <a href="../cms/form.md" class="dropdown-item" download>
-                <div class="icn-svg" data-icon="download"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
-                <span>Download .md file</span>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="../cms/form.md" class="dropdown-item" target="_blank" rel="noopener noreferrer">
-                <div class="icn-svg" data-icon="open-full"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div>
-                <span>Open .md in new tab</span>
-              </a>
+              <button type="button" class="dropdown-item js-copy-url" aria-label="Copy page link to clipboard">
+                <div class="icn-svg" data-icon="link" data-file="link.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M14.8284 16.2426L8.46446 22.6066L1.39339 15.5355L7.75735 9.17158L9.17156 10.5858L5.63603 14.1213C4.85498 14.9024 4.85498 16.1687 5.63603 16.9498L7.05024 18.364C7.83129 19.145 9.09762 19.145 9.87867 18.364L13.4142 14.8284L14.8284 16.2426ZM9.17156 16.2426L7.75735 14.8284L14.8284 7.75736L16.2426 9.17158L9.17156 16.2426ZM16.2426 14.8284L14.8284 13.4142L18.3639 9.87868C19.145 9.09763 19.145 7.8313 18.3639 7.05026L16.9497 5.63604C16.1687 4.85499 14.9024 4.85499 14.1213 5.63604L10.5858 9.17158L9.17156 7.75736L15.5355 1.3934L22.6066 8.46447L16.2426 14.8284Z" fill="currentColor"/></svg></div>
+                <span>Copy link</span>
+              </button>
+              <div data-auth-role="team">
+                <div class="dropdown-divider"></div>
+                <a href="../cms/form.md" class="dropdown-item js-md-download" download>
+                  <div class="icn-svg" data-icon="download" data-file="download.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
+                  <span>Download .md file</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="../cms/form.md" class="dropdown-item js-md-open" target="_blank" rel="noopener noreferrer">
+                  <div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div>
+                  <span>Open .md in new tab</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -204,8 +213,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-0lsiu0z5l" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-0lsiu0z5l" class="language-html">&lt;label for=&quot;name&quot;&gt;Full name&lt;/label&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-uci6klt5v" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-uci6klt5v" class="language-html">&lt;label for=&quot;name&quot;&gt;Full name&lt;/label&gt;
 &lt;input type=&quot;text&quot; id=&quot;name&quot; placeholder=&quot;Enter your name&quot;&gt;
 </code></pre>
       </div>
@@ -228,8 +237,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-zd8q1y33v" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-zd8q1y33v" class="language-html">&lt;input type=&quot;text&quot; placeholder=&quot;Text&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-q0x4hedh5" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-q0x4hedh5" class="language-html">&lt;input type=&quot;text&quot; placeholder=&quot;Text&quot;&gt;
 &lt;input type=&quot;email&quot; placeholder=&quot;Email&quot;&gt;
 &lt;input type=&quot;password&quot; placeholder=&quot;Password&quot;&gt;
 &lt;input type=&quot;number&quot; placeholder=&quot;Number&quot;&gt;
@@ -259,8 +268,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-pesb10dnz" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-pesb10dnz" class="language-html">&lt;label for=&quot;message&quot;&gt;Message&lt;/label&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-2dc28gq6f" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-2dc28gq6f" class="language-html">&lt;label for=&quot;message&quot;&gt;Message&lt;/label&gt;
 &lt;textarea id=&quot;message&quot; placeholder=&quot;Enter your message...&quot;&gt;&lt;/textarea&gt;
 </code></pre>
       </div>
@@ -280,8 +289,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-t437x795f" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-t437x795f" class="language-html">&lt;label for=&quot;country&quot;&gt;Country&lt;/label&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-flm8ad1ks" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-flm8ad1ks" class="language-html">&lt;label for=&quot;country&quot;&gt;Country&lt;/label&gt;
 &lt;select id=&quot;country&quot;&gt;
   &lt;option value=&quot;&quot; disabled selected&gt;Choose a country&lt;/option&gt;
   &lt;option value=&quot;nz&quot;&gt;New Zealand&lt;/option&gt;
@@ -292,6 +301,27 @@
     
 <p><strong>Properties:</strong> <code>appearance: none</code>, custom caret, right padding for arrow space.</p>
 <hr>
+<h2 id="colour-input">Colour Input</h2>
+<p>The native colour picker is styled to match other form inputs. Browser chrome is removed so the colour swatch fills the entire element. Use alongside a text input for hex/named colour entry.</p>
+<div class="demo-preview is-joined">
+  <div class="block row gap-s align-center">
+    <input type="color" id="demo-color" value="#ffa500">
+    <input type="text" value="ffa500" placeholder="hex or name">
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-3i5gvoquo" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-3i5gvoquo" class="language-html">&lt;div class=&quot;block row gap-s align-center&quot;&gt;
+  &lt;input type=&quot;color&quot; id=&quot;color-picker&quot; value=&quot;#ffa500&quot;&gt;
+  &lt;input type=&quot;text&quot; value=&quot;ffa500&quot; placeholder=&quot;hex or name&quot;&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<p><strong>Properties:</strong> <code>appearance: none</code>, <code>aspect-ratio: 1 / 1</code>, <code>align-self: stretch</code> (matches sibling height), <code>padding: var(--space-xs)</code>, swatch wrapper padding removed. Same border and focus styles as text inputs.</p>
+<hr>
 <h2 id="disabled-state">Disabled State</h2>
 <p>Add the <code>disabled</code> attribute to any input, textarea, or select:</p>
 <div class="demo-preview is-joined">
@@ -300,8 +330,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-3iu4of263" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-3iu4of263" class="language-html">&lt;input type=&quot;text&quot; value=&quot;Cannot edit&quot; disabled&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-7oc7dsfl5" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-7oc7dsfl5" class="language-html">&lt;input type=&quot;text&quot; value=&quot;Cannot edit&quot; disabled&gt;
 </code></pre>
       </div>
     
@@ -327,8 +357,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-n7uxae8dg" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-n7uxae8dg" class="language-html">&lt;div class=&quot;form-check&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-b1w8agjh8" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-b1w8agjh8" class="language-html">&lt;div class=&quot;form-check&quot;&gt;
   &lt;input type=&quot;checkbox&quot; id=&quot;terms&quot;&gt;
   &lt;label for=&quot;terms&quot;&gt;I agree to the terms&lt;/label&gt;
 &lt;/div&gt;
@@ -350,8 +380,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-zk2eylirx" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-zk2eylirx" class="language-html">&lt;div class=&quot;form-check&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-zlv91ozwi" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-zlv91ozwi" class="language-html">&lt;div class=&quot;form-check&quot;&gt;
   &lt;input type=&quot;radio&quot; name=&quot;group&quot; id=&quot;option-a&quot;&gt;
   &lt;label for=&quot;option-a&quot;&gt;Option A&lt;/label&gt;
 &lt;/div&gt;
@@ -376,8 +406,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-os34dd59s" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-os34dd59s" class="language-html">&lt;div class=&quot;form-toggle&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-ikh1yxszu" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-ikh1yxszu" class="language-html">&lt;div class=&quot;form-toggle&quot;&gt;
   &lt;input type=&quot;checkbox&quot; id=&quot;notifications&quot; role=&quot;switch&quot;&gt;
   &lt;label for=&quot;notifications&quot;&gt;Enable notifications&lt;/label&gt;
 &lt;/div&gt;
@@ -395,8 +425,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-0xcxf4ize" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-0xcxf4ize" class="language-html">&lt;div class=&quot;form-toggle is-label-right&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-hgd33mm4i" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-hgd33mm4i" class="language-html">&lt;div class=&quot;form-toggle is-label-right&quot;&gt;
   &lt;input type=&quot;checkbox&quot; id=&quot;darkmode&quot; role=&quot;switch&quot;&gt;
   &lt;label for=&quot;darkmode&quot;&gt;Dark mode&lt;/label&gt;
 &lt;/div&gt;
@@ -413,8 +443,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-hfviqpgsc" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-hfviqpgsc" class="language-html">&lt;div class=&quot;form-toggle&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-fc7vws9jx" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-fc7vws9jx" class="language-html">&lt;div class=&quot;form-toggle&quot;&gt;
   &lt;input type=&quot;checkbox&quot; id=&quot;feature&quot; role=&quot;switch&quot; disabled&gt;
   &lt;label for=&quot;feature&quot;&gt;Coming soon&lt;/label&gt;
 &lt;/div&gt;
@@ -439,8 +469,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-3eqgvrz0k" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-3eqgvrz0k" class="language-html">&lt;div class=&quot;form-group&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-mqivsqxji" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-mqivsqxji" class="language-html">&lt;div class=&quot;form-group&quot;&gt;
   &lt;label for=&quot;name&quot;&gt;Name&lt;/label&gt;
   &lt;input type=&quot;text&quot; id=&quot;name&quot;&gt;
 &lt;/div&gt;
@@ -455,8 +485,8 @@
 <p>Use <code>.form-check</code> for inline checkbox/radio + label pairs:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-eir6q8k42" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-eir6q8k42" class="language-html">&lt;div class=&quot;form-check&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-x93875enq" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-x93875enq" class="language-html">&lt;div class=&quot;form-check&quot;&gt;
   &lt;input type=&quot;checkbox&quot; id=&quot;opt-in&quot;&gt;
   &lt;label for=&quot;opt-in&quot;&gt;Subscribe to newsletter&lt;/label&gt;
 &lt;/div&gt;
@@ -478,8 +508,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-w4d059xy6" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-w4d059xy6" class="language-html">&lt;fieldset&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-h2yvkw27s" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-h2yvkw27s" class="language-html">&lt;fieldset&gt;
   &lt;legend&gt;Contact details&lt;/legend&gt;
   &lt;div class=&quot;form-group&quot;&gt;
     &lt;label for=&quot;phone&quot;&gt;Phone&lt;/label&gt;
@@ -493,17 +523,17 @@
 <h2 id="segmented-control">Segmented Control</h2>
 <p><code>.segmented-control</code> is a button group that acts like a single-select input — similar to a group of radio buttons but with a tab-like appearance.</p>
 <div class="demo-preview is-joined">
-  <div class="segmented-control">
-    <button class="segmented-control-btn is-active">Option A</button>
-    <button class="segmented-control-btn">Option B</button>
-    <button class="segmented-control-btn">Option C</button>
+  <div class="segmented-control" role="group" aria-label="Options">
+    <button class="segmented-control-btn is-active" aria-pressed="true" onclick="this.parentElement.querySelectorAll('.segmented-control-btn').forEach(function(b){b.classList.remove('is-active');b.setAttribute('aria-pressed','false')});this.classList.add('is-active');this.setAttribute('aria-pressed','true')">Option A</button>
+    <button class="segmented-control-btn" aria-pressed="false" onclick="this.parentElement.querySelectorAll('.segmented-control-btn').forEach(function(b){b.classList.remove('is-active');b.setAttribute('aria-pressed','false')});this.classList.add('is-active');this.setAttribute('aria-pressed','true')">Option B</button>
+    <button class="segmented-control-btn" aria-pressed="false" onclick="this.parentElement.querySelectorAll('.segmented-control-btn').forEach(function(b){b.classList.remove('is-active');b.setAttribute('aria-pressed','false')});this.classList.add('is-active');this.setAttribute('aria-pressed','true')">Option C</button>
   </div>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-3w24ojwji" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-3w24ojwji" class="language-html">&lt;div class=&quot;segmented-control&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-xykxk6eac" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-xykxk6eac" class="language-html">&lt;div class=&quot;segmented-control&quot;&gt;
   &lt;button class=&quot;segmented-control-btn is-active&quot;&gt;Option A&lt;/button&gt;
   &lt;button class=&quot;segmented-control-btn&quot;&gt;Option B&lt;/button&gt;
   &lt;button class=&quot;segmented-control-btn&quot;&gt;Option C&lt;/button&gt;
@@ -515,8 +545,8 @@
 <p>Use <code>.is-icon</code> on a segment button for icon-only options:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-hwso7u8zy" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-hwso7u8zy" class="language-html">&lt;button class=&quot;segmented-control-btn is-icon&quot; aria-label=&quot;Grid view&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-pktattca6" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-pktattca6" class="language-html">&lt;button class=&quot;segmented-control-btn is-icon&quot; aria-label=&quot;Grid view&quot;&gt;
   &lt;div class=&quot;icn-svg&quot; data-icon=&quot;grid&quot;&gt;&lt;!-- SVG --&gt;&lt;/div&gt;
 &lt;/button&gt;
 </code></pre>
@@ -549,8 +579,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-3qrh33dfk" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-3qrh33dfk" class="language-html">&lt;div class=&quot;slider-wrapper&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-n9bviwxia" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-n9bviwxia" class="language-html">&lt;div class=&quot;slider-wrapper&quot;&gt;
   &lt;div class=&quot;slider-header&quot;&gt;
     &lt;label for=&quot;opacity&quot;&gt;Opacity&lt;/label&gt;
     &lt;span class=&quot;slider-value&quot; id=&quot;opacity-val&quot;&gt;75%&lt;/span&gt;
@@ -574,8 +604,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-gfyqi6wau" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-gfyqi6wau" class="language-html">&lt;div class=&quot;number-input&quot; role=&quot;group&quot; aria-label=&quot;Quantity&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-68ro750so" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-68ro750so" class="language-html">&lt;div class=&quot;number-input&quot; role=&quot;group&quot; aria-label=&quot;Quantity&quot;&gt;
   &lt;button class=&quot;number-input-btn&quot; data-number-decrement type=&quot;button&quot; aria-label=&quot;Decrease&quot;&gt;&amp;minus;&lt;/button&gt;
   &lt;input type=&quot;number&quot; value=&quot;1&quot; min=&quot;0&quot; max=&quot;99&quot; aria-label=&quot;Quantity&quot;&gt;
   &lt;button class=&quot;number-input-btn&quot; data-number-increment type=&quot;button&quot; aria-label=&quot;Increase&quot;&gt;+&lt;/button&gt;
@@ -609,8 +639,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-code-btn" data-clipboard-target="#code-qmh2zsqkl" type="button" aria-label="Copy code"><div class="icn-svg" data-icon="copy"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> <span class="copy-text">Copy</span></button>
-        <pre><code id="code-qmh2zsqkl" class="language-html">&lt;fieldset&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-5zn956489" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-5zn956489" class="language-html">&lt;fieldset&gt;
   &lt;legend class=&quot;radio-group-label&quot;&gt;Shipping method&lt;/legend&gt;
   &lt;div class=&quot;radio-group&quot;&gt;
     &lt;div class=&quot;form-check&quot;&gt;
@@ -672,25 +702,25 @@
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#form-tokens" class="toc-link">Form Tokens</a></li><li class="toc-item toc-level-2"><a href="#labels" class="toc-link">Labels</a></li><li class="toc-item toc-level-2"><a href="#text-inputs" class="toc-link">Text Inputs</a></li><li class="toc-item toc-level-2"><a href="#focus-state" class="toc-link">Focus State</a></li><li class="toc-item toc-level-2"><a href="#textarea" class="toc-link">Textarea</a></li><li class="toc-item toc-level-2"><a href="#select" class="toc-link">Select</a></li><li class="toc-item toc-level-2"><a href="#disabled-state" class="toc-link">Disabled State</a></li><li class="toc-item toc-level-2"><a href="#checkbox-amp-radio" class="toc-link">Checkbox &amp; Radio</a></li><li class="toc-item toc-level-2"><a href="#toggle-switch" class="toc-link">Toggle / Switch</a></li><li class="toc-item toc-level-2"><a href="#layout-patterns" class="toc-link">Layout Patterns</a></li><li class="toc-item toc-level-2"><a href="#segmented-control" class="toc-link">Segmented Control</a></li><li class="toc-item toc-level-2"><a href="#slider" class="toc-link">Slider</a></li><li class="toc-item toc-level-2"><a href="#number-input" class="toc-link">Number Input</a></li><li class="toc-item toc-level-2"><a href="#radio-group" class="toc-link">Radio Group</a></li><li class="toc-item toc-level-2"><a href="#rules" class="toc-link">Rules</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#form-tokens" class="toc-link">Form Tokens</a></li><li class="toc-item toc-level-2"><a href="#labels" class="toc-link">Labels</a></li><li class="toc-item toc-level-2"><a href="#text-inputs" class="toc-link">Text Inputs</a></li><li class="toc-item toc-level-2"><a href="#focus-state" class="toc-link">Focus State</a></li><li class="toc-item toc-level-2"><a href="#textarea" class="toc-link">Textarea</a></li><li class="toc-item toc-level-2"><a href="#select" class="toc-link">Select</a></li><li class="toc-item toc-level-2"><a href="#colour-input" class="toc-link">Colour Input</a></li><li class="toc-item toc-level-2"><a href="#disabled-state" class="toc-link">Disabled State</a></li><li class="toc-item toc-level-2"><a href="#checkbox-amp-radio" class="toc-link">Checkbox &amp; Radio</a></li><li class="toc-item toc-level-2"><a href="#toggle-switch" class="toc-link">Toggle / Switch</a></li><li class="toc-item toc-level-2"><a href="#layout-patterns" class="toc-link">Layout Patterns</a></li><li class="toc-item toc-level-2"><a href="#segmented-control" class="toc-link">Segmented Control</a></li><li class="toc-item toc-level-2"><a href="#slider" class="toc-link">Slider</a></li><li class="toc-item toc-level-2"><a href="#number-input" class="toc-link">Number Input</a></li><li class="toc-item toc-level-2"><a href="#radio-group" class="toc-link">Radio Group</a></li><li class="toc-item toc-level-2"><a href="#rules" class="toc-link">Rules</a></li></ul></nav></div>
     </aside>
         </div>
 
         <!-- Page Navigation (Previous / Next) -->
-        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="disclosure.html" class="page-nav-link page-nav-prev" rel="prev">
-      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="copy-button.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
       <span class="page-nav-text">
         <span class="page-nav-label">Previous</span>
         
-        <h3 class="page-nav-title">Disclosure</h3>
+        <h3 class="page-nav-title">Copy Button</h3>
       </span>
-    </a><a href="table.html" class="page-nav-link page-nav-next" rel="next">
+    </a><a href="number-input.html" class="page-nav-link page-nav-next" rel="next">
       <span class="page-nav-text">
         <span class="page-nav-label">Next</span>
         
-        <h3 class="page-nav-title">Table</h3>
+        <h3 class="page-nav-title">Number Input</h3>
       </span>
-      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
     </a></div></nav>
 
         <!-- Page Feedback -->
@@ -699,8 +729,8 @@
                 <h3 class="page-feedback-prompt">Was this page helpful?</h3>
                 <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
                 <div class="button-group">
-                    <button class="button is-small" data-feedback="yes" type="button">Yes</button>
-                    <button class="button is-small is-outline is-faded" data-feedback="no" type="button">No</button>
+                    <button class="button" data-feedback="yes" type="button"><div class="icn-svg" data-icon="thumbs-up" data-file="thumbs-up.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 3L14.5 8H23V12.5L19.5 21H2V8H7L14 1L16 3ZM9.29289 8.53426C9.10536 8.72179 9 8.97615 9 9.24136V17C9 18.1046 9.89543 19 11 19H16.8208C17.6312 19 18.3616 18.5109 18.6701 17.7615L21 12.1035V11C21 10.4477 20.5523 10 20 10H13.1555C12.4856 10 12.0052 9.35431 12.1976 8.71271L13.2907 5.06833C13.3504 4.86932 13.1046 4.72254 12.9577 4.86945L9.29289 8.53426ZM5 10C4.44772 10 4 10.4477 4 11V18C4 18.5523 4.44772 19 5 19H6C6.55228 19 7 18.5523 7 18V11C7 10.4477 6.55228 10 6 10H5Z" fill="currentColor"/></svg></div> Yes</button>
+                    <button class="button is-outline is-faded" data-feedback="no" type="button"><div class="icn-svg" data-icon="thumbs-down" data-file="thumbs-down.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21L9.5 16H1L1 11.5L4.5 3L22 3L22 16L17 16L10 23L8 21ZM14.7071 15.4657C14.8946 15.2782 15 15.0239 15 14.7586L15 7C15 5.89543 14.1046 5 13 5L7.17921 5C6.36877 5 5.63845 5.48908 5.32986 6.23847L3 11.8965L3 13C3 13.5523 3.44772 14 4 14L10.8445 14C11.5144 14 11.9948 14.6457 11.8024 15.2873L10.7093 18.9317C10.6496 19.1307 10.8954 19.2775 11.0423 19.1305L14.7071 15.4657ZM19 14C19.5523 14 20 13.5523 20 13V6C20 5.44772 19.5523 5 19 5H18C17.4477 5 17 5.44772 17 6V13C17 13.5523 17.4477 14 18 14H19Z" fill="currentColor"/></svg></div> No</button>
                 </div>
             </div>
         </section>
@@ -742,58 +772,6 @@
             function initHighlight() {
                 document.querySelectorAll('pre code').forEach((block) => {
                     hljs.highlightElement(block);
-                });
-            }
-
-            function copyToClipboard(text) {
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    return navigator.clipboard.writeText(text);
-                }
-                var textarea = document.createElement('textarea');
-                textarea.value = text;
-                textarea.style.position = 'fixed';
-                textarea.style.opacity = '0';
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                return Promise.resolve();
-            }
-
-            var copyIconPath = 'M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z';
-            var checkIconPath = 'M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z';
-
-            function initClipboard() {
-                const buttons = document.querySelectorAll('.copy-code-btn');
-
-                buttons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        const targetId = this.getAttribute('data-clipboard-target');
-                        const codeElement = document.querySelector(targetId);
-
-                        if (codeElement) {
-                            const text = codeElement.textContent;
-                            const textSpan = this.querySelector('.copy-text');
-                            const btnPath = this.querySelector('path');
-
-                            copyToClipboard(text).then(() => {
-                                if (btnPath) {
-                                    btnPath.setAttribute('d', checkIconPath);
-                                }
-                                if (textSpan) {
-                                    textSpan.textContent = 'Copied!';
-                                }
-                                setTimeout(() => {
-                                    if (btnPath) {
-                                        btnPath.setAttribute('d', copyIconPath);
-                                    }
-                                    if (textSpan) {
-                                        textSpan.textContent = 'Copy';
-                                    }
-                                }, 1500);
-                            });
-                        }
-                    });
                 });
             }
 
@@ -869,7 +847,6 @@
 
             function init() {
                 initHighlight();
-                initClipboard();
                 initTOCActiveState();
             }
 
@@ -884,7 +861,7 @@
     <!-- Back to Top -->
     <div class="back-to-top-wrapper">
       <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
-        <div class="icn-svg" data-icon="arrow-top"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M4 4V2H20V4H4Z" fill="currentColor"/><path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/></svg></div>
+        <div class="icn-svg" data-icon="arrow-top" data-file="arrow-top.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M4 4V2H20V4H4Z" fill="currentColor"/><path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/></svg></div>
       </button>
     </div>
     <script>
@@ -914,8 +891,31 @@
     <script src="../assets/js/auth.js"></script>
     <!-- Feedback -->
     <script src="../assets/js/feedback.js"></script>
+    <!-- Copy to clipboard -->
+    <script src="../assets/js/copy-button.js"></script>
+    <!-- Number input stepper -->
+    <script src="../assets/js/number-input.js"></script>
+    <!-- Tabs -->
+    <script src="../assets/js/tabs.js"></script>
+    <!-- Toast notifications -->
+    <script src="../assets/js/toast.js"></script>
+    <!-- Dialog -->
+    <script src="../assets/js/dialog.js"></script>
+    <!-- Rating -->
+    <script src="../assets/js/rating.js"></script>
+    <!-- Markdown download/open — strips frontmatter and block HTML -->
+    <script src="../assets/js/md-strip.js"></script>
 
     <script>
+      /* Tag dismiss */
+      document.addEventListener('click', function (e) {
+        var removeBtn = e.target.closest('.tag-remove');
+        if (removeBtn) {
+          var tag = removeBtn.closest('.tag');
+          if (tag) tag.remove();
+        }
+      });
+
       /* Table scroll overflow hint */
       (function initTableScroll() {
         var wrappers = document.querySelectorAll('.table-scroll');

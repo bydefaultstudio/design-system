@@ -3,8 +3,8 @@ title: "Tabs"
 subtitle: "Tabbed content navigation"
 description: "How to use the tabs component for switching between content panels."
 section: "Design System"
-subsection: ""
-order: 17
+subsection: "Content"
+order: 13
 slug: "tabs"
 status: "published"
 access: "team"

@@ -3,8 +3,8 @@ title: "Divider"
 subtitle: "Horizontal and vertical separators"
 description: "How to use the divider component for visual separation between content sections."
 section: "Design System"
-subsection: ""
-order: 24
+subsection: "Content"
+order: 6
 slug: "divider"
 status: "published"
 access: "team"

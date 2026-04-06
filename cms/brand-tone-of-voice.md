@@ -2,7 +2,7 @@
 title: "Tone of Voice"
 subtitle: "How the brand speaks and writes"
 description: "The language, tone, and communication style that defines how the brand expresses itself."
-section: "Brand"
+section: "Brand Book"
 subsection: ""
 order: 7
 slug: "brand-tone-of-voice"
@@ -11,42 +11,48 @@ access: "team"
 client: "internal"
 ---
 
+## The Founding Principle
+
+We have taste. We care about the visual, the presentation, the language, and the narrative. Every piece of communication we put into the world is signalling something about the brand behind it.
+
+**Our job is always to signal the right perception.**
+
+That applies to a pitch deck, a social caption, a one-line email reply, and a rich media ad unit. The signal is either working for the brand or against it. There is no neutral. Precise, confident, culturally alive communication signals an agency that understands what brand actually means.
+
+This is why we don't play safe. Safe signals nothing. It blends in.
+
+---
+
 ## One-screen cheat sheet (use this when you're writing)
 
 ### Brand voice (always true)
 
-**By Default sounds like a smart human with taste.** We are **clear, opinionated, culturally fluent, and warm**. We challenge patterns, but we never punch down.
+**By Default sounds like a real person with taste and a point of view.** We are **precise, culturally fluent, and opinionated**. Premium but not precious. A little dry. Imperfect on purpose — because over-polished copy signals nothing real behind it.
 
 ### Voice pillars
 
-**1. Direct + clear**
+**1. Culturally fluent**
 
-- Do: Lead with the point. Use plain language.
-- Don't: Warm up for 3 paragraphs or hide behind jargon.
-- Example: "Here's what we recommend, and why it will work."
-
-**2. Culturally fluent**
-
-- Do: Reference real behaviours, moments, and lived context.
-- Don't: Speak in abstract brand-theory or trend bingo.
+- Do: Reference real behaviour, real moments, real tensions. Move inside culture.
+- Don't: Explain culture. Use it as decoration. Chase it as a trend.
 - Example: "Culture isn't a costume. It's behaviour."
 
-**3. Thoughtfully challenging**
+**2. Thoughtfully challenging with a POV**
 
-- Do: Name the problem, then offer a better default.
-- Don't: Be combative, snarky, or vague.
-- Example: "Most 'inclusive' work is compliance. We're building for belonging."
+- Do: Take a position. Say the thing the industry isn't saying. Back it up with thinking.
+- Don't: Hedge. Soften. Write things everyone already agrees with. Be combative without substance.
+- Example: "Most advertising reaches people. Very little of it influences them."
 
-**4. Human + warm**
+**3. Direct + precise**
 
-- Do: Write like you'd say it to someone you respect.
-- Don't: Sound like a corporate memo or a motivational poster.
-- Example: "Quick update. We're on it. Here's what happens next."
+- Do: Lead with the point. Use plain language. Say the specific thing, not the vague version of it.
+- Don't: Warm up for three paragraphs. Hide behind jargon. Write the obvious.
+- Example: "Here's what we recommend, and why it will work."
 
-**5. Dry wit (optional, never forced)**
+**4. Dry wit (optional, never forced)**
 
-- Do: Understate. Let the point land.
-- Don't: Perform humour or use sarcasm that could alienate.
+- Do: Understate. Let the point land. Punch up.
+- Don't: Perform humour. Use sarcasm that could alienate. Make wit the point instead of the tool.
 - Example: "Revolutionary concept, apparently."
 
 ### Tone (changes by situation)
@@ -65,8 +71,15 @@ Use the same voice, but adjust these dials:
 - **Active voice.** Short to medium sentences.
 - **British English** by default.
 - **Contractions welcome** (we're, it's, can't).
-- **Avoid:** "leverage", "synergy", "holistic", "innovative" (unless you prove it), "we're excited to…", "in order to…", "at By Default, we…".
+- **Never start a sentence** with "At By Default, we believe."
+- **Avoid:** leverage, synergy, holistic, transformative, impactful, seamless, empower, unlock, resonate, elevate, ecosystem.
 - Use "**by default**" sparingly and only where it adds meaning.
+
+### The Test
+
+Before anything goes out: does this sound like a real person talking, or a brand broadcasting? Is there a point of view in here, or could any agency have written this? Did we say the specific thing, or the vague version of it?
+
+**If any answer is no, rewrite it.**
 
 ---
 
@@ -81,10 +94,10 @@ Use the same voice, but adjust these dials:
 
 ### Our voice foundations
 
-Our voice is influenced by two archetypal energies:
+Our voice is shaped by two archetypal energies:
 
-- **Creator:** inventive, precise, expressive. We build what we wish existed.
-- **Rebel:** pattern-breaking, direct, witty. We challenge what's normalised and offer better defaults.
+- **Creator:** inventive, precise, expressive. We build what we wish existed. The idea comes first. The craft serves the idea.
+- **Rebel:** pattern-breaking, direct, dry. We challenge what's normalised and say the thing the industry isn't saying.
 
 Archetypes are the *why*. The cheat sheet is the *how*.
 
@@ -103,8 +116,8 @@ We challenge norms to rebuild, not to dunk.
 
 **Examples**
 
-- "Inclusive design isn't a checklist. It's a standard. Build for the edges and everyone wins."
-- "If the work only 'includes' people at the end, it's not inclusion. It's retrofitting."
+- "Most advertising reaches people. Very little of it influences them."
+- "Passive content watches those moments pass. Interactive content influences decisions in them."
 
 ### 2. Speak with intent
 
@@ -131,12 +144,12 @@ We create resonance, not just information.
 
 **Examples**
 
-- "Culture isn't decoration. It's the operating system."
-- "If the experience is 'accessible' but exhausting, it's not accessible."
+- "Culture is how people identify. Storytelling is how people remember. Commerce is how brands sell."
+- "A brand is only as strong as the experience someone has when they interact with it."
 
-### 4. Be human and warm
+### 4. Be direct, not cold
 
-We're direct, not cold.
+Precision doesn't mean robotic. We're opinionated, not indifferent.
 
 **Use it when:** collaboration, feedback, follow-ups, sensitive topics.
 
@@ -174,29 +187,29 @@ Lead with the insight. Show the trade-offs. Make the next step unmistakable.
 
 ### Website & brand copy
 
-**Dial:** Directness medium · Warmth medium · Playfulness medium · Formality low
+**Dial:** Directness high · Warmth low · Playfulness low · Formality low
 
-Be memorable, but never unclear. Show what we do with examples, not adjectives.
+Name the client's problem and show you solve it. Don't explain the industry. Be memorable without being unclear.
 
 ### Social posts
 
-**Dial:** Directness medium · Warmth high · Playfulness medium · Formality low
+**Dial:** Directness medium · Warmth medium · Playfulness medium · Formality low
 
-One point per post. Cultural references should feel natural, not performative.
+One point per post. A position in every piece. Cultural references should feel natural, not performative.
 
 ### Emails & client communication
 
-**Dial:** Directness high · Warmth high · Playfulness low · Formality medium
+**Dial:** Directness high · Warmth medium · Playfulness low · Formality medium
 
 Start with what matters. Keep it short. End with next steps.
 
-### Educational & community content
+### Newsletter
 
-**Dial:** Directness medium · Warmth high · Playfulness medium · Formality low
+**Dial:** Directness medium · Warmth medium · Playfulness low · Formality low
 
-Be generous with frameworks. Be specific and practical.
+Informed, direct, no fluff. Reads like a smart industry letter, not a marketing email. One strong POV, one piece of proof, one observation worth paying attention to.
 
-### Blog posts & newsletters
+### Blog posts & long-form
 
 **Dial:** Directness medium · Warmth medium · Playfulness medium · Formality low
 

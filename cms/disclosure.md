@@ -3,8 +3,8 @@ title: "Disclosure"
 subtitle: "Details and summary toggle component"
 description: "How to use the native details/summary disclosure pattern in the design system."
 section: "Design System"
-subsection: ""
-order: 10
+subsection: "Content"
+order: 5
 slug: "disclosure"
 status: "published"
 access: "team"
@@ -19,6 +19,8 @@ The disclosure component uses native HTML `<details>` and `<summary>` elements t
 
 - Uses **native HTML** (`<details>/<summary>`) for built-in accessibility and keyboard support
 - Hidden by default — content is revealed on demand
+- Chevron indicator sits on the **left** of the summary text, rotating from right-pointing (closed) to down-pointing (open)
+- Disclosure content aligns with the summary text (indented past the chevron)
 - Styled with design system tokens (fonts, colors, spacing, borders)
 - The `.disclosure-content` wrapper provides consistent padding and typography
 - The `.disclosure-table` pattern displays key-value pairs (e.g. CSS properties)
@@ -90,17 +92,47 @@ The `<dt>` labels are styled with `--text-faded` and the `<dd>` values with `--t
 
 ## Copy Button
 
-Add a `.copy-btn` inside `.disclosure-content` with a `data-copy` attribute containing the text to copy:
+Add a `.copy-btn` inside `.disclosure-content` with a `data-copy` attribute containing the text to copy. Use `&#10;` for newlines in the `data-copy` value.
+
+<div class="demo-preview is-joined">
+  <details>
+    <summary>Show details</summary>
+    <div class="disclosure-content">
+      <dl class="disclosure-table">
+        <dt>Font size</dt>
+        <dd>var(--font-4xl) <span class="token-tag">40px</span></dd>
+        <dt>Line height</dt>
+        <dd>var(--line-height-s) <span class="token-tag">1</span></dd>
+      </dl>
+      <button class="button is-small copy-btn"
+        data-copy="font-size: var(--font-4xl);&#10;line-height: var(--line-height-s);"
+        aria-label="Copy CSS for Heading 1">
+        Copy CSS
+      </button>
+    </div>
+  </details>
+</div>
 
 ```html
-<button class="button is-small is-faded copy-btn"
-  data-copy="font-size: var(--font-4xl);&#10;line-height: var(--line-height-s);"
-  aria-label="Copy CSS for Heading 1">
-  Copy CSS
-</button>
+<details>
+  <summary>Show details</summary>
+  <div class="disclosure-content">
+    <dl class="disclosure-table">
+      <dt>Font size</dt>
+      <dd>var(--font-4xl) <span class="token-tag">40px</span></dd>
+      <dt>Line height</dt>
+      <dd>var(--line-height-s) <span class="token-tag">1</span></dd>
+    </dl>
+    <button class="button is-small copy-btn"
+      data-copy="font-size: var(--font-4xl);&#10;line-height: var(--line-height-s);"
+      aria-label="Copy CSS for Heading 1">
+      Copy CSS
+    </button>
+  </div>
+</details>
 ```
 
-Use `&#10;` for newlines in the `data-copy` value. The button requires a small JS handler:
+The button requires a small JS handler:
 
 ```js
 document.addEventListener('click', function (event) {
@@ -125,10 +157,10 @@ document.addEventListener('click', function (event) {
 | Class | Purpose |
 |---|---|
 | `details` (element) | Base container — border, border-radius |
-| `summary` (element) | Toggle trigger — monospace, faded color, pointer cursor |
+| `summary` (element) | Toggle trigger — left-side chevron via `::before`, pointer cursor |
 | `.disclosure-content` | Content wrapper — padding, border-top separator, monospace font |
 | `.disclosure-table` | Grid layout for key-value pairs (2-column: label + value) |
-| `.button.is-small.is-faded.copy-btn` | Copy-to-clipboard button — uses design system button with copy state |
+| `.button.is-small.copy-btn` | Copy-to-clipboard button — uses design system button with copy state |
 | `.copy-btn.is-copied` | Copied state — success color feedback |
 
 ---

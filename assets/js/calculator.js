@@ -620,7 +620,6 @@ function loadSavedConfig(index) {
   updateFeeGridLayout();
   recalculate();
   updateURLState();
-  closeDropdown();
 }
 
 // Delete a saved config
@@ -724,42 +723,6 @@ function updateCurrencyToggle() {
   if (toggle) toggle.checked = activeCurrency === 'USD';
   if (gbpLabel) gbpLabel.classList.toggle('is-active', activeCurrency === 'GBP');
   if (usdLabel) usdLabel.classList.toggle('is-active', activeCurrency === 'USD');
-}
-
-//
-//------- Copy URL -------//
-//
-
-var ICON_CHECK = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
-  + '<path d="M9.55 18L3.85 12.3L5.275 10.875L9.55 15.15L18.725 5.975L20.15 7.4L9.55 18Z" fill="currentColor"/>'
-  + '</svg>';
-
-function copyURL() {
-  var btn = document.getElementById('btn-copy-url');
-  if (!btn) return;
-
-  var iconEl = btn.querySelector('.icn-svg');
-  var textSpan = btn.querySelector('span');
-  var originalIconHTML = iconEl ? iconEl.innerHTML : '';
-  var originalText = textSpan ? textSpan.textContent : '';
-
-  navigator.clipboard.writeText(window.location.href).then(function() {
-    if (iconEl) iconEl.innerHTML = ICON_CHECK;
-    if (textSpan) textSpan.textContent = 'Copied';
-
-    setTimeout(function() {
-      if (iconEl) iconEl.innerHTML = originalIconHTML;
-      if (textSpan) textSpan.textContent = originalText;
-    }, 2000);
-  }).catch(function() {
-    // Fallback for older browsers
-    var input = document.createElement('input');
-    input.value = window.location.href;
-    document.body.appendChild(input);
-    input.select();
-    document.execCommand('copy');
-    document.body.removeChild(input);
-  });
 }
 
 //
@@ -909,9 +872,6 @@ function setupEventListeners() {
 
   var btnSave = document.getElementById('btn-save');
   if (btnSave) btnSave.addEventListener('click', saveCurrentState);
-
-  var btnCopyURL = document.getElementById('btn-copy-url');
-  if (btnCopyURL) btnCopyURL.addEventListener('click', copyURL);
 
   var btnReset = document.getElementById('btn-reset');
   if (btnReset) btnReset.addEventListener('click', resetCalculator);
