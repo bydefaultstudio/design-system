@@ -84,11 +84,50 @@
     });
   });
 
-  // Color swatch copy (separate — inline hex buttons in tables)
+  // Color swatch copy — .color-copy-btn with data-format="hex" or "css"
+  function rgbToHex(r, g, b) {
+    return '#' + [r, g, b].map(function (v) {
+      var hex = v.toString(16);
+      return hex.length === 1 ? '0' + hex : hex;
+    }).join('');
+  }
+
+  function getComputedHex(element) {
+    var rgb = getComputedStyle(element).backgroundColor;
+    var match = rgb.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+    if (!match) return null;
+    return rgbToHex(parseInt(match[1]), parseInt(match[2]), parseInt(match[3]));
+  }
+
+  // Initialize color copy buttons with icon structure
+  function initColorCopyButtons() {
+    var buttons = document.querySelectorAll('.color-copy-btn');
+    buttons.forEach(function (btn) {
+      var label = btn.textContent;
+      btn.innerHTML = '<span class="copy-btn-default"><div class="icn-svg">' + ICON_COPY + '</div> ' + label + '</span>'
+        + '<span class="copy-btn-copied"><div class="icn-svg">' + ICON_CHECK + '</div> Copied</span>';
+    });
+  }
+
   document.addEventListener('click', function (e) {
-    var btn = e.target.closest('.color-copy[data-copy]');
+    var btn = e.target.closest('.color-copy-btn');
     if (!btn) return;
-    var text = btn.getAttribute('data-copy');
+
+    var row = btn.closest('.color-row');
+    if (!row) return;
+
+    var format = btn.getAttribute('data-format');
+    var token = row.getAttribute('data-token');
+    var text;
+
+    if (format === 'css') {
+      text = 'var(' + token + ')';
+    } else {
+      text = getComputedHex(row);
+    }
+
+    if (!text) return;
+
     copyToClipboard(text).then(function () {
       btn.classList.add('is-copied');
       setTimeout(function () {
@@ -169,9 +208,14 @@
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initIconTables);
-  } else {
+  function initAll() {
     initIconTables();
+    initColorCopyButtons();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
   }
 })();

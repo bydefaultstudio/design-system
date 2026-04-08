@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Shapes Analytics Tracking - By Default Brand OS</title>
+    <meta name="description" content="Complete guide to the analytics events tracked in the Hero Shapes physics section, including event triggers, data properties, and implementation details.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Hero Shapes Analytics Tracking - By Default Brand OS">
+    <meta property="og:description" content="Complete guide to the analytics events tracked in the Hero Shapes physics section, including event triggers, data properties, and implementation details.">
+    <meta property="og:image" content="../assets/images/og/og-default.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Design System Framework (path set in cms/docs.config.js) -->
+    <link rel="stylesheet" href="../assets/css/design-system.css" id="design-system-css"
+          onerror="document.getElementById('ds-missing-banner').style.display='flex'">
+    
+
+    <!-- Google Fonts (configured in cms/docs.config.js) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Markdown CSS -->
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    
+
+    <!-- Early theme loader: apply cached client theme before first paint -->
+    <script>
+    (function(){try{var V='20260407',VK='bdd-client-theme-version';if(localStorage.getItem(VK)!==V){localStorage.removeItem('bdd-client-theme');localStorage.setItem(VK,V)}if(document.documentElement.getAttribute('data-client-theme'))return;var c=localStorage.getItem('bdd-client-theme');if(!c)return;var p=c.split('|'),k=p[0],css=p[1],fonts=p[2];if(!k||!css)return;var b='../';var l=document.createElement('link');l.id='client-theme-css';l.rel='stylesheet';l.href=b+css;document.head.appendChild(l);document.documentElement.setAttribute('data-client-theme',k);if(fonts){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://fonts.googleapis.com';pc.id='client-theme-fonts-preconnect';document.head.appendChild(pc);var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';pc2.id='client-theme-fonts-preconnect2';document.head.appendChild(pc2);var fl=document.createElement('link');fl.id='client-theme-fonts';fl.rel='stylesheet';fl.href=fonts;document.head.appendChild(fl)}}catch(e){}})();
+    </script>
+
+    <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
+    <script>
+      window._gotrueReady = (function() {
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0') {
+          return Promise.resolve(null);
+        }
+        return import('https://cdn.jsdelivr.net/npm/gotrue-js@0.9.29/+esm')
+          .then(function(m) { var G = m.default && m.default.default ? m.default.default : m.default; window.GoTrue = G; return G; })
+          .catch(function(e) { console.error('[Auth] GoTrue load failed:', e); return null; });
+      })();
+    </script>
+</head>
+<body class="auth-loading" data-access="team">
+
+    <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
+    <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
+        <span>⚠️</span>
+        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">cms/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
+        <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
+    </div>
+
+    <!-- Site Navigation (header + sidebar injected by nav.js) -->
+    <div id="site-nav" data-base="../"></div>
+
+    <div class="docs-main-area">
+        <!-- Page Header (full width, outside grid) -->
+        <div class="page-header">
+      <div class="container-small">
+        <h1>Hero Shapes Analytics Tracking</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">Analytics tracking system for Hero Shapes physics interactions</p>
+        
+      </div>
+    </div>
+
+        <!-- Sticky Bar (breadcrumbs + actions) -->
+        <div class="sticky-bar">
+      <div class="sticky-bar-container">
+        <div class="sticky-bar-content">
+          <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
+            <a href="../website/index.html">Website</a>
+            <span class="breadcrumb-separator">/</span>
+            <span>Hero Shapes Analytics Tracking</span>
+          </nav>
+        </div>
+        <div class="sticky-bar-actions">
+          <div class="dropdown">
+            <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Markdown source options">
+              <div class="icn-svg" data-icon="more-horizontal" data-file="more-horizontal.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
+            </button>
+            <div class="dropdown-menu is-right">
+              <button type="button" class="dropdown-item js-copy-url" aria-label="Copy page link to clipboard">
+                <div class="icn-svg" data-icon="link" data-file="link.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M14.8284 16.2426L8.46446 22.6066L1.39339 15.5355L7.75735 9.17158L9.17156 10.5858L5.63603 14.1213C4.85498 14.9024 4.85498 16.1687 5.63603 16.9498L7.05024 18.364C7.83129 19.145 9.09762 19.145 9.87867 18.364L13.4142 14.8284L14.8284 16.2426ZM9.17156 16.2426L7.75735 14.8284L14.8284 7.75736L16.2426 9.17158L9.17156 16.2426ZM16.2426 14.8284L14.8284 13.4142L18.3639 9.87868C19.145 9.09763 19.145 7.8313 18.3639 7.05026L16.9497 5.63604C16.1687 4.85499 14.9024 4.85499 14.1213 5.63604L10.5858 9.17158L9.17156 7.75736L15.5355 1.3934L22.6066 8.46447L16.2426 14.8284Z" fill="currentColor"/></svg></div>
+                <span>Copy link</span>
+              </button>
+              <div data-auth-role="team">
+                <div class="dropdown-divider"></div>
+                <a href="../cms/website-hero-shapes-analytics.md" class="dropdown-item js-md-download" download>
+                  <div class="icn-svg" data-icon="download" data-file="download.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
+                  <span>Download .md file</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="../cms/website-hero-shapes-analytics.md" class="dropdown-item js-md-open" target="_blank" rel="noopener noreferrer">
+                  <div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div>
+                  <span>Open .md in new tab</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Main Content + TOC grid -->
+        <div class="docs-content-grid padding-global">
+            <!-- Main Content -->
+            <main class="docs-main">
+                <article>
+                    <h1 id="hero-shapes-analytics-tracking">Hero Shapes Analytics Tracking</h1>
+<p>Complete analytics tracking system for user interactions within the Hero Shapes physics section. All events are pushed to <code>window.dataLayer</code> (for Google Tag Manager) or fall back to <code>gtag()</code> if GTM is not present.</p>
+<h2 id="overview">Overview</h2>
+<p>The tracking system monitors user interactions with the physics shapes, including drags, clicks, and time spent interacting. All tracking is session-based and designed to be lightweight and non-intrusive to the physics engine performance.</p>
+<h2 id="implementation">Implementation</h2>
+<p>The analytics system is integrated into <code>hero-shapes.js</code> and uses a modular approach:</p>
+<ul>
+<li><strong>State Management</strong>: Lightweight in-memory state tracking</li>
+<li><strong>Event Helper</strong>: Single <code>trackEvent()</code> function that handles both GTM and gtag</li>
+<li><strong>Event Hooks</strong>: Integrated into existing Matter.js event listeners</li>
+<li><strong>No Performance Impact</strong>: Tracking runs asynchronously and doesn&#39;t block physics calculations</li>
+</ul>
+<h2 id="tracked-events">Tracked Events</h2>
+<h3>1. <code>interaction_started</code></h3>
+<p><strong>Trigger:</strong> Fires the moment the user performs their first drag in the session.</p>
+<p><strong>Fires Once:</strong> Yes, only once per session.</p>
+<p><strong>Event Data:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-a6rve7x55" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-a6rve7x55" class="language-javascript">{
+  event: &quot;interaction_started&quot;,
+  timestamp: 1234567890123,
+  shape_label: &quot;news&quot; // or null if drag didn&#39;t start on a shape
+}
+</code></pre>
+      </div>
+    
+<p><strong>When It Fires:</strong></p>
+<ul>
+<li>First time a user starts dragging any shape</li>
+<li>Before any other interaction events</li>
+<li>Starts the interaction timer</li>
+</ul>
+<hr>
+<h3>2. <code>first_shape_dragged</code></h3>
+<p><strong>Trigger:</strong> Fires only the first time a user drags a shape.</p>
+<p><strong>Fires Once:</strong> Yes, only once per session.</p>
+<p><strong>Event Data:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-xgoeji0z6" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-xgoeji0z6" class="language-javascript">{
+  event: &quot;first_shape_dragged&quot;,
+  shape_label: &quot;news&quot;,
+  shape_index: 0,
+  timestamp: 1234567890123
+}
+</code></pre>
+      </div>
+    
+<p><strong>When It Fires:</strong></p>
+<ul>
+<li>First drag of any shape in the session</li>
+<li>Only if the drag started on an actual shape (not logo or walls)</li>
+</ul>
+<hr>
+<h3>3. <code>shape_dragged</code></h3>
+<p><strong>Trigger:</strong> Fires every time a drag begins.</p>
+<p><strong>Fires Once:</strong> No, fires on every drag.</p>
+<p><strong>Event Data:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-8o5lxieui" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-8o5lxieui" class="language-javascript">{
+  event: &quot;shape_dragged&quot;,
+  shape_label: &quot;founders&quot;,
+  total_drags: 5,
+  timestamp: 1234567890123
+}
+</code></pre>
+      </div>
+    
+<p><strong>Properties:</strong></p>
+<ul>
+<li><code>total_drags</code>: Increments with each drag (session counter)</li>
+<li><code>shape_label</code>: Label of the shape being dragged</li>
+</ul>
+<p><strong>When It Fires:</strong></p>
+<ul>
+<li>Every time a user starts dragging a shape</li>
+<li>Increments the session drag counter</li>
+<li>Adds shape to unique shapes set</li>
+</ul>
+<hr>
+<h3>4. <code>shape_clicked</code></h3>
+<p><strong>Trigger:</strong> When a shape is clicked (not dragged).</p>
+<p><strong>Fires Once:</strong> No, fires on every click.</p>
+<p><strong>Event Data:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-o1usxx22m" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-o1usxx22m" class="language-javascript">{
+  event: &quot;shape_clicked&quot;,
+  shape_label: &quot;work&quot;,
+  timestamp: 1234567890123
+}
+</code></pre>
+      </div>
+    
+<p><strong>Click Detection:</strong></p>
+<ul>
+<li>Uses existing 5px distance threshold</li>
+<li>If mouse movement &lt; 5px between mousedown and mouseup = click</li>
+<li>If mouse movement &gt;= 5px = drag (not tracked as click)</li>
+</ul>
+<p><strong>When It Fires:</strong></p>
+<ul>
+<li>User clicks a shape without dragging</li>
+<li>Only fires for actual shapes (not logo or walls)</li>
+</ul>
+<hr>
+<h3>5. <code>time_spent_interacting</code></h3>
+<p><strong>Trigger:</strong> Fires when user becomes inactive or page unloads.</p>
+<p><strong>Fires Once:</strong> Per interaction session.</p>
+<p><strong>Event Data:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-2ppqc4uoy" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-2ppqc4uoy" class="language-javascript">{
+  event: &quot;time_spent_interacting&quot;,
+  interaction_duration_ms: 15420,
+  total_drags: 8,
+  shapes_interacted_count: 3,
+  timestamp: 1234567890123
+}
+</code></pre>
+      </div>
+    
+<p><strong>Properties:</strong></p>
+<ul>
+<li><code>interaction_duration_ms</code>: Time from <code>interaction_started</code> to inactivity/unload</li>
+<li><code>total_drags</code>: Total number of drags in the session</li>
+<li><code>shapes_interacted_count</code>: Number of unique shapes interacted with</li>
+</ul>
+<p><strong>When It Fires:</strong></p>
+<ul>
+<li>After 3 seconds of inactivity (no drags)</li>
+<li>On page unload (<code>beforeunload</code> event)</li>
+<li>Timer starts when <code>interaction_started</code> fires</li>
+</ul>
+<p><strong>Inactivity Detection:</strong></p>
+<ul>
+<li>3-second timeout after last drag ends</li>
+<li>Timer resets on each new drag</li>
+<li>Only fires if an interaction was started</li>
+</ul>
+<hr>
+<h3>6. <code>shapes_interacted_count</code></h3>
+<p><strong>Logic:</strong> Maintains a Set of unique shape labels the user has interacted with.</p>
+<p><strong>Included In:</strong> <code>time_spent_interacting</code> event (as <code>shapes_interacted_count</code> property).</p>
+<p><strong>How It Works:</strong></p>
+<ul>
+<li>Each shape label is added to a Set when dragged</li>
+<li>Set automatically handles uniqueness</li>
+<li>Count is included in <code>time_spent_interacting</code> event</li>
+</ul>
+<hr>
+<h3>7. <code>reset_button_clicked</code></h3>
+<p><strong>Trigger:</strong> Fires when the reset button is clicked.</p>
+<p><strong>Fires Once:</strong> No, fires every time reset is clicked.</p>
+<p><strong>Event Data:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-i66eh3wfs" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-i66eh3wfs" class="language-javascript">{
+  event: &quot;reset_button_clicked&quot;,
+  timestamp: 1234567890123,
+  total_drags: 12,
+  interaction_duration_ms: 28450
+}
+</code></pre>
+      </div>
+    
+<p><strong>Properties:</strong></p>
+<ul>
+<li><code>total_drags</code>: Total drags so far in the session</li>
+<li><code>interaction_duration_ms</code>: Time since <code>interaction_started</code> (if started)</li>
+</ul>
+<p><strong>When It Fires:</strong></p>
+<ul>
+<li>User clicks the reset button (<code>#button-on-canvas</code>)</li>
+<li>Fires before shapes are reset</li>
+<li>Includes current session stats</li>
+</ul>
+<hr>
+<h2 id="technical-implementation">Technical Implementation</h2>
+<h3 id="event-helper-function">Event Helper Function</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-39a9xyzyy" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-39a9xyzyy" class="language-javascript">function trackEvent(eventName, eventData = {}) {
+  // Adds timestamp if not provided
+  if (!eventData.timestamp) {
+    eventData.timestamp = Date.now();
+  }
+
+  // Push to dataLayer for GTM
+  if (window.dataLayer &amp;&amp; Array.isArray(window.dataLayer)) {
+    window.dataLayer.push({
+      event: eventName,
+      ...eventData
+    });
+  } 
+  // Fallback to gtag if available
+  else if (typeof gtag === &#39;function&#39;) {
+    gtag(&#39;event&#39;, eventName, eventData);
+  }
+}
+</code></pre>
+      </div>
+    
+<h3 id="state-management">State Management</h3>
+<p>All tracking state is stored in <code>window.stackingShapes.analytics</code>:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-98qtr20st" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-98qtr20st" class="language-javascript">{
+  hasStarted: false,              // Has interaction_started fired?
+  hasDraggedFirstShape: false,    // Has first_shape_dragged fired?
+  interactionStartTime: null,     // When did interaction start?
+  totalDrags: 0,                  // Session drag counter
+  shapesSet: new Set(),           // Unique shapes interacted with
+  inactivityTimer: null,          // Inactivity timeout reference
+  INACTIVITY_TIMEOUT: 3000        // 3 seconds
+}
+</code></pre>
+      </div>
+    
+<h3 id="event-hooks">Event Hooks</h3>
+<p>Tracking is integrated into existing Matter.js event listeners:</p>
+<ul>
+<li><strong><code>startdrag</code> event</strong> - <code>interaction_started</code>, <code>first_shape_dragged</code>, <code>shape_dragged</code></li>
+<li><strong><code>enddrag</code> event</strong> - Inactivity timer check</li>
+<li><strong><code>mouseup</code> event</strong> - <code>shape_clicked</code> (if distance &lt; 5px)</li>
+<li><strong><code>beforeunload</code> event</strong> - <code>time_spent_interacting</code></li>
+<li><strong>Reset button click</strong> - <code>reset_button_clicked</code></li>
+</ul>
+<h2 id="data-layer-format">Data Layer Format</h2>
+<p>All events are pushed to <code>window.dataLayer</code> in this format:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-tx6p970tl" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-tx6p970tl" class="language-javascript">window.dataLayer.push({
+  event: &quot;event_name&quot;,
+  property1: &quot;value1&quot;,
+  property2: &quot;value2&quot;,
+  timestamp: 1234567890123
+});
+</code></pre>
+      </div>
+    
+<h2 id="gtm-configuration">GTM Configuration</h2>
+<p>In Google Tag Manager, you can create triggers based on these events:</p>
+<ol>
+<li><strong>Trigger Type:</strong> Custom Event</li>
+<li><strong>Event Name:</strong> <code>interaction_started</code>, <code>shape_dragged</code>, etc.</li>
+<li><strong>Variables:</strong> Access event properties like <code>shape_label</code>, <code>total_drags</code>, etc.</li>
+</ol>
+<h3 id="example-gtm-tag-configuration">Example GTM Tag Configuration</h3>
+<p><strong>Tag:</strong> Google Analytics: GA4 Event</p>
+<ul>
+<li><strong>Event Name:</strong> <code>hero_shapes_interaction</code></li>
+<li><strong>Event Parameters:</strong><ul>
+<li><code>shape_label</code>: <code>{{shape_label}}</code></li>
+<li><code>total_drags</code>: <code>{{total_drags}}</code></li>
+<li><code>interaction_duration_ms</code>: <code>{{interaction_duration_ms}}</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>Trigger:</strong> Custom Event</p>
+<ul>
+<li><strong>Event Name:</strong> <code>shape_dragged</code></li>
+</ul>
+<h2 id="session-behavior">Session Behavior</h2>
+<ul>
+<li><strong>Session Scope:</strong> All tracking is per-page-session</li>
+<li><strong>State Persistence:</strong> State resets on page reload</li>
+<li><strong>No Duplicates:</strong> <code>interaction_started</code> and <code>first_shape_dragged</code> fire only once</li>
+<li><strong>Counter Reset:</strong> <code>total_drags</code> resets on page reload</li>
+</ul>
+<h2 id="performance-considerations">Performance Considerations</h2>
+<ul>
+<li><strong>Non-Blocking:</strong> All tracking is asynchronous</li>
+<li><strong>Lightweight:</strong> Minimal state management overhead</li>
+<li><strong>No Physics Impact:</strong> Tracking doesn&#39;t interfere with Matter.js calculations</li>
+<li><strong>Efficient:</strong> Uses Set for unique shape tracking (O(1) lookups)</li>
+</ul>
+<h2 id="testing">Testing</h2>
+<p>To test the tracking system:</p>
+<ol>
+<li>Open browser console</li>
+<li>Check <code>window.dataLayer</code> array for pushed events</li>
+<li>Or use GTM Preview mode to see events in real-time</li>
+<li>Interact with shapes to trigger events</li>
+</ol>
+<h3 id="console-testing">Console Testing</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-nwn42ojuj" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-nwn42ojuj" class="language-javascript">// Check if dataLayer exists
+console.log(window.dataLayer);
+
+// Filter for hero shapes events
+window.dataLayer.filter(e =&gt; e.event &amp;&amp; e.event.includes(&#39;shape&#39;) || e.event === &#39;interaction_started&#39;);
+</code></pre>
+      </div>
+    
+<h2 id="event-flow-example">Event Flow Example</h2>
+<ol>
+<li>User drags shape - <code>interaction_started</code> fires</li>
+<li>Same drag - <code>first_shape_dragged</code> fires</li>
+<li>Same drag - <code>shape_dragged</code> fires (total_drags: 1)</li>
+<li>User drags another shape - <code>shape_dragged</code> fires (total_drags: 2)</li>
+<li>User stops for 3 seconds - <code>time_spent_interacting</code> fires</li>
+<li>User clicks reset - <code>reset_button_clicked</code> fires</li>
+</ol>
+
+                </article>
+            </main>
+
+            <!-- Table of Contents -->
+            <aside class="docs-toc">
+      <span class="toc-header">On this page</span>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-1"><a href="#hero-shapes-analytics-tracking" class="toc-link">Hero Shapes Analytics Tracking</a></li><li class="toc-item toc-level-2"><a href="#overview" class="toc-link">Overview</a></li><li class="toc-item toc-level-2"><a href="#implementation" class="toc-link">Implementation</a></li><li class="toc-item toc-level-2"><a href="#tracked-events" class="toc-link">Tracked Events</a></li><li class="toc-item toc-level-2"><a href="#technical-implementation" class="toc-link">Technical Implementation</a></li><li class="toc-item toc-level-2"><a href="#data-layer-format" class="toc-link">Data Layer Format</a></li><li class="toc-item toc-level-2"><a href="#gtm-configuration" class="toc-link">GTM Configuration</a></li><li class="toc-item toc-level-2"><a href="#session-behavior" class="toc-link">Session Behavior</a></li><li class="toc-item toc-level-2"><a href="#performance-considerations" class="toc-link">Performance Considerations</a></li><li class="toc-item toc-level-2"><a href="#testing" class="toc-link">Testing</a></li><li class="toc-item toc-level-2"><a href="#event-flow-example" class="toc-link">Event Flow Example</a></li></ul></nav></div>
+    </aside>
+        </div>
+
+        <!-- Page Navigation (Previous / Next) -->
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="hero.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <h3 class="page-nav-title">Hero</h3>
+      </span>
+    </a><a href="stacking-shapes.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <h3 class="page-nav-title">Stacking Shapes</h3>
+      </span>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+    </a></div></nav>
+
+        <!-- Page Feedback -->
+        <section class="page-feedback" aria-label="Page feedback">
+            <div class="page-feedback-inner padding-global">
+                <h3 class="page-feedback-prompt">Was this page helpful?</h3>
+                <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
+                <div class="button-group">
+                    <button class="button" data-feedback="yes" type="button"><div class="icn-svg" data-icon="thumbs-up" data-file="thumbs-up.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 3L14.5 8H23V12.5L19.5 21H2V8H7L14 1L16 3ZM9.29289 8.53426C9.10536 8.72179 9 8.97615 9 9.24136V17C9 18.1046 9.89543 19 11 19H16.8208C17.6312 19 18.3616 18.5109 18.6701 17.7615L21 12.1035V11C21 10.4477 20.5523 10 20 10H13.1555C12.4856 10 12.0052 9.35431 12.1976 8.71271L13.2907 5.06833C13.3504 4.86932 13.1046 4.72254 12.9577 4.86945L9.29289 8.53426ZM5 10C4.44772 10 4 10.4477 4 11V18C4 18.5523 4.44772 19 5 19H6C6.55228 19 7 18.5523 7 18V11C7 10.4477 6.55228 10 6 10H5Z" fill="currentColor"/></svg></div> Yes</button>
+                    <button class="button is-outline is-faded" data-feedback="no" type="button"><div class="icn-svg" data-icon="thumbs-down" data-file="thumbs-down.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21L9.5 16H1L1 11.5L4.5 3L22 3L22 16L17 16L10 23L8 21ZM14.7071 15.4657C14.8946 15.2782 15 15.0239 15 14.7586L15 7C15 5.89543 14.1046 5 13 5L7.17921 5C6.36877 5 5.63845 5.48908 5.32986 6.23847L3 11.8965L3 13C3 13.5523 3.44772 14 4 14L10.8445 14C11.5144 14 11.9948 14.6457 11.8024 15.2873L10.7093 18.9317C10.6496 19.1307 10.8954 19.2775 11.0423 19.1305L14.7071 15.4657ZM19 14C19.5523 14 20 13.5523 20 13V6C20 5.44772 19.5523 5 19 5H18C17.4477 5 17 5.44772 17 6V13C17 13.5523 17.4477 14 18 14H19Z" fill="currentColor"/></svg></div> No</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Modal -->
+        <dialog class="feedback-modal" aria-label="Send feedback">
+            <div class="feedback-modal-content">
+                <h3 class="feedback-modal-title">Send feedback</h3>
+                <p class="feedback-modal-subtitle"></p>
+                <form class="feedback-form" name="page-feedback" data-netlify="true">
+                    <input type="hidden" name="form-name" value="page-feedback">
+                    <input type="hidden" name="sentiment" value="">
+                    <input type="hidden" name="page" value="">
+                    <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
+                    <div class="button-group feedback-modal-actions">
+                        <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>
+                        <button type="submit" class="button is-small">Send feedback</button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
+
+        <!-- Footer -->
+        <footer class="docs-footer">
+            <div class="docs-footer-inner padding-global">
+                <p class="docs-footer-text">© 2026 By Default</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- Initialize Highlight.js, Copy, and TOC -->
+    <script>
+        (function() {
+            'use strict';
+
+            function initHighlight() {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+
+            function initTOCActiveState() {
+                const tocLinks = document.querySelectorAll('.toc-link');
+                const headings = document.querySelectorAll('h1[id], h2[id]');
+
+                if (tocLinks.length === 0 || headings.length === 0) return;
+
+                const linkMap = new Map();
+                tocLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        const id = href.substring(1);
+                        linkMap.set(id, link);
+                    }
+                });
+
+                const observerOptions = {
+                    rootMargin: '-20% 0px -70% 0px',
+                    threshold: 0
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const id = entry.target.id;
+                        const link = linkMap.get(id);
+
+                        if (entry.isIntersecting) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            if (link) {
+                                link.classList.add('toc-link-active');
+                            }
+                        }
+                    });
+                }, observerOptions);
+
+                headings.forEach(heading => {
+                    if (heading.id) {
+                        observer.observe(heading);
+                    }
+                });
+
+                function setInitialActive() {
+                    let activeHeading = null;
+                    let maxTop = -Infinity;
+
+                    headings.forEach(heading => {
+                        const rect = heading.getBoundingClientRect();
+                        if (rect.top <= 100 && rect.top > maxTop) {
+                            maxTop = rect.top;
+                            activeHeading = heading;
+                        }
+                    });
+
+                    if (activeHeading && activeHeading.id) {
+                        const link = linkMap.get(activeHeading.id);
+                        if (link) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            link.classList.add('toc-link-active');
+                        }
+                    }
+                }
+
+                setInitialActive();
+
+                let scrollTimeout;
+                window.addEventListener('scroll', () => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(setInitialActive, 100);
+                });
+            }
+
+            function init() {
+                initHighlight();
+                initTOCActiveState();
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+
+    <!-- Back to Top -->
+    <div class="back-to-top-wrapper">
+      <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
+        <div class="icn-svg" data-icon="arrow-top" data-file="arrow-top.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M4 4V2H20V4H4Z" fill="currentColor"/><path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/></svg></div>
+      </button>
+    </div>
+    <script>
+      (function() {
+        var btn = document.querySelector('.back-to-top-wrapper');
+        if (!btn) return;
+        window.addEventListener('scroll', function() {
+          btn.classList.toggle('is-visible', window.scrollY > 300);
+        });
+        btn.querySelector('button').addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+
+    <!-- Dropdown -->
+    <script src="../assets/js/dropdown.js"></script>
+
+    <!-- Site Navigation -->
+    <script src="../assets/js/nav.js"></script>
+    <!-- Auth -->
+    <script src="../assets/js/auth-config.js"></script>
+    <!-- Theme -->
+    <script src="../assets/js/theme-config.js"></script>
+    <script src="../assets/js/theme-loader.js"></script>
+    <!-- Auth (must load after theme scripts) -->
+    <script src="../assets/js/auth.js"></script>
+    <!-- Feedback -->
+    <script src="../assets/js/feedback.js"></script>
+    <!-- Copy to clipboard -->
+    <script src="../assets/js/copy-button.js"></script>
+    <!-- Number input stepper -->
+    <script src="../assets/js/number-input.js"></script>
+    <!-- Tabs -->
+    <script src="../assets/js/tabs.js"></script>
+    <!-- Toast notifications -->
+    <script src="../assets/js/toast.js"></script>
+    <!-- Dialog -->
+    <script src="../assets/js/dialog.js"></script>
+    <!-- Rating -->
+    <script src="../assets/js/rating.js"></script>
+    <!-- Markdown download/open — strips frontmatter and block HTML -->
+    <script src="../assets/js/md-strip.js"></script>
+
+    <script>
+      /* Tag dismiss */
+      document.addEventListener('click', function (e) {
+        var removeBtn = e.target.closest('.tag-remove');
+        if (removeBtn) {
+          var tag = removeBtn.closest('.tag');
+          if (tag) tag.remove();
+        }
+      });
+
+      /* Table scroll overflow hint */
+      (function initTableScroll() {
+        var wrappers = document.querySelectorAll('.table-scroll');
+        if (!wrappers.length) return;
+
+        function checkOverflow(wrapper) {
+          var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
+          var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
+          wrapper.classList.toggle('is-overflowing', isOverflowing);
+          wrapper.classList.toggle('is-scrolled-end', isAtEnd);
+        }
+
+        wrappers.forEach(function(wrapper) {
+          checkOverflow(wrapper);
+          wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+        });
+
+        window.addEventListener('resize', function() {
+          wrappers.forEach(checkOverflow);
+        });
+      })();
+    </script>
+    <div class="cursor-default"></div>
+    <div class="cursor-halo"></div>
+        <link rel="stylesheet" href="../assets/css/bd-cursor.css">
+    <script src="../assets/js/vendor/gsap/gsap.min.js"></script>
+    <script src="../assets/js/vendor/gsap/ScrollTrigger.min.js"></script>
+    <script src="../assets/js/vendor/gsap/SplitText.min.js"></script>
+    <script src="../assets/js/bd/bd-animations.js"></script>
+    <script src="../assets/js/bd/bd-audio.js"></script>
+    <script src="../assets/js/bd/bd-cursor.js"></script>
+</body>
+</html>

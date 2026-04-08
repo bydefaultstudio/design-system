@@ -405,6 +405,9 @@
     }
   }
 
+  function hideEl(el) { if (el) el.classList.add('is-hidden'); }
+  function showEl(el) { if (el) el.classList.remove('is-hidden'); }
+
   function showSetPasswordForm(titleText, subtitleText, options) {
     var opts = options || {};
     var form = document.getElementById('login-form');
@@ -415,11 +418,11 @@
     var title = document.getElementById('login-title');
     var subtitle = document.getElementById('login-subtitle');
 
-    if (form) form.style.display = 'none';
-    if (forgotBtn) forgotBtn.style.display = 'none';
-    if (resetForm) resetForm.style.display = 'none';
-    if (setPasswordForm) setPasswordForm.style.display = 'flex';
-    if (nameGroup) nameGroup.style.display = opts.showName ? 'flex' : 'none';
+    hideEl(form);
+    hideEl(forgotBtn);
+    hideEl(resetForm);
+    showEl(setPasswordForm);
+    if (opts.showName) { showEl(nameGroup); } else { hideEl(nameGroup); }
     if (title) title.textContent = titleText || 'Set Your Password';
     if (subtitle) subtitle.textContent = subtitleText || 'Choose a secure password for your account.';
 
@@ -439,9 +442,9 @@
     var title = document.getElementById('login-title');
     var subtitle = document.getElementById('login-subtitle');
 
-    if (setPasswordForm) setPasswordForm.style.display = 'none';
-    if (form) { form.style.display = 'block'; form.reset(); }
-    if (forgotBtn) forgotBtn.style.display = 'block';
+    hideEl(setPasswordForm);
+    if (form) { showEl(form); form.reset(); }
+    showEl(forgotBtn);
     if (title) title.textContent = 'Welcome to BrandOS';
     if (subtitle) subtitle.textContent = 'Sign in to access your dashboard';
 
@@ -475,7 +478,7 @@
     newSubmitBtn.addEventListener('click', function () {
       var nameInput = document.getElementById('set-password-name');
       var nameGroup = document.getElementById('set-password-name-group');
-      var nameVisible = nameGroup && nameGroup.style.display !== 'none';
+      var nameVisible = nameGroup && !nameGroup.classList.contains('is-hidden');
       var name = nameVisible && nameInput ? nameInput.value.trim() : '';
       var newPw = document.getElementById('set-password-new').value;
       var confirmPw = document.getElementById('set-password-confirm').value;
@@ -590,9 +593,9 @@
     // Forgot password toggle
     if (forgotBtn && resetForm) {
       forgotBtn.addEventListener('click', function () {
-        form.style.display = 'none';
-        forgotBtn.style.display = 'none';
-        resetForm.style.display = 'block';
+        hideEl(form);
+        hideEl(forgotBtn);
+        showEl(resetForm);
         var resetEmail = document.getElementById('reset-email');
         if (resetEmail) resetEmail.focus();
       });
@@ -601,9 +604,9 @@
     // Back to login
     if (resetBackBtn) {
       resetBackBtn.addEventListener('click', function () {
-        form.style.display = 'block';
-        forgotBtn.style.display = 'block';
-        resetForm.style.display = 'none';
+        showEl(form);
+        showEl(forgotBtn);
+        hideEl(resetForm);
         var resetError = document.getElementById('reset-error');
         var resetSuccess = document.getElementById('reset-success');
         if (resetError) { resetError.textContent = ''; resetError.style.display = 'none'; }
@@ -1314,9 +1317,9 @@
         var resetForm = document.getElementById('login-reset-form');
         var title = document.getElementById('login-title');
         var subtitle = document.getElementById('login-subtitle');
-        if (form) form.style.display = 'none';
-        if (forgotBtn) forgotBtn.style.display = 'none';
-        if (resetForm) resetForm.style.display = 'flex';
+        hideEl(form);
+        hideEl(forgotBtn);
+        showEl(resetForm);
         if (title) title.textContent = 'Forgot Password';
         if (subtitle) subtitle.textContent = 'Enter your email to receive a reset link.';
         showContent();

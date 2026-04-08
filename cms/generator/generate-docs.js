@@ -111,6 +111,7 @@ function getRawIcon(name) {
 const SECTION_FOLDERS = {
   'Brand Book': 'brand',
   'Design System': 'design-system',
+  'Website': 'website',
   'Docs': 'docs',
   'Tools': 'tools'
 };
@@ -676,11 +677,86 @@ function generatePageNav(file, pageOrder) {
 }
 
 /**
+ * Build script tags for a page based on section and frontmatter.
+ * - Website section pages get global GSAP + bd-* scripts automatically.
+ * - Any page can request additional scripts via the "scripts" frontmatter field.
+ *   e.g. scripts: "splide, scroll-smoother"
+ */
+function buildPageScripts(section, frontmatter) {
+  const base = '../';
+
+  // Script registry — maps keywords to script tag paths (load order matters)
+  const SCRIPT_REGISTRY = {
+    // GSAP core + standard plugins (global for Website)
+    'gsap':             `${base}assets/js/vendor/gsap/gsap.min.js`,
+    'scroll-trigger':   `${base}assets/js/vendor/gsap/ScrollTrigger.min.js`,
+    'split-text':       `${base}assets/js/vendor/gsap/SplitText.min.js`,
+    // GSAP optional plugins (per-page)
+    'scroll-smoother':  `${base}assets/js/vendor/gsap/ScrollSmoother.min.js`,
+    'draggable':        `${base}assets/js/vendor/gsap/Draggable.min.js`,
+    'scroll-to':        `${base}assets/js/vendor/gsap/ScrollToPlugin.min.js`,
+    // In-house tools (global for Website)
+    'bd-animations':    `${base}assets/js/bd/bd-animations.js`,
+    'bd-audio':         `${base}assets/js/bd/bd-audio.js`,
+    'bd-cursor':        `${base}assets/js/bd/bd-cursor.js`,
+    // Third-party (per-page)
+    'splide':           'https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js',
+    'splide-auto-scroll': 'https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-auto-scroll@0.5.3/dist/js/splide-extension-auto-scroll.min.js',
+    'splide-intersection': 'https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-intersection@0.2.0/dist/js/splide-extension-intersection.min.js',
+  };
+
+  // Global scripts for Website section pages (order matters)
+  const WEBSITE_GLOBALS = [
+    'gsap', 'scroll-trigger', 'split-text',
+    'bd-animations', 'bd-audio', 'bd-cursor'
+  ];
+
+  const scripts = [];
+
+  // Add global scripts for Website section
+  if (section === 'Website') {
+    for (const key of WEBSITE_GLOBALS) {
+      scripts.push(SCRIPT_REGISTRY[key]);
+    }
+  }
+
+  // Add per-page scripts from frontmatter (e.g. scripts: "splide, scroll-smoother")
+  if (frontmatter.scripts) {
+    const requested = frontmatter.scripts.split(',').map(s => s.trim().toLowerCase());
+    for (const key of requested) {
+      if (SCRIPT_REGISTRY[key] && !scripts.includes(SCRIPT_REGISTRY[key])) {
+        scripts.push(SCRIPT_REGISTRY[key]);
+      }
+    }
+  }
+
+  if (scripts.length === 0) return '';
+
+  const parts = [];
+
+  // Add CSS for Website section (bd-cursor needs its stylesheet)
+  if (section === 'Website') {
+    parts.push(`    <link rel="stylesheet" href="${base}assets/css/bd-cursor.css">`);
+  }
+
+  // Add script tags
+  parts.push(...scripts.map(src => `    <script src="${src}"></script>`));
+
+  return parts.join('\n');
+}
+
+/**
  * Generate page HTML
  */
 function generatePage(file, template, pageOrder) {
   const { frontmatter, content } = file;
-  const htmlContent = markdownToHtml(content);
+  let htmlContent = markdownToHtml(content);
+
+  // Apply drop cap to first paragraph if enabled in frontmatter
+  if (frontmatter.dropcap === 'true') {
+    htmlContent = htmlContent.replace(/<p>/, '<p class="drop-cap">');
+  }
+
   const tableOfContents = generateTableOfContents(htmlContent);
   const access = deriveDataAccess(frontmatter);
 
@@ -743,6 +819,9 @@ function generatePage(file, template, pageOrder) {
     </div>`;
   }
 
+  // Build page scripts based on section and frontmatter
+  const pageScripts = buildPageScripts(file.section, frontmatter);
+
   return template
     .replaceAll('{{PAGE_TITLE}}', frontmatter.title || 'Untitled')
     .replaceAll('{{META_DESCRIPTION}}', frontmatter.description || '')
@@ -761,6 +840,7 @@ function generatePage(file, template, pageOrder) {
     .replace('{{PAGE_NAV}}', generatePageNav(file, pageOrder))
     .replace('{{FOOTER_TEXT}}', PROJECT_CONFIG.footerText)
     .replace('{{PAGE_ACCESS}}', access)
+    .replace('{{PAGE_SCRIPTS}}', pageScripts)
     .replaceAll('{{NAV_BASE}}', '../');
 }
 
@@ -1016,6 +1096,7 @@ function buildNavSectionsHtml(filesBySection) {
   const sectionIconMap = {
     'Brand Book': { icon: getRawIcon('brand-book'), name: 'brand' },
     'Design System': { icon: getRawIcon('design-system'), name: 'design-system' },
+    'Website': { icon: getRawIcon('browser'), name: 'website' },
     'Docs': { icon: getRawIcon('docs'), name: 'docs' },
     'Tools': { icon: getRawIcon('tools'), name: 'tools' },
   };
@@ -1186,7 +1267,13 @@ function generateClientDocs(template) {
 
       const title = frontmatter.title || filename.replace('.md', '');
       const htmlName = filename.replace('.md', '.html');
-      const htmlContent = markdownToHtml(content);
+      let htmlContent = markdownToHtml(content);
+
+      // Apply drop cap to first paragraph if enabled in frontmatter
+      if (frontmatter.dropcap === 'true') {
+        htmlContent = htmlContent.replace(/<p>/, '<p class="drop-cap">');
+      }
+
       const tableOfContents = generateTableOfContents(htmlContent);
       const order = parseInt(frontmatter.order, 10) || 99;
 
@@ -1273,7 +1360,7 @@ function generateClientDocs(template) {
         .replace('{{CLIENT_THEME_ATTR}}', `data-client-theme="${clientKey}"`)
         .replace('{{GOOGLE_FONTS}}', googleFonts)
         .replace('{{PAGE_NAV}}', '')
-        .replace('{{FOOTER_TEXT}}', `${theme.label} — Powered by By Default BrandOS`)
+        .replace('{{FOOTER_TEXT}}', '© 2026 By Default')
         .replace('{{PAGE_ACCESS}}', deriveDataAccess(frontmatter))
         .replaceAll('{{NAV_BASE}}', navBase);
 
@@ -1452,7 +1539,7 @@ function generateClientSectionOverviews(template) {
         .replace('{{PAGE_CONTENT}}', content)
         .replace('{{TOC_SECTION}}', '')
         .replace('{{PAGE_NAV}}', '')
-        .replace('{{FOOTER_TEXT}}', `${clientLabel} — Powered by By Default BrandOS`)
+        .replace('{{FOOTER_TEXT}}', '© 2026 By Default')
         .replace('{{DESIGN_SYSTEM_PATH}}', base + PROJECT_CONFIG.designSystemPath)
         .replace('{{BRAND_CSS}}', PROJECT_CONFIG.brandCssPath ? `<link rel="stylesheet" href="${base}${PROJECT_CONFIG.brandCssPath}">` : '')
         .replace('{{CLIENT_THEME_CSS}}', `<!-- Client Theme Override (must load last to override base styles) -->\n    <link rel="stylesheet" href="${base === '../../' ? '../' : ''}theme.css">`)
@@ -1648,7 +1735,7 @@ function generateClientIndexPages(template) {
       .replace('{{PAGE_CONTENT}}', contentHtml)
       .replace('{{TOC_SECTION}}', '')
       .replace('{{PAGE_NAV}}', '')
-      .replace('{{FOOTER_TEXT}}', `${clientLabel} — Powered by By Default BrandOS`)
+      .replace('{{FOOTER_TEXT}}', '© 2026 By Default')
       .replace(`<link rel="stylesheet" href="${dsPath}" id="design-system-css"`, `<link rel="stylesheet" href="${navBase}${PROJECT_CONFIG.designSystemPath}" id="design-system-css"`)
       .replace('{{BRAND_CSS}}', brandCss)
       .replace('{{CLIENT_THEME_CSS}}', clientThemeCss)

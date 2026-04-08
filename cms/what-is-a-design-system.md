@@ -9,6 +9,7 @@ slug: "what-is-a-design-system"
 status: "published"
 access: "team"
 client: "internal"
+dropcap: true
 ---
 
 A **Design System** is your team's shared toolkit for creating **consistent, high-quality digital products and brand experiences**.

@@ -4,14 +4,14 @@
  * Script Purpose: CLI tool for cleaning and optimising SVG files
  * Author: By Default Studio
  * Created: 2026-03-22
- * Version: 1.2.0
- * Last Updated: 2026-04-01
+ * Version: 1.3.0
+ * Last Updated: 2026-04-07
  */
 
 const fs = require('fs');
 const path = require('path');
 
-console.error('svg-clean v1.2.0');
+console.error('svg-clean v1.3.0');
 
 //
 //------- Utility Functions -------//
@@ -26,7 +26,7 @@ function parseArgs(argv) {
     iconName: null,
     logo: false,
     logoName: null,
-    size: false,
+    size: null,
     standalone: false,
     stripComments: false,
     stripMetadata: false,
@@ -54,6 +54,9 @@ function parseArgs(argv) {
         break;
       case '--size':
         options.size = true;
+        break;
+      case '--keep-size':
+        options.size = false;
         break;
       case '--standalone':
         options.standalone = true;
@@ -85,6 +88,14 @@ function parseArgs(argv) {
     }
   }
 
+  // Resolve --size default based on context:
+  // - --standalone (file for <img> use): keep original dimensions
+  // - inline (default): apply width="100%" height="100%"
+  // Explicit --size or --keep-size always wins over the default
+  if (options.size === null) {
+    options.size = !options.standalone;
+  }
+
   return options;
 }
 
@@ -104,13 +115,20 @@ function printHelp() {
   console.log(`
 Usage: echo '<svg>...</svg>' | node svg-clean.js [OPTIONS]
 
+Modes:
+  Default (inline)   Strips xmlns, applies width="100%" height="100%"
+                     Ready to paste directly into HTML
+  --standalone       Re-adds xmlns, keeps original dimensions
+                     For .svg files used via <img src="...">
+
 Options:
-  --current-color    Set all path fills to currentColor
+  --current-color    Set all shape fills to currentColor (for theme support)
+  --size             Force width="100%" height="100%" (default for inline mode)
+  --keep-size        Keep original width/height (default for --standalone mode)
   --icon             Wrap output in <div class="icn-svg">
   --icon-name NAME   Add data-icon attribute to the wrapper (use with --icon)
-  --logo             Wrap in <div class="svg-logo-NAME"> with aspect-ratio, auto size 100%
+  --logo             Wrap in <div class="svg-logo-NAME"> with aspect-ratio
   --logo-name NAME   Set the logo name (e.g. svg-logo-brand)
-  --size             Remove width/height, add width="100%" height="100%"
   --standalone       Re-add xmlns and XML declaration for standalone .svg files
   --strip-comments   Remove XML/HTML comments
   --strip-metadata   Remove data-* attributes and editor class names
@@ -120,10 +138,14 @@ Options:
   -h, --help         Show this help message
 
 Examples:
-  echo '<svg>...</svg>' | node svg-clean.js
-  echo '<svg>...</svg>' | node svg-clean.js --size -o assets/images/svg-icons/icon.svg
-  echo '<svg>...</svg>' | node svg-clean.js --logo --standalone -o assets/images/logos/logo.svg
-  cat icon.svg | node svg-clean.js --strip-comments --minify
+  # Inline SVG (strips xmlns, 100% sizing, currentColor)
+  cat logo.svg | node svg-clean.js --current-color
+
+  # Standalone .svg file (keeps colors and dimensions, adds xmlns)
+  cat logo.svg | node svg-clean.js --standalone -o assets/images/logos/logo.svg
+
+  # Icon for inline use
+  cat icon.svg | node svg-clean.js --current-color --icon --icon-name "arrow-right"
 `);
 }
 
@@ -249,13 +271,14 @@ function processSVG(svgCode, options = {}) {
     }
   );
 
-  // Process all <path> elements — set fill to currentColor (if enabled)
+  // Process all shape elements — set fill to currentColor (if enabled)
+  // Covers: path, rect, circle, ellipse, polygon, polyline, line
   const applyCurrentColor = options.currentColor;
 
   if (applyCurrentColor) {
     processedCode = processedCode.replace(
-      /<path([^>]*?)>/g,
-      (match, attributes) => {
+      /<(path|rect|circle|ellipse|polygon|polyline|line)([^>]*?)(\/?)\s*>/g,
+      (_match, tag, attributes, selfClose) => {
         if (attributes.includes('fill=')) {
           attributes = attributes.replace(/fill="[^"]*"/g, 'fill="currentColor"');
         } else {
@@ -265,7 +288,7 @@ function processSVG(svgCode, options = {}) {
         if (attributes.includes('style=')) {
           attributes = attributes.replace(
             /style="([^"]*?)"/g,
-            (styleMatch, styleContent) => {
+            (_styleMatch, styleContent) => {
               const newStyleContent = styleContent.replace(
                 /fill\s*:\s*[^;]+/g,
                 'fill: currentColor'
@@ -280,7 +303,7 @@ function processSVG(svgCode, options = {}) {
           );
         }
 
-        return `<path${attributes}>`;
+        return `<${tag}${attributes}${selfClose}>`;
       }
     );
   }

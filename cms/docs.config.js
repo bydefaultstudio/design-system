@@ -16,7 +16,7 @@ module.exports = {
   googleFontsUrl: 'https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap',
 
   // Footer text
-  footerText: '© 2026 By Default BrandOS',
+  footerText: '© 2026 By Default',
 
   // Index page description (shown on the docs homepage)
   indexDescription: 'Complete documentation for By Default BrandOS — the design and brand systems hub.',
