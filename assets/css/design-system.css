@@ -297,25 +297,25 @@
   --transparent: transparent;
 
   /* -- Color-Mix Alpha Scale -- */
-  --alpha-5: transparent 5%;
-  --alpha-10: transparent 10%;
-  --alpha-15: transparent 15%;
-  --alpha-20: transparent 20%;
-  --alpha-25: transparent 25%;
-  --alpha-30: transparent 30%;
-  --alpha-35: transparent 35%;
-  --alpha-40: transparent 40%;
-  --alpha-45: transparent 45%;
+  --alpha-5: transparent 95%;
+  --alpha-10: transparent 90%;
+  --alpha-15: transparent 85%;
+  --alpha-20: transparent 80%;
+  --alpha-25: transparent 75%;
+  --alpha-30: transparent 70%;
+  --alpha-35: transparent 65%;
+  --alpha-40: transparent 60%;
+  --alpha-45: transparent 55%;
   --alpha-50: transparent 50%;
-  --alpha-55: transparent 55%;
-  --alpha-60: transparent 60%;
-  --alpha-65: transparent 65%;
-  --alpha-70: transparent 70%;
-  --alpha-75: transparent 75%;
-  --alpha-80: transparent 80%;
-  --alpha-85: transparent 85%;
-  --alpha-90: transparent 90%;
-  --alpha-95: transparent 95%;
+  --alpha-55: transparent 45%;
+  --alpha-60: transparent 40%;
+  --alpha-65: transparent 35%;
+  --alpha-70: transparent 30%;
+  --alpha-75: transparent 25%;
+  --alpha-80: transparent 20%;
+  --alpha-85: transparent 15%;
+  --alpha-90: transparent 10%;
+  --alpha-95: transparent 5%;
 
   /* -- Semantic colours -- */
   --text-primary: var(--warm-black);
@@ -346,7 +346,7 @@
   --button-text: var(--off-white);
   --button-secondary: var(--black);
   --button-secondary-text: var(--off-white);
-  --button-faded: var(--black-alpha-15);
+  --button-faded: color-mix(in srgb, var(--button-primary), var(--alpha-20));
 
   /* -- Status colours (from brand book or defaults) -- */
   --status-info: var(--blue);
@@ -421,7 +421,7 @@
   --dialog-background: var(--background-primary);
   --dialog-max-width: 560px;
   --dialog-shadow: 0 8px 32px var(--black-alpha-20);
-  --dialog-backdrop: rgba(0, 0, 0, 0.6);
+  --dialog-backdrop: var(--background-modal);
 
   /* -- Slider tokens -- */
   --slider-track-background: var(--background-darker);
@@ -461,7 +461,7 @@
   --background-plain: #2a2a2a;
   --background-faded: rgba(255, 255, 255, 0.06);
   --background-darker: rgba(255, 255, 255, 0.12);
-  --background-modal: rgba(0, 0, 0, 0.5);
+  --background-modal: var(--black-alpha-50);
   --background-sidebar: var(--background-primary);
   --background-site-header: var(--background-primary);
 
@@ -483,7 +483,7 @@
   --button-text:var(--background-primary);
   --button-secondary: #e8e6e3;
   --button-secondary-text: #1a1a1a;
-  --button-faded: rgba(255, 255, 255, 0.12);
+  --button-faded: color-mix(in srgb, var(--button-primary), var(--alpha-80));
 
   /* -- Status -- */
   --status-info: var(--blue-light);
@@ -575,7 +575,7 @@
     --button-text: #1a1a1a;
     --button-secondary: #e8e6e3;
     --button-secondary-text: #1a1a1a;
-    --button-faded: rgba(255, 255, 255, 0.12);
+  --button-faded: color-mix(in srgb, var(--button-primary), var(--alpha-80));
 
     --status-info: var(--blue-light);
     --status-success: var(--green-light);
@@ -1290,7 +1290,7 @@ body {
 
 /* -- Headings -- */
 h1 {
-  font-size: var(--font-5xl);
+  font-size: var(--font-4xl);
   line-height: var(--line-height-s);
 }
 
@@ -1613,6 +1613,7 @@ select {
   background-color: var(--input-background);
   border: var(--border-s) solid var(--input-border);
   padding: var(--space-m) var(--space-l);
+  min-height: 44px;
   width: 100%;
   display: block;
   transition: border-color 0.2s ease;
@@ -1627,9 +1628,32 @@ input[type="url"]:focus,
 input[type="tel"]:focus,
 textarea:focus,
 select:focus {
-  outline: none;
+  outline: 2px solid var(--input-focus);
+  outline-offset: 2px;
   border-color: var(--input-focus);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus), var(--alpha-75));
+  box-shadow: none;
+}
+
+/* -- Input error state -- */
+input.is-error,
+textarea.is-error,
+select.is-error {
+  border-color: var(--status-danger);
+}
+
+input.is-error:focus,
+textarea.is-error:focus,
+select.is-error:focus {
+  outline-color: var(--status-danger);
+}
+
+/* -- Disabled inputs -- */
+input:disabled,
+textarea:disabled,
+select:disabled {
+  background-color: var(--input-disabled-bg);
+  color: var(--input-disabled-text);
+  cursor: not-allowed;
 }
 
 input[type="number"]::-webkit-outer-spin-button,
@@ -2383,7 +2407,7 @@ pre {
   padding: var(--space-l);
   overflow-x: auto;
   font-family: var(--font-tertiary);
-  font-size: var(--font-xs);
+  font-size: calc(var(--text-body) - 2px);
   line-height: var(--line-height-xl);
 }
 
@@ -3073,17 +3097,21 @@ input[type="range"]:disabled::-webkit-slider-thumb {
 }
 
 /* -- State: default -- */
-.copy-btn .copy-btn-default { display: inline-flex; align-items: center; gap: var(--space-s); }
-.copy-btn .copy-btn-copied  { display: none; }
+.copy-btn .copy-btn-default,
+.color-copy-btn .copy-btn-default { display: inline-flex; align-items: center; gap: var(--space-s); }
+.copy-btn .copy-btn-copied,
+.color-copy-btn .copy-btn-copied  { display: none; }
 
 /* -- State: copied -- */
-.copy-btn.is-copied .copy-btn-default { display: none; }
-.copy-btn.is-copied .copy-btn-copied  { display: inline-flex; align-items: center; gap: var(--space-s); }
+.copy-btn.is-copied .copy-btn-default,
+.color-copy-btn.is-copied .copy-btn-default { display: none; }
+.copy-btn.is-copied .copy-btn-copied,
+.color-copy-btn.is-copied .copy-btn-copied  { display: inline-flex; align-items: center; gap: var(--space-s); }
 
 .copy-btn.is-copied {
   color: var(--status-success);
   border-color: var(--status-success);
-  background-color: color-mix(in srgb, var(--status-success), var(--alpha-90));
+  background-color: color-mix(in srgb, var(--status-success), var(--alpha-10));
 }
 
 /* -- Variant: icon only -- */
@@ -3236,7 +3264,7 @@ input[type="range"]:disabled::-webkit-slider-thumb {
 .drop-cap::first-letter {
   float: left;
   font-family: var(--font-secondary);
-  font-size: 4.5rem;
+  font-size: 3.5rem;
   font-weight: var(--font-weight-regular);
   line-height: 0.82;
   color: var(--text-primary);

@@ -50,12 +50,12 @@
       <!-- Account Info (read-only) -->
       <div class="account-section" id="account-info">
         <div class="form-group">
-          <label>Email</label>
-          <input type="email" id="account-email" disabled>
+          <label for="account-email">Email</label>
+          <input type="email" id="account-email" disabled aria-disabled="true">
         </div>
         <div class="form-group">
-          <label>Role</label>
-          <input type="text" id="account-role" disabled>
+          <label for="account-role">Role</label>
+          <input type="text" id="account-role" disabled aria-disabled="true">
         </div>
       </div>
 
@@ -63,10 +63,10 @@
       <div class="account-section" id="account-profile">
         <div class="form-group">
           <label for="account-name">Full name</label>
-          <input type="text" id="account-name" name="full-name" autocomplete="name" placeholder="Your full name">
+          <input type="text" id="account-name" name="full-name" autocomplete="name" aria-describedby="account-profile-error" placeholder="Your full name">
         </div>
-        <div class="login-error" id="account-profile-error" role="alert"></div>
-        <div class="login-success" id="account-profile-success" role="status"></div>
+        <div class="login-error" id="account-profile-error" role="alert" aria-live="assertive"></div>
+        <div class="login-success" id="account-profile-success" role="status" aria-live="polite"></div>
         <button type="button" class="button login-submit-btn" id="account-profile-save">Save name</button>
       </div>
 
@@ -74,14 +74,28 @@
       <div class="account-section" id="account-password">
         <div class="form-group">
           <label for="account-new-password">New password</label>
-          <input type="password" id="account-new-password" name="new-password" autocomplete="new-password" placeholder="Enter new password" minlength="8">
+          <div class="password-field">
+            <input type="password" id="account-new-password" name="new-password" autocomplete="new-password" aria-required="true" aria-describedby="account-password-error" placeholder="Enter new password" minlength="8">
+            <button type="button" class="password-toggle" aria-label="Show password" aria-pressed="false">
+              <div class="icn-svg" data-icon="eye">
+                <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M12 5C5.63636 5 2 12 2 12C2 12 5.63636 19 12 19C18.3636 19 22 12 22 12C22 12 18.3636 5 12 5ZM12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12C16 14.2091 14.2091 16 12 16Z" fill="currentColor"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></svg>
+              </div>
+            </button>
+          </div>
         </div>
         <div class="form-group">
           <label for="account-confirm-password">Confirm password</label>
-          <input type="password" id="account-confirm-password" name="confirm-password" autocomplete="new-password" placeholder="Confirm new password" minlength="8">
+          <div class="password-field">
+            <input type="password" id="account-confirm-password" name="confirm-password" autocomplete="new-password" aria-required="true" aria-describedby="account-password-error" placeholder="Confirm new password" minlength="8">
+            <button type="button" class="password-toggle" aria-label="Show password" aria-pressed="false">
+              <div class="icn-svg" data-icon="eye">
+                <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M12 5C5.63636 5 2 12 2 12C2 12 5.63636 19 12 19C18.3636 19 22 12 22 12C22 12 18.3636 5 12 5ZM12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12C16 14.2091 14.2091 16 12 16Z" fill="currentColor"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></svg>
+              </div>
+            </button>
+          </div>
         </div>
-        <div class="login-error" id="account-password-error" role="alert"></div>
-        <div class="login-success" id="account-password-success" role="status"></div>
+        <div class="login-error" id="account-password-error" role="alert" aria-live="assertive"></div>
+        <div class="login-success" id="account-password-success" role="status" aria-live="polite"></div>
         <button type="button" class="button login-submit-btn" id="account-password-save">Update password</button>
       </div>
     </div>
@@ -97,6 +111,8 @@
   <script src="../assets/js/theme-config.js"></script>
   <script src="../assets/js/theme-loader.js"></script>
   <script src="../assets/js/auth.js"></script>
+  <!-- Password toggle -->
+  <script src="../assets/js/password-toggle.js"></script>
 
 </body>
 

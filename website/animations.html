@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animations - By Default Brand OS</title>
+    <meta name="description" content="Comprehensive guide to using the ByDefault animations library built with GSAP and ScrollTrigger for creating engaging, performant animations across the website.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Animations - By Default Brand OS">
+    <meta property="og:description" content="Comprehensive guide to using the ByDefault animations library built with GSAP and ScrollTrigger for creating engaging, performant animations across the website.">
+    <meta property="og:image" content="../assets/images/og/og-default.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Design System Framework (path set in cms/docs.config.js) -->
+    <link rel="stylesheet" href="../assets/css/design-system.css" id="design-system-css"
+          onerror="document.getElementById('ds-missing-banner').style.display='flex'">
+    
+
+    <!-- Google Fonts (configured in cms/docs.config.js) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Markdown CSS -->
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    
+
+    <!-- Early theme loader: apply cached client theme before first paint -->
+    <script>
+    (function(){try{var V='20260407',VK='bdd-client-theme-version';if(localStorage.getItem(VK)!==V){localStorage.removeItem('bdd-client-theme');localStorage.setItem(VK,V)}if(document.documentElement.getAttribute('data-client-theme'))return;var c=localStorage.getItem('bdd-client-theme');if(!c)return;var p=c.split('|'),k=p[0],css=p[1],fonts=p[2];if(!k||!css)return;var b='../';var l=document.createElement('link');l.id='client-theme-css';l.rel='stylesheet';l.href=b+css;document.head.appendChild(l);document.documentElement.setAttribute('data-client-theme',k);if(fonts){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://fonts.googleapis.com';pc.id='client-theme-fonts-preconnect';document.head.appendChild(pc);var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';pc2.id='client-theme-fonts-preconnect2';document.head.appendChild(pc2);var fl=document.createElement('link');fl.id='client-theme-fonts';fl.rel='stylesheet';fl.href=fonts;document.head.appendChild(fl)}}catch(e){}})();
+    </script>
+
+    <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
+    <script>
+      window._gotrueReady = (function() {
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0') {
+          return Promise.resolve(null);
+        }
+        return import('https://cdn.jsdelivr.net/npm/gotrue-js@0.9.29/+esm')
+          .then(function(m) { var G = m.default && m.default.default ? m.default.default : m.default; window.GoTrue = G; return G; })
+          .catch(function(e) { console.error('[Auth] GoTrue load failed:', e); return null; });
+      })();
+    </script>
+</head>
+<body class="auth-loading" data-access="team">
+
+    <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
+    <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
+        <span>⚠️</span>
+        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">cms/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
+        <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
+    </div>
+
+    <!-- Site Navigation (header + sidebar injected by nav.js) -->
+    <div id="site-nav" data-base="../"></div>
+
+    <div class="docs-main-area">
+        <!-- Page Header (full width, outside grid) -->
+        <div class="page-header">
+      <div class="container-small">
+        <h1>Animations</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">ByDefault Studio Animation System v4.0 with GSAP and ScrollTrigger</p>
+        
+      </div>
+    </div>
+
+        <!-- Sticky Bar (breadcrumbs + actions) -->
+        <div class="sticky-bar">
+      <div class="sticky-bar-container">
+        <div class="sticky-bar-content">
+          <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
+            <a href="../website/index.html">Website</a>
+            <span class="breadcrumb-separator">/</span>
+            <span>Animations</span>
+          </nav>
+        </div>
+        <div class="sticky-bar-actions">
+          <div class="dropdown">
+            <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Markdown source options">
+              <div class="icn-svg" data-icon="more-horizontal" data-file="more-horizontal.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
+            </button>
+            <div class="dropdown-menu is-right">
+              <button type="button" class="dropdown-item js-copy-url" aria-label="Copy page link to clipboard">
+                <div class="icn-svg" data-icon="link" data-file="link.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M14.8284 16.2426L8.46446 22.6066L1.39339 15.5355L7.75735 9.17158L9.17156 10.5858L5.63603 14.1213C4.85498 14.9024 4.85498 16.1687 5.63603 16.9498L7.05024 18.364C7.83129 19.145 9.09762 19.145 9.87867 18.364L13.4142 14.8284L14.8284 16.2426ZM9.17156 16.2426L7.75735 14.8284L14.8284 7.75736L16.2426 9.17158L9.17156 16.2426ZM16.2426 14.8284L14.8284 13.4142L18.3639 9.87868C19.145 9.09763 19.145 7.8313 18.3639 7.05026L16.9497 5.63604C16.1687 4.85499 14.9024 4.85499 14.1213 5.63604L10.5858 9.17158L9.17156 7.75736L15.5355 1.3934L22.6066 8.46447L16.2426 14.8284Z" fill="currentColor"/></svg></div>
+                <span>Copy link</span>
+              </button>
+              <div data-auth-role="team">
+                <div class="dropdown-divider"></div>
+                <a href="../cms/website-animations.md" class="dropdown-item js-md-download" download>
+                  <div class="icn-svg" data-icon="download" data-file="download.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
+                  <span>Download .md file</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="../cms/website-animations.md" class="dropdown-item js-md-open" target="_blank" rel="noopener noreferrer">
+                  <div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div>
+                  <span>Open .md in new tab</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Main Content + TOC grid -->
+        <div class="docs-content-grid padding-global">
+            <!-- Main Content -->
+            <main class="docs-main">
+                <article>
+                    <h1 id="animations">Animations</h1>
+<p><strong>Version 4.0</strong> - ByDefault Studio Animation System</p>
+<p>A comprehensive guide to using the ByDefault animations library built with GSAP and ScrollTrigger.</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="basic-usage">Basic Usage</h3>
+<p>Add the <code>data-bd-animate</code> attribute to any element you want to animate:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-tmhphggga" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-tmhphggga" class="language-html">&lt;!-- Simple fade in animation (default) --&gt;
+&lt;h1 data-bd-animate&gt;Welcome to ByDefault&lt;/h1&gt;
+
+&lt;!-- Slide up animation --&gt;
+&lt;p data-bd-animate=&quot;slide-up&quot;&gt;This text slides up from below&lt;/p&gt;
+
+&lt;!-- Scale in animation --&gt;
+&lt;div data-bd-animate=&quot;scale-in&quot;&gt;This element scales in&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="legacy-support">Legacy Support</h3>
+<p>The system also supports legacy <code>data-text-animate</code> attributes:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-fzjjq2hpx" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-fzjjq2hpx" class="language-html">&lt;!-- Legacy syntax (automatically converted to data-bd-animate=&quot;fade&quot;) --&gt;
+&lt;h2 data-text-animate=&quot;element&quot;&gt;Legacy Animation&lt;/h2&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="available-animations">Available Animations</h2>
+<h3 id="all-animations">All Animations</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Animation</th>
+<th>Attribute Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Fade</strong></td>
+<td><code>fade</code> or empty</td>
+<td>Default fade in animation</td>
+</tr>
+<tr>
+<td><strong>Slide</strong></td>
+<td><code>slide</code></td>
+<td>Fade + slide up from below</td>
+</tr>
+<tr>
+<td><strong>Slide Up</strong></td>
+<td><code>slide-up</code></td>
+<td>Slide up from below</td>
+</tr>
+<tr>
+<td><strong>Slide Down</strong></td>
+<td><code>slide-down</code></td>
+<td>Slide down from above</td>
+</tr>
+<tr>
+<td><strong>Slide Left</strong></td>
+<td><code>slide-left</code></td>
+<td>Slide in from left</td>
+</tr>
+<tr>
+<td><strong>Slide Right</strong></td>
+<td><code>slide-right</code></td>
+<td>Slide in from right</td>
+</tr>
+<tr>
+<td><strong>Scale In</strong></td>
+<td><code>scale-in</code></td>
+<td>Scale from 80% to 100%</td>
+</tr>
+<tr>
+<td><strong>Rotate In</strong></td>
+<td><code>rotate-in</code></td>
+<td>Rotate in from -15 degrees to 0 degrees</td>
+</tr>
+<tr>
+<td><strong>Expand Spacing</strong></td>
+<td><code>expand-spacing</code></td>
+<td>Expand letter spacing</td>
+</tr>
+<tr>
+<td><strong>Skew</strong></td>
+<td><code>skew</code></td>
+<td>Skew animation</td>
+</tr>
+<tr>
+<td><strong>Flip</strong></td>
+<td><code>flip</code></td>
+<td>3D flip effect</td>
+</tr>
+<tr>
+<td><strong>Fade In/Out</strong></td>
+<td><code>fade-in-out</code></td>
+<td>Smooth fade transition</td>
+</tr>
+<tr>
+<td><strong>Blur In</strong></td>
+<td><code>blur-in</code></td>
+<td>Blur to clear effect</td>
+</tr>
+<tr>
+<td><strong>Bounce In</strong></td>
+<td><code>bounce-in</code></td>
+<td>Bouncy entrance</td>
+</tr>
+<tr>
+<td><strong>Shake</strong></td>
+<td><code>shake</code></td>
+<td>Shake effect</td>
+</tr>
+<tr>
+<td><strong>Flash</strong></td>
+<td><code>flash</code></td>
+<td>Continuous flashing</td>
+</tr>
+<tr>
+<td><strong>Neon</strong></td>
+<td><code>neon</code></td>
+<td>Neon glow effect</td>
+</tr>
+<tr>
+<td><strong>Tilt</strong></td>
+<td><code>tilt</code></td>
+<td>3D perspective tilt</td>
+</tr>
+<tr>
+<td><strong>In View</strong></td>
+<td><code>in-view</code></td>
+<td>Animate when element enters viewport</td>
+</tr>
+<tr>
+<td><strong>Delay</strong></td>
+<td><code>data-bd-delay</code></td>
+<td>Animation delay in seconds (e.g., &quot;0.5&quot;)</td>
+</tr>
+<tr>
+<td><strong>Scrub</strong></td>
+<td><code>data-bd-scrub</code></td>
+<td>Scroll-tied animation speed (&quot;true&quot; or &quot;0.1-5.0&quot;)</td>
+</tr>
+<tr>
+<td><strong>From Y</strong></td>
+<td><code>data-bd-from-y</code></td>
+<td>Starting Y position offset (e.g., &quot;50&quot;, &quot;-30&quot;)</td>
+</tr>
+<tr>
+<td><strong>From X</strong></td>
+<td><code>data-bd-from-x</code></td>
+<td>Starting X position offset (e.g., &quot;100&quot;, &quot;-50&quot;)</td>
+</tr>
+<tr>
+<td><strong>From Scale</strong></td>
+<td><code>data-bd-from-scale</code></td>
+<td>Starting scale size (e.g., &quot;0.8&quot;, &quot;1.2&quot;)</td>
+</tr>
+</tbody></table></div>
+<h3 id="text-specific-animations">Text-Specific Animations</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Animation</th>
+<th>Attribute Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Characters</strong></td>
+<td><code>data-text-animate=&quot;chars&quot;</code></td>
+<td>Animate each character</td>
+</tr>
+<tr>
+<td><strong>Words</strong></td>
+<td><code>data-text-animate=&quot;words&quot;</code></td>
+<td>Animate each word</td>
+</tr>
+<tr>
+<td><strong>Lines</strong></td>
+<td><code>data-text-animate=&quot;lines&quot;</code></td>
+<td>Animate each line</td>
+</tr>
+<tr>
+<td><strong>Rich Text</strong></td>
+<td><code>data-text-animate=&quot;rich-text&quot;</code></td>
+<td>Animate rich text elements</td>
+</tr>
+<tr>
+<td><strong>List Items</strong></td>
+<td><code>data-text-animate=&quot;list&quot;</code></td>
+<td>Animate list items</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="configuration-options">Configuration Options</h2>
+<h3 id="scroll-behavior">Scroll Behavior</h3>
+<h4 id="scrub-animation">Scrub Animation</h4>
+<p>Make animations tied to scroll position:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-7a39f2bey" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-7a39f2bey" class="language-html">&lt;!-- Smooth scroll-tied animation --&gt;
+&lt;div data-bd-animate=&quot;slide-up&quot; data-bd-scrub=&quot;true&quot;&gt;
+  Scrolls smoothly with page
+&lt;/div&gt;
+
+&lt;!-- Custom scrub speed (0.1 = slow, 2 = fast) --&gt;
+&lt;div data-bd-animate=&quot;slide-up&quot; data-bd-scrub=&quot;0.5&quot;&gt;
+  Medium speed scroll animation
+&lt;/div&gt;
+
+&lt;!-- No scrub (default) - fires once when element enters viewport --&gt;
+&lt;div data-bd-animate=&quot;slide-up&quot;&gt;
+  Fires once when visible
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h4 id="delay">Delay</h4>
+<p>Add delays to animations:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-jb3azshvy" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-jb3azshvy" class="language-html">&lt;!-- Delay animation by 0.5 seconds --&gt;
+&lt;h1 data-bd-animate=&quot;fade&quot; data-bd-delay=&quot;0.5&quot;&gt;Delayed Animation&lt;/h1&gt;
+
+&lt;!-- Delay by 1.2 seconds --&gt;
+&lt;p data-bd-animate=&quot;slide-up&quot; data-bd-delay=&quot;1.2&quot;&gt;Longer Delay&lt;/p&gt;
+</code></pre>
+      </div>
+    
+<h3 id="viewport-positioning">Viewport Positioning</h3>
+<h4 id="custom-starting-position">Custom Starting Position</h4>
+<p>For <code>in-view</code> animations, customize the starting position using multiple positioning attributes:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-gd6jdv63r" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-gd6jdv63r" class="language-html">&lt;!-- Start from 50px below --&gt;
+&lt;div data-bd-animate=&quot;in-view&quot; data-bd-from-y=&quot;50&quot;&gt;
+  Starts 50px below current position
+&lt;/div&gt;
+
+&lt;!-- Start from left and scaled down --&gt;
+&lt;div data-bd-animate=&quot;in-view&quot; data-bd-from-x=&quot;-100&quot; data-bd-from-scale=&quot;0.8&quot;&gt;
+  Starts from left, scaled down
+&lt;/div&gt;
+
+&lt;!-- Complex starting position --&gt;
+&lt;div data-bd-animate=&quot;in-view&quot; data-bd-from-y=&quot;80&quot; data-bd-from-x=&quot;30&quot; data-bd-from-scale=&quot;0.6&quot;&gt;
+  Starts 80px below, 30px right, at 60% scale
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h4 id="available-position-attributes">Available Position Attributes</h4>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+<th>Example Values</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>data-bd-from-y</code></td>
+<td>Vertical offset from current position</td>
+<td><code>&quot;50&quot;</code> (down), <code>&quot;-30&quot;</code> (up)</td>
+</tr>
+<tr>
+<td><code>data-bd-from-x</code></td>
+<td>Horizontal offset from current position</td>
+<td><code>&quot;100&quot;</code> (right), <code>&quot;-50&quot;</code> (left)</td>
+</tr>
+<tr>
+<td><code>data-bd-from-scale</code></td>
+<td>Starting scale (1.0 = normal size)</td>
+<td><code>&quot;0.8&quot;</code> (80%), <code>&quot;1.2&quot;</code> (120%)</td>
+</tr>
+</tbody></table></div>
+<p><strong>Note</strong>: These attributes only work with <code>data-bd-animate=&quot;in-view&quot;</code> animations.</p>
+<hr>
+<h2 id="attribute-combinations-amp-compatibility">Attribute Combinations &amp; Compatibility</h2>
+<h3 id="what-works-together">What Works Together</h3>
+<h4 id="compatible-combinations">Compatible Combinations</h4>
+<p><strong>All Animations Support:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-p9qwgqesb" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-p9qwgqesb" class="language-html">&lt;!-- Delay + Scrub (any animation type) --&gt;
+&lt;div data-bd-animate=&quot;slide-up&quot; data-bd-delay=&quot;0.5&quot; data-bd-scrub=&quot;1&quot;&gt;
+  Delayed scroll animation
+&lt;/div&gt;
+
+&lt;!-- Delay + Any animation type --&gt;
+&lt;h1 data-bd-animate=&quot;scale-in&quot; data-bd-delay=&quot;0.3&quot;&gt;Delayed scale animation&lt;/h1&gt;
+</code></pre>
+      </div>
+    
+<p><strong>In-View Animations Support:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-gyi1jb3eg" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-gyi1jb3eg" class="language-html">&lt;!-- Position + Delay (in-view only) --&gt;
+&lt;div data-bd-animate=&quot;in-view&quot; data-bd-from-y=&quot;50&quot; data-bd-delay=&quot;0.8&quot;&gt;
+  Starts below, with delay
+&lt;/div&gt;
+
+&lt;!-- Multiple position attributes (in-view only) --&gt;
+&lt;div data-bd-animate=&quot;in-view&quot; data-bd-from-y=&quot;30&quot; data-bd-from-x=&quot;-20&quot; data-bd-from-scale=&quot;0.9&quot;&gt;
+  Complex starting position
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<p><strong>Text Animations Support:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-kay5px40y" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-kay5px40y" class="language-html">&lt;!-- Text animation + Delay + Scrub --&gt;
+&lt;h1 data-text-animate=&quot;chars&quot; data-bd-delay=&quot;0.5&quot; data-bd-scrub=&quot;2&quot;&gt;
+  Delayed character animation with scroll
+&lt;/h1&gt;
+</code></pre>
+      </div>
+    
+<h4 id="incompatible-combinations">Incompatible Combinations</h4>
+<p><strong>Position Attributes Only Work With In-View:</strong></p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-jeabzcgit" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-jeabzcgit" class="language-html">&lt;!-- This won&#39;t work - position attributes ignored --&gt;
+&lt;div data-bd-animate=&quot;slide-up&quot; data-bd-from-y=&quot;50&quot;&gt;
+  Position attributes ignored for slide-up
+&lt;/div&gt;
+
+&lt;!-- This works - use in-view instead --&gt;
+&lt;div data-bd-animate=&quot;in-view&quot; data-bd-from-y=&quot;50&quot;&gt;
+  Position attributes work with in-view
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="complete-compatibility-matrix">Complete Compatibility Matrix</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Animation Type</th>
+<th><code>data-bd-delay</code></th>
+<th><code>data-bd-scrub</code></th>
+<th><code>data-bd-from-*</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Core animations</strong> (fade, slide, etc.)</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>Advanced animations</strong> (scale-in, rotate-in, etc.)</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>Text animations</strong> (chars, words, lines)</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>In-view animations</strong></td>
+<td>Yes</td>
+<td>No*</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><strong>Special effects</strong> (flash, neon, shake)</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+</tr>
+</tbody></table></div>
+<p>*In-view animations don&#39;t use scrub because they trigger based on viewport entry, not scroll position.</p>
+<h3 id="practical-examples">Practical Examples</h3>
+<h4 id="hero-section-with-multiple-elements">Hero Section with Multiple Elements</h4>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-0snbp3wkw" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-0snbp3wkw" class="language-html">&lt;section class=&quot;hero&quot;&gt;
+  &lt;!-- Main title with delay --&gt;
+  &lt;h1 data-bd-animate=&quot;slide-up&quot; data-bd-delay=&quot;0.3&quot;&gt;Welcome&lt;/h1&gt;
+  
+  &lt;!-- Subtitle with character animation and delay --&gt;
+  &lt;p data-text-animate=&quot;chars&quot; data-bd-delay=&quot;0.8&quot;&gt;Animated Characters&lt;/p&gt;
+  
+  &lt;!-- Button with bounce and longer delay --&gt;
+  &lt;button data-bd-animate=&quot;bounce-in&quot; data-bd-delay=&quot;1.2&quot;&gt;Get Started&lt;/button&gt;
+&lt;/section&gt;
+</code></pre>
+      </div>
+    
+<h4 id="scroll-tied-content-section">Scroll-Tied Content Section</h4>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-qv2j185rz" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-qv2j185rz" class="language-html">&lt;section&gt;
+  &lt;!-- Image that scales with scroll --&gt;
+  &lt;img data-bd-animate=&quot;scale-in&quot; data-bd-scrub=&quot;1&quot; src=&quot;image.jpg&quot; alt=&quot;Hero&quot;&gt;
+  
+  &lt;!-- Text that fades with scroll --&gt;
+  &lt;p data-bd-animate=&quot;fade&quot; data-bd-scrub=&quot;1.5&quot;&gt;Scroll-tied content&lt;/p&gt;
+  
+  &lt;!-- Words that animate with scroll --&gt;
+  &lt;h2 data-text-animate=&quot;words&quot; data-bd-scrub=&quot;2&quot;&gt;Scroll Animation&lt;/h2&gt;
+&lt;/section&gt;
+</code></pre>
+      </div>
+    
+<h4 id="viewport-entry-animations">Viewport Entry Animations</h4>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-ia12i95ub" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-ia12i95ub" class="language-html">&lt;section&gt;
+  &lt;!-- Card that enters from below with delay --&gt;
+  &lt;div class=&quot;card&quot; data-bd-animate=&quot;in-view&quot; data-bd-from-y=&quot;100&quot; data-bd-delay=&quot;0.5&quot;&gt;
+    &lt;h3&gt;Card Title&lt;/h3&gt;
+    &lt;p&gt;Card content&lt;/p&gt;
+  &lt;/div&gt;
+  
+  &lt;!-- Another card entering from left --&gt;
+  &lt;div class=&quot;card&quot; data-bd-animate=&quot;in-view&quot; data-bd-from-x=&quot;-150&quot; data-bd-delay=&quot;0.8&quot;&gt;
+    &lt;h3&gt;Another Card&lt;/h3&gt;
+    &lt;p&gt;More content&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+      </div>
+    
+<h4 id="mixed-animation-types">Mixed Animation Types</h4>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-csxruggb3" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-csxruggb3" class="language-html">&lt;div class=&quot;content-grid&quot;&gt;
+  &lt;!-- Each element has different animation + timing --&gt;
+  &lt;div data-bd-animate=&quot;slide-up&quot; data-bd-delay=&quot;0.1&quot;&gt;Item 1&lt;/div&gt;
+  &lt;div data-bd-animate=&quot;scale-in&quot; data-bd-delay=&quot;0.3&quot;&gt;Item 2&lt;/div&gt;
+  &lt;div data-text-animate=&quot;words&quot; data-bd-delay=&quot;0.5&quot;&gt;Item 3&lt;/div&gt;
+  &lt;div data-bd-animate=&quot;rotate-in&quot; data-bd-delay=&quot;0.7&quot;&gt;Item 4&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="best-practices">Best Practices</h3>
+<ol>
+<li><strong>Use delays sparingly</strong> - Too many delayed animations can feel sluggish</li>
+<li><strong>Combine scrub with caution</strong> - Multiple scrub animations can impact performance</li>
+<li><strong>In-view for precise control</strong> - Use when you need custom starting positions</li>
+<li><strong>Test on mobile</strong> - Some combinations may behave differently on smaller screens</li>
+<li><strong>Consider reduced motion</strong> - All animations respect user accessibility preferences</li>
+</ol>
+<hr>
+<h2 id="responsive-behavior">Responsive Behavior</h2>
+<h3 id="automatic-responsiveness">Automatic Responsiveness</h3>
+<p>The animation system automatically adjusts trigger points based on screen size:</p>
+<ul>
+<li><strong>Desktop</strong>: Triggers at <code>top 85%</code> to <code>bottom 75%</code></li>
+<li><strong>Mobile</strong>: Triggers at <code>top 100%</code> to <code>top 60%</code></li>
+</ul>
+<h3 id="reduced-motion-support">Reduced Motion Support</h3>
+<p>The system respects user preferences for reduced motion:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-lssilre09" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-lssilre09" class="language-css">/* Automatically applied when user has prefers-reduced-motion: reduce */
+/* Elements simply appear without animation */
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="advanced-examples">Advanced Examples</h2>
+<h3 id="character-animation">Character Animation</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-gq27lcq56" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-gq27lcq56" class="language-html">&lt;!-- Animate each character with stagger --&gt;
+&lt;h1 data-text-animate=&quot;chars&quot;&gt;Animated Characters&lt;/h1&gt;
+
+&lt;!-- With custom scrub --&gt;
+&lt;h1 data-text-animate=&quot;chars&quot; data-bd-scrub=&quot;1&quot;&gt;Smooth Character Animation&lt;/h1&gt;
+</code></pre>
+      </div>
+    
+<h3 id="word-animation">Word Animation</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-3z3eyd851" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-3z3eyd851" class="language-html">&lt;!-- Animate each word --&gt;
+&lt;h2 data-text-animate=&quot;words&quot;&gt;Each Word Animates&lt;/h2&gt;
+
+&lt;!-- With delay --&gt;
+&lt;h2 data-text-animate=&quot;words&quot; data-bd-delay=&quot;0.3&quot;&gt;Delayed Word Animation&lt;/h2&gt;
+</code></pre>
+      </div>
+    
+<h3 id="rich-text-animation">Rich Text Animation</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-uakn9qlm8" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-uakn9qlm8" class="language-html">&lt;!-- Animate all rich text elements --&gt;
+&lt;div data-text-animate=&quot;rich-text&quot;&gt;
+  &lt;h1&gt;This heading animates&lt;/h1&gt;
+  &lt;p&gt;This paragraph animates&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Each list item animates&lt;/li&gt;
+    &lt;li&gt;With staggered timing&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="complex-animation-combinations">Complex Animation Combinations</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-eev4dh6m5" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-eev4dh6m5" class="language-html">&lt;!-- Multiple animations on different elements --&gt;
+&lt;section&gt;
+  &lt;h1 data-bd-animate=&quot;slide-up&quot; data-bd-delay=&quot;0.2&quot;&gt;Main Title&lt;/h1&gt;
+  &lt;p data-text-animate=&quot;words&quot; data-bd-delay=&quot;0.5&quot;&gt;Animated paragraph&lt;/p&gt;
+  &lt;div data-bd-animate=&quot;scale-in&quot; data-bd-delay=&quot;0.8&quot;&gt;
+    &lt;img src=&quot;image.jpg&quot; alt=&quot;Scaled image&quot;&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+      </div>
+    
+<h3 id="scroll-tied-hero-section">Scroll-Tied Hero Section</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-p2fkppdo5" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-p2fkppdo5" class="language-html">&lt;!-- Hero section with scroll-tied animations --&gt;
+&lt;section class=&quot;hero&quot;&gt;
+  &lt;h1 data-bd-animate=&quot;slide-up&quot; data-bd-scrub=&quot;1&quot;&gt;Hero Title&lt;/h1&gt;
+  &lt;p data-text-animate=&quot;chars&quot; data-bd-scrub=&quot;1.5&quot;&gt;Hero subtitle&lt;/p&gt;
+  &lt;button data-bd-animate=&quot;bounce-in&quot; data-bd-delay=&quot;1&quot;&gt;Call to Action&lt;/button&gt;
+&lt;/section&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="technical-details">Technical Details</h2>
+<h3 id="dependencies">Dependencies</h3>
+<ul>
+<li><strong>GSAP</strong>: Core animation library</li>
+<li><strong>ScrollTrigger</strong>: Scroll-based animation triggers</li>
+<li><strong>SplitText</strong>: Text splitting for character/word animations</li>
+</ul>
+<h3 id="performance">Performance</h3>
+<ul>
+<li><strong>Debounced Resize</strong>: 150ms debounce for resize events</li>
+<li><strong>Smart Rebuilding</strong>: Only rebuilds SplitText on resize</li>
+<li><strong>Memory Management</strong>: Automatically reverts SplitText instances</li>
+<li><strong>Reduced Motion</strong>: Respects accessibility preferences</li>
+</ul>
+<h3 id="browser-support">Browser Support</h3>
+<ul>
+<li>Modern browsers with ES6+ support</li>
+<li>Automatic fallback for reduced motion preferences</li>
+<li>Optimized for mobile performance</li>
+</ul>
+<hr>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="common-issues">Common Issues</h3>
+<h4 id="animation-not-working">Animation Not Working</h4>
+<ol>
+<li>Check that GSAP and ScrollTrigger are loaded</li>
+<li>Verify the <code>data-bd-animate</code> attribute is correct</li>
+<li>Ensure the element is in the DOM when animations initialize</li>
+</ol>
+<h4 id="duplicate-animations">Duplicate Animations</h4>
+<p>The system prevents duplicate bindings with <code>data-bd-bound</code> attributes.</p>
+<h4 id="performance-issues">Performance Issues</h4>
+<ul>
+<li>Use <code>data-bd-scrub</code> sparingly for complex animations</li>
+<li>Avoid too many SplitText animations on one page</li>
+<li>Test on mobile devices for performance</li>
+</ul>
+<h3 id="debug-mode">Debug Mode</h3>
+<p>Check browser console for animation initialization messages:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-vjsjntm0y" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-vjsjntm0y">ByDefault Animations v4.0 - Canonical data-bd-* namespace
+Fonts loaded successfully
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="migration-guide">Migration Guide</h2>
+<h3 id="from-legacy-system">From Legacy System</h3>
+<p>If you&#39;re upgrading from an older version:</p>
+<ol>
+<li><strong>Replace</strong> <code>data-text-animate=&quot;element&quot;</code> with <code>data-bd-animate=&quot;fade&quot;</code></li>
+<li><strong>Keep</strong> existing <code>data-text-animate</code> values for text animations</li>
+<li><strong>Add</strong> <code>data-bd-scrub</code> for scroll-tied animations</li>
+<li><strong>Update</strong> any custom CSS that conflicts with new animations</li>
+</ol>
+<h3 id="breaking-changes">Breaking Changes</h3>
+<ul>
+<li><code>data-text-animate=&quot;element&quot;</code> now requires <code>data-bd-animate=&quot;fade&quot;</code></li>
+<li>Some animation timing has been optimized</li>
+<li>ScrollTrigger refresh behavior improved</li>
+</ul>
+<hr>
+<h2 id="customization">Customization</h2>
+<h3 id="extending-animations">Extending Animations</h3>
+<p>To add custom animations, extend the animation functions:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-rm98umws0" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-rm98umws0" class="language-javascript">// Add to bd-animations.js
+function customAnimation() {
+  gsap.utils.toArray(&quot;[data-bd-animate=&#39;custom&#39;]&quot;).forEach((element) =&gt; {
+    if (element.dataset.bdBound) return;
+    
+    gsap.set(element, { opacity: 0, customProperty: 0 });
+    
+    gsap.to(element, {
+      opacity: 1,
+      customProperty: 1,
+      ease: &quot;power2.out&quot;,
+      scrollTrigger: {
+        trigger: element,
+        start: &quot;top 85%&quot;,
+        end: &quot;bottom 75%&quot;
+      }
+    });
+    
+    element.dataset.bdBound = &quot;1&quot;;
+  });
+}
+
+// Add to textAnimations() function
+customAnimation();
+</code></pre>
+      </div>
+    
+
+                </article>
+            </main>
+
+            <!-- Table of Contents -->
+            <aside class="docs-toc">
+      <span class="toc-header">On this page</span>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-1"><a href="#animations" class="toc-link">Animations</a></li><li class="toc-item toc-level-2"><a href="#quick-start" class="toc-link">Quick Start</a></li><li class="toc-item toc-level-2"><a href="#available-animations" class="toc-link">Available Animations</a></li><li class="toc-item toc-level-2"><a href="#configuration-options" class="toc-link">Configuration Options</a></li><li class="toc-item toc-level-2"><a href="#attribute-combinations-amp-compatibility" class="toc-link">Attribute Combinations &amp; Compatibility</a></li><li class="toc-item toc-level-2"><a href="#responsive-behavior" class="toc-link">Responsive Behavior</a></li><li class="toc-item toc-level-2"><a href="#advanced-examples" class="toc-link">Advanced Examples</a></li><li class="toc-item toc-level-2"><a href="#technical-details" class="toc-link">Technical Details</a></li><li class="toc-item toc-level-2"><a href="#troubleshooting" class="toc-link">Troubleshooting</a></li><li class="toc-item toc-level-2"><a href="#migration-guide" class="toc-link">Migration Guide</a></li><li class="toc-item toc-level-2"><a href="#customization" class="toc-link">Customization</a></li></ul></nav></div>
+    </aside>
+        </div>
+
+        <!-- Page Navigation (Previous / Next) -->
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="../design-system/tabs.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        <span class="page-nav-section">Design System</span>
+        <h3 class="page-nav-title">Tabs</h3>
+      </span>
+    </a><a href="audio.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <h3 class="page-nav-title">Audio</h3>
+      </span>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+    </a></div></nav>
+
+        <!-- Page Feedback -->
+        <section class="page-feedback" aria-label="Page feedback">
+            <div class="page-feedback-inner padding-global">
+                <h3 class="page-feedback-prompt">Was this page helpful?</h3>
+                <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
+                <div class="button-group">
+                    <button class="button" data-feedback="yes" type="button"><div class="icn-svg" data-icon="thumbs-up" data-file="thumbs-up.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 3L14.5 8H23V12.5L19.5 21H2V8H7L14 1L16 3ZM9.29289 8.53426C9.10536 8.72179 9 8.97615 9 9.24136V17C9 18.1046 9.89543 19 11 19H16.8208C17.6312 19 18.3616 18.5109 18.6701 17.7615L21 12.1035V11C21 10.4477 20.5523 10 20 10H13.1555C12.4856 10 12.0052 9.35431 12.1976 8.71271L13.2907 5.06833C13.3504 4.86932 13.1046 4.72254 12.9577 4.86945L9.29289 8.53426ZM5 10C4.44772 10 4 10.4477 4 11V18C4 18.5523 4.44772 19 5 19H6C6.55228 19 7 18.5523 7 18V11C7 10.4477 6.55228 10 6 10H5Z" fill="currentColor"/></svg></div> Yes</button>
+                    <button class="button is-outline is-faded" data-feedback="no" type="button"><div class="icn-svg" data-icon="thumbs-down" data-file="thumbs-down.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21L9.5 16H1L1 11.5L4.5 3L22 3L22 16L17 16L10 23L8 21ZM14.7071 15.4657C14.8946 15.2782 15 15.0239 15 14.7586L15 7C15 5.89543 14.1046 5 13 5L7.17921 5C6.36877 5 5.63845 5.48908 5.32986 6.23847L3 11.8965L3 13C3 13.5523 3.44772 14 4 14L10.8445 14C11.5144 14 11.9948 14.6457 11.8024 15.2873L10.7093 18.9317C10.6496 19.1307 10.8954 19.2775 11.0423 19.1305L14.7071 15.4657ZM19 14C19.5523 14 20 13.5523 20 13V6C20 5.44772 19.5523 5 19 5H18C17.4477 5 17 5.44772 17 6V13C17 13.5523 17.4477 14 18 14H19Z" fill="currentColor"/></svg></div> No</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Modal -->
+        <dialog class="feedback-modal" aria-label="Send feedback">
+            <div class="feedback-modal-content">
+                <h3 class="feedback-modal-title">Send feedback</h3>
+                <p class="feedback-modal-subtitle"></p>
+                <form class="feedback-form" name="page-feedback" data-netlify="true">
+                    <input type="hidden" name="form-name" value="page-feedback">
+                    <input type="hidden" name="sentiment" value="">
+                    <input type="hidden" name="page" value="">
+                    <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
+                    <div class="button-group feedback-modal-actions">
+                        <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>
+                        <button type="submit" class="button is-small">Send feedback</button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
+
+        <!-- Footer -->
+        <footer class="docs-footer">
+            <div class="docs-footer-inner padding-global">
+                <p class="docs-footer-text">© 2026 By Default</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- Initialize Highlight.js, Copy, and TOC -->
+    <script>
+        (function() {
+            'use strict';
+
+            function initHighlight() {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+
+            function initTOCActiveState() {
+                const tocLinks = document.querySelectorAll('.toc-link');
+                const headings = document.querySelectorAll('h1[id], h2[id]');
+
+                if (tocLinks.length === 0 || headings.length === 0) return;
+
+                const linkMap = new Map();
+                tocLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        const id = href.substring(1);
+                        linkMap.set(id, link);
+                    }
+                });
+
+                const observerOptions = {
+                    rootMargin: '-20% 0px -70% 0px',
+                    threshold: 0
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const id = entry.target.id;
+                        const link = linkMap.get(id);
+
+                        if (entry.isIntersecting) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            if (link) {
+                                link.classList.add('toc-link-active');
+                            }
+                        }
+                    });
+                }, observerOptions);
+
+                headings.forEach(heading => {
+                    if (heading.id) {
+                        observer.observe(heading);
+                    }
+                });
+
+                function setInitialActive() {
+                    let activeHeading = null;
+                    let maxTop = -Infinity;
+
+                    headings.forEach(heading => {
+                        const rect = heading.getBoundingClientRect();
+                        if (rect.top <= 100 && rect.top > maxTop) {
+                            maxTop = rect.top;
+                            activeHeading = heading;
+                        }
+                    });
+
+                    if (activeHeading && activeHeading.id) {
+                        const link = linkMap.get(activeHeading.id);
+                        if (link) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            link.classList.add('toc-link-active');
+                        }
+                    }
+                }
+
+                setInitialActive();
+
+                let scrollTimeout;
+                window.addEventListener('scroll', () => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(setInitialActive, 100);
+                });
+            }
+
+            function init() {
+                initHighlight();
+                initTOCActiveState();
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+
+    <!-- Back to Top -->
+    <div class="back-to-top-wrapper">
+      <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
+        <div class="icn-svg" data-icon="arrow-top" data-file="arrow-top.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M4 4V2H20V4H4Z" fill="currentColor"/><path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/></svg></div>
+      </button>
+    </div>
+    <script>
+      (function() {
+        var btn = document.querySelector('.back-to-top-wrapper');
+        if (!btn) return;
+        window.addEventListener('scroll', function() {
+          btn.classList.toggle('is-visible', window.scrollY > 300);
+        });
+        btn.querySelector('button').addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+
+    <!-- Dropdown -->
+    <script src="../assets/js/dropdown.js"></script>
+
+    <!-- Site Navigation -->
+    <script src="../assets/js/nav.js"></script>
+    <!-- Auth -->
+    <script src="../assets/js/auth-config.js"></script>
+    <!-- Theme -->
+    <script src="../assets/js/theme-config.js"></script>
+    <script src="../assets/js/theme-loader.js"></script>
+    <!-- Auth (must load after theme scripts) -->
+    <script src="../assets/js/auth.js"></script>
+    <!-- Feedback -->
+    <script src="../assets/js/feedback.js"></script>
+    <!-- Copy to clipboard -->
+    <script src="../assets/js/copy-button.js"></script>
+    <!-- Number input stepper -->
+    <script src="../assets/js/number-input.js"></script>
+    <!-- Tabs -->
+    <script src="../assets/js/tabs.js"></script>
+    <!-- Toast notifications -->
+    <script src="../assets/js/toast.js"></script>
+    <!-- Dialog -->
+    <script src="../assets/js/dialog.js"></script>
+    <!-- Rating -->
+    <script src="../assets/js/rating.js"></script>
+    <!-- Markdown download/open — strips frontmatter and block HTML -->
+    <script src="../assets/js/md-strip.js"></script>
+
+    <script>
+      /* Tag dismiss */
+      document.addEventListener('click', function (e) {
+        var removeBtn = e.target.closest('.tag-remove');
+        if (removeBtn) {
+          var tag = removeBtn.closest('.tag');
+          if (tag) tag.remove();
+        }
+      });
+
+      /* Table scroll overflow hint */
+      (function initTableScroll() {
+        var wrappers = document.querySelectorAll('.table-scroll');
+        if (!wrappers.length) return;
+
+        function checkOverflow(wrapper) {
+          var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
+          var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
+          wrapper.classList.toggle('is-overflowing', isOverflowing);
+          wrapper.classList.toggle('is-scrolled-end', isAtEnd);
+        }
+
+        wrappers.forEach(function(wrapper) {
+          checkOverflow(wrapper);
+          wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+        });
+
+        window.addEventListener('resize', function() {
+          wrappers.forEach(checkOverflow);
+        });
+      })();
+    </script>
+</body>
+</html>

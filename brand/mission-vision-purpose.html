@@ -35,7 +35,7 @@
 
     <!-- Early theme loader: apply cached client theme before first paint -->
     <script>
-    (function(){try{if(document.documentElement.getAttribute('data-client-theme'))return;var c=localStorage.getItem('bdd-client-theme');if(!c)return;var p=c.split('|'),k=p[0],css=p[1],fonts=p[2];if(!k||!css)return;var b='../';var l=document.createElement('link');l.id='client-theme-css';l.rel='stylesheet';l.href=b+css;document.head.appendChild(l);document.documentElement.setAttribute('data-client-theme',k);if(fonts){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://fonts.googleapis.com';pc.id='client-theme-fonts-preconnect';document.head.appendChild(pc);var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';pc2.id='client-theme-fonts-preconnect2';document.head.appendChild(pc2);var fl=document.createElement('link');fl.id='client-theme-fonts';fl.rel='stylesheet';fl.href=fonts;document.head.appendChild(fl)}}catch(e){}})();
+    (function(){try{var V='20260407',VK='bdd-client-theme-version';if(localStorage.getItem(VK)!==V){localStorage.removeItem('bdd-client-theme');localStorage.setItem(VK,V)}if(document.documentElement.getAttribute('data-client-theme'))return;var c=localStorage.getItem('bdd-client-theme');if(!c)return;var p=c.split('|'),k=p[0],css=p[1],fonts=p[2];if(!k||!css)return;var b='../';var l=document.createElement('link');l.id='client-theme-css';l.rel='stylesheet';l.href=b+css;document.head.appendChild(l);document.documentElement.setAttribute('data-client-theme',k);if(fonts){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://fonts.googleapis.com';pc.id='client-theme-fonts-preconnect';document.head.appendChild(pc);var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';pc2.id='client-theme-fonts-preconnect2';document.head.appendChild(pc2);var fl=document.createElement('link');fl.id='client-theme-fonts';fl.rel='stylesheet';fl.href=fonts;document.head.appendChild(fl)}}catch(e){}})();
     </script>
 
     <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
@@ -187,7 +187,7 @@
         <!-- Footer -->
         <footer class="docs-footer">
             <div class="docs-footer-inner padding-global">
-                <p class="docs-footer-text">© 2026 By Default BrandOS</p>
+                <p class="docs-footer-text">© 2026 By Default</p>
             </div>
         </footer>
     </div>
@@ -369,5 +369,8 @@
         });
       })();
     </script>
+    <div class="cursor-default"></div>
+    <div class="cursor-halo"></div>
+    
 </body>
 </html>

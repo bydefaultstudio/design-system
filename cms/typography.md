@@ -78,14 +78,14 @@ All headings use `--font-secondary` (RecifeText) at `--font-weight-regular` (400
 <h3>Structure creates clarity in complexity</h3>
 ```
 
-| Element | Token | Line Height |
-| --- | --- | --- |
-| `h1` | `--font-5xl` | `--line-height-s` (1) |
-| `h2` | `--font-3xl` | `--line-height-s` (1) |
-| `h3` | `--font-2xl` | `--line-height-s` (1) |
-| `h4` | `--font-xl` | `--line-height-s` (1) |
-| `h5` | `--font-l` | `--line-height-s` (1) |
-| `h6` | `--font-l` | `--line-height-l` (1.4) |
+| Element | Token | Line Height | Value |
+| --- | --- | --- | --- |
+| `h1` | `--font-4xl` | `--line-height-s` | 1 |
+| `h2` | `--font-3xl` | `--line-height-s` | 1 |
+| `h3` | `--font-2xl` | `--line-height-s` | 1 |
+| `h4` | `--font-xl` | `--line-height-s` | 1 |
+| `h5` | `--font-l` | `--line-height-s` | 1 |
+| `h6` | `--font-l` | `--line-height-l` | 1.4 |
 
 ---
 
@@ -126,13 +126,13 @@ The default paragraph style used for all running content. The `--text-body` toke
 <p class="text-size-xsmall">Captions and metadata.</p>
 ```
 
-| Element | Token | Line Height |
-| --- | --- | --- |
-| `.text-size-xlarge` | `--font-xl` | `--line-height-l` (1.4) |
-| `.text-size-large` | `--font-l` | `--line-height-l` (1.4) |
-| `p` (default) | `--font-m` | `--line-height-l` (1.4) |
-| `.text-size-small` | `--font-s` | `--line-height-xl` (1.6) |
-| `.text-size-xsmall` | `--font-xs` | `--line-height-xl` (1.6) |
+| Element | Token | Line Height | Value |
+| --- | --- | --- | --- |
+| `.text-size-xlarge` | `--font-xl` | `--line-height-l` | 1.4 |
+| `.text-size-large` | `--font-l` | `--line-height-l` | 1.4 |
+| `p` (default) | `--font-m` | `--line-height-l` | 1.4 |
+| `.text-size-small` | `--font-s` | `--line-height-xl` | 1.6 |
+| `.text-size-xsmall` | `--font-xs` | `--line-height-xl` | 1.6 |
 
 ---
 
@@ -171,9 +171,9 @@ A small, uppercase label used to provide context above headings, within sections
 
 ```
 
-| Element | Token | Line Height |
-| --- | --- | --- |
-| `.eyebrow` | `--font-xs` | `--line-height-m` (1.3) |
+| Element | Token | Line Height | Value |
+| --- | --- | --- | --- |
+| `.eyebrow` | `--font-xs` | `--line-height-m` | 1.3 |
 
 ---
 
@@ -204,9 +204,9 @@ Used for pullquotes and highlighted passages. Renders in the secondary serif fon
 </blockquote>
 ```
 
-| Element | Token | Line Height |
-| --- | --- | --- |
-| `blockquote` | `--font-m` | `--line-height-l` (1.4) |
+| Element | Token | Line Height | Value |
+| --- | --- | --- | --- |
+| `blockquote` | `--font-m` | `--line-height-l` | 1.4 |
 
 ---
 

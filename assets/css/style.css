@@ -82,6 +82,7 @@ hr {
   font-weight: var(--font-weight-medium);
   cursor: default;
   position: relative;
+  height: 80px;
 }
 
 .color-row-name {
@@ -117,8 +118,13 @@ hr {
   font-weight: var(--font-weight-semi-bold);
   cursor: pointer;
   padding: var(--space-2xs) var(--space-s);
+
+}
+
+.color-copy-btn:hover {
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2.5px;
 }
 
 
@@ -666,7 +672,7 @@ body:not(.sidebar-collapsed) .nav-section[open] .nav-list {
   text-decoration: none;
   font-family: var(--font-primary);
   font-size: var(--font-m);
-  line-height: 1;
+    line-height: var(--line-height-l);
   transition: color 0.2s, background 0.2s;
 }
 
@@ -788,6 +794,7 @@ body:not(.sidebar-collapsed) .nav-section[open] .nav-list {
 
 .page-nav-next {
   justify-content: flex-end;
+  text-align: right;
 }
 
 .page-nav-text {
@@ -922,7 +929,7 @@ h1[id],
 h2[id],
 h3[id],
 section[id] {
-  scroll-margin-top: calc(var(--header-height) + var(--sticky-bar-height));
+  scroll-margin-top: calc(var(--header-height) + var(--sticky-bar-height) + var(--space-xl));
 }
 
 .page-header {
@@ -966,6 +973,8 @@ section[id] {
   max-width: 1080px;
   margin: 0 auto;
   height: var(--sticky-bar-height);
+  padding-left: var(--space-l);
+
 }
 
 
@@ -1519,21 +1528,26 @@ body.auth-role-public:not(.auth-role-client) .page-wrapper.has-sidebar {
 }
 
 .login-logo {
-  height: 48px;
-  width: auto;
+  height: 60px;
   margin-bottom: var(--space-l);
+  color: var(--text-primary);
+}
+
+.login-logo svg {
+  height: 100%;
+  width: auto;
 }
 
 .login-title {
-  font-size: var(--font-l);
+  font-size: var(--font-xl);
   font-weight: var(--font-weight-semi-bold);
   color: var(--text-primary);
-  margin-bottom: var(--space-2xs);
+  margin-bottom: var(--space-s);
   text-align: center;
 }
 
 .login-subtitle {
-  font-size: var(--font-s);
+  font-size: var(--font-m);
   color: var(--text-secondary);
   margin-bottom: var(--space-l);
   text-align: center;
@@ -1553,8 +1567,6 @@ body.auth-role-public:not(.auth-role-client) .page-wrapper.has-sidebar {
 }
 
 .login-form label {
-  font-size: var(--font-xs);
-  font-weight: var(--font-weight-medium);
   color: var(--text-secondary);
 }
 
@@ -1565,14 +1577,14 @@ body.auth-role-public:not(.auth-role-client) .page-wrapper.has-sidebar {
 
 .login-error {
   display: none;
-  font-size: var(--font-xs);
+  font-size: var(--font-s);
   color: var(--status-error);
   text-align: center;
 }
 
 .login-success {
   display: none;
-  font-size: var(--font-xs);
+  font-size: var(--font-s);
   color: var(--status-success);
   text-align: center;
 }
@@ -1580,17 +1592,55 @@ body.auth-role-public:not(.auth-role-client) .page-wrapper.has-sidebar {
 .login-forgot-btn {
   background: none;
   border: none;
-  padding: var(--space-xs) 0;
+  padding: var(--space-s) 0;
   margin-top: var(--space-2xs);
-  font-size: var(--font-xs);
+  /* font-size: var(--font-xs); */
   color: var(--text-secondary);
   cursor: pointer;
   font-family: inherit;
+  min-height: 44px;
   transition: color 0.2s;
 }
 
 .login-forgot-btn:hover {
   color: var(--text-link);
+}
+
+/* --- Password Field (input + show/hide toggle) --- */
+
+.password-field {
+  position: relative;
+}
+
+.password-field input {
+  padding-right: var(--space-4xl);
+}
+
+.password-toggle {
+  position: absolute;
+  right: var(--space-m);
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-faded);
+  padding: var(--space-xs);
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.password-toggle:hover {
+  color: var(--text-primary);
+}
+
+.password-toggle .icn-svg {
+  width: 20px;
+  height: 20px;
 }
 
 .login-reset-form {
@@ -1607,8 +1657,6 @@ body.auth-role-public:not(.auth-role-client) .page-wrapper.has-sidebar {
 }
 
 .login-reset-form label {
-  font-size: var(--font-xs);
-  font-weight: var(--font-weight-medium);
   color: var(--text-secondary);
 }
 
@@ -1640,8 +1688,6 @@ body.auth-role-public:not(.auth-role-client) .page-wrapper.has-sidebar {
 }
 
 .login-set-password-form label {
-  font-size: var(--font-xs);
-  font-weight: var(--font-weight-medium);
   color: var(--text-secondary);
 }
 
@@ -1663,8 +1709,6 @@ body.auth-role-public:not(.auth-role-client) .page-wrapper.has-sidebar {
 }
 
 .account-section label {
-  font-size: var(--font-xs);
-  font-weight: var(--font-weight-medium);
   color: var(--text-secondary);
 }
 

@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero - By Default Brand OS</title>
+    <meta name="description" content="Complete guide to the hero section system including key visual spawning, interactive elements, and responsive design for the ByDefault website portfolio showcase.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Hero - By Default Brand OS">
+    <meta property="og:description" content="Complete guide to the hero section system including key visual spawning, interactive elements, and responsive design for the ByDefault website portfolio showcase.">
+    <meta property="og:image" content="../assets/images/og/og-default.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Design System Framework (path set in cms/docs.config.js) -->
+    <link rel="stylesheet" href="../assets/css/design-system.css" id="design-system-css"
+          onerror="document.getElementById('ds-missing-banner').style.display='flex'">
+    
+
+    <!-- Google Fonts (configured in cms/docs.config.js) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Markdown CSS -->
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    
+
+    <!-- Early theme loader: apply cached client theme before first paint -->
+    <script>
+    (function(){try{var V='20260407',VK='bdd-client-theme-version';if(localStorage.getItem(VK)!==V){localStorage.removeItem('bdd-client-theme');localStorage.setItem(VK,V)}if(document.documentElement.getAttribute('data-client-theme'))return;var c=localStorage.getItem('bdd-client-theme');if(!c)return;var p=c.split('|'),k=p[0],css=p[1],fonts=p[2];if(!k||!css)return;var b='../';var l=document.createElement('link');l.id='client-theme-css';l.rel='stylesheet';l.href=b+css;document.head.appendChild(l);document.documentElement.setAttribute('data-client-theme',k);if(fonts){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://fonts.googleapis.com';pc.id='client-theme-fonts-preconnect';document.head.appendChild(pc);var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';pc2.id='client-theme-fonts-preconnect2';document.head.appendChild(pc2);var fl=document.createElement('link');fl.id='client-theme-fonts';fl.rel='stylesheet';fl.href=fonts;document.head.appendChild(fl)}}catch(e){}})();
+    </script>
+
+    <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
+    <script>
+      window._gotrueReady = (function() {
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0') {
+          return Promise.resolve(null);
+        }
+        return import('https://cdn.jsdelivr.net/npm/gotrue-js@0.9.29/+esm')
+          .then(function(m) { var G = m.default && m.default.default ? m.default.default : m.default; window.GoTrue = G; return G; })
+          .catch(function(e) { console.error('[Auth] GoTrue load failed:', e); return null; });
+      })();
+    </script>
+</head>
+<body class="auth-loading" data-access="team">
+
+    <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
+    <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
+        <span>⚠️</span>
+        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">cms/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
+        <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
+    </div>
+
+    <!-- Site Navigation (header + sidebar injected by nav.js) -->
+    <div id="site-nav" data-base="../"></div>
+
+    <div class="docs-main-area">
+        <!-- Page Header (full width, outside grid) -->
+        <div class="page-header">
+      <div class="container-small">
+        <h1>Hero</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">Interactive portfolio showcase with key visual spawning system</p>
+        
+      </div>
+    </div>
+
+        <!-- Sticky Bar (breadcrumbs + actions) -->
+        <div class="sticky-bar">
+      <div class="sticky-bar-container">
+        <div class="sticky-bar-content">
+          <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
+            <a href="../website/index.html">Website</a>
+            <span class="breadcrumb-separator">/</span>
+            <span>Hero</span>
+          </nav>
+        </div>
+        <div class="sticky-bar-actions">
+          <div class="dropdown">
+            <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Markdown source options">
+              <div class="icn-svg" data-icon="more-horizontal" data-file="more-horizontal.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
+            </button>
+            <div class="dropdown-menu is-right">
+              <button type="button" class="dropdown-item js-copy-url" aria-label="Copy page link to clipboard">
+                <div class="icn-svg" data-icon="link" data-file="link.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M14.8284 16.2426L8.46446 22.6066L1.39339 15.5355L7.75735 9.17158L9.17156 10.5858L5.63603 14.1213C4.85498 14.9024 4.85498 16.1687 5.63603 16.9498L7.05024 18.364C7.83129 19.145 9.09762 19.145 9.87867 18.364L13.4142 14.8284L14.8284 16.2426ZM9.17156 16.2426L7.75735 14.8284L14.8284 7.75736L16.2426 9.17158L9.17156 16.2426ZM16.2426 14.8284L14.8284 13.4142L18.3639 9.87868C19.145 9.09763 19.145 7.8313 18.3639 7.05026L16.9497 5.63604C16.1687 4.85499 14.9024 4.85499 14.1213 5.63604L10.5858 9.17158L9.17156 7.75736L15.5355 1.3934L22.6066 8.46447L16.2426 14.8284Z" fill="currentColor"/></svg></div>
+                <span>Copy link</span>
+              </button>
+              <div data-auth-role="team">
+                <div class="dropdown-divider"></div>
+                <a href="../cms/website-hero.md" class="dropdown-item js-md-download" download>
+                  <div class="icn-svg" data-icon="download" data-file="download.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
+                  <span>Download .md file</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="../cms/website-hero.md" class="dropdown-item js-md-open" target="_blank" rel="noopener noreferrer">
+                  <div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div>
+                  <span>Open .md in new tab</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Main Content + TOC grid -->
+        <div class="docs-content-grid padding-global">
+            <!-- Main Content -->
+            <main class="docs-main">
+                <article>
+                    <h1 id="hero">Hero</h1>
+<h2 id="overview">Overview</h2>
+<p>The hero section is an interactive portfolio showcase that spawns key visuals when users click or tap. It&#39;s designed to create an engaging, gallery-like experience that showcases work through animated visual elements.</p>
+<h2 id="file-structure">File Structure</h2>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-l9ti7aofj" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-l9ti7aofj">hero/
+ hero.js              # Main JavaScript functionality
+ hero.css             # Styling and responsive design
+ hero-test.html       # Development test file
+ hero-backup.js       # Backup version
+ README.md            # This documentation
+</code></pre>
+      </div>
+    
+<h2 id="key-features">Key Features</h2>
+<h3 id="interactive-visual-spawning">Interactive Visual Spawning</h3>
+<ul>
+<li><strong>Click/Tap to Spawn</strong>: Users can click anywhere in the hero section to spawn key visuals</li>
+<li><strong>Consecutive Selection</strong>: Visuals are selected in order from the collection</li>
+<li><strong>Responsive Sizing</strong>: Different display widths based on aspect ratio and screen size</li>
+<li><strong>Smooth Animations</strong>: GSAP-powered enter, dwell, and exit animations</li>
+</ul>
+<h3 id="multi-asset-support">Multi-Asset Support</h3>
+<ul>
+<li><strong>Images</strong>: PNG, JPG, WebP, AVIF formats</li>
+<li><strong>Videos</strong>: MP4 with poster images and autoplay</li>
+<li><strong>GIFs</strong>: Treated as images for optimal performance</li>
+</ul>
+<h3 id="responsive-design">Responsive Design</h3>
+<ul>
+<li><strong>Mobile Detection</strong>: Automatically adjusts settings for mobile vs desktop</li>
+<li><strong>Aspect Ratio Handling</strong>: Proper container sizing with CSS <code>aspect-ratio</code></li>
+<li><strong>Object Fit</strong>: Images and videos use <code>object-fit: cover</code> for proper cropping</li>
+</ul>
+<h2 id="html-structure">HTML Structure</h2>
+<h3 id="basic-hero-container">Basic Hero Container</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-466lybkii" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-466lybkii" class="language-html">&lt;section id=&quot;key-visual-container&quot;&gt;
+  &lt;div class=&quot;hero-content&quot;&gt;
+    &lt;h1 class=&quot;hero-title&quot;&gt;Click Anywhere&lt;/h1&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+      </div>
+    
+<h3 id="webflow-cms-integration">Webflow CMS Integration</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-fz1k5j3k9" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-fz1k5j3k9" class="language-html">&lt;!-- Hidden JSON feed for CMS data --&gt;
+&lt;div id=&quot;kv-json-feed&quot; style=&quot;display: none;&quot;&gt;
+  &lt;script type=&quot;application/json&quot; class=&quot;kv-json&quot;&gt;
+    {
+      &quot;type&quot;: &quot;image&quot;,
+      &quot;src&quot;: &quot;https://example.com/image.jpg&quot;,
+      &quot;poster&quot;: &quot;https://example.com/poster.jpg&quot;,
+      &quot;alt&quot;: &quot;Image description&quot;,
+      &quot;ratio&quot;: &quot;16:9&quot;,
+      &quot;weight&quot;: 1,
+      &quot;drop&quot;: &quot;season1&quot;,
+      &quot;order&quot;: 1
+    }
+  &lt;/script&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h2 id="javascript-api">JavaScript API</h2>
+<h3 id="initialization">Initialization</h3>
+<p>The hero section automatically initializes when the DOM is ready:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-kaiymn0nb" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-kaiymn0nb" class="language-javascript">// The KeyVisualCollection class initializes automatically
+// No manual initialization needed
+</code></pre>
+      </div>
+    
+<h3 id="configuration">Configuration</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-xl673chze" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-xl673chze" class="language-javascript">// Responsive display widths (automatically calculated)
+const widths = {
+  &#39;16:9&#39;: &#39;45vw&#39;,  // Landscape
+  &#39;4:5&#39;: &#39;30vw&#39;,   // Portrait
+  &#39;1:1&#39;: &#39;35vw&#39;,   // Square
+  &#39;2:1&#39;: &#39;90vw&#39;,   // Ultra-wide landscape
+  &#39;9:16&#39;: &#39;30vw&#39;   // Ultra-tall portrait
+};
+
+// Mobile widths (larger for better mobile experience)
+const mobileWidths = {
+  &#39;16:9&#39;: &#39;70vw&#39;,
+  &#39;4:5&#39;: &#39;50vw&#39;,
+  &#39;1:1&#39;: &#39;55vw&#39;,
+  &#39;2:1&#39;: &#39;90vw&#39;,
+  &#39;9:16&#39;: &#39;45vw&#39;
+};
+</code></pre>
+      </div>
+    
+<h3 id="animation-configuration">Animation Configuration</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-bcx4rllof" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-bcx4rllof" class="language-javascript">// Desktop animation settings
+const desktopConfig = {
+  enterDuration: 0.8,
+  dwellDuration: 3000,
+  exitDuration: 1.2,
+  driftDistance: [10, 10],
+  driftXMultiplier: 0.1,
+  scaleRange: [0.8, 1.2],
+  rotationRange: [-15, 15]
+};
+
+// Mobile animation settings (optimized for touch)
+const mobileConfig = {
+  enterDuration: 0.6,
+  dwellDuration: 3000,
+  exitDuration: 1.0,
+  driftDistance: [20, 30],
+  driftXMultiplier: 0.2,
+  scaleRange: [0.7, 1.1],
+  rotationRange: [-10, 10]
+};
+</code></pre>
+      </div>
+    
+<h2 id="css-classes">CSS Classes</h2>
+<h3 id="container">Container</h3>
+<ul>
+<li><code>#key-visual-container</code> - Main hero container (full viewport height)</li>
+<li><code>#key-visual-overlay</code> - Fixed overlay for spawned visuals</li>
+<li><code>.hero-content</code> - Content wrapper with centering</li>
+</ul>
+<h3 id="visual-elements">Visual Elements</h3>
+<ul>
+<li><code>.key-visual</code> - Individual spawned visual container</li>
+<li><code>.key-visual img</code> - Image elements with <code>object-fit: cover</code></li>
+<li><code>.key-visual video</code> - Video elements with <code>object-fit: cover</code></li>
+</ul>
+<h3 id="content">Content</h3>
+<ul>
+<li><code>.hero-title</code> - Main headline (responsive typography)</li>
+</ul>
+<h2 id="aspect-ratio-system">Aspect Ratio System</h2>
+<h3 id="supported-ratios">Supported Ratios</h3>
+<ul>
+<li><strong>16:9</strong> - Landscape (45vw desktop, 70vw mobile)</li>
+<li><strong>4:5</strong> - Portrait (30vw desktop, 50vw mobile)</li>
+<li><strong>1:1</strong> - Square (35vw desktop, 55vw mobile)</li>
+<li><strong>2:1</strong> - Ultra-wide landscape (90vw desktop, 90vw mobile)</li>
+<li><strong>9:16</strong> - Ultra-tall portrait (30vw desktop, 45vw mobile)</li>
+</ul>
+<h3 id="css-implementation">CSS Implementation</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-vavbuqcs4" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-vavbuqcs4" class="language-css">.key-visual {
+  aspect-ratio: var(--aspect-ratio, 1);
+}
+
+.key-visual img,
+.key-visual video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+</code></pre>
+      </div>
+    
+<h3 id="javascript-implementation">JavaScript Implementation</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-ue5f0nsf3" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-ue5f0nsf3" class="language-javascript">// Set aspect ratio for proper container sizing
+const aspectRatio = visual.ratio.replace(&#39;:&#39;, &#39; / &#39;);
+keyVisual.style.setProperty(&#39;--aspect-ratio&#39;, aspectRatio);
+</code></pre>
+      </div>
+    
+<h2 id="webflow-cms-integration">Webflow CMS Integration</h2>
+<h3 id="data-structure">Data Structure</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-kewocqma7" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-kewocqma7" class="language-json">{
+  &quot;type&quot;: &quot;image|video|gif&quot;,
+  &quot;src&quot;: &quot;https://example.com/asset.jpg&quot;,
+  &quot;poster&quot;: &quot;https://example.com/poster.jpg&quot;,
+  &quot;alt&quot;: &quot;Alt text for accessibility&quot;,
+  &quot;ratio&quot;: &quot;16:9|4:5|1:1|2:1|9:16&quot;,
+  &quot;weight&quot;: 1,
+  &quot;drop&quot;: &quot;season1&quot;,
+  &quot;order&quot;: 1
+}
+</code></pre>
+      </div>
+    
+<h3 id="field-mapping">Field Mapping</h3>
+<ul>
+<li><code>type</code> - Asset type (image, video, gif)</li>
+<li><code>src</code> - Asset URL</li>
+<li><code>poster</code> - Video poster image URL</li>
+<li><code>alt</code> - Alt text for accessibility</li>
+<li><code>ratio</code> - Aspect ratio for container sizing</li>
+<li><code>weight</code> - Selection weight (currently unused)</li>
+<li><code>drop</code> - Season/category label</li>
+<li><code>order</code> - Display order (ascending)</li>
+</ul>
+<h3 id="fallback-collection">Fallback Collection</h3>
+<p>If no CMS data is found, the system uses a default collection with placeholder images.</p>
+<h2 id="performance-optimizations">Performance Optimizations</h2>
+<h3 id="asset-loading">Asset Loading</h3>
+<ul>
+<li><strong>Preloading</strong>: First asset is preloaded for better performance</li>
+<li><strong>Lazy Loading</strong>: Videos use <code>preload=&quot;metadata&quot;</code> to reduce initial load</li>
+<li><strong>Format Optimization</strong>: Supports modern formats (WebP, AVIF)</li>
+</ul>
+<h3 id="animation-performance">Animation Performance</h3>
+<ul>
+<li><strong>Hardware Acceleration</strong>: <code>transform: translateZ(0)</code> and <code>backface-visibility: hidden</code></li>
+<li><strong>GSAP Optimization</strong>: Uses <code>will-change</code> and optimized transforms</li>
+<li><strong>Reduced Motion</strong>: Respects <code>prefers-reduced-motion</code> setting</li>
+</ul>
+<h3 id="memory-management">Memory Management</h3>
+<ul>
+<li><strong>Instance Limiting</strong>: Maximum 20 active visuals at once</li>
+<li><strong>Automatic Cleanup</strong>: Visuals are removed after exit animation</li>
+<li><strong>DOM Cleanup</strong>: CMS JSON feed is removed after parsing</li>
+</ul>
+<h2 id="mobile-support">Mobile Support</h2>
+<h3 id="touch-events">Touch Events</h3>
+<ul>
+<li><strong>Tap Detection</strong>: Distinguishes between taps and scrolls</li>
+<li><strong>Scroll Preservation</strong>: Allows normal scrolling while maintaining tap functionality</li>
+<li><strong>Passive Listeners</strong>: All touch events use <code>passive: true</code> for better performance</li>
+</ul>
+<h3 id="responsive-adjustments">Responsive Adjustments</h3>
+<ul>
+<li><strong>Larger Visuals</strong>: Mobile gets larger display widths for better visibility</li>
+<li><strong>Simplified Animations</strong>: Reduced complexity for mobile devices</li>
+<li><strong>Touch-Friendly</strong>: Optimized for finger interaction</li>
+</ul>
+<h2 id="browser-support">Browser Support</h2>
+<ul>
+<li><strong>Modern Browsers</strong>: Chrome, Firefox, Safari, Edge</li>
+<li><strong>Mobile Browsers</strong>: iOS Safari, Chrome Mobile</li>
+<li><strong>CSS Features</strong>: <code>aspect-ratio</code>, <code>object-fit</code>, CSS custom properties</li>
+<li><strong>JavaScript</strong>: ES6+ features, GSAP animations</li>
+</ul>
+<h2 id="integration">Integration</h2>
+<h3 id="webflow-setup">Webflow Setup</h3>
+<ol>
+<li>Add the hero container element with ID <code>key-visual-container</code></li>
+<li>Include the CSS file in your project</li>
+<li>Include the JavaScript file in your project</li>
+<li>Add GSAP library (if not already included)</li>
+<li>The hero will automatically initialize</li>
+</ol>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="common-issues">Common Issues</h3>
+<ol>
+<li><strong>Visuals not spawning</strong>: Check console for initialization errors</li>
+<li><strong>Wrong aspect ratios</strong>: Verify CSS custom properties are being set</li>
+<li><strong>Mobile not working</strong>: Check touch event handling and mobile detection</li>
+<li><strong>CMS data not loading</strong>: Verify JSON structure and container ID</li>
+</ol>
+<h3 id="debug-mode">Debug Mode</h3>
+<p>Enable console logging to see:</p>
+<ul>
+<li>Responsive width calculations</li>
+<li>Visual creation with ratios and widths</li>
+<li>Mobile detection status</li>
+</ul>
+<h2 id="version-history">Version History</h2>
+<ul>
+<li><strong>v2.0.0</strong> (November 14, 2025): Major update - Vimeo iframe embed support, maxWidth feature, performance optimizations, consolidated video code, improved URL decoding</li>
+<li><strong>v1.9.9</strong>: Added aspect ratio system, mobile scroll fix, CMS integration</li>
+<li><strong>v1.7.1</strong>: Mobile touch handling improvements</li>
+<li><strong>v1.7.0</strong>: Initial responsive design implementation</li>
+</ul>
+
+                </article>
+            </main>
+
+            <!-- Table of Contents -->
+            <aside class="docs-toc">
+      <span class="toc-header">On this page</span>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-1"><a href="#hero" class="toc-link">Hero</a></li><li class="toc-item toc-level-2"><a href="#overview" class="toc-link">Overview</a></li><li class="toc-item toc-level-2"><a href="#file-structure" class="toc-link">File Structure</a></li><li class="toc-item toc-level-2"><a href="#key-features" class="toc-link">Key Features</a></li><li class="toc-item toc-level-2"><a href="#html-structure" class="toc-link">HTML Structure</a></li><li class="toc-item toc-level-2"><a href="#javascript-api" class="toc-link">JavaScript API</a></li><li class="toc-item toc-level-2"><a href="#css-classes" class="toc-link">CSS Classes</a></li><li class="toc-item toc-level-2"><a href="#aspect-ratio-system" class="toc-link">Aspect Ratio System</a></li><li class="toc-item toc-level-2"><a href="#webflow-cms-integration" class="toc-link">Webflow CMS Integration</a></li><li class="toc-item toc-level-2"><a href="#performance-optimizations" class="toc-link">Performance Optimizations</a></li><li class="toc-item toc-level-2"><a href="#mobile-support" class="toc-link">Mobile Support</a></li><li class="toc-item toc-level-2"><a href="#browser-support" class="toc-link">Browser Support</a></li><li class="toc-item toc-level-2"><a href="#integration" class="toc-link">Integration</a></li><li class="toc-item toc-level-2"><a href="#troubleshooting" class="toc-link">Troubleshooting</a></li><li class="toc-item toc-level-2"><a href="#version-history" class="toc-link">Version History</a></li></ul></nav></div>
+    </aside>
+        </div>
+
+        <!-- Page Navigation (Previous / Next) -->
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="homepage.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <h3 class="page-nav-title">Homepage</h3>
+      </span>
+    </a><a href="hero-shapes-analytics.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <h3 class="page-nav-title">Hero Shapes Analytics Tracking</h3>
+      </span>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+    </a></div></nav>
+
+        <!-- Page Feedback -->
+        <section class="page-feedback" aria-label="Page feedback">
+            <div class="page-feedback-inner padding-global">
+                <h3 class="page-feedback-prompt">Was this page helpful?</h3>
+                <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
+                <div class="button-group">
+                    <button class="button" data-feedback="yes" type="button"><div class="icn-svg" data-icon="thumbs-up" data-file="thumbs-up.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 3L14.5 8H23V12.5L19.5 21H2V8H7L14 1L16 3ZM9.29289 8.53426C9.10536 8.72179 9 8.97615 9 9.24136V17C9 18.1046 9.89543 19 11 19H16.8208C17.6312 19 18.3616 18.5109 18.6701 17.7615L21 12.1035V11C21 10.4477 20.5523 10 20 10H13.1555C12.4856 10 12.0052 9.35431 12.1976 8.71271L13.2907 5.06833C13.3504 4.86932 13.1046 4.72254 12.9577 4.86945L9.29289 8.53426ZM5 10C4.44772 10 4 10.4477 4 11V18C4 18.5523 4.44772 19 5 19H6C6.55228 19 7 18.5523 7 18V11C7 10.4477 6.55228 10 6 10H5Z" fill="currentColor"/></svg></div> Yes</button>
+                    <button class="button is-outline is-faded" data-feedback="no" type="button"><div class="icn-svg" data-icon="thumbs-down" data-file="thumbs-down.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21L9.5 16H1L1 11.5L4.5 3L22 3L22 16L17 16L10 23L8 21ZM14.7071 15.4657C14.8946 15.2782 15 15.0239 15 14.7586L15 7C15 5.89543 14.1046 5 13 5L7.17921 5C6.36877 5 5.63845 5.48908 5.32986 6.23847L3 11.8965L3 13C3 13.5523 3.44772 14 4 14L10.8445 14C11.5144 14 11.9948 14.6457 11.8024 15.2873L10.7093 18.9317C10.6496 19.1307 10.8954 19.2775 11.0423 19.1305L14.7071 15.4657ZM19 14C19.5523 14 20 13.5523 20 13V6C20 5.44772 19.5523 5 19 5H18C17.4477 5 17 5.44772 17 6V13C17 13.5523 17.4477 14 18 14H19Z" fill="currentColor"/></svg></div> No</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Modal -->
+        <dialog class="feedback-modal" aria-label="Send feedback">
+            <div class="feedback-modal-content">
+                <h3 class="feedback-modal-title">Send feedback</h3>
+                <p class="feedback-modal-subtitle"></p>
+                <form class="feedback-form" name="page-feedback" data-netlify="true">
+                    <input type="hidden" name="form-name" value="page-feedback">
+                    <input type="hidden" name="sentiment" value="">
+                    <input type="hidden" name="page" value="">
+                    <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
+                    <div class="button-group feedback-modal-actions">
+                        <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>
+                        <button type="submit" class="button is-small">Send feedback</button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
+
+        <!-- Footer -->
+        <footer class="docs-footer">
+            <div class="docs-footer-inner padding-global">
+                <p class="docs-footer-text">© 2026 By Default</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- Initialize Highlight.js, Copy, and TOC -->
+    <script>
+        (function() {
+            'use strict';
+
+            function initHighlight() {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+
+            function initTOCActiveState() {
+                const tocLinks = document.querySelectorAll('.toc-link');
+                const headings = document.querySelectorAll('h1[id], h2[id]');
+
+                if (tocLinks.length === 0 || headings.length === 0) return;
+
+                const linkMap = new Map();
+                tocLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        const id = href.substring(1);
+                        linkMap.set(id, link);
+                    }
+                });
+
+                const observerOptions = {
+                    rootMargin: '-20% 0px -70% 0px',
+                    threshold: 0
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const id = entry.target.id;
+                        const link = linkMap.get(id);
+
+                        if (entry.isIntersecting) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            if (link) {
+                                link.classList.add('toc-link-active');
+                            }
+                        }
+                    });
+                }, observerOptions);
+
+                headings.forEach(heading => {
+                    if (heading.id) {
+                        observer.observe(heading);
+                    }
+                });
+
+                function setInitialActive() {
+                    let activeHeading = null;
+                    let maxTop = -Infinity;
+
+                    headings.forEach(heading => {
+                        const rect = heading.getBoundingClientRect();
+                        if (rect.top <= 100 && rect.top > maxTop) {
+                            maxTop = rect.top;
+                            activeHeading = heading;
+                        }
+                    });
+
+                    if (activeHeading && activeHeading.id) {
+                        const link = linkMap.get(activeHeading.id);
+                        if (link) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            link.classList.add('toc-link-active');
+                        }
+                    }
+                }
+
+                setInitialActive();
+
+                let scrollTimeout;
+                window.addEventListener('scroll', () => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(setInitialActive, 100);
+                });
+            }
+
+            function init() {
+                initHighlight();
+                initTOCActiveState();
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+
+    <!-- Back to Top -->
+    <div class="back-to-top-wrapper">
+      <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
+        <div class="icn-svg" data-icon="arrow-top" data-file="arrow-top.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M4 4V2H20V4H4Z" fill="currentColor"/><path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/></svg></div>
+      </button>
+    </div>
+    <script>
+      (function() {
+        var btn = document.querySelector('.back-to-top-wrapper');
+        if (!btn) return;
+        window.addEventListener('scroll', function() {
+          btn.classList.toggle('is-visible', window.scrollY > 300);
+        });
+        btn.querySelector('button').addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+
+    <!-- Dropdown -->
+    <script src="../assets/js/dropdown.js"></script>
+
+    <!-- Site Navigation -->
+    <script src="../assets/js/nav.js"></script>
+    <!-- Auth -->
+    <script src="../assets/js/auth-config.js"></script>
+    <!-- Theme -->
+    <script src="../assets/js/theme-config.js"></script>
+    <script src="../assets/js/theme-loader.js"></script>
+    <!-- Auth (must load after theme scripts) -->
+    <script src="../assets/js/auth.js"></script>
+    <!-- Feedback -->
+    <script src="../assets/js/feedback.js"></script>
+    <!-- Copy to clipboard -->
+    <script src="../assets/js/copy-button.js"></script>
+    <!-- Number input stepper -->
+    <script src="../assets/js/number-input.js"></script>
+    <!-- Tabs -->
+    <script src="../assets/js/tabs.js"></script>
+    <!-- Toast notifications -->
+    <script src="../assets/js/toast.js"></script>
+    <!-- Dialog -->
+    <script src="../assets/js/dialog.js"></script>
+    <!-- Rating -->
+    <script src="../assets/js/rating.js"></script>
+    <!-- Markdown download/open — strips frontmatter and block HTML -->
+    <script src="../assets/js/md-strip.js"></script>
+
+    <script>
+      /* Tag dismiss */
+      document.addEventListener('click', function (e) {
+        var removeBtn = e.target.closest('.tag-remove');
+        if (removeBtn) {
+          var tag = removeBtn.closest('.tag');
+          if (tag) tag.remove();
+        }
+      });
+
+      /* Table scroll overflow hint */
+      (function initTableScroll() {
+        var wrappers = document.querySelectorAll('.table-scroll');
+        if (!wrappers.length) return;
+
+        function checkOverflow(wrapper) {
+          var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
+          var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
+          wrapper.classList.toggle('is-overflowing', isOverflowing);
+          wrapper.classList.toggle('is-scrolled-end', isAtEnd);
+        }
+
+        wrappers.forEach(function(wrapper) {
+          checkOverflow(wrapper);
+          wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+        });
+
+        window.addEventListener('resize', function() {
+          wrappers.forEach(checkOverflow);
+        });
+      })();
+    </script>
+    <div class="cursor-default"></div>
+    <div class="cursor-halo"></div>
+        <link rel="stylesheet" href="../assets/css/bd-cursor.css">
+    <script src="../assets/js/vendor/gsap/gsap.min.js"></script>
+    <script src="../assets/js/vendor/gsap/ScrollTrigger.min.js"></script>
+    <script src="../assets/js/vendor/gsap/SplitText.min.js"></script>
+    <script src="../assets/js/bd/bd-animations.js"></script>
+    <script src="../assets/js/bd/bd-audio.js"></script>
+    <script src="../assets/js/bd/bd-cursor.js"></script>
+</body>
+</html>

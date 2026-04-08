@@ -16,6 +16,16 @@
   var THEME_FONTS_ID = 'client-theme-fonts';
   var STORAGE_KEY = 'admin-theme-preview';
   var CACHE_KEY = 'bdd-client-theme';
+  var CACHE_VERSION_KEY = 'bdd-client-theme-version';
+  var CACHE_VERSION = '20260407';
+
+  // Invalidate theme cache if deploy version changed
+  try {
+    if (localStorage.getItem(CACHE_VERSION_KEY) !== CACHE_VERSION) {
+      localStorage.removeItem(CACHE_KEY);
+      localStorage.setItem(CACHE_VERSION_KEY, CACHE_VERSION);
+    }
+  } catch (e) {}
 
   //------- Utility -------//
 
