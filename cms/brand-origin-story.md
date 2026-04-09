@@ -5,7 +5,6 @@ description: "The story of how the brand came to be — its history, inspiration
 section: "Brand Book"
 subsection: ""
 order: 3
-slug: "brand-origin-story"
 status: "published"
 access: "team"
 client: "internal"

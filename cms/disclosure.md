@@ -1,11 +1,10 @@
 ---
 title: "Disclosure"
-subtitle: "Details and summary toggle component"
+subtitle: "Reveal content on demand"
 description: "How to use the native details/summary disclosure pattern in the design system."
 section: "Design System"
 subsection: "Content"
 order: 5
-slug: "disclosure"
 status: "published"
 access: "team"
 client: "internal"
@@ -60,7 +59,7 @@ Use `.disclosure-table` with a `<dl>` to display property-value pairs:
     <div class="disclosure-content">
       <dl class="disclosure-table">
         <dt>Font size</dt>
-        <dd>var(--font-4xl) <span class="token-tag">40px</span></dd>
+        <dd>var(--font-7xl) <span class="token-tag">48px</span></dd>
         <dt>Line height</dt>
         <dd>var(--line-height-s) <span class="token-tag">1</span></dd>
         <dt>Weight</dt>
@@ -76,7 +75,7 @@ Use `.disclosure-table` with a `<dl>` to display property-value pairs:
   <div class="disclosure-content">
     <dl class="disclosure-table">
       <dt>Font size</dt>
-      <dd>var(--font-4xl) <span class="token-tag">40px</span></dd>
+      <dd>var(--font-7xl) <span class="token-tag">48px</span></dd>
       <dt>Line height</dt>
       <dd>var(--line-height-s) <span class="token-tag">1</span></dd>
       <dt>Weight</dt>
@@ -100,12 +99,12 @@ Add a `.copy-btn` inside `.disclosure-content` with a `data-copy` attribute cont
     <div class="disclosure-content">
       <dl class="disclosure-table">
         <dt>Font size</dt>
-        <dd>var(--font-4xl) <span class="token-tag">40px</span></dd>
+        <dd>var(--font-7xl) <span class="token-tag">48px</span></dd>
         <dt>Line height</dt>
         <dd>var(--line-height-s) <span class="token-tag">1</span></dd>
       </dl>
       <button class="button is-small copy-btn"
-        data-copy="font-size: var(--font-4xl);&#10;line-height: var(--line-height-s);"
+        data-copy="font-size: var(--font-7xl);&#10;line-height: var(--line-height-s);"
         aria-label="Copy CSS for Heading 1">
         Copy CSS
       </button>
@@ -119,12 +118,12 @@ Add a `.copy-btn` inside `.disclosure-content` with a `data-copy` attribute cont
   <div class="disclosure-content">
     <dl class="disclosure-table">
       <dt>Font size</dt>
-      <dd>var(--font-4xl) <span class="token-tag">40px</span></dd>
+      <dd>var(--font-7xl) <span class="token-tag">48px</span></dd>
       <dt>Line height</dt>
       <dd>var(--line-height-s) <span class="token-tag">1</span></dd>
     </dl>
     <button class="button is-small copy-btn"
-      data-copy="font-size: var(--font-4xl);&#10;line-height: var(--line-height-s);"
+      data-copy="font-size: var(--font-7xl);&#10;line-height: var(--line-height-s);"
       aria-label="Copy CSS for Heading 1">
       Copy CSS
     </button>

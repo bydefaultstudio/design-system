@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Essential -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Code Generator</title>
+  <meta name="description" content="Generate branded QR codes for campaigns, packaging, and brand assets." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="QR Code Generator - By Default Brand OS">
+  <meta property="og:description" content="Generate branded QR codes for campaigns, packaging, and brand assets.">
+  <meta property="og:image" content="../assets/images/og/og-default.jpg">
+  <meta property="og:type" content="website">
+
+  <!-- Robots -->
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Design System Framework -->
+  <link rel="stylesheet" href="../assets/css/design-system.css" />
+  <!-- Site styles -->
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <!-- Tool shared styles -->
+  <link rel="stylesheet" href="../assets/css/tools.css" />
+  <!-- QR Code styles (last) -->
+  <link rel="stylesheet" href="../assets/css/qr-code.css" />
+
+  <!-- GoTrue JS (skipped on localhost) -->
+  <script>
+    window._gotrueReady = (function() {
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0') {
+        return Promise.resolve(null);
+      }
+      return import('https://cdn.jsdelivr.net/npm/gotrue-js@0.9.29/+esm')
+        .then(function(m) { var G = m.default && m.default.default ? m.default.default : m.default; window.GoTrue = G; return G; })
+        .catch(function(e) { console.error('[Auth] GoTrue load failed:', e); return null; });
+    })();
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="auth-loading" data-access="team">
+
+  <!-- Site Navigation -->
+  <div id="site-nav" data-base="../"></div>
+
+  <div class="page-wrapper has-sidebar">
+    <div class="page-content">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="container-small">
+          <h1>QR Code Generator</h1>
+          <p class="page-subtitle" data-text-wrap="pretty">Generate QR codes for campaigns, packaging, and brand assets.</p>
+        </div>
+      </div>
+
+      <!-- Sticky Bar -->
+      <div class="sticky-bar">
+        <div class="sticky-bar-container">
+          <div class="sticky-bar-content">
+            <label class="text-size-small">Format</label>
+            <div class="segmented-control" id="format-selector">
+              <button type="button" class="segmented-control-btn is-active" data-format="png">PNG</button>
+              <button type="button" class="segmented-control-btn" data-format="svg">SVG</button>
+            </div>
+          </div>
+          <div class="sticky-bar-actions">
+            <button class="button is-small" id="btn-download" type="button" disabled>
+              <div class="icn-svg" data-icon="download"><svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M13 2V13.7608C13 14.6517 14.0771 15.0979 14.7071 14.4679L18.6 10.575L20 12L12 20L4 12L5.4 10.575L9.29289 14.4679C9.92286 15.0979 11 14.6517 11 13.7608V2H13Z" fill="currentColor"/><path d="M4 22V20H20V22H4Z" fill="currentColor"/></svg></div>
+              Download
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Tool Content -->
+      <section class="top-medium bottom-large">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-l">
+
+              <!-- URL / Text Input -->
+              <div class="block gap-s">
+                <label for="qr-input">Text or URL</label>
+                <textarea id="qr-input" placeholder="https://example.com" rows="3"></textarea>
+                <p class="qr-error" id="qr-error" role="alert"></p>
+              </div>
+
+              <!-- Options Grid -->
+              <div class="tool-grid">
+
+                <!-- Size -->
+                <div class="tool-grid-field">
+                  <label for="qr-size" class="text-size-small">Size (px)</label>
+                  <input type="number" id="qr-size" value="512" min="128" max="2048" step="64">
+                </div>
+
+                <!-- Error Correction -->
+                <div class="tool-grid-field">
+                  <label class="text-size-small">Error Correction</label>
+                  <div class="segmented-control" id="ec-selector">
+                    <button type="button" class="segmented-control-btn" data-ec="L" title="Low (~7% recovery)">L</button>
+                    <button type="button" class="segmented-control-btn" data-ec="M" title="Medium (~15% recovery)">M</button>
+                    <button type="button" class="segmented-control-btn" data-ec="Q" title="Quartile (~25% recovery)">Q</button>
+                    <button type="button" class="segmented-control-btn is-active" data-ec="H" title="High (~30% recovery)">H</button>
+                  </div>
+                </div>
+
+                <!-- Module Radius -->
+                <div class="tool-grid-field">
+                  <label for="qr-radius" class="text-size-small">Module Radius</label>
+                  <div class="qr-range-row">
+                    <input type="range" id="qr-radius" min="0" max="50" value="0" step="1">
+                    <span class="qr-range-value" id="qr-radius-value">0%</span>
+                  </div>
+                </div>
+
+                <!-- Quiet Zone -->
+                <div class="tool-grid-field">
+                  <label for="qr-quiet-zone" class="text-size-small">Quiet Zone</label>
+                  <div class="qr-range-row">
+                    <input type="range" id="qr-quiet-zone" min="0" max="8" value="4" step="1">
+                    <span class="qr-range-value" id="qr-quiet-zone-value">4</span>
+                  </div>
+                </div>
+
+                <!-- Fill Color -->
+                <div class="tool-grid-field">
+                  <label class="text-size-small">Fill Color</label>
+                  <div class="qr-color-row">
+                    <input type="color" id="qr-fill-picker" value="#000000" aria-label="Fill color picker">
+                    <input type="text" id="qr-fill-text" value="#000000" maxlength="7" aria-label="Fill color hex value">
+                  </div>
+                </div>
+
+                <!-- Background Color -->
+                <div class="tool-grid-field">
+                  <label class="text-size-small">Background Color</label>
+                  <div class="qr-color-row qr-bg-controls" id="qr-bg-controls">
+                    <input type="color" id="qr-bg-picker" value="#FFFFFF" aria-label="Background color picker">
+                    <input type="text" id="qr-bg-text" value="#FFFFFF" maxlength="7" aria-label="Background color hex value">
+                  </div>
+                  <div class="form-toggle">
+                    <input type="checkbox" id="qr-transparent">
+                    <label for="qr-transparent">Transparent background</label>
+                  </div>
+                </div>
+
+              </div>
+
+              <hr class="divider">
+
+              <!-- Preview -->
+              <div class="block gap-s">
+                <label class="text-size-small">Preview</label>
+                <div class="qr-preview-frame" id="qr-preview-frame">
+                  <canvas id="qr-canvas" width="512" height="512" role="img" aria-label="QR code preview"></canvas>
+                </div>
+                <p class="text-size-xsmall text-faded" id="qr-dims-label">512 &times; 512 px</p>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="block row gap-m" style="flex-wrap: wrap;">
+                <button class="button" id="btn-download-main" type="button" disabled>
+                  <div class="icn-svg" data-icon="download"><svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M13 2V13.7608C13 14.6517 14.0771 15.0979 14.7071 14.4679L18.6 10.575L20 12L12 20L4 12L5.4 10.575L9.29289 14.4679C9.92286 15.0979 11 14.6517 11 13.7608V2H13Z" fill="currentColor"/><path d="M4 22V20H20V22H4Z" fill="currentColor"/></svg></div>
+                  Download
+                </button>
+                <button class="button is-outline" id="btn-copy-svg" type="button" style="display: none;">
+                  <span class="copy-btn-default"><div class="icn-svg" data-icon="copy"><svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> Copy SVG</span>
+                  <span class="copy-btn-copied"><div class="icn-svg" data-icon="check"><svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div> Copied!</span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Page Feedback -->
+    <section class="page-feedback" aria-label="Page feedback">
+      <div class="page-feedback-inner padding-global">
+        <h3 class="page-feedback-prompt">Was this page helpful?</h3>
+        <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
+        <div class="button-group">
+          <button class="button" data-feedback="yes" type="button"><div class="icn-svg" data-icon="thumbs-up" data-file="thumbs-up.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 3L14.5 8H23V12.5L19.5 21H2V8H7L14 1L16 3ZM9.29289 8.53426C9.10536 8.72179 9 8.97615 9 9.24136V17C9 18.1046 9.89543 19 11 19H16.8208C17.6312 19 18.3616 18.5109 18.6701 17.7615L21 12.1035V11C21 10.4477 20.5523 10 20 10H13.1555C12.4856 10 12.0052 9.35431 12.1976 8.71271L13.2907 5.06833C13.3504 4.86932 13.1046 4.72254 12.9577 4.86945L9.29289 8.53426ZM5 10C4.44772 10 4 10.4477 4 11V18C4 18.5523 4.44772 19 5 19H6C6.55228 19 7 18.5523 7 18V11C7 10.4477 6.55228 10 6 10H5Z" fill="currentColor"/></svg></div> Yes</button>
+          <button class="button is-outline is-faded" data-feedback="no" type="button"><div class="icn-svg" data-icon="thumbs-down" data-file="thumbs-down.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21L9.5 16H1L1 11.5L4.5 3L22 3L22 16L17 16L10 23L8 21ZM14.7071 15.4657C14.8946 15.2782 15 15.0239 15 14.7586L15 7C15 5.89543 14.1046 5 13 5L7.17921 5C6.36877 5 5.63845 5.48908 5.32986 6.23847L3 11.8965L3 13C3 13.5523 3.44772 14 4 14L10.8445 14C11.5144 14 11.9948 14.6457 11.8024 15.2873L10.7093 18.9317C10.6496 19.1307 10.8954 19.2775 11.0423 19.1305L14.7071 15.4657ZM19 14C19.5523 14 20 13.5523 20 13V6C20 5.44772 19.5523 5 19 5H18C17.4477 5 17 5.44772 17 6V13C17 13.5523 17.4477 14 18 14H19Z" fill="currentColor"/></svg></div> No</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feedback Modal -->
+    <dialog class="feedback-modal" aria-label="Send feedback">
+      <div class="feedback-modal-content">
+        <h3 class="feedback-modal-title">Send feedback</h3>
+        <p class="feedback-modal-subtitle"></p>
+        <form class="feedback-form" name="page-feedback" data-netlify="true">
+          <input type="hidden" name="form-name" value="page-feedback">
+          <input type="hidden" name="sentiment" value="">
+          <input type="hidden" name="page" value="">
+          <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
+          <div class="button-group feedback-modal-actions">
+            <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>
+            <button type="submit" class="button is-small">Send feedback</button>
+          </div>
+        </form>
+      </div>
+    </dialog>
+
+    <!-- Footer -->
+    <footer class="docs-footer">
+      <div class="docs-footer-inner padding-global">
+        <p class="docs-footer-text">&copy; 2026 By Default</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- QR Code Library (vendored) -->
+  <script src="../assets/js/vendor/qrcode-generator.min.js"></script>
+
+  <script>
+    /**
+     * Script Purpose: QR Code Generator UI
+     * Author: By Default Studio
+     * Version: 1.0.0
+     * Last Updated: 2026-04-09
+     */
+
+    console.log('QR Code Generator v1.0.0');
+
+    //
+    //------- Utility Functions -------//
+    //
+
+    function clamp(val, min, max) {
+      return Math.min(Math.max(val, min), max);
+    }
+
+    function isValidHex(hex) {
+      return /^#[0-9A-Fa-f]{6}$/.test(hex);
+    }
+
+    function normaliseHex(raw) {
+      var h = raw.trim();
+      if (h.charAt(0) !== '#') h = '#' + h;
+      return h.toUpperCase();
+    }
+
+    //
+    //------- QR Generation -------//
+    //
+
+    var _currentMatrix = null;
+    var _currentModuleCount = 0;
+
+    function generateQRMatrix(text, ecLevel) {
+      var qr = qrcode(0, ecLevel);
+      qr.addData(text);
+      qr.make();
+
+      var count = qr.getModuleCount();
+      var matrix = [];
+      for (var row = 0; row < count; row++) {
+        matrix[row] = [];
+        for (var col = 0; col < count; col++) {
+          matrix[row][col] = qr.isDark(row, col);
+        }
+      }
+
+      _currentMatrix = matrix;
+      _currentModuleCount = count;
+      return { matrix: matrix, moduleCount: count };
+    }
+
+    //
+    //------- Canvas Rendering -------//
+    //
+
+    function drawRoundedRect(ctx, x, y, w, h, r) {
+      if (r <= 0) {
+        ctx.fillRect(x, y, w, h);
+        return;
+      }
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    function renderToCanvas(canvas, matrix, moduleCount, options) {
+      var size = options.size;
+      var quietZone = options.quietZone;
+      var totalModules = moduleCount + quietZone * 2;
+      var cellSize = size / totalModules;
+      var radiusRatio = options.moduleRadius;
+      var cornerRadius = cellSize * radiusRatio;
+
+      canvas.width = size;
+      canvas.height = size;
+
+      var ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, size, size);
+
+      if (!options.transparentBg) {
+        ctx.fillStyle = options.bgColor;
+        ctx.fillRect(0, 0, size, size);
+      }
+
+      ctx.fillStyle = options.fillColor;
+
+      for (var row = 0; row < moduleCount; row++) {
+        for (var col = 0; col < moduleCount; col++) {
+          if (matrix[row][col]) {
+            var x = (col + quietZone) * cellSize;
+            var y = (row + quietZone) * cellSize;
+            drawRoundedRect(ctx, x, y, cellSize, cellSize, cornerRadius);
+          }
+        }
+      }
+    }
+
+    //
+    //------- SVG Generation -------//
+    //
+
+    function generateSVGString(matrix, moduleCount, options) {
+      var size = options.size;
+      var quietZone = options.quietZone;
+      var totalModules = moduleCount + quietZone * 2;
+      var cellSize = size / totalModules;
+      var radiusRatio = options.moduleRadius;
+      var cornerRadius = cellSize * radiusRatio;
+      var rx = cornerRadius > 0 ? ' rx="' + cornerRadius.toFixed(2) + '" ry="' + cornerRadius.toFixed(2) + '"' : '';
+
+      var parts = [];
+      parts.push('<svg xmlns="http://www.w3.org/2000/svg" width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size + '">');
+
+      if (!options.transparentBg) {
+        parts.push('  <rect width="100%" height="100%" fill="' + options.bgColor + '"/>');
+      }
+
+      for (var row = 0; row < moduleCount; row++) {
+        for (var col = 0; col < moduleCount; col++) {
+          if (matrix[row][col]) {
+            var x = ((col + quietZone) * cellSize).toFixed(2);
+            var y = ((row + quietZone) * cellSize).toFixed(2);
+            var w = cellSize.toFixed(2);
+            parts.push('  <rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + w + '" fill="' + options.fillColor + '"' + rx + '/>');
+          }
+        }
+      }
+
+      parts.push('</svg>');
+      return parts.join('\n');
+    }
+
+    //
+    //------- Export Functions -------//
+    //
+
+    function downloadPNG(canvas, size) {
+      canvas.toBlob(function(blob) {
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'qr-code-' + size + 'px.png';
+        a.click();
+        URL.revokeObjectURL(url);
+      }, 'image/png');
+    }
+
+    function downloadSVG(svgString, size) {
+      var blob = new Blob([svgString], { type: 'image/svg+xml' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'qr-code-' + size + 'px.svg';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    //
+    //------- UI -------//
+    //
+
+    var FORMAT_BUTTONS = null;
+    var EC_BUTTONS = null;
+    var _debounceTimer = null;
+
+    function getActiveFormat() {
+      var active = document.querySelector('#format-selector .segmented-control-btn.is-active');
+      return active ? active.getAttribute('data-format') : 'png';
+    }
+
+    function getActiveEC() {
+      var active = document.querySelector('#ec-selector .segmented-control-btn.is-active');
+      return active ? active.getAttribute('data-ec') : 'H';
+    }
+
+    function getOptions() {
+      var size = clamp(parseInt(document.getElementById('qr-size').value, 10) || 512, 128, 2048);
+      var radiusPercent = parseInt(document.getElementById('qr-radius').value, 10) || 0;
+      var quietZone = parseInt(document.getElementById('qr-quiet-zone').value, 10) || 0;
+      var transparent = document.getElementById('qr-transparent').checked;
+
+      var fillHex = normaliseHex(document.getElementById('qr-fill-text').value);
+      var bgHex = normaliseHex(document.getElementById('qr-bg-text').value);
+
+      if (!isValidHex(fillHex)) fillHex = '#000000';
+      if (!isValidHex(bgHex)) bgHex = '#FFFFFF';
+
+      return {
+        size: size,
+        moduleRadius: radiusPercent / 100,
+        quietZone: quietZone,
+        fillColor: fillHex,
+        bgColor: bgHex,
+        transparentBg: transparent
+      };
+    }
+
+    function setDownloadEnabled(enabled) {
+      document.getElementById('btn-download').disabled = !enabled;
+      document.getElementById('btn-download-main').disabled = !enabled;
+    }
+
+    function showError(msg) {
+      var el = document.getElementById('qr-error');
+      if (msg) {
+        el.textContent = msg;
+        el.classList.add('is-visible');
+      } else {
+        el.textContent = '';
+        el.classList.remove('is-visible');
+      }
+    }
+
+    function updatePreview() {
+      var input = document.getElementById('qr-input').value.trim();
+      var canvas = document.getElementById('qr-canvas');
+      var dimsLabel = document.getElementById('qr-dims-label');
+      var options = getOptions();
+
+      if (!input) {
+        var ctx = canvas.getContext('2d');
+        canvas.width = options.size;
+        canvas.height = options.size;
+        ctx.clearRect(0, 0, options.size, options.size);
+        if (!options.transparentBg) {
+          ctx.fillStyle = options.bgColor;
+          ctx.fillRect(0, 0, options.size, options.size);
+        }
+        setDownloadEnabled(false);
+        showError(null);
+        dimsLabel.innerHTML = options.size + ' &times; ' + options.size + ' px';
+        return;
+      }
+
+      try {
+        var result = generateQRMatrix(input, getActiveEC());
+        renderToCanvas(canvas, result.matrix, result.moduleCount, options);
+        setDownloadEnabled(true);
+        showError(null);
+        dimsLabel.innerHTML = options.size + ' &times; ' + options.size + ' px';
+      } catch (e) {
+        var ctx2 = canvas.getContext('2d');
+        canvas.width = options.size;
+        canvas.height = options.size;
+        ctx2.clearRect(0, 0, options.size, options.size);
+        setDownloadEnabled(false);
+        showError('Text too long for this error correction level. Try a lower level or shorter text.');
+      }
+    }
+
+    function scheduleUpdate() {
+      clearTimeout(_debounceTimer);
+      _debounceTimer = setTimeout(updatePreview, 150);
+    }
+
+    function handleDownload() {
+      var input = document.getElementById('qr-input').value.trim();
+      if (!input || !_currentMatrix) return;
+
+      var options = getOptions();
+      var format = getActiveFormat();
+
+      if (format === 'svg') {
+        var svgString = generateSVGString(_currentMatrix, _currentModuleCount, options);
+        downloadSVG(svgString, options.size);
+      } else {
+        downloadPNG(document.getElementById('qr-canvas'), options.size);
+      }
+    }
+
+    function handleCopySVG() {
+      var input = document.getElementById('qr-input').value.trim();
+      if (!input || !_currentMatrix) return;
+
+      var options = getOptions();
+      var svgString = generateSVGString(_currentMatrix, _currentModuleCount, options);
+      var btn = document.getElementById('btn-copy-svg');
+
+      navigator.clipboard.writeText(svgString).then(function() {
+        btn.classList.add('is-copied');
+        setTimeout(function() { btn.classList.remove('is-copied'); }, 2000);
+      });
+    }
+
+    function handleFormatSwitch(btn) {
+      FORMAT_BUTTONS.forEach(function(b) { b.classList.remove('is-active'); });
+      btn.classList.add('is-active');
+
+      var format = btn.getAttribute('data-format');
+      var copySvgBtn = document.getElementById('btn-copy-svg');
+      copySvgBtn.style.display = format === 'svg' ? '' : 'none';
+    }
+
+    function handleECSwitch(btn) {
+      EC_BUTTONS.forEach(function(b) { b.classList.remove('is-active'); });
+      btn.classList.add('is-active');
+      scheduleUpdate();
+    }
+
+    function syncColorFromPicker(pickerId, textId) {
+      var picker = document.getElementById(pickerId);
+      var text = document.getElementById(textId);
+      text.value = picker.value.toUpperCase();
+      scheduleUpdate();
+    }
+
+    function syncColorFromText(textId, pickerId) {
+      var text = document.getElementById(textId);
+      var picker = document.getElementById(pickerId);
+      var hex = normaliseHex(text.value);
+      if (isValidHex(hex)) {
+        picker.value = hex;
+        scheduleUpdate();
+      }
+    }
+
+    //
+    //------- Init -------//
+    //
+
+    document.addEventListener('DOMContentLoaded', function() {
+      FORMAT_BUTTONS = document.querySelectorAll('#format-selector .segmented-control-btn');
+      EC_BUTTONS = document.querySelectorAll('#ec-selector .segmented-control-btn');
+
+      // Format segmented control
+      FORMAT_BUTTONS.forEach(function(btn) {
+        btn.addEventListener('click', function() { handleFormatSwitch(btn); });
+      });
+
+      // Error correction segmented control
+      EC_BUTTONS.forEach(function(btn) {
+        btn.addEventListener('click', function() { handleECSwitch(btn); });
+      });
+
+      // Text input
+      document.getElementById('qr-input').addEventListener('input', scheduleUpdate);
+
+      // Size input
+      document.getElementById('qr-size').addEventListener('input', scheduleUpdate);
+
+      // Module radius slider
+      document.getElementById('qr-radius').addEventListener('input', function() {
+        document.getElementById('qr-radius-value').textContent = this.value + '%';
+        scheduleUpdate();
+      });
+
+      // Quiet zone slider
+      document.getElementById('qr-quiet-zone').addEventListener('input', function() {
+        document.getElementById('qr-quiet-zone-value').textContent = this.value;
+        scheduleUpdate();
+      });
+
+      // Fill color
+      document.getElementById('qr-fill-picker').addEventListener('input', function() {
+        syncColorFromPicker('qr-fill-picker', 'qr-fill-text');
+      });
+      document.getElementById('qr-fill-text').addEventListener('change', function() {
+        syncColorFromText('qr-fill-text', 'qr-fill-picker');
+      });
+
+      // Background color
+      document.getElementById('qr-bg-picker').addEventListener('input', function() {
+        syncColorFromPicker('qr-bg-picker', 'qr-bg-text');
+      });
+      document.getElementById('qr-bg-text').addEventListener('change', function() {
+        syncColorFromText('qr-bg-text', 'qr-bg-picker');
+      });
+
+      // Transparent toggle
+      document.getElementById('qr-transparent').addEventListener('change', function() {
+        var controls = document.getElementById('qr-bg-controls');
+        var frame = document.getElementById('qr-preview-frame');
+        if (this.checked) {
+          controls.classList.add('is-disabled');
+          frame.classList.add('is-transparent');
+        } else {
+          controls.classList.remove('is-disabled');
+          frame.classList.remove('is-transparent');
+        }
+        scheduleUpdate();
+      });
+
+      // Download buttons (both sticky bar and main)
+      document.getElementById('btn-download').addEventListener('click', handleDownload);
+      document.getElementById('btn-download-main').addEventListener('click', handleDownload);
+
+      // Copy SVG button
+      document.getElementById('btn-copy-svg').addEventListener('click', handleCopySVG);
+
+      // Initial render
+      updatePreview();
+    });
+  </script>
+
+  <!-- Back to Top -->
+  <div class="back-to-top-wrapper">
+    <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
+      <div class="icn-svg"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 4V2H20V4H4Z" fill="currentColor"/>
+        <path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/>
+      </svg></div>
+    </button>
+  </div>
+  <script>
+    (function() {
+      var btn = document.querySelector('.back-to-top-wrapper');
+      if (!btn) return;
+      window.addEventListener('scroll', function() { btn.classList.toggle('is-visible', window.scrollY > 300); });
+      btn.querySelector('button').addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    })();
+  </script>
+
+  <!-- Component JS -->
+  <script src="../assets/js/dropdown.js"></script>
+
+  <!-- Site Navigation -->
+  <script src="../assets/js/nav.js"></script>
+  <!-- Auth -->
+  <script src="../assets/js/auth-config.js"></script>
+  <script src="../assets/js/theme-config.js"></script>
+  <script src="../assets/js/theme-loader.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <!-- Feedback -->
+  <script src="../assets/js/feedback.js"></script>
+  <!-- Copy to clipboard -->
+  <script src="../assets/js/copy-button.js"></script>
+</body>
+
+</html>

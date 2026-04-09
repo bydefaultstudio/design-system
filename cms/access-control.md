@@ -5,7 +5,6 @@ description: "How to manage user logins, roles, and page-level access control us
 section: "Docs"
 subsection: "Site Management"
 order: 1
-slug: "access-control"
 status: "published"
 access: "admin"
 client: "internal"

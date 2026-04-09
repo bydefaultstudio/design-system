@@ -5,7 +5,6 @@ description: "The core values that shape how the brand thinks, acts, and communi
 section: "Brand Book"
 subsection: ""
 order: 2
-slug: "brand-values"
 status: "published"
 access: "team"
 client: "internal"

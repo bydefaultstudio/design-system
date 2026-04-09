@@ -1,0 +1,4921 @@
+# BrandOS Design System — AI Reference
+
+> This is the complete design system reference for **By Default Studio's BrandOS**. It contains every design token, layout pattern, component, and rule you need to build on-brand HTML and CSS. Use this as your authoritative guide for all code you generate.
+
+## How to Use This Document
+
+1. **Always use semantic tokens** (e.g., `var(--text-primary)`, `var(--background-faded)`), never primitive tokens directly (e.g., `--neutral-800`, `--green`).
+2. **Follow the layout hierarchy**: `section > .padding-global > .container-* > .block` — never skip levels.
+3. **Use existing components** (`.button`, `.card`, `.callout`, `.badge`, etc.) before creating custom markup.
+4. **Use existing utility classes** (`.gap-*`, `.top-*`, `.bottom-*`, `.padding-*`, `.border-*`) instead of writing new CSS.
+5. **Accessibility is required**: semantic HTML, keyboard navigation, `aria-label` where needed, focus states, `<button>` for actions, `<a>` for links.
+6. **Dark mode is token-based**: set `data-theme="dark"` on `<html>` — never write component-level dark mode CSS; tokens handle it automatically.
+
+## Do Not
+
+- Use inline styles
+- Use primitive color tokens directly (e.g., `--green`, `--neutral-800`)
+- Use external icon libraries (Font Awesome, Material Design, Heroicons, etc.) — only brand SVG icons
+- Add margins inside blocks — blocks use `gap` for internal spacing
+- Add spacing directly to containers — sections control macro spacing
+- Use spacer divs
+- Invent new class naming patterns — follow `.component-name` / `.component-name--modifier` / `.is-state`
+- Hardcode values that should use tokens (colors, spacing, typography, borders)
+
+---
+## Layout System
+This system provides a **predictable layout structure** that keeps spacing, alignment, and width consistent across all pages.
+
+---
+
+## Page Structure
+
+All pages follow the same hierarchy:
+
+```
+body
+└─ page-wrapper
+└─ page-content
+└─ section
+└─ padding-global
+└─ container / max-width
+└─ block
+```
+
+### Why this matters
+- Clear separation of concerns
+- Consistent spacing and widths
+- Easy to scan and reason about layouts
+
+```html
+<section>
+  <div class="padding-global">
+    <div class="container-medium">
+      <div class="block">
+        <!-- Content -->
+      </div>
+    </div>
+  </div>
+</section>
+```
+
+---
+
+## Sections
+
+Sections group **major content areas** and control **vertical spacing**.
+
+### When to use
+
+* Every major page section
+* Any time you need vertical rhythm between content groups
+
+### Rules
+
+* Sections own vertical spacing
+* Use `.top-*` and `.bottom-*` classes
+* Do not apply margins inside sections
+
+```html
+<section class="top-large bottom-large">
+  <div class="padding-global">
+    <!-- Content -->
+  </div>
+</section>
+```
+
+---
+
+## Padding Global
+
+`.padding-global` provides **consistent horizontal padding**.
+
+### When to use
+
+* Inside every section
+* Whenever content needs safe spacing from screen edges
+
+```html
+<div class="padding-global">
+  <div class="container-medium">
+    <!-- Content -->
+  </div>
+</div>
+```
+
+Padding comes from `.padding-global`, **never from containers**.
+
+---
+
+## Containers
+
+Containers constrain width and centre content in the viewport.
+
+### When to use
+
+* Most page content
+* Any readable text or structured layout
+
+### Key rules
+
+* Containers centre content
+* Containers do **not** add padding
+* Use one container per section (in most cases)
+
+```html
+<div class="container-medium">
+  <div class="block">
+    <h2>Heading</h2>
+    <p>Content</p>
+  </div>
+</div>
+```
+
+### Variants
+
+<div style="background: var(--background-faded); padding: var(--space-m) 0;">
+    <div class="container-medium" style="background: var(--text-accent); color: var(--off-white); padding: var(--space-s); text-align: center;  font-size: var(--font-xs);">.container-medium</div>
+  </div>
+  <div style="background: var(--background-faded); padding: var(--space-m) 0;">
+    <div class="container-large" style="background: var(--text-accent); color: var(--off-white); padding: var(--space-s); text-align: center;  font-size: var(--font-xs);">.container-large</div>
+  </div>
+</div>
+
+| Class              | Use                    |
+| ------------------ | ---------------------- |
+| `container-small`  | Narrow layouts         |
+| `container-medium` | Default readable width |
+| `container-large`  | Wider layouts          |
+
+---
+
+## Max-Width
+
+Max-width utilities apply **width limits only**.
+
+### When to use
+
+* Special cases
+* Content that should not be centred
+* Breaking out of container behaviour
+
+| Class              | Use               |
+| ------------------ | ----------------- |
+| `max-width-small`  | Narrow constraint |
+| `max-width-medium` | Default readable  |
+| `max-width-large`  | Wide constraint   |
+| `max-width-full`   | No constraint     |
+
+**Rule of thumb**
+
+* Centre content → use a container
+* Only limit width → use max-width (exception, not default)
+
+---
+
+## Blocks
+
+Blocks group **related content** and manage internal spacing.
+
+### When to use
+
+* Heading + text
+* Text + buttons
+* Image + caption
+* Any content that belongs together
+
+### Default behaviour
+
+* Vertical flex layout
+* Uses `gap` for spacing
+* No margins on children
+
+```html
+<div class="block">
+  <h2>Heading</h2>
+  <p>Body text</p>
+</div>
+```
+
+### Gap modifiers
+
+<div style="background: var(--background-faded); padding: var(--space-xs);  font-size: var(--font-xs); text-align: center;">Item</div>
+    <div style="background: var(--background-faded); padding: var(--space-xs);  font-size: var(--font-xs); text-align: center;">Item</div>
+  </div>
+  <div class="block gap-s" style="border: var(--border-s) solid var(--border-faded); padding: var(--space-m);  min-width: 8rem;">
+    <div style="background: var(--background-faded); padding: var(--space-xs);  font-size: var(--font-xs); text-align: center;">.gap-s</div>
+    <div style="background: var(--background-faded); padding: var(--space-xs);  font-size: var(--font-xs); text-align: center;">Item</div>
+    <div style="background: var(--background-faded); padding: var(--space-xs);  font-size: var(--font-xs); text-align: center;">Item</div>
+  </div>
+  <div class="block gap-m" style="border: var(--border-s) solid var(--border-faded); padding: var(--space-m);  min-width: 8rem;">
+    <div style="background: var(--background-faded); padding: var(--space-xs);  font-size: var(--font-xs); text-align: center;">.gap-m</div>
+    <div style="background: var(--background-faded); padding: var(--space-xs);  font-size: var(--font-xs); text-align: center;">Item</div>
+    <div style="background: var(--background-faded); padding: var(--space-xs);  font-size: var(--font-xs); text-align: center;">Item</div>
+  </div>
+  <div class="block gap-l" style="border: var(--border-s) solid var(--border-faded); padding: var(--space-m);  min-width: 8rem;">
+    <div style="background: var(--background-faded); padding: var(--space-xs);  font-size: var(--font-xs); text-align: center;">.gap-l</div>
+    <div style="background: var(--background-faded); padding: var(--space-xs);  font-size: var(--font-xs); text-align: center;">Item</div>
+    <div style="background: var(--background-faded); padding: var(--space-xs);  font-size: var(--font-xs); text-align: center;">Item</div>
+  </div>
+  <div class="block gap-xl" style="border: var(--border-s) solid var(--border-faded); padding: var(--space-m);  min-width: 8rem;">
+    <div style="background: var(--background-faded); padding: var(--space-xs);  font-size: var(--font-xs); text-align: center;">.gap-xl</div>
+    <div style="background: var(--background-faded); padding: var(--space-xs);  font-size: var(--font-xs); text-align: center;">Item</div>
+    <div style="background: var(--background-faded); padding: var(--space-xs);  font-size: var(--font-xs); text-align: center;">Item</div>
+  </div>
+  </div>
+</div>
+
+| Class    | Effect      |
+| -------- | ----------- |
+| `gap-xs` | Very tight  |
+| `gap-s`  | Small       |
+| `gap-m`  | Default     |
+| `gap-l`  | Large       |
+| `gap-xl` | Extra large |
+
+```html
+<div class="block gap-l">
+  <h2>Heading</h2>
+  <p>More space between elements</p>
+</div>
+```
+
+---
+
+## Block Layout Modifiers
+
+Blocks can change layout or alignment.
+
+| Class          | Effect              |
+| -------------- | ------------------- |
+| `row`          | Horizontal layout   |
+| `row-reverse`  | Reversed horizontal |
+| `align-start`  | Align items start   |
+| `align-center` | Centre items        |
+| `align-end`    | Align items end     |
+
+```html
+<div class="block row gap-m align-center">
+  <p>Text</p>
+  <button>Action</button>
+</div>
+```
+
+---
+
+## Grid
+
+Grids create **column-based layouts**.
+They are not spacing utilities.
+
+### Base grid
+
+* Two equal columns
+* Default gap applied
+
+<div style="background: var(--background-faded); padding: var(--space-m);  text-align: center; font-size: var(--font-xs);">Column 2</div>
+  </div>
+</div>
+
+```html
+<div class="grid">
+  <div>Item</div>
+  <div>Item</div>
+</div>
+```
+
+### Column modifiers
+
+<div style="background: var(--background-faded); padding: var(--space-m);  text-align: center; font-size: var(--font-xs);">2</div>
+    <div style="background: var(--background-faded); padding: var(--space-m);  text-align: center; font-size: var(--font-xs);">3</div>
+  </div>
+  <div class="grid cols-4">
+    <div style="background: var(--background-faded); padding: var(--space-m);  text-align: center; font-size: var(--font-xs);">1</div>
+    <div style="background: var(--background-faded); padding: var(--space-m);  text-align: center; font-size: var(--font-xs);">2</div>
+    <div style="background: var(--background-faded); padding: var(--space-m);  text-align: center; font-size: var(--font-xs);">3</div>
+    <div style="background: var(--background-faded); padding: var(--space-m);  text-align: center; font-size: var(--font-xs);">4</div>
+  </div>
+</div>
+
+| Class       | Columns       |
+| ----------- | ------------- |
+| `cols-3`    | Three columns |
+| `cols-4`    | Four columns  |
+
+```html
+<div class="grid cols-3">
+  <div>Item 1</div>
+  <div>Item 2</div>
+  <div>Item 3</div>
+</div>
+```
+
+### Item width
+
+| Class         | Effect                |
+| ------------- | --------------------- |
+| `fit-content` | Item sizes to content |
+
+```html
+<div class="grid">
+  <div>Flexible column</div>
+  <div class="fit-content">Fixed</div>
+</div>
+```
+
+### Rules
+
+* Use grids for layout, not spacing
+* Use `gap-*` to adjust spacing
+* Combine column + gap modifiers as needed
+
+---
+
+## Design Tokens
+
+These are the actual CSS custom property values from `design-system.css`. Always use semantic tokens (not primitives) in production code.
+
+### 1. BRAND TOKENS
+
+| Token | Value | Note |
+| --- | --- | --- |
+| **Typography** | | |
+| `--font-primary` | `"Inclusive Sans", sans-serif` |  |
+| `--font-secondary` | `"RecifeText", Georgia, serif` |  |
+| `--font-tertiary` | `"IBM Plex Mono", monospace` |  |
+| `--font-quaternary` | `"Bugrino", sans-serif` |  |
+| **Palette** | | |
+| `--off-white` | `#FFFAF6` |  |
+| `--warm-white` | `#f5ebe3` |  |
+| `--warm-black` | `#221f1c` |  |
+| `--off-black` | `#0f0e0e` |  |
+| **Accent colours** | | |
+| `--red-lighter` | `#FFE8E3` |  |
+| `--red-light` | `#FFD6CD` |  |
+| `--red` | `#D92A27` |  |
+| `--red-dark` | `#750D0B` |  |
+| `--blue-lighter` | `#D5F3FF` |  |
+| `--blue-light` | `#B1E6FC` |  |
+| `--blue` | `#1A54D6` |  |
+| `--blue-dark` | `#152F57` |  |
+| `--yellow-lighter` | `#FFF3B8` |  |
+| `--yellow-light` | `#FFEA83` |  |
+| `--yellow` | `#FFB533` |  |
+| `--yellow-dark` | `#7E5700` |  |
+| `--green-lighter` | `#DBF7CC` |  |
+| `--green-light` | `#B6D6A5` |  |
+| `--green` | `#167255` |  |
+| `--green-dark` | `#094C45` |  |
+| `--purple-lighter` | `#F9E2FF` |  |
+| `--purple-light` | `#F5CDFF` |  |
+| `--purple` | `#AA4FE3` |  |
+| `--purple-dark` | `#600E83` |  |
+| **Base font sizes (rem-based, progressive step scale: +2px body, +4px heading, +8px display)** | | |
+| `--font-3xs` | `0.625rem` | 10px |
+| `--font-2xs` | `0.75rem` | 12px |
+| `--font-xs` | `0.875rem` | 14px |
+| `--font-s` | `1rem` | 16px |
+| `--font-m` | `1.125rem` | 18px |
+| `--font-l` | `1.25rem` | 20px |
+| `--font-xl` | `1.375rem` | 22px |
+| `--font-2xl` | `1.5rem` | 24px |
+| `--font-3xl` | `1.75rem` | 28px |
+| `--font-4xl` | `2rem` | 32px |
+| `--font-5xl` | `2.25rem` | 36px |
+| `--font-6xl` | `2.5rem` | 40px |
+| `--font-7xl` | `3rem` | 48px |
+| `--font-8xl` | `3.5rem` | 56px |
+| `--font-9xl` | `4rem` | 64px |
+| `--font-10xl` | `4.5rem` | 72px |
+| **Semantic font sizes** | | |
+| `--text-body` | `var(--font-m)` |  |
+| **UI font sizes** | | |
+| `--button-font-size` | `var(--text-body)` |  |
+| `--button-font-size-small` | `var(--font-xs)` |  |
+| **Line height tokens** | | |
+| `--line-height-xs` | `0.7` |  |
+| `--line-height-s` | `1` |  |
+| `--line-height-m` | `1.3` |  |
+| `--line-height-l` | `1.4` |  |
+| `--line-height-xl` | `1.6` |  |
+| `--line-height-2xl` | `1.8` |  |
+| **Font weight tokens** | | |
+| `--font-weight-light` | `300` |  |
+| `--font-weight-regular` | `400` |  |
+| `--font-weight-medium` | `500` |  |
+| `--font-weight-semi-bold` | `600` |  |
+| `--font-weight-bold` | `700` |  |
+| `--font-weight-extra-bold` | `800` |  |
+| `--font-weight-black` | `900` |  |
+| **Letter spacing tokens (em-based for proportional scaling)** | | |
+| `--letter-spacing-s` | `0.03em` |  |
+| `--letter-spacing-m` | `0.06em` |  |
+| `--letter-spacing-l` | `0.12em` |  |
+| `--letter-spacing-xl` | `0.24em` |  |
+
+### 2. SYSTEM TOKENS - COLORS
+
+| Token | Value | Note |
+| --- | --- | --- |
+| **Neutrals** | | |
+| `--neutral-50` | `#fff7f1` |  |
+| `--neutral-100` | `#e8e1dc` |  |
+| `--neutral-150` | `#ddd6d1` |  |
+| `--neutral-200` | `#d2cbc6` |  |
+| `--neutral-300` | `#bbb5b1` |  |
+| `--neutral-400` | `#a59f9b` |  |
+| `--neutral-500` | `#8e8986` |  |
+| `--neutral-600` | `#777371` |  |
+| `--neutral-700` | `#615d5b` |  |
+| `--neutral-800` | `#4a4846` |  |
+| `--neutral-900` | `#343230` |  |
+| `--neutral-950` | `#1d1c1b` |  |
+| `--neutral-990` | `#0f0e0e` |  |
+| **Black & White Alpha Tokens** | | |
+| `--black` | `#000000` |  |
+| `--black-alpha-3` | `#00000008` |  |
+| `--black-alpha-5` | `#0000000d` |  |
+| `--black-alpha-10` | `#0000001a` |  |
+| `--black-alpha-15` | `#00000026` |  |
+| `--black-alpha-20` | `#00000033` |  |
+| `--black-alpha-30` | `#0000004d` |  |
+| `--black-alpha-40` | `#00000066` |  |
+| `--black-alpha-50` | `#00000080` |  |
+| `--black-alpha-60` | `#00000099` |  |
+| `--black-alpha-70` | `#000000b3` |  |
+| `--black-alpha-80` | `#000000cc` |  |
+| `--black-alpha-90` | `#000000e6` |  |
+| `--black-alpha-95` | `#000000f2` |  |
+| `--white` | `#ffffff` |  |
+| `--white-alpha-5` | `#ffffff0d` |  |
+| `--white-alpha-10` | `#ffffff1a` |  |
+| `--white-alpha-15` | `#ffffff26` |  |
+| `--white-alpha-20` | `#ffffff33` |  |
+| `--white-alpha-30` | `#ffffff4d` |  |
+| `--white-alpha-40` | `#ffffff66` |  |
+| `--white-alpha-50` | `#ffffff80` |  |
+| `--white-alpha-60` | `#ffffff99` |  |
+| `--white-alpha-70` | `#ffffffb3` |  |
+| `--white-alpha-80` | `#ffffffcc` |  |
+| `--white-alpha-90` | `#ffffffe6` |  |
+| `--white-alpha-95` | `#fffffff2` |  |
+| `--transparent` | `transparent` |  |
+| **Color-Mix Alpha Scale** | | |
+| `--alpha-5` | `transparent 5%` |  |
+| `--alpha-10` | `transparent 10%` |  |
+| `--alpha-15` | `transparent 15%` |  |
+| `--alpha-20` | `transparent 20%` |  |
+| `--alpha-25` | `transparent 25%` |  |
+| `--alpha-30` | `transparent 30%` |  |
+| `--alpha-35` | `transparent 35%` |  |
+| `--alpha-40` | `transparent 40%` |  |
+| `--alpha-45` | `transparent 45%` |  |
+| `--alpha-50` | `transparent 50%` |  |
+| `--alpha-55` | `transparent 55%` |  |
+| `--alpha-60` | `transparent 60%` |  |
+| `--alpha-65` | `transparent 65%` |  |
+| `--alpha-70` | `transparent 70%` |  |
+| `--alpha-75` | `transparent 75%` |  |
+| `--alpha-80` | `transparent 80%` |  |
+| `--alpha-85` | `transparent 85%` |  |
+| `--alpha-90` | `transparent 90%` |  |
+| `--alpha-95` | `transparent 95%` |  |
+| **Semantic colours** | | |
+| `--text-primary` | `var(--warm-black)` |  |
+| `--text-secondary` | `var(--neutral-800)` |  |
+| `--text-plain` | `var(--black)` |  |
+| `--text-faded` | `var(--black-alpha-50)` |  |
+| `--text-accent` | `var(--blue)` |  |
+| `--text-link` | `var(--blue)` |  |
+| `--text-inverted` | `var(--off-white)` |  |
+| `--text-sidebar` | `var(--text-primary)` |  |
+| `--text-site-header` | `var(--text-primary)` |  |
+| `--background-primary` | `var(--off-white)` |  |
+| `--background-secondary` | `var(--warm-white)` |  |
+| `--background-plain` | `var(--white)` |  |
+| `--background-faded` | `var(--black-alpha-5)` |  |
+| `--background-darker` | `var(--black-alpha-10)` |  |
+| `--background-lighter` | `var(--white-alpha-10)` |  |
+| `--background-modal` | `rgba(0, 0, 0, 0.75)` |  |
+| `--background-sidebar` | `var(--background-primary)` |  |
+| `--background-site-header` | `var(--background-primary)` |  |
+| `--border-primary` | `var(--text-primary)` |  |
+| `--border-secondary` | `var(--neutral-300)` |  |
+| `--border-faded` | `var(--black-alpha-15)` |  |
+| `--button-primary` | `var(--text-primary)` |  |
+| `--button-text` | `var(--off-white)` |  |
+| `--button-secondary` | `var(--black)` |  |
+| `--button-secondary-text` | `var(--off-white)` |  |
+| `--button-faded` | `var(--black-alpha-15)` |  |
+| **Status colours (from brand book or defaults)** | | |
+| `--status-info` | `var(--blue)` |  |
+| `--status-info-bg` | `var(--blue-lighter)` |  |
+| `--status-success` | `var(--green)` |  |
+| `--status-success-bg` | `var(--green-lighter)` |  |
+| `--status-warning` | `var(--yellow-darker)` |  |
+| `--status-warning-bg` | `var(--yellow-lighter)` |  |
+| `--status-danger` | `var(--red)` |  |
+| `--status-danger-bg` | `var(--red-lighter)` |  |
+| `--status-accent` | `var(--purple)` |  |
+| `--status-accent-bg` | `var(--purple-lighter)` |  |
+| **Form semantic tokens** | | |
+| `--input-border` | `var(--border-secondary)` |  |
+| `--input-background` | `var(--black-alpha-5)` |  |
+| `--input-text` | `var(--text-plain)` |  |
+| `--input-placeholder` | `var(--text-faded)` |  |
+| `--input-focus` | `var(--green)` |  |
+| `--input-disabled-bg` | `var(--background-faded)` |  |
+| `--input-disabled-text` | `var(--text-faded)` |  |
+| `--checkbox-background` | `var(--neutral-100)` |  |
+| `--checkbox-selected` | `var(--text-primary)` |  |
+| `--checkbox-border` | `var(--border-faded)` |  |
+| `--checkbox-checkmark` | `var(--off-white)` |  |
+| `--toggle-track` | `var(--black-alpha-3)` |  |
+| `--toggle-knob` | `var(--neutral-500)` |  |
+| `--toggle-selected` | `var(--text-primary)` |  |
+| `--toggle-knob-selected` | `var(--off-white)` |  |
+| **Selection** | | |
+| `--selection-text` | `var(--background-primary)` |  |
+| `--selection-background` | `var(--text-primary)` |  |
+| **Card tokens** | | |
+| `--card-background` | `var(--background-primary)` |  |
+| `--card-border` | `var(--border-faded)` |  |
+| `--card-border-hover` | `var(--border-primary)` |  |
+| `--card-padding` | `var(--space-xl)` |  |
+| `--card-radius` | `var(--radius-m)` |  |
+| **Tooltip tokens** | | |
+| `--tooltip-background` | `var(--warm-black)` |  |
+| `--tooltip-text` | `var(--off-white)` |  |
+| **Toast tokens** | | |
+| `--toast-background` | `var(--warm-black)` |  |
+| `--toast-text` | `var(--off-white)` |  |
+| **Tab tokens** | | |
+| `--tab-active-color` | `var(--text-primary)` |  |
+| `--tab-inactive-color` | `var(--text-faded)` |  |
+| `--tab-indicator-color` | `var(--text-primary)` |  |
+| **Progress tokens** | | |
+| `--progress-track` | `var(--background-darker)` |  |
+| `--progress-fill` | `var(--text-primary)` |  |
+| **Divider tokens** | | |
+| `--divider-color` | `var(--border-faded)` |  |
+| **Dropdown tokens** | | |
+| `--dropdown-background` | `var(--background-primary)` |  |
+| `--dropdown-border` | `var(--border-faded)` |  |
+| `--dropdown-item-hover` | `var(--background-faded)` |  |
+| **Tag tokens** | | |
+| `--tag-background` | `var(--background-darker)` |  |
+| `--tag-border` | `var(--border-faded)` |  |
+| **Dialog tokens** | | |
+| `--dialog-background` | `var(--background-primary)` |  |
+| `--dialog-max-width` | `560px` |  |
+| `--dialog-shadow` | `0 8px 32px var(--black-alpha-20)` |  |
+| `--dialog-backdrop` | `rgba(0, 0, 0, 0.6)` |  |
+| **Slider tokens** | | |
+| `--slider-track-background` | `var(--background-darker)` |  |
+| `--slider-fill` | `var(--text-primary)` |  |
+| `--slider-thumb-background` | `var(--text-primary)` |  |
+| `--slider-thumb-border` | `var(--background-primary)` |  |
+| **Rating tokens** | | |
+| `--rating-color` | `var(--yellow)` |  |
+| `--rating-color-empty` | `var(--background-faded)` |  |
+| `--rating-size` | `1.5rem` |  |
+| **Mark tokens** | | |
+| `--mark-background` | `var(--yellow-light)` |  |
+| `--mark-text` | `var(--warm-black)` |  |
+
+### 2b. THEME TOKENS - DARK MODE
+
+| Token | Value | Note |
+| --- | --- | --- |
+| **Unit tokens** | | |
+| `--none` | `0` |  |
+| `--2xs` | `0.125rem` |  |
+| **2px** | | |
+| `--xs` | `0.25rem` |  |
+| **4px** | | |
+| `--s` | `0.5rem` |  |
+| **8px** | | |
+| `--m` | `0.75rem` |  |
+| **12px** | | |
+| `--l` | `1rem` |  |
+| **16px** | | |
+| `--xl` | `1.5rem` |  |
+| **24px** | | |
+| `--2xl` | `2rem` |  |
+| **32px** | | |
+| `--3xl` | `2.5rem` |  |
+| **40px** | | |
+| `--4xl` | `3rem` |  |
+| **48px** | | |
+| `--5xl` | `3.5rem` |  |
+| **56px** | | |
+| `--6xl` | `4rem` |  |
+| **64px** | | |
+| `--7xl` | `4.5rem` |  |
+| **72px** | | |
+| `--8xl` | `5rem` |  |
+| **80px** | | |
+| `--9xl` | `5.5rem` |  |
+| **88px** | | |
+| `--10xl` | `6rem` |  |
+| **96px** | | |
+| `--11xl` | `6.5rem` |  |
+| **104px** | | |
+| `--12xl` | `7rem` |  |
+| **112px** | | |
+| `--13xl` | `7.5rem` |  |
+| **120px** | | |
+| `--14xl` | `10rem` |  |
+| **Spacing scale** | | |
+| `--space-none` | `var(--none)` |  |
+| `--space-2xs` | `var(--2xs)` |  |
+| `--space-xs` | `var(--xs)` |  |
+| `--space-s` | `var(--s)` |  |
+| `--space-m` | `var(--m)` |  |
+| `--space-l` | `var(--l)` |  |
+| `--space-xl` | `var(--xl)` |  |
+| `--space-2xl` | `var(--2xl)` |  |
+| `--space-3xl` | `var(--3xl)` |  |
+| `--space-4xl` | `var(--4xl)` |  |
+| `--space-5xl` | `var(--5xl)` |  |
+| `--space-6xl` | `var(--6xl)` |  |
+| `--space-7xl` | `var(--7xl)` |  |
+| `--space-8xl` | `var(--8xl)` |  |
+| `--space-9xl` | `var(--9xl)` |  |
+| `--space-10xl` | `var(--10xl)` |  |
+| `--space-11xl` | `var(--11xl)` |  |
+| `--space-12xl` | `var(--12xl)` |  |
+| `--space-13xl` | `var(--13xl)` |  |
+| `--space-14xl` | `var(--14xl)` |  |
+| **Section spacing variables** | | |
+| `--section-xs` | `var(--space-xl)` |  |
+| `--section-s` | `var(--space-2xl)` |  |
+| `--section-m` | `var(--space-6xl)` |  |
+| `--section-l` | `var(--space-10xl)` |  |
+| `--section-xl` | `var(--space-14xl)` |  |
+| **Border width tokens** | | |
+| `--border-s` | `1.5px` |  |
+| `--border-m` | `2px` |  |
+| `--border-l` | `4px` |  |
+| **Border composition variables** | | |
+| `--border-width` | `var(--border-s)` |  |
+| `--border-style` | `solid` |  |
+| `--border-color` | `var(--border-primary)` |  |
+| **Border radius tokens** | | |
+| `--radius-xs` | `4px` |  |
+| `--radius-s` | `6px` |  |
+| `--radius-m` | `10px` |  |
+| `--radius-l` | `16px` |  |
+| `--radius-xl` | `24px` |  |
+| `--radius-pill` | `999px` |  |
+
+### DARK MODE OVERRIDES
+
+| Token | Value | Note |
+| --- | --- | --- |
+| **Text** | | |
+| `--text-primary` | `#e8e6e3` |  |
+| `--text-secondary` | `#a8a5a2` |  |
+| `--text-plain` | `#f0eeeb` |  |
+| `--text-faded` | `rgba(255, 255, 255, 0.45)` |  |
+| `--text-accent` | `#5bb89a` |  |
+| `--text-link` | `#5bb89a` |  |
+| `--text-inverted` | `#1a1a1a` |  |
+| `--text-sidebar` | `var(--text-primary)` |  |
+| `--text-site-header` | `var(--text-primary)` |  |
+| **Background** | | |
+| `--background-primary` | `#1a1a1a` |  |
+| `--background-secondary` | `#222222` |  |
+| `--background-plain` | `#2a2a2a` |  |
+| `--background-faded` | `rgba(255, 255, 255, 0.06)` |  |
+| `--background-darker` | `rgba(255, 255, 255, 0.12)` |  |
+| `--background-modal` | `rgba(0, 0, 0, 0.5)` |  |
+| `--background-sidebar` | `var(--background-primary)` |  |
+| `--background-site-header` | `var(--background-primary)` |  |
+| **Border** | | |
+| `--border-primary` | `#e8e6e3` |  |
+| `--border-secondary` | `#3a3a3a` |  |
+| `--border-faded` | `rgba(255, 255, 255, 0.12)` |  |
+| **Black & white alpha (inverted for dark surfaces)** | | |
+| `--black-alpha-5` | `rgba(255, 255, 255, 0.05)` |  |
+| `--black-alpha-10` | `rgba(255, 255, 255, 0.08)` |  |
+| `--black-alpha-15` | `rgba(255, 255, 255, 0.12)` |  |
+| `--black-alpha-20` | `rgba(255, 255, 255, 0.16)` |  |
+| `--black-alpha-30` | `rgba(255, 255, 255, 0.22)` |  |
+| `--black-alpha-50` | `rgba(255, 255, 255, 0.45)` |  |
+| **Button** | | |
+| `--button-primary` | `#5bb89a` |  |
+| `--button-text` | `#1a1a1a` |  |
+| `--button-secondary` | `#e8e6e3` |  |
+| `--button-secondary-text` | `#1a1a1a` |  |
+| `--button-faded` | `rgba(255, 255, 255, 0.12)` |  |
+| **Status** | | |
+| `--status-info` | `var(--blue-light)` |  |
+| `--status-success` | `var(--green-light)` |  |
+| `--status-warning` | `var(--yellow-light)` |  |
+| `--status-danger` | `var(--red-light)` |  |
+| `--status-accent` | `var(--purple-light)` |  |
+| **Form** | | |
+| `--input-border` | `#3a3a3a` |  |
+| `--input-background` | `rgba(255, 255, 255, 0.08)` |  |
+| `--input-text` | `#f0eeeb` |  |
+| `--input-placeholder` | `rgba(255, 255, 255, 0.45)` |  |
+| `--input-focus` | `#5bb89a` |  |
+| `--input-disabled-bg` | `rgba(255, 255, 255, 0.06)` |  |
+| `--input-disabled-text` | `rgba(255, 255, 255, 0.3)` |  |
+| `--checkbox-background` | `#3a3a3a` |  |
+| `--checkbox-selected` | `#e8e6e3` |  |
+| `--checkbox-border` | `#555` |  |
+| `--checkbox-checkmark` | `#1a1a1a` |  |
+| `--toggle-track` | `#444` |  |
+| `--toggle-knob` | `#888` |  |
+| `--toggle-selected` | `#e8e6e3` |  |
+| `--toggle-knob-selected` | `#1a1a1a` |  |
+| **Card** | | |
+| `--card-background` | `var(--background-secondary)` |  |
+| `--card-border` | `var(--border-faded)` |  |
+| `--card-border-hover` | `var(--border-primary)` |  |
+| **Tooltip / Toast** | | |
+| `--tooltip-background` | `var(--neutral-100)` |  |
+| `--tooltip-text` | `var(--warm-black)` |  |
+| `--toast-background` | `var(--neutral-100)` |  |
+| `--toast-text` | `var(--warm-black)` |  |
+| **Dropdown** | | |
+| `--dropdown-background` | `var(--background-plain)` |  |
+| **Dialog** | | |
+| `--dialog-background` | `var(--background-secondary)` |  |
+| `--dialog-shadow` | `0 8px 40px var(--black-alpha-60)` |  |
+| **Mark** | | |
+| `--mark-background` | `color-mix(in srgb, var(--yellow), var(--alpha-60))` |  |
+| `--mark-text` | `var(--off-white)` |  |
+
+
+---
+
+## Color Usage
+Color tokens define the shared, reusable color values that power both design and code. This page shows what each color looks like. For the full token list with values, see the [Tokens](tokens.html) page.
+
+Colors are organised into two layers: **primitive tokens** (raw values) and **semantic tokens** (intent-based aliases). Always use semantic tokens in production code — primitives are the building blocks that semantic tokens reference.
+
+---
+
+## Brand Palette
+
+The core brand colors that define the project identity. These are set per-project in the Brand Tokens section of `design-system.css`.
+
+<div class="color-list border border-faded">
+  <div class="color-row" style="background-color: var(--off-white);" data-token="--off-white"><span class="color-row-name">off-white</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--warm-white);" data-token="--warm-white"><span class="color-row-name">warm-white</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--warm-black);" data-token="--warm-black"><span class="color-row-name">warm-black</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--off-black);" data-token="--off-black"><span class="color-row-name">off-black</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+</div>
+
+### Accent Colors
+
+<div class="grid cols-2 gap-m">
+  <div class="color-list border border-faded">
+    <div class="color-row" style="background-color: var(--red-lighter);" data-token="--red-lighter"><span class="color-row-name">red-lighter</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row" style="background-color: var(--red-light);" data-token="--red-light"><span class="color-row-name">red-light</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row is-text-light" style="background-color: var(--red);" data-token="--red"><span class="color-row-name">red</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row is-text-light" style="background-color: var(--red-dark);" data-token="--red-dark"><span class="color-row-name">red-dark</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  </div>
+  <div class="color-list border border-faded">
+    <div class="color-row" style="background-color: var(--blue-lighter);" data-token="--blue-lighter"><span class="color-row-name">blue-lighter</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row" style="background-color: var(--blue-light);" data-token="--blue-light"><span class="color-row-name">blue-light</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row is-text-light" style="background-color: var(--blue);" data-token="--blue"><span class="color-row-name">blue</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row is-text-light" style="background-color: var(--blue-dark);" data-token="--blue-dark"><span class="color-row-name">blue-dark</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  </div>
+  <div class="color-list border border-faded">
+    <div class="color-row" style="background-color: var(--yellow-lighter);" data-token="--yellow-lighter"><span class="color-row-name">yellow-lighter</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row" style="background-color: var(--yellow-light);" data-token="--yellow-light"><span class="color-row-name">yellow-light</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row is-text-light" style="background-color: var(--yellow);" data-token="--yellow"><span class="color-row-name">yellow</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row is-text-light" style="background-color: var(--yellow-dark);" data-token="--yellow-dark"><span class="color-row-name">yellow-dark</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  </div>
+  <div class="color-list border border-faded">
+    <div class="color-row" style="background-color: var(--green-lighter);" data-token="--green-lighter"><span class="color-row-name">green-lighter</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row" style="background-color: var(--green-light);" data-token="--green-light"><span class="color-row-name">green-light</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row is-text-light" style="background-color: var(--green);" data-token="--green"><span class="color-row-name">green</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row is-text-light" style="background-color: var(--green-dark);" data-token="--green-dark"><span class="color-row-name">green-dark</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  </div>
+  <div class="color-list border border-faded">
+    <div class="color-row" style="background-color: var(--purple-lighter);" data-token="--purple-lighter"><span class="color-row-name">purple-lighter</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row" style="background-color: var(--purple-light);" data-token="--purple-light"><span class="color-row-name">purple-light</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row is-text-light" style="background-color: var(--purple);" data-token="--purple"><span class="color-row-name">purple</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+    <div class="color-row is-text-light" style="background-color: var(--purple-dark);" data-token="--purple-dark"><span class="color-row-name">purple-dark</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  </div>
+</div>
+
+---
+
+## Primitive Scales
+
+### Neutral
+
+Warm grey ramp from lightest to near-black, used for backgrounds, borders, and secondary text.
+
+<div class="color-list border border-faded">
+  <div class="color-row" style="background-color: var(--neutral-50);" data-token="--neutral-50"><span class="color-row-name">neutral-50</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--neutral-100);" data-token="--neutral-100"><span class="color-row-name">neutral-100</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--neutral-150);" data-token="--neutral-150"><span class="color-row-name">neutral-150</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--neutral-200);" data-token="--neutral-200"><span class="color-row-name">neutral-200</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--neutral-300);" data-token="--neutral-300"><span class="color-row-name">neutral-300</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--neutral-400);" data-token="--neutral-400"><span class="color-row-name">neutral-400</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--neutral-500);" data-token="--neutral-500"><span class="color-row-name">neutral-500</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--neutral-600);" data-token="--neutral-600"><span class="color-row-name">neutral-600</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--neutral-700);" data-token="--neutral-700"><span class="color-row-name">neutral-700</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--neutral-800);" data-token="--neutral-800"><span class="color-row-name">neutral-800</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--neutral-900);" data-token="--neutral-900"><span class="color-row-name">neutral-900</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--neutral-950);" data-token="--neutral-950"><span class="color-row-name">neutral-950</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--neutral-990);" data-token="--neutral-990"><span class="color-row-name">neutral-990</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+</div>
+
+### Black Alpha
+
+Semi-transparent black values for overlays, shadows, borders, and tints.
+
+<div class="color-list border border-faded">
+  <div class="color-row is-text-light" style="background-color: var(--black);" data-token="--black"><span class="color-row-name">black</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--black-alpha-95);" data-token="--black-alpha-95"><span class="color-row-name">black-alpha-95</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--black-alpha-90);" data-token="--black-alpha-90"><span class="color-row-name">black-alpha-90</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--black-alpha-80);" data-token="--black-alpha-80"><span class="color-row-name">black-alpha-80</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--black-alpha-70);" data-token="--black-alpha-70"><span class="color-row-name">black-alpha-70</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--black-alpha-60);" data-token="--black-alpha-60"><span class="color-row-name">black-alpha-60</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--black-alpha-50);" data-token="--black-alpha-50"><span class="color-row-name">black-alpha-50</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--black-alpha-40);" data-token="--black-alpha-40"><span class="color-row-name">black-alpha-40</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--black-alpha-30);" data-token="--black-alpha-30"><span class="color-row-name">black-alpha-30</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--black-alpha-20);" data-token="--black-alpha-20"><span class="color-row-name">black-alpha-20</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--black-alpha-15);" data-token="--black-alpha-15"><span class="color-row-name">black-alpha-15</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--black-alpha-10);" data-token="--black-alpha-10"><span class="color-row-name">black-alpha-10</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--black-alpha-5);" data-token="--black-alpha-5"><span class="color-row-name">black-alpha-5</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--black-alpha-3);" data-token="--black-alpha-3"><span class="color-row-name">black-alpha-3</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+</div>
+
+### White Alpha
+
+Semi-transparent white values for highlights and light overlays. Shown on a dark background for visibility.
+
+<div class="color-list border border-faded" style="background: var(--neutral-800);">
+  <div class="color-row is-text-light" style="background-color: var(--white);" data-token="--white"><span class="color-row-name">white</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-95);" data-token="--white-alpha-95"><span class="color-row-name">white-alpha-95</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-90);" data-token="--white-alpha-90"><span class="color-row-name">white-alpha-90</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-80);" data-token="--white-alpha-80"><span class="color-row-name">white-alpha-80</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-70);" data-token="--white-alpha-70"><span class="color-row-name">white-alpha-70</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-60);" data-token="--white-alpha-60"><span class="color-row-name">white-alpha-60</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-50);" data-token="--white-alpha-50"><span class="color-row-name">white-alpha-50</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-40);" data-token="--white-alpha-40"><span class="color-row-name">white-alpha-40</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-30);" data-token="--white-alpha-30"><span class="color-row-name">white-alpha-30</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-20);" data-token="--white-alpha-20"><span class="color-row-name">white-alpha-20</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-15);" data-token="--white-alpha-15"><span class="color-row-name">white-alpha-15</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-10);" data-token="--white-alpha-10"><span class="color-row-name">white-alpha-10</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--white-alpha-5);" data-token="--white-alpha-5"><span class="color-row-name">white-alpha-5</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+</div>
+
+---
+
+## Semantic Colors
+
+Semantic colors map primitive tokens to **meaning and intent**. Use these in layouts and components — never use primitives directly.
+
+### Text
+
+<div class="color-list border border-faded">
+  <div class="color-row is-text-light" style="background-color: var(--text-primary);" data-token="--text-primary"><span class="color-row-name">text-primary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--text-secondary);" data-token="--text-secondary"><span class="color-row-name">text-secondary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--text-plain);" data-token="--text-plain"><span class="color-row-name">text-plain</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--text-faded);" data-token="--text-faded"><span class="color-row-name">text-faded</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--text-accent);" data-token="--text-accent"><span class="color-row-name">text-accent</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--text-link);" data-token="--text-link"><span class="color-row-name">text-link</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--text-inverted);" data-token="--text-inverted"><span class="color-row-name">text-inverted</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+</div>
+
+### Background
+
+<div class="color-list border border-faded">
+  <div class="color-row" style="background-color: var(--background-primary);" data-token="--background-primary"><span class="color-row-name">background-primary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--background-secondary);" data-token="--background-secondary"><span class="color-row-name">background-secondary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--background-plain);" data-token="--background-plain"><span class="color-row-name">background-plain</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--background-faded);" data-token="--background-faded"><span class="color-row-name">background-faded</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--background-darker);" data-token="--background-darker"><span class="color-row-name">background-darker</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+</div>
+
+### Border
+
+<div class="color-list border border-faded">
+  <div class="color-row is-text-light" style="background-color: var(--border-primary);" data-token="--border-primary"><span class="color-row-name">border-primary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--border-secondary);" data-token="--border-secondary"><span class="color-row-name">border-secondary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--border-faded);" data-token="--border-faded"><span class="color-row-name">border-faded</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+</div>
+
+### Button
+
+<div class="color-list border border-faded">
+  <div class="color-row is-text-light" style="background-color: var(--button-primary);" data-token="--button-primary"><span class="color-row-name">button-primary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row" style="background-color: var(--button-text);" data-token="--button-text"><span class="color-row-name">button-text</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--button-secondary);" data-token="--button-secondary"><span class="color-row-name">button-secondary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--button-faded);" data-token="--button-faded"><span class="color-row-name">button-faded</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+</div>
+
+### Status
+
+Status tokens now reference the dark shade of each accent colour family. `--status-info` maps to `var(--blue-dark)` (previously `var(--green)`), aligning with the conventional use of blue for informational states. In dark mode, status tokens flip to the light shades for readability.
+
+<div class="color-list border border-faded">
+  <div class="color-row is-text-light" style="background-color: var(--status-info);" data-token="--status-info"><span class="color-row-name">status-info</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--status-success);" data-token="--status-success"><span class="color-row-name">status-success</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--status-warning);" data-token="--status-warning"><span class="color-row-name">status-warning</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--status-danger);" data-token="--status-danger"><span class="color-row-name">status-danger</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--status-accent);" data-token="--status-accent"><span class="color-row-name">status-accent</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+</div>
+
+---
+
+## Dark Mode
+
+The design system uses a `data-theme` attribute to switch between light and dark modes. Light mode is the default. Dark mode activates when `data-theme="dark"` is set on any element.
+
+### How It Works
+
+- **`:root`** — light mode tokens (always present)
+- **`[data-theme="dark"]`** — overrides semantic tokens with dark values
+- **`@media (prefers-color-scheme: dark)`** — no-JS fallback for users with a dark OS preference
+
+The toggle button in the site header sets `data-theme="dark"` on `<html>` and persists the choice in `localStorage`.
+
+### Scoped Usage
+
+You can apply dark mode to any element, not just the page:
+
+<div data-theme="dark" style="background: var(--background-primary); color: var(--text-primary); padding: var(--space-xl); border: var(--border-s) solid var(--border-secondary);">
+      <div class="block gap-xs">
+        <h4>Dark mode</h4>
+        <p>Primary text</p>
+        <p style="color: var(--text-faded);">Faded text</p>
+        <p style="color: var(--text-accent);">Accent text</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+```html
+<!-- Dark card on a light page -->
+<div data-theme="dark" class="card">
+  <p>This section uses dark mode tokens</p>
+</div>
+```
+
+All semantic tokens inside that element resolve to their dark values via CSS custom property inheritance.
+
+### Customizing Dark Mode
+
+Edit the `[data-theme="dark"]` block in `design-system.css` (section 2b). When changing a value, also update the `@media (prefers-color-scheme: dark)` fallback (section 2c) to keep them in sync.
+
+---
+
+## Typography
+Typography tokens provide a **consistent, modular system** for all text across the products. They are designed for **clarity, readability, and hierarchy**, while remaining flexible across devices.
+
+The system uses three font families — a primary sans-serif for body and UI, a secondary serif for headings, and a tertiary monospace for code and labels. For the full list of typography token values, see the [Tokens](tokens.html) page.
+
+---
+
+## Font Sizes
+
+The full type scale used across the system. Reference these tokens when setting font sizes on any element.
+
+The scale uses a **progressive step** approach: +2px in the body range, +4px in the heading range, and +8px in the display range.
+
+| Token | Value | px Equivalent |
+| --- | --- | --- |
+| `--font-3xs` | 0.625rem | 10px |
+| `--font-2xs` | 0.75rem | 12px |
+| `--font-xs` | 0.875rem | 14px |
+| `--font-s` | 1rem | 16px |
+| `--font-m` | 1.125rem | 18px |
+| `--font-l` | 1.25rem | 20px |
+| `--font-xl` | 1.375rem | 22px |
+| `--font-2xl` | 1.5rem | 24px |
+| `--font-3xl` | 1.75rem | 28px |
+| `--font-4xl` | 2rem | 32px |
+| `--font-5xl` | 2.25rem | 36px |
+| `--font-6xl` | 2.5rem | 40px |
+| `--font-7xl` | 3rem | 48px |
+| `--font-8xl` | 3.5rem | 56px |
+| `--font-9xl` | 4rem | 64px |
+| `--font-10xl` | 4.5rem | 72px |
+
+---
+
+## Headings
+
+All headings use `--font-secondary` (RecifeText) at `--font-weight-regular` (400). Each level steps down in size to create a clear visual hierarchy.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Heading 2</p>
+      <h2 style="margin: 0;">Every detail contributes to the whole</h2>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Heading 3</p>
+      <h3 style="margin: 0;">Structure creates clarity in complexity</h3>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Heading 4</p>
+      <h4 style="margin: 0;">Good defaults eliminate guesswork</h4>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Heading 5</p>
+      <h5 style="margin: 0;">Constraints unlock creative freedom</h5>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Heading 6</p>
+      <h6 style="margin: 0;">Small decisions compound over time</h6>
+    </div>
+  </div>
+</div>
+
+```html
+<h1>Build systems that scale with your ambition</h1>
+<h2>Every detail contributes to the whole</h2>
+<h3>Structure creates clarity in complexity</h3>
+```
+
+| Element | Token | Line Height |
+| --- | --- | --- |
+| `h1` | `--font-7xl` | `--line-height-s` (1) |
+| `h2` | `--font-6xl` | `--line-height-s` (1) |
+| `h3` | `--font-4xl` | `--line-height-s` (1) |
+| `h4` | `--font-3xl` | `--line-height-s` (1) |
+| `h5` | `--font-xl` | `--line-height-s` (1) |
+| `h6` | `--font-xl` | `--line-height-l` (1.4) |
+
+---
+
+## Body Text
+
+The default paragraph style used for all running content. The `--text-body` token controls the base size globally — changing it updates paragraphs, inputs, code, tables, and buttons at once. Size modifier classes let you step up or down from the default.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Large</p>
+      <p class="text-size-large" style="margin: 0;">Introductory text and section summaries that sit between headings and body text in the hierarchy.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Medium (default)</p>
+      <p style="margin: 0;">The default body text size. This is what you get without adding any size class — the baseline for all running content.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Small</p>
+      <p class="text-size-small" style="margin: 0;">Secondary content, supporting details, and supplementary information that doesn't need to compete with body text for attention.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Extra Small</p>
+      <p class="text-size-xsmall" style="margin: 0;">Captions, footnotes, metadata, and fine print — available but not prominent.</p>
+    </div>
+  </div>
+</div>
+
+```html
+<p class="text-size-xlarge">Lead paragraph text.</p>
+<p class="text-size-large">Introductory text.</p>
+<p>Default body text (no class needed).</p>
+<p class="text-size-small">Smaller supporting text.</p>
+<p class="text-size-xsmall">Captions and metadata.</p>
+```
+
+| Element | Token | Line Height |
+| --- | --- | --- |
+| `.text-size-xlarge` | `--font-3xl` | `--line-height-l` (1.4) |
+| `.text-size-large` | `--font-xl` | `--line-height-l` (1.4) |
+| `p` (default) | `--font-m` | `--line-height-l` (1.4) |
+| `.text-size-small` | `--font-s` | `--line-height-xl` (1.6) |
+| `.text-size-xsmall` | `--font-xs` | `--line-height-xl` (1.6) |
+
+---
+
+## Eyebrow
+
+A small, uppercase label used to provide context above headings, within sections, or inline with other content. The `.eyebrow` class works on any element — `<p>`, `<span>`, `<h2>`, or anything else.
+
+<div class="block gap-s">
+      <span class="eyebrow">Latest Update</span>
+      <h3 style="margin: 0; color: var(--text-faded);">New components added to the library</h3>
+    </div>
+    <div class="block gap-s">
+      <h2 class="eyebrow" style="margin: 0;">Section Label</h2>
+      <p style="margin: 0; color: var(--text-faded);">An eyebrow on an h2 resets it to the small uppercase style, useful when you need heading semantics without heading size.</p>
+    </div>
+  </div>
+</div>
+
+```html
+<!-- On a paragraph -->
+<p class="eyebrow">Case Study</p>
+<h2>Building a design system from the ground up</h2>
+
+<!-- On a span (inline) -->
+<span class="eyebrow">Latest Update</span>
+
+<!-- On a heading (semantic heading, eyebrow style) -->
+<h2 class="eyebrow">Section Label</h2>
+
+```
+
+| Element | Token | Line Height |
+| --- | --- | --- |
+| `.eyebrow` | `--font-xs` | `--line-height-m` (1.3) |
+
+---
+
+## Blockquote
+
+Used for pullquotes and highlighted passages. Renders in the secondary serif font with a left border accent.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Long quote</p>
+      <blockquote style="margin: 0;">
+        <p>A design system is more than a collection of components — it is a shared language between design and engineering. When done well, it reduces inconsistency, speeds up delivery, and creates a foundation that scales with the product.</p>
+      </blockquote>
+    </div>
+  </div>
+</div>
+
+```html
+<blockquote>
+  <p>Good typography is invisible. Bad typography is everywhere.</p>
+</blockquote>
+```
+
+| Element | Token | Line Height |
+| --- | --- | --- |
+| `blockquote` | `--font-m` | `--line-height-l` (1.4) |
+
+---
+
+## Font Families
+
+The system uses four font stacks, each with a distinct role.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Secondary — RecifeText</p>
+      <p style="margin: 0; font-family: var(--font-secondary); font-size: var(--font-3xl);">Typography is the voice of design</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Tertiary — IBM Plex Mono</p>
+      <p style="margin: 0; font-family: var(--font-tertiary); font-size: var(--font-3xl);">Typography is the voice of design</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Quaternary — Bugrino</p>
+      <p style="margin: 0; font-family: var(--font-quaternary); font-size: var(--font-3xl);">Typography is the voice of design</p>
+    </div>
+  </div>
+</div>
+
+```css
+body { font-family: var(--font-primary); }
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-secondary); }
+code, pre, kbd { font-family: var(--font-tertiary); }
+```
+
+| Token | Font | Used For |
+| --- | --- | --- |
+| `--font-primary` | Inclusive Sans | Body text, UI, labels |
+| `--font-secondary` | RecifeText | Headings, blockquotes |
+| `--font-tertiary` | IBM Plex Mono | Code, pre, kbd |
+| `--font-quaternary` | Bugrino | TBD |
+
+---
+
+## Font Weight
+
+Available weight values from light to black. All headings default to regular weight.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Regular</p>
+      <div class="font-4xl" style="font-weight: var(--font-weight-regular);">Systems scale when decisions are shared</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Medium</p>
+      <div class="font-4xl" style="font-weight: var(--font-weight-medium);">Tokens turn intention into consistency</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Semi-Bold</p>
+      <div class="font-4xl" style="font-weight: var(--font-weight-semi-bold);">Structure creates clarity in complexity</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Bold</p>
+      <div class="font-4xl" style="font-weight: var(--font-weight-bold);">Good defaults eliminate guesswork</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Extra-Bold</p>
+      <div class="font-4xl" style="font-weight: var(--font-weight-extra-bold);">Constraints unlock creative freedom</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Black</p>
+      <div class="font-4xl" style="font-weight: var(--font-weight-black);">Build with purpose, not by accident</div>
+    </div>
+  </div>
+</div>
+
+```css
+font-weight: var(--font-weight-bold);
+```
+
+| Token | Value |
+| --- | --- |
+| `--font-weight-light` | 300 |
+| `--font-weight-regular` | 400 |
+| `--font-weight-medium` | 500 |
+| `--font-weight-semi-bold` | 600 |
+| `--font-weight-bold` | 700 |
+| `--font-weight-extra-bold` | 800 |
+| `--font-weight-black` | 900 |
+
+---
+
+## Line Height
+
+Vertical rhythm values from tight display text to loose body copy. Headings use tighter values; body text uses looser values for readability.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Small</p>
+      <p class="text-size-large" style="margin: 0; line-height: var(--line-height-s);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Medium</p>
+      <p class="text-size-large" style="margin: 0; line-height: var(--line-height-m);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Large</p>
+      <p class="text-size-large" style="margin: 0; line-height: var(--line-height-l);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Extra Large</p>
+      <p class="text-size-large" style="margin: 0; line-height: var(--line-height-xl);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">2X Large</p>
+      <p class="text-size-large" style="margin: 0; line-height: var(--line-height-2xl);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+    </div>
+  </div>
+</div>
+
+```css
+line-height: var(--line-height-l);
+```
+
+| Token | Value | Used For |
+| --- | --- | --- |
+| `--line-height-xs` | 0.7 | Tight display text |
+| `--line-height-s` | 1 | Headings |
+| `--line-height-m` | 1.3 | Subheadings, eyebrows |
+| `--line-height-l` | 1.4 | Body text, paragraphs |
+| `--line-height-xl` | 1.6 | Small text, captions |
+| `--line-height-2xl` | 1.8 | Spacious body text |
+
+---
+
+## Letter Spacing
+
+Tracking values used for labels, eyebrows, and display text. Values are em-based so they scale proportionally with font size.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Medium</p>
+      <div style="letter-spacing: var(--letter-spacing-m); font-size: var(--font-m); text-transform: uppercase; font-weight: var(--font-weight-semi-bold);">Design System Components</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Large</p>
+      <div style="letter-spacing: var(--letter-spacing-l); font-size: var(--font-m); text-transform: uppercase; font-weight: var(--font-weight-semi-bold);">Design System Components</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Extra Large</p>
+      <div style="letter-spacing: var(--letter-spacing-xl); font-size: var(--font-m); text-transform: uppercase; font-weight: var(--font-weight-semi-bold);">Design System Components</div>
+    </div>
+  </div>
+</div>
+
+```css
+letter-spacing: var(--letter-spacing-xl);
+```
+
+| Token | Value | Used For |
+| --- | --- | --- |
+| `--letter-spacing-s` | 0.03em | Subtle tracking |
+| `--letter-spacing-m` | 0.06em | Medium tracking |
+| `--letter-spacing-l` | 0.12em | Wide tracking |
+| `--letter-spacing-xl` | 0.24em | Eyebrows, labels |
+
+---
+
+## Spacing
+Spacing tokens define **distance**, not intent. They are reused for gaps, padding, and margins depending on context. For the full list of spacing token values, see the [Tokens](tokens.html) page.
+
+The system is built in layers: **unit tokens** (raw values) → **space tokens** (semantic aliases) → **utility classes** (applied in HTML). Always use space tokens or utility classes — never hardcode pixel values.
+
+---
+
+## Space Scale
+
+The space scale provides a visual reference for the spacing tokens used throughout the system.
+
+| Token | Value | px Equivalent |
+| --- | --- | --- |
+| `--space-none` | 0 | 0px |
+| `--space-2xs` | 0.125rem | 2px |
+| `--space-xs` | 0.25rem | 4px |
+| `--space-s` | 0.5rem | 8px |
+| `--space-m` | 0.75rem | 12px |
+| `--space-l` | 1rem | 16px |
+| `--space-xl` | 1.5rem | 24px |
+| `--space-2xl` | 2rem | 32px |
+| `--space-3xl` | 2.5rem | 40px |
+| `--space-4xl` | 3rem | 48px |
+| `--space-5xl` | 3.5rem | 56px |
+| `--space-6xl` | 4rem | 64px |
+| `--space-7xl` | 4.5rem | 72px |
+| `--space-8xl` | 5rem | 80px |
+| `--space-9xl` | 5.5rem | 88px |
+| `--space-10xl` | 6rem | 96px |
+
+<div class="block gap-s">
+      <p class="demo-eyebrow">xs · 4px</p>
+      <div style="height: var(--xs); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">s · 8px</p>
+      <div style="height: var(--s); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">m · 12px</p>
+      <div style="height: var(--m); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">l · 16px</p>
+      <div style="height: var(--l); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">xl · 24px</p>
+      <div style="height: var(--xl); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">2xl · 32px</p>
+      <div style="height: var(--2xl); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">3xl · 40px</p>
+      <div style="height: var(--3xl); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">4xl · 48px</p>
+      <div style="height: var(--4xl); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">6xl · 64px</p>
+      <div style="height: var(--6xl); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">8xl · 80px</p>
+      <div style="height: var(--8xl); width: 100%; background: var(--background-darker);"></div>
+    </div>
+    <div class="block gap-s">
+      <p class="demo-eyebrow">10xl · 96px</p>
+      <div style="height: var(--10xl); width: 100%; background: var(--background-darker);"></div>
+    </div>
+  </div>
+</div>
+
+```css
+padding: var(--space-m);
+gap: var(--space-xl);
+margin-bottom: var(--space-l);
+```
+
+---
+
+## Gap
+
+Gap modifiers control the space between child elements inside a `.block`. The default gap is `--space-m`.
+
+<div style="padding: var(--space-s); background: var(--background-faded);">Second item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Third item</div>
+        </div>
+      </div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Extra Small</p>
+      <div class="block padding-l border border-faded border-dashed">
+        <div class="block gap-xs">
+          <div style="padding: var(--space-s); background: var(--background-faded);">First item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Second item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Third item</div>
+        </div>
+      </div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Small</p>
+      <div class="block padding-l border border-faded border-dashed">
+        <div class="block gap-s">
+          <div style="padding: var(--space-s); background: var(--background-faded);">First item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Second item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Third item</div>
+        </div>
+      </div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Default gap</p>
+      <div class="block padding-l border border-faded border-dashed">
+        <div class="block gap-m">
+          <div style="padding: var(--space-s); background: var(--background-faded);">First item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Second item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Third item</div>
+        </div>
+      </div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Large</p>
+      <div class="block padding-l border border-faded border-dashed">
+        <div class="block gap-l">
+          <div style="padding: var(--space-s); background: var(--background-faded);">First item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Second item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Third item</div>
+        </div>
+      </div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Extra Large</p>
+      <div class="block padding-l border border-faded border-dashed">
+        <div class="block gap-xl">
+          <div style="padding: var(--space-s); background: var(--background-faded);">First item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Second item</div>
+          <div style="padding: var(--space-s); background: var(--background-faded);">Third item</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+```html
+<div class="block gap-l">
+  <div>Item one</div>
+  <div>Item two</div>
+  <div>Item three</div>
+</div>
+```
+
+| Class | Value | px Equivalent |
+| --- | --- | --- |
+| `.gap-none` | 0 | 0px |
+| `.gap-xs` | `--space-xs` | 4px |
+| `.gap-s` | `--space-s` | 8px |
+| `.gap-m` | `--space-m` | 12px |
+| `.gap-l` | `--space-l` | 16px |
+| `.gap-xl` | `--space-xl` | 24px |
+| `.gap-2xl` | `--space-2xl` | 32px |
+| `.gap-3xl` | `--space-3xl` | 40px |
+
+---
+
+## Padding
+
+Padding utilities apply internal spacing to an element on all sides.
+
+</div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">.padding-m</p>
+      <div class="padding-m" style="background: var(--background-faded);">
+        <div style="background: var(--background-primary); padding: var(--space-s);">Content</div>
+      </div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">.padding-l</p>
+      <div class="padding-l" style="background: var(--background-faded);">
+        <div style="background: var(--background-primary); padding: var(--space-s);">Content</div>
+      </div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">.padding-xl</p>
+      <div class="padding-xl" style="background: var(--background-faded);">
+        <div style="background: var(--background-primary); padding: var(--space-s);">Content</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+```html
+<div class="padding-l">
+  <!-- Content with large padding on all sides -->
+</div>
+```
+
+| Class | Value | px Equivalent |
+| --- | --- | --- |
+| `.padding-s` | `--space-s` | 8px |
+| `.padding-m` | `--space-m` | 12px |
+| `.padding-l` | `--space-l` | 16px |
+| `.padding-xl` | `--space-xl` | 24px |
+| `.padding-2xl` | `--space-2xl` | 32px |
+| `.padding-3xl` | `--space-3xl` | 40px |
+
+---
+
+## Section Spacing
+
+Section spacing controls the vertical rhythm between major page sections. Apply `.top-*` and `.bottom-*` classes to `<section>` elements. These scale responsively between desktop and mobile.
+
+<div style="padding: var(--space-m);">
+            <p class="text-size-xsmall text-faded" style="margin: 0;"><code>.top-small</code></p>
+          </div>
+        </div>
+        <div class="block gap-none border border-faded border-dashed">
+          <div class="top-medium bg-faded"></div>
+          <div style="padding: var(--space-m);">
+            <p class="text-size-xsmall text-faded" style="margin: 0;"><code>.top-medium</code></p>
+          </div>
+        </div>
+        <div class="block gap-none border border-faded border-dashed">
+          <div class="top-large bg-faded"></div>
+          <div style="padding: var(--space-m);">
+            <p class="text-size-xsmall text-faded" style="margin: 0;"><code>.top-large</code></p>
+          </div>
+        </div>
+        <div class="block gap-none border border-faded border-dashed">
+          <div class="top-xl bg-faded"></div>
+          <div style="padding: var(--space-m);">
+            <p class="text-size-xsmall text-faded" style="margin: 0;"><code>.top-xl</code></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Bottom spacing</p>
+      <div class="block gap-m">
+        <div class="block gap-none border border-faded border-dashed">
+          <div style="padding: var(--space-m);">
+            <p class="text-size-xsmall text-faded" style="margin: 0;"><code>.bottom-small</code></p>
+          </div>
+          <div class="bottom-small bg-faded"></div>
+        </div>
+        <div class="block gap-none border border-faded border-dashed">
+          <div style="padding: var(--space-m);">
+            <p class="text-size-xsmall text-faded" style="margin: 0;"><code>.bottom-medium</code></p>
+          </div>
+          <div class="bottom-medium bg-faded"></div>
+        </div>
+        <div class="block gap-none border border-faded border-dashed">
+          <div style="padding: var(--space-m);">
+            <p class="text-size-xsmall text-faded" style="margin: 0;"><code>.bottom-large</code></p>
+          </div>
+          <div class="bottom-large bg-faded"></div>
+        </div>
+        <div class="block gap-none border border-faded border-dashed">
+          <div style="padding: var(--space-m);">
+            <p class="text-size-xsmall text-faded" style="margin: 0;"><code>.bottom-xl</code></p>
+          </div>
+          <div class="bottom-xl bg-faded"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+```html
+<section class="top-medium bottom-medium">
+  <!-- Section content -->
+</section>
+```
+
+| Class | Token | Desktop | Mobile |
+| --- | --- | --- | --- |
+| `.top-small` / `.bottom-small` | `--section-s` | 32px | 24px |
+| `.top-medium` / `.bottom-medium` | `--section-m` | 64px | 32px |
+| `.top-large` / `.bottom-large` | `--section-l` | 96px | 56px |
+| `.top-xl` / `.bottom-xl` | `--section-xl` | 160px | 80px |
+
+---
+
+## Border System
+Borders use a **composable architecture** that separates positioning from styling. Structural classes define where the border appears, and combo classes modify width, style, and color independently. For border token values, see the [Tokens](tokens.html) page.
+
+---
+
+## Structure
+
+Structural classes define **where** the border appears. By default, borders use `--border-s` width, solid style, and `--border-primary` color.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Top</p>
+      <div class="border-top padding-l">Content with top border</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Bottom</p>
+      <div class="border-bottom padding-l">Content with bottom border</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Left</p>
+      <div class="border-left padding-l">Content with left border</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Right</p>
+      <div class="border-right padding-l">Content with right border</div>
+    </div>
+  </div>
+</div>
+
+```html
+<div class="border">All sides</div>
+<div class="border-top">Top only</div>
+<div class="border-bottom">Bottom only</div>
+<div class="border-left">Left only</div>
+<div class="border-right">Right only</div>
+```
+
+| Class | Effect |
+| --- | --- |
+| `.border` | Border on all sides |
+| `.border-top` | Top only |
+| `.border-bottom` | Bottom only |
+| `.border-left` | Left only |
+| `.border-right` | Right only |
+
+---
+
+## Width
+
+Width classes modify the border thickness. The default is `--border-s`.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Medium</p>
+      <div class="border border-m padding-l">2px border</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Large</p>
+      <div class="border border-l padding-l">4px border</div>
+    </div>
+  </div>
+</div>
+
+```html
+<div class="border border-m">Medium border on all sides</div>
+```
+
+| Class | Token | px Equivalent |
+| --- | --- | --- |
+| `.border-s` | `--border-s` | 1.5px |
+| `.border-m` | `--border-m` | 2px |
+| `.border-l` | `--border-l` | 4px |
+
+---
+
+## Style
+
+Style classes modify the border appearance. The default is solid.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Dashed</p>
+      <div class="border border-dashed padding-l">Dashed border</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Dotted</p>
+      <div class="border border-dotted padding-l">Dotted border</div>
+    </div>
+  </div>
+</div>
+
+```html
+<div class="border border-dashed">Dashed border</div>
+```
+
+| Class | Style |
+| --- | --- |
+| `.border-solid` | Solid (default) |
+| `.border-dashed` | Dashed |
+| `.border-dotted` | Dotted |
+
+---
+
+## Color
+
+Color classes modify the border color using semantic tokens.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Secondary</p>
+      <div class="border border-secondary padding-l">Medium, neutral border</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Faded</p>
+      <div class="border border-faded padding-l">Subtle, light border</div>
+    </div>
+  </div>
+</div>
+
+```html
+<div class="border border-faded">Subtle border</div>
+```
+
+| Class | Token |
+| --- | --- |
+| `.border-primary` | `--border-primary` |
+| `.border-secondary` | `--border-secondary` |
+| `.border-faded` | `--border-faded` |
+
+---
+
+## Radius
+
+Border radius tokens control corner rounding. Apply them directly via CSS — there are no utility classes for radius.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Small</p>
+      <div class="border border-faded padding-l" style="border-radius: var(--radius-s);">6px radius</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Medium</p>
+      <div class="border border-faded padding-l" style="border-radius: var(--radius-m);">10px radius</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Large</p>
+      <div class="border border-faded padding-l" style="border-radius: var(--radius-l);">16px radius</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Extra Large</p>
+      <div class="border border-faded padding-l" style="border-radius: var(--radius-xl);">24px radius</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Pill</p>
+      <div class="border border-faded padding-l" style="border-radius: var(--radius-pill);">Fully rounded</div>
+    </div>
+  </div>
+</div>
+
+```css
+border-radius: var(--radius-m);
+```
+
+| Token | Value |
+| --- | --- |
+| `--radius-xs` | 4px |
+| `--radius-s` | 6px |
+| `--radius-m` | 10px |
+| `--radius-l` | 16px |
+| `--radius-xl` | 24px |
+| `--radius-pill` | 999px |
+
+---
+
+## Composing Borders
+
+Combine structural, width, style, and color classes to build any border you need. Each class modifies a single concern.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Bottom + large + primary</p>
+      <div class="border-bottom border-l border-primary padding-l">Composed border</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">All sides + faded + dotted</p>
+      <div class="border border-faded border-dotted padding-l">Composed border</div>
+    </div>
+  </div>
+</div>
+
+```html
+<div class="border-top border-m border-dashed border-secondary">
+  Composed: top + medium + dashed + secondary
+</div>
+```
+
+---
+
+## Component Conventions
+This document defines the rules and conventions for building components in the By Default design system. All contributors must follow these patterns to keep the system consistent and predictable.
+
+---
+
+## Naming convention
+
+- **Base class:** `.component-name` (e.g. `.badge`, `.card`, `.toast`)
+- **Modifiers:** `.component-name--modifier` (e.g. `.badge--success`, `.card--flush`)
+- **State classes:** `.is-state` (e.g. `.is-active`, `.is-open`, `.is-disabled`, `.is-hidden`, `.is-loading`) — shared across components
+- **Utility overrides:** use `!important` only on utility classes (e.g. `.gap-m`)
+- **JS hooks:** use `data-*` attributes, never CSS class names
+
+**Legacy note:** The button component uses `.is-outline`, `.is-faded`, `.is-small`, `.is-xsmall`, `.is-icon` as modifiers. These predate the `--modifier` convention and are kept for backward compatibility. New components must use `--modifier` syntax.
+
+---
+
+## Token rule
+
+Every visual value in component CSS must reference a CSS custom property defined in `:root`. Never hardcode hex values, pixel values (except structural ones like `border-radius: 50%`), or raw font values.
+
+Component tokens follow this pattern:
+```css
+--component-property: var(--semantic-token);
+```
+
+Example:
+```css
+--card-background: var(--background-primary);
+--card-border: var(--border-faded);
+--card-radius: var(--radius-m);
+--card-padding: var(--space-xl);
+```
+
+---
+
+## File rule
+
+| What | Where |
+|------|-------|
+| Component CSS | `assets/css/design-system.css` under a numbered section heading |
+| Component JS (if needed) | `assets/js/component-name.js` |
+| Documentation source | `cms/component-name.md` |
+| Generated docs page | `design-system/component-name.html` |
+
+Section headings in `design-system.css` follow the format:
+```css
+/* ------ 16. BADGE ------ */
+```
+
+---
+
+## Accessibility rule
+
+Every interactive component must include:
+
+| Requirement | Details |
+|-------------|---------|
+| ARIA roles | Correct `role` attribute (e.g. `role="tablist"`, `role="tab"`, `role="tabpanel"`) |
+| ARIA attributes | `aria-selected`, `aria-controls`, `aria-labelledby`, `aria-current`, `aria-label` as needed |
+| Keyboard support | Tab to focus, Enter/Space to activate, Escape to dismiss (where applicable), Arrow keys for navigation (tabs, menus) |
+| Focus indicator | `box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus), transparent 75%)` |
+| Screen reader text | Use `aria-label` or visually hidden text for icon-only actions |
+
+---
+
+## Component status
+
+| Component | CSS class | Needs JS | Docs page |
+|-----------|-----------|----------|-----------|
+| Button | `.button` | No | `button.md` |
+| Form elements | `.form-group`, `.form-check`, `.form-toggle`, `.segmented-control` | No | `form.md` |
+| Callout | `.callout` | No | `callout.md` |
+| Disclosure | `details`/`summary` | No | `disclosure.md` |
+| Badge | `.badge` | No | `badge.md` |
+| Card | `.card` | No | `card.md` |
+| Breadcrumb | `.breadcrumb` | No | `breadcrumb.md` |
+| Tabs | `.tabs`, `.tab` | Yes (`tabs.js`) | `tabs.md` |
+| Progress | `.progress-bar` | No | `progress.md` |
+| Tooltip | `[data-tooltip]` | No | `tooltip.md` |
+| Toast | `.toast` | Yes (`toast.js`) | `toast.md` |
+| Code / Pre / Kbd | `code`, `pre`, `kbd` | No | `code.md` |
+| Mark / Abbr / Figure | `mark`, `abbr`, `figure` | No | `mark.md` |
+
+---
+
+## Dark mode rule
+
+Components must **not** contain dark-mode-specific CSS. They rely entirely on semantic token overrides in `[data-theme="dark"]` and `@media (prefers-color-scheme: dark)`.
+
+The only exception is when a component uses brand-palette tokens directly (avoid this). If unavoidable, add the override to both the `[data-theme="dark"]` block and the `@media` fallback block.
+
+Current exceptions:
+- `mark` element — uses `--yellow-light` via `--mark-background` token, requires dark mode override
+- Scrollbar — uses neutral scale tokens directly, requires dark mode override
+
+---
+
+## How to add a new component
+
+1. **Define tokens** in `:root` (in `design-system.css`, after existing component tokens):
+   ```css
+   /* -- Component tokens -- */
+   --component-property: var(--semantic-token);
+   ```
+
+2. **Add dark mode overrides** if the component uses non-semantic tokens — add to both `[data-theme="dark"]` and `@media (prefers-color-scheme: dark)` blocks.
+
+3. **Write CSS** in `design-system.css` under a new numbered section:
+   ```css
+   /* ------ N. COMPONENT NAME ------ */
+   ```
+
+4. **Write JS** (only if needed) in `assets/js/component-name.js`. Follow the existing pattern: IIFE, named functions, version logged to console.
+
+5. **Write documentation** in `cms/component-name.md` following the standard frontmatter and content structure.
+
+6. **Update this spec file** — add the component to the status table above.
+
+7. **Regenerate docs:**
+   ```bash
+   cd cms/generator && npm run docgen
+   ```
+
+---
+
+## Components
+
+### Button
+
+Buttons are interactive elements used to trigger actions. They size to their content by default and should communicate **clear intent and hierarchy**.
+
+The `.button` class is required for styled buttons. The bare `<button>` element has only a minimal reset — always add `class="button"` to get the full button appearance.
+
+---
+
+## Primary Button
+
+The default `.button` is the most prominent action on the page.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Hover</p>
+      <div><button class="button" style="transform: scale(1.05);">Primary Action</button></div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Disabled</p>
+      <div><button class="button" disabled>Primary Action</button></div>
+    </div>
+  </div>
+</div>
+
+```html
+<button class="button">Primary Action</button>
+<button class="button" disabled>Primary Action</button>
+```
+
+---
+
+## Outline Button
+
+`.is-outline` removes the filled background and uses a border instead. Use for secondary actions that shouldn't compete with the primary CTA.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Hover</p>
+      <div><button class="button is-outline" style="transform: scale(1.05);">Secondary Action</button></div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Disabled</p>
+      <div><button class="button is-outline" disabled>Secondary Action</button></div>
+    </div>
+  </div>
+</div>
+
+```html
+<button class="button is-outline">Secondary Action</button>
+```
+
+---
+
+## Faded Button
+
+`.is-faded` applies a subtle background for low-priority or passive actions.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Hover</p>
+      <div><button class="button is-faded" style="transform: scale(1.05);">Optional Action</button></div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Disabled</p>
+      <div><button class="button is-faded" disabled>Optional Action</button></div>
+    </div>
+  </div>
+</div>
+
+```html
+<button class="button is-faded">Optional Action</button>
+```
+
+---
+
+## Outline + Faded
+
+`.is-outline.is-faded` combines both modifiers for tertiary or utility actions.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Hover</p>
+      <div><button class="button is-outline is-faded" style="transform: scale(1.05);">Tertiary Action</button></div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Disabled</p>
+      <div><button class="button is-outline is-faded" disabled>Tertiary Action</button></div>
+    </div>
+  </div>
+</div>
+
+```html
+<button class="button is-outline is-faded">Tertiary Action</button>
+```
+
+---
+
+## Small Button
+
+`.is-small` reduces font size and padding for dense UI areas.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Disabled</p>
+      <div class="block row gap-m">
+        <button class="button is-small" disabled>Small Primary</button>
+        <button class="button is-small is-outline" disabled>Small Outline</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+```html
+<button class="button is-small">Small Primary</button>
+<button class="button is-small is-outline">Small Outline</button>
+<button class="button is-small is-faded">Small Faded</button>
+```
+
+---
+
+## Icon Button
+
+`.is-icon` creates a circular button designed for icons only. Always include `aria-label` for accessibility.
+
+</button>
+        <button class="button is-icon is-faded" aria-label="Search">
+          <div class="icn-svg" data-icon="search">
+            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <path d="M18.6 20L15.5658 16.9658C14.8452 16.2452 13.7005 16.2131 12.7513 16.584C12.6932 16.6067 12.6344 16.6287 12.575 16.65C11.925 16.8833 11.2333 17 10.5 17C8.68333 17 7.14583 16.3708 5.8875 15.1125C4.62917 13.8542 4 12.3167 4 10.5C4 8.68333 4.62917 7.14583 5.8875 5.8875C7.14583 4.62917 8.68333 4 10.5 4C12.3167 4 13.8542 4.62917 15.1125 5.8875C16.3708 7.14583 17 8.68333 17 10.5C17 11.2333 16.8833 11.925 16.65 12.575C16.6287 12.6344 16.6067 12.6932 16.584 12.7513C16.2131 13.7005 16.2452 14.8452 16.9658 15.5658L20 18.6L18.6 20ZM10.5 15C11.75 15 12.8125 14.5625 13.6875 13.6875C14.5625 12.8125 15 11.75 15 10.5C15 9.25 14.5625 8.1875 13.6875 7.3125C12.8125 6.4375 11.75 6 10.5 6C9.25 6 8.1875 6.4375 7.3125 7.3125C6.4375 8.1875 6 9.25 6 10.5C6 11.75 6.4375 12.8125 7.3125 13.6875C8.1875 14.5625 9.25 15 10.5 15Z" fill="currentColor"/>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Disabled</p>
+      <div class="block row gap-m">
+        <button class="button is-icon" aria-label="Close" disabled>
+          <div class="icn-svg" data-icon="close">
+            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+```html
+<button class="button is-icon" aria-label="Close">
+  <div class="icn-svg" data-icon="close"><!-- SVG icon --></div>
+</button>
+
+<button class="button is-icon is-faded" aria-label="Search">
+  <div class="icn-svg" data-icon="search"><!-- SVG icon --></div>
+</button>
+```
+
+---
+
+## Button Group
+
+`.button-group` is a flex container for grouping multiple buttons together. It provides consistent spacing, wraps on smaller screens, and vertically centres buttons of different sizes.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Centred</p>
+      <div class="button-group justify-center">
+        <button class="button">Confirm</button>
+        <button class="button is-outline">Cancel</button>
+      </div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Right-aligned</p>
+      <div class="button-group justify-end">
+        <button class="button is-faded">Cancel</button>
+        <button class="button">Confirm</button>
+      </div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Mixed sizes</p>
+      <div class="button-group">
+        <button class="button">Primary</button>
+        <button class="button is-small is-outline">Small Secondary</button>
+        <button class="button is-small is-faded">Small Tertiary</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+```html
+<div class="button-group">
+  <button class="button">Confirm</button>
+  <button class="button is-outline">Cancel</button>
+</div>
+
+<div class="button-group justify-center">...</div>
+<div class="button-group justify-end">...</div>
+```
+
+| Class | Effect |
+| --- | --- |
+| `.button-group` | Flex container with consistent gap |
+| `.justify-center` | Centre-aligns the group |
+| `.justify-end` | Right-aligns the group |
+
+---
+
+## All Variants
+
+A side-by-side comparison of every button style at default size.
+
+</button>
+  </div>
+</div>
+
+---
+
+## Copy Button
+
+The `.copy-btn` adds clipboard copy functionality to any button. It copies the value from `data-copy` and shows a "Copied!" state. Three variants are available. See the [Copy Button](copy-button.html) docs for full details.
+
+Copy</span>
+          <span class="copy-btn-copied"><div class="icn-svg" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div> Copied!</span>
+        </button>
+        <button class="button is-small is-outline copy-btn is-copied" type="button">
+          <span class="copy-btn-default"><div class="icn-svg" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> Copy</span>
+          <span class="copy-btn-copied"><div class="icn-svg" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div> Copied!</span>
+        </button>
+      </div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Icon Only</p>
+      <div class="block row gap-m">
+        <button class="button is-small is-outline copy-btn is-icon-only" data-copy="var(--button-primary)" data-tooltip="Copy" type="button" aria-label="Copy">
+          <span class="copy-btn-default"><div class="icn-svg" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
+          <span class="copy-btn-copied"><div class="icn-svg" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
+        </button>
+        <button class="button is-small is-outline copy-btn is-icon-only is-copied" data-tooltip="Copied!" type="button" aria-label="Copy">
+          <span class="copy-btn-default"><div class="icn-svg" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
+          <span class="copy-btn-copied"><div class="icn-svg" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
+        </button>
+      </div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Ghost</p>
+      <div class="block row gap-m">
+        <button class="button copy-btn is-ghost" data-copy="var(--button-primary)" data-tooltip="Copy" type="button" aria-label="Copy">
+          <span class="copy-btn-default"><div class="icn-svg" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
+          <span class="copy-btn-copied"><div class="icn-svg" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
+        </button>
+        <button class="button copy-btn is-ghost is-copied" data-tooltip="Copied!" type="button" aria-label="Copy">
+          <span class="copy-btn-default"><div class="icn-svg" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
+          <span class="copy-btn-copied"><div class="icn-svg" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+```html
+<!-- Icon + Text -->
+<button class="button is-small is-outline copy-btn" data-copy="value" type="button">
+  <span class="copy-btn-default">{{icon:copy}} Copy</span>
+  <span class="copy-btn-copied">{{icon:check}} Copied!</span>
+</button>
+
+<!-- Icon Only -->
+<button class="button is-small is-outline copy-btn is-icon-only" data-copy="value" data-tooltip="Copy" type="button" aria-label="Copy">
+  <span class="copy-btn-default">{{icon:copy}}</span>
+  <span class="copy-btn-copied">{{icon:check}}</span>
+</button>
+
+<!-- Ghost -->
+<button class="button copy-btn is-ghost" data-copy="value" data-tooltip="Copy" type="button" aria-label="Copy">
+  <span class="copy-btn-default">{{icon:copy}}</span>
+  <span class="copy-btn-copied">{{icon:check}}</span>
+</button>
+```
+
+Requires `assets/js/copy-button.js`.
+
+---
+
+## Usage Rules
+
+- Buttons should **never stretch full width** by default
+- Use one clear primary button per section when possible
+- Use outline or faded styles to reduce visual competition
+- Use icon buttons **only** when the icon meaning is clear
+- If a button feels too prominent or too quiet, change the modifier — not the base styles
+
+### Card
+
+Cards are surface containers that group related content with a border and background. They support padding modifiers and an interactive (clickable) variant.
+
+---
+
+## Tokens
+
+| Token | Default (Light) | Default (Dark) | Purpose |
+|-------|-----------------|----------------|---------|
+| `--card-background` | `var(--background-primary)` | `var(--background-secondary)` | Surface colour |
+| `--card-border` | `var(--border-faded)` | `var(--border-faded)` | Border colour |
+| `--card-radius` | `var(--radius-m)` | — | Corner radius |
+| `--card-padding` | `var(--space-xl)` | — | Internal padding |
+
+---
+
+## Basic usage
+
+```html
+<div class="card">
+  <p>Card content goes here.</p>
+</div>
+```
+
+---
+
+## Flush card
+
+Remove internal padding with `.card--flush` — useful when the card contains a full-bleed image or nested content that manages its own spacing.
+
+</div>
+
+```html
+<div class="card card--flush">
+  <!-- Content manages its own padding -->
+</div>
+```
+
+---
+
+## Interactive card
+
+Wrap in an `<a>` tag with `.card--interactive` for clickable cards. Adds hover shadow and focus ring.
+
+### Clickable card
+
+```html
+<a class="card card--interactive" href="#">
+  <h3 class="card-title">Clickable card</h3>
+  <p class="card-description">This entire card is a link.</p>
+</a>
+```
+
+### Image card
+
+Combine `.card--flush` with `.card--interactive` to create a clickable card with a full-bleed image. The `.img` and `.card-image` classes handle display and border-radius. Use a padded inner wrapper for the text content.
+
+</a>
+</div>
+
+```html
+<a class="card card--flush card--interactive" href="#">
+  <img class="img img-16x9 card-image" src="image.jpg" alt="Description">
+  <div style="padding: var(--card-padding);">
+    <h3 class="card-title">Card with image</h3>
+    <p class="card-description">Supporting text below the image.</p>
+  </div>
+</a>
+```
+
+---
+
+## Accessibility notes
+
+- Use semantic HTML inside cards (`<h3>`, `<p>`, `<ul>`, etc.)
+- Interactive cards (`<a>`) automatically receive focus ring on `focus-visible`
+- If a card contains multiple interactive elements, do not wrap the entire card in an `<a>`
+
+---
+
+## Do / Don't
+
+**Do:**
+- Use cards to group related content visually
+- Use `.card--flush` when content needs full-bleed layout
+
+**Don't:**
+- Don't nest interactive cards inside other interactive elements
+- Don't use cards purely for visual decoration — they should contain meaningful content
+
+### Callout
+
+Callouts are used to **highlight important information** within content. They draw attention to notes, tips, warnings, and other contextual messages.
+
+---
+
+## Core Principles
+
+- Callouts use a **base + variant** pattern (like buttons and borders)
+- The base `.callout` class provides structure and neutral styling
+- Variant classes add semantic color via left border and background tint
+- All colors are controlled by semantic tokens that can be customized per project
+
+---
+
+## Status Color Tokens
+
+Callout variants are powered by status color tokens defined in `:root`. Each status has a foreground and background token:
+
+| Token | Default | Purpose |
+|---|---|---|
+| `--status-info` | `var(--blue)` | Informational, notes |
+| `--status-info-bg` | `var(--blue-lighter)` | Info background |
+| `--status-success` | `var(--green)` | Tips, positive feedback |
+| `--status-success-bg` | `var(--green-lighter)` | Success background |
+| `--status-warning` | `var(--yellow-darker)` | Warnings, attention needed |
+| `--status-warning-bg` | `var(--yellow-lighter)` | Warning background |
+| `--status-danger` | `var(--red)` | Caution, destructive actions |
+| `--status-danger-bg` | `var(--red-lighter)` | Danger background |
+| `--status-accent` | `var(--purple)` | Important, emphasis |
+| `--status-accent-bg` | `var(--purple-lighter)` | Accent background |
+
+Callouts, badges, and other components reference these tokens directly — no intermediate `--callout-*` layer needed.
+
+---
+
+## Base Callout
+
+The `.callout` class provides the structural foundation:
+
+```html
+<div class="callout">
+  <p class="callout-description">General-purpose highlighted content.</p>
+</div>
+```
+
+**Structural properties:**
+- Left border using `--border-l` width (4px)
+- Padding using spacing tokens
+- Neutral background (`--background-faded`)
+- First/last child margin normalization
+
+---
+
+## Callout Title
+
+Use `.callout-title` inside any callout for a styled heading:
+
+<p class="callout-description">Content here.</p>
+  </div>
+</div>
+
+```html
+<div class="callout callout-note">
+  <div class="callout-title">Note</div>
+  <p class="callout-description">Content here.</p>
+</div>
+```
+
+The title inherits the variant's accent color automatically.
+
+---
+
+## Callout with Icon
+
+Icons are **optional**. Add `.callout--icon` to the `.callout` element to enable the icon layout. No wrapper div needed — the icon, title, and description are all direct children with their own classes.
+
+<p class="callout-description">This callout has an icon for extra visual context.</p>
+  </div>
+</div>
+
+```html
+<div class="callout callout-note callout--icon">
+  <div class="icn-svg" data-icon="info"><!-- info SVG --></div>
+  <div class="callout-title">Note</div>
+  <p class="callout-description">This callout has an icon for extra visual context.</p>
+</div>
+```
+
+**How it works:**
+- `.callout--icon` switches the callout to a two-column CSS grid
+- The `.icn-svg` is pinned to row 1, column 1 — vertically centered with the title via `align-self: center`
+- `.callout-title` and `.callout-description` auto-flow into column 2
+- The icon stays aligned with the title regardless of title font size (`font-s`, `h2`, `h3`, etc.)
+- To remove the icon, drop `.callout--icon` and the `.icn-svg`
+
+| Class | Role |
+|---|---|
+| `.callout--icon` | Enables two-column grid layout |
+| `.icn-svg` | Icon (direct child, pinned to row 1, vertically centered with title) |
+| `.callout-title` | Title text (row 1, column 2) |
+| `.callout-description` | Description content (below title, column 2) |
+
+---
+
+## Recommended Icons
+
+Each variant has a suggested icon for visual consistency. These are recommendations — any brand icon can be used.
+
+| Variant | Icon | Shorthand |
+|---|---|---|
+| `.callout-note` | {{icon:info}} Info circle | `{{icon:info}}` |
+| `.callout-tip` | {{icon:bolt}} Lightning bolt | `{{icon:bolt}}` |
+| `.callout-warning` | {{icon:warning}} Warning triangle | `{{icon:warning}}` |
+| `.callout-caution` | {{icon:close-circled}} Close circle | `{{icon:close-circled}}` |
+| `.callout-important` | {{icon:exclamation}} Exclamation circle | `{{icon:exclamation}}` |
+
+---
+
+## Variants
+
+### Note (`.callout-note`)
+
+For useful information users should know, even when skimming.
+
+<p class="callout-description">Useful information that users should know.</p>
+  </div>
+</div>
+
+```html
+<div class="callout callout-note">
+  <div class="callout-title">Note</div>
+  <p class="callout-description">Useful information that users should know.</p>
+</div>
+```
+
+With icon:
+
+<p class="callout-description">Useful information that users should know.</p>
+  </div>
+</div>
+
+```html
+<div class="callout callout-note callout--icon">
+  <div class="icn-svg" data-icon="info"><!-- info SVG --></div>
+  <div class="callout-title">Note</div>
+  <p class="callout-description">Useful information that users should know.</p>
+</div>
+```
+
+### Tip (`.callout-tip`)
+
+For helpful advice on doing things better or more easily.
+
+<p class="callout-description">Helpful advice for doing things better.</p>
+  </div>
+</div>
+
+```html
+<div class="callout callout-tip">
+  <div class="callout-title">Tip</div>
+  <p class="callout-description">Helpful advice for doing things better.</p>
+</div>
+```
+
+With icon:
+
+<p class="callout-description">Helpful advice for doing things better.</p>
+  </div>
+</div>
+
+```html
+<div class="callout callout-tip callout--icon">
+  <div class="icn-svg" data-icon="bolt"><!-- bolt SVG --></div>
+  <div class="callout-title">Tip</div>
+  <p class="callout-description">Helpful advice for doing things better.</p>
+</div>
+```
+
+### Warning (`.callout-warning`)
+
+For urgent information that needs immediate attention.
+
+<p class="callout-description">Urgent information to avoid problems.</p>
+  </div>
+</div>
+
+```html
+<div class="callout callout-warning">
+  <div class="callout-title">Warning</div>
+  <p class="callout-description">Urgent information to avoid problems.</p>
+</div>
+```
+
+With icon:
+
+<p class="callout-description">Urgent information to avoid problems.</p>
+  </div>
+</div>
+
+```html
+<div class="callout callout-warning callout--icon">
+  <div class="icn-svg" data-icon="warning"><!-- warning SVG --></div>
+  <div class="callout-title">Warning</div>
+  <p class="callout-description">Urgent information to avoid problems.</p>
+</div>
+```
+
+### Caution (`.callout-caution`)
+
+For advising about risks or negative outcomes.
+
+<p class="callout-description">Risks or negative outcomes of certain actions.</p>
+  </div>
+</div>
+
+```html
+<div class="callout callout-caution">
+  <div class="callout-title">Caution</div>
+  <p class="callout-description">Risks or negative outcomes of certain actions.</p>
+</div>
+```
+
+With icon:
+
+<p class="callout-description">Risks or negative outcomes of certain actions.</p>
+  </div>
+</div>
+
+```html
+<div class="callout callout-caution callout--icon">
+  <div class="icn-svg" data-icon="close-circled"><!-- close-circled SVG --></div>
+  <div class="callout-title">Caution</div>
+  <p class="callout-description">Risks or negative outcomes of certain actions.</p>
+</div>
+```
+
+### Important (`.callout-important`)
+
+For key information users need to achieve their goal.
+
+<p class="callout-description">Key information users need to know.</p>
+  </div>
+</div>
+
+```html
+<div class="callout callout-important">
+  <div class="callout-title">Important</div>
+  <p class="callout-description">Key information users need to know.</p>
+</div>
+```
+
+With icon:
+
+<p class="callout-description">Key information users need to know.</p>
+  </div>
+</div>
+
+```html
+<div class="callout callout-important callout--icon">
+  <div class="icn-svg" data-icon="exclamation"><!-- exclamation SVG --></div>
+  <div class="callout-title">Important</div>
+  <p class="callout-description">Key information users need to know.</p>
+</div>
+```
+
+---
+
+## Rules
+
+| Do | Don't |
+|---|---|
+| Use semantic variants for meaning | Use color to decorate without purpose |
+| Keep callout content concise | Put entire sections inside callouts |
+| Use `.callout-title` for labeling | Use headings (h1–h6) inside callouts |
+| Use recommended icons for visual consistency | Add icons to every callout — use them when they add clarity |
+| Customize `--status-*` tokens per project | Hardcode colors on individual callouts |
+
+---
+
+## Relationship to Alerts
+
+The site also includes an `.alert` component (`.alert-note`, `.alert-tip`, `.alert-important`, `.alert-warning`, `.alert-caution`) for inline callout boxes — typically used in documentation content. These share the same colour tokens as the design system callouts.
+
+The design system callouts (`.callout`) are the **structured, project-wide** equivalent with icon support and richer layout. For simple inline messages, use `.alert`. For prominent UI callouts, use `.callout`.
+
+### Form Elements
+
+Form elements are styled globally using semantic tokens. All text inputs, textareas, selects, checkboxes, and radios share **consistent sizing, focus states, and disabled styling**.
+
+---
+
+## Form Tokens
+
+All form styling is controlled by semantic tokens in `:root`:
+
+| Token | Default | Purpose |
+|---|---|---|
+| `--input-border` | `var(--border-secondary)` | Default border color |
+| `--input-background` | `var(--background-primary)` | Input background |
+| `--input-text` | `var(--text-plain)` | Input text color |
+| `--input-placeholder` | `var(--text-faded)` | Placeholder text color |
+| `--input-focus` | `var(--green)` | Focus border and ring color |
+| `--input-disabled-bg` | `var(--background-faded)` | Disabled background |
+| `--input-disabled-text` | `var(--text-faded)` | Disabled text color |
+| `--checkbox-background` | `var(--neutral-100)` | Checkbox unchecked background |
+| `--checkbox-selected` | `var(--text-primary)` | Checkbox/radio checked fill |
+| `--checkbox-border` | `var(--border-secondary)` | Checkbox/radio border color |
+| `--checkbox-checkmark` | `var(--off-white)` | Checkmark/dot color |
+| `--toggle-track` | `var(--neutral-200)` | Toggle track background |
+| `--toggle-knob` | `var(--neutral-500)` | Toggle knob (unchecked) |
+| `--toggle-selected` | `var(--text-primary)` | Toggle track (checked) |
+| `--toggle-knob-selected` | `var(--off-white)` | Toggle knob (checked) |
+
+---
+
+## Labels
+
+Labels are styled as block elements with medium weight:
+
+```html
+<label for="name">Full name</label>
+<input type="text" id="name" placeholder="Enter your name">
+```
+
+**Properties:** `display: block`, `font-size: var(--font-s)`, `font-weight: var(--font-weight-medium)`, bottom margin for spacing from the input.
+
+---
+
+## Text Inputs
+
+All standard text input types are styled globally:
+
+<div class="form-group">
+    <input type="email" placeholder="Email">
+  </div>
+  <div class="form-group">
+    <input type="number" placeholder="Number">
+  </div>
+</div>
+
+```html
+<input type="text" placeholder="Text">
+<input type="email" placeholder="Email">
+<input type="password" placeholder="Password">
+<input type="number" placeholder="Number">
+<input type="search" placeholder="Search">
+<input type="url" placeholder="URL">
+<input type="tel" placeholder="Phone">
+```
+
+**Properties:** full width, `font-size: var(--font-m)` (matches body text), `padding: var(--space-m) var(--space-l)`, border from `--input-border`, smooth focus transition.
+
+---
+
+## Focus State
+
+All inputs share a consistent focus style:
+- Border color changes to `--input-focus`
+- A subtle box-shadow ring appears (2px, 75% transparent)
+- No outline (replaced by box-shadow for consistency)
+
+This is accessibility-safe and keyboard-visible.
+
+---
+
+## Textarea
+
+Textareas have a minimum height and allow vertical resizing:
+
+```html
+<label for="message">Message</label>
+<textarea id="message" placeholder="Enter your message..."></textarea>
+```
+
+**Properties:** `min-height: 120px`, `resize: vertical`.
+
+---
+
+## Select
+
+Selects use a custom dropdown arrow via an inline SVG background:
+
+```html
+<label for="country">Country</label>
+<select id="country">
+  <option value="" disabled selected>Choose a country</option>
+  <option value="nz">New Zealand</option>
+  <option value="au">Australia</option>
+</select>
+```
+
+**Properties:** `appearance: none`, custom caret, right padding for arrow space.
+
+---
+
+## Colour Input
+
+The native colour picker is styled to match other form inputs. Browser chrome is removed so the colour swatch fills the entire element. Use alongside a text input for hex/named colour entry.
+
+```html
+<div class="block row gap-s align-center">
+  <input type="color" id="color-picker" value="#ffa500">
+  <input type="text" value="ffa500" placeholder="hex or name">
+</div>
+```
+
+**Properties:** `appearance: none`, `aspect-ratio: 1 / 1`, `align-self: stretch` (matches sibling height), `padding: var(--space-xs)`, swatch wrapper padding removed. Same border and focus styles as text inputs.
+
+---
+
+## Disabled State
+
+Add the `disabled` attribute to any input, textarea, or select:
+
+```html
+<input type="text" value="Cannot edit" disabled>
+```
+
+**Properties:** `--input-disabled-bg` background, `--input-disabled-text` color, `cursor: not-allowed`.
+
+---
+
+## Checkbox & Radio
+
+Checkboxes and radios use `appearance: none` with custom styling. Wrap each in `.form-check` for inline label alignment.
+
+### Checkbox
+
+<div class="form-check">
+    <input type="checkbox" id="demo-check-2" checked>
+    <label for="demo-check-2">Checked</label>
+  </div>
+  <div class="form-check">
+    <input type="checkbox" id="demo-check-disabled" disabled>
+    <label for="demo-check-disabled">Disabled</label>
+  </div>
+</div>
+
+```html
+<div class="form-check">
+  <input type="checkbox" id="terms">
+  <label for="terms">I agree to the terms</label>
+</div>
+```
+
+**Properties:** `24px` size (`--space-xl`), `--checkbox-background` fill, `--border-m` border with `--radius-xs` corners. Checked state uses `--checkbox-selected` fill with a white checkmark SVG.
+
+### Radio
+
+<div class="form-check">
+    <input type="radio" name="demo-radio" id="demo-radio-2" checked>
+    <label for="demo-radio-2">Checked</label>
+  </div>
+</div>
+
+```html
+<div class="form-check">
+  <input type="radio" name="group" id="option-a">
+  <label for="option-a">Option A</label>
+</div>
+```
+
+**Properties:** same as checkbox but with `border-radius: 50%` and a centered dot on checked.
+
+---
+
+## Toggle / Switch
+
+A toggle is a checkbox styled as a sliding switch. Use `.form-toggle` instead of `.form-check`. Always include `role="switch"` for accessibility.
+
+### Default (label left)
+
+<div class="form-toggle">
+    <input type="checkbox" id="demo-toggle-2" role="switch" checked>
+    <label for="demo-toggle-2">On</label>
+  </div>
+</div>
+
+```html
+<div class="form-toggle">
+  <input type="checkbox" id="notifications" role="switch">
+  <label for="notifications">Enable notifications</label>
+</div>
+```
+
+### Label right
+
+Add `.is-label-right` to place the label after the toggle.
+
+```html
+<div class="form-toggle is-label-right">
+  <input type="checkbox" id="darkmode" role="switch">
+  <label for="darkmode">Dark mode</label>
+</div>
+```
+
+### Disabled
+
+```html
+<div class="form-toggle">
+  <input type="checkbox" id="feature" role="switch" disabled>
+  <label for="feature">Coming soon</label>
+</div>
+```
+
+**Properties:** 44px × 24px pill-shaped track, 18px circular knob. Unchecked: `--toggle-track` background with `--toggle-knob` knob. Checked: `--toggle-selected` background, knob slides right and becomes `--toggle-knob-selected`.
+
+---
+
+## Layout Patterns
+
+### Form Group
+
+Use `.form-group` to wrap a label + input pair with consistent bottom spacing:
+
+<div class="form-group">
+    <label for="demo-fg-email">Email</label>
+    <input type="email" id="demo-fg-email">
+  </div>
+</div>
+
+```html
+<div class="form-group">
+  <label for="name">Name</label>
+  <input type="text" id="name">
+</div>
+<div class="form-group">
+  <label for="email">Email</label>
+  <input type="email" id="email">
+</div>
+```
+
+### Form Check
+
+Use `.form-check` for inline checkbox/radio + label pairs:
+
+```html
+<div class="form-check">
+  <input type="checkbox" id="opt-in">
+  <label for="opt-in">Subscribe to newsletter</label>
+</div>
+```
+
+**Properties:** `display: flex`, `align-items: center`, `gap` for spacing. The label inside `.form-check` is inline with regular weight.
+
+### Fieldset & Legend
+
+Use `<fieldset>` and `<legend>` to group related form controls:
+
+</fieldset>
+</div>
+
+```html
+<fieldset>
+  <legend>Contact details</legend>
+  <div class="form-group">
+    <label for="phone">Phone</label>
+    <input type="tel" id="phone">
+  </div>
+</fieldset>
+```
+
+---
+
+## Segmented Control
+
+`.segmented-control` is a button group that acts like a single-select input — similar to a group of radio buttons but with a tab-like appearance.
+
+```html
+<div class="segmented-control">
+  <button class="segmented-control-btn is-active">Option A</button>
+  <button class="segmented-control-btn">Option B</button>
+  <button class="segmented-control-btn">Option C</button>
+</div>
+```
+
+### Icon variant
+
+Use `.is-icon` on a segment button for icon-only options:
+
+```html
+<button class="segmented-control-btn is-icon" aria-label="Grid view">
+  <div class="icn-svg" data-icon="grid"><!-- SVG --></div>
+</button>
+```
+
+### Styling
+
+- **Track:** `var(--background-faded)` with `var(--radius-m)` corners
+- **Active segment:** `var(--text-primary)` background with `var(--background-primary)` text
+- **Focus:** 2px outline with offset
+
+### Accessibility
+
+- Add `role="group"` and `aria-label` to the container
+- Use `aria-pressed="true"` on the active segment button
+- Toggle `is-active` and `aria-pressed` via JavaScript on click
+
+---
+
+## Slider
+
+`input[type="range"]` is styled with design system tokens. Use `.slider-wrapper` for a labelled slider with live value display. See the [Slider](slider.html) docs for full details.
+
+<input type="range" id="form-demo-slider" min="0" max="100" value="75" oninput="document.getElementById('form-demo-slider-val').textContent = this.value + '%'">
+  </div>
+</div>
+
+```html
+<div class="slider-wrapper">
+  <div class="slider-header">
+    <label for="opacity">Opacity</label>
+    <span class="slider-value" id="opacity-val">75%</span>
+  </div>
+  <input type="range" id="opacity" min="0" max="100" value="75"
+    oninput="document.getElementById('opacity-val').textContent = this.value + '%'">
+</div>
+```
+
+---
+
+## Number Input
+
+`.number-input` wraps a native number input with decrement/increment buttons. See the [Number Input](number-input.html) docs for full details.
+
+```html
+<div class="number-input" role="group" aria-label="Quantity">
+  <button class="number-input-btn" data-number-decrement type="button" aria-label="Decrease">&minus;</button>
+  <input type="number" value="1" min="0" max="99" aria-label="Quantity">
+  <button class="number-input-btn" data-number-increment type="button" aria-label="Increase">+</button>
+</div>
+```
+
+Requires `assets/js/number-input.js`.
+
+---
+
+## Radio Group
+
+`.radio-group` wraps multiple radio inputs with consistent spacing. Supports vertical (default) and horizontal (`.is-horizontal`) layouts. See the [Radio Group](radio-group.html) docs for full details.
+
+<div class="form-check">
+        <input type="radio" name="form-demo-shipping" id="form-demo-exp">
+        <label for="form-demo-exp">Express (2-3 days)</label>
+      </div>
+      <div class="form-check">
+        <input type="radio" name="form-demo-shipping" id="form-demo-next">
+        <label for="form-demo-next">Next day</label>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
+```html
+<fieldset>
+  <legend class="radio-group-label">Shipping method</legend>
+  <div class="radio-group">
+    <div class="form-check">
+      <input type="radio" name="shipping" id="std" checked>
+      <label for="std">Standard (5-7 days)</label>
+    </div>
+    ...
+  </div>
+</fieldset>
+```
+
+---
+
+## Rules
+
+| Do | Don't |
+|---|---|
+| Use `<label>` with `for` attribute | Use placeholder as a label replacement |
+| Use `.form-group` for spacing | Add margins directly to inputs |
+| Use `.form-check` for checkbox/radio pairs | Float labels next to checkboxes manually |
+| Use `.form-toggle` for toggle switches | Style a checkbox as a toggle without the wrapper |
+| Add `role="switch"` on toggle inputs | Use a toggle without the switch role |
+| Use semantic tokens for customization | Hardcode colors on individual inputs |
+| Use `<fieldset>` for logical grouping | Use `<div>` with borders to fake fieldsets |
+| Keep inputs full-width by default | Set fixed widths unless layout requires it |
+
+### Badge
+
+Badges are small inline labels used to indicate status, category, or metadata. They use the mono font (`--font-tertiary`) and pill shape by default.
+
+---
+
+## Tokens
+
+| Token | Default | Purpose |
+|-------|---------|---------|
+| `--badge-font-size` | `var(--font-2xs)` | Font size |
+| `--badge-padding-y` | `var(--space-2xs)` | Vertical padding |
+| `--badge-padding-x` | `var(--space-s)` | Horizontal padding |
+| `--badge-radius` | `var(--radius-pill)` | Border radius (pill) |
+
+Status variants reuse the global `--status-*` tokens.
+
+---
+
+## Basic usage
+
+```html
+<span class="badge">Default</span>
+```
+
+---
+
+## Variants
+
+```html
+<span class="badge">Default</span>
+<span class="badge badge--success">Success</span>
+<span class="badge badge--warning">Warning</span>
+<span class="badge badge--danger">Danger</span>
+<span class="badge badge--info">Info</span>
+<span class="badge badge--accent">Accent</span>
+```
+
+Each variant uses `color-mix()` to create a transparent tinted background from the corresponding `--status-*` token.
+
+---
+
+## Accessibility notes
+
+- Badges are presentational — they do not require ARIA roles
+- Ensure the badge text provides sufficient context (avoid colour-only meaning)
+- If a badge conveys critical status, pair it with descriptive text nearby
+
+---
+
+## Do / Don't
+
+**Do:**
+- Use badges for metadata: status, version, category
+- Keep badge text short (1-2 words)
+
+**Don't:**
+- Don't use badges as buttons — they are not interactive
+- Don't rely on colour alone to convey meaning
+
+### Tabs
+
+Tabs organise content into panels that the user switches between. The component requires JavaScript (`assets/js/tabs.js`) for interaction and follows the WAI-ARIA tabs pattern.
+
+---
+
+## Tokens
+
+| Token | Default | Purpose |
+|-------|---------|---------|
+| `--tab-active-color` | `var(--text-primary)` | Active tab text colour |
+| `--tab-inactive-color` | `var(--text-faded)` | Inactive tab text colour |
+| `--tab-indicator-color` | `var(--text-primary)` | Bottom border indicator |
+
+---
+
+## Basic usage
+
+<div class="tab-panel" id="demo-panel-1" role="tabpanel" aria-labelledby="demo-tab-1">
+    <p>Panel 1 content</p>
+  </div>
+  <div class="tab-panel is-hidden" id="demo-panel-2" role="tabpanel" aria-labelledby="demo-tab-2">
+    <p>Panel 2 content</p>
+  </div>
+  <div class="tab-panel is-hidden" id="demo-panel-3" role="tabpanel" aria-labelledby="demo-tab-3">
+    <p>Panel 3 content</p>
+  </div>
+</div>
+
+```html
+<div class="tabs" role="tablist" aria-label="Section name">
+  <button class="tab is-active" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1">Tab One</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2">Tab Two</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3">Tab Three</button>
+</div>
+
+<div class="tab-panel" id="panel-1" role="tabpanel" aria-labelledby="tab-1">
+  Panel 1 content
+</div>
+<div class="tab-panel is-hidden" id="panel-2" role="tabpanel" aria-labelledby="tab-2">
+  Panel 2 content
+</div>
+<div class="tab-panel is-hidden" id="panel-3" role="tabpanel" aria-labelledby="tab-3">
+  Panel 3 content
+</div>
+```
+
+---
+
+## JavaScript
+
+Include `assets/js/tabs.js` on any page that uses tabs. The script automatically initialises all `[role="tablist"]` elements on the page.
+
+```html
+<script src="/assets/js/tabs.js"></script>
+```
+
+No manual initialisation is required.
+
+---
+
+## Keyboard interactions
+
+| Key | Action |
+|-----|--------|
+| `Tab` | Moves focus to the active tab, then to the panel |
+| `ArrowRight` | Moves focus to the next tab |
+| `ArrowLeft` | Moves focus to the previous tab |
+| `Home` | Moves focus to the first tab |
+| `End` | Moves focus to the last tab |
+| `Enter` / `Space` | Activates the focused tab (via click) |
+
+---
+
+## Accessibility notes
+
+- The tab list uses `role="tablist"` with a descriptive `aria-label`
+- Each tab uses `role="tab"` with `aria-selected` and `aria-controls`
+- Each panel uses `role="tabpanel"` with `aria-labelledby`
+- Hidden panels use `.is-hidden` (`display: none`) so they are removed from the tab order
+- Focus ring appears on `focus-visible`
+
+---
+
+## Do / Don't
+
+**Do:**
+- Use unique IDs for tabs and panels on each page
+- Set one tab as `is-active` and `aria-selected="true"` by default
+- Provide a descriptive `aria-label` on the tablist
+
+**Don't:**
+- Don't use tabs for sequential steps (use a stepper pattern instead)
+- Don't nest tablists inside tab panels
+
+### Toast
+
+Toasts are temporary notifications that appear in the bottom-right corner and dismiss automatically. They require JavaScript (`assets/js/toast.js`).
+
+---
+
+## Tokens
+
+| Token | Default (Light) | Default (Dark) | Purpose |
+|-------|-----------------|----------------|---------|
+| `--toast-background` | `var(--warm-black)` | `var(--neutral-100)` | Toast background |
+| `--toast-text` | `var(--off-white)` | `var(--warm-black)` | Toast text colour |
+| `--toast-radius` | `var(--radius-m)` | — | Corner radius |
+
+Status variants use the global `--status-*` tokens for the left border accent.
+
+---
+
+## Basic usage
+
+Include the script on any page that uses toasts:
+
+```html
+<script src="/assets/js/toast.js"></script>
+```
+
+Then call `showToast()` from JavaScript:
+
+```js
+showToast('Changes saved successfully.');
+```
+
+---
+
+## API
+
+```js
+showToast(message, type, duration);
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `message` | string | — | Toast message text (required) |
+| `type` | string | `'default'` | `'default'`, `'success'`, `'warning'`, `'danger'`, `'info'` |
+| `duration` | number | `4000` | Auto-dismiss time in milliseconds |
+
+---
+
+## Variants
+
+<div class="toast toast--warning" role="alert" style="position: static; max-width: 100%;">
+      <span class="toast-message">Your session will expire in 5 minutes.</span>
+      <button class="toast-close" aria-label="Dismiss">{{icon:close}}</button>
+    </div>
+    <div class="toast toast--danger" role="alert" style="position: static; max-width: 100%;">
+      <span class="toast-message">Failed to upload file. Please try again.</span>
+      <button class="toast-close" aria-label="Dismiss">{{icon:close}}</button>
+    </div>
+    <div class="toast toast--info" role="alert" style="position: static; max-width: 100%;">
+      <span class="toast-message">New comment on your project.</span>
+      <button class="toast-close" aria-label="Dismiss">{{icon:close}}</button>
+    </div>
+  </div>
+</div>
+
+```js
+showToast('Changes saved.', 'success');
+showToast('Connection unstable.', 'warning');
+showToast('Failed to save.', 'danger');
+showToast('New version available.', 'info');
+```
+
+Each variant uses `--status-*` and `--status-*-bg` tokens for colour.
+
+---
+
+## HTML structure
+
+The JS creates this markup automatically:
+
+```html
+<div class="toast-container" aria-live="polite" aria-atomic="false">
+  <div class="toast toast--success" role="alert">
+    <span class="toast-message">Changes saved.</span>
+    <button class="toast-close" aria-label="Dismiss">
+      <div class="icn-svg" data-icon="close">...</div>
+    </button>
+  </div>
+</div>
+```
+
+The container is injected once at the end of `<body>`. Individual toasts are appended and removed automatically.
+
+---
+
+## Accessibility notes
+
+- The container uses `aria-live="polite"` so screen readers announce new toasts
+- Each toast has `role="alert"`
+- The dismiss button has `aria-label="Dismiss"`
+- Toasts auto-dismiss after the specified duration — users can also dismiss manually
+
+---
+
+## Do / Don't
+
+**Do:**
+- Use toasts for transient, non-blocking feedback (save confirmations, status updates)
+- Keep messages short and actionable
+
+**Don't:**
+- Don't use toasts for critical errors that require user action — use a modal or inline alert
+- Don't stack more than 3 toasts simultaneously
+
+### Tooltip
+
+Tooltips are CSS-only overlays that appear on hover or keyboard focus. They use the `data-tooltip` attribute — no JavaScript required.
+
+---
+
+## Tokens
+
+| Token | Default (Light) | Default (Dark) | Purpose |
+|-------|-----------------|----------------|---------|
+| `--tooltip-background` | `var(--warm-black)` | `var(--neutral-100)` | Bubble background |
+| `--tooltip-text` | `var(--off-white)` | `var(--warm-black)` | Bubble text colour |
+| `--tooltip-radius` | `var(--radius-s)` | — | Corner radius |
+| `--tooltip-font-size` | `var(--font-xs)` | — | Font size |
+
+---
+
+## Basic usage
+
+```html
+<span data-tooltip="This is a tooltip">Hover over me</span>
+```
+
+---
+
+## On interactive elements
+
+```html
+<button class="button" data-tooltip="Save your changes">Save</button>
+```
+
+On buttons and links, the cursor remains `pointer` instead of the default `help`.
+
+---
+
+## Positions
+
+By default, tooltips appear above the element. Use `data-tooltip-position` to change placement.
+
+```html
+<span data-tooltip="Above (default)">Top</span>
+<span data-tooltip="Below" data-tooltip-position="bottom">Bottom</span>
+<span data-tooltip="To the left" data-tooltip-position="left">Left</span>
+<span data-tooltip="To the right" data-tooltip-position="right">Right</span>
+```
+
+---
+
+## Accessibility notes
+
+- Tooltips appear on `:hover` and `:focus-visible`
+- Content is set via `data-tooltip` attribute and rendered with `content: attr(data-tooltip)` — it is not accessible to screen readers
+- For critical information, do not rely on tooltips alone — add `aria-label` or visible text
+- Tooltips use `pointer-events: none` so they do not interfere with interaction
+
+---
+
+## Do / Don't
+
+**Do:**
+- Use tooltips for supplementary, non-essential information
+- Keep tooltip text short (one sentence max)
+- Add `aria-label` when the tooltip contains essential context
+
+**Don't:**
+- Don't put interactive content (links, buttons) in tooltips
+- Don't use tooltips for critical information that must be visible
+- Don't use tooltips on touch-only interfaces (they require hover)
+
+### Disclosure
+
+The disclosure component uses native HTML `<details>` and `<summary>` elements to create expandable/collapsible content sections. No JavaScript required for the toggle behaviour.
+
+---
+
+## Core Principles
+
+- Uses **native HTML** (`<details>/<summary>`) for built-in accessibility and keyboard support
+- Hidden by default — content is revealed on demand
+- Chevron indicator sits on the **left** of the summary text, rotating from right-pointing (closed) to down-pointing (open)
+- Disclosure content aligns with the summary text (indented past the chevron)
+- Styled with design system tokens (fonts, colors, spacing, borders)
+- The `.disclosure-content` wrapper provides consistent padding and typography
+- The `.disclosure-table` pattern displays key-value pairs (e.g. CSS properties)
+- The `.copy-btn` provides copy-to-clipboard functionality (requires minimal JS)
+
+---
+
+## Basic Usage
+
+</details>
+</div>
+
+```html
+<details>
+  <summary>Show details</summary>
+  <div class="disclosure-content">
+    <p>Content revealed when expanded.</p>
+  </div>
+</details>
+```
+
+---
+
+## Key-Value Table Pattern
+
+Use `.disclosure-table` with a `<dl>` to display property-value pairs:
+
+</details>
+</div>
+
+```html
+<details>
+  <summary>Show details</summary>
+  <div class="disclosure-content">
+    <dl class="disclosure-table">
+      <dt>Font size</dt>
+      <dd>var(--font-7xl) <span class="token-tag">48px</span></dd>
+      <dt>Line height</dt>
+      <dd>var(--line-height-s) <span class="token-tag">1</span></dd>
+      <dt>Weight</dt>
+      <dd>var(--font-weight-regular) <span class="token-tag">400</span></dd>
+    </dl>
+  </div>
+</details>
+```
+
+The `<dt>` labels are styled with `--text-faded` and the `<dd>` values with `--text-primary`. The `.token-tag` span shows the resolved value inline.
+
+---
+
+## Copy Button
+
+Add a `.copy-btn` inside `.disclosure-content` with a `data-copy` attribute containing the text to copy. Use `&#10;` for newlines in the `data-copy` value.
+
+</details>
+</div>
+
+```html
+<details>
+  <summary>Show details</summary>
+  <div class="disclosure-content">
+    <dl class="disclosure-table">
+      <dt>Font size</dt>
+      <dd>var(--font-7xl) <span class="token-tag">48px</span></dd>
+      <dt>Line height</dt>
+      <dd>var(--line-height-s) <span class="token-tag">1</span></dd>
+    </dl>
+    <button class="button is-small copy-btn"
+      data-copy="font-size: var(--font-7xl);&#10;line-height: var(--line-height-s);"
+      aria-label="Copy CSS for Heading 1">
+      Copy CSS
+    </button>
+  </div>
+</details>
+```
+
+The button requires a small JS handler:
+
+```js
+document.addEventListener('click', function (event) {
+  var button = event.target.closest('.copy-btn');
+  if (!button) return;
+  var text = button.getAttribute('data-copy');
+  navigator.clipboard.writeText(text).then(function () {
+    button.textContent = 'Copied';
+    button.classList.add('is-copied');
+    setTimeout(function () {
+      button.textContent = 'Copy CSS';
+      button.classList.remove('is-copied');
+    }, 1500);
+  });
+});
+```
+
+---
+
+## CSS Classes
+
+| Class | Purpose |
+|---|---|
+| `details` (element) | Base container — border, border-radius |
+| `summary` (element) | Toggle trigger — left-side chevron via `::before`, pointer cursor |
+| `.disclosure-content` | Content wrapper — padding, border-top separator, monospace font |
+| `.disclosure-table` | Grid layout for key-value pairs (2-column: label + value) |
+| `.button.is-small.copy-btn` | Copy-to-clipboard button — uses design system button with copy state |
+| `.copy-btn.is-copied` | Copied state — success color feedback |
+
+---
+
+## Accessibility
+
+- Native `<details>/<summary>` provides keyboard support (Enter/Space to toggle)
+- `summary` is focusable and announced as a disclosure widget by screen readers
+- `.copy-btn` should include an `aria-label` describing what will be copied
+- Focus-visible outlines are styled using `--input-focus` token
+
+---
+
+## Design Tokens Used
+
+| Token | Usage |
+|---|---|
+| `--border-s` | Border width for container and content separator |
+| `--border-faded` | Border color |
+| `--font-tertiary` | Monospace font for summary and content |
+| `--font-2xs` | Font size for summary and content text |
+| `--text-faded` | Summary text color, table labels |
+| `--text-secondary` | Summary hover color, content text |
+| `--text-primary` | Table values |
+| `--text-accent` | Copy button text |
+| `--text-link` | Copy button hover text |
+| `--background-faded` | Copy button background |
+| `--background-secondary` | Copy button hover background |
+| `--status-success` | Copied state color |
+| `--input-focus` | Focus ring color |
+| `--space-xs` | Border radius |
+| `--space-s`, `--space-m` | Padding values |
+
+---
+
+## When to Use
+
+- **Styleguide**: Show CSS details beneath typography, color, and component demos
+- **Documentation**: Collapse supplementary information that not all readers need
+- **Forms**: Hide advanced options or additional context
+
+## When Not to Use
+
+- For primary content that all users need to see — use visible layout instead
+- For navigation — use proper nav patterns
+- For multi-panel accordions with mutual exclusion — this pattern allows multiple open simultaneously
+
+### Breadcrumb
+
+Breadcrumbs show the user's location within a site hierarchy. The component uses native `<nav>` with `aria-label` for accessibility.
+
+---
+
+## Basic usage
+
+```html
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a>
+  <span class="breadcrumb-separator" aria-hidden="true">/</span>
+  <a href="/design-system/">Design System</a>
+  <span class="breadcrumb-separator" aria-hidden="true">/</span>
+  <span aria-current="page">Breadcrumb</span>
+</nav>
+```
+
+---
+
+## Structure
+
+| Element | Role |
+|---------|------|
+| `<nav class="breadcrumb">` | Container with `aria-label="Breadcrumb"` |
+| `<a href="...">` | Navigable ancestor pages |
+| `<span class="breadcrumb-separator">` | Visual separator with `aria-hidden="true"` |
+| `<span aria-current="page">` | Current page (not a link) |
+
+---
+
+## Accessibility notes
+
+- Always wrap in a `<nav>` element with `aria-label="Breadcrumb"`
+- The current page uses `aria-current="page"` and is not a link
+- Separators use `aria-hidden="true"` so screen readers skip them
+- Links are focusable with standard keyboard navigation
+
+---
+
+## Do / Don't
+
+**Do:**
+- Use breadcrumbs on pages with clear hierarchical structure
+- Mark the current page with `aria-current="page"`
+
+**Don't:**
+- Don't use breadcrumbs on single-level pages (e.g. homepage)
+- Don't make the current page a clickable link
+
+### Progress Bar
+
+Progress bars use the native `<progress>` element styled with design system tokens. They indicate completion percentage and support status colour variants.
+
+---
+
+## Tokens
+
+| Token | Default | Purpose |
+|-------|---------|---------|
+| `--progress-track` | `var(--background-darker)` | Track (unfilled) background |
+| `--progress-fill` | `var(--text-primary)` | Fill (completed) colour |
+| `--progress-radius` | `var(--radius-pill)` | Corner radius |
+| `--progress-height` | `var(--space-s)` | Bar height |
+
+---
+
+## Basic usage
+
+```html
+<progress class="progress-bar" value="60" max="100">60%</progress>
+```
+
+The fallback text (`60%`) is shown in browsers that do not support `<progress>`.
+
+---
+
+## Status variants
+
+```html
+<progress class="progress-bar progress-bar--success" value="100" max="100">100%</progress>
+<progress class="progress-bar progress-bar--warning" value="40" max="100">40%</progress>
+<progress class="progress-bar progress-bar--danger" value="10" max="100">10%</progress>
+```
+
+---
+
+## Accessibility notes
+
+- The native `<progress>` element is announced by screen readers automatically
+- Always include fallback text content inside the element
+- If the progress represents a named process, associate it with a label using `aria-label` or a visible `<label>`
+
+---
+
+## Do / Don't
+
+**Do:**
+- Use status variants to indicate outcome (green for complete, red for critical)
+- Include fallback text inside the `<progress>` element
+
+**Don't:**
+- Don't use progress bars for indeterminate loading — use a spinner or skeleton instead
+- Don't animate the value attribute with JS unless the operation is genuinely progressing
+
+### Dialog
+
+Dialogs are modal windows built on the native `<dialog>` element. They trap focus, darken the backdrop, and support header, body, and footer sections. Opening and closing is handled via `data-dialog-open` and `data-dialog-close` attributes.
+
+---
+
+## Tokens
+
+| Token | Default (Light) | Default (Dark) | Purpose |
+|-------|-----------------|----------------|---------|
+| `--dialog-background` | `var(--background-primary)` | `var(--background-secondary)` | Dialog surface |
+| `--dialog-max-width` | `560px` | — | Maximum width |
+| `--dialog-shadow` | `0 8px 32px var(--black-alpha-20)` | `0 8px 40px var(--black-alpha-60)` | Drop shadow |
+| `--dialog-backdrop` | `rgba(0, 0, 0, 0.6)` | — | Backdrop overlay |
+
+---
+
+## Basic usage
+
+</button>
+    </div>
+    <div class="dialog-body">
+      <p>This is the dialog body content. It can contain any HTML — text, forms, images, or other components.</p>
+    </div>
+    <div class="dialog-footer">
+      <button class="button is-faded" type="button" data-dialog-close>Cancel</button>
+      <button class="button" type="button" data-dialog-close>Confirm</button>
+    </div>
+  </dialog>
+</div>
+
+```html
+<button class="button" type="button" data-dialog-open="my-dialog">Open dialog</button>
+
+<dialog id="my-dialog" class="dialog">
+  <div class="dialog-header">
+    <h3 class="dialog-title">Dialog title</h3>
+    <button class="dialog-close" type="button" aria-label="Close"><!-- close icon --></button>
+  </div>
+  <div class="dialog-body">
+    <p>Dialog content here.</p>
+  </div>
+  <div class="dialog-footer">
+    <button class="button is-faded" type="button" data-dialog-close>Cancel</button>
+    <button class="button" type="button" data-dialog-close>Confirm</button>
+  </div>
+</dialog>
+```
+
+---
+
+## Confirmation dialog
+
+A destructive action pattern with a danger-styled confirm button.
+
+</button>
+    </div>
+    <div class="dialog-body">
+      <p>This action cannot be undone. All files, settings, and history for this project will be permanently deleted.</p>
+    </div>
+    <div class="dialog-footer">
+      <button class="button is-faded" type="button" data-dialog-close>Cancel</button>
+      <button class="button" type="button" data-dialog-close style="background: var(--status-danger); border-color: var(--status-danger);">Delete</button>
+    </div>
+  </dialog>
+</div>
+
+---
+
+## JavaScript
+
+Include `assets/js/dialog.js` on any page using dialogs.
+
+```html
+<script src="/assets/js/dialog.js"></script>
+```
+
+- `data-dialog-open="dialog-id"` on a trigger opens the dialog via `showModal()`
+- `data-dialog-close` or `.dialog-close` inside a dialog closes it
+- Clicking the backdrop also closes the dialog
+
+---
+
+## Keyboard interactions
+
+| Key | Action |
+|-----|--------|
+| `Escape` | Closes the dialog |
+| `Tab` | Cycles through focusable elements inside the dialog (focus is trapped) |
+| `Enter` / `Space` | Activates the focused button |
+
+---
+
+## Accessibility notes
+
+- Uses the native `<dialog>` element — focus trapping is handled by the browser
+- The dialog title should use `aria-labelledby` pointing to the `.dialog-title` ID
+- Close buttons must have `aria-label="Close"`
+- The backdrop is created by the browser's `::backdrop` pseudo-element
+
+---
+
+## Do / Don't
+
+**Do:**
+- Use dialogs for actions that require confirmation or focused input
+- Keep dialog content concise — one task per dialog
+- Always provide a way to dismiss (close button + Escape + backdrop click)
+
+**Don't:**
+- Don't use dialogs for content that should be inline on the page
+- Don't stack dialogs on top of each other
+- Don't use dialogs for simple alerts — use callouts or toasts instead
+
+### Dropdown
+
+Dropdowns show a contextual menu when a trigger is clicked. They are the universal menu pattern — used in the site header, sticky bars, tool toolbars, and page content. One component, same classes everywhere.
+
+---
+
+## Tokens
+
+| Token | Default | Purpose |
+|-------|---------|---------|
+| `--dropdown-background` | `var(--background-primary)` | Menu background |
+| `--dropdown-border` | `var(--border-faded)` | Menu and divider border |
+| `--dropdown-item-hover` | `var(--background-faded)` | Item hover background |
+| `--dropdown-item-padding-y` | `var(--space-l)` | Item vertical padding |
+| `--dropdown-item-padding-x` | `var(--space-m)` | Item horizontal padding |
+
+---
+
+## Trigger patterns
+
+The trigger is the element that opens the dropdown. `.dropdown-trigger` provides built-in styling — no additional classes needed.
+
+### Icon + text + chevron
+
+The most common trigger. The `.dropdown-chevron` rotates 180 degrees when the dropdown is open.
+
+<span>Account</span>
+      <div class="icn-svg dropdown-chevron" data-icon="chevron-down"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/></svg></div>
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" role="menuitem" type="button">Profile</button>
+      <button class="dropdown-item" role="menuitem" type="button">Settings</button>
+      <div class="dropdown-divider" role="separator"></div>
+      <button class="dropdown-item dropdown-item--danger" role="menuitem" type="button">Sign out</button>
+    </div>
+  </div>
+</div>
+
+```html
+<div class="dropdown">
+  <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false">
+    <div class="icn-svg" data-icon="user"><!-- svg --></div>
+    <span>Account</span>
+    <div class="icn-svg dropdown-chevron" data-icon="chevron-down"><!-- svg --></div>
+  </button>
+  <div class="dropdown-menu">
+    <!-- items -->
+  </div>
+</div>
+```
+
+### Icon-only trigger
+
+For toolbars and compact contexts. No text, no chevron — the icon alone signals "click for options."
+
+</button>
+    <div class="dropdown-menu is-right">
+      <button class="dropdown-item" role="menuitem" type="button">Edit</button>
+      <button class="dropdown-item" role="menuitem" type="button">Duplicate</button>
+      <div class="dropdown-divider" role="separator"></div>
+      <button class="dropdown-item dropdown-item--danger" role="menuitem" type="button">Delete</button>
+    </div>
+  </div>
+</div>
+
+```html
+<button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="More options">
+  <div class="icn-svg" data-icon="more-horizontal"><!-- svg --></div>
+</button>
+```
+
+### Button trigger
+
+For page content where the trigger should look like a standard button.
+
+</button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" role="menuitem" type="button">Option A</button>
+      <button class="dropdown-item" role="menuitem" type="button">Option B</button>
+      <button class="dropdown-item" role="menuitem" type="button">Option C</button>
+    </div>
+  </div>
+</div>
+
+```html
+<button class="dropdown-trigger button is-outline" type="button" ...>
+  Options
+  <div class="icn-svg dropdown-chevron"><!-- chevron svg --></div>
+</button>
+```
+
+---
+
+## When to use a chevron
+
+| Scenario | Chevron? | Why |
+|----------|----------|-----|
+| Selector-style trigger (choosing a value) | Yes | Signals "pick from a list" |
+| Navigation dropdown (Account, Profile) | Yes | Shows the menu expands downward |
+| Icon-only trigger (⋯ more, settings gear) | No | The icon itself implies a menu |
+| Button trigger with label | Optional | Use when the button looks like a selector |
+
+---
+
+## Menu alignment
+
+Menus open left-aligned by default. Add `.is-right` to right-align from the trigger.
+
+```html
+<div class="dropdown-menu is-right">
+```
+
+Use `.is-right` when the dropdown is near the right edge of the viewport to prevent overflow.
+
+---
+
+## Item patterns
+
+### Text-only item
+
+The simplest item — just a label with no icon.
+
+</button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" role="menuitem" type="button">Admin</button>
+      <button class="dropdown-item" role="menuitem" type="button">Team</button>
+      <button class="dropdown-item" role="menuitem" type="button">Public</button>
+    </div>
+  </div>
+</div>
+
+```html
+<button class="dropdown-item" role="menuitem" type="button">Admin</button>
+```
+
+### Icon-left item
+
+An icon before the text reinforces the action. Use for action verbs like Edit, Download, Delete.
+
+</button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" role="menuitem" type="button">
+        <div class="icn-svg" data-icon="settings"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M11 15H22V17H11V19H5V17H2V15H5V13H11V15ZM7 17H9V15H7V17Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M19 7H22V9H19V11H13V9H2V7H13V5H19V7ZM15 9H17V7H15V9Z" fill="currentColor"/></svg></div>
+        <span>Settings</span>
+      </button>
+      <button class="dropdown-item" role="menuitem" type="button">
+        <div class="icn-svg" data-icon="download"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
+        <span>Download</span>
+      </button>
+      <div class="dropdown-divider" role="separator"></div>
+      <button class="dropdown-item dropdown-item--danger" role="menuitem" type="button">
+        <div class="icn-svg" data-icon="close"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/></svg></div>
+        <span>Delete</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+```html
+<button class="dropdown-item" role="menuitem" type="button">
+  <div class="icn-svg" data-icon="settings"><!-- svg --></div>
+  <span>Settings</span>
+</button>
+```
+
+### Icon-right item (trailing content)
+
+Use `.dropdown-item-end` to push trailing content to the right edge. Ideal for keyboard shortcuts, badges, status indicators, or chevrons hinting at sub-menus.
+
+</button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" role="menuitem" type="button">
+        <span>Undo</span>
+        <span class="dropdown-item-end"><kbd>Ctrl+Z</kbd></span>
+      </button>
+      <button class="dropdown-item" role="menuitem" type="button">
+        <span>Redo</span>
+        <span class="dropdown-item-end"><kbd>Ctrl+Y</kbd></span>
+      </button>
+      <div class="dropdown-divider" role="separator"></div>
+      <button class="dropdown-item" role="menuitem" type="button">
+        <span>Cut</span>
+        <span class="dropdown-item-end"><kbd>Ctrl+X</kbd></span>
+      </button>
+      <button class="dropdown-item" role="menuitem" type="button">
+        <span>Copy</span>
+        <span class="dropdown-item-end"><kbd>Ctrl+C</kbd></span>
+      </button>
+      <button class="dropdown-item" role="menuitem" type="button">
+        <span>Paste</span>
+        <span class="dropdown-item-end"><kbd>Ctrl+V</kbd></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+```html
+<button class="dropdown-item" role="menuitem" type="button">
+  <span>Undo</span>
+  <span class="dropdown-item-end"><kbd>Ctrl+Z</kbd></span>
+</button>
+```
+
+### Item with description
+
+Use `.dropdown-desc` for supporting text below the label.
+
+</button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" role="menuitem" type="button">
+        <div>
+          <div>Blank project</div>
+          <div class="dropdown-desc">Start from scratch with an empty project</div>
+        </div>
+      </button>
+      <button class="dropdown-item" role="menuitem" type="button">
+        <div>
+          <div>From template</div>
+          <div class="dropdown-desc">Choose from pre-built project templates</div>
+        </div>
+      </button>
+      <button class="dropdown-item" role="menuitem" type="button">
+        <div>
+          <div>Import</div>
+          <div class="dropdown-desc">Import an existing project from a file or URL</div>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+
+```html
+<button class="dropdown-item" role="menuitem" type="button">
+  <div>
+    <div>From template</div>
+    <div class="dropdown-desc">Choose from pre-built project templates</div>
+  </div>
+</button>
+```
+
+### Avatar item
+
+For user menus showing the logged-in user's identity.
+
+</button>
+    <div class="dropdown-menu is-right">
+      <div class="dropdown-item" style="pointer-events: none;">
+        <span class="auth-user-avatar" style="width: 2rem; height: 2rem; border-radius: 50%; background: var(--background-darker); display: flex; align-items: center; justify-content: center; font-size: var(--font-xs); font-weight: var(--font-weight-semi-bold); flex-shrink: 0;">E</span>
+        <div>
+          <div>Erlen Masson</div>
+          <div class="dropdown-desc">erlen@bydefault.studio</div>
+        </div>
+      </div>
+      <div class="dropdown-divider" role="separator"></div>
+      <button class="dropdown-item" role="menuitem" type="button">
+        <div class="icn-svg" data-icon="settings"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M11 15H22V17H11V19H5V17H2V15H5V13H11V15ZM7 17H9V15H7V17Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M19 7H22V9H19V11H13V9H2V7H13V5H19V7ZM15 9H17V7H15V9Z" fill="currentColor"/></svg></div>
+        <span>Account</span>
+      </button>
+      <button class="dropdown-item dropdown-item--danger" role="menuitem" type="button">
+        <div class="icn-svg" data-icon="logout"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H12V5H5V19H12V21H5ZM16 17L14.625 15.55L17.175 13H9V11H17.175L14.625 8.45L16 7L21 12L16 17Z" fill="currentColor"/></svg></div>
+        <span>Log out</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+---
+
+## Section labels
+
+Use `.dropdown-label` to create non-interactive section headers that group items.
+
+</button>
+    <div class="dropdown-menu">
+      <div class="dropdown-label">Actions</div>
+      <button class="dropdown-item" role="menuitem" type="button">Rename</button>
+      <button class="dropdown-item" role="menuitem" type="button">Duplicate</button>
+      <button class="dropdown-item" role="menuitem" type="button">Archive</button>
+      <div class="dropdown-divider" role="separator"></div>
+      <div class="dropdown-label">Danger zone</div>
+      <button class="dropdown-item dropdown-item--danger" role="menuitem" type="button">Delete project</button>
+    </div>
+  </div>
+</div>
+
+```html
+<div class="dropdown-label">Actions</div>
+<button class="dropdown-item" role="menuitem" type="button">Rename</button>
+...
+<div class="dropdown-divider" role="separator"></div>
+<div class="dropdown-label">Danger zone</div>
+<button class="dropdown-item dropdown-item--danger" role="menuitem" type="button">Delete project</button>
+```
+
+---
+
+## Disabled item
+
+</div>
+
+```html
+<button class="dropdown-item is-disabled" role="menuitem" type="button" disabled aria-disabled="true">
+  Save as...
+</button>
+```
+
+---
+
+## When to use what
+
+| Pattern | When to use | Example |
+|---------|-------------|---------|
+| Icon-left | Action verbs — the icon reinforces what the action does | Edit, Download, Delete, Settings |
+| Icon-right (`.dropdown-item-end`) | Trailing metadata — keyboard shortcuts, badges, status | Undo `Ctrl+Z`, Status `Active` |
+| No icon | Simple value selection — the text is self-explanatory | Role names, client names, sizes |
+| Avatar | User identification — profile menus | Account dropdown |
+| Description (`.dropdown-desc`) | Items that need explanation | "From template — Choose from pre-built..." |
+| Section label (`.dropdown-label`) | Grouping related items under a heading | "Switch Role", "Danger zone" |
+| Divider (`.dropdown-divider`) | Separating logical groups | Between actions and danger items |
+
+---
+
+## JavaScript
+
+Include `assets/js/dropdown.js` on any page. It auto-initialises all `.dropdown` elements — no setup needed.
+
+```html
+<script src="/assets/js/dropdown.js"></script>
+```
+
+Clicking a `.dropdown-trigger` toggles `.is-open` on the parent `.dropdown`. Clicking outside or pressing Escape closes all open dropdowns.
+
+---
+
+## Keyboard interactions
+
+| Key | Action |
+|-----|--------|
+| `Enter` / `Space` | Opens the dropdown (on trigger), activates item (on item) |
+| `ArrowDown` | Moves focus to the next item |
+| `ArrowUp` | Moves focus to the previous item |
+| `Escape` | Closes the dropdown and returns focus to the trigger |
+| `Tab` | Moves focus out of the dropdown |
+
+---
+
+## Accessibility notes
+
+- Trigger: `aria-haspopup="true"`, `aria-expanded="false"` (JS updates to `"true"` on open)
+- Icon-only triggers: add `aria-label` describing the action
+- Menu: `role="menu"`
+- Items: `role="menuitem"` on buttons, or just `<a>` for link items
+- Dividers: `role="separator"`
+- Disabled items: `disabled` attribute + `aria-disabled="true"`
+
+---
+
+## Structure reference
+
+| Element | Class | Purpose |
+|---------|-------|---------|
+| Container | `.dropdown` | Positioning context |
+| Trigger | `.dropdown-trigger` | Clickable element that opens the menu |
+| Chevron | `.dropdown-chevron` | Rotating arrow indicator (on trigger) |
+| Menu | `.dropdown-menu` | The panel that appears |
+| Menu (right) | `.dropdown-menu .is-right` | Right-aligned from trigger |
+| Item | `.dropdown-item` | Clickable row |
+| Item (danger) | `.dropdown-item .dropdown-item--danger` | Destructive action |
+| Item (disabled) | `.dropdown-item .is-disabled` | Unavailable action |
+| Trailing content | `.dropdown-item-end` | Right-aligned metadata inside an item |
+| Description | `.dropdown-desc` | Supporting text under item label |
+| Label | `.dropdown-label` | Non-interactive section header |
+| Divider | `.dropdown-divider` | Separator line between groups |
+
+---
+
+## Do / Don't
+
+**Do:**
+- Use dropdowns for contextual actions and selections
+- Group related items with labels and dividers
+- Use icon-left for actions, icon-right for metadata
+- Add `aria-label` on icon-only triggers
+- Use `.is-right` near the right viewport edge
+
+**Don't:**
+- Don't use dropdowns for primary navigation — use tabs or links
+- Don't nest dropdowns inside dropdowns
+- Don't use dropdowns for form field selection — use `<select>` instead
+- Don't put more than 10 items in a single dropdown — break into sections or use a different pattern
+
+### Tag
+
+Tags are small interactive labels used for categorisation, filtering, and metadata display. They support status variants and can be dismissible with a remove button.
+
+---
+
+## Tokens
+
+| Token | Default | Purpose |
+|-------|---------|---------|
+| `--tag-font-size` | `var(--font-xs)` | Font size |
+| `--tag-padding-y` | `var(--space-2xs)` | Vertical padding |
+| `--tag-padding-x` | `var(--space-s)` | Horizontal padding |
+| `--tag-radius` | `var(--radius-s)` | Corner radius |
+| `--tag-background` | `var(--background-darker)` | Default background |
+| `--tag-border` | `var(--border-faded)` | Border colour |
+
+---
+
+## Basic usage
+
+```html
+<span class="tag">Default tag</span>
+```
+
+---
+
+## Variants
+
+```html
+<span class="tag tag--success">Success</span>
+<span class="tag tag--warning">Warning</span>
+<span class="tag tag--danger">Danger</span>
+<span class="tag tag--info">Info</span>
+```
+
+---
+
+## Dismissible tag
+
+Add a `.tag-remove` button inside the tag. Clicking it removes the tag from the DOM.
+
+```html
+<span class="tag">
+  Design
+  <button class="tag-remove" aria-label="Remove Design tag" type="button">{{icon:close}}</button>
+</span>
+```
+
+---
+
+## Tag group
+
+Use `.tag-group` to wrap multiple tags with consistent spacing.
+
+```html
+<div class="tag-group">
+  <span class="tag">HTML</span>
+  <span class="tag">CSS</span>
+  <span class="tag">JavaScript</span>
+</div>
+```
+
+---
+
+## In context — active filters
+
+</div>
+
+---
+
+## JavaScript
+
+Tag dismiss uses a simple inline event listener — no separate JS file needed:
+
+```js
+document.addEventListener('click', function (e) {
+  var removeBtn = e.target.closest('.tag-remove');
+  if (removeBtn) {
+    var tag = removeBtn.closest('.tag');
+    if (tag) tag.remove();
+  }
+});
+```
+
+---
+
+## Accessibility notes
+
+- The remove button must have `aria-label` describing what is being removed
+- Tags are presentational — they don't require ARIA roles
+- When used as filters, consider announcing removal to screen readers via a live region
+
+---
+
+## Do / Don't
+
+**Do:**
+- Use tags for categorisation and filter indicators
+- Use status variants to indicate state (success, warning, danger)
+- Include `aria-label` on every remove button
+
+**Don't:**
+- Don't use tags as buttons — they are labels, not actions
+- Don't use tags for navigation
+
+### Code / Pre / Kbd
+
+The design system styles three code-related elements: inline `code`, block-level `pre`, and keyboard shortcuts `kbd`. All use the mono font (`--font-tertiary`).
+
+---
+
+## Inline code
+
+```html
+<p>Use <code>var(--text-primary)</code> for the main text colour.</p>
+```
+
+Inline code gets a subtle background, small padding, and rounded corners. It uses `word-break: break-word` to wrap within narrow containers.
+
+---
+
+## Code blocks
+
+```html
+<pre><code>.button {
+  background: var(--button-primary);
+  color: var(--button-text);
+}</code></pre>
+```
+
+Code blocks use `pre` with a nested `code` element. The inner `code` resets inline code styles (background, padding, border-radius) so they don't stack.
+
+---
+
+## Keyboard shortcuts
+
+```html
+<kbd>⌘</kbd> + <kbd>K</kbd>
+```
+
+The `kbd` element renders with a subtle 3D key appearance using `border` and `box-shadow`.
+
+---
+
+## Combining kbd elements
+
+```html
+<p>Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> to open the command palette.</p>
+```
+
+---
+
+## Accessibility notes
+
+- `code` and `pre` elements are announced by screen readers as code
+- `kbd` is announced as "keyboard input" by most screen readers
+- Ensure code blocks have sufficient colour contrast in both light and dark modes
+
+---
+
+## Do / Don't
+
+**Do:**
+- Use `code` for inline references to variables, functions, filenames
+- Use `pre > code` for multi-line code examples
+- Use `kbd` for keyboard shortcuts and key references
+
+**Don't:**
+- Don't use `code` for emphasis — use `strong` or `em` instead
+- Don't use `pre` without a nested `code` element
+
+### Mark / Abbr / Figure
+
+The design system styles three semantic HTML elements for inline and block-level content enrichment.
+
+---
+
+## Highlighted text (mark)
+
+The `<mark>` element highlights text with a yellow background. In dark mode, the background shifts to a semi-transparent yellow.
+
+```html
+<p>This is <mark>highlighted text</mark> within a paragraph.</p>
+```
+
+---
+
+## Abbreviations (abbr)
+
+The `<abbr>` element indicates an abbreviation or acronym. It renders with a dotted underline and shows the full text on hover via the native `title` attribute.
+
+```html
+<p>The design system uses <abbr title="Cascading Style Sheets">CSS</abbr> custom properties.</p>
+```
+
+---
+
+## Figure and figcaption
+
+The `<figure>` element wraps media content (images, code blocks, diagrams) with an optional `<figcaption>` for descriptive text.
+
+<figcaption>Caption text describing the image above.</figcaption>
+  </figure>
+</div>
+
+```html
+<figure>
+  <img src="image.jpg" alt="Description">
+  <figcaption>Caption text describing the image above.</figcaption>
+</figure>
+```
+
+---
+
+## Accessibility notes
+
+- `<mark>` is announced by some screen readers as "highlighted" — use it for genuinely highlighted content, not for visual styling
+- `<abbr>` with `title` shows its expansion on hover — for critical abbreviations, spell out the full term on first use in the text
+- `<figure>` images must have meaningful `alt` text; `<figcaption>` provides supplementary context, not a replacement for `alt`
+
+---
+
+## Do / Don't
+
+**Do:**
+- Use `<mark>` for search result highlights or key phrases
+- Use `<abbr>` for technical acronyms with a `title` attribute
+- Use `<figure>` for any media that benefits from a caption
+
+**Don't:**
+- Don't use `<mark>` as a general-purpose text highlighter for emphasis — use `<strong>` or `<em>`
+- Don't omit `title` on `<abbr>` — it is the only way to convey the expansion
+- Don't use `<figcaption>` without a parent `<figure>`
+
+---
+
+## Icon System
+Icons are inline SVG elements wrapped in a container class. They inherit colour from the surrounding text, maintain a fixed square aspect ratio, and are accessible by default.
+
+---
+
+## Principles
+
+- **Inline SVG only** — never use `<img>` tags for icons. Inline SVGs allow colour inheritance and eliminate extra HTTP requests.
+- **`currentColor` always** — all icon `<path>` elements must use `fill="currentColor"` so the icon inherits the parent's text colour. This keeps icons visually consistent across themes and contexts.
+- **No `xmlns`** — strip `xmlns` and `xmlns:xlink` attributes from inline SVGs. They are only needed for standalone `.svg` files, not inline usage.
+- **Square aspect ratio** — icons are always 1:1. Use `viewBox` to define the coordinate system, not `width`/`height`.
+- **Brand icons only** — do not use Material Design, Font Awesome, Heroicons, Feather, or any other third-party icon source. Use the brand icons from `assets/images/svg-icons/`. If no icon exists for your need, request one from the design team.
+
+---
+
+## Icon Wrapper
+
+Use `.icn-svg` to wrap inline SVG icons. This class constrains the icon to a fixed size and enforces the square aspect ratio.
+
+<div class="icn-svg" data-icon="check">
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+      <path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/>
+    </svg>
+  </div>
+  <div class="icn-svg" data-icon="close">
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+      <path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/>
+    </svg>
+  </div>
+  <div class="icn-svg" data-icon="search">
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+      <path d="M18.6 20L15.5658 16.9658C14.8452 16.2452 13.7005 16.2131 12.7513 16.584C12.6932 16.6067 12.6344 16.6287 12.575 16.65C11.925 16.8833 11.2333 17 10.5 17C8.68333 17 7.14583 16.3708 5.8875 15.1125C4.62917 13.8542 4 12.3167 4 10.5C4 8.68333 4.62917 7.14583 5.8875 5.8875C7.14583 4.62917 8.68333 4 10.5 4C12.3167 4 13.8542 4.62917 15.1125 5.8875C16.3708 7.14583 17 8.68333 17 10.5C17 11.2333 16.8833 11.925 16.65 12.575C16.6287 12.6344 16.6067 12.6932 16.584 12.7513C16.2131 13.7005 16.2452 14.8452 16.9658 15.5658L20 18.6L18.6 20ZM10.5 15C11.75 15 12.8125 14.5625 13.6875 13.6875C14.5625 12.8125 15 11.75 15 10.5C15 9.25 14.5625 8.1875 13.6875 7.3125C12.8125 6.4375 11.75 6 10.5 6C9.25 6 8.1875 6.4375 7.3125 7.3125C6.4375 8.1875 6 9.25 6 10.5C6 11.75 6.4375 12.8125 7.3125 13.6875C8.1875 14.5625 9.25 15 10.5 15Z" fill="currentColor"/>
+    </svg>
+  </div>
+  <div class="icn-svg" data-icon="info">
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+      <path d="M13 18H11V10H13V18Z" fill="currentColor"/><path d="M12 6C12.35 6 12.646 6.12064 12.8877 6.3623C13.1294 6.60397 13.25 6.9 13.25 7.25C13.25 7.6 13.1294 7.89603 12.8877 8.1377C12.646 8.37936 12.35 8.5 12 8.5C11.65 8.5 11.354 8.37936 11.1123 8.1377C10.8706 7.89603 10.75 7.6 10.75 7.25C10.75 6.9 10.8706 6.60397 11.1123 6.3623C11.354 6.12064 11.65 6 12 6Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/>
+    </svg>
+  </div>
+  </div>
+</div>
+
+```html
+<div class="icn-svg" data-icon="arrow-right">
+  <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+    <path d="M5 12h14M12 5l7 7-7 7" fill="currentColor"/>
+  </svg>
+</div>
+```
+
+### Properties
+
+| Property | Value | Purpose |
+|---|---|---|
+| `width` | `1.5rem` | Standard icon size |
+| `height` | `1.5rem` | Matches width for square |
+| `display` | `flex` | Enables centering |
+| `justify-content` | `center` | Horizontal centering |
+| `align-items` | `center` | Vertical centering |
+| `aspect-ratio` | `1 / 1` | Enforces square shape |
+
+### `data-icon` attribute
+
+Always include a `data-icon` attribute with a descriptive name. This makes icons identifiable in code — raw SVG paths are unreadable without it.
+
+```html
+<div class="icn-svg" data-icon="chevron-down">...</div>
+<div class="icn-svg" data-icon="close">...</div>
+<div class="icn-svg" data-icon="search">...</div>
+```
+
+Use lowercase kebab-case for icon names (e.g. `arrow-right`, `chevron-down`, `external-link`).
+
+---
+
+## Icon in Buttons
+
+For icon-only buttons, use `.is-icon` on the button and `.icn-svg` as the SVG wrapper.
+
+</button>
+  <button class="button is-icon" aria-label="Search">
+    <div class="icn-svg" data-icon="search">
+      <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+        <path d="M18.6 20L15.5658 16.9658C14.8452 16.2452 13.7005 16.2131 12.7513 16.584C12.6932 16.6067 12.6344 16.6287 12.575 16.65C11.925 16.8833 11.2333 17 10.5 17C8.68333 17 7.14583 16.3708 5.8875 15.1125C4.62917 13.8542 4 12.3167 4 10.5C4 8.68333 4.62917 7.14583 5.8875 5.8875C7.14583 4.62917 8.68333 4 10.5 4C12.3167 4 13.8542 4.62917 15.1125 5.8875C16.3708 7.14583 17 8.68333 17 10.5C17 11.2333 16.8833 11.925 16.65 12.575C16.6287 12.6344 16.6067 12.6932 16.584 12.7513C16.2131 13.7005 16.2452 14.8452 16.9658 15.5658L20 18.6L18.6 20ZM10.5 15C11.75 15 12.8125 14.5625 13.6875 13.6875C14.5625 12.8125 15 11.75 15 10.5C15 9.25 14.5625 8.1875 13.6875 7.3125C12.8125 6.4375 11.75 6 10.5 6C9.25 6 8.1875 6.4375 7.3125 7.3125C6.4375 8.1875 6 9.25 6 10.5C6 11.75 6.4375 12.8125 7.3125 13.6875C8.1875 14.5625 9.25 15 10.5 15Z" fill="currentColor"/>
+      </svg>
+    </div>
+  </button>
+  </div>
+</div>
+
+```html
+<button class="button is-icon" aria-label="Close">
+  <div class="icn-svg">
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+      <path d="M18 6L6 18M6 6l12 12" fill="currentColor"/>
+    </svg>
+  </div>
+</button>
+```
+
+See the [Button documentation](button.html) for full button modifier details.
+
+---
+
+## SVG Requirements
+
+Every icon SVG must follow these rules before being added to the codebase:
+
+| Rule | Required | Example |
+|---|---|---|
+| `fill="currentColor"` | Yes | Inherits text colour from parent |
+| `viewBox` attribute | Yes | `viewBox="0 0 24 24"` defines the coordinate space |
+| No `xmlns` | Yes | Strip `xmlns` and `xmlns:xlink` — not needed inline |
+| `width="100%" height="100%"` | Yes | SVG fills its `.icn-svg` wrapper; sizing is controlled by the wrapper class |
+| `fill="none"` on `<svg>` | Yes | Prevents default black fill; paths use `fill="currentColor"` individually |
+| No XML comments | Recommended | Remove `<!-- ... -->` comments for cleaner code |
+
+### Standard `viewBox`
+
+Use `0 0 24 24` as the default icon grid. If an icon uses a different coordinate system, preserve its original `viewBox` — do not rescale manually.
+
+---
+
+## Accessibility
+
+- **Decorative icons** — add `aria-hidden="true"` to the SVG when the icon is purely visual and accompanied by text.
+- **Meaningful icons** — add `aria-label` to the parent element (e.g. the button) when the icon conveys meaning without visible text.
+- **Icon buttons** — always include `aria-label` on the `<button>` element.
+
+```html
+<!-- Decorative: icon next to text -->
+<div class="icn-svg" data-icon="check">
+  <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M20 6L9 17l-5-5" fill="currentColor"/>
+  </svg>
+</div>
+
+<!-- Meaningful: icon button with no visible text -->
+<button class="button is-icon" aria-label="Close menu">
+  <div class="icn-svg">
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M18 6L6 18M6 6l12 12" fill="currentColor"/>
+    </svg>
+  </div>
+</button>
+```
+
+---
+
+## Colour
+
+Icons inherit colour through `currentColor`. To change an icon's colour, change the text colour of its parent — never hardcode a fill value.
+
+<div style="color: var(--text-accent);">
+    <div class="icn-svg" data-icon="info">
+      <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+        <path d="M13 18H11V10H13V18Z" fill="currentColor"/><path d="M12 6C12.35 6 12.646 6.12064 12.8877 6.3623C13.1294 6.60397 13.25 6.9 13.25 7.25C13.25 7.6 13.1294 7.89603 12.8877 8.1377C12.646 8.37936 12.35 8.5 12 8.5C11.65 8.5 11.354 8.37936 11.1123 8.1377C10.8706 7.89603 10.75 7.6 10.75 7.25C10.75 6.9 10.8706 6.60397 11.1123 6.3623C11.354 6.12064 11.65 6 12 6Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/>
+      </svg>
+    </div>
+  </div>
+  <div style="color: var(--text-faded);">
+    <div class="icn-svg" data-icon="info">
+      <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+        <path d="M13 18H11V10H13V18Z" fill="currentColor"/><path d="M12 6C12.35 6 12.646 6.12064 12.8877 6.3623C13.1294 6.60397 13.25 6.9 13.25 7.25C13.25 7.6 13.1294 7.89603 12.8877 8.1377C12.646 8.37936 12.35 8.5 12 8.5C11.65 8.5 11.354 8.37936 11.1123 8.1377C10.8706 7.89603 10.75 7.6 10.75 7.25C10.75 6.9 10.8706 6.60397 11.1123 6.3623C11.354 6.12064 11.65 6 12 6Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/>
+      </svg>
+    </div>
+  </div>
+  </div>
+</div>
+
+```html
+<!-- Icon inherits the faded text colour -->
+<div class="text-faded">
+  <div class="icn-svg" data-icon="info">
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="currentColor"/>
+    </svg>
+  </div>
+</div>
+```
+
+---
+
+## Icon Shorthand
+
+Use `{{icon:name}}` in any markdown file processed by the doc generator to render an inline icon. The shorthand is expanded at build time — the actual SVG is read from `assets/images/svg-icons/` and injected as a standard `.icn-svg` wrapper.
+
+```
+{{icon:check}}         → renders the check icon
+{{icon:arrow-right}}   → renders the arrow-right icon
+{{icon:t-shirt}}       → renders the t-shirt icon
+```
+
+The `name` must match a key from the icon registry below. If the name is not found, a warning is logged during generation and an HTML comment is output instead.
+
+This shorthand only works in files processed by `cms/generator/generate-docs.js` — it does not work in standalone HTML pages.
+
+---
+
+## SVG Cleaner Tool
+
+Use the [SVG Cleaner](../tools/svg-cleaner.html) to prepare icons before adding them to the codebase. The tool automates the required cleanup:
+
+- Strips `xmlns` attributes
+- Sets fills to `currentColor` (when enabled)
+- Wraps in `.icn-svg` with `data-icon` attribute (when "Icon" is checked)
+- Strips XML comments
+- Optional minification
+
+For CLI usage:
+
+```bash
+echo '<svg>...</svg>' | node assets/js/svg-clean.js --current-color --icon --icon-name arrow-right --strip-comments
+```
+
+---
+
+## Naming Conventions
+
+| Convention | Example |
+|---|---|
+| Lowercase kebab-case | `arrow-right`, `chevron-down` |
+| Describe the shape, not the function | `arrow-right` not `go-forward` |
+| Use directional suffixes | `chevron-up`, `chevron-down`, `chevron-left` |
+| Use common icon vocabulary | `close`, `search`, `menu`, `check`, `plus`, `minus` |
+
+---
+
+## Rules
+
+| Do | Don't |
+|---|---|
+| Use `fill="currentColor"` on all paths | Hardcode hex colours in SVG fills |
+| Use `.icn-svg` to wrap all icons | Use `<img>` tags for icons |
+| Include `data-icon` with a descriptive name | Leave icons unnamed |
+| Include `aria-hidden="true"` on decorative icons | Omit accessibility attributes |
+| Include `aria-label` on icon-only buttons | Rely on the icon alone to convey meaning |
+| Use the SVG Cleaner to prepare icons | Manually edit SVG attributes |
+| Strip `xmlns` from inline SVGs | Keep attributes meant for standalone files |
+| Use `width="100%" height="100%"` on SVGs | Use fixed pixel/rem sizes on the SVG element |
+| Use `fill="none"` on the `<svg>` element | Omit `fill` on `<svg>` (defaults to black) |
+| Use `.icn-svg` wrapper to control icon size | Size icons via `width`/`height` on the SVG |
+| Check the registry before using any icon | Use external icon libraries as a fallback |
+
+---
+
+## Requesting a New Icon
+
+If you need an icon that is not in the brand icon set:
+
+1. **Check the brand book** — the icon you need may exist under a different name. See the Visual Identity page for the full icon grid.
+2. **Document the request** — describe the concept, intended size, and where it will be used
+3. **Submit to the design team** — new icons must match the existing style (24x24 grid, single-colour, rounded corners)
+4. **Do not use a placeholder** — wait for the brand icon to be designed rather than shipping with a generic substitute
+
+Maintaining a consistent icon language across the site is more important than shipping fast with mismatched icons.
+
+---
+
+## CSS Conventions
+## Overview
+
+This guide ensures:
+
+- Readable, modular, and maintainable CSS
+- Clear organization with related styles grouped together
+- Easy navigation and long-term maintenance
+- Consistent commenting hierarchy
+- Logical file structure
+
+---
+
+## Organisation Principles
+
+### Group Related Styles Together
+
+**Always keep related styles adjacent:**
+
+- All font sizes together
+- All spacing utilities together
+- All color tokens of the same type together
+- All modifiers for the same component together
+- All hover/active states immediately after their base class
+
+**Example - Typography Grouping:**
+```css
+/* -- Headings -- */
+h1 {
+  font-size: var(--font-7xl);
+  line-height: var(--line-height-s);
+  font-weight: var(--font-weight-bold);
+}
+h2 {
+  font-size: var(--font-6xl);
+  line-height: var(--line-height-s);
+  font-weight: var(--font-weight-bold);
+}
+/* All headings grouped together */
+```
+
+**Example - Component Grouping:**
+```css
+/* -- Button -- */
+.button, button {
+  padding: var(--space-s) var(--space-m);
+  background: var(--background-primary);
+  border: var(--border-s) solid var(--border-primary);
+}
+.button:hover {
+  background: var(--background-secondary);
+}
+.button.is-outline {
+  background: transparent;
+}
+/* All button-related styles together */
+```
+---
+
+## Token Organisation
+
+Use CSS custom properties (variables) for reusable values. Organize tokens logically:
+
+**Example - Token Grouping:**
+```css
+:root {
+  /* -- Unit tokens -- */
+  --unit-s: 0.5rem;    /* 8px */
+  --unit-m: 1rem;      /* 16px */
+
+  /* -- Spacing scale -- */
+  --space-s: var(--unit-s);
+  --space-m: var(--unit-m);
+
+  /* -- Typography tokens -- */
+  --font-size-base: 1rem;
+  --font-weight-bold: 700;
+}
+```
+
+**Principles:**
+- Group tokens by purpose (units, spacing, typography, colors)
+- Use subsections to organize within `:root`
+- Reference tokens when possible (e.g., `--space-m: var(--unit-m)`)
+- Keep related tokens adjacent
+
+---
+
+## Component Organization
+
+When writing component styles, follow this order:
+
+1. **Base class first**
+2. **States immediately after base** (hover, active, focus)
+3. **Modifiers grouped together** (is-*, has-*)
+4. **Sub-components after modifiers**
+
+**Example:**
+```css
+/* -- Card -- */
+.card {
+  padding: var(--space-m);
+  background: var(--background-primary);
+}
+.card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.card.is-compact {
+  padding: var(--space-s);
+}
+/* All card-related styles together */
+```
+
+---
+
+## Property Ordering for Readability
+
+Group related properties together within a selector:
+
+**Suggested order:**
+1. Layout (display, position, grid, flex)
+2. Box model (width, height, margin, padding)
+3. Visual (background, border, box-shadow)
+4. Typography (font, line-height, text-align)
+5. Other (opacity, cursor, transition)
+
+**Example:**
+```css
+.button {
+  /* Layout */
+  display: inline-flex;
+  
+  /* Box model */
+  padding: var(--space-m) var(--space-l);
+  
+  /* Visual */
+  background: var(--background-primary);
+  border: var(--border-s) solid var(--border-primary);
+  
+  /* Typography */
+  font-size: var(--font-m);
+  font-weight: var(--font-weight-semi-bold);
+}
+```
+**Note**: The comments above are for demonstration only. In actual code, the visual grouping is what matters, not the comments.
+
+---
+
+## Commenting Hierarchy
+
+Use **three levels only**. Do not invent new formats.
+
+### 1. Major Sections
+
+Used for top‑level structure of the file.
+
+**Format**
+```css
+/* ------ Section Title ------ */
+```
+
+**Rules**
+- Always uppercase
+- One line only
+- Blank line before and after
+- Use to mark major divisions in your CSS
+
+**Example**
+```css
+/* ------ BASE STYLES ------ */
+
+body {
+  /* ... */
+}
+```
+
+---
+
+### 2. Subsections
+
+Used to group related concepts inside a section.
+
+**Format**
+```css
+/* -- Subsection name -- */
+```
+
+**Rules**
+- Title case
+- One line
+- Use only when grouping related rules
+- Blank line before
+
+**Example**
+```css
+/* -- Headings -- */
+h1 {
+  /* ... */
+}
+h2 {
+  /* ... */
+}
+```
+
+---
+
+### 3. Inline / Feature Comments
+
+Used to clarify values or mark important behaviour.
+
+**Format**
+```css
+/* Short clarification */
+```
+
+**Rules**
+- Keep factual and brief
+- Prefer same-line comments
+- Do not explain obvious CSS
+
+**Example**
+```css
+--unit-xs: 0.25rem; /* 4px */
+```
+
+---
+
+## Responsive Code Organization
+
+### Adding Breakpoints
+
+When adding responsive breakpoints, follow these guidelines:
+
+1. **Choose breakpoints that match your design** - Common breakpoints include:
+   - Mobile: `768px` (max-width)
+   - Tablet: `1024px` (max-width)
+   - Desktop: `1440px` (min-width)
+
+2. **Keep breakpoints consistent** - Use the same breakpoints throughout your project
+
+3. **Group responsive code together** - Place all media queries in a dedicated section at the end of your file
+
+**Example:**
+```css
+/* ------ RESPONSIVE ------ */
+
+/* Mobile */
+@media (max-width: 768px) {
+  :root {
+    --font-size-base: 0.875rem;
+  }
+  .card {
+    padding: var(--space-s);
+  }
+}
+```
+
+### Organization
+
+When organizing responsive code:
+
+1. **Override tokens in `:root`** - Don't override individual classes when possible
+2. **Group by token type** - Fonts together, spacing together
+3. **Use subsections** - Clearly mark what's being overridden
+4. **Always at the end** - Responsive code should come last in the file
+5. **Comment breakpoints** - Label each breakpoint clearly (Mobile, Tablet, Desktop)
+
+**Example:**
+```css
+/* ------ RESPONSIVE ------ */
+
+/* Mobile */
+@media (max-width: 768px) {
+  :root {
+    /* -- Mobile font sizes -- */
+    --font-size-base: 0.875rem;
+  }
+  .card {
+    padding: var(--space-s);
+  }
+}
+```
+
+### Best Practices
+
+- Override tokens when possible, not individual classes
+- Scale down proportionally
+- Keep mobile values grouped by type
+- Use clear subsection comments
+
+---
+
+## Rules to Follow
+
+### Organization
+
+- ✅ Group related styles together
+- ✅ Keep all font-related styles in one place
+- ✅ Keep all spacing utilities together
+- ✅ Keep all color tokens of the same type together
+- ✅ Place responsive code at the end
+- ✅ Keep related properties together within selectors
+
+### Commenting
+
+- ✅ Use three-level commenting hierarchy
+- ✅ Do not mix comment styles
+- ✅ Do not skip levels
+- ✅ Do not add decorative separators
+- ✅ Prefer fewer comments over more
+- ✅ Comments should help *find* things, not explain theory
+
+### Code Quality
+
+- ✅ Use design system tokens, over hardcode values
+- ✅ Use semantic tokens over primitive tokens when possible
+- ✅ Keep related properties together (e.g., all typography properties)
+- ✅ Place states immediately after base classes
+- ✅ Group modifiers together
+
+### What to Avoid
+
+- ❌ Scattering related styles across the file
+- ❌ Mixing font sizes with spacing utilities
+- ❌ Placing responsive code in the middle of sections
+- ❌ Hardcoding values that should use tokens
+- ❌ Using primitive tokens directly in layouts when semantic tokens exist
+- ❌ Separating component states and modifiers from their base class
+
+---
+
+## Quick Reference
+
+| Task | Rule |
+|------|------|
+| Add new token | Group with related tokens (colors with colors, spacing with spacing) |
+| Add new utility class | Group with other utilities of the same type |
+| Add new component | Group all related styles together (base, states, modifiers, sub-components) |
+| Add responsive override | Place at end of file, override tokens when possible |
+| Add modifier to component | Place immediately after component base class |
+| Add state to component | Place immediately after base class, before modifiers |

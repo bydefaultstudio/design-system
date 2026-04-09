@@ -5,7 +5,6 @@ description: "Master specification for all design system components — naming, 
 section: "Docs"
 subsection: "Dev"
 order: 20
-slug: "components"
 status: "published"
 access: "team"
 client: "internal"

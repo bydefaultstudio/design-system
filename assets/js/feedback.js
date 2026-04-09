@@ -1,50 +1,66 @@
 /**
  * feedback.js — Page feedback widget
  * Handles "Was this page helpful?" interaction and modal dialog.
+ * Submits feedback to Notion via /api/submit-form.
  *
- * @version 1.0.0
+ * @version 2.0.0
  * @author By Default
  */
 (function () {
   'use strict';
 
-  console.log('feedback.js loaded');
+  console.log('feedback.js v2.0.0 loaded');
 
+  //
   //------- Configuration -------//
+  //
 
+  var API_BASE = '/api';
+  var FORM_TYPE = 'feedback';
   var SUBTITLE_YES = 'Great to hear! Any additional feedback?';
   var SUBTITLE_NO = 'Sorry about that. What could be improved?';
   var SUCCESS_MESSAGE = 'Thanks for your feedback!';
 
+  //
   //------- Utilities -------//
+  //
 
-  function getPageIdentifier() {
-    return window.location.pathname;
+  function getPageUrl() {
+    return window.location.href;
   }
 
+  function getTodayISO() {
+    return new Date().toISOString().split('T')[0];
+  }
+
+  //
   //------- Submission -------//
+  //
 
-  function submitFeedback(form) {
-    var formData = new FormData(form);
-    var encoded = new URLSearchParams(formData).toString();
+  function submitFeedback(feedbackText) {
+    var data = {
+      'Feedback': feedbackText,
+      'Page': getPageUrl(),
+      'Submitted Date': getTodayISO()
+    };
 
-    console.log('[Feedback] Submitting:', Object.fromEntries(formData));
-
-    return fetch('/', {
+    return fetch(API_BASE + '/submit-form', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: encoded
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ formType: FORM_TYPE, data: data })
     }).then(function (response) {
       if (!response.ok) {
-        console.error('[Feedback] Submit failed:', response.status);
+        return response.json().catch(function () { return {}; }).then(function (err) {
+          throw new Error(err.error || 'Submission failed');
+        });
       }
-      return response;
-    }).catch(function (err) {
-      console.error('[Feedback] Submit error:', err);
+      return response.json();
     });
   }
 
+  //
   //------- Main Logic -------//
+  //
 
   function initFeedback() {
     var section = document.querySelector('.page-feedback');
@@ -54,16 +70,16 @@
     var yesBtn = section.querySelector('[data-feedback="yes"]');
     var noBtn = section.querySelector('[data-feedback="no"]');
     var subtitle = dialog.querySelector('.feedback-modal-subtitle');
-    var sentimentInput = dialog.querySelector('input[name="sentiment"]');
-    var pageInput = dialog.querySelector('input[name="page"]');
     var form = dialog.querySelector('.feedback-form');
     var closeBtn = dialog.querySelector('.feedback-modal-close');
     var textarea = dialog.querySelector('.feedback-textarea');
+    var submitBtn = form.querySelector('button[type="submit"]');
     var prompt = section.querySelector('.page-feedback-prompt');
 
+    var currentSentiment = '';
+
     function openModal(sentiment) {
-      sentimentInput.value = sentiment;
-      pageInput.value = getPageIdentifier();
+      currentSentiment = sentiment;
       subtitle.textContent = sentiment === 'yes' ? SUBTITLE_YES : SUBTITLE_NO;
       textarea.value = '';
       dialog.showModal();
@@ -74,7 +90,9 @@
       section.classList.add('is-submitted');
     }
 
+    //
     //------- Event Listeners -------//
+    //
 
     yesBtn.addEventListener('click', function () {
       openModal('yes');
@@ -97,16 +115,39 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      submitFeedback(form).then(function () {
+      var feedbackText = textarea.value.trim();
+      if (!feedbackText) {
+        feedbackText = currentSentiment === 'yes' ? 'Helpful' : 'Not helpful';
+      }
+
+      var originalText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      submitFeedback(feedbackText).then(function () {
         dialog.close();
         showSuccess();
+      }).catch(function (err) {
+        console.error('[Feedback] Submit error:', err);
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+
+        var existing = form.querySelector('.feedback-error');
+        if (existing) existing.remove();
+
+        var errorMsg = document.createElement('div');
+        errorMsg.className = 'feedback-error';
+        errorMsg.textContent = err.message || 'Something went wrong. Please try again.';
+        form.appendChild(errorMsg);
       });
     });
 
     console.log('[Feedback] Initialized');
   }
 
+  //
   //------- Init -------//
+  //
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initFeedback);

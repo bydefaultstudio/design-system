@@ -1,11 +1,10 @@
 ---
 title: "Tabs"
-subtitle: "Tabbed content navigation"
+subtitle: "Switch between related content without leaving the page"
 description: "How to use the tabs component for switching between content panels."
 section: "Design System"
 subsection: "Content"
 order: 13
-slug: "tabs"
 status: "published"
 access: "team"
 client: "internal"

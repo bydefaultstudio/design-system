@@ -1,0 +1,110 @@
+/* ------ WORLD CLOCK TOOL STYLES ------ */
+
+/* -- Preview frame -- */
+.clock-preview-frame {
+  position: relative;
+  background-color: var(--background-faded);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+}
+
+.clock-preview-frame iframe {
+  display: block;
+  width: 100%;
+  height: 140px;
+  border: none;
+}
+
+.clock-preview-frame.is-dark {
+  background-color: var(--neutral-900);
+}
+
+/* -- City search -- */
+.clock-search-wrapper {
+  position: relative;
+}
+
+.clock-search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  max-height: 240px;
+  overflow-y: auto;
+  background: var(--background-primary);
+  border: var(--border-s) solid var(--border-faded);
+  border-radius: var(--radius-s);
+  box-shadow: var(--shadow-m);
+  margin-top: var(--space-2xs);
+  display: none;
+}
+
+.clock-search-results.is-open {
+  display: block;
+}
+
+.clock-search-result {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-xs) var(--space-s);
+  cursor: pointer;
+  font-size: var(--font-s);
+  color: var(--text-primary);
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.clock-search-result:hover,
+.clock-search-result.is-highlighted {
+  background: var(--background-faded);
+}
+
+.clock-search-result-tz {
+  font-size: var(--font-xs);
+  color: var(--text-faded);
+}
+
+/* -- Preset buttons -- */
+.clock-preset-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+/* -- Output rows -- */
+.clock-output-row {
+  display: flex;
+  gap: var(--space-s);
+  align-items: center;
+}
+
+.clock-output-row input,
+.clock-output-row textarea {
+  flex: 1;
+  min-width: 0;
+}
+
+.clock-output-row textarea {
+  resize: none;
+  font-family: var(--font-tertiary);
+  font-size: var(--font-xs);
+  line-height: var(--line-height-m);
+}
+
+/* ------ RESPONSIVE ------ */
+
+/* -- Mobile -- */
+@media (max-width: 768px) {
+  .clock-output-row {
+    flex-direction: column;
+  }
+
+  .clock-output-row .copy-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

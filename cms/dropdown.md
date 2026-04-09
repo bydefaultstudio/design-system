@@ -5,7 +5,6 @@ description: "How to use the dropdown component for contextual menus, action lis
 section: "Design System"
 subsection: "Content"
 order: 8
-slug: "dropdown"
 status: "published"
 access: "team"
 client: "internal"

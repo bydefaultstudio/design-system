@@ -5,7 +5,6 @@ description: "Practical techniques for reducing SVG file size and keeping page l
 section: "Docs"
 subsection: "Code Standards"
 order: 5
-slug: "svg-best-practices"
 status: "published"
 access: "team"
 client: "internal"

@@ -5,7 +5,6 @@ description: "Documentation for markdown styling and design system integration"
 section: "Docs"
 subsection: "Code Standards"
 order: 6
-slug: "markdown-style"
 status: "published"
 access: "team"
 client: "internal"
@@ -26,32 +25,58 @@ All markdown files should follow these standardized patterns to ensure:
 
 ## Frontmatter
 
-Every markdown file in the documentation must start with frontmatter (YAML metadata) that defines the page's metadata and organization:
+Every markdown file must start with YAML frontmatter between `---` delimiters. The generator reads these fields to determine page output, navigation, access control, and rendering.
+
+### Core Fields
+
+| Field | Required | Default | Description |
+|---|---|---|---|
+| `title` | Yes | filename | Page heading and browser tab title |
+| `subtitle` | No | — | Secondary heading below the title |
+| `description` | No | — | Meta description for SEO and social sharing |
+| `section` | No | uncategorized | Navigation group — determines output folder (`Brand Book`, `Design System`, `Docs`, `Tools`, `Projects`, `Website`) |
+| `subsection` | No | — | Sub-category within a section for nav grouping |
+| `order` | No | 999 | Sort position within section (lower = first) |
+| `status` | No | published | Set to `"draft"` to exclude from generation |
+| `access` | No | team | Visibility: `"public"`, `"team"`, `"admin"`, `"client"`, `"admin+client"` |
+| `client` | No | internal | Client scope: `"internal"`, `"all"`, or a specific client key |
+
+### Action Button Fields
+
+Any page can display a header button linking to an external resource (tool, Figma file, etc).
+
+| Field | Required | Default | Description |
+|---|---|---|---|
+| `actionUrl` | No | — | URL for the header button |
+| `actionLabel` | No | Open | Button text |
+| `actionAccess` | No | — | Visibility control for the button on client pages |
+
+### Enhancement Fields
+
+| Field | Required | Default | Description |
+|---|---|---|---|
+| `dropcap` | No | — | Set to `"true"` to style the first paragraph with a drop cap |
+| `scripts` | No | — | Comma-separated script names to inject (e.g. `"splide, notion-form"`) |
+
+**Available scripts:** `gsap`, `scroll-trigger`, `split-text`, `scroll-smoother`, `draggable`, `scroll-to`, `bd-animations`, `bd-audio`, `bd-cursor`, `splide`, `splide-auto-scroll`, `splide-intersection`, `notion-form`
+
+### Example
 
 ```markdown
 ---
-title: "Your Documentation Title Here"
-subtitle: "Your page subtitle or brief description"
-description: "Guide defining how to structure and organize your content"
-section: "overview"
+title: "CPM Calculator"
+subtitle: "Plan campaign impressions, fees, and payouts"
+description: "Calculate campaign impressions, fees, payouts, and margins."
+section: "Tools"
 order: 1
-access: "team"
+status: "published"
+access: "admin"
+client: "internal"
+actionUrl: "./cpm-calculator.html"
+actionLabel: "Open Tool"
+actionAccess: "public"
 ---
-
-Your markdown content starts here...
 ```
-
-**Note:** The frontmatter must be at the very top of the file, enclosed by `---` on separate lines.
-
-### Required Fields
-
-- **`title`** - The main page title (used in `<h1>` and page `<title>`)
-- **`subtitle`** - Optional subtitle displayed below the title
-- **`description`** - Meta description for SEO and social sharing
-- **`section`** - Section name for navigation grouping (e.g., `"overview"`, `"features"`, `"api"`)
-- **`order`** - Numeric order within the section (lower numbers appear first)
-
-### Example
 
 
 ---
@@ -384,8 +409,8 @@ Typography scale tokens:
 | `--font-xs` | 14px | 1.4 | Small text |
 | `--font-s` | 16px | 1.4 | Body text |
 | `--font-m` | 18px | 1.4 | Default |
-| `--font-l` | 22px | 1.2 | Subheadings |
-| `--font-xl` | 28px | 1.2 | Headings |
+| `--font-l` | 20px | 1.4 | Subheadings |
+| `--font-xl` | 22px | 1.2 | Headings |
 
 ```markdown
 Design system spacing tokens:
@@ -405,8 +430,8 @@ Typography scale tokens:
 | `--font-xs` | 14px | 1.4 | Small text |
 | `--font-s` | 16px | 1.4 | Body text |
 | `--font-m` | 18px | 1.4 | Default |
-| `--font-l` | 22px | 1.2 | Subheadings |
-| `--font-xl` | 28px | 1.2 | Headings |
+| `--font-l` | 20px | 1.4 | Subheadings |
+| `--font-xl` | 22px | 1.2 | Headings |
 ```
 
 ---

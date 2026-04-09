@@ -1,11 +1,10 @@
 ---
 title: "Color"
-subtitle: "Color tokens and semantic colors"
+subtitle: "Palette, scales, and semantic colour mappings"
 description: "Visual reference for all color tokens — brand palette, primitive scales, and semantic mappings."
 section: "Design System"
 subsection: ""
 order: 2
-slug: "color"
 status: "published"
 access: "team"
 client: "internal"
@@ -205,7 +204,7 @@ You can apply dark mode to any element, not just the page:
 
 <div class="demo-preview is-joined">
   <div class="grid">
-    <div style="background: var(--background-faded); color: var(--text-primary); padding: var(--space-xl); border: var(--border-s) solid var(--border-secondary); font-size: var(--font-l);">
+    <div style="background: var(--background-faded); color: var(--text-primary); padding: var(--space-xl); border: var(--border-s) solid var(--border-secondary); font-size: var(--font-xl);">
       <div class="block gap-xs">
         <h4>Light mode</h4>
         <span>Primary text</span>

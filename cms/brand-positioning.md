@@ -5,7 +5,6 @@ description: "How the brand is positioned relative to its audience, competitors,
 section: "Brand Book"
 subsection: ""
 order: 4
-slug: "brand-positioning"
 status: "published"
 access: "team"
 client: "internal"

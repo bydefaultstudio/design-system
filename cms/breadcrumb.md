@@ -1,11 +1,10 @@
 ---
 title: "Breadcrumb"
-subtitle: "Navigation trail component"
+subtitle: "Show where you are in the hierarchy"
 description: "How to use the breadcrumb component for showing navigation hierarchy."
 section: "Design System"
 subsection: "Content"
 order: 1
-slug: "breadcrumb"
 status: "published"
 access: "team"
 client: "internal"

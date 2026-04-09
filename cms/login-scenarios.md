@@ -5,7 +5,6 @@ description: "Reference page for testing all authentication flows — login, for
 section: "Docs"
 subsection: "Dev"
 order: 4
-slug: "login-scenarios"
 status: "published"
 access: "admin"
 client: "internal"

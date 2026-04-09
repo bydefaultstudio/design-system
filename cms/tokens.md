@@ -1,11 +1,10 @@
 ---
 title: "Tokens"
-subtitle: "Complete reference for all design tokens"
+subtitle: "Every visual decision in one place"
 description: "Every design token in one place — colors, typography, spacing, borders, and component tokens."
 section: "Design System"
 subsection: ""
 order: 1
-slug: "tokens"
 status: "published"
 access: "team"
 client: "internal"
@@ -74,14 +73,17 @@ The full type scale from 10px to 72px, defined in rem.
 | `--font-xs` | 0.875rem | 14px |
 | `--font-s` | 1rem | 16px |
 | `--font-m` | 1.125rem | 18px |
-| `--font-l` | 1.375rem | 22px |
-| `--font-xl` | 1.75rem | 28px |
-| `--font-2xl` | 2rem | 32px |
-| `--font-3xl` | 2.5rem | 40px |
-| `--font-4xl` | 3rem | 48px |
-| `--font-5xl` | 3.4375rem | 55px |
-| `--font-6xl` | 4rem | 64px |
-| `--font-7xl` | 4.5rem | 72px |
+| `--font-l` | 1.25rem | 20px |
+| `--font-xl` | 1.375rem | 22px |
+| `--font-2xl` | 1.5rem | 24px |
+| `--font-3xl` | 1.75rem | 28px |
+| `--font-4xl` | 2rem | 32px |
+| `--font-5xl` | 2.25rem | 36px |
+| `--font-6xl` | 2.5rem | 40px |
+| `--font-7xl` | 3rem | 48px |
+| `--font-8xl` | 3.5rem | 56px |
+| `--font-9xl` | 4rem | 64px |
+| `--font-10xl` | 4.5rem | 72px |
 
 ### Semantic Font Sizes
 

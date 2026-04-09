@@ -1,11 +1,10 @@
 ---
 title: "Toast"
-subtitle: "Notification messages"
+subtitle: "Temporary feedback that confirms an action"
 description: "How to use the toast component for temporary notification messages."
 section: "Design System"
 subsection: "Feedback"
 order: 6
-slug: "toast"
 status: "published"
 access: "team"
 client: "internal"

@@ -174,7 +174,7 @@
     }
 
     var basePath = getBasePath();
-    var logoPath = basePath + 'assets/images/logos/' + clientFolder + '.svg';
+    var logoPath = basePath + clientFolder + '/assets/logo.svg';
     fetch(logoPath)
       .then(function(response) { return response.text(); })
       .then(function(svgText) {

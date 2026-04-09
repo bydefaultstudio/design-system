@@ -1,11 +1,10 @@
 ---
 title: "Form"
-subtitle: "Form element styling and patterns"
+subtitle: "Inputs, controls, and data collection patterns"
 description: "How to use form elements, labels, inputs, and layout patterns in the design system."
 section: "Design System"
 subsection: "Data Entry"
 order: 3
-slug: "form"
 status: "published"
 access: "team"
 client: "internal"

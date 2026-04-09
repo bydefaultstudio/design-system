@@ -1,0 +1,97 @@
+/* ====================================================================
+   QR CODE GENERATOR STYLES
+   ==================================================================== */
+
+/* -- Preview frame -- */
+
+.qr-preview-frame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background-faded);
+  border: 1px solid var(--border-faded);
+  border-radius: var(--radius-m);
+  padding: var(--space-l);
+}
+
+.qr-preview-frame canvas {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-s);
+  image-rendering: pixelated;
+}
+
+/* -- Transparent background checkerboard -- */
+
+.qr-preview-frame.is-transparent {
+  background-image:
+    linear-gradient(45deg, var(--border-faded) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--border-faded) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--border-faded) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--border-faded) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+}
+
+/* -- Color input row -- */
+
+.qr-color-row {
+  display: flex;
+  gap: var(--space-s);
+  align-items: center;
+}
+
+.qr-color-row input[type="color"] {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+}
+
+.qr-color-row input[type="text"] {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-tertiary);
+}
+
+/* -- Range value display -- */
+
+.qr-range-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.qr-range-value {
+  font-size: var(--font-xs);
+  color: var(--text-faded);
+  font-family: var(--font-tertiary);
+  min-width: 3ch;
+  text-align: right;
+}
+
+/* -- Disabled state for bg color when transparent -- */
+
+.qr-bg-controls.is-disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* -- Error message -- */
+
+.qr-error {
+  color: var(--status-danger);
+  font-size: var(--font-s);
+  display: none;
+}
+
+.qr-error.is-visible {
+  display: block;
+}
+
+/* -- Responsive -- */
+
+@media (max-width: 768px) {
+  .qr-preview-frame {
+    padding: var(--space-m);
+  }
+}

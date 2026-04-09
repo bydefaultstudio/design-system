@@ -1,11 +1,10 @@
 ---
 title: "Image"
-subtitle: "Composable image styling"
+subtitle: "Aspect ratios and responsive image patterns"
 description: "Guide to using the image component with base styles and aspect-ratio combo classes."
 section: "Design System"
 subsection: "Content"
 order: 9
-slug: "image"
 status: "published"
 access: "team"
 client: "internal"

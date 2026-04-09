@@ -1,0 +1,190 @@
+/* ─────────────────────────────
+   CLIENT THEME: Dianomi
+   ─────────────────────────────
+
+   Brand primitives are defined once at the top.
+   Semantic tokens reference them — update a primitive
+   and every usage updates automatically.
+   ───────────────────────────── */
+
+
+:root {
+
+  /* ── Brand Primitives ───────────────────────
+     Core brand colours — change these to update
+     every semantic token that references them.
+     ─────────────────────────────────────────── */
+  --brand-dark: #212121;
+  --brand-grey: #595959;
+  --brand-green: #40997f;
+  --brand-light: #eeeeee;
+  --brand-white: #fafafa;
+
+
+  /* ── Typography ──────────────────────────── */
+  --font-primary: "Montserrat", "Helvetica Neue", sans-serif;
+  --font-secondary: "Montserrat", "Helvetica Neue", sans-serif;
+  --font-tertiary: "IBM Plex Mono", monospace;
+
+
+  /* ── Neutral scale ──────────────────────────
+     Pure grey ramp — no warm or cool tint.
+     ─────────────────────────────────────────── */
+  --neutral-50:  #fafafa;
+  --neutral-100: #e5e5e5;
+  --neutral-150: #d4d4d4;
+  --neutral-200: #c4c4c4;
+  --neutral-300: #a3a3a3;
+  --neutral-400: #8a8a8a;
+  --neutral-500: #737373;
+  --neutral-600: #5c5c5c;
+  --neutral-700: #474747;
+  --neutral-800: #333333;
+  --neutral-900: #1f1f1f;
+  --neutral-950: #141414;
+  --neutral-990: #0a0a0a;
+
+
+  --background-sidebar: var(--background-plain);
+  --background-site-header: var(--background-plain);
+
+
+
+  /* ── Text ────────────────────────────────── */
+  --text-primary: var(--brand-dark);
+  --text-secondary: var(--brand-grey);
+  --text-accent: var(--brand-green);
+  --text-link: var(--brand-green);
+  --text-inverted: var(--brand-white);
+
+
+  /* ── Backgrounds ─────────────────────────── */
+  --background-primary: var(--brand-white);
+  --background-secondary: var(--brand-light);
+
+
+  /* ── Borders ─────────────────────────────── */
+  --border-primary: var(--brand-dark);
+  --border-secondary: #d1d5db;
+
+
+  /* ── Buttons ─────────────────────────────── */
+  --button-primary: var(--brand-green);
+  --button-text: #ffffff;
+  --button-secondary: var(--brand-dark);
+  --button-secondary-text: var(--brand-white);
+
+
+  /* ── Accent ──────────────────────────────── */
+  --status-info: var(--brand-green);
+  --input-focus: var(--brand-green);
+  --checkbox-selected: var(--brand-green);
+
+
+  /* ── Selection ───────────────────────────── */
+  --selection-text: #ffffff;
+  --selection-background: var(--brand-green);
+
+    /* -- Card tokens -- */
+  --card-background: var(--background-plain);
+}
+
+
+/* ── Dark mode ─────────────────────────────── */
+
+[data-theme="dark"] {
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-plain: #f3f4f6;
+  --text-accent: #6bc4a8;
+  --text-link: #6bc4a8;
+  --text-inverted: var(--brand-dark);
+
+  --background-primary: var(--brand-dark);
+  --background-secondary: #2a2a2a;
+  --background-plain: #333333;
+
+  --border-primary: #f3f4f6;
+  --border-secondary: #4b5563;
+
+  --button-primary: #6bc4a8;
+  --button-text: var(--brand-dark);
+  --button-secondary: #f3f4f6;
+  --button-secondary-text: var(--brand-dark);
+
+  --status-info: #6bc4a8;
+  --input-focus: #6bc4a8;
+  --checkbox-selected: #6bc4a8;
+
+  --selection-text: var(--brand-dark);
+  --selection-background: #6bc4a8;
+}
+
+
+/* ── System preference fallback (no-JS) ────── */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --text-primary: #f3f4f6;
+    --text-secondary: #9ca3af;
+    --text-plain: #f3f4f6;
+    --text-accent: #6bc4a8;
+    --text-link: #6bc4a8;
+    --text-inverted: var(--brand-dark);
+
+    --background-primary: var(--brand-dark);
+    --background-secondary: #2a2a2a;
+    --background-plain: #333333;
+
+    --border-primary: #f3f4f6;
+    --border-secondary: #4b5563;
+
+    --button-primary: #6bc4a8;
+    --button-text: var(--brand-dark);
+    --button-secondary: #f3f4f6;
+    --button-secondary-text: var(--brand-dark);
+
+    --status-info: #6bc4a8;
+    --input-focus: #6bc4a8;
+    --checkbox-selected: #6bc4a8;
+
+    --selection-text: var(--brand-dark);
+    --selection-background: #6bc4a8;
+  }
+}
+
+
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--font-weight-semi-bold);
+}
+
+.svg-logo.nav-logo {
+  height: 35px;
+}
+
+@media (max-width: 768px) {
+
+.svg-logo.nav-logo {
+  height: 25px;
+}
+}
+
+.nav-link, .nav-section-toggle {
+  font-weight: var(--font-weight-medium);
+}
+
+.calculator-result-value {
+    font-weight: var(--font-weight-medium);
+
+}
+
+.back-to-top-btn {
+  color: var(--font-primary);
+}
+
+.card--interactive:hover {
+  background: var(--card-background);
+}
+
+

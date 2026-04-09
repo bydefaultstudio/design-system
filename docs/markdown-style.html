@@ -126,33 +126,146 @@
 </ul>
 <hr>
 <h2 id="frontmatter">Frontmatter</h2>
-<p>Every markdown file in the documentation must start with frontmatter (YAML metadata) that defines the page&#39;s metadata and organization:</p>
+<p>Every markdown file must start with YAML frontmatter between <code>---</code> delimiters. The generator reads these fields to determine page output, navigation, access control, and rendering.</p>
+<h3 id="core-fields">Core Fields</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Field</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>title</code></td>
+<td>Yes</td>
+<td>filename</td>
+<td>Page heading and browser tab title</td>
+</tr>
+<tr>
+<td><code>subtitle</code></td>
+<td>No</td>
+<td>—</td>
+<td>Secondary heading below the title</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>No</td>
+<td>—</td>
+<td>Meta description for SEO and social sharing</td>
+</tr>
+<tr>
+<td><code>section</code></td>
+<td>No</td>
+<td>uncategorized</td>
+<td>Navigation group — determines output folder (<code>Brand Book</code>, <code>Design System</code>, <code>Docs</code>, <code>Tools</code>, <code>Projects</code>, <code>Website</code>)</td>
+</tr>
+<tr>
+<td><code>subsection</code></td>
+<td>No</td>
+<td>—</td>
+<td>Sub-category within a section for nav grouping</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>No</td>
+<td>999</td>
+<td>Sort position within section (lower = first)</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>No</td>
+<td>published</td>
+<td>Set to <code>&quot;draft&quot;</code> to exclude from generation</td>
+</tr>
+<tr>
+<td><code>access</code></td>
+<td>No</td>
+<td>team</td>
+<td>Visibility: <code>&quot;public&quot;</code>, <code>&quot;team&quot;</code>, <code>&quot;admin&quot;</code>, <code>&quot;client&quot;</code>, <code>&quot;admin+client&quot;</code></td>
+</tr>
+<tr>
+<td><code>client</code></td>
+<td>No</td>
+<td>internal</td>
+<td>Client scope: <code>&quot;internal&quot;</code>, <code>&quot;all&quot;</code>, or a specific client key</td>
+</tr>
+</tbody></table></div>
+<h3 id="action-button-fields">Action Button Fields</h3>
+<p>Any page can display a header button linking to an external resource (tool, Figma file, etc).</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Field</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>actionUrl</code></td>
+<td>No</td>
+<td>—</td>
+<td>URL for the header button</td>
+</tr>
+<tr>
+<td><code>actionLabel</code></td>
+<td>No</td>
+<td>Open</td>
+<td>Button text</td>
+</tr>
+<tr>
+<td><code>actionAccess</code></td>
+<td>No</td>
+<td>—</td>
+<td>Visibility control for the button on client pages</td>
+</tr>
+</tbody></table></div>
+<h3 id="enhancement-fields">Enhancement Fields</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Field</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>dropcap</code></td>
+<td>No</td>
+<td>—</td>
+<td>Set to <code>&quot;true&quot;</code> to style the first paragraph with a drop cap</td>
+</tr>
+<tr>
+<td><code>scripts</code></td>
+<td>No</td>
+<td>—</td>
+<td>Comma-separated script names to inject (e.g. <code>&quot;splide, notion-form&quot;</code>)</td>
+</tr>
+</tbody></table></div>
+<p><strong>Available scripts:</strong> <code>gsap</code>, <code>scroll-trigger</code>, <code>split-text</code>, <code>scroll-smoother</code>, <code>draggable</code>, <code>scroll-to</code>, <code>bd-animations</code>, <code>bd-audio</code>, <code>bd-cursor</code>, <code>splide</code>, <code>splide-auto-scroll</code>, <code>splide-intersection</code>, <code>notion-form</code></p>
+<h3 id="example">Example</h3>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-opj3kn40u" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-opj3kn40u" class="language-markdown">---
-title: &quot;Your Documentation Title Here&quot;
-subtitle: &quot;Your page subtitle or brief description&quot;
-description: &quot;Guide defining how to structure and organize your content&quot;
-section: &quot;overview&quot;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-7grv9gris" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-7grv9gris" class="language-markdown">---
+title: &quot;CPM Calculator&quot;
+subtitle: &quot;Plan campaign impressions, fees, and payouts&quot;
+description: &quot;Calculate campaign impressions, fees, payouts, and margins.&quot;
+section: &quot;Tools&quot;
 order: 1
-access: &quot;team&quot;
+status: &quot;published&quot;
+access: &quot;admin&quot;
+client: &quot;internal&quot;
+actionUrl: &quot;./cpm-calculator.html&quot;
+actionLabel: &quot;Open Tool&quot;
+actionAccess: &quot;public&quot;
 ---
-
-Your markdown content starts here...
 </code></pre>
       </div>
     
-<p><strong>Note:</strong> The frontmatter must be at the very top of the file, enclosed by <code>---</code> on separate lines.</p>
-<h3 id="required-fields">Required Fields</h3>
-<ul>
-<li><strong><code>title</code></strong> - The main page title (used in <code>&lt;h1&gt;</code> and page <code>&lt;title&gt;</code>)</li>
-<li><strong><code>subtitle</code></strong> - Optional subtitle displayed below the title</li>
-<li><strong><code>description</code></strong> - Meta description for SEO and social sharing</li>
-<li><strong><code>section</code></strong> - Section name for navigation grouping (e.g., <code>&quot;overview&quot;</code>, <code>&quot;features&quot;</code>, <code>&quot;api&quot;</code>)</li>
-<li><strong><code>order</code></strong> - Numeric order within the section (lower numbers appear first)</li>
-</ul>
-<h3 id="example">Example</h3>
 <hr>
 <h2 id="headers">Headers</h2>
 <h1 id="your-primary-headline-big-bold-and-unmissable">Your Primary Headline, Big, Bold, and Unmissable</h1>
@@ -163,8 +276,8 @@ Your markdown content starts here...
 <h6 id="clear-navigation-heading-for-important-information">Clear Navigation Heading for Important Information</h6>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-aygtjxd88" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-aygtjxd88" class="language-markdown"># Your Primary Headline, Big, Bold, and Unmissable
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-99ci6j6gf" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-99ci6j6gf" class="language-markdown"># Your Primary Headline, Big, Bold, and Unmissable
 
 ## Supporting Headline to Guide Your Content
 
@@ -183,8 +296,8 @@ Your markdown content starts here...
 <p>This paragraph demonstrates how body text will look across your layout. <strong>Bold text</strong> adds emphasis, while <em>italics</em> offer a subtle highlight. You can also use <del>strikethrough</del> to show edits. Combined emphasis with <strong>asterisks and <em>underscores</em></strong> for clarity.</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-si5yt2moy" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-si5yt2moy" class="language-markdown">This paragraph demonstrates how body text will look across your layout. **Bold text** adds emphasis, while *italics* offer a subtle highlight. You can also use ~~strikethrough~~ to show edits. Combined emphasis with **asterisks and _underscores_** for clarity.
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-lzwmj7lcj" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-lzwmj7lcj" class="language-markdown">This paragraph demonstrates how body text will look across your layout. **Bold text** adds emphasis, while *italics* offer a subtle highlight. You can also use ~~strikethrough~~ to show edits. Combined emphasis with **asterisks and _underscores_** for clarity.
 </code></pre>
       </div>
     
@@ -224,8 +337,8 @@ Your markdown content starts here...
 </ul>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-uszgwnzic" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-uszgwnzic" class="language-markdown">Typography principles for effective design:
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-k7r6g03uk" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-k7r6g03uk" class="language-markdown">Typography principles for effective design:
 
 1. **Readability** - Use clear, legible typefaces
 2. **Hierarchy** - Establish visual order with size and weight
@@ -266,8 +379,8 @@ Your markdown content starts here...
 </ol>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-crwwxfkwf" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-crwwxfkwf" class="language-markdown">1. Type with Purpose
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-30oi9m6g6" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-30oi9m6g6" class="language-markdown">1. Type with Purpose
    1. Design with Intent
       1. Making Letters Matter
          1. Typography That Tells Your Story
@@ -290,8 +403,8 @@ Your markdown content starts here...
 </ul>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-okdjjz2ds" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-okdjjz2ds" class="language-markdown">* Fonts That Speak Volumes
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-qg1cg7mgx" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-qg1cg7mgx" class="language-markdown">* Fonts That Speak Volumes
   * Modern Design Principles
     * Visual Hierarchy
       * Content Organization
@@ -311,8 +424,8 @@ Your markdown content starts here...
 </ul>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-qd4j0xk7x" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-qd4j0xk7x" class="language-markdown">- [ ] Review heading hierarchy
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-po5iop6la" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-po5iop6la" class="language-markdown">- [ ] Review heading hierarchy
 - [x] Document font scales
 - [ ] Update spacing guidelines
   - [x] Define line heights
@@ -328,8 +441,8 @@ Your markdown content starts here...
 <p>Some text to show that the reference links can follow later.</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-ul5xrhpfi" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-ul5xrhpfi" class="language-markdown">For further information, check out [this link](overview.html), which will take you to another page.
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-0pw4uyu1a" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-0pw4uyu1a" class="language-markdown">For further information, check out [this link](overview.html), which will take you to another page.
 
 Visit [ByDefault Studio](https://bydefault.studio &quot;ByDefault Design System&quot;) for comprehensive guidelines.
 
@@ -352,8 +465,8 @@ Some text to show that the reference links can follow later.
 <p>Reference-style:<br><img src="../assets/icons/favicon.svg" alt="ByDefault Logo" title="ByDefault Studio Logo"></p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-n6kl2lggq" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-n6kl2lggq" class="language-markdown">Here&#39;s the ByDefault favicon (hover to see the title text):
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-yi5wymz7h" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-yi5wymz7h" class="language-markdown">Here&#39;s the ByDefault favicon (hover to see the title text):
 
 Inline-style: ![ByDefault Favicon](../assets/icons/favicon.svg &quot;ByDefault Studio Favicon&quot;)
 
@@ -373,8 +486,8 @@ Reference-style:
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-jgm5i39gs" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-jgm5i39gs" class="language-markdown">&lt;img src=&quot;assets/images/og-default.jpg&quot; alt=&quot;Example image&quot; class=&quot;border border-secondary padding-m max-width-full&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-8bw4iq5bo" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-8bw4iq5bo" class="language-markdown">&lt;img src=&quot;assets/images/og-default.jpg&quot; alt=&quot;Example image&quot; class=&quot;border border-secondary padding-m max-width-full&quot;&gt;
 </code></pre>
       </div>
     
@@ -388,8 +501,8 @@ Reference-style:
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-c9ozqcl7n" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-c9ozqcl7n" class="language-markdown">&lt;div class=&quot;block gap-l border border-secondary padding-l&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-lz3m1d943" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-lz3m1d943" class="language-markdown">&lt;div class=&quot;block gap-l border border-secondary padding-l&quot;&gt;
   &lt;h3&gt;Custom Block Example&lt;/h3&gt;
   &lt;p&gt;This is a custom HTML block with a heading, text, and button. You can use any design system classes to style it.&lt;/p&gt;
   &lt;button class=&quot;button&quot;&gt;Action Button&lt;/button&gt;
@@ -403,8 +516,8 @@ Reference-style:
 <p>The ByDefault design system uses <code>CSS custom properties</code> for all design tokens. Inline <code>code</code> has <code>back-ticks around</code> it for clarity.</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-657xcubb1" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-657xcubb1" class="language-css">:root {
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-a9es10jc4" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-a9es10jc4" class="language-css">:root {
   /* Typography tokens */
   --font-primary: &quot;Arial&quot;, sans-serif;
   --font-s: 16px;
@@ -420,8 +533,8 @@ Reference-style:
     
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-fp4joc9gm" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-fp4joc9gm" class="language-javascript">// Design system token usage
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-biz3jl9f5" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-biz3jl9f5" class="language-javascript">// Design system token usage
 const designTokens = {
   spacing: {
     xs: &#39;var(--space-xs)&#39;,
@@ -438,8 +551,8 @@ const designTokens = {
     
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-0oj8ww20n" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-0oj8ww20n">No language indicated, so no syntax highlighting.
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-bybegrc7k" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-bybegrc7k">No language indicated, so no syntax highlighting.
 Use this for plain text examples or design notes.
 </code></pre>
       </div>
@@ -447,8 +560,8 @@ Use this for plain text examples or design notes.
 <p>Markdown code (shown as indented code block):</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-3sbqcyrwu" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-3sbqcyrwu">The ByDefault design system uses `CSS custom properties` for all design tokens. Inline `code` has `back-ticks around` it for clarity.
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-sv800no7u" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-sv800no7u">The ByDefault design system uses `CSS custom properties` for all design tokens. Inline `code` has `back-ticks around` it for clarity.
 
 ```css
 :root {
@@ -559,21 +672,21 @@ Use this for plain text examples or design notes.
 </tr>
 <tr>
 <td><code>--font-l</code></td>
-<td>22px</td>
-<td>1.2</td>
+<td>20px</td>
+<td>1.4</td>
 <td>Subheadings</td>
 </tr>
 <tr>
 <td><code>--font-xl</code></td>
-<td>28px</td>
+<td>22px</td>
 <td>1.2</td>
 <td>Headings</td>
 </tr>
 </tbody></table></div>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-b0f6q28yt" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-b0f6q28yt" class="language-markdown">Design system spacing tokens:
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-1uoylr7cd" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-1uoylr7cd" class="language-markdown">Design system spacing tokens:
 
 | Token | Value | Pixels | Usage |
 | ----- |:-----:| -----: | ----- |
@@ -590,8 +703,8 @@ Typography scale tokens:
 | `--font-xs` | 14px | 1.4 | Small text |
 | `--font-s` | 16px | 1.4 | Body text |
 | `--font-m` | 18px | 1.4 | Default |
-| `--font-l` | 22px | 1.2 | Subheadings |
-| `--font-xl` | 28px | 1.2 | Headings |
+| `--font-l` | 20px | 1.4 | Subheadings |
+| `--font-xl` | 22px | 1.2 | Headings |
 </code></pre>
       </div>
     
@@ -608,8 +721,8 @@ Typography scale tokens:
 </blockquote>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-zqiwom0od" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-zqiwom0od" class="language-markdown">&gt; Words matter, but how those words are presented matters just as much. Typography transforms content from mundane to magical, from ordinary to extraordinary.
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-o5odbcz4l" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-o5odbcz4l" class="language-markdown">&gt; Words matter, but how those words are presented matters just as much. Typography transforms content from mundane to magical, from ordinary to extraordinary.
 
 &gt; Typography is more than style; it&#39;s about communication. The right type makes content readable, relatable, and engaging, drawing readers into the heart of the message.
 
@@ -627,8 +740,8 @@ Typography scale tokens:
 </blockquote>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-m3yy9lujw" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-m3yy9lujw" class="language-markdown">&gt; Typography is the craft of endowing human language with a durable visual form.
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-ptjyday9y" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-ptjyday9y" class="language-markdown">&gt; Typography is the craft of endowing human language with a durable visual form.
 &gt;
 &gt; &gt; Good design is as little design as possible. — Dieter Rams
 &gt;
@@ -646,8 +759,8 @@ Typography scale tokens:
 <p>Here&#39;s how to apply spacing:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-matikashz" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-matikashz">padding: var(--space-l);
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-i1g61g1u1" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-i1g61g1u1">padding: var(--space-l);
 margin: var(--space-xl);
 </code></pre>
       </div>
@@ -655,8 +768,8 @@ margin: var(--space-xl);
 </blockquote>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-wfnayn1h1" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-wfnayn1h1" class="language-markdown">&gt; ## Typography Principles
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-m5gv0jqqt" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-m5gv0jqqt" class="language-markdown">&gt; ## Typography Principles
 &gt;
 &gt; 1.   **Readability** - Use clear, legible typefaces
 &gt; 2.   **Hierarchy** - Establish visual order with size and weight
@@ -679,8 +792,8 @@ margin: var(--space-xl);
 <p>Content organization section</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-rvn3llzxo" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-rvn3llzxo" class="language-markdown">Section break
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-7llik5b5a" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-7llik5b5a" class="language-markdown">Section break
 
 ---
 
@@ -703,8 +816,8 @@ Content organization section
 <p>This line is also a separate paragraph, but...<br>This line is only separated by a single newline, so it&#39;s a separate line in the <em>same paragraph</em>.</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-qy1bus7y0" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-qy1bus7y0" class="language-markdown">This paragraph demonstrates how body text will look across your layout. **Bold text** adds emphasis, while *italics* offer a subtle highlight.
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-bzo86r9us" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-bzo86r9us" class="language-markdown">This paragraph demonstrates how body text will look across your layout. **Bold text** adds emphasis, while *italics* offer a subtle highlight.
 
 This line is separated from the one above by two newlines, so it will be a *separate paragraph*.
 
@@ -719,8 +832,8 @@ This line is only separated by a single newline, so it&#39;s a separate line in 
 <p>Contact us: <a href="mailto:hello@bydefault.studio">hello@bydefault.studio</a></p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-3ei4qroso" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-3ei4qroso" class="language-markdown">Visit our website: &lt;https://bydefault.studio&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-58it821mn" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-58it821mn" class="language-markdown">Visit our website: &lt;https://bydefault.studio&gt;
 
 Contact us: &lt;hello@bydefault.studio&gt;
 </code></pre>
@@ -794,10 +907,7 @@ Contact us: &lt;hello@bydefault.studio&gt;
             <div class="feedback-modal-content">
                 <h3 class="feedback-modal-title">Send feedback</h3>
                 <p class="feedback-modal-subtitle"></p>
-                <form class="feedback-form" name="page-feedback" data-netlify="true">
-                    <input type="hidden" name="form-name" value="page-feedback">
-                    <input type="hidden" name="sentiment" value="">
-                    <input type="hidden" name="page" value="">
+                <form class="feedback-form">
                     <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
                     <div class="button-group feedback-modal-actions">
                         <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>

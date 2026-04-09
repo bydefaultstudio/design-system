@@ -5,7 +5,6 @@ description: "The mission, vision, and purpose that define why the brand exists 
 section: "Brand Book"
 subsection: ""
 order: 1
-slug: "brand-mission-vision-purpose"
 status: "published"
 access: "team"
 client: "internal"

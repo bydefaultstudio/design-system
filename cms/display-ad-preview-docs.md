@@ -1,19 +1,19 @@
 ---
 title: "Display Ad Preview"
-subtitle: "How to use the Display Ad Preview tool"
+subtitle: "Preview ad creatives across IAB formats and devices"
 description: "Generate Celtra ad preview sandbox URLs with device simulation and publisher context."
 section: "Tools"
 subsection: ""
 order: 3
-slug: "display-ad-preview-docs"
 status: "published"
 access: "admin"
 client: "internal"
-toolUrl: "../tools/display-ad-preview.html"
-toolAccess: "client:dianomi,client-template"
+actionUrl: "./display-ad-preview.html"
+actionLabel: "Open Tool"
+actionAccess: "client:dianomi,client-template"
 ---
 
-The Display Ad Preview tool generates Celtra sandbox preview URLs through a visual interface. Instead of manually constructing URLs with query parameters, select a device type, size, position, and preview mode from the sidebar controls.
+Preview Celtra ad creatives in standard IAB sizes with device simulation and publisher context. Select a device type, size, position, and preview mode — the tool generates the sandbox URL.
 
 ---
 

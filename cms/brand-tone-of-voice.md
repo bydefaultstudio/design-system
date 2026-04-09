@@ -5,7 +5,6 @@ description: "The language, tone, and communication style that defines how the b
 section: "Brand Book"
 subsection: ""
 order: 7
-slug: "brand-tone-of-voice"
 status: "published"
 access: "team"
 client: "internal"

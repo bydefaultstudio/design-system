@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en" data-client-theme="dianomi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dianomi — Format Links - By Default Brand OS</title>
+    <meta name="description" content="Display ad preview links showing how ads appear on desktop and mobile devices across different brand examples.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="../../assets/icons/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Dianomi — Format Links - By Default Brand OS">
+    <meta property="og:description" content="Display ad preview links showing how ads appear on desktop and mobile devices across different brand examples.">
+    <meta property="og:image" content="../../assets/images/og/og-default.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Design System Framework (path set in cms/docs.config.js) -->
+    <link rel="stylesheet" href="../../assets/css/design-system.css" id="design-system-css"
+          onerror="document.getElementById('ds-missing-banner').style.display='flex'">
+    
+
+    <!-- Google Fonts (configured in cms/docs.config.js) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Markdown CSS -->
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+
+    <!-- Client Theme Override (must load last to override base styles) -->
+    <link rel="stylesheet" href="../assets/theme.css">
+
+    <!-- Early theme loader: apply cached client theme before first paint -->
+    <script>
+    (function(){try{var V='20260407',VK='bdd-client-theme-version';if(localStorage.getItem(VK)!==V){localStorage.removeItem('bdd-client-theme');localStorage.setItem(VK,V)}if(document.documentElement.getAttribute('data-client-theme'))return;var c=localStorage.getItem('bdd-client-theme');if(!c)return;var p=c.split('|'),k=p[0],css=p[1],fonts=p[2];if(!k||!css)return;var b='../../';var l=document.createElement('link');l.id='client-theme-css';l.rel='stylesheet';l.href=b+css;document.head.appendChild(l);document.documentElement.setAttribute('data-client-theme',k);if(fonts){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://fonts.googleapis.com';pc.id='client-theme-fonts-preconnect';document.head.appendChild(pc);var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';pc2.id='client-theme-fonts-preconnect2';document.head.appendChild(pc2);var fl=document.createElement('link');fl.id='client-theme-fonts';fl.rel='stylesheet';fl.href=fonts;document.head.appendChild(fl)}}catch(e){}})();
+    </script>
+
+    <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
+    <script>
+      window._gotrueReady = (function() {
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0') {
+          return Promise.resolve(null);
+        }
+        return import('https://cdn.jsdelivr.net/npm/gotrue-js@0.9.29/+esm')
+          .then(function(m) { var G = m.default && m.default.default ? m.default.default : m.default; window.GoTrue = G; return G; })
+          .catch(function(e) { console.error('[Auth] GoTrue load failed:', e); return null; });
+      })();
+    </script>
+</head>
+<body class="auth-loading" data-access="client:dianomi">
+
+    <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
+    <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
+        <span>⚠️</span>
+        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">cms/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
+        <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
+    </div>
+
+    <!-- Site Navigation (header + sidebar injected by nav.js) -->
+    <div id="site-nav" data-base="../../"></div>
+
+    <div class="docs-main-area">
+        <!-- Page Header (full width, outside grid) -->
+        <div class="page-header">
+          <div class="container-small">
+            <h1>Format Links</h1>
+            <p class="page-subtitle" data-text-wrap="pretty">Preview links for all rich media formats</p>
+            
+          </div>
+        </div>
+
+        <!-- Sticky Bar (breadcrumbs + actions) -->
+        <div class="sticky-bar">
+          <div class="sticky-bar-container">
+            <div class="sticky-bar-content">
+              <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
+                <a href="index.html">Docs</a>
+                <span class="breadcrumb-separator">/</span>
+                <span>Format Links</span>
+              </nav>
+            </div>
+            <div class="sticky-bar-actions">
+              <div class="dropdown">
+                <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Markdown source options">
+                  <div class="icn-svg" data-icon="more-horizontal" data-file="more-horizontal.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
+                </button>
+                <div class="dropdown-menu is-right">
+                  <button type="button" class="dropdown-item js-copy-url" aria-label="Copy page link to clipboard">
+                    <div class="icn-svg" data-icon="link" data-file="link.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M14.8284 16.2426L8.46446 22.6066L1.39339 15.5355L7.75735 9.17158L9.17156 10.5858L5.63603 14.1213C4.85498 14.9024 4.85498 16.1687 5.63603 16.9498L7.05024 18.364C7.83129 19.145 9.09762 19.145 9.87867 18.364L13.4142 14.8284L14.8284 16.2426ZM9.17156 16.2426L7.75735 14.8284L14.8284 7.75736L16.2426 9.17158L9.17156 16.2426ZM16.2426 14.8284L14.8284 13.4142L18.3639 9.87868C19.145 9.09763 19.145 7.8313 18.3639 7.05026L16.9497 5.63604C16.1687 4.85499 14.9024 4.85499 14.1213 5.63604L10.5858 9.17158L9.17156 7.75736L15.5355 1.3934L22.6066 8.46447L16.2426 14.8284Z" fill="currentColor"/></svg></div>
+                    <span>Copy link</span>
+                  </button>
+                  <div data-auth-role="team">
+                    <div class="dropdown-divider"></div>
+                    <a href="../../cms/clients/dianomi/format-links.md" class="dropdown-item js-md-download" download>
+                      <div class="icn-svg" data-icon="download" data-file="download.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
+                      <span>Download .md file</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="../../cms/clients/dianomi/format-links.md" class="dropdown-item js-md-open" target="_blank" rel="noopener noreferrer">
+                      <div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div>
+                      <span>Open .md in new tab</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content + TOC grid -->
+        <div class="docs-content-grid padding-global">
+            <!-- Main Content -->
+            <main class="docs-main">
+                <article>
+                    <p>Display ad previews showing how the same ads appear on different devices (desktop and mobile).</p>
+<hr>
+<h2 id="amex">Amex</h2>
+<p><img src="../assets/images/thumb_amex.png" alt="Amex rich media preview"></p>
+<ul>
+<li><a href="https://by-default.celtra.com/shareablePreview/y52ux" target="_blank" rel="noopener noreferrer">Desktop Link</a></li>
+<li><a href="https://by-default.celtra.com/shareablePreview/68zj6" target="_blank" rel="noopener noreferrer">Mobile Link</a></li>
+<li><a href="https://by-default.celtra.com/preview/607c9467#deviceType=Desktop&overrides.deviceInfo.deviceType=Desktop&rp.creativePosition=right" target="_blank" rel="noopener noreferrer">Desktop Link — No Logo</a></li>
+</ul>
+<hr>
+<h2 id="prada">Prada</h2>
+<p><img src="../assets/images/thumb_mobile-prada.png" alt="Prada rich media preview"></p>
+<ul>
+<li><a href="https://by-default.celtra.com/shareablePreview/ihlxk" target="_blank" rel="noopener noreferrer">Desktop Link</a></li>
+<li><a href="https://by-default.celtra.com/shareablePreview/qzn221" target="_blank" rel="noopener noreferrer">Mobile Link</a></li>
+<li><a href="https://preview-sandbox.celtra.com/shareablePreview/ihlxk/frame?desktopPreviewFrame=1" target="_blank" rel="noopener noreferrer">Desktop Link — No Logo</a></li>
+</ul>
+<hr>
+<h2 id="burberry">Burberry</h2>
+<p><img src="../assets/images/thumb_burberry.png" alt="Burberry rich media preview"></p>
+<ul>
+<li><a href="https://by-default.celtra.com/shareablePreview/25ug51" target="_blank" rel="noopener noreferrer">Desktop Link</a></li>
+<li><a href="https://preview-sandbox.celtra.com/preview/6b94e555/frame?overrides.deviceInfo.deviceType=Desktop&desktopPreviewFrame=1" target="_blank" rel="noopener noreferrer">Desktop Link — No Logo</a></li>
+</ul>
+<hr>
+<h2 id="fendi">Fendi</h2>
+<p><img src="../assets/images/thumb_fendi.png" alt="Fendi rich media preview"></p>
+<ul>
+<li><a href="https://by-default.celtra.com/shareablePreview/2p967" target="_blank" rel="noopener noreferrer">Desktop Link</a></li>
+<li><a href="https://by-default.celtra.com/shareablePreview/60nqy" target="_blank" rel="noopener noreferrer">Mobile Link</a></li>
+<li><a href="https://preview-sandbox.celtra.com/preview/97b7db75/frame?overrides.deviceInfo.deviceType=Desktop&rp.creativePosition=right&desktopPreviewFrame=1" target="_blank" rel="noopener noreferrer">Desktop Link — No Logo</a></li>
+</ul>
+<hr>
+<h2 id="porsche">Porsche</h2>
+<p><img src="../assets/images/thumb_porsche.png" alt="Porsche rich media preview"></p>
+<ul>
+<li><a href="https://by-default.celtra.com/shareablePreview/eu47y" target="_blank" rel="noopener noreferrer">Desktop Link</a></li>
+<li><a href="http://by-default.celtra.com/shareablePreview/eu47y/frame?desktopPreviewFrame=1" target="_blank" rel="noopener noreferrer">Desktop Link — No Logo</a></li>
+</ul>
+<hr>
+<h2 id="rolex">Rolex</h2>
+<p><img src="../assets/images/thumb_rolex.png" alt="Rolex rich media preview"></p>
+<ul>
+<li><a href="https://by-default.celtra.com/shareablePreview/6w8iu" target="_blank" rel="noopener noreferrer">Desktop Link</a></li>
+<li><a href="https://by-default.celtra.com/shareablePreview/a7kyx" target="_blank" rel="noopener noreferrer">Mobile Link</a></li>
+<li><a href="https://preview-sandbox.celtra.com/preview/f9bd909e/frame?overrides.deviceInfo.deviceType=Desktop&desktopPreviewFrame=1" target="_blank" rel="noopener noreferrer">Desktop Link — No Logo</a></li>
+</ul>
+<hr>
+<h2 id="louis-vuitton">Louis Vuitton</h2>
+<p><img src="../assets/images/thumb_louis-vitton.png" alt="Louis Vuitton rich media preview"></p>
+<ul>
+<li><a href="https://by-default.celtra.com/shareablePreview/2pbav" target="_blank" rel="noopener noreferrer">Desktop Link</a></li>
+<li><a href="https://by-default.celtra.com/shareablePreview/uaeev" target="_blank" rel="noopener noreferrer">Mobile Link</a></li>
+<li><a href="https://preview-sandbox.celtra.com/shareablePreview/2pbav/frame?desktopPreviewFrame=1" target="_blank" rel="noopener noreferrer">Desktop Link — No Logo</a></li>
+</ul>
+<hr>
+<h2 id="rimowa">Rimowa</h2>
+<p><img src="../assets/images/thumb_rimowa.png" alt="Rimowa rich media preview"></p>
+<ul>
+<li><a href="https://by-default.celtra.com/shareablePreview/6nfdl1" target="_blank" rel="noopener noreferrer">Desktop Link</a></li>
+<li><a href="https://preview-sandbox.celtra.com/preview/7c39b9d4/frame?overrides.deviceInfo.deviceType=Desktop&desktopPreviewFrame=1" target="_blank" rel="noopener noreferrer">Desktop Link — No Logo</a></li>
+</ul>
+
+                </article>
+            </main>
+
+            <!-- Table of Contents -->
+            <aside class="docs-toc"><span class="toc-header">On this page</span><div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#amex" class="toc-link">Amex</a></li><li class="toc-item toc-level-2"><a href="#prada" class="toc-link">Prada</a></li><li class="toc-item toc-level-2"><a href="#burberry" class="toc-link">Burberry</a></li><li class="toc-item toc-level-2"><a href="#fendi" class="toc-link">Fendi</a></li><li class="toc-item toc-level-2"><a href="#porsche" class="toc-link">Porsche</a></li><li class="toc-item toc-level-2"><a href="#rolex" class="toc-link">Rolex</a></li><li class="toc-item toc-level-2"><a href="#louis-vuitton" class="toc-link">Louis Vuitton</a></li><li class="toc-item toc-level-2"><a href="#rimowa" class="toc-link">Rimowa</a></li></ul></nav></div></aside>
+        </div>
+
+        <!-- Page Navigation (Previous / Next) -->
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="working-with-by-default.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-left-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <h3 class="page-nav-title">Working with By Default</h3>
+      </span>
+    </a><a href="publishers-industries.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <h3 class="page-nav-title">Publishers & Industries</h3>
+      </span>
+      <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+    </a></div></nav>
+
+        <!-- Page Feedback -->
+        <section class="page-feedback" aria-label="Page feedback">
+            <div class="page-feedback-inner padding-global">
+                <h3 class="page-feedback-prompt">Was this page helpful?</h3>
+                <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
+                <div class="button-group">
+                    <button class="button" data-feedback="yes" type="button"><div class="icn-svg" data-icon="thumbs-up" data-file="thumbs-up.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 3L14.5 8H23V12.5L19.5 21H2V8H7L14 1L16 3ZM9.29289 8.53426C9.10536 8.72179 9 8.97615 9 9.24136V17C9 18.1046 9.89543 19 11 19H16.8208C17.6312 19 18.3616 18.5109 18.6701 17.7615L21 12.1035V11C21 10.4477 20.5523 10 20 10H13.1555C12.4856 10 12.0052 9.35431 12.1976 8.71271L13.2907 5.06833C13.3504 4.86932 13.1046 4.72254 12.9577 4.86945L9.29289 8.53426ZM5 10C4.44772 10 4 10.4477 4 11V18C4 18.5523 4.44772 19 5 19H6C6.55228 19 7 18.5523 7 18V11C7 10.4477 6.55228 10 6 10H5Z" fill="currentColor"/></svg></div> Yes</button>
+                    <button class="button is-outline is-faded" data-feedback="no" type="button"><div class="icn-svg" data-icon="thumbs-down" data-file="thumbs-down.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21L9.5 16H1L1 11.5L4.5 3L22 3L22 16L17 16L10 23L8 21ZM14.7071 15.4657C14.8946 15.2782 15 15.0239 15 14.7586L15 7C15 5.89543 14.1046 5 13 5L7.17921 5C6.36877 5 5.63845 5.48908 5.32986 6.23847L3 11.8965L3 13C3 13.5523 3.44772 14 4 14L10.8445 14C11.5144 14 11.9948 14.6457 11.8024 15.2873L10.7093 18.9317C10.6496 19.1307 10.8954 19.2775 11.0423 19.1305L14.7071 15.4657ZM19 14C19.5523 14 20 13.5523 20 13V6C20 5.44772 19.5523 5 19 5H18C17.4477 5 17 5.44772 17 6V13C17 13.5523 17.4477 14 18 14H19Z" fill="currentColor"/></svg></div> No</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Modal -->
+        <dialog class="feedback-modal" aria-label="Send feedback">
+            <div class="feedback-modal-content">
+                <h3 class="feedback-modal-title">Send feedback</h3>
+                <p class="feedback-modal-subtitle"></p>
+                <form class="feedback-form">
+                    <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
+                    <div class="button-group feedback-modal-actions">
+                        <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>
+                        <button type="submit" class="button is-small">Send feedback</button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
+
+        <!-- Footer -->
+        <footer class="docs-footer">
+            <div class="docs-footer-inner padding-global">
+                <p class="docs-footer-text">© 2026 By Default</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- Initialize Highlight.js, Copy, and TOC -->
+    <script>
+        (function() {
+            'use strict';
+
+            function initHighlight() {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+
+            function initTOCActiveState() {
+                const tocLinks = document.querySelectorAll('.toc-link');
+                const headings = document.querySelectorAll('h1[id], h2[id]');
+
+                if (tocLinks.length === 0 || headings.length === 0) return;
+
+                const linkMap = new Map();
+                tocLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        const id = href.substring(1);
+                        linkMap.set(id, link);
+                    }
+                });
+
+                const observerOptions = {
+                    rootMargin: '-20% 0px -70% 0px',
+                    threshold: 0
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const id = entry.target.id;
+                        const link = linkMap.get(id);
+
+                        if (entry.isIntersecting) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            if (link) {
+                                link.classList.add('toc-link-active');
+                            }
+                        }
+                    });
+                }, observerOptions);
+
+                headings.forEach(heading => {
+                    if (heading.id) {
+                        observer.observe(heading);
+                    }
+                });
+
+                function setInitialActive() {
+                    let activeHeading = null;
+                    let maxTop = -Infinity;
+
+                    headings.forEach(heading => {
+                        const rect = heading.getBoundingClientRect();
+                        if (rect.top <= 100 && rect.top > maxTop) {
+                            maxTop = rect.top;
+                            activeHeading = heading;
+                        }
+                    });
+
+                    if (activeHeading && activeHeading.id) {
+                        const link = linkMap.get(activeHeading.id);
+                        if (link) {
+                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            link.classList.add('toc-link-active');
+                        }
+                    }
+                }
+
+                setInitialActive();
+
+                let scrollTimeout;
+                window.addEventListener('scroll', () => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(setInitialActive, 100);
+                });
+            }
+
+            function init() {
+                initHighlight();
+                initTOCActiveState();
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+
+    <!-- Back to Top -->
+    <div class="back-to-top-wrapper">
+      <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
+        <div class="icn-svg" data-icon="arrow-top" data-file="arrow-top.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M4 4V2H20V4H4Z" fill="currentColor"/><path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/></svg></div>
+      </button>
+    </div>
+    <script>
+      (function() {
+        var btn = document.querySelector('.back-to-top-wrapper');
+        if (!btn) return;
+        window.addEventListener('scroll', function() {
+          btn.classList.toggle('is-visible', window.scrollY > 300);
+        });
+        btn.querySelector('button').addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+
+    <!-- Dropdown -->
+    <script src="../../assets/js/dropdown.js"></script>
+
+    <!-- Site Navigation -->
+    <script src="../../assets/js/nav.js"></script>
+    <!-- Auth -->
+    <script src="../../assets/js/auth-config.js"></script>
+    <!-- Theme -->
+    <script src="../../assets/js/theme-config.js"></script>
+    <script src="../../assets/js/theme-loader.js"></script>
+    <!-- Auth (must load after theme scripts) -->
+    <script src="../../assets/js/auth.js"></script>
+    <!-- Feedback -->
+    <script src="../../assets/js/feedback.js"></script>
+    <!-- Copy to clipboard -->
+    <script src="../../assets/js/copy-button.js"></script>
+    <!-- Number input stepper -->
+    <script src="../../assets/js/number-input.js"></script>
+    <!-- Tabs -->
+    <script src="../../assets/js/tabs.js"></script>
+    <!-- Toast notifications -->
+    <script src="../../assets/js/toast.js"></script>
+    <!-- Dialog -->
+    <script src="../../assets/js/dialog.js"></script>
+    <!-- Rating -->
+    <script src="../../assets/js/rating.js"></script>
+    <!-- Markdown download/open — strips frontmatter and block HTML -->
+    <script src="../../assets/js/md-strip.js"></script>
+
+    <script>
+      /* Tag dismiss */
+      document.addEventListener('click', function (e) {
+        var removeBtn = e.target.closest('.tag-remove');
+        if (removeBtn) {
+          var tag = removeBtn.closest('.tag');
+          if (tag) tag.remove();
+        }
+      });
+
+      /* Table scroll overflow hint */
+      (function initTableScroll() {
+        var wrappers = document.querySelectorAll('.table-scroll');
+        if (!wrappers.length) return;
+
+        function checkOverflow(wrapper) {
+          var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
+          var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
+          wrapper.classList.toggle('is-overflowing', isOverflowing);
+          wrapper.classList.toggle('is-scrolled-end', isAtEnd);
+        }
+
+        wrappers.forEach(function(wrapper) {
+          checkOverflow(wrapper);
+          wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+        });
+
+        window.addEventListener('resize', function() {
+          wrappers.forEach(checkOverflow);
+        });
+      })();
+    </script>
+    <div class="cursor-default"></div>
+    <div class="cursor-halo"></div>
+    
+</body>
+</html>

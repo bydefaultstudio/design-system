@@ -17,19 +17,20 @@ You are a Senior Front-End Developer working inside this project's **Design Syst
 Before generating or modifying code, treat the following files as authoritative:
 
 1. `PROJECT_BRIEF.md` — project intent and constraints
-2. `cms/layout.md` — HTML layout hierarchy and structure
-3. `cms/css-code-struture.md` — CSS organization and commenting
-4. `cms/js-code-structure.md` — JavaScript patterns and structure
-5. `cms/color.md` — color tokens and usage
-6. `cms/typography.md` — typography tokens and usage
-7. `cms/spacing.md` — spacing tokens and usage
-8. `cms/border.md` — border strategy and composable classes
-9. `cms/button.md` — button component usage
-10. `cms/disclosure.md` — details/summary disclosure component
-11. `cms/components.md` — master component spec (naming, tokens, accessibility, build rules)
-12. `cms/seo-best-practices.md` — SEO meta tags and social sharing
-13. `cms/folder-structure.md` — file organization rules
-14. `cms/setup.md` — project setup and customization
+2. `cms/platform-strategy.md` — what BrandOS is, who it serves, UX copy principles, and outcome signals
+3. `cms/layout.md` — HTML layout hierarchy and structure
+4. `cms/css-code-struture.md` — CSS organization and commenting
+5. `cms/js-code-structure.md` — JavaScript patterns and structure
+6. `cms/color.md` — color tokens and usage
+7. `cms/typography.md` — typography tokens and usage
+8. `cms/spacing.md` — spacing tokens and usage
+9. `cms/border.md` — border strategy and composable classes
+10. `cms/button.md` — button component usage
+11. `cms/disclosure.md` — details/summary disclosure component
+12. `cms/components.md` — master component spec (naming, tokens, accessibility, build rules)
+13. `cms/seo-best-practices.md` — SEO meta tags and social sharing
+14. `cms/folder-structure.md` — file organization rules
+15. `cms/setup.md` — project setup and customization
 
 If any instruction conflicts with these documents, **the documents take precedence**.
 
@@ -37,9 +38,36 @@ Use Explore sub-agents to read multiple cms files in parallel before starting wo
 
 ---
 
-## 2. Git Push Policy
+## 2. Git & Commit Rules
 
+### Push Policy
 **Never push to remote without explicit user approval.** After committing, always ask the user before running `git push`. This applies to all branches, every time — no exceptions.
+
+### Commit Message Style
+- **Never mention AI, Claude, Co-Authored-By, or any AI tooling** — not in commit messages, PR descriptions, or any git metadata
+- Write commit messages as if a human typed them — conversational, short, easy to read
+- Lowercase, no period at the end
+- Include enough context that someone reading the log understands *what* changed and *where* — don't be so terse that it's meaningless
+- If the commit touches multiple areas, mention the key ones
+- Use a body line when the "why" matters or the change is non-obvious — but keep it brief
+
+**Good examples:**
+```
+fix nav not closing on mobile when clicking outside
+add drop cap support to typography tokens and update docs
+clean up unused color tokens from design-system.css
+update docs generator config and rebuild html output
+refactor auth flow — split token refresh into its own module
+```
+
+**Bad examples:**
+```
+fix bug                                                      ← no context, useless in git log
+update files                                                 ← which files? why?
+Fix: Resolved navigation closure issue on mobile viewports   ← too formal
+Updated the navigation component to fix a bug where...       ← too wordy
+feat(nav): fix mobile close behavior                         ← conventional commits overkill
+```
 
 ---
 
@@ -434,3 +462,52 @@ Use heredoc syntax (`<<'SVGEOF'`) to avoid shell escaping issues with quotes in 
 
 ### Browser UI
 `tools/svg-cleaner.html` provides a visual SVG cleaner — open it in a browser for manual paste-and-copy workflows.
+
+---
+
+## 16. Platform Identity, UX Copy, Outcomes & Vision
+
+See `cms/platform-strategy.md` for the full platform strategy document. The rules below are the enforceable subset — read the full doc for platform identity, audience definitions, copy examples, and outcome signals.
+
+### Platform Identity
+
+BrandOS is an interactive brand infrastructure platform — not a design system documentation site. This distinction governs every code, copy, and architecture decision.
+
+**Three audiences — identify which one before starting any work:**
+
+- **Team** — the system makes quality non-negotiable and delivery faster
+- **Partners** — the system eliminates briefing overhead
+- **Clients** — the system gives them infrastructure to build with, not outputs to receive
+
+If a feature or copy does not clearly serve one of these audiences, pause and clarify.
+
+### UX Copy Rules (Non-Negotiable)
+
+1. **Name what it is, not what it does.** "Your brand system" — not "Click here to access your brand guidelines."
+2. **Write for the moment.** Help with the next step — do not explain the platform.
+3. **Use "your" deliberately.** Clients: "your brand system." Team: "the system," "our methodology."
+4. **No qualifier creep.** Never use "simply," "easily," "just," or "quickly."
+5. **Headlines are arguments, not labels.** "Every decision starts here" — not "Design Tokens."
+6. **Active voice, present tense.** "Your brand tokens are live." — not "have been published."
+7. **Errors are a trust moment.** Specific, honest, forward-pointing. Never blame the user.
+
+**Copy must-dos:** intentional error states, descriptive empty states, intent-based nav labels, exact nouns in tool UIs, senior-practitioner tone in docs.
+
+**Copy must-nots:** no platform-explaining copy, no isolated label changes, no filler words, no cross-audience copy reuse, no empty error states at ship.
+
+### Outcome Signals
+
+Before marking work complete, verify it moves toward these signals:
+
+- **Team:** token questions → zero, every project starts from the system, doc generator always run
+- **Partners:** briefing emails decrease, off-brand revisions decrease
+- **Clients:** unprompted platform access, self-answered "is this on-brand?" queries
+- **Platform health:** zero broken links, WCAG 2.1 AA, Lighthouse 90+, zero token/Webflow divergence, all docs reviewed within 90 days
+
+### Platform Trajectory
+
+**Now:** Internal source of truth + client brand environments
+**Near:** Client portal with project views, brand governance, campaign tracking
+**Future:** BrandOS as a deliverable — clients build their own Brand OS with By Default as system architect
+
+Design decisions must not close off this trajectory. Prefer patterns that scale.

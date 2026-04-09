@@ -1,11 +1,10 @@
 ---
 title: "Icon"
-subtitle: "Icon usage, guidelines, and complete icon catalog"
+subtitle: "Brand icon standards and the full registry"
 description: "How to use icons in the design system — SVG standards, wrapper classes, accessibility, tooling, and the full registry of brand icons."
 section: "Design System"
 subsection: ""
 order: 7
-slug: "iconography"
 status: "published"
 access: "team"
 client: "internal"

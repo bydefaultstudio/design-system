@@ -1,19 +1,19 @@
 ---
 title: "CPM Calculator"
-subtitle: "How to use the CPM & Spend Calculator"
-description: "Complete guide to using the calculator, toggle options, and calculation formulas."
+subtitle: "Plan campaign impressions, fees, and payouts"
+description: "Calculate campaign impressions, fees, payouts, and margins from monthly spend — with multi-partner support and currency switching."
 section: "Tools"
 subsection: ""
 order: 1
-slug: "calculator-docs"
 status: "published"
 access: "admin"
 client: "internal"
-toolUrl: "../tools/cpm-calculator.html"
-toolAccess: "public"
+actionUrl: "./cpm-calculator.html"
+actionLabel: "Open Tool"
+actionAccess: "public"
 ---
 
-The CPM & Spend Calculator is a web-based tool for media planners and sales teams to calculate campaign impressions, fees, payouts, and margins based on monthly spend.
+Calculate campaign impressions, fees, payouts, and margins from monthly spend. Built for media planners and sales teams, with multi-partner support, creative and hosting fee toggles, and currency switching.
 
 ---
 

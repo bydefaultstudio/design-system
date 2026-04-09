@@ -5,7 +5,6 @@ description: "How to use code, pre, and kbd elements in the design system."
 section: "Design System"
 subsection: "Content"
 order: 3
-slug: "code"
 status: "published"
 access: "team"
 client: "internal"

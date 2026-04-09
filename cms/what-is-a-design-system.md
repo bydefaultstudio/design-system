@@ -5,7 +5,6 @@ description: "What a design system is, why it matters, and what's inside it."
 section: "Design System"
 subsection: ""
 order: 0
-slug: "what-is-a-design-system"
 status: "published"
 access: "team"
 client: "internal"
@@ -36,20 +35,11 @@ By following a Design System, teams can **move faster, collaborate better, and m
 
 ## Using This Design System with AI
 
-This design system has an **AI-readable reference file** that gives tools like Claude, ChatGPT, and Cursor full context about every token, component, and pattern. When you share it with an AI, the code it generates will automatically follow our design system.
+This design system publishes **AI-readable reference files** following the [llms.txt standard](https://llmstxt.org). Share them with tools like Claude, Cursor, Copilot, or ChatGPT — the code they generate will automatically follow our design system.
 
-**Live reference URL:**
+| File | Purpose |
+| --- | --- |
+| [`llms.txt`](https://bydefault.design/llms.txt) | Lightweight index with section links |
+| [`llms-full.txt`](https://bydefault.design/llms-full.txt) | Complete reference — all tokens, components, and rules |
 
-```
-https://bydefault.design/ai-reference.md
-```
-
-This file is **auto-generated** from the design system source files on every deploy, so it's always up-to-date.
-
-### How to Use It
-
-Paste the URL into any AI tool at the start of your conversation and ask it to use it as the design system reference. Most AI tools can fetch the URL directly — if not, download the file and upload it as an attachment.
-
-### What's Inside
-
-Every design token value (colors, typography, spacing, borders), the full layout hierarchy, all component patterns with HTML examples, utility classes, icon rules, dark mode tokens, and accessibility requirements — everything an AI needs to generate on-brand code.
+Both files are auto-generated on every deploy, so they stay up-to-date. For tool-specific setup instructions, see the [LLM documentation page](../docs/llms.html).

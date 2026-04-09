@@ -1,11 +1,10 @@
 ---
 title: "Dialog"
-subtitle: "Modal dialogs using native dialog element"
+subtitle: "Focused interactions that require a response"
 description: "How to use the dialog component for modal windows, confirmations, and form overlays."
 section: "Design System"
 subsection: "Content"
 order: 4
-slug: "dialog"
 status: "published"
 access: "team"
 client: "internal"

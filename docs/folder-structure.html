@@ -133,6 +133,7 @@
 <li><code>tools/</code> → Live tool apps (CPM calculator, SVG cleaner, display ad preview)</li>
 <li><code>src/</code> → Source files (pages, JS)</li>
 <li><code>themes/</code> → Client theme overrides (one CSS file per client)</li>
+<li><code>cdn/</code> → Webflow project code (JS + CSS served via CDN)</li>
 </ul>
 <h2 id="assets">assets/</h2>
 <p>Single source of truth for all assets. No duplication.</p>
@@ -171,6 +172,24 @@
 <li><code>theme-template.css</code> → Starter template (copy and customise per client)</li>
 </ul>
 <p>Register themes in <code>assets/js/theme-config.js</code>. See <a href="setup.md#client-theming">Setup — Client Theming</a> for usage.</p>
+<h2 id="cdn">cdn/</h2>
+<p>JavaScript and CSS files served to Webflow projects via CDN (jsdelivr). Each subfolder represents a Webflow site. Global scripts shared across sites live in <code>assets/js/bd/</code>.</p>
+<ul>
+<li><code>studio/</code> → By Default agency website (bydefault.studio)<ul>
+<li><code>js/</code> → Page-specific scripts (homepage, hero, blog, case study, etc.)</li>
+<li><code>css/</code> → Page-specific styles (hero section)</li>
+</ul>
+</li>
+<li><code>fifa-wc26/</code> → FIFA World Cup 2026 interactive stadium map<ul>
+<li><code>js/</code> → Map script</li>
+</ul>
+</li>
+<li><code>la-interactive-map/</code> → LA interactive map<ul>
+<li><code>js/</code> → Map script</li>
+</ul>
+</li>
+</ul>
+<p>Additional project folders can be added as needed. Project overview docs are generated to <code>projects/</code> from <code>cms/projects-*.md</code>.</p>
 <h2 id="src">src/</h2>
 <h3 id="srcjs">src/js/</h3>
 <ul>
@@ -226,7 +245,7 @@
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#root-level" class="toc-link">Root Level</a></li><li class="toc-item toc-level-2"><a href="#assets" class="toc-link">assets/</a></li><li class="toc-item toc-level-2"><a href="#design-system" class="toc-link">design-system/</a></li><li class="toc-item toc-level-2"><a href="#brand-book" class="toc-link">brand-book/</a></li><li class="toc-item toc-level-2"><a href="#themes" class="toc-link">themes/</a></li><li class="toc-item toc-level-2"><a href="#src" class="toc-link">src/</a></li><li class="toc-item toc-level-2"><a href="#templates" class="toc-link">templates/</a></li><li class="toc-item toc-level-2"><a href="#cms" class="toc-link">cms/</a></li><li class="toc-item toc-level-2"><a href="#css-loading-order" class="toc-link">CSS Loading Order</a></li><li class="toc-item toc-level-2"><a href="#tools" class="toc-link">tools/</a></li><li class="toc-item toc-level-2"><a href="#notes" class="toc-link">Notes</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#root-level" class="toc-link">Root Level</a></li><li class="toc-item toc-level-2"><a href="#assets" class="toc-link">assets/</a></li><li class="toc-item toc-level-2"><a href="#design-system" class="toc-link">design-system/</a></li><li class="toc-item toc-level-2"><a href="#brand-book" class="toc-link">brand-book/</a></li><li class="toc-item toc-level-2"><a href="#themes" class="toc-link">themes/</a></li><li class="toc-item toc-level-2"><a href="#cdn" class="toc-link">cdn/</a></li><li class="toc-item toc-level-2"><a href="#src" class="toc-link">src/</a></li><li class="toc-item toc-level-2"><a href="#templates" class="toc-link">templates/</a></li><li class="toc-item toc-level-2"><a href="#cms" class="toc-link">cms/</a></li><li class="toc-item toc-level-2"><a href="#css-loading-order" class="toc-link">CSS Loading Order</a></li><li class="toc-item toc-level-2"><a href="#tools" class="toc-link">tools/</a></li><li class="toc-item toc-level-2"><a href="#notes" class="toc-link">Notes</a></li></ul></nav></div>
     </aside>
         </div>
 
@@ -264,10 +283,7 @@
             <div class="feedback-modal-content">
                 <h3 class="feedback-modal-title">Send feedback</h3>
                 <p class="feedback-modal-subtitle"></p>
-                <form class="feedback-form" name="page-feedback" data-netlify="true">
-                    <input type="hidden" name="form-name" value="page-feedback">
-                    <input type="hidden" name="sentiment" value="">
-                    <input type="hidden" name="page" value="">
+                <form class="feedback-form">
                     <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
                     <div class="button-group feedback-modal-actions">
                         <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>

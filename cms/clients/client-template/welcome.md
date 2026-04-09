@@ -1,31 +1,26 @@
 ---
 title: "Welcome"
-subtitle: "How to use this site"
-description: "A quick guide to navigating your brand portal and finding what you need."
+subtitle: "Your brand system starts here"
+description: "Everything you need to build, reference, and maintain your brand — identity guidelines, design tokens, and operational tools."
 section: "Docs"
 subsection: ""
 order: 1
-slug: "welcome"
 status: "published"
 access: "client"
 client: "client-template"
 ---
 
-Welcome to your brand portal. This site is your central hub for brand guidelines, assets, and tools.
+This is your brand environment — the single place where your brand identity, guidelines, and tools live together.
 
-## What you'll find here
+## Your brand identity
 
-### Brand Book
+Your brand book holds the visual and strategic foundations: logo usage, colour palette, typography, and the rules that keep everything consistent. Reference it whenever you're creating branded materials or briefing a partner.
 
-Your brand book contains the visual identity guidelines for your brand. This includes logo usage, colour palette, typography, and more. Use these guidelines when creating any branded materials.
+## Your tools
 
-### Tools
+- **CPM Calculator** — plan campaign impressions, fees, and payouts
+- **Display Ad Preview** — preview ad creatives across standard IAB formats and devices
 
-We've set up a few tools to make your day-to-day work easier:
+## Need something?
 
-- **CPM Calculator** — quickly calculate CPM, impressions, or spend
-- **Display Ad Preview** — preview Celtra ad creatives in standard IAB sizes
-
-## Getting help
-
-If you need something that isn't covered here, reach out to your By Default contact and we'll get it sorted.
+Contact your By Default account lead directly. If something is missing from this environment, we'll add it.

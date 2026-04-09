@@ -5,7 +5,6 @@ description: "How to use the copy button component for copying text to the clipb
 section: "Design System"
 subsection: "Data Entry"
 order: 2
-slug: "copy-button"
 status: "published"
 access: "team"
 client: "internal"

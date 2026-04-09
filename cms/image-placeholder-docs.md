@@ -5,13 +5,12 @@ description: "A URL-based SVG placeholder image generator. Set custom dimensions
 section: "Tools"
 subsection: ""
 order: 4
-slug: "image-placeholder-docs"
 status: "published"
 access: "admin"
 client: "internal"
-toolUrl: "image-placeholder.html"
-toolAccess: "public"
-toolLabel: "Open Tool"
+actionUrl: "image-placeholder.html"
+actionLabel: "Open Tool"
+actionAccess: "public"
 ---
 
 The Image Placeholder tool generates SVG placeholder images on the fly via URL parameters. Change the URL to change the image — no image libraries required.

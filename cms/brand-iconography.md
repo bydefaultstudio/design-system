@@ -5,7 +5,6 @@ description: "Browse, copy, and download every icon in the brand icon set."
 section: "Brand Book"
 subsection: ""
 order: 8
-slug: "brand-iconography"
 status: "published"
 access: "team"
 client: "internal"

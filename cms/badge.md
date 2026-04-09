@@ -5,7 +5,6 @@ description: "How to use badge and pill components for status labels, version ta
 section: "Design System"
 subsection: "Feedback"
 order: 1
-slug: "badge"
 status: "published"
 access: "team"
 client: "internal"

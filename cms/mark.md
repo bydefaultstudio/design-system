@@ -5,7 +5,6 @@ description: "How to use mark, abbr, and figure elements in the design system."
 section: "Design System"
 subsection: "Content"
 order: 10
-slug: "mark"
 status: "published"
 access: "team"
 client: "internal"

@@ -5,7 +5,6 @@ description: "Guide to customizing this project template for your new project."
 section: "Docs"
 subsection: "Dev"
 order: 1
-slug: "setup"
 status: "published"
 access: "admin"
 client: "internal"

@@ -283,14 +283,19 @@
   // Safety: always show content within 2 seconds, even if theme CSS fails to load
   setTimeout(showContent, 2000);
 
-  function redirectAccessDenied() {
+  function redirectAccessDenied(reason, fromPath) {
     var currentPage = getCurrentPagePath();
     if (currentPage === ACCESS_DENIED_PAGE) {
       showContent();
       return;
     }
     var base = getBasePrefix();
-    window.location.href = base + ACCESS_DENIED_PAGE;
+    var url = base + ACCESS_DENIED_PAGE;
+    var params = [];
+    if (reason) params.push('reason=' + encodeURIComponent(reason));
+    if (fromPath) params.push('from=' + encodeURIComponent(fromPath));
+    if (params.length) url += '?' + params.join('&');
+    window.location.replace(url);
   }
 
   function setRoleClass(role) {
@@ -1051,7 +1056,7 @@
     var userRole = getEffectiveRole(metadata.roles || []);
     if (!userRole) {
       renderAuthHeaderDropdown(user);
-      redirectAccessDenied();
+      redirectAccessDenied('role', getCurrentPagePath());
       return;
     }
 
@@ -1067,9 +1072,13 @@
     var adminActiveRole = realRole === 'admin' ? userRole : null;
 
     if (!hasAccessForValue(userRole, requiredRole, user)) {
+      var deniedReason = 'role';
+      if (requiredRole.indexOf('client:') !== -1 && hasAccess(userRole, 'client')) {
+        deniedReason = 'org';
+      }
       renderAuthHeaderDropdown(user, adminActiveRole);
       setRoleClass(userRole);
-      redirectAccessDenied();
+      redirectAccessDenied(deniedReason, getCurrentPagePath());
       return;
     }
 
@@ -1360,8 +1369,12 @@
     setRoleClass(activeRole);
 
     if (requiredRole !== 'public' && !hasAccessForValue(activeRole, requiredRole, devUser)) {
+      var devDeniedReason = 'role';
+      if (requiredRole.indexOf('client:') !== -1 && hasAccess(activeRole, 'client')) {
+        devDeniedReason = 'org';
+      }
       renderAuthHeaderDropdown(devUser, activeRole);
-      redirectAccessDenied();
+      redirectAccessDenied(devDeniedReason, getCurrentPagePath());
       return;
     }
 

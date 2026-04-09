@@ -5,7 +5,6 @@ description: "Guide to upgrading the documentation engine without affecting proj
 section: "Docs"
 subsection: "Dev"
 order: 3
-slug: "upgrading-docs"
 status: "published"
 access: "admin"
 client: "internal"

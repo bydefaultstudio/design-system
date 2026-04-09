@@ -5,7 +5,6 @@ description: "Complete guide to SEO meta tags, Open Graph, X Cards, and structur
 section: "Docs"
 subsection: "Code Standards"
 order: 4
-slug: "seo-best-practices"
 status: "published"
 access: "team"
 client: "internal"

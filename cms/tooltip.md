@@ -1,11 +1,10 @@
 ---
 title: "Tooltip"
-subtitle: "CSS-only contextual hints"
+subtitle: "Additional context on hover — no JavaScript required"
 description: "How to use the tooltip component for showing additional context on hover."
 section: "Design System"
 subsection: "Feedback"
 order: 7
-slug: "tooltip"
 status: "published"
 access: "team"
 client: "internal"

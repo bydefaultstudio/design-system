@@ -1,11 +1,10 @@
 ---
 title: "Callout"
-subtitle: "Callout and alert component guidelines"
+subtitle: "Draw attention to what matters"
 description: "How to use callout styles and semantic variants in the design system."
 section: "Design System"
 subsection: "Feedback"
 order: 2
-slug: "callout"
 status: "published"
 access: "team"
 client: "internal"

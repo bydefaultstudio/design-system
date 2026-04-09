@@ -1,11 +1,10 @@
 ---
 title: "Typography"
-subtitle: "Typography tokens and text components"
+subtitle: "Type scale, weights, and reading rhythm"
 description: "Complete reference for typography tokens including font scale, line height, font weight, and letter spacing."
 section: "Design System"
 subsection: ""
 order: 4
-slug: "typography"
 status: "published"
 access: "team"
 client: "internal"
@@ -21,21 +20,26 @@ The system uses three font families — a primary sans-serif for body and UI, a 
 
 The full type scale used across the system. Reference these tokens when setting font sizes on any element.
 
-| Token | Value | px Equivalent |
-| --- | --- | --- |
-| `--font-3xs` | 0.625rem | 10px |
-| `--font-2xs` | 0.75rem | 12px |
-| `--font-xs` | 0.875rem | 14px |
-| `--font-s` | 1rem | 16px |
-| `--font-m` | 1.125rem | 18px |
-| `--font-l` | 1.375rem | 22px |
-| `--font-xl` | 1.75rem | 28px |
-| `--font-2xl` | 2rem | 32px |
-| `--font-3xl` | 2.5rem | 40px |
-| `--font-4xl` | 3rem | 48px |
-| `--font-5xl` | 3.4375rem | 55px |
-| `--font-6xl` | 4rem | 64px |
-| `--font-7xl` | 4.5rem | 72px |
+The scale uses a **progressive step** approach: +2px in the body range, +4px in the heading range, and +8px in the display range. This gives more granularity where it matters most.
+
+| Token | Value | px Equivalent | Step |
+| --- | --- | --- | --- |
+| `--font-3xs` | 0.625rem | 10px | — |
+| `--font-2xs` | 0.75rem | 12px | +2px |
+| `--font-xs` | 0.875rem | 14px | +2px |
+| `--font-s` | 1rem | 16px | +2px |
+| `--font-m` | 1.125rem | 18px | +2px |
+| `--font-l` | 1.25rem | 20px | +2px |
+| `--font-xl` | 1.375rem | 22px | +2px |
+| `--font-2xl` | 1.5rem | 24px | +2px |
+| `--font-3xl` | 1.75rem | 28px | +4px |
+| `--font-4xl` | 2rem | 32px | +4px |
+| `--font-5xl` | 2.25rem | 36px | +4px |
+| `--font-6xl` | 2.5rem | 40px | +4px |
+| `--font-7xl` | 3rem | 48px | +8px |
+| `--font-8xl` | 3.5rem | 56px | +8px |
+| `--font-9xl` | 4rem | 64px | +8px |
+| `--font-10xl` | 4.5rem | 72px | +8px |
 
 ---
 
@@ -78,14 +82,14 @@ All headings use `--font-secondary` (RecifeText) at `--font-weight-regular` (400
 <h3>Structure creates clarity in complexity</h3>
 ```
 
-| Element | Token | Line Height | Value |
-| --- | --- | --- | --- |
-| `h1` | `--font-4xl` | `--line-height-s` | 1 |
-| `h2` | `--font-3xl` | `--line-height-s` | 1 |
-| `h3` | `--font-2xl` | `--line-height-s` | 1 |
-| `h4` | `--font-xl` | `--line-height-s` | 1 |
-| `h5` | `--font-l` | `--line-height-s` | 1 |
-| `h6` | `--font-l` | `--line-height-l` | 1.4 |
+| Element | Token | px | Line Height | Value |
+| --- | --- | --- | --- | --- |
+| `h1` | `--font-7xl` | 48px | `--line-height-s` | 1 |
+| `h2` | `--font-6xl` | 40px | `--line-height-s` | 1 |
+| `h3` | `--font-4xl` | 32px | `--line-height-s` | 1 |
+| `h4` | `--font-3xl` | 28px | `--line-height-s` | 1 |
+| `h5` | `--font-xl` | 22px | `--line-height-s` | 1 |
+| `h6` | `--font-xl` | 22px | `--line-height-l` | 1.4 |
 
 ---
 
@@ -126,13 +130,13 @@ The default paragraph style used for all running content. The `--text-body` toke
 <p class="text-size-xsmall">Captions and metadata.</p>
 ```
 
-| Element | Token | Line Height | Value |
-| --- | --- | --- | --- |
-| `.text-size-xlarge` | `--font-xl` | `--line-height-l` | 1.4 |
-| `.text-size-large` | `--font-l` | `--line-height-l` | 1.4 |
-| `p` (default) | `--font-m` | `--line-height-l` | 1.4 |
-| `.text-size-small` | `--font-s` | `--line-height-xl` | 1.6 |
-| `.text-size-xsmall` | `--font-xs` | `--line-height-xl` | 1.6 |
+| Element | Token | px | Line Height | Value |
+| --- | --- | --- | --- | --- |
+| `.text-size-xlarge` | `--font-3xl` | 28px | `--line-height-l` | 1.4 |
+| `.text-size-large` | `--font-xl` | 22px | `--line-height-l` | 1.4 |
+| `p` (default) | `--font-m` | 18px | `--line-height-l` | 1.4 |
+| `.text-size-small` | `--font-s` | 16px | `--line-height-xl` | 1.6 |
+| `.text-size-xsmall` | `--font-xs` | 14px | `--line-height-xl` | 1.6 |
 
 ---
 
@@ -210,6 +214,43 @@ Used for pullquotes and highlighted passages. Renders in the secondary serif fon
 
 ---
 
+## Links
+
+Links use text-color underlines with a hover transition. The default state shows `--text-plain` text with a `--text-link` coloured underline. On hover, the text colour shifts to `--text-link` and the underline moves down slightly. External links (`target="_blank"`) automatically show a share icon via `::after` that inherits the link colour.
+
+<div class="demo-preview is-joined">
+  <div class="block gap-xl">
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Inline link</p>
+      <p style="margin: 0;">Read the full <a href="#">brand guidelines</a> before starting any new project.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">External link</p>
+      <p style="margin: 0;">Typography is powered by <a href="https://fonts.google.com" target="_blank" rel="noopener noreferrer">Google Fonts</a> for web delivery.</p>
+    </div>
+  </div>
+</div>
+
+```html
+<!-- Inline link -->
+<p>Read the full <a href="/brand">brand guidelines</a> before starting.</p>
+
+<!-- External link (icon added automatically) -->
+<p>Typography is powered by <a href="https://fonts.google.com" target="_blank" rel="noopener noreferrer">Google Fonts</a> for web delivery.</p>
+```
+
+| Property | Value |
+| --- | --- |
+| Default colour | `--text-plain` |
+| Underline colour | `--text-link` |
+| Hover colour | `--text-link` |
+| Underline offset | 2.5px → 4px on hover |
+| Underline thickness | 1.5px |
+| Transition | 0.3s all |
+| External icon | `::after` on `a[target="_blank"]`, inherits `currentColor` |
+
+---
+
 ## Font Families
 
 The system uses four font stacks, each with a distinct role.
@@ -218,19 +259,19 @@ The system uses four font stacks, each with a distinct role.
   <div class="block gap-xl">
     <div class="block gap-m">
       <p class="demo-eyebrow">Primary — Inclusive Sans</p>
-      <p style="margin: 0; font-family: var(--font-primary); font-size: var(--font-xl);">Typography is the voice of design</p>
+      <p style="margin: 0; font-family: var(--font-primary); font-size: var(--font-3xl);">Typography is the voice of design</p>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Secondary — RecifeText</p>
-      <p style="margin: 0; font-family: var(--font-secondary); font-size: var(--font-xl);">Typography is the voice of design</p>
+      <p style="margin: 0; font-family: var(--font-secondary); font-size: var(--font-3xl);">Typography is the voice of design</p>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Tertiary — IBM Plex Mono</p>
-      <p style="margin: 0; font-family: var(--font-tertiary); font-size: var(--font-xl);">Typography is the voice of design</p>
+      <p style="margin: 0; font-family: var(--font-tertiary); font-size: var(--font-3xl);">Typography is the voice of design</p>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Quaternary — Bugrino</p>
-      <p style="margin: 0; font-family: var(--font-quaternary); font-size: var(--font-xl);">Typography is the voice of design</p>
+      <p style="margin: 0; font-family: var(--font-quaternary); font-size: var(--font-3xl);">Typography is the voice of design</p>
     </div>
   </div>
 </div>
@@ -258,31 +299,31 @@ Available weight values from light to black. All headings default to regular wei
   <div class="block gap-s">
     <div class="block gap-m">
       <p class="demo-eyebrow">Light</p>
-      <div class="font-2xl" style="font-weight: var(--font-weight-light);">Design is not just what it looks like</div>
+      <div class="font-4xl" style="font-weight: var(--font-weight-light);">Design is not just what it looks like</div>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Regular</p>
-      <div class="font-2xl" style="font-weight: var(--font-weight-regular);">Systems scale when decisions are shared</div>
+      <div class="font-4xl" style="font-weight: var(--font-weight-regular);">Systems scale when decisions are shared</div>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Medium</p>
-      <div class="font-2xl" style="font-weight: var(--font-weight-medium);">Tokens turn intention into consistency</div>
+      <div class="font-4xl" style="font-weight: var(--font-weight-medium);">Tokens turn intention into consistency</div>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Semi-Bold</p>
-      <div class="font-2xl" style="font-weight: var(--font-weight-semi-bold);">Structure creates clarity in complexity</div>
+      <div class="font-4xl" style="font-weight: var(--font-weight-semi-bold);">Structure creates clarity in complexity</div>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Bold</p>
-      <div class="font-2xl" style="font-weight: var(--font-weight-bold);">Good defaults eliminate guesswork</div>
+      <div class="font-4xl" style="font-weight: var(--font-weight-bold);">Good defaults eliminate guesswork</div>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Extra-Bold</p>
-      <div class="font-2xl" style="font-weight: var(--font-weight-extra-bold);">Constraints unlock creative freedom</div>
+      <div class="font-4xl" style="font-weight: var(--font-weight-extra-bold);">Constraints unlock creative freedom</div>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Black</p>
-      <div class="font-2xl" style="font-weight: var(--font-weight-black);">Build with purpose, not by accident</div>
+      <div class="font-4xl" style="font-weight: var(--font-weight-black);">Build with purpose, not by accident</div>
     </div>
   </div>
 </div>

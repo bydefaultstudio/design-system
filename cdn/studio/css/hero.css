@@ -1,0 +1,114 @@
+/* ========================================
+   Hero Section Styles
+   ======================================== */
+
+/* === Key Visual Container === */
+#key-visual-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+
+  user-select: none;
+}
+
+/* Prevent horizontal scroll on mobile */
+body {
+  overflow-x: hidden;
+}
+
+/* === Hero Content === */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  padding: 2rem;
+  pointer-events: none; /* Allow clicks to pass through to container */
+}
+
+/* === Hero Title === */
+.hero-title {
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 0;
+  color: #111;
+}
+
+
+/* === Key Visual Overlay === */
+#key-visual-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  /* Ensure key visuals stay within bounds */
+  contain: layout;
+}
+
+/* === Key Visual Styles === */
+.key-visual {
+  position: absolute;
+  pointer-events: none;
+  will-change: transform, opacity;
+  overflow: hidden;
+  transition: none; /* Disable CSS transitions for Web Animations API */
+  aspect-ratio: var(--aspect-ratio, 1);
+}
+
+.key-visual img,
+.key-visual video,
+.key-visual iframe {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* === Reduced Motion Support === */
+@media (prefers-reduced-motion: reduce) {
+  .key-visual {
+    transition: opacity 0.3s ease;
+  }
+  
+  #key-visual-container {
+    cursor: default;
+  }
+}
+
+/* === Performance Optimizations === */
+.key-visual {
+  /* Force hardware acceleration */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+  .hero-content {
+    padding: 1rem;
+  }
+  
+  /* Ensure key visuals don't cause horizontal overflow on mobile */
+  .key-visual {
+    max-width: calc(100vw - 100px); /* Account for centering offset */
+  }
+}
+
+/* === High DPI Displays === */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .key-visual img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}

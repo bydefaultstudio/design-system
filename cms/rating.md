@@ -5,7 +5,6 @@ description: "How to use the rating component for star-based ratings and reviews
 section: "Design System"
 subsection: "Feedback"
 order: 4
-slug: "rating"
 status: "published"
 access: "team"
 client: "internal"

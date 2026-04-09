@@ -5,7 +5,6 @@ description: "Guide defining how CSS should be structured, organized, and commen
 section: "Docs"
 subsection: "Code Standards"
 order: 2
-slug: "css-code-struture"
 status: "published"
 access: "team"
 client: "internal"
@@ -39,12 +38,12 @@ This guide ensures:
 ```css
 /* -- Headings -- */
 h1 {
-  font-size: var(--font-3xl);
+  font-size: var(--font-7xl);
   line-height: var(--line-height-s);
   font-weight: var(--font-weight-bold);
 }
 h2 {
-  font-size: var(--font-2xl);
+  font-size: var(--font-6xl);
   line-height: var(--line-height-s);
   font-weight: var(--font-weight-bold);
 }

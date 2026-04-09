@@ -1,11 +1,10 @@
 ---
 title: "Drop Cap"
-subtitle: "Decorative initial letters for editorial and long-form paragraphs"
+subtitle: "Decorative opening letters for editorial content"
 description: "How to use the drop cap style for decorative initial letters."
 section: "Design System"
 subsection: "Content"
 order: 7
-slug: "drop-cap"
 status: "published"
 access: "team"
 client: "internal"

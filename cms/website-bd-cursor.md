@@ -17,7 +17,6 @@ Add the CSS and JS to your project:
 
 ```html
 <link rel="stylesheet" href="path/to/bd-cursor.css">
-<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
 <script src="path/to/bd-cursor.js"></script>
 ```
 
@@ -233,7 +232,17 @@ Hover over each element to see the cursor change. Desktop only.
 
 ## Dependencies
 
-- **GSAP** — cursor movement and press animation
+- **None** — zero-dependency vanilla JS (no GSAP required)
 - Desktop only (991px+), skipped on touch devices
 - Requires `.cursor-default` and `.cursor-halo` elements in DOM
 - Adds `custom-cursor-active` class to `<body>` when active
+
+## Animation Configuration
+
+The follow speed and snapping behavior can be tuned via constants at the top of `bd-cursor.js`:
+
+| Constant | Default | Description |
+|----------|---------|-------------|
+| `CURSOR_LERP` | `0.25` | Cursor follow speed — higher = tighter follow, lower = smoother trail |
+| `HALO_LERP` | `0.25` | Halo follow speed — matches cursor so both layers stay together |
+| `SNAP_THRESHOLD` | `0.5` | Distance (px) at which the cursor snaps to the target position |

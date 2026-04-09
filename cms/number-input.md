@@ -1,11 +1,10 @@
 ---
 title: "Number Input"
-subtitle: "Stepper input with increment and decrement"
+subtitle: "Precise numeric entry with step controls"
 description: "How to use the number input component with stepper buttons for precise numeric entry."
 section: "Design System"
 subsection: "Data Entry"
 order: 4
-slug: "number-input"
 status: "published"
 access: "team"
 client: "internal"

@@ -5,7 +5,6 @@ description: "How to use the card component for grouping related content in a co
 section: "Design System"
 subsection: "Content"
 order: 2
-slug: "card"
 status: "published"
 access: "team"
 client: "internal"

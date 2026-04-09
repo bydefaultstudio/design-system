@@ -113,14 +113,15 @@ const SECTION_FOLDERS = {
   'Design System': 'design-system',
   'Website': 'website',
   'Docs': 'docs',
-  'Tools': 'tools'
+  'Tools': 'tools',
+  'Projects': 'projects'
 };
 
 // Special filename overrides for files that don't follow the prefix-strip pattern
 const FILENAME_OVERRIDES = {
-  'calculator-docs.md': { folder: 'docs', name: 'cpm-calculator.html' },
-  'svg-cleaner-docs.md': { folder: 'docs', name: 'svg-cleaner.html' },
-  'display-ad-preview-docs.md': { folder: 'docs', name: 'display-ad-preview.html' },
+  'calculator-docs.md': { folder: 'tools', name: 'cpm-calculator-docs.html' },
+  'svg-cleaner-docs.md': { folder: 'tools', name: 'svg-cleaner-docs.html' },
+  'display-ad-preview-docs.md': { folder: 'tools', name: 'display-ad-preview-docs.html' },
   'css-code-struture.md': { folder: 'docs', name: 'css.html' },
   'js-code-structure.md': { folder: 'docs', name: 'javascript.html' },
 
@@ -132,6 +133,7 @@ const FILENAME_OVERRIDES = {
   'folder-structure.md': { folder: 'docs', name: 'folder-structure.html' },
   'upgrading-docs.md': { folder: 'docs', name: 'upgrading-docs.html' },
   'login-scenarios.md': { folder: 'docs', name: 'login-scenarios.html' },
+  'llms-docs.md': { folder: 'docs', name: 'llms.html' },
 };
 
 /**
@@ -479,9 +481,10 @@ function generateSectionIndexPage(section, template, files, filesBySection) {
     for (const file of ungrouped) {
       let cardHref = file.htmlName;
       let cardAccess = deriveDataAccess(file.frontmatter);
-      if (section === 'Tools' && file.frontmatter.toolUrl) {
-        cardHref = file.frontmatter.toolUrl;
-        cardAccess = file.frontmatter.toolAccess || 'client';
+      const cardActionUrl = file.frontmatter.actionUrl || file.frontmatter.toolUrl;
+      if (cardActionUrl) {
+        cardHref = cardActionUrl;
+        cardAccess = file.frontmatter.actionAccess || file.frontmatter.toolAccess || cardAccess;
       }
       cards += `<a href="${cardHref}" class="card card--interactive" data-access="${cardAccess}"><h3 class="card-title">${file.title}</h3>${file.frontmatter.subtitle ? `<p class="card-description" data-text-wrap="pretty">${file.frontmatter.subtitle}</p>` : ''}</a>`;
     }
@@ -677,6 +680,13 @@ function generatePageNav(file, pageOrder) {
 }
 
 /**
+ * Build footer text from project config (shared by internal and client docs).
+ */
+function buildFooterHtml() {
+  return PROJECT_CONFIG.footerText || '© 2026 By Default';
+}
+
+/**
  * Build script tags for a page based on section and frontmatter.
  * - Website section pages get global GSAP + bd-* scripts automatically.
  * - Any page can request additional scripts via the "scripts" frontmatter field.
@@ -703,6 +713,8 @@ function buildPageScripts(section, frontmatter) {
     'splide':           'https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js',
     'splide-auto-scroll': 'https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-auto-scroll@0.5.3/dist/js/splide-extension-auto-scroll.min.js',
     'splide-intersection': 'https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-intersection@0.2.0/dist/js/splide-extension-intersection.min.js',
+    // Notion dynamic forms
+    'notion-form':        `${base}assets/js/notion-form.js`,
   };
 
   // Global scripts for Website section pages (order matters)
@@ -762,9 +774,11 @@ function generatePage(file, template, pageOrder) {
 
   // Generate page header separately
   let pageHeader = '';
-  const toolLinkHtml = frontmatter.toolUrl
+  const actionUrl = frontmatter.actionUrl || frontmatter.toolUrl;
+  const actionLabel = frontmatter.actionLabel || frontmatter.toolLabel || 'Open';
+  const actionLinkHtml = actionUrl
     ? `<div class="button-group justify-center">
-        <a href="${frontmatter.toolUrl}" class="button is-small page-source-link">${frontmatter.toolLabel || 'Open Tool'}</a>
+        <a href="${actionUrl}" class="button is-small page-action-link">${actionLabel}</a>
       </div>`
     : '';
   if (frontmatter.title) {
@@ -772,7 +786,7 @@ function generatePage(file, template, pageOrder) {
       <div class="container-small">
         <h1>${frontmatter.title}</h1>
         ${frontmatter.subtitle ? `<p class="page-subtitle" data-text-wrap="pretty">${frontmatter.subtitle}</p>` : ''}
-        ${toolLinkHtml}
+        ${actionLinkHtml}
       </div>
     </div>`;
   }
@@ -912,6 +926,7 @@ function generateNavJs(filesBySection) {
   var ICON_CHEVRON_DOWN = '${esc(getRawIcon('chevron-down'))}';
 
   var headerRight = '<div class="site-header-right">'
+    + '<a href="' + base + 'support.html" class="header-link header-contact-link">Contact us</a>'
     + '<div class="auth-header-container"></div>'
     + '<div class="header-link dark-mode-toggle" role="button" tabindex="0" aria-label="Toggle dark mode">'
     + '<div class="icn-svg dark-mode-icon-light">' + ICON_SUN + '</div>'
@@ -1099,6 +1114,7 @@ function buildNavSectionsHtml(filesBySection) {
     'Website': { icon: getRawIcon('browser'), name: 'website' },
     'Docs': { icon: getRawIcon('docs'), name: 'docs' },
     'Tools': { icon: getRawIcon('tools'), name: 'tools' },
+    'Projects': { icon: getRawIcon('folder'), name: 'projects' },
   };
 
   // Read ordering from _defaults.md (configurable per directory)
@@ -1161,12 +1177,13 @@ function buildNavSectionsHtml(filesBySection) {
 
     // Render ungrouped files first
     for (const file of ungrouped) {
-      // For Tools section: link to actual tool app, use toolAccess for visibility
+      // For Tools section: link to actual tool app, use actionAccess for visibility
       let linkHref = file.htmlPath;
       let linkAccess = deriveDataAccess(file.frontmatter);
-      if (section === 'Tools' && file.frontmatter.toolUrl) {
-        linkHref = file.frontmatter.toolUrl.replace(/^\.\.\//, '');
-        linkAccess = file.frontmatter.toolAccess || 'client';
+      const navActionUrl = file.frontmatter.actionUrl || file.frontmatter.toolUrl;
+      if (section === 'Tools' && navActionUrl) {
+        linkHref = navActionUrl.replace(/^\.\.\//, '');
+        linkAccess = file.frontmatter.actionAccess || file.frontmatter.toolAccess || 'client';
       }
       html += `<li><a href="${linkHref}" class="nav-link" data-access="${linkAccess}"><span>${file.title}</span></a></li>`;
     }
@@ -1215,6 +1232,34 @@ function buildNavSectionsHtml(filesBySection) {
 }
 
 /**
+ * Recursively copy a directory and all its contents.
+ */
+function copyDirRecursive(src, dest) {
+  fs.mkdirSync(dest, { recursive: true });
+  const entries = fs.readdirSync(src);
+  for (const entry of entries) {
+    const srcPath = path.join(src, entry);
+    const destPath = path.join(dest, entry);
+    if (fs.statSync(srcPath).isDirectory()) {
+      copyDirRecursive(srcPath, destPath);
+    } else {
+      fs.copyFileSync(srcPath, destPath);
+    }
+  }
+}
+
+/**
+ * Copy client assets from cms/clients/{clientKey}/assets/ to {OUTPUT_DIR}/{clientKey}/assets/.
+ * Recursively copies all subdirectories (logos/, fonts/, etc.).
+ * Runs before page generation so CSS, logos, and fonts are available.
+ */
+function copyClientAssets(clientKey) {
+  const srcDir = path.join(DOCS_DIR, 'clients', clientKey, 'assets');
+  if (!fs.existsSync(srcDir)) return;
+  copyDirRecursive(srcDir, path.join(OUTPUT_DIR, clientKey, 'assets'));
+}
+
+/**
  * Generate client doc pages from markdown files in cms/clients/{clientFolder}/
  *
  * Frontmatter fields:
@@ -1245,6 +1290,9 @@ function generateClientDocs(template) {
   });
 
   for (const clientKey of clientDirs) {
+    // Copy client assets (theme CSS, logos) to output
+    copyClientAssets(clientKey);
+
     const clientDocsPath = path.join(clientsDir, clientKey);
     const mdFiles = fs.readdirSync(clientDocsPath)
       .filter(f => f.endsWith('.md') && !f.startsWith('README') && !f.startsWith('_'));
@@ -1253,6 +1301,7 @@ function generateClientDocs(template) {
 
     const theme = themeConfig.themes[clientKey];
     const pages = [];
+    const clientFiles = [];
 
     // Load folder defaults for this client directory
     const clientDefaults = loadDefaults(clientDocsPath);
@@ -1264,6 +1313,12 @@ function generateClientDocs(template) {
       // Merge folder defaults — page frontmatter wins
       const frontmatter = { ...clientDefaults, ...parsed.frontmatter };
       const content = parsed.content;
+
+      // Skip draft pages
+      if (frontmatter.status === 'draft') {
+        console.log(`⏭️  Skipped (draft): ${clientKey}/${filename}`);
+        continue;
+      }
 
       const title = frontmatter.title || filename.replace('.md', '');
       const htmlName = filename.replace('.md', '.html');
@@ -1283,11 +1338,19 @@ function generateClientDocs(template) {
 
       // Page header
       let pageHeader = '';
+      const clientActionUrl = frontmatter.actionUrl || frontmatter.toolUrl;
+      const clientActionLabel = frontmatter.actionLabel || frontmatter.toolLabel || 'Open';
+      const clientActionHtml = clientActionUrl
+        ? `<div class="button-group justify-center">
+            <a href="${clientActionUrl}" class="button is-small page-action-link">${clientActionLabel}</a>
+          </div>`
+        : '';
       if (title) {
         pageHeader = `<div class="page-header">
           <div class="container-small">
             <h1>${title}</h1>
             ${frontmatter.subtitle ? `<p class="page-subtitle" data-text-wrap="pretty">${frontmatter.subtitle}</p>` : ''}
+            ${clientActionHtml}
           </div>
         </div>`;
       }
@@ -1340,7 +1403,7 @@ function generateClientDocs(template) {
       const brandCss = PROJECT_CONFIG.brandCssPath
         ? `<link rel="stylesheet" href="${navBase}${PROJECT_CONFIG.brandCssPath}">`
         : '';
-      const clientThemeCss = `<!-- Client Theme Override (must load last to override base styles) -->\n    <link rel="stylesheet" href="${sectionSlug ? '../' : ''}theme.css">`;
+      const clientThemeCss = `<!-- Client Theme Override (must load last to override base styles) -->\n    <link rel="stylesheet" href="${sectionSlug ? '../' : ''}assets/theme.css">`;
       const googleFonts = theme.fonts
         ? `<link rel="preconnect" href="https://fonts.googleapis.com">\n    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n    <link href="${theme.fonts}" rel="stylesheet">`
         : GOOGLE_FONTS_HTML;
@@ -1359,30 +1422,58 @@ function generateClientDocs(template) {
         .replace('{{CLIENT_THEME_CSS}}', clientThemeCss)
         .replace('{{CLIENT_THEME_ATTR}}', `data-client-theme="${clientKey}"`)
         .replace('{{GOOGLE_FONTS}}', googleFonts)
-        .replace('{{PAGE_NAV}}', '')
-        .replace('{{FOOTER_TEXT}}', '© 2026 By Default')
+        .replace('{{PAGE_SCRIPTS}}', buildPageScripts(frontmatter.section || '', frontmatter))
+        .replace('{{FOOTER_TEXT}}', buildFooterHtml())
         .replace('{{PAGE_ACCESS}}', deriveDataAccess(frontmatter))
         .replaceAll('{{NAV_BASE}}', navBase);
 
-      // Write file — nested under section subfolder if section exists
+      // Derive output path
       const dir = sectionSlug
         ? path.join(OUTPUT_DIR, clientKey, sectionSlug)
         : path.join(OUTPUT_DIR, clientKey);
-      fs.mkdirSync(dir, { recursive: true });
-      fs.writeFileSync(path.join(dir, htmlName), html);
       const outputRelPath = sectionSlug ? `${clientKey}/${sectionSlug}/${htmlName}` : `${clientKey}/${htmlName}`;
-      console.log(`📄 Generated: ${outputRelPath}`);
+      const htmlFolder = sectionSlug ? `${clientKey}/${sectionSlug}` : clientKey;
 
-      pages.push({
+      // Collect for two-pass rendering (nav needs full page order)
+      clientFiles.push({
+        filename,
         title,
+        section: frontmatter.section || '',
+        htmlFolder,
+        htmlName,
+        htmlPath: outputRelPath,
         subtitle: frontmatter.subtitle || '',
-        href: outputRelPath,
-        section: frontmatter.section || null,
-        order
+        order,
+        html,
+        dir
       });
     }
 
-    // Sort by order
+    // Sort by order for prev/next navigation
+    clientFiles.sort((a, b) => {
+      if (a.order !== b.order) return a.order - b.order;
+      return a.title.localeCompare(b.title);
+    });
+
+    // Pass 2: Inject prev/next nav and write files
+    for (const file of clientFiles) {
+      const pageNav = generatePageNav(file, clientFiles);
+      const finalHtml = file.html.replace('{{PAGE_NAV}}', pageNav);
+
+      fs.mkdirSync(file.dir, { recursive: true });
+      fs.writeFileSync(path.join(file.dir, file.htmlName), finalHtml);
+      console.log(`📄 Generated: ${file.htmlPath}`);
+
+      pages.push({
+        title: file.title,
+        subtitle: file.subtitle,
+        href: file.htmlPath,
+        section: file.section || null,
+        order: file.order
+      });
+    }
+
+    // Sort pages for theme-config
     pages.sort((a, b) => a.order - b.order);
     generatedPages[clientKey] = pages.map(({ title, subtitle, href, section }) => {
       const entry = { title, href };
@@ -1455,7 +1546,7 @@ function updateThemeConfigPages(generatedPages) {
 
 /**
  * Build tool registry from markdown frontmatter (single source of truth).
- * Returns an object keyed by tool slug with { title, subtitle, toolAccess, toolUrl }.
+ * Returns an object keyed by tool slug with { title, subtitle, toolAccess, actionUrl }.
  */
 function buildToolRegistryFromFrontmatter() {
   const toolFiles = fs.readdirSync(DOCS_DIR)
@@ -1464,14 +1555,15 @@ function buildToolRegistryFromFrontmatter() {
   for (const filename of toolFiles) {
     const raw = fs.readFileSync(path.join(DOCS_DIR, filename), 'utf8');
     const { frontmatter } = parseFrontmatter(raw);
-    if (frontmatter.section === 'Tools' && frontmatter.toolUrl) {
-      // Derive tool slug from toolUrl (e.g. "../tools/cpm-calculator.html" → "cpm-calculator")
-      const slug = path.basename(frontmatter.toolUrl, '.html');
+    const toolActionUrl = frontmatter.actionUrl || frontmatter.toolUrl;
+    if (frontmatter.section === 'Tools' && toolActionUrl) {
+      // Derive tool slug from actionUrl (e.g. "./cpm-calculator.html" → "cpm-calculator")
+      const slug = path.basename(toolActionUrl, '.html');
       tools[slug] = {
         title: frontmatter.title || slug,
         subtitle: frontmatter.subtitle || '',
-        toolAccess: frontmatter.toolAccess || 'client',
-        toolUrl: frontmatter.toolUrl
+        toolAccess: frontmatter.actionAccess || frontmatter.toolAccess || 'client',
+        actionUrl: toolActionUrl
       };
     }
   }
@@ -1517,7 +1609,7 @@ function generateClientSectionOverviews(template) {
     const brandCss = PROJECT_CONFIG.brandCssPath
       ? `<link rel="stylesheet" href="${navBase}${PROJECT_CONFIG.brandCssPath}">`
       : '';
-    const clientThemeCss = `<!-- Client Theme Override (must load last to override base styles) -->\n    <link rel="stylesheet" href="theme.css">`;
+    const clientThemeCss = `<!-- Client Theme Override (must load last to override base styles) -->\n    <link rel="stylesheet" href="assets/theme.css">`;
     const googleFonts = theme.fonts
       ? `<link rel="preconnect" href="https://fonts.googleapis.com">\n    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n    <link href="${theme.fonts}" rel="stylesheet">`
       : GOOGLE_FONTS_HTML;
@@ -1539,10 +1631,10 @@ function generateClientSectionOverviews(template) {
         .replace('{{PAGE_CONTENT}}', content)
         .replace('{{TOC_SECTION}}', '')
         .replace('{{PAGE_NAV}}', '')
-        .replace('{{FOOTER_TEXT}}', '© 2026 By Default')
+        .replace('{{FOOTER_TEXT}}', buildFooterHtml())
         .replace('{{DESIGN_SYSTEM_PATH}}', base + PROJECT_CONFIG.designSystemPath)
         .replace('{{BRAND_CSS}}', PROJECT_CONFIG.brandCssPath ? `<link rel="stylesheet" href="${base}${PROJECT_CONFIG.brandCssPath}">` : '')
-        .replace('{{CLIENT_THEME_CSS}}', `<!-- Client Theme Override (must load last to override base styles) -->\n    <link rel="stylesheet" href="${base === '../../' ? '../' : ''}theme.css">`)
+        .replace('{{CLIENT_THEME_CSS}}', `<!-- Client Theme Override (must load last to override base styles) -->\n    <link rel="stylesheet" href="${base === '../../' ? '../' : ''}assets/theme.css">`)
         .replace('{{CLIENT_THEME_ATTR}}', `data-client-theme="${clientKey}"`)
         .replace('{{GOOGLE_FONTS}}', googleFonts);
     }
@@ -1623,6 +1715,235 @@ function generateClientSectionOverviews(template) {
     }
   }
   fs.writeFileSync(themeConfigPath, configSource);
+}
+
+/**
+ * Generate brand-book.html for each client.
+ *
+ * Scans cms/clients/{clientKey}/assets/logos/ for .svg files and builds a
+ * logo gallery page with light + dark previews, copy-SVG and download buttons.
+ * An optional cms/clients/{clientKey}/brand-book.md provides custom intro
+ * content and frontmatter overrides (title, subtitle, description, access).
+ */
+function generateBrandBook(template) {
+  const clientsDir = path.join(DOCS_DIR, 'clients');
+  if (!fs.existsSync(clientsDir)) return;
+
+  const themeConfigPath = path.join(OUTPUT_DIR, 'assets', 'js', 'theme-config.js');
+  if (!fs.existsSync(themeConfigPath)) return;
+  const configCode = fs.readFileSync(themeConfigPath, 'utf8');
+  const sandbox = {};
+  vm.runInNewContext(configCode, sandbox);
+  const themeConfig = sandbox.THEME_CONFIG;
+  if (!themeConfig || !themeConfig.themes) return;
+
+  const clientDirs = fs.readdirSync(clientsDir).filter(dir => {
+    return fs.statSync(path.join(clientsDir, dir)).isDirectory() && themeConfig.themes[dir];
+  });
+
+  const copyIcon = getIcon('copy');
+  const downloadIcon = getIcon('download');
+
+  for (const clientKey of clientDirs) {
+    const theme = themeConfig.themes[clientKey];
+    const clientLabel = theme.label || clientKey;
+
+    // Scan for logo SVG files
+    const logosDir = path.join(clientsDir, clientKey, 'assets', 'logos');
+    if (!fs.existsSync(logosDir)) {
+      console.log(`⚠️  No logos/ folder for client '${clientKey}', skipping brand book`);
+      continue;
+    }
+
+    const svgFiles = fs.readdirSync(logosDir).filter(f => f.endsWith('.svg'));
+    if (svgFiles.length === 0) {
+      console.log(`⚠️  No SVG files in logos/ for client '${clientKey}', skipping brand book`);
+      continue;
+    }
+
+    // Load optional brand-book.md for intro content and frontmatter
+    const brandBookMdPath = path.join(clientsDir, clientKey, 'brand-book.md');
+    let frontmatter = {};
+    let introHtml = '';
+
+    if (fs.existsSync(brandBookMdPath)) {
+      const raw = fs.readFileSync(brandBookMdPath, 'utf8');
+      const parsed = parseFrontmatter(raw);
+      // Merge folder defaults — brand-book frontmatter wins
+      const clientDefaults = loadDefaults(path.join(clientsDir, clientKey));
+      frontmatter = { ...clientDefaults, ...parsed.frontmatter };
+      if (parsed.content) {
+        introHtml = markdownToHtml(parsed.content);
+      }
+    } else {
+      // Fall back to folder defaults only
+      frontmatter = loadDefaults(path.join(clientsDir, clientKey));
+    }
+
+    const pageTitle = frontmatter.title || 'Brand Identity';
+    const pageSubtitle = frontmatter.subtitle || 'Visual identity, logo, palette, and typography';
+    const pageDescription = frontmatter.description || `${clientLabel} brand identity.`;
+
+    // Build page content
+    let contentHtml = '';
+
+    // Hero section
+    contentHtml += `<div class="page-header">
+      <div class="container-small">
+        <p class="eyebrow">${clientLabel}</p>
+        <h1>${pageTitle}</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">${pageSubtitle}</p>
+      </div>
+    </div>`;
+
+    // Custom intro from brand-book.md
+    if (introHtml) {
+      contentHtml += `<div class="block gap-l">${introHtml}</div>`;
+    }
+
+    // Logo gallery section
+    contentHtml += `<div class="block gap-2xl">
+      <h2>Logos</h2>`;
+
+    for (const svgFile of svgFiles) {
+      const kebabName = svgFile.replace(/\.svg$/i, '');
+      const titleName = kebabName
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+
+      let svgContent = fs.readFileSync(path.join(logosDir, svgFile), 'utf8')
+        .replace(/\n\s*/g, '')
+        .trim();
+
+      // Escape SVG for data attribute (used by copy/download buttons)
+      const svgEscaped = svgContent
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
+      contentHtml += `<div class="block gap-m">
+        <h3>${titleName}</h3>
+        <div class="grid cols-2 gap-xl">
+          <!-- Light -->
+          <div class="block border border-faded gap-none" style="align-items: center;">
+            <div class="padding-3xl" style="display: flex; align-items: center; justify-content: center; min-height: 200px; background-color: var(--black-alpha-5); width: 100%;">
+              <div class="svg-logo" data-icon="${kebabName}">
+                ${svgContent}
+              </div>
+            </div>
+            <div class="button-group padding-xl">
+              <button class="button is-xsmall icon-copy-btn" aria-label="Copy logo code" data-svg-code="${svgEscaped}">${copyIcon} Copy</button>
+              <button class="button is-xsmall icon-download-btn" aria-label="Download SVG file" data-svg-code="${svgEscaped}" data-filename="${svgFile}">${downloadIcon} Download</button>
+            </div>
+          </div>
+          <!-- Dark -->
+          <div class="block border border-faded gap-none" style="align-items: center;">
+            <div class="padding-3xl" style="display: flex; align-items: center; justify-content: center; min-height: 200px; background-color: var(--neutral-950); color: var(--white); width: 100%;">
+              <div class="svg-logo" data-icon="${kebabName}">
+                ${svgContent}
+              </div>
+            </div>
+            <div class="button-group padding-xl">
+              <button class="button is-xsmall icon-copy-btn" aria-label="Copy logo code" data-svg-code="${svgEscaped}">${copyIcon} Copy</button>
+              <button class="button is-xsmall icon-download-btn" aria-label="Download SVG file" data-svg-code="${svgEscaped}" data-filename="${svgFile}">${downloadIcon} Download</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    contentHtml += `</div>`;
+
+    // Build page from template (same pattern as generateClientIndexPages)
+    const navBase = '../';
+    const brandCss = PROJECT_CONFIG.brandCssPath
+      ? `<link rel="stylesheet" href="${navBase}${PROJECT_CONFIG.brandCssPath}">`
+      : '';
+    const clientThemeCss = `<!-- Client Theme Override (must load last to override base styles) -->\n    <link rel="stylesheet" href="assets/theme.css">`;
+    const googleFonts = theme.fonts
+      ? `<link rel="preconnect" href="https://fonts.googleapis.com">\n    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n    <link href="${theme.fonts}" rel="stylesheet">`
+      : GOOGLE_FONTS_HTML;
+
+    // Brand book inline script for copy/download buttons
+    const brandBookScript = `
+    <script>
+    (function() {
+      'use strict';
+
+      function initBrandBookButtons() {
+        // Copy SVG code
+        document.querySelectorAll('.icon-copy-btn').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var code = btn.getAttribute('data-svg-code');
+            if (!code) return;
+            // Decode escaped HTML entities
+            var textarea = document.createElement('textarea');
+            textarea.innerHTML = code;
+            var decoded = textarea.value;
+            navigator.clipboard.writeText(decoded).then(function() {
+              var original = btn.innerHTML;
+              btn.textContent = 'Copied!';
+              setTimeout(function() { btn.innerHTML = original; }, 1500);
+            });
+          });
+        });
+
+        // Download SVG file
+        document.querySelectorAll('.icon-download-btn').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var code = btn.getAttribute('data-svg-code');
+            var filename = btn.getAttribute('data-filename') || 'logo.svg';
+            if (!code) return;
+            var textarea = document.createElement('textarea');
+            textarea.innerHTML = code;
+            var decoded = textarea.value;
+            var blob = new Blob([decoded], { type: 'image/svg+xml' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          });
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initBrandBookButtons);
+      } else {
+        initBrandBookButtons();
+      }
+    })();
+    </script>`;
+
+    let html = template
+      .replace(/\{\{PAGE_TITLE\}\}/g, `${clientLabel} — ${pageTitle}`)
+      .replace(/\{\{META_DESCRIPTION\}\}/g, pageDescription)
+      .replace(/\{\{NAV_BASE\}\}/g, navBase)
+      .replace(/\{\{PAGE_ACCESS\}\}/g, deriveDataAccess(frontmatter))
+      .replace('{{PAGE_HEADER}}', '')
+      .replace('{{PAGE_STICKY_BAR}}', '')
+      .replace('{{PAGE_CONTENT}}', contentHtml)
+      .replace('{{TOC_SECTION}}', '')
+      .replace('{{PAGE_NAV}}', '')
+      .replace('{{FOOTER_TEXT}}', buildFooterHtml())
+      .replace('{{DESIGN_SYSTEM_PATH}}', navBase + PROJECT_CONFIG.designSystemPath)
+      .replace('{{BRAND_CSS}}', brandCss)
+      .replace('{{CLIENT_THEME_CSS}}', clientThemeCss)
+      .replace('{{CLIENT_THEME_ATTR}}', `data-client-theme="${clientKey}"`)
+      .replace('{{GOOGLE_FONTS}}', googleFonts)
+      .replace('{{PAGE_SCRIPTS}}', brandBookScript);
+
+    // Write to client folder
+    const dir = path.join(OUTPUT_DIR, clientKey);
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, 'brand-book.html'), html);
+    console.log(`📄 Generated: ${clientKey}/brand-book.html`);
+  }
 }
 
 function generateClientIndexPages(template) {
@@ -1720,7 +2041,7 @@ function generateClientIndexPages(template) {
     const brandCss = PROJECT_CONFIG.brandCssPath
       ? `<link rel="stylesheet" href="${navBase}${PROJECT_CONFIG.brandCssPath}">`
       : '';
-    const clientThemeCss = `<!-- Client Theme Override (must load last to override base styles) -->\n    <link rel="stylesheet" href="theme.css">`;
+    const clientThemeCss = `<!-- Client Theme Override (must load last to override base styles) -->\n    <link rel="stylesheet" href="assets/theme.css">`;
     const googleFonts = theme.fonts
       ? `<link rel="preconnect" href="https://fonts.googleapis.com">\n    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n    <link href="${theme.fonts}" rel="stylesheet">`
       : GOOGLE_FONTS_HTML;
@@ -1735,7 +2056,7 @@ function generateClientIndexPages(template) {
       .replace('{{PAGE_CONTENT}}', contentHtml)
       .replace('{{TOC_SECTION}}', '')
       .replace('{{PAGE_NAV}}', '')
-      .replace('{{FOOTER_TEXT}}', '© 2026 By Default')
+      .replace('{{FOOTER_TEXT}}', buildFooterHtml())
       .replace(`<link rel="stylesheet" href="${dsPath}" id="design-system-css"`, `<link rel="stylesheet" href="${navBase}${PROJECT_CONFIG.designSystemPath}" id="design-system-css"`)
       .replace('{{BRAND_CSS}}', brandCss)
       .replace('{{CLIENT_THEME_CSS}}', clientThemeCss)
@@ -1836,6 +2157,12 @@ async function generateDocs() {
     const frontmatter = { ...cmsDefaults, ...parsed.frontmatter };
     const markdownContent = parsed.content;
 
+    // Skip draft pages
+    if (frontmatter.status === 'draft') {
+      console.log(`⏭️  Skipped (draft): ${filename}`);
+      continue;
+    }
+
     const title = frontmatter.title || filename.replace('.md', '');
     const section = frontmatter.section || 'uncategorized';
 
@@ -1920,6 +2247,7 @@ async function generateDocs() {
   if (!isSingleFile) {
     const generatedClientPages = generateClientDocs(template);
     updateThemeConfigPages(generatedClientPages);
+    generateBrandBook(template);
     generateClientSectionOverviews(template);
     generateClientIndexPages(template);
   }

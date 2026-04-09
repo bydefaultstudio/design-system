@@ -5,7 +5,6 @@ description: "The personality traits and character that define how the brand pre
 section: "Brand Book"
 subsection: ""
 order: 6
-slug: "brand-personality"
 status: "published"
 access: "team"
 client: "internal"

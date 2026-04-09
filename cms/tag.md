@@ -5,7 +5,6 @@ description: "How to use the tag component for labels, filters, and categorisati
 section: "Design System"
 subsection: "Feedback"
 order: 5
-slug: "tag"
 status: "published"
 access: "team"
 client: "internal"

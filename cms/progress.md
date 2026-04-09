@@ -1,11 +1,10 @@
 ---
 title: "Progress"
-subtitle: "Progress bar indicators"
+subtitle: "Show how far along something is"
 description: "How to use the progress bar component for showing completion status."
 section: "Design System"
 subsection: "Feedback"
 order: 3
-slug: "progress"
 status: "published"
 access: "team"
 client: "internal"

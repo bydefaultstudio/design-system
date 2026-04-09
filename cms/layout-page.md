@@ -1,11 +1,10 @@
 ---
 title: "Layout"
-subtitle: "Blocks, grids, containers, and page structure"
+subtitle: "How content is structured, spaced, and contained"
 description: "How to use blocks, grids, containers, max-width utilities, and section spacing to compose page layouts."
 section: "Design System"
 subsection: ""
 order: 3
-slug: "layout-page"
 status: "published"
 access: "team"
 client: "internal"

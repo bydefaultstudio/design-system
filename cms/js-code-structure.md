@@ -5,7 +5,6 @@ description: "Guide defining how JavaScript should be structured and organized."
 section: "Docs"
 subsection: "Code Standards"
 order: 1
-slug: "js-code-structure"
 status: "published"
 access: "team"
 client: "internal"

@@ -5,7 +5,6 @@ description: "The unique value the brand delivers to its audience and why it mat
 section: "Brand Book"
 subsection: ""
 order: 5
-slug: "brand-value-proposition"
 status: "published"
 access: "team"
 client: "internal"

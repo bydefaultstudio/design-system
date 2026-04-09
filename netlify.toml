@@ -1,5 +1,5 @@
 [build]
-  command = "cd cms/generator && npm install && npm run docgen && cd ../.. && node tools/generate-ai-reference.js"
+  command = "cd cms/generator && npm install && npm run docgen && cd ../.. && node tools/generate-llms-txt.js"
   publish = "."
   functions = "netlify/functions"
 
@@ -14,12 +14,33 @@
     Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
-  for = "/ai-reference.md"
+  for = "/llms.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/llms-full.txt"
   [headers.values]
     Content-Type = "text/plain; charset=utf-8"
     Cache-Control = "public, max-age=0, must-revalidate"
 
 [[redirects]]
+  from = "/ai-reference.md"
+  to = "/llms-full.txt"
+  status = 301
+
+[[redirects]]
   from = "/image/*"
   to = "/.netlify/functions/image"
+  status = 200
+
+[[redirects]]
+  from = "/api/get-schema"
+  to = "/.netlify/functions/get-schema"
+  status = 200
+
+[[redirects]]
+  from = "/api/submit-form"
+  to = "/.netlify/functions/submit-form"
   status = 200

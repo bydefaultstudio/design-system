@@ -200,20 +200,23 @@
   --purple-light: #F5CDFF;
   --purple: #AA4FE3;
   --purple-dark: #600E83;
-  /* -- Base font sizes (rem-based, scale with root font-size) -- */
+  /* -- Base font sizes (rem-based, progressive step scale: +2px body, +4px heading, +8px display) -- */
   --font-3xs: 0.625rem;  /* 10px */
   --font-2xs: 0.75rem;   /* 12px */
   --font-xs: 0.875rem;   /* 14px */
   --font-s: 1rem;        /* 16px */
   --font-m: 1.125rem;    /* 18px */
-  --font-l: 1.375rem;    /* 22px */
-  --font-xl: 1.75rem;    /* 28px */
-  --font-2xl: 2rem;      /* 32px */
-  --font-3xl: 2.5rem;    /* 40px */
-  --font-4xl: 3rem;      /* 48px */
-  --font-5xl: 3.4375rem; /* 55px */
-  --font-6xl: 4rem;      /* 64px */
-  --font-7xl: 4.5rem;    /* 72px */
+  --font-l: 1.25rem;     /* 20px */
+  --font-xl: 1.375rem;   /* 22px */
+  --font-2xl: 1.5rem;    /* 24px */
+  --font-3xl: 1.75rem;   /* 28px */
+  --font-4xl: 2rem;      /* 32px */
+  --font-5xl: 2.25rem;   /* 36px */
+  --font-6xl: 2.5rem;    /* 40px */
+  --font-7xl: 3rem;      /* 48px */
+  --font-8xl: 3.5rem;    /* 56px */
+  --font-9xl: 4rem;      /* 64px */
+  --font-10xl: 4.5rem;   /* 72px */
 
   /* -- Semantic font sizes -- */
   --text-body: var(--font-m);
@@ -365,7 +368,7 @@
   --input-background: var(--black-alpha-5);
   --input-text: var(--text-plain);
   --input-placeholder: var(--text-faded);
-  --input-focus: var(--green);
+  --input-focus: var(--text-accent);
   --input-disabled-bg: var(--background-faded);
   --input-disabled-text: var(--text-faded);
   --checkbox-background: var(--neutral-100);
@@ -374,7 +377,7 @@
   --checkbox-checkmark: var(--off-white);
   --toggle-track: var(--black-alpha-3);
   --toggle-knob: var(--neutral-500);
-  --toggle-selected: var(--text-primary);
+  --toggle-selected: var(--text-accent);
   --toggle-knob-selected: var(--off-white);
 
   /* -- Selection -- */
@@ -497,7 +500,7 @@
   --input-background: rgba(255, 255, 255, 0.08);
   --input-text: #f0eeeb;
   --input-placeholder: rgba(255, 255, 255, 0.45);
-  --input-focus: #5bb89a;
+  --input-focus: var(--text-accent);
   --input-disabled-bg: rgba(255, 255, 255, 0.06);
   --input-disabled-text: rgba(255, 255, 255, 0.3);
   --checkbox-background: #3a3a3a;
@@ -1053,14 +1056,30 @@ section {
   font-size: var(--font-6xl);
 }
 
+.font-7xl {
+  font-size: var(--font-7xl);
+}
+
+.font-8xl {
+  font-size: var(--font-8xl);
+}
+
+.font-9xl {
+  font-size: var(--font-9xl);
+}
+
+.font-10xl {
+  font-size: var(--font-10xl);
+}
+
 /* -- Text size utilities -- */
 
 .text-size-xlarge {
-  font-size: var(--font-xl);
+  font-size: var(--font-3xl);
 }
 
 .text-size-large {
-  font-size: var(--font-l);
+  font-size: var(--font-xl);
 }
 
 .text-size-medium {
@@ -1290,32 +1309,32 @@ body {
 
 /* -- Headings -- */
 h1 {
-  font-size: var(--font-4xl);
+  font-size: var(--font-7xl);
   line-height: var(--line-height-s);
 }
 
 h2 {
-  font-size: var(--font-3xl);
+  font-size: var(--font-5xl);
   line-height: var(--line-height-s);
 }
 
 h3 {
-  font-size: var(--font-2xl);
+  font-size: var(--font-3xl);
   line-height: var(--line-height-s);
 }
 
 h4 {
-  font-size: var(--font-xl);
+  font-size: var(--font-2xl);
   line-height: var(--line-height-s);
 }
 
 h5 {
-  font-size: var(--font-l);
+  font-size: var(--font-xl);
   line-height: var(--line-height-s);
 }
 
 h6 {
-  font-size: var(--font-l);
+  font-size: var(--font-xl);
   line-height: var(--line-height-l);
 }
 
@@ -1344,13 +1363,30 @@ a {
   text-decoration: underline;
   -webkit-text-decoration-color: var(--text-link);
   text-decoration-color: var(--text-link);
-  text-decoration-thickness: 1.5px;
+  text-decoration-thickness: 0.09em;
   transition: all 0.3s;
 }
 
-a:hover {
+a:not(.button):hover {
   color: var(--text-link);
-  text-underline-offset: 4px;
+  text-underline-offset: 6px;
+
+}
+
+a[target="_blank"]::after {
+  content: "";
+  display: inline-block;
+  width: 0.75em;
+  height: 0.75em;
+  margin-left: 0.2em;
+  vertical-align: baseline;
+  background-color: currentColor;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3 21V3H9V5H7C5.89543 5 5 5.89543 5 7V17C5 18.1046 5.89543 19 7 19H17C18.1046 19 19 18.1046 19 17V15H21V21H3ZM9.7 15.7L8.3 14.3L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H12V3H21V12H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L9.7 15.7Z' fill='black'/%3E%3C/svg%3E");
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3 21V3H9V5H7C5.89543 5 5 5.89543 5 7V17C5 18.1046 5.89543 19 7 19H17C18.1046 19 19 18.1046 19 17V15H21V21H3ZM9.7 15.7L8.3 14.3L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H12V3H21V12H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L9.7 15.7Z' fill='black'/%3E%3C/svg%3E");
+  mask-size: contain;
+  mask-repeat: no-repeat;
 }
 
 /* -- Lists -- */
@@ -1956,6 +1992,79 @@ input[type="radio"]:disabled:checked {
   margin-bottom: var(--space-l);
 }
 
+/* -- Form hint text -- */
+.form-hint {
+  font-size: var(--font-s);
+  color: var(--text-secondary);
+  margin-top: var(--space-xs);
+}
+
+/* -- Form error message -- */
+.form-error {
+  font-size: var(--font-s);
+  color: var(--status-danger);
+  margin-top: var(--space-xs);
+}
+
+/* -- Skeleton loading -- */
+.skeleton-line {
+  background: var(--background-faded);
+  border-radius: 4px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-label {
+  height: 14px;
+  width: 30%;
+  margin-bottom: var(--space-xs);
+}
+
+.skeleton-input {
+  height: 44px;
+  width: 100%;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* -- Form success state -- */
+.notion-form-success {
+  text-align: center;
+  padding: var(--space-3xl) 0;
+}
+
+.notion-form-success p {
+  font-size: var(--text-body);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-l);
+}
+
+/* -- Form error state -- */
+.notion-form-error {
+  text-align: center;
+  padding: var(--space-3xl) 0;
+  color: var(--text-secondary);
+}
+
+/* -- Access support form states -- */
+.access-support-success {
+  text-align: center;
+  padding: var(--space-3xl) 0;
+}
+
+.access-support-success p {
+  font-size: var(--text-body);
+  color: var(--text-secondary);
+}
+
+.access-support-error {
+  font-size: var(--font-s);
+  color: var(--status-danger);
+  margin-top: var(--space-s);
+}
+
 /* ------ 13. DISCLOSURE (details / summary) ------ */
 
 /* -- Base disclosure -- */
@@ -2110,6 +2219,8 @@ details .disclosure-content {
 .card-title {
   margin-top: 0;
   margin-bottom: var(--space-s);
+  font-size: var(--font-3xl);
+  line-height: var(--line-height-m);
 }
 
 .card-description {
@@ -2910,7 +3021,7 @@ hr {
 
 .dialog-title {
   font-family: var(--font-secondary);
-  font-size: var(--font-xl);
+  font-size: var(--font-3xl);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-m);
   color: var(--text-primary);
@@ -3202,7 +3313,7 @@ input[type="range"]:disabled::-webkit-slider-thumb {
   border-radius: 0;
   color: var(--text-primary);
   cursor: pointer;
-  font-size: var(--font-l);
+  font-size: var(--font-xl);
   line-height: 1;
   transition: background-color 0.1s ease;
   flex-shrink: 0;

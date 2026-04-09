@@ -1,11 +1,10 @@
 ---
 title: "Divider"
-subtitle: "Horizontal and vertical separators"
+subtitle: "Visual breaks between content sections"
 description: "How to use the divider component for visual separation between content sections."
 section: "Design System"
 subsection: "Content"
 order: 6
-slug: "divider"
 status: "published"
 access: "team"
 client: "internal"

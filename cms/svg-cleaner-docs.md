@@ -1,19 +1,19 @@
 ---
 title: "SVG Cleaner"
-subtitle: "How to use the SVG Cleaner tool"
+subtitle: "Prepare SVGs for the design system"
 description: "Paste raw SVG code and get a cleaned, optimised version ready for the design system."
 section: "Tools"
 subsection: ""
 order: 2
-slug: "svg-cleaner-docs"
 status: "published"
 access: "admin"
 client: "internal"
-toolUrl: "../tools/svg-cleaner.html"
-toolAccess: "team"
+actionUrl: "./svg-cleaner.html"
+actionLabel: "Open Tool"
+actionAccess: "team"
 ---
 
-The SVG Cleaner is a browser-based tool for cleaning and optimising SVG code before adding it to the project. Paste raw SVG and get a cleaned version ready for the design system.
+Paste raw SVG code and get a cleaned, optimised version ready for the design system. Strips namespaces, normalises fills, sets responsive sizing, and minifies output.
 
 ---
 

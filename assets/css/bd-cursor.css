@@ -97,11 +97,13 @@
       pointer-events: none;
       z-index: 10000;
       will-change: transform;
-      transition: background-color 0.2s;
+      transition: width 0.2s ease-out, height 0.2s ease-out, background-color 0.2s;
     }
 
     /* Click feedback */
     .cursor-pressed {
+      width: 90px;
+      height: 90px;
       background-color: var(--cursor-10);
       border-color: var(--cursor-10);
     }

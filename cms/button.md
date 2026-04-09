@@ -1,11 +1,10 @@
 ---
 title: "Button"
-subtitle: "Button component and usage guidelines"
+subtitle: "Actions that communicate intent and hierarchy"
 description: "How to use button styles and modifiers in the design system."
 section: "Design System"
 subsection: "Data Entry"
 order: 1
-slug: "button"
 status: "published"
 access: "team"
 client: "internal"

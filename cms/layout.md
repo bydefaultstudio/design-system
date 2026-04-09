@@ -5,7 +5,6 @@ description: "How to structure pages using sections, containers, blocks, and gri
 section: "Docs"
 subsection: "Code Standards"
 order: 3
-slug: "layout"
 status: "published"
 access: "team"
 client: "internal"

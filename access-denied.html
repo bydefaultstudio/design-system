@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Access Denied - By Default Brand OS</title>
-  <meta name="description" content="You do not have permission to view this page.">
+  <title>Access restricted — By Default Brand OS</title>
+  <meta name="description" content="You don't currently have the right access to view this page.">
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
@@ -41,14 +41,21 @@
     <div class="page-content">
       <section>
         <div class="padding-global">
-          <div class="container-medium">
-            <div class="access-denied-wrapper">
-              <h1>Access Denied</h1>
-              <p>You don't have permission to view this page. Please contact an administrator if you believe this is an error.</p>
-              <div class="button-group justify-center">
-                <a href="index.html" class="button" data-home-link>Go to Home</a>
-                <button class="button is-outline" type="button" id="access-denied-login-btn">Log in with a different account</button>
+          <div class="container-small">
+            <div class="access-denied-wrapper block gap-l align-center" aria-labelledby="access-denied-heading">
+
+              <!-- Decorative lock icon -->
+              <div class="icn-svg access-denied-icon" aria-hidden="true">
+                <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 12C13.1046 12 14 12.8954 14 14C14 14.7398 13.5971 15.3835 13 15.7295V18H11V15.7295C10.4029 15.3835 10 14.7398 10 14C10 12.8954 10.8954 12 12 12Z" fill="currentColor"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 1C14.7614 1 17 3.23858 17 6V8H20V22H4V8H7V6C7 3.23858 9.23858 1 12 1ZM8 10C6.89543 10 6 10.8954 6 12V18C6 19.1046 6.89543 20 8 20H16C17.1046 20 18 19.1046 18 18V12C18 10.8954 17.1046 10 16 10H8ZM12 3C10.3431 3 9 4.34315 9 6V7C9 7.55228 9.44772 8 10 8H14C14.5523 8 15 7.55228 15 7V6C15 4.34315 13.6569 3 12 3Z" fill="currentColor"/>
+                </svg>
               </div>
+
+              <h1 id="access-denied-heading" data-text-wrap="balance" tabindex="-1">You don't have access to this page</h1>
+              <p id="access-denied-message">Your account doesn't include this area. If that doesn't seem right, get in touch with whoever manages your access.</p>
+              <div class="button-group justify-center" id="access-denied-actions"></div>
+
             </div>
           </div>
         </div>
@@ -68,21 +75,111 @@
   <script>
     (function () {
       'use strict';
-      var loginBtn = document.getElementById('access-denied-login-btn');
-      if (!loginBtn) return;
 
-      loginBtn.addEventListener('click', function () {
-        var isDev = window.location.hostname === 'localhost' ||
-                    window.location.hostname === '127.0.0.1' ||
-                    window.location.hostname === '0.0.0.0';
+      var params = new URLSearchParams(window.location.search);
+      var reason = params.get('reason') || '';
+      var fromPath = params.get('from') || '';
 
-        if (isDev) {
-          sessionStorage.removeItem('auth-dev-role');
+      var isDev = window.location.hostname === 'localhost' ||
+                  window.location.hostname === '127.0.0.1' ||
+                  window.location.hostname === '0.0.0.0';
+
+      // --- Scenario definitions ---
+
+      var scenarios = {
+        role: {
+          heading: 'You don\'t have access to this page',
+          message: 'Your account doesn\'t include this area. If that doesn\'t seem right, get in touch with whoever manages your access.',
+          buttons: [
+            { label: 'Go to my dashboard', type: 'primary', action: 'home' },
+            { label: 'Get help', type: 'ghost', action: 'help' }
+          ]
+        },
+        unauthenticated: {
+          heading: 'Sign in to view this page',
+          message: 'You need to be signed in to see this. We\'ll bring you right back once you\'re logged in.',
+          buttons: [
+            { label: 'Sign in', type: 'primary', action: 'login-redirect' },
+            { label: 'Go to homepage', type: 'secondary', action: 'homepage' }
+          ]
+        },
+        org: {
+          heading: 'Wrong account for this page',
+          message: 'You\'re signed in, but this page belongs to a different account. Try switching to the right one.',
+          buttons: [
+            { label: 'Go to my dashboard', type: 'primary', action: 'home' },
+            { label: 'Switch account', type: 'secondary', action: 'login' },
+            { label: 'Get help', type: 'ghost', action: 'help' }
+          ]
         }
+      };
 
-        // Redirect to login page
-        window.location.href = 'auth/login.html';
-      });
+      // --- Resolve scenario (default to role) ---
+
+      var scenario = scenarios[reason] || scenarios.role;
+
+      // --- Set heading and message ---
+
+      var headingEl = document.getElementById('access-denied-heading');
+      var messageEl = document.getElementById('access-denied-message');
+
+      if (headingEl) headingEl.textContent = scenario.heading;
+      if (messageEl) messageEl.textContent = scenario.message;
+
+      // --- Build buttons ---
+
+      var actionsEl = document.getElementById('access-denied-actions');
+
+      if (actionsEl) {
+        scenario.buttons.forEach(function (btn) {
+          var el;
+          var classes = 'button';
+          if (btn.type === 'secondary') classes += ' is-outline';
+          if (btn.type === 'ghost') classes += ' is-outline is-faded';
+
+          if (btn.action === 'home') {
+            el = document.createElement('a');
+            el.href = 'index.html';
+            el.setAttribute('data-home-link', '');
+          } else if (btn.action === 'homepage') {
+            el = document.createElement('a');
+            el.href = 'index.html';
+          } else if (btn.action === 'help') {
+            el = document.createElement('a');
+            var supportUrl = 'support.html';
+            if (fromPath) supportUrl += '?from=' + encodeURIComponent(fromPath);
+            el.href = supportUrl;
+          } else {
+            el = document.createElement('button');
+            el.type = 'button';
+          }
+
+          el.className = classes;
+          el.textContent = btn.label;
+
+          // Login actions: clear dev session and redirect
+          if (btn.action === 'login' || btn.action === 'login-redirect') {
+            el.addEventListener('click', function () {
+              if (isDev) {
+                sessionStorage.removeItem('auth-dev-role');
+              }
+              var loginUrl = 'auth/login.html';
+              if (btn.action === 'login-redirect' && fromPath) {
+                loginUrl += '?redirect=' + encodeURIComponent(fromPath);
+              }
+              window.location.replace(loginUrl);
+            });
+          }
+
+          actionsEl.appendChild(el);
+        });
+      }
+
+      // --- Focus management ---
+
+      if (headingEl) {
+        setTimeout(function () { headingEl.focus(); }, 100);
+      }
     })();
   </script>
 </body>

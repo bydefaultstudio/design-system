@@ -1,11 +1,10 @@
 ---
 title: "Border"
-subtitle: "Composable border system"
+subtitle: "Composable borders — position, width, style, colour"
 description: "Guide to using the composable border architecture for flexible border styling."
 section: "Design System"
 subsection: ""
 order: 6
-slug: "border"
 status: "published"
 access: "team"
 client: "internal"
