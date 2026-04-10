@@ -4,7 +4,7 @@ subtitle: "Palette, scales, and semantic colour mappings"
 description: "Visual reference for all color tokens — brand palette, primitive scales, and semantic mappings."
 section: "Design System"
 subsection: ""
-order: 2
+order: 3
 status: "published"
 access: "team"
 client: "internal"
@@ -155,6 +155,19 @@ Semantic colors map primitive tokens to **meaning and intent**. Use these in lay
   <div class="color-row is-text-dark" style="background-color: var(--background-darker);" data-token="--background-darker"><span class="color-row-name">background-darker</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
 </div>
 
+### Solid colour backgrounds
+
+Solid colour blocks for hero sections, callouts, ad units, and any marketing surface that needs to lean on a brand colour. Each token resolves to the brand primitive when overridden in a client theme — otherwise the design system default applies.
+
+<div class="color-list border border-faded">
+  <div class="color-row is-text-light" style="background-color: var(--background-accent);" data-token="--background-accent"><span class="color-row-name">background-accent</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--background-black);" data-token="--background-black"><span class="color-row-name">background-black</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-dark" style="background-color: var(--background-white);" data-token="--background-white"><span class="color-row-name">background-white</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--background-blue);" data-token="--background-blue"><span class="color-row-name">background-blue</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--background-red);" data-token="--background-red"><span class="color-row-name">background-red</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+  <div class="color-row is-text-light" style="background-color: var(--background-green);" data-token="--background-green"><span class="color-row-name">background-green</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
+</div>
+
 ### Border
 
 <div class="color-list border border-faded">
@@ -174,7 +187,7 @@ Semantic colors map primitive tokens to **meaning and intent**. Use these in lay
 
 ### Status
 
-Status tokens now reference the dark shade of each accent colour family. `--status-info` maps to `var(--blue-dark)` (previously `var(--green)`), aligning with the conventional use of blue for informational states. In dark mode, status tokens flip to the light shades for readability.
+Status tokens now reference the dark shade of each accent colour family. `var(--status-info)` maps to `var(--blue-dark)` (previously `var(--green)`), aligning with the conventional use of blue for informational states. In dark mode, status tokens flip to the light shades for readability.
 
 <div class="color-list border border-faded">
   <div class="color-row is-text-light" style="background-color: var(--status-info);" data-token="--status-info"><span class="color-row-name">status-info</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>

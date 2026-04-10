@@ -127,6 +127,61 @@ hr {
   text-underline-offset: 2.5px;
 }
 
+/* -- Button-flavoured color row (used in the brand book) --
+ * The whole row is the copy target. Hover reveals an ::after copy icon
+ * (CSS mask of the copy SVG); on .is-copied the icon swaps to a check.
+ * Inline background-color always wins over the .copy-btn.is-copied reset. */
+button.color-row {
+  width: 100%;
+  border: none;
+  text-align: left;
+  font-family: var(--font-tertiary);
+  font-size: var(--font-s);
+  cursor: pointer;
+  justify-content: space-between;
+  transition: filter 0.15s;
+}
+
+button.color-row:hover {
+  filter: brightness(0.96);
+}
+
+button.color-row::after {
+  content: "";
+  display: inline-block;
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: currentColor;
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z' fill='black'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z' fill='black'/></svg>");
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+          mask-position: center;
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  opacity: 0.6;
+  transition: opacity 0.15s;
+}
+
+button.color-row:hover::after,
+button.color-row:focus-visible::after {
+  opacity: 1;
+}
+
+button.color-row.is-copied::after {
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z' fill='black'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z' fill='black'/></svg>");
+  opacity: 1;
+}
+
+/* Don't let .copy-btn.is-copied global reset bleed into our coloured row */
+button.color-row.is-copied {
+  color: inherit;
+  border-color: inherit;
+}
+
 
 /* ------ TABLES ------ */
 
@@ -313,7 +368,7 @@ body.no-sidebar .page-wrapper.has-sidebar {
   max-width: 1080px;
   margin: 0 auto;
   width: 100%;
-  padding: var(--space-xl) var(--space-l) 0;
+  padding: var(--space-xl) var(--space-xl) 0;
   flex: 1;
 }
 
@@ -868,12 +923,35 @@ body:not(.sidebar-collapsed) .nav-section[open] .nav-list {
   margin: 0;
 }
 
-.page-feedback.is-submitted .page-feedback-description {
+/* Success state — hidden by default, shown when .is-submitted is set */
+.page-feedback-success {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-s);
+}
+
+.page-feedback-success-icon {
+  color: var(--status-success);
+}
+
+.page-feedback-success-icon .icn-svg {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.page-feedback-success-title {
+  margin: 0;
+}
+
+.page-feedback.is-submitted .page-feedback-prompt,
+.page-feedback.is-submitted .page-feedback-description,
+.page-feedback.is-submitted .button-group {
   display: none;
 }
 
-.page-feedback.is-submitted .button-group {
-  display: none;
+.page-feedback.is-submitted .page-feedback-success {
+  display: flex;
 }
 
 
@@ -942,29 +1020,38 @@ section[id] {
   scroll-margin-top: calc(var(--header-height) + var(--sticky-bar-height) + var(--space-xl));
 }
 
-.page-header {
-  width: 100%;
-  padding-top: var(--section-l);
-  padding-bottom: var(--section-l);
-  background: var(--background-faded);
-  border-bottom: var(--border-s) solid var(--border-secondary);
+/* -- Inline page header (top of article, not full-bleed) -- */
+.docs-page-header {
+  margin-bottom: var(--space-xl);
+  text-wrap: balance;
 }
 
-.page-header .container-small {
-  text-align: center;
-}
-
-.page-header h1 {
-  text-align: center;
+.docs-page-header h1 {
   margin-top: 0;
   margin-bottom: var(--space-m);
 }
 
-.page-subtitle {
+.docs-page-subtitle {
   color: var(--text-secondary);
   font-size: var(--font-m);
+  margin-top: 0;
   margin-bottom: var(--space-m);
-  text-align: center;
+}
+
+/* -- Brand book section spacing -- */
+.brand-book-section {
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-3xl);
+  border-top: var(--border-s) solid var(--border-faded);
+}
+
+.brand-book-section:first-of-type {
+  border-top: none;
+  padding-top: var(--space-l);
+}
+
+.brand-book-section > h2 {
+  margin-top: 0;
 }
 
 .page-source-link,
@@ -973,21 +1060,19 @@ section[id] {
 }
 
 
-/* -- Docs sticky bar overrides -- */
+/* -- Docs sticky sub-header bar (sits below site header, constrained to article width) -- */
 /* Base .sticky-bar component is in design-system.css */
 
-.sticky-bar {
+.sticky-bar-page {
   top: var(--header-height);
 }
 
-.sticky-bar-container {
+.sticky-bar-page .sticky-bar-container {
   max-width: 1080px;
   margin: 0 auto;
   height: var(--sticky-bar-height);
   padding-left: var(--space-l);
-
 }
-
 
 /* ------ 4. DOCS TABLE OF CONTENTS ------ */
 
@@ -1231,9 +1316,25 @@ section[id] {
     height: 45px;
   }
 
+  /* Mobile header right side: icons only — hide text labels, tighten padding */
+  .site-header-right .header-link-label {
+    display: none;
+  }
+
+  .site-header-right .header-link,
+  .site-header-right .dropdown-trigger {
+    padding: 0 var(--space-l);
+    gap: var(--space-xs);
+  }
+
   .site-header-hamburger {
     display: flex;
     padding: 0 var(--space-l);
+  }
+
+  /* No-sidebar pages: logo is first child, supply the left padding the hamburger would have */
+  .site-header-left > .site-header-logo-link:first-child {
+    padding-left: var(--space-l);
   }
 
   /* Hide desktop sidebar toggle on mobile */

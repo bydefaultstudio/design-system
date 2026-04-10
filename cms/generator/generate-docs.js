@@ -266,6 +266,139 @@ function parseFrontmatter(content) {
 }
 
 /**
+ * Sitewide pre-pass: chipify any inline <code> matching one of the three
+ * explicit conventions, anywhere in the document (paragraphs, lists, tables, etc.).
+ *
+ *   `.class-name`        → class chip,  copies `.class-name`
+ *   `var(--token-name)`  → token chip,  copies `var(--token-name)`
+ *   `#abc123`            → hex chip,    copies `#abc123` + colour swatch
+ *
+ * Anything else in <code> is left alone. Block code (<pre><code class="language-...">)
+ * has a `class` attribute on the <code>, so the bare-tag regex below skips it.
+ */
+function chipifyExplicitPatterns(html) {
+  return html.replace(/<code>([^<]+)<\/code>/g, (match, content) => {
+    // Class: .foo-bar, .is-active, .cols-3
+    if (/^\.[a-z][\w-]*$/i.test(content)) {
+      return buildClassButton(content);
+    }
+    // Token: var(--foo-bar)
+    if (/^var\(--[a-z0-9_-]+\)$/i.test(content)) {
+      return buildTokenButton(content);
+    }
+    // Hex: #abc, #abcd, #abcdef, #abcdef12
+    if (/^#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(content)) {
+      return buildHexButton(content);
+    }
+    return match;
+  });
+}
+
+function buildClassButton(className) {
+  return `<button type="button" class="token-copy is-class" data-copy="${escapeAttr(className)}" aria-label="Copy ${escapeAttr(className)}"><code>${className}</code></button>`;
+}
+
+function buildTokenButton(varExpression) {
+  return `<button type="button" class="token-copy is-token" data-copy="${escapeAttr(varExpression)}" aria-label="Copy ${escapeAttr(varExpression)}"><code>${varExpression}</code></button>`;
+}
+
+/**
+ * Turn token-table cells into clickable copy buttons (legacy heuristic pass).
+ *
+ * Runs after chipifyExplicitPatterns and acts as a fallback for older docs that
+ * still use bare `--token` syntax, unwrapped hex values, or font-stack literals
+ * inside table cells. Cells already chipified by the explicit-pattern pass are
+ * skipped to avoid double-wrapping.
+ *
+ * Skips the description column (last column when its <th> matches description|notes|usage).
+ */
+function injectTokenCopyButtons(tableInner) {
+  // Identify the description column index from the header row, if any.
+  let descriptionIndex = -1;
+  const theadMatch = tableInner.match(/<thead>([\s\S]*?)<\/thead>/);
+  if (theadMatch) {
+    const headers = [...theadMatch[1].matchAll(/<th[^>]*>([\s\S]*?)<\/th>/g)].map(m => m[1]);
+    descriptionIndex = headers.findIndex(h => /description|notes|usage/i.test(h.replace(/<[^>]*>/g, '')));
+  }
+
+  // Walk every <tr> and rebuild its <td> cells.
+  return tableInner.replace(/<tr>([\s\S]*?)<\/tr>/g, (rowMatch, rowInner) => {
+    // Leave header rows alone.
+    if (/<th[\s>]/.test(rowInner)) return rowMatch;
+
+    let cellIndex = -1;
+    const newInner = rowInner.replace(/<td>([\s\S]*?)<\/td>/g, (_, cell) => {
+      cellIndex++;
+      if (cellIndex === descriptionIndex) return `<td>${cell}</td>`;
+      return `<td>${transformTokenCell(cell)}</td>`;
+    });
+    return `<tr>${newInner}</tr>`;
+  });
+}
+
+/**
+ * Transform a single token-table cell into a copy button.
+ *
+ * The new explicit-pattern pre-pass (chipifyExplicitPatterns) handles the
+ * common cases: `.class`, `var(--token)`, and `#hex`. This legacy fallback
+ * exists only for two narrow backward-compat cases on un-migrated docs:
+ *
+ *   1. <code>--bare-token</code>  → wraps in var() and chipifies
+ *   2. bare #hex (no backticks)   → chipifies with swatch
+ *
+ * Everything else is left alone. Earlier versions had a "literal copy of any
+ * single <code>" case plus a looksLikeValue heuristic that misfired badly
+ * (e.g. chipifying "Centre items" because "items" contains "em"). Both removed.
+ */
+function transformTokenCell(cell) {
+  const raw = cell.trim();
+  if (!raw) return cell;
+
+  // Already chipified by the sitewide explicit-pattern pre-pass — leave it alone.
+  if (raw.includes('class="token-copy')) return cell;
+
+  // Backward-compat 1: <code>--bare-token</code> → copies var(--bare-token)
+  const codeVarMatch = raw.match(/^<code>(--[a-z0-9-]+)<\/code>$/i);
+  if (codeVarMatch) {
+    return buildVarButton(codeVarMatch[1]);
+  }
+
+  // Backward-compat 2: bare hex code with no backticks
+  const hexMatch = raw.match(/^(#[0-9a-fA-F]{6,8}|#[0-9a-fA-F]{3,4})$/);
+  if (hexMatch) {
+    return buildHexButton(hexMatch[1]);
+  }
+
+  // Backward-compat 3: mixed cells containing one or more <code>--bare-token</code>
+  // entries — chipify just the bare tokens, leave any other <code> untouched.
+  if (/<code>--[a-z0-9-]+<\/code>/i.test(raw)) {
+    return raw.replace(/<code>(--[a-z0-9-]+)<\/code>/gi, (_, inner) => buildVarButton(inner));
+  }
+
+  return cell;
+}
+
+function buildVarButton(varName) {
+  const copyValue = `var(${varName})`;
+  return `<button type="button" class="token-copy is-token" data-copy="${escapeAttr(copyValue)}" aria-label="Copy ${escapeAttr(copyValue)}"><code>${varName}</code></button>`;
+}
+
+function buildHexButton(hex) {
+  return `<button type="button" class="token-copy has-swatch" data-copy="${hex}" aria-label="Copy ${hex}"><code>${hex}</code><span class="token-swatch" style="background:${hex};" aria-hidden="true"></span></button>`;
+}
+
+/**
+ * Escape a string for safe inclusion in an HTML attribute value.
+ */
+function escapeAttr(text) {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+/**
  * Convert markdown to HTML using marked
  */
 function markdownToHtml(markdown) {
@@ -323,15 +456,19 @@ function markdownToHtml(markdown) {
     return match;
   });
 
+  // Sitewide pre-pass: chipify any inline <code> matching .class / var(--token) / #hex.
+  // Works anywhere in the document — paragraphs, lists, tables, callouts.
+  html = chipifyExplicitPatterns(html);
+
   // Wrap bare tables (markdown-generated) in a scroll container — skip demo tables that already have classes
   html = html.replace(/<table>([\s\S]*?)<\/table>/g, '<div class="table-scroll"><table class="table">$1</table></div>');
 
-  // Inject clickable color swatches next to hex codes inside table cells
-  html = html.replace(/<td>([^<]*#[0-9a-fA-F]{3,8}[^<]*)<\/td>/g, (match, inner) => {
-    const replaced = inner.replace(/(#[0-9a-fA-F]{6,8}|#[0-9a-fA-F]{3,4})\b/g,
-      (hex) => `<button type="button" class="color-copy" data-copy="${hex}" aria-label="Copy ${hex}">${hex}<span class="color-swatch" style="background:${hex};" aria-hidden="true"></span></button>`
-    );
-    return `<td>${replaced}</td>`;
+  // Turn token-table cells into copy buttons.
+  // Skips the "Description" column (last column when its header text matches description|notes|usage).
+  // Each non-description cell whose content is a recognisable token, value, or hex
+  // is replaced with a <button class="token-copy"> that copies the right thing on click.
+  html = html.replace(/<table class="table">([\s\S]*?)<\/table>/g, (_, tableInner) => {
+    return `<table class="table">${injectTokenCopyButtons(tableInner)}</table>`;
   });
 
   // Add copy buttons to code blocks
@@ -772,30 +909,28 @@ function generatePage(file, template, pageOrder) {
   const tableOfContents = generateTableOfContents(htmlContent);
   const access = deriveDataAccess(frontmatter);
 
-  // Generate page header separately
+  // Generate inline page header (lives at the top of the article, no full-bleed box)
   let pageHeader = '';
   const actionUrl = frontmatter.actionUrl || frontmatter.toolUrl;
   const actionLabel = frontmatter.actionLabel || frontmatter.toolLabel || 'Open';
   const actionLinkHtml = actionUrl
-    ? `<div class="button-group justify-center">
+    ? `<div class="button-group">
         <a href="${actionUrl}" class="button is-small page-action-link">${actionLabel}</a>
       </div>`
     : '';
   if (frontmatter.title) {
-    pageHeader = `<div class="page-header">
-      <div class="container-small">
-        <h1>${frontmatter.title}</h1>
-        ${frontmatter.subtitle ? `<p class="page-subtitle" data-text-wrap="pretty">${frontmatter.subtitle}</p>` : ''}
-        ${actionLinkHtml}
-      </div>
-    </div>`;
+    pageHeader = `<header class="docs-page-header">
+      <h1>${frontmatter.title}</h1>
+      ${frontmatter.subtitle ? `<p class="docs-page-subtitle" data-text-wrap="pretty">${frontmatter.subtitle}</p>` : ''}
+      ${actionLinkHtml}
+    </header>`;
   }
 
-  // Generate page sub-bar (breadcrumbs + markdown dropdown)
+  // Generate sticky sub-header bar (breadcrumb + markdown dropdown)
   let pageSubbar = '';
   if (frontmatter.title && file.htmlFolder) {
     const sectionLabel = file.section || file.htmlFolder.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(' ');
-    pageSubbar = `<div class="sticky-bar">
+    pageSubbar = `<div class="sticky-bar sticky-bar-page">
       <div class="sticky-bar-container">
         <div class="sticky-bar-content">
           <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
@@ -897,6 +1032,7 @@ function generateNavJs(filesBySection) {
   var ICON_HOME = '${esc(getRawIcon('home'))}';
   var ICON_SUN = '${esc(getRawIcon('sun-1'))}';
   var ICON_MOON = '${esc(getRawIcon('moon'))}';
+  var ICON_MAIL = '${esc(getRawIcon('mail'))}';
 
   // ── Build header HTML ──
   var headerLeft = '<div class="site-header-left">';
@@ -926,7 +1062,10 @@ function generateNavJs(filesBySection) {
   var ICON_CHEVRON_DOWN = '${esc(getRawIcon('chevron-down'))}';
 
   var headerRight = '<div class="site-header-right">'
-    + '<a href="' + base + 'support.html" class="header-link header-contact-link">Contact us</a>'
+    + '<a href="' + base + 'support.html" class="header-link header-contact-link" aria-label="Contact">'
+    + '<div class="icn-svg" data-icon="mail">' + ICON_MAIL + '</div>'
+    + '<span class="header-link-label">Contact</span>'
+    + '</a>'
     + '<div class="auth-header-container"></div>'
     + '<div class="header-link dark-mode-toggle" role="button" tabindex="0" aria-label="Toggle dark mode">'
     + '<div class="icn-svg dark-mode-icon-light">' + ICON_SUN + '</div>'
@@ -1336,32 +1475,30 @@ function generateClientDocs(template) {
       const sectionSlug = frontmatter.section ? frontmatter.section.toLowerCase().replace(/\s+/g, '-') : '';
       const navBase = sectionSlug ? '../../' : '../';
 
-      // Page header
+      // Inline page header (lives at top of article, no full-bleed box)
       let pageHeader = '';
       const clientActionUrl = frontmatter.actionUrl || frontmatter.toolUrl;
       const clientActionLabel = frontmatter.actionLabel || frontmatter.toolLabel || 'Open';
       const clientActionHtml = clientActionUrl
-        ? `<div class="button-group justify-center">
+        ? `<div class="button-group">
             <a href="${clientActionUrl}" class="button is-small page-action-link">${clientActionLabel}</a>
           </div>`
         : '';
       if (title) {
-        pageHeader = `<div class="page-header">
-          <div class="container-small">
-            <h1>${title}</h1>
-            ${frontmatter.subtitle ? `<p class="page-subtitle" data-text-wrap="pretty">${frontmatter.subtitle}</p>` : ''}
-            ${clientActionHtml}
-          </div>
-        </div>`;
+        pageHeader = `<header class="docs-page-header">
+          <h1>${title}</h1>
+          ${frontmatter.subtitle ? `<p class="docs-page-subtitle" data-text-wrap="pretty">${frontmatter.subtitle}</p>` : ''}
+          ${clientActionHtml}
+        </header>`;
       }
 
-      // Build page sub-bar (breadcrumbs)
+      // Build sticky sub-header bar (breadcrumb + markdown dropdown)
       let pageSubbar = '';
       if (title && frontmatter.section) {
         const sectionLabel = frontmatter.section;
         const overviewHref = 'index.html';
         const mdPath = `${navBase}cms/clients/${clientKey}/${filename}`;
-        pageSubbar = `<div class="sticky-bar">
+        pageSubbar = `<div class="sticky-bar sticky-bar-page">
           <div class="sticky-bar-container">
             <div class="sticky-bar-content">
               <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
@@ -1508,18 +1645,23 @@ function updateThemeConfigPages(generatedPages) {
       continue;
     }
 
-    // Keep manually-defined pages (like index.html) from the existing array
+    // Keep manually-defined pages (like index.html) from the existing array.
+    // Any stale entry pointing into <client>/docs/ that isn't in newPages
+    // (and isn't the docs/index overview) gets dropped — prevents leftover
+    // entries from renamed/deleted markdown files lingering in theme-config.
     const existingPagesStr = match[3];
     const manualPages = [];
     const pageRegex = /\{[^}]*href:\s*'([^']+)'[^}]*\}/g;
+    const docsPrefix = `${clientKey}/docs/`;
+    const docsIndexHref = `${docsPrefix}index.html`;
     let pageMatch;
     while ((pageMatch = pageRegex.exec(existingPagesStr)) !== null) {
       const href = pageMatch[1];
-      // Keep pages that aren't being generated (e.g. index.html)
       const isGenerated = newPages.some(p => p.href === href);
-      if (!isGenerated) {
-        manualPages.push(pageMatch[0]);
-      }
+      if (isGenerated) continue; // re-added below from newPages
+      const isStaleDocsEntry = href.startsWith(docsPrefix) && href !== docsIndexHref;
+      if (isStaleDocsEntry) continue; // drop stale generated-doc references
+      manualPages.push(pageMatch[0]);
     }
 
     // Build new pages entries
@@ -1741,9 +1883,6 @@ function generateBrandBook(template) {
     return fs.statSync(path.join(clientsDir, dir)).isDirectory() && themeConfig.themes[dir];
   });
 
-  const copyIcon = getIcon('copy');
-  const downloadIcon = getIcon('download');
-
   for (const clientKey of clientDirs) {
     const theme = themeConfig.themes[clientKey];
     const clientLabel = theme.label || clientKey;
@@ -1780,81 +1919,363 @@ function generateBrandBook(template) {
       frontmatter = loadDefaults(path.join(clientsDir, clientKey));
     }
 
-    const pageTitle = frontmatter.title || 'Brand Identity';
-    const pageSubtitle = frontmatter.subtitle || 'Visual identity, logo, palette, and typography';
-    const pageDescription = frontmatter.description || `${clientLabel} brand identity.`;
+    const pageTitle = frontmatter.title || 'Brand Book';
+    const pageSubtitle = frontmatter.subtitle || 'Logo, colour, typography, and interface elements styled with your brand tokens';
+    const pageDescription = frontmatter.description || `${clientLabel} brand book.`;
 
     // Build page content
     let contentHtml = '';
 
-    // Hero section
-    contentHtml += `<div class="page-header">
-      <div class="container-small">
-        <p class="eyebrow">${clientLabel}</p>
-        <h1>${pageTitle}</h1>
-        <p class="page-subtitle" data-text-wrap="pretty">${pageSubtitle}</p>
-      </div>
-    </div>`;
+    // Inline page header — title + subtitle only, no eyebrow or icon
+    contentHtml += `<header class="docs-page-header">
+      <h1>${pageTitle}</h1>
+      <p class="docs-page-subtitle" data-text-wrap="pretty">${pageSubtitle}</p>
+    </header>`;
 
     // Custom intro from brand-book.md
     if (introHtml) {
       contentHtml += `<div class="block gap-l">${introHtml}</div>`;
     }
 
-    // Logo gallery section
-    contentHtml += `<div class="block gap-2xl">
-      <h2>Logos</h2>`;
+    // ─────────────────────────────────────────────────────────
+    // PART 1 — PRIMITIVES
+    // The raw building blocks: logos, colours, fonts.
+    // Compact, scannable, copy-friendly. No editorial content.
+    // ─────────────────────────────────────────────────────────
 
-    for (const svgFile of svgFiles) {
-      const kebabName = svgFile.replace(/\.svg$/i, '');
-      const titleName = kebabName
-        .split('-')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
+    // ─── LOGOS ───────────────────────────────────────────────
+    // Logos follow the convention: logo_brand-{type}-{light|dark}.svg
+    // Group by type, sort by canonical order, render light + dark side by side.
+    const logoTypeOrder = ['primary', 'wordmark', 'avatar', 'horizontal'];
+    const logoTypeTitles = {
+      'primary': 'Primary Logo',
+      'wordmark': 'Wordmark',
+      'avatar': 'Avatar Logo',
+      'horizontal': 'Horizontal Logo',
+    };
 
-      let svgContent = fs.readFileSync(path.join(logosDir, svgFile), 'utf8')
-        .replace(/\n\s*/g, '')
-        .trim();
+    // Parse files: extract base type + variant
+    // e.g. "logo_brand-wordmark-light.svg" → { type: 'wordmark', variant: 'light', file: '...' }
+    const logoEntries = svgFiles
+      .map(f => {
+        const m = f.match(/^logo_brand-(.+?)-(light|dark)\.svg$/i);
+        if (!m) return null;
+        return { type: m[1], variant: m[2], file: f };
+      })
+      .filter(Boolean);
 
-      // Escape SVG for data attribute (used by copy/download buttons)
-      const svgEscaped = svgContent
-        .replace(/&/g, '&amp;')
-        .replace(/"/g, '&quot;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
+    // Group by type
+    const logoGroups = {};
+    for (const entry of logoEntries) {
+      if (!logoGroups[entry.type]) logoGroups[entry.type] = {};
+      logoGroups[entry.type][entry.variant] = entry.file;
+    }
 
-      contentHtml += `<div class="block gap-m">
-        <h3>${titleName}</h3>
-        <div class="grid cols-2 gap-xl">
-          <!-- Light -->
-          <div class="block border border-faded gap-none" style="align-items: center;">
-            <div class="padding-3xl" style="display: flex; align-items: center; justify-content: center; min-height: 200px; background-color: var(--black-alpha-5); width: 100%;">
-              <div class="svg-logo" data-icon="${kebabName}">
-                ${svgContent}
+    // Sort group keys by canonical order
+    const sortedGroupKeys = Object.keys(logoGroups).sort((a, b) => {
+      const aIdx = logoTypeOrder.indexOf(a);
+      const bIdx = logoTypeOrder.indexOf(b);
+      if (aIdx !== -1 && bIdx !== -1) return aIdx - bIdx;
+      if (aIdx !== -1) return -1;
+      if (bIdx !== -1) return 1;
+      return a.localeCompare(b);
+    });
+
+    // Render the logos section only if we have at least one matching file
+    if (sortedGroupKeys.length > 0) {
+      contentHtml += `<section class="brand-book-section block gap-2xl">
+        <h2>Logos</h2>`;
+
+      for (const typeKey of sortedGroupKeys) {
+        const group = logoGroups[typeKey];
+        const title = logoTypeTitles[typeKey] || (typeKey.charAt(0).toUpperCase() + typeKey.slice(1) + ' Logo');
+
+        contentHtml += `<div class="block gap-m">
+          <h3 style="margin: 0;">${title}</h3>
+          <div class="grid cols-2 gap-l">`;
+
+        // Render light then dark variants if they exist
+        for (const variant of ['light', 'dark']) {
+          const file = group[variant];
+          if (!file) continue;
+
+          let svgContent = fs.readFileSync(path.join(logosDir, file), 'utf8')
+            .replace(/\n\s*/g, '')
+            .trim();
+
+          // Escape for data-copy attribute
+          const svgEscapedAttr = svgContent
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+
+          const previewClass = variant === 'dark' ? 'asset-card-preview--dark' : 'asset-card-preview--light';
+          const downloadHref = `assets/logos/${file}`;
+          const variantLabel = variant.charAt(0).toUpperCase() + variant.slice(1);
+
+          contentHtml += `<div class="asset-card">
+            <div class="asset-card-preview ${previewClass}">
+              <div class="svg-logo" data-icon="${typeKey}-${variant}" style="max-width: 240px; max-height: 120px;">${svgContent}</div>
+            </div>
+            <div class="asset-card-footer">
+              <p class="asset-card-title">${variantLabel}</p>
+              <div class="asset-card-actions">
+                <button class="button is-small copy-btn is-icon-only" type="button" data-copy="${svgEscapedAttr}" data-tooltip="Copy SVG" aria-label="Copy SVG">
+                  <span class="copy-btn-default">${getIcon('copy')}</span>
+                  <span class="copy-btn-copied">${getIcon('check')}</span>
+                </button>
+                <a class="button is-small" href="${downloadHref}" download="${file}" data-tooltip="Download" aria-label="Download SVG">
+                  ${getIcon('download')}
+                </a>
               </div>
             </div>
-            <div class="button-group padding-xl">
-              <button class="button is-xsmall icon-copy-btn" aria-label="Copy logo code" data-svg-code="${svgEscaped}">${copyIcon} Copy</button>
-              <button class="button is-xsmall icon-download-btn" aria-label="Download SVG file" data-svg-code="${svgEscaped}" data-filename="${svgFile}">${downloadIcon} Download</button>
-            </div>
+          </div>`;
+        }
+
+        contentHtml += `</div>
+        </div>`;
+      }
+
+      contentHtml += `</section>`;
+    }
+
+    // ─── COLOURS ─────────────────────────────────────────────
+    // Read brand primitives from this client's theme.css.
+    // If none defined, fall back to the project semantic palette tokens.
+    const themeCssPath = path.join(clientsDir, clientKey, 'assets', 'theme.css');
+    let brandColorTokens = [];
+    if (fs.existsSync(themeCssPath)) {
+      const themeCssRaw = fs.readFileSync(themeCssPath, 'utf8');
+      const brandTokenRegex = /^\s*(--brand-[a-z0-9-]+)\s*:\s*([^;]+);/gm;
+      let m;
+      while ((m = brandTokenRegex.exec(themeCssRaw)) !== null) {
+        brandColorTokens.push({ token: m[1] });
+      }
+    }
+
+    // Fallback: use semantic tokens if no brand primitives are defined
+    if (brandColorTokens.length === 0) {
+      brandColorTokens = [
+        { token: '--background-primary' },
+        { token: '--background-secondary' },
+        { token: '--text-primary' },
+        { token: '--text-secondary' },
+        { token: '--button-primary' },
+        { token: '--button-secondary' },
+        { token: '--text-accent' },
+        { token: '--border-secondary' },
+      ];
+    }
+
+    // Split into two columns
+    const half = Math.ceil(brandColorTokens.length / 2);
+    const colorColLeft = brandColorTokens.slice(0, half);
+    const colorColRight = brandColorTokens.slice(half);
+
+    // Click the row → copies the var(--token) reference. Hover reveals the
+    // ::after copy icon defined in style.css. Check icon swap on .is-copied.
+    const renderColorRow = (c) => `<button class="color-row copy-btn" type="button" style="background-color: var(${c.token});" data-copy="var(${c.token})" aria-label="Copy var(${c.token})">
+      <span class="color-row-name">var(${c.token})</span>
+    </button>`;
+
+    contentHtml += `<section class="brand-book-section block gap-l">
+      <h2>Colours</h2>
+      <div class="grid cols-2 gap-l">
+        <div class="color-list border border-faded">${colorColLeft.map(renderColorRow).join('')}</div>
+        <div class="color-list border border-faded">${colorColRight.map(renderColorRow).join('')}</div>
+      </div>
+    </section>`;
+
+    // ─── BACKGROUNDS ─────────────────────────────────────────
+    // Solid colour background tokens — useful for hero blocks, callouts,
+    // ad units, marketing surfaces. Each maps to a brand primitive (or
+    // falls back to the design system default).
+    const backgroundTokens = [
+      { token: '--background-accent' },
+      { token: '--background-black'  },
+      { token: '--background-white'  },
+      { token: '--background-blue'   },
+      { token: '--background-red'    },
+      { token: '--background-green'  },
+    ];
+
+    const bgHalf = Math.ceil(backgroundTokens.length / 2);
+    const bgColLeft = backgroundTokens.slice(0, bgHalf);
+    const bgColRight = backgroundTokens.slice(bgHalf);
+
+    contentHtml += `<section class="brand-book-section block gap-l">
+      <h2>Backgrounds</h2>
+      <div class="grid cols-2 gap-l">
+        <div class="color-list border border-faded">${bgColLeft.map(renderColorRow).join('')}</div>
+        <div class="color-list border border-faded">${bgColRight.map(renderColorRow).join('')}</div>
+      </div>
+    </section>`;
+
+    // ─── FONTS ───────────────────────────────────────────────
+    // Show every distinct brand font as a specimen card.
+    // Dedupe by family value — if --font-primary and --font-secondary share the
+    // same value, only one card is rendered.
+    const fontTokenSpecs = [
+      { token: '--font-primary',    fallback: 'Primary' },
+      { token: '--font-secondary',  fallback: 'Secondary' },
+      { token: '--font-tertiary',   fallback: 'Tertiary' },
+      { token: '--font-quaternary', fallback: 'Quaternary' },
+    ];
+
+    let fontTokens = [];
+    if (fs.existsSync(themeCssPath)) {
+      const themeCssRaw = fs.readFileSync(themeCssPath, 'utf8');
+      // Build a map of token → first family name from theme.css
+      const themeFontMap = {};
+      const fontTokenRegex = /^\s*(--font-(?:primary|secondary|tertiary|quaternary))\s*:\s*([^;]+);/gm;
+      let m;
+      while ((m = fontTokenRegex.exec(themeCssRaw)) !== null) {
+        if (themeFontMap[m[1]]) continue; // first definition wins
+        themeFontMap[m[1]] = m[2].split(',')[0].trim().replace(/^["']|["']$/g, '');
+      }
+
+      // Walk in canonical order, dedupe by family value
+      const seenFamilies = new Set();
+      for (const spec of fontTokenSpecs) {
+        const family = themeFontMap[spec.token];
+        if (!family || seenFamilies.has(family)) continue;
+        seenFamilies.add(family);
+        fontTokens.push({ token: spec.token, family });
+      }
+    }
+    if (fontTokens.length === 0) {
+      fontTokens = [
+        { token: '--font-primary',   family: 'Primary' },
+        { token: '--font-secondary', family: 'Secondary' },
+        { token: '--font-tertiary',  family: 'Tertiary' },
+      ];
+    }
+
+    contentHtml += `<section class="brand-book-section block gap-l">
+      <h2>Fonts</h2>
+      <div class="grid cols-${Math.min(fontTokens.length, 3)} gap-l">`;
+    for (const f of fontTokens) {
+      contentHtml += `<div class="asset-card">
+        <div class="asset-card-preview asset-card-preview--light" style="text-align: center;">
+          <div style="font-family: var(${f.token});">
+            <p style="font-size: var(--font-9xl); margin: 0; line-height: 1;">Aa</p>
+            <p style="font-size: var(--font-s); margin: var(--space-l) 0 0; line-height: 1.5;">ABCDEFGHIJKLM<br>abcdefghijklm<br>0123456789</p>
           </div>
-          <!-- Dark -->
-          <div class="block border border-faded gap-none" style="align-items: center;">
-            <div class="padding-3xl" style="display: flex; align-items: center; justify-content: center; min-height: 200px; background-color: var(--neutral-950); color: var(--white); width: 100%;">
-              <div class="svg-logo" data-icon="${kebabName}">
-                ${svgContent}
-              </div>
-            </div>
-            <div class="button-group padding-xl">
-              <button class="button is-xsmall icon-copy-btn" aria-label="Copy logo code" data-svg-code="${svgEscaped}">${copyIcon} Copy</button>
-              <button class="button is-xsmall icon-download-btn" aria-label="Download SVG file" data-svg-code="${svgEscaped}" data-filename="${svgFile}">${downloadIcon} Download</button>
-            </div>
-          </div>
+        </div>
+        <div class="asset-card-footer">
+          <p class="asset-card-title">${f.family}</p>
         </div>
       </div>`;
     }
+    contentHtml += `</div>
+    </section>`;
 
-    contentHtml += `</div>`;
+    // ─────────────────────────────────────────────────────────
+    // PART 2 — IN USE
+    // The brand applied across real scenarios — an article, a callout,
+    // a card grid, and a contact form. Each scenario stitches multiple
+    // elements together so the brand can be seen in context.
+    // ─────────────────────────────────────────────────────────
+
+    // ─── SCENARIO 1: Article ─────────────────────────────────
+    // Demonstrates: H1, H2, H3, eyebrow, lead paragraph, body, inline styling,
+    // internal + external links, unordered + ordered lists, blockquote, small print.
+    // Sits on the page, not in a bordered box.
+    contentHtml += `<section class="brand-book-section block gap-l">
+      <article class="block gap-l">
+        <header class="block gap-m">
+          <p class="eyebrow" style="margin: 0;">Field notes</p>
+          <h1 style="margin: 0;">Your Primary Headline, Big, Bold, and Unmissable</h1>
+          <p class="text-size-xlarge" style="margin: 0;">This lead paragraph demonstrates how introductory body text will look across your layout — used to set the tone for the body that follows and draw the reader in.</p>
+        </header>
+
+        <p>This paragraph demonstrates how body text will look across your layout. <strong>Bold text</strong> adds emphasis, while <em>italics</em> offer a subtle highlight. You can also use <s>strikethrough</s> to show edits, or <code>inline code</code> for technical terms. For further information, check out <a href="#">this internal link</a>, or visit our <a href="https://example.com" target="_blank" rel="noopener noreferrer">external site</a>.</p>
+
+        <h2>Type with Purpose, Design with Intent</h2>
+
+        <p>This extended paragraph serves to demonstrate how substantial blocks of body text will behave across your layout, giving you a realistic sense of how readers will experience longer-form content. <strong>Strategic use of bold text</strong> helps break up visual monotony, while <em>italicised phrases introduce subtle emphasis</em>. As you work through multiple lines, you'll notice how spacing, line height, and text density all contribute to overall readability.</p>
+
+        <h3>What good typography does</h3>
+
+        <ul>
+          <li>Establishes a clear visual hierarchy</li>
+          <li>Improves readability over long passages</li>
+          <li>Carries the brand voice consistently
+            <ul>
+              <li>Across digital and print</li>
+              <li>Across light and dark surfaces</li>
+            </ul>
+          </li>
+          <li>Communicates without shouting</li>
+        </ul>
+
+        <h3>How we use it</h3>
+
+        <ol>
+          <li>Discovery and brief</li>
+          <li>Strategy and positioning</li>
+          <li>Design and prototyping
+            <ol>
+              <li>Visual exploration</li>
+              <li>Refinement</li>
+            </ol>
+          </li>
+          <li>Build and handover</li>
+        </ol>
+
+        <blockquote><p>Words matter, but how those words are presented matters just as much. Typography transforms content from mundane to magical, from ordinary to extraordinary.</p></blockquote>
+
+        <p class="text-size-small">Terms and conditions apply. Prices are subject to change without notice. See site for complete details.</p>
+      </article>
+    </section>`;
+
+    // ─── SCENARIO 2: Card grid ───────────────────────────────
+    // Demonstrates: card, card-title, card-description, button, grid layout, inline links.
+    contentHtml += `<section class="brand-book-section block gap-l">
+      <h2>Three things worth your time</h2>
+      <div class="grid cols-3 gap-l">
+        <a href="#" class="card card--interactive">
+          <h3 class="card-title">Catchy article title example</h3>
+          <p class="card-description">A short preview of the article content, crafted to grab attention and spark curiosity. Just enough to tempt the reader to click.</p>
+        </a>
+        <a href="#" class="card card--interactive">
+          <h3 class="card-title">Bold title for a blog post</h3>
+          <p class="card-description">A few compelling lines that hint at the story within. Use this space to draw the reader in with tone, intrigue, or a bold statement.</p>
+        </a>
+        <a href="#" class="card card--interactive">
+          <h3 class="card-title">Short and scroll-stopping</h3>
+          <p class="card-description">Bold insights, fresh thinking, and a reason to scroll. This placeholder shows how a post excerpt will look in your feed layout.</p>
+        </a>
+      </div>
+    </section>`;
+
+    // ─── SCENARIO 3: Contact form ────────────────────────────
+    // One of each form element: text input, textarea, radio, toggle, button.
+    contentHtml += `<section class="brand-book-section block gap-l">
+      <h2>Get in touch</h2>
+      <div class="block gap-l">
+        <div class="block gap-xs">
+          <label for="bb-name"><strong>Name</strong></label>
+          <input type="text" id="bb-name" placeholder="Your name">
+        </div>
+        <div class="block gap-xs">
+          <label for="bb-message"><strong>Message</strong></label>
+          <textarea id="bb-message" rows="4" placeholder="Tell us a little about your project..."></textarea>
+        </div>
+        <div class="form-check">
+          <input type="radio" id="bb-radio" name="bb-radio" checked>
+          <label for="bb-radio">Subscribe me to updates</label>
+        </div>
+        <div class="form-toggle">
+          <input type="checkbox" id="bb-toggle" checked>
+          <label for="bb-toggle">Email notifications</label>
+        </div>
+        <div class="button-group">
+          <button class="button" type="button">Send message</button>
+        </div>
+      </div>
+    </section>`;
 
     // Build page from template (same pattern as generateClientIndexPages)
     const navBase = '../';
@@ -1866,59 +2287,8 @@ function generateBrandBook(template) {
       ? `<link rel="preconnect" href="https://fonts.googleapis.com">\n    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n    <link href="${theme.fonts}" rel="stylesheet">`
       : GOOGLE_FONTS_HTML;
 
-    // Brand book inline script for copy/download buttons
-    const brandBookScript = `
-    <script>
-    (function() {
-      'use strict';
-
-      function initBrandBookButtons() {
-        // Copy SVG code
-        document.querySelectorAll('.icon-copy-btn').forEach(function(btn) {
-          btn.addEventListener('click', function() {
-            var code = btn.getAttribute('data-svg-code');
-            if (!code) return;
-            // Decode escaped HTML entities
-            var textarea = document.createElement('textarea');
-            textarea.innerHTML = code;
-            var decoded = textarea.value;
-            navigator.clipboard.writeText(decoded).then(function() {
-              var original = btn.innerHTML;
-              btn.textContent = 'Copied!';
-              setTimeout(function() { btn.innerHTML = original; }, 1500);
-            });
-          });
-        });
-
-        // Download SVG file
-        document.querySelectorAll('.icon-download-btn').forEach(function(btn) {
-          btn.addEventListener('click', function() {
-            var code = btn.getAttribute('data-svg-code');
-            var filename = btn.getAttribute('data-filename') || 'logo.svg';
-            if (!code) return;
-            var textarea = document.createElement('textarea');
-            textarea.innerHTML = code;
-            var decoded = textarea.value;
-            var blob = new Blob([decoded], { type: 'image/svg+xml' });
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-          });
-        });
-      }
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initBrandBookButtons);
-      } else {
-        initBrandBookButtons();
-      }
-    })();
-    </script>`;
+    // Brand book uses the standard .copy-btn pattern (handled by copy-button.js)
+    // and native <a download> for downloads — no inline script needed.
 
     let html = template
       .replace(/\{\{PAGE_TITLE\}\}/g, `${clientLabel} — ${pageTitle}`)
@@ -1936,7 +2306,7 @@ function generateBrandBook(template) {
       .replace('{{CLIENT_THEME_CSS}}', clientThemeCss)
       .replace('{{CLIENT_THEME_ATTR}}', `data-client-theme="${clientKey}"`)
       .replace('{{GOOGLE_FONTS}}', googleFonts)
-      .replace('{{PAGE_SCRIPTS}}', brandBookScript);
+      .replace('{{PAGE_SCRIPTS}}', '');
 
     // Write to client folder
     const dir = path.join(OUTPUT_DIR, clientKey);

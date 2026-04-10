@@ -63,17 +63,8 @@
     <div id="site-nav" data-base="../"></div>
 
     <div class="docs-main-area">
-        <!-- Page Header (full width, outside grid) -->
-        <div class="page-header">
-      <div class="container-small">
-        <h1>Disclosure</h1>
-        <p class="page-subtitle" data-text-wrap="pretty">Reveal content on demand</p>
-        
-      </div>
-    </div>
-
-        <!-- Sticky Bar (breadcrumbs + actions) -->
-        <div class="sticky-bar">
+        <!-- Page sub-header bar (full width, sticky — breadcrumb + filename + actions) -->
+        <div class="sticky-bar sticky-bar-page">
       <div class="sticky-bar-container">
         <div class="sticky-bar-content">
           <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
@@ -115,6 +106,11 @@
             <!-- Main Content -->
             <main class="docs-main">
                 <article>
+                    <header class="docs-page-header">
+      <h1>Disclosure</h1>
+      <p class="docs-page-subtitle" data-text-wrap="pretty">Reveal content on demand</p>
+      
+    </header>
                     <p>The disclosure component uses native HTML <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> elements to create expandable/collapsible content sections. No JavaScript required for the toggle behaviour.</p>
 <hr>
 <h2 id="core-principles">Core Principles</h2>
@@ -124,9 +120,9 @@
 <li>Chevron indicator sits on the <strong>left</strong> of the summary text, rotating from right-pointing (closed) to down-pointing (open)</li>
 <li>Disclosure content aligns with the summary text (indented past the chevron)</li>
 <li>Styled with design system tokens (fonts, colors, spacing, borders)</li>
-<li>The <code>.disclosure-content</code> wrapper provides consistent padding and typography</li>
-<li>The <code>.disclosure-table</code> pattern displays key-value pairs (e.g. CSS properties)</li>
-<li>The <code>.copy-btn</code> provides copy-to-clipboard functionality (requires minimal JS)</li>
+<li>The <button type="button" class="token-copy is-class" data-copy=".disclosure-content" aria-label="Copy .disclosure-content"><code>.disclosure-content</code></button> wrapper provides consistent padding and typography</li>
+<li>The <button type="button" class="token-copy is-class" data-copy=".disclosure-table" aria-label="Copy .disclosure-table"><code>.disclosure-table</code></button> pattern displays key-value pairs (e.g. CSS properties)</li>
+<li>The <button type="button" class="token-copy is-class" data-copy=".copy-btn" aria-label="Copy .copy-btn"><code>.copy-btn</code></button> provides copy-to-clipboard functionality (requires minimal JS)</li>
 </ul>
 <hr>
 <h2 id="basic-usage">Basic Usage</h2>
@@ -141,8 +137,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-azd54fwtq" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-azd54fwtq" class="language-html">&lt;details&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-ze5gctsl7" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-ze5gctsl7" class="language-html">&lt;details&gt;
   &lt;summary&gt;Show details&lt;/summary&gt;
   &lt;div class=&quot;disclosure-content&quot;&gt;
     &lt;p&gt;Content revealed when expanded.&lt;/p&gt;
@@ -153,7 +149,7 @@
     
 <hr>
 <h2 id="key-value-table-pattern">Key-Value Table Pattern</h2>
-<p>Use <code>.disclosure-table</code> with a <code>&lt;dl&gt;</code> to display property-value pairs:</p>
+<p>Use <button type="button" class="token-copy is-class" data-copy=".disclosure-table" aria-label="Copy .disclosure-table"><code>.disclosure-table</code></button> with a <code>&lt;dl&gt;</code> to display property-value pairs:</p>
 <div class="demo-preview is-joined">
   <details>
     <summary>Show details</summary>
@@ -172,8 +168,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-gm5ucgm4e" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-gm5ucgm4e" class="language-html">&lt;details&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-cdhsu93ma" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-cdhsu93ma" class="language-html">&lt;details&gt;
   &lt;summary&gt;Show details&lt;/summary&gt;
   &lt;div class=&quot;disclosure-content&quot;&gt;
     &lt;dl class=&quot;disclosure-table&quot;&gt;
@@ -189,10 +185,10 @@
 </code></pre>
       </div>
     
-<p>The <code>&lt;dt&gt;</code> labels are styled with <code>--text-faded</code> and the <code>&lt;dd&gt;</code> values with <code>--text-primary</code>. The <code>.token-tag</code> span shows the resolved value inline.</p>
+<p>The <code>&lt;dt&gt;</code> labels are styled with <button type="button" class="token-copy is-token" data-copy="var(--text-faded)" aria-label="Copy var(--text-faded)"><code>var(--text-faded)</code></button> and the <code>&lt;dd&gt;</code> values with <button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button>. The <button type="button" class="token-copy is-class" data-copy=".token-tag" aria-label="Copy .token-tag"><code>.token-tag</code></button> span shows the resolved value inline.</p>
 <hr>
 <h2 id="copy-button">Copy Button</h2>
-<p>Add a <code>.copy-btn</code> inside <code>.disclosure-content</code> with a <code>data-copy</code> attribute containing the text to copy. Use <code>&amp;#10;</code> for newlines in the <code>data-copy</code> value.</p>
+<p>Add a <button type="button" class="token-copy is-class" data-copy=".copy-btn" aria-label="Copy .copy-btn"><code>.copy-btn</code></button> inside <button type="button" class="token-copy is-class" data-copy=".disclosure-content" aria-label="Copy .disclosure-content"><code>.disclosure-content</code></button> with a <code>data-copy</code> attribute containing the text to copy. Use <code>&amp;#10;</code> for newlines in the <code>data-copy</code> value.</p>
 <div class="demo-preview is-joined">
   <details>
     <summary>Show details</summary>
@@ -214,8 +210,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-6xs74eyhh" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-6xs74eyhh" class="language-html">&lt;details&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-6zmmc305b" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-6zmmc305b" class="language-html">&lt;details&gt;
   &lt;summary&gt;Show details&lt;/summary&gt;
   &lt;div class=&quot;disclosure-content&quot;&gt;
     &lt;dl class=&quot;disclosure-table&quot;&gt;
@@ -237,8 +233,8 @@
 <p>The button requires a small JS handler:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-0tkmh9lag" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-0tkmh9lag" class="language-js">document.addEventListener(&#39;click&#39;, function (event) {
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-jie8anyir" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-jie8anyir" class="language-js">document.addEventListener(&#39;click&#39;, function (event) {
   var button = event.target.closest(&#39;.copy-btn&#39;);
   if (!button) return;
   var text = button.getAttribute(&#39;data-copy&#39;);
@@ -264,19 +260,19 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>details</code> (element)</td>
+<td><button type="button" class="token-copy is-class" data-copy=".details" aria-label="Copy .details"><code>.details</code></button> (element)</td>
 <td>Base container — border, border-radius</td>
 </tr>
 <tr>
-<td><code>summary</code> (element)</td>
+<td><button type="button" class="token-copy is-class" data-copy=".summary" aria-label="Copy .summary"><code>.summary</code></button> (element)</td>
 <td>Toggle trigger — left-side chevron via <code>::before</code>, pointer cursor</td>
 </tr>
 <tr>
-<td><code>.disclosure-content</code></td>
+<td><button type="button" class="token-copy is-class" data-copy=".disclosure-content" aria-label="Copy .disclosure-content"><code>.disclosure-content</code></button></td>
 <td>Content wrapper — padding, border-top separator, monospace font</td>
 </tr>
 <tr>
-<td><code>.disclosure-table</code></td>
+<td><button type="button" class="token-copy is-class" data-copy=".disclosure-table" aria-label="Copy .disclosure-table"><code>.disclosure-table</code></button></td>
 <td>Grid layout for key-value pairs (2-column: label + value)</td>
 </tr>
 <tr>
@@ -293,8 +289,8 @@
 <ul>
 <li>Native <code>&lt;details&gt;/&lt;summary&gt;</code> provides keyboard support (Enter/Space to toggle)</li>
 <li><code>summary</code> is focusable and announced as a disclosure widget by screen readers</li>
-<li><code>.copy-btn</code> should include an <code>aria-label</code> describing what will be copied</li>
-<li>Focus-visible outlines are styled using <code>--input-focus</code> token</li>
+<li><button type="button" class="token-copy is-class" data-copy=".copy-btn" aria-label="Copy .copy-btn"><code>.copy-btn</code></button> should include an <code>aria-label</code> describing what will be copied</li>
+<li>Focus-visible outlines are styled using <button type="button" class="token-copy is-token" data-copy="var(--input-focus)" aria-label="Copy var(--input-focus)"><code>var(--input-focus)</code></button> token</li>
 </ul>
 <hr>
 <h2 id="design-tokens-used">Design Tokens Used</h2>
@@ -306,63 +302,63 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--border-s</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-s)" aria-label="Copy var(--border-s)"><code>var(--border-s)</code></button></td>
 <td>Border width for container and content separator</td>
 </tr>
 <tr>
-<td><code>--border-faded</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-faded)" aria-label="Copy var(--border-faded)"><code>var(--border-faded)</code></button></td>
 <td>Border color</td>
 </tr>
 <tr>
-<td><code>--font-tertiary</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-tertiary)" aria-label="Copy var(--font-tertiary)"><code>var(--font-tertiary)</code></button></td>
 <td>Monospace font for summary and content</td>
 </tr>
 <tr>
-<td><code>--font-2xs</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-2xs)" aria-label="Copy var(--font-2xs)"><code>var(--font-2xs)</code></button></td>
 <td>Font size for summary and content text</td>
 </tr>
 <tr>
-<td><code>--text-faded</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-faded)" aria-label="Copy var(--text-faded)"><code>var(--text-faded)</code></button></td>
 <td>Summary text color, table labels</td>
 </tr>
 <tr>
-<td><code>--text-secondary</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-secondary)" aria-label="Copy var(--text-secondary)"><code>var(--text-secondary)</code></button></td>
 <td>Summary hover color, content text</td>
 </tr>
 <tr>
-<td><code>--text-primary</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button></td>
 <td>Table values</td>
 </tr>
 <tr>
-<td><code>--text-accent</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-accent)" aria-label="Copy var(--text-accent)"><code>var(--text-accent)</code></button></td>
 <td>Copy button text</td>
 </tr>
 <tr>
-<td><code>--text-link</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-link)" aria-label="Copy var(--text-link)"><code>var(--text-link)</code></button></td>
 <td>Copy button hover text</td>
 </tr>
 <tr>
-<td><code>--background-faded</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-faded)" aria-label="Copy var(--background-faded)"><code>var(--background-faded)</code></button></td>
 <td>Copy button background</td>
 </tr>
 <tr>
-<td><code>--background-secondary</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-secondary)" aria-label="Copy var(--background-secondary)"><code>var(--background-secondary)</code></button></td>
 <td>Copy button hover background</td>
 </tr>
 <tr>
-<td><code>--status-success</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--status-success)" aria-label="Copy var(--status-success)"><code>var(--status-success)</code></button></td>
 <td>Copied state color</td>
 </tr>
 <tr>
-<td><code>--input-focus</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--input-focus)" aria-label="Copy var(--input-focus)"><code>var(--input-focus)</code></button></td>
 <td>Focus ring color</td>
 </tr>
 <tr>
-<td><code>--space-xs</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-xs)" aria-label="Copy var(--space-xs)"><code>var(--space-xs)</code></button></td>
 <td>Border radius</td>
 </tr>
 <tr>
-<td><code>--space-s</code>, <code>--space-m</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-s)" aria-label="Copy var(--space-s)"><code>var(--space-s)</code></button>, <button type="button" class="token-copy is-token" data-copy="var(--space-m)" aria-label="Copy var(--space-m)"><code>var(--space-m)</code></button></td>
 <td>Padding values</td>
 </tr>
 </tbody></table></div>
@@ -398,11 +394,11 @@
         
         <h3 class="page-nav-title">Dialog</h3>
       </span>
-    </a><a href="divider.html" class="page-nav-link page-nav-next" rel="next">
+    </a><a href="sticky-bar.html" class="page-nav-link page-nav-next" rel="next">
       <span class="page-nav-text">
         <span class="page-nav-label">Next</span>
         
-        <h3 class="page-nav-title">Divider</h3>
+        <h3 class="page-nav-title">Sticky Bar</h3>
       </span>
       <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
     </a></div></nav>
@@ -414,7 +410,11 @@
                 <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
                 <div class="button-group">
                     <button class="button" data-feedback="yes" type="button"><div class="icn-svg" data-icon="thumbs-up" data-file="thumbs-up.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 3L14.5 8H23V12.5L19.5 21H2V8H7L14 1L16 3ZM9.29289 8.53426C9.10536 8.72179 9 8.97615 9 9.24136V17C9 18.1046 9.89543 19 11 19H16.8208C17.6312 19 18.3616 18.5109 18.6701 17.7615L21 12.1035V11C21 10.4477 20.5523 10 20 10H13.1555C12.4856 10 12.0052 9.35431 12.1976 8.71271L13.2907 5.06833C13.3504 4.86932 13.1046 4.72254 12.9577 4.86945L9.29289 8.53426ZM5 10C4.44772 10 4 10.4477 4 11V18C4 18.5523 4.44772 19 5 19H6C6.55228 19 7 18.5523 7 18V11C7 10.4477 6.55228 10 6 10H5Z" fill="currentColor"/></svg></div> Yes</button>
-                    <button class="button is-outline is-faded" data-feedback="no" type="button"><div class="icn-svg" data-icon="thumbs-down" data-file="thumbs-down.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21L9.5 16H1L1 11.5L4.5 3L22 3L22 16L17 16L10 23L8 21ZM14.7071 15.4657C14.8946 15.2782 15 15.0239 15 14.7586L15 7C15 5.89543 14.1046 5 13 5L7.17921 5C6.36877 5 5.63845 5.48908 5.32986 6.23847L3 11.8965L3 13C3 13.5523 3.44772 14 4 14L10.8445 14C11.5144 14 11.9948 14.6457 11.8024 15.2873L10.7093 18.9317C10.6496 19.1307 10.8954 19.2775 11.0423 19.1305L14.7071 15.4657ZM19 14C19.5523 14 20 13.5523 20 13V6C20 5.44772 19.5523 5 19 5H18C17.4477 5 17 5.44772 17 6V13C17 13.5523 17.4477 14 18 14H19Z" fill="currentColor"/></svg></div> No</button>
+                    <button class="button is-faded" data-feedback="no" type="button"><div class="icn-svg" data-icon="thumbs-down" data-file="thumbs-down.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21L9.5 16H1L1 11.5L4.5 3L22 3L22 16L17 16L10 23L8 21ZM14.7071 15.4657C14.8946 15.2782 15 15.0239 15 14.7586L15 7C15 5.89543 14.1046 5 13 5L7.17921 5C6.36877 5 5.63845 5.48908 5.32986 6.23847L3 11.8965L3 13C3 13.5523 3.44772 14 4 14L10.8445 14C11.5144 14 11.9948 14.6457 11.8024 15.2873L10.7093 18.9317C10.6496 19.1307 10.8954 19.2775 11.0423 19.1305L14.7071 15.4657ZM19 14C19.5523 14 20 13.5523 20 13V6C20 5.44772 19.5523 5 19 5H18C17.4477 5 17 5.44772 17 6V13C17 13.5523 17.4477 14 18 14H19Z" fill="currentColor"/></svg></div> No</button>
+                </div>
+                <div class="page-feedback-success" aria-live="polite">
+                    <div class="page-feedback-success-icon"><div class="icn-svg" data-icon="status-check" data-file="status-check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_14441_253)"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.0004 0.000396729C18.6276 0.000611138 24.0004 5.37311 24.0004 12.0004C24.0002 18.6275 18.6275 24.0002 12.0004 24.0004C5.37311 24.0004 0.000611143 18.6276 0.000396729 12.0004C0.000396729 5.37298 5.37298 0.000396729 12.0004 0.000396729ZM11.9643 13.7357C11.1833 14.5167 9.9172 14.5166 9.13614 13.7357L6.27481 10.8754L4.85001 12.3002L10.5502 18.0004L20.1498 8.39981L18.725 6.97501L11.9643 13.7357Z" fill="currentColor"/></g><defs><clipPath id="clip0_14441_253"><rect width="24" height="24" fill="white"/></clipPath></defs></svg></div></div>
+                    <h3 class="page-feedback-success-title">Thanks for your feedback</h3>
                 </div>
             </div>
         </section>

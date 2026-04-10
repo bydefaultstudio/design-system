@@ -65,6 +65,7 @@ Browse, copy, and download every icon in the brand icon set. For usage guideline
 | {{icon:open-full}} | Open Full | `open-full` |
 | {{icon:play}} | Play | `play` |
 | {{icon:play-2}} | Play 2 | `play-2` |
+| {{icon:pause}} | Pause | `pause` |
 | {{icon:switch}} | Switch | `switch` |
 | {{icon:bookmark}} | Bookmark | `bookmark` |
 | {{icon:reset}} | Reset | `reset` |

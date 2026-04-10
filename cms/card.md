@@ -4,7 +4,7 @@ subtitle: "Contained content surfaces"
 description: "How to use the card component for grouping related content in a contained surface."
 section: "Design System"
 subsection: "Content"
-order: 2
+order: 1
 status: "published"
 access: "team"
 client: "internal"
@@ -18,10 +18,10 @@ Cards are surface containers that group related content with a border and backgr
 
 | Token | Default (Light) | Default (Dark) | Purpose |
 |-------|-----------------|----------------|---------|
-| `--card-background` | `var(--background-primary)` | `var(--background-secondary)` | Surface colour |
-| `--card-border` | `var(--border-faded)` | `var(--border-faded)` | Border colour |
-| `--card-radius` | `var(--radius-m)` | — | Corner radius |
-| `--card-padding` | `var(--space-xl)` | — | Internal padding |
+| `var(--card-background)` | `var(--background-primary)` | `var(--background-secondary)` | Surface colour |
+| `var(--card-border)` | `var(--border-faded)` | `var(--border-faded)` | Border colour |
+| `var(--card-radius)` | `var(--radius-m)` | — | Corner radius |
+| `var(--card-padding)` | `var(--space-xl)` | — | Internal padding |
 
 ---
 

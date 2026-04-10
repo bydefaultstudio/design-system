@@ -18,10 +18,10 @@ Tooltips are CSS-only overlays that appear on hover or keyboard focus. They use 
 
 | Token | Default (Light) | Default (Dark) | Purpose |
 |-------|-----------------|----------------|---------|
-| `--tooltip-background` | `var(--warm-black)` | `var(--neutral-100)` | Bubble background |
-| `--tooltip-text` | `var(--off-white)` | `var(--warm-black)` | Bubble text colour |
-| `--tooltip-radius` | `var(--radius-s)` | — | Corner radius |
-| `--tooltip-font-size` | `var(--font-xs)` | — | Font size |
+| `var(--tooltip-background)` | `var(--warm-black)` | `var(--neutral-100)` | Bubble background |
+| `var(--tooltip-text)` | `var(--off-white)` | `var(--warm-black)` | Bubble text colour |
+| `var(--tooltip-radius)` | `var(--radius-s)` | — | Corner radius |
+| `var(--tooltip-font-size)` | `var(--font-xs)` | — | Font size |
 
 ---
 

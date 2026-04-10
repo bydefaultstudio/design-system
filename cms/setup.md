@@ -19,9 +19,9 @@ This template provides a solid foundation for new projects. Follow these steps t
 Update brand colors in `assets/css/design-system.css` under the **Brand Tokens** section at the top.
 
 **What to change:**
-- `--off-white`, `--warm-black`, etc. — Your palette colours
-- `--green`, `--red`, `--blue`, etc. — Your accent colours
-- `--font-primary`, `--font-secondary`, `--font-tertiary` — Your fonts
+- `var(--off-white)`, `var(--warm-black)`, etc. — Your palette colours
+- `var(--green)`, `var(--red)`, `var(--blue)`, etc. — Your accent colours
+- `var(--font-primary)`, `var(--font-secondary)`, `var(--font-tertiary)` — Your fonts
 
 **Example:**
 ```css
@@ -40,9 +40,9 @@ Update brand colors in `assets/css/design-system.css` under the **Brand Tokens**
 Update font families in `assets/css/design-system.css` under the **Brand Tokens** section.
 
 **What to change:**
-- `--font-primary` — Your primary font family
-- `--font-secondary` — Your secondary font family (if used)
-- `--font-tertiary` — Your monospace font (if used)
+- `var(--font-primary)` — Your primary font family
+- `var(--font-secondary)` — Your secondary font family (if used)
+- `var(--font-tertiary)` — Your monospace font (if used)
 
 **Also update:**
 - Google Fonts link in `cms/docs.config.js` (if using Google Fonts)
@@ -162,15 +162,15 @@ The template groups tokens by concern. Only uncomment what differs from the defa
 
 | Category | Tokens | Purpose |
 |----------|--------|---------|
-| **Typography** | `--font-primary`, `--font-secondary`, `--font-tertiary` | Client fonts (add `@font-face` too) |
-| **Neutral scale** | `--neutral-50` through `--neutral-990` | Generic grey ramp (uncommented by default) |
-| **Text** | `--text-primary`, `--text-secondary`, `--text-accent`, `--text-link`, `--text-inverted` | Core text colours |
-| **Backgrounds** | `--background-primary`, `--background-secondary` | Surface colours |
-| **Borders** | `--border-primary`, `--border-secondary` | Border colours |
-| **Buttons** | `--button-primary`, `--button-text` | Button colours |
-| **Accent** | `--status-info`, `--input-focus`, `--checkbox-selected` | Accent colour used across UI |
+| **Typography** | `var(--font-primary)`, `var(--font-secondary)`, `var(--font-tertiary)` | Client fonts (add `@font-face` too) |
+| **Neutral scale** | `var(--neutral-50)` through `var(--neutral-990)` | Generic grey ramp (uncommented by default) |
+| **Text** | `var(--text-primary)`, `var(--text-secondary)`, `var(--text-accent)`, `var(--text-link)`, `var(--text-inverted)` | Core text colours |
+| **Backgrounds** | `var(--background-primary)`, `var(--background-secondary)` | Surface colours |
+| **Borders** | `var(--border-primary)`, `var(--border-secondary)` | Border colours |
+| **Buttons** | `var(--button-primary)`, `var(--button-text)` | Button colours |
+| **Accent** | `var(--status-info)`, `var(--input-focus)`, `var(--checkbox-selected)` | Accent colour used across UI |
 
-Tokens like `--text-faded`, `--background-faded`, and `--border-faded` use alpha transparency and generally work across any theme without overriding. Callout tokens derive from status colours via `color-mix()` and update automatically.
+Tokens like `var(--text-faded)`, `var(--background-faded)`, and `var(--border-faded)` use alpha transparency and generally work across any theme without overriding. Callout tokens derive from status colours via `color-mix()` and update automatically.
 
 ### Dark mode
 

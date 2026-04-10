@@ -16,7 +16,7 @@ Borders use a **composable architecture** that separates positioning from stylin
 
 ## Structure
 
-Structural classes define **where** the border appears. By default, borders use `--border-s` width, solid style, and `--border-primary` color.
+Structural classes define **where** the border appears. By default, borders use `var(--border-s)` width, solid style, and `var(--border-primary)` color.
 
 <div class="demo-preview is-joined">
   <div class="block gap-xl">
@@ -63,7 +63,7 @@ Structural classes define **where** the border appears. By default, borders use 
 
 ## Width
 
-Width classes modify the border thickness. The default is `--border-s`.
+Width classes modify the border thickness. The default is `var(--border-s)`.
 
 <div class="demo-preview is-joined">
   <div class="block gap-xl">
@@ -88,9 +88,9 @@ Width classes modify the border thickness. The default is `--border-s`.
 
 | Class | Token | px Equivalent |
 | --- | --- | --- |
-| `.border-s` | `--border-s` | 1.5px |
-| `.border-m` | `--border-m` | 2px |
-| `.border-l` | `--border-l` | 4px |
+| `.border-s` | `var(--border-s)` | 1.5px |
+| `.border-m` | `var(--border-m)` | 2px |
+| `.border-l` | `var(--border-l)` | 4px |
 
 ---
 
@@ -154,9 +154,9 @@ Color classes modify the border color using semantic tokens.
 
 | Class | Token |
 | --- | --- |
-| `.border-primary` | `--border-primary` |
-| `.border-secondary` | `--border-secondary` |
-| `.border-faded` | `--border-faded` |
+| `.border-primary` | `var(--border-primary)` |
+| `.border-secondary` | `var(--border-secondary)` |
+| `.border-faded` | `var(--border-faded)` |
 
 ---
 
@@ -199,12 +199,12 @@ border-radius: var(--radius-m);
 
 | Token | Value |
 | --- | --- |
-| `--radius-xs` | 4px |
-| `--radius-s` | 6px |
-| `--radius-m` | 10px |
-| `--radius-l` | 16px |
-| `--radius-xl` | 24px |
-| `--radius-pill` | 999px |
+| `var(--radius-xs)` | 4px |
+| `var(--radius-s)` | 6px |
+| `var(--radius-m)` | 10px |
+| `var(--radius-l)` | 16px |
+| `var(--radius-xl)` | 24px |
+| `var(--radius-pill)` | 999px |
 
 ---
 

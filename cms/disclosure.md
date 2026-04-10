@@ -4,7 +4,7 @@ subtitle: "Reveal content on demand"
 description: "How to use the native details/summary disclosure pattern in the design system."
 section: "Design System"
 subsection: "Content"
-order: 5
+order: 7
 status: "published"
 access: "team"
 client: "internal"
@@ -85,7 +85,7 @@ Use `.disclosure-table` with a `<dl>` to display property-value pairs:
 </details>
 ```
 
-The `<dt>` labels are styled with `--text-faded` and the `<dd>` values with `--text-primary`. The `.token-tag` span shows the resolved value inline.
+The `<dt>` labels are styled with `var(--text-faded)` and the `<dd>` values with `var(--text-primary)`. The `.token-tag` span shows the resolved value inline.
 
 ---
 
@@ -155,8 +155,8 @@ document.addEventListener('click', function (event) {
 
 | Class | Purpose |
 |---|---|
-| `details` (element) | Base container — border, border-radius |
-| `summary` (element) | Toggle trigger — left-side chevron via `::before`, pointer cursor |
+| `.details` (element) | Base container — border, border-radius |
+| `.summary` (element) | Toggle trigger — left-side chevron via `::before`, pointer cursor |
 | `.disclosure-content` | Content wrapper — padding, border-top separator, monospace font |
 | `.disclosure-table` | Grid layout for key-value pairs (2-column: label + value) |
 | `.button.is-small.copy-btn` | Copy-to-clipboard button — uses design system button with copy state |
@@ -169,7 +169,7 @@ document.addEventListener('click', function (event) {
 - Native `<details>/<summary>` provides keyboard support (Enter/Space to toggle)
 - `summary` is focusable and announced as a disclosure widget by screen readers
 - `.copy-btn` should include an `aria-label` describing what will be copied
-- Focus-visible outlines are styled using `--input-focus` token
+- Focus-visible outlines are styled using `var(--input-focus)` token
 
 ---
 
@@ -177,21 +177,21 @@ document.addEventListener('click', function (event) {
 
 | Token | Usage |
 |---|---|
-| `--border-s` | Border width for container and content separator |
-| `--border-faded` | Border color |
-| `--font-tertiary` | Monospace font for summary and content |
-| `--font-2xs` | Font size for summary and content text |
-| `--text-faded` | Summary text color, table labels |
-| `--text-secondary` | Summary hover color, content text |
-| `--text-primary` | Table values |
-| `--text-accent` | Copy button text |
-| `--text-link` | Copy button hover text |
-| `--background-faded` | Copy button background |
-| `--background-secondary` | Copy button hover background |
-| `--status-success` | Copied state color |
-| `--input-focus` | Focus ring color |
-| `--space-xs` | Border radius |
-| `--space-s`, `--space-m` | Padding values |
+| `var(--border-s)` | Border width for container and content separator |
+| `var(--border-faded)` | Border color |
+| `var(--font-tertiary)` | Monospace font for summary and content |
+| `var(--font-2xs)` | Font size for summary and content text |
+| `var(--text-faded)` | Summary text color, table labels |
+| `var(--text-secondary)` | Summary hover color, content text |
+| `var(--text-primary)` | Table values |
+| `var(--text-accent)` | Copy button text |
+| `var(--text-link)` | Copy button hover text |
+| `var(--background-faded)` | Copy button background |
+| `var(--background-secondary)` | Copy button hover background |
+| `var(--status-success)` | Copied state color |
+| `var(--input-focus)` | Focus ring color |
+| `var(--space-xs)` | Border radius |
+| `var(--space-s)`, `var(--space-m)` | Padding values |
 
 ---
 

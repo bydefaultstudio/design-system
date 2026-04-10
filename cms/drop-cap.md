@@ -4,7 +4,7 @@ subtitle: "Decorative opening letters for editorial content"
 description: "How to use the drop cap style for decorative initial letters."
 section: "Design System"
 subsection: "Content"
-order: 7
+order: 14
 status: "published"
 access: "team"
 client: "internal"

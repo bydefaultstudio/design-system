@@ -25,7 +25,7 @@
   }
 
   document.addEventListener('click', function (e) {
-    var btn = e.target.closest('.copy-btn');
+    var btn = e.target.closest('.copy-btn, .token-copy');
     if (!btn) return;
 
     var text;

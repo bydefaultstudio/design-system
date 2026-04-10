@@ -20,21 +20,21 @@ All form styling is controlled by semantic tokens in `:root`:
 
 | Token | Default | Purpose |
 |---|---|---|
-| `--input-border` | `var(--border-secondary)` | Default border color |
-| `--input-background` | `var(--background-primary)` | Input background |
-| `--input-text` | `var(--text-plain)` | Input text color |
-| `--input-placeholder` | `var(--text-faded)` | Placeholder text color |
-| `--input-focus` | `var(--green)` | Focus border and ring color |
-| `--input-disabled-bg` | `var(--background-faded)` | Disabled background |
-| `--input-disabled-text` | `var(--text-faded)` | Disabled text color |
-| `--checkbox-background` | `var(--neutral-100)` | Checkbox unchecked background |
-| `--checkbox-selected` | `var(--text-primary)` | Checkbox/radio checked fill |
-| `--checkbox-border` | `var(--border-secondary)` | Checkbox/radio border color |
-| `--checkbox-checkmark` | `var(--off-white)` | Checkmark/dot color |
-| `--toggle-track` | `var(--neutral-200)` | Toggle track background |
-| `--toggle-knob` | `var(--neutral-500)` | Toggle knob (unchecked) |
-| `--toggle-selected` | `var(--text-primary)` | Toggle track (checked) |
-| `--toggle-knob-selected` | `var(--off-white)` | Toggle knob (checked) |
+| `var(--input-border)` | `var(--border-secondary)` | Default border color |
+| `var(--input-background)` | `var(--background-primary)` | Input background |
+| `var(--input-text)` | `var(--text-plain)` | Input text color |
+| `var(--input-placeholder)` | `var(--text-faded)` | Placeholder text color |
+| `var(--input-focus)` | `var(--green)` | Focus border and ring color |
+| `var(--input-disabled-bg)` | `var(--background-faded)` | Disabled background |
+| `var(--input-disabled-text)` | `var(--text-faded)` | Disabled text color |
+| `var(--checkbox-background)` | `var(--neutral-100)` | Checkbox unchecked background |
+| `var(--checkbox-selected)` | `var(--text-primary)` | Checkbox/radio checked fill |
+| `var(--checkbox-border)` | `var(--border-secondary)` | Checkbox/radio border color |
+| `var(--checkbox-checkmark)` | `var(--off-white)` | Checkmark/dot color |
+| `var(--toggle-track)` | `var(--neutral-200)` | Toggle track background |
+| `var(--toggle-knob)` | `var(--neutral-500)` | Toggle knob (unchecked) |
+| `var(--toggle-selected)` | `var(--text-primary)` | Toggle track (checked) |
+| `var(--toggle-knob-selected)` | `var(--off-white)` | Toggle knob (checked) |
 
 ---
 
@@ -82,14 +82,14 @@ All standard text input types are styled globally:
 <input type="tel" placeholder="Phone">
 ```
 
-**Properties:** full width, `font-size: var(--font-m)` (matches body text), `padding: var(--space-m) var(--space-l)`, border from `--input-border`, smooth focus transition.
+**Properties:** full width, `font-size: var(--font-m)` (matches body text), `padding: var(--space-m) var(--space-l)`, border from `var(--input-border)`, smooth focus transition.
 
 ---
 
 ## Focus State
 
 All inputs share a consistent focus style:
-- Border color changes to `--input-focus`
+- Border color changes to `var(--input-focus)`
 - A subtle box-shadow ring appears (2px, 75% transparent)
 - No outline (replaced by box-shadow for consistency)
 
@@ -175,7 +175,7 @@ Add the `disabled` attribute to any input, textarea, or select:
 <input type="text" value="Cannot edit" disabled>
 ```
 
-**Properties:** `--input-disabled-bg` background, `--input-disabled-text` color, `cursor: not-allowed`.
+**Properties:** `var(--input-disabled-bg)` background, `var(--input-disabled-text)` color, `cursor: not-allowed`.
 
 ---
 
@@ -207,7 +207,7 @@ Checkboxes and radios use `appearance: none` with custom styling. Wrap each in `
 </div>
 ```
 
-**Properties:** `24px` size (`--space-xl`), `--checkbox-background` fill, `--border-m` border with `--radius-xs` corners. Checked state uses `--checkbox-selected` fill with a white checkmark SVG.
+**Properties:** `24px` size (`var(--space-xl)`), `var(--checkbox-background)` fill, `var(--border-m)` border with `var(--radius-xs)` corners. Checked state uses `var(--checkbox-selected)` fill with a white checkmark SVG.
 
 ### Radio
 
@@ -291,7 +291,7 @@ Add `.is-label-right` to place the label after the toggle.
 </div>
 ```
 
-**Properties:** 44px × 24px pill-shaped track, 18px circular knob. Unchecked: `--toggle-track` background with `--toggle-knob` knob. Checked: `--toggle-selected` background, knob slides right and becomes `--toggle-knob-selected`.
+**Properties:** 44px × 24px pill-shaped track, 18px circular knob. Unchecked: `var(--toggle-track)` background with `var(--toggle-knob)` knob. Checked: `var(--toggle-selected)` background, knob slides right and becomes `var(--toggle-knob-selected)`.
 
 ---
 

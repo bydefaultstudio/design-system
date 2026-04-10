@@ -19,7 +19,6 @@
   var FORM_TYPE = 'feedback';
   var SUBTITLE_YES = 'Great to hear! Any additional feedback?';
   var SUBTITLE_NO = 'Sorry about that. What could be improved?';
-  var SUCCESS_MESSAGE = 'Thanks for your feedback!';
 
   //
   //------- Utilities -------//
@@ -74,7 +73,6 @@
     var closeBtn = dialog.querySelector('.feedback-modal-close');
     var textarea = dialog.querySelector('.feedback-textarea');
     var submitBtn = form.querySelector('button[type="submit"]');
-    var prompt = section.querySelector('.page-feedback-prompt');
 
     var currentSentiment = '';
 
@@ -86,7 +84,6 @@
     }
 
     function showSuccess() {
-      prompt.textContent = SUCCESS_MESSAGE;
       section.classList.add('is-submitted');
     }
 

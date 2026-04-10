@@ -4,7 +4,7 @@ subtitle: "Structured data in rows and columns"
 description: "Guide to using the table component with base styles and modifier classes."
 section: "Design System"
 subsection: "Content"
-order: 12
+order: 10
 status: "published"
 access: "team"
 client: "internal"

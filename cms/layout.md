@@ -133,9 +133,9 @@ Containers constrain width and centre content in the viewport.
 
 | Class              | Use                    |
 | ------------------ | ---------------------- |
-| `container-small`  | Narrow layouts         |
-| `container-medium` | Default readable width |
-| `container-large`  | Wider layouts          |
+| `.container-small` | Narrow layouts |
+| `.container-medium` | Default readable width |
+| `.container-large` | Wider layouts |
 
 ---
 
@@ -151,10 +151,10 @@ Max-width utilities apply **width limits only**.
 
 | Class              | Use               |
 | ------------------ | ----------------- |
-| `max-width-small`  | Narrow constraint |
-| `max-width-medium` | Default readable  |
-| `max-width-large`  | Wide constraint   |
-| `max-width-full`   | No constraint     |
+| `.max-width-small` | Narrow constraint |
+| `.max-width-medium` | Default readable |
+| `.max-width-large` | Wide constraint |
+| `.max-width-full` | No constraint |
 
 **Rule of thumb**
 
@@ -221,11 +221,11 @@ Blocks group **related content** and manage internal spacing.
 
 | Class    | Effect      |
 | -------- | ----------- |
-| `gap-xs` | Very tight  |
-| `gap-s`  | Small       |
-| `gap-m`  | Default     |
-| `gap-l`  | Large       |
-| `gap-xl` | Extra large |
+| `.gap-xs` | Very tight |
+| `.gap-s` | Small |
+| `.gap-m` | Default |
+| `.gap-l` | Large |
+| `.gap-xl` | Extra large |
 
 ```html
 <div class="block gap-l">
@@ -242,11 +242,11 @@ Blocks can change layout or alignment.
 
 | Class          | Effect              |
 | -------------- | ------------------- |
-| `row`          | Horizontal layout   |
-| `row-reverse`  | Reversed horizontal |
-| `align-start`  | Align items start   |
-| `align-center` | Centre items        |
-| `align-end`    | Align items end     |
+| `.row` | Horizontal layout |
+| `.row-reverse` | Reversed horizontal |
+| `.align-start` | Align items start |
+| `.align-center` | Centre items |
+| `.align-end` | Align items end |
 
 ```html
 <div class="block row gap-m align-center">
@@ -299,8 +299,8 @@ They are not spacing utilities.
 
 | Class       | Columns       |
 | ----------- | ------------- |
-| `cols-3`    | Three columns |
-| `cols-4`    | Four columns  |
+| `.cols-3` | Three columns |
+| `.cols-4` | Four columns |
 
 ```html
 <div class="grid cols-3">
@@ -314,7 +314,7 @@ They are not spacing utilities.
 
 | Class         | Effect                |
 | ------------- | --------------------- |
-| `fit-content` | Item sizes to content |
+| `.fit-content` | Item sizes to content |
 
 ```html
 <div class="grid">

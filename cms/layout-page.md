@@ -4,7 +4,7 @@ subtitle: "How content is structured, spaced, and contained"
 description: "How to use blocks, grids, containers, max-width utilities, and section spacing to compose page layouts."
 section: "Design System"
 subsection: ""
-order: 3
+order: 9
 status: "published"
 access: "team"
 client: "internal"
@@ -18,7 +18,7 @@ For the full page hierarchy (`body → page-wrapper → page-content → section
 
 ## Blocks
 
-A `.block` is a vertical flex stack with a default gap of `--space-m` between children. It is the fundamental building block for content layout.
+A `.block` is a vertical flex stack with a default gap of `var(--space-m)` between children. It is the fundamental building block for content layout.
 
 ### Default gap
 
@@ -82,14 +82,14 @@ Add `.gap-*` to control spacing between children. These work on both `.block` an
 
 | Class | Gap | Token |
 |-------|-----|-------|
-| `.gap-none` | 0 | `--space-none` |
-| `.gap-xs` | 4px | `--space-xs` |
-| `.gap-s` | 8px | `--space-s` |
-| `.gap-m` | 12px | `--space-m` (default) |
-| `.gap-l` | 16px | `--space-l` |
-| `.gap-xl` | 24px | `--space-xl` |
-| `.gap-2xl` | 32px | `--space-2xl` |
-| `.gap-3xl` | 48px | `--space-3xl` |
+| `.gap-none` | 0 | `var(--space-none)` |
+| `.gap-xs` | 4px | `var(--space-xs)` |
+| `.gap-s` | 8px | `var(--space-s)` |
+| `.gap-m` | 12px | `var(--space-m)` (default) |
+| `.gap-l` | 16px | `var(--space-l)` |
+| `.gap-xl` | 24px | `var(--space-xl)` |
+| `.gap-2xl` | 32px | `var(--space-2xl)` |
+| `.gap-3xl` | 48px | `var(--space-3xl)` |
 
 ### Horizontal row
 
@@ -295,12 +295,12 @@ General-purpose padding utilities for spacing inside elements.
 
 | Class | Value | Token |
 |-------|-------|-------|
-| `.padding-s` | 8px | `--space-s` |
-| `.padding-m` | 12px | `--space-m` |
-| `.padding-l` | 16px | `--space-l` |
-| `.padding-xl` | 24px | `--space-xl` |
-| `.padding-2xl` | 32px | `--space-2xl` |
-| `.padding-3xl` | 48px | `--space-3xl` |
+| `.padding-s` | 8px | `var(--space-s)` |
+| `.padding-m` | 12px | `var(--space-m)` |
+| `.padding-l` | 16px | `var(--space-l)` |
+| `.padding-xl` | 24px | `var(--space-xl)` |
+| `.padding-2xl` | 32px | `var(--space-2xl)` |
+| `.padding-3xl` | 48px | `var(--space-3xl)` |
 
 ---
 

@@ -50,7 +50,7 @@ Place anchor points on whole pixel values to avoid long decimals like `300.78000
 
 ### Round decimals
 
-SVG exports often contain excessive decimal precision. Rounding `20.500001` to `20.5` (or even `21`) usually produces no visible difference. The SVG Cleaner's `--precision` flag automates this.
+SVG exports often contain excessive decimal precision. Rounding `20.500001` to `20.5` (or even `21`) usually produces no visible difference. The SVG Cleaner's `var(--precision)` flag automates this.
 
 Start with 2 decimal places and compare visually. For simple shapes, 1 or even 0 decimal places may be sufficient.
 
@@ -91,11 +91,11 @@ Outlining a stroke roughly doubles the anchor count. If your design can work wit
 
 ### Strip metadata and comments
 
-Vector editors add export comments, `data-name` attributes, and tool-specific class names (e.g. Illustrator's `.cls-1`). These serve no purpose in the browser. The SVG Cleaner strips comments with `--strip-comments` and metadata with `--strip-metadata`.
+Vector editors add export comments, `data-name` attributes, and tool-specific class names (e.g. Illustrator's `.cls-1`). These serve no purpose in the browser. The SVG Cleaner strips comments with `var(--strip-comments)` and metadata with `var(--strip-metadata)`.
 
 ### Remove unnecessary whitespace
 
-Spaces, newlines, and commas in path data are often optional. The SVG Cleaner's `--minify` flag handles this:
+Spaces, newlines, and commas in path data are often optional. The SVG Cleaner's `var(--minify)` flag handles this:
 
 | Before | After |
 |---|---|
@@ -131,12 +131,12 @@ The [SVG Cleaner](../tools/svg-cleaner.html) automates most of these optimisatio
 
 | Flag | What it does |
 |---|---|
-| `--strip-comments` | Removes XML/HTML comments |
-| `--strip-metadata` | Removes `data-*` attributes and editor class names |
+| `var(--strip-comments)` | Removes XML/HTML comments |
+| `var(--strip-metadata)` | Removes `data-*` attributes and editor class names |
 | `--precision N` | Rounds decimal values to N places |
-| `--minify` | Collapses whitespace and optimises path data |
-| `--current-color` | Sets all path fills to `currentColor` |
-| `--size` | Replaces width/height with `100%` |
+| `var(--minify)` | Collapses whitespace and optimises path data |
+| `var(--current-color)` | Sets all path fills to `currentColor` |
+| `var(--size)` | Replaces width/height with `100%` |
 
 ---
 

@@ -4,7 +4,7 @@ subtitle: "Dismissible labels and filter chips"
 description: "How to use the tag component for labels, filters, and categorisation."
 section: "Design System"
 subsection: "Feedback"
-order: 5
+order: 3
 status: "published"
 access: "team"
 client: "internal"
@@ -18,12 +18,12 @@ Tags are small interactive labels used for categorisation, filtering, and metada
 
 | Token | Default | Purpose |
 |-------|---------|---------|
-| `--tag-font-size` | `var(--font-xs)` | Font size |
-| `--tag-padding-y` | `var(--space-2xs)` | Vertical padding |
-| `--tag-padding-x` | `var(--space-s)` | Horizontal padding |
-| `--tag-radius` | `var(--radius-s)` | Corner radius |
-| `--tag-background` | `var(--background-darker)` | Default background |
-| `--tag-border` | `var(--border-faded)` | Border colour |
+| `var(--tag-font-size)` | `var(--font-xs)` | Font size |
+| `var(--tag-padding-y)` | `var(--space-2xs)` | Vertical padding |
+| `var(--tag-padding-x)` | `var(--space-s)` | Horizontal padding |
+| `var(--tag-radius)` | `var(--radius-s)` | Corner radius |
+| `var(--tag-background)` | `var(--background-darker)` | Default background |
+| `var(--tag-border)` | `var(--border-faded)` | Border colour |
 
 ---
 

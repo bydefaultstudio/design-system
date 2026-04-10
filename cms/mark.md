@@ -4,7 +4,7 @@ subtitle: "Highlighted text, abbreviations, and media captions"
 description: "How to use mark, abbr, and figure elements in the design system."
 section: "Design System"
 subsection: "Content"
-order: 10
+order: 12
 status: "published"
 access: "team"
 client: "internal"

@@ -67,16 +67,16 @@ Locks off: **Icon**, **Logo**, **currentColor**, **Size 100%**
 
 | Flag | Effect |
 |------|--------|
-| `--current-color` | Sets all `<path>` fill attributes to `currentColor` |
-| `--size` | Removes width/height, adds `width="100%" height="100%"` |
-| `--standalone` | Re-adds `xmlns` and XML declaration for standalone `.svg` files |
-| `--strip-comments` | Removes XML/HTML comments |
-| `--strip-metadata` | Removes `data-*` attributes and editor class names |
+| `var(--current-color)` | Sets all `<path>` fill attributes to `currentColor` |
+| `var(--size)` | Removes width/height, adds `width="100%" height="100%"` |
+| `var(--standalone)` | Re-adds `xmlns` and XML declaration for standalone `.svg` files |
+| `var(--strip-comments)` | Removes XML/HTML comments |
+| `var(--strip-metadata)` | Removes `data-*` attributes and editor class names |
 | `--precision N` | Rounds decimal values to N decimal places |
-| `--minify` | Collapses whitespace and optimises path data |
-| `--logo` | Wraps in `<div class="svg-logo-NAME">` with aspect-ratio |
+| `var(--minify)` | Collapses whitespace and optimises path data |
+| `var(--logo)` | Wraps in `<div class="svg-logo-NAME">` with aspect-ratio |
 | `--logo-name NAME` | Sets the logo class name |
-| `--icon` | Wraps in `<div class="icn-svg">` |
+| `var(--icon)` | Wraps in `<div class="icn-svg">` |
 | `--icon-name NAME` | Sets the `data-icon` attribute |
 
 ---

@@ -22,7 +22,7 @@ This document defines the rules and conventions for building components in the B
 - **Utility overrides:** use `!important` only on utility classes (e.g. `.gap-m`)
 - **JS hooks:** use `data-*` attributes, never CSS class names
 
-**Legacy note:** The button component uses `.is-outline`, `.is-faded`, `.is-small`, `.is-xsmall`, `.is-icon` as modifiers. These predate the `--modifier` convention and are kept for backward compatibility. New components must use `--modifier` syntax.
+**Legacy note:** The button component uses `.is-outline`, `.is-faded`, `.is-small`, `.is-xsmall`, `.is-icon` as modifiers. These predate the `var(--modifier)` convention and are kept for backward compatibility. New components must use `var(--modifier)` syntax.
 
 ---
 
@@ -102,7 +102,7 @@ Components must **not** contain dark-mode-specific CSS. They rely entirely on se
 The only exception is when a component uses brand-palette tokens directly (avoid this). If unavoidable, add the override to both the `[data-theme="dark"]` block and the `@media` fallback block.
 
 Current exceptions:
-- `mark` element — uses `--yellow-light` via `--mark-background` token, requires dark mode override
+- `mark` element — uses `var(--yellow-light)` via `var(--mark-background)` token, requires dark mode override
 - Scrollbar — uses neutral scale tokens directly, requires dark mode override
 
 ---

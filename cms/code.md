@@ -4,13 +4,13 @@ subtitle: "Inline code, code blocks, and keyboard shortcuts"
 description: "How to use code, pre, and kbd elements in the design system."
 section: "Design System"
 subsection: "Content"
-order: 3
+order: 11
 status: "published"
 access: "team"
 client: "internal"
 ---
 
-The design system styles three code-related elements: inline `code`, block-level `pre`, and keyboard shortcuts `kbd`. All use the mono font (`--font-tertiary`).
+The design system styles three code-related elements: inline `code`, block-level `pre`, and keyboard shortcuts `kbd`. All use the mono font (`var(--font-tertiary)`).
 
 ---
 
