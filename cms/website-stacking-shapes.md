@@ -3,6 +3,7 @@ title: "Stacking Shapes"
 subtitle: "Interactive physics-driven experience with draggable brand shapes and Matter.js"
 description: "Complete guide to the Stacking Shapes component featuring interactive physics simulation, draggable shapes, logo integration, and sound effects for engaging user interactions."
 section: "Website"
+layer: "app"
 subsection: "Pages"
 order: 4
 ---

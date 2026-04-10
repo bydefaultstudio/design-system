@@ -3,6 +3,7 @@ title: "Divider"
 subtitle: "Visual breaks between content sections"
 description: "How to use the divider component for visual separation between content sections."
 section: "Design System"
+layer: "core"
 subsection: "Content"
 order: 9
 status: "published"

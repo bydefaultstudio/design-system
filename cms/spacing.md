@@ -3,6 +3,7 @@ title: "Spacing"
 subtitle: "The spacing scale that governs every gap and margin"
 description: "Complete reference for spacing tokens including units, space tokens, section spacing, gaps, and padding utilities."
 section: "Design System"
+layer: "foundation"
 subsection: ""
 order: 5
 status: "published"

@@ -3,6 +3,7 @@ title: "Setup"
 subtitle: "Getting started with this template"
 description: "Guide to customizing this project template for your new project."
 section: "Docs"
+layer: "app"
 subsection: "Dev"
 order: 1
 status: "published"
@@ -53,8 +54,7 @@ Update font families in `assets/css/design-system.css` under the **Brand Tokens*
 
 ## Logo
 
-Replace the logo image:
-- `assets/images/logos/logo.svg` - Documentation site logo
+Replace the logo files in `assets/images/logos/bydefault/`. There are six variants — three marks (primary, primary-centered, avatar) each with a black and a white version. See [Logo](../brand/logo.html) for the full file reference.
 
 ---
 
@@ -88,7 +88,7 @@ The documentation is ready to use, but you may want to:
 
 - [ ] Update brand colors in `assets/css/design-system.css` (Brand Tokens section)
 - [ ] Update font families in `assets/css/design-system.css` (Brand Tokens section)
-- [ ] Replace logo in `assets/images/logos/logo.svg`
+- [ ] Replace logos in `assets/images/logos/bydefault/`
 - [ ] Fill in `PROJECT_BRIEF.md`
 - [ ] Update Google Fonts links (if applicable)
 - [ ] Set up client theme (if applicable) — see [Client Theming](#client-theming)

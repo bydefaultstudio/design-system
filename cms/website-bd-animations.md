@@ -3,6 +3,7 @@ title: "bd-animations"
 subtitle: "In-house animation system built on GSAP and ScrollTrigger"
 description: "Documentation for bd-animations — the ByDefault reusable animation library for any project. Covers data attributes, animation types, text splitting, and configuration."
 section: "Website"
+layer: "app"
 subsection: "Interactions"
 order: 1
 ---

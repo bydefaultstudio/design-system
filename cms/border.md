@@ -3,6 +3,7 @@ title: "Border"
 subtitle: "Composable borders — position, width, style, colour"
 description: "Guide to using the composable border architecture for flexible border styling."
 section: "Design System"
+layer: "foundation"
 subsection: ""
 order: 6
 status: "published"

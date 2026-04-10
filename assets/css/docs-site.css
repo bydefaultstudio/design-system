@@ -1,0 +1,507 @@
+/* =====================================================================
+ * DOCS-SITE COMPONENTS
+ * =====================================================================
+ *
+ * Components and patterns that only exist to power the BrandOS docs
+ * site itself. None of these ship with the design system to other
+ * products — they live here so design-system.css stays portable.
+ *
+ * If you find yourself adding something to this file, ask: "would this
+ * be useful in a fresh React app or marketing site?" If yes, it
+ * probably belongs in design-system.css instead.
+ *
+ * Loaded after style.css and design-system.css. See CLAUDE.md §17
+ * (Layer Discipline) for the rules that govern this split.
+ *
+ * SECTIONS:
+ *   1. Sticky Bar         — fixed sub-header used by docs nav
+ *   2. Copy Button        — affordance for copying tokens / snippets
+ *   3. Token Copy         — inline copy chips inside generated token tables
+ *   4. Book Cover         — landing-page section "spine" cards
+ *   5. Asset Card         — brand-asset showcase pattern
+ *   6. Don't Card         — "do/don't" rule cards used in brand docs
+ * ===================================================================== */
+
+
+/* ------ 1. STICKY BAR ------ */
+
+.sticky-bar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--background-primary);
+}
+
+.sticky-bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-l);
+  border-bottom: var(--border-s) solid var(--border-faded);
+}
+
+/* -- Scrollable content area -- */
+.sticky-bar-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-l);
+  min-width: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  height: 100%;
+}
+
+.sticky-bar-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* -- Sticky bar breadcrumbs -- */
+.sticky-bar-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  font-size: var(--font-s);
+  color: var(--text-secondary);
+  min-width: 0;
+}
+
+.sticky-bar-breadcrumbs a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.sticky-bar-breadcrumbs a:hover {
+  color: var(--text-primary);
+}
+
+.sticky-bar-breadcrumbs > span:last-child {
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* -- Sticky bar actions -- */
+.sticky-bar-actions {
+  display: flex;
+  align-items: stretch;
+  align-self: stretch;
+  flex-shrink: 0;
+}
+
+/* -- Dropdown inside sticky bar -- */
+.sticky-bar .dropdown {
+  align-self: stretch;
+}
+
+.sticky-bar .dropdown-trigger {
+  padding: 0 var(--space-s);
+}
+
+/* -- Sticky bar child elements -- */
+/* Children are scoped so they stretch to fill bar height automatically */
+
+/* Tabs inside sticky bar */
+.sticky-bar .tabs {
+  border-bottom: none;
+  align-self: stretch;
+  flex-shrink: 0;
+}
+
+.sticky-bar .tab {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-l);
+  font-size: var(--font-s);
+}
+
+.sticky-bar .tab.is-active::after {
+  bottom: 0;
+}
+
+/* Breadcrumbs inside sticky bar */
+.sticky-bar .breadcrumb {
+  align-self: center;
+  font-size: var(--font-s);
+}
+
+/* Toggles inside sticky bar */
+.sticky-bar .form-toggle {
+  align-self: center;
+}
+
+/* Segmented control inside sticky bar */
+.sticky-bar .segmented-control {
+  align-self: center;
+}
+
+
+/* ------ 2. COPY BUTTON ------ */
+
+.copy-btn {
+  position: relative;
+}
+
+/* -- State: default -- */
+.copy-btn .copy-btn-default,
+.color-copy-btn .copy-btn-default { display: inline-flex; align-items: center; gap: var(--space-s); }
+.copy-btn .copy-btn-copied,
+.color-copy-btn .copy-btn-copied  { display: none; }
+
+/* -- State: copied -- */
+.copy-btn.is-copied .copy-btn-default,
+.color-copy-btn.is-copied .copy-btn-default { display: none; }
+.copy-btn.is-copied .copy-btn-copied,
+.color-copy-btn.is-copied .copy-btn-copied  { display: inline-flex; align-items: center; gap: var(--space-s); }
+
+.copy-btn.is-copied {
+  color: var(--status-success);
+  border-color: var(--status-success);
+  background-color: color-mix(in srgb, var(--status-success), var(--alpha-10));
+}
+
+/* -- Variant: icon only -- */
+.copy-btn.is-icon-only {
+  padding: var(--space-s);
+}
+
+/* -- Variant: ghost (no background, no border) -- */
+.copy-btn.is-ghost {
+  background: none;
+  border: none;
+  padding: var(--space-xs);
+  color: var(--text-primary);
+
+}
+
+.copy-btn.is-ghost:hover {
+  color: var(--text-faded);
+}
+
+.copy-btn.is-ghost.is-copied {
+  background: none;
+  border: none;
+  color: var(--status-success);
+}
+
+/* -- Tooltip: force visible on copied state -- */
+.copy-btn.is-copied[data-tooltip]::before {
+  opacity: 1;
+}
+
+/* -- Icon table: auto-generated Copy + Download columns -- */
+.icon-table td:first-child {
+  text-align: center;
+}
+
+.icon-table td:first-child .icn-svg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+
+/* ------ 3. TOKEN COPY ------
+ * Inline copy button used in token tables (generated by cms/generator/generate-docs.js).
+ * Wraps a <code> chip so the cell stays readable but every value, variable, and hex
+ * becomes one click away from the clipboard. Adds an inline swatch for hex values.
+ */
+
+.token-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.token-copy code {
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.token-copy:hover code {
+  color: var(--text-primary);
+  background: color-mix(in srgb, var(--text-primary), var(--alpha-15));
+}
+
+/* Swatch dot for hex values */
+.token-swatch {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: var(--border-s) solid var(--border-faded);
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.token-copy.is-copied code {
+  color: var(--status-success);
+}
+
+/* Copy affordance icon — inline visual cue that the chip is clickable.
+   Swaps to a check icon while .is-copied, then reverts. */
+.token-copy::after {
+  content: "";
+  display: inline-block;
+  width: 0.85em;
+  height: 0.85em;
+  flex-shrink: 0;
+  background-color: currentColor;
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z'/%3E%3C/svg%3E");
+  mask-size: contain;
+  -webkit-mask-size: contain;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  opacity: 0.4;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+
+.token-copy:hover::after {
+  opacity: 0.8;
+}
+
+.token-copy.is-copied::after {
+  opacity: 1;
+  color: var(--status-success);
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z'/%3E%3C/svg%3E");
+}
+
+
+/* ------ 4. BOOK COVER ------
+ * .book-cover is the card variant used on overview /
+ * landing index pages — each card is the "cover" of a
+ * section the user can open. It pairs with .grid.cols-2
+ * for a generous, scannable index layout.
+ *
+ *   <a href="brand/" class="book-cover">
+ *     <header class="book-cover-header">
+ *       <div class="icn-svg" data-icon="full-screen">…</div>
+ *     </header>
+ *     <div class="book-cover-content">
+ *       <h3 class="card-title">Brand Book</h3>
+ *       <p class="card-description">Brand identity, values…</p>
+ *     </div>
+ *     <footer class="book-cover-footer">
+ *       <span class="book-cover-author">Studio</span>
+ *       <div class="icn-svg" data-icon="add">…</div>
+ *     </footer>
+ *   </a>
+ *
+ * Self-contained: no .card needed alongside it. Inherits
+ * background, border, and hover states from the card token
+ * scale so it stays visually consistent. Header and footer
+ * are full-width strips with their own borders; the centred
+ * content sits between them and absorbs the remaining space.
+ */
+
+.book-cover {
+  display: flex;
+  flex-direction: column;
+  min-height: 250px;
+  background: var(--card-background);
+  border: var(--border-s) solid var(--card-border);
+  color: inherit;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border 0.3s, background-color 0.3s, box-shadow 0.15s;
+}
+
+.book-cover-header,
+.book-cover-footer {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: var(--space-m) var(--space-l);
+}
+
+.book-cover-header {
+  justify-content: flex-end;
+}
+
+.book-cover-footer {
+  justify-content: space-between;
+}
+
+.book-cover-author {
+  font-size: var(--font-s);
+  color: var(--text-secondary);
+}
+
+.book-cover-author em {
+  font-style: italic;
+}
+
+.book-cover-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: var(--space-2xl);
+}
+
+.book-cover-title {
+  margin-top: 0;
+  margin-bottom: var(--space-s);
+  font-size: var(--font-5xl);
+  line-height: var(--line-height-m);
+}
+
+.book-cover-description {
+  color: var(--text-secondary);
+  font-size: var(--text-body);
+  margin-bottom: 0;
+  text-wrap: pretty;
+}
+
+.book-cover:hover {
+  color: inherit;
+  background: var(--background-faded);
+  box-shadow: 0 4px 12px var(--black-alpha-10);
+}
+
+.book-cover:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus), var(--alpha-75));
+}
+
+
+/* ------ 5. ASSET CARD ------
+ * Generic showcase card for presenting a single brand asset with context.
+ * The wrapper, preview frame, and footer stay consistent — only the
+ * content inside the preview slot changes:
+ *
+ *   logo SVG • font specimen • brand icon • brand image • token
+ *
+ * Three composable parts:
+ *
+ *   .asset-card
+ *     .asset-card-preview       — centred visual area (auto min-height)
+ *     .asset-card-footer        — title + actions row at the bottom
+ *
+ * Light/dark variants set the preview background — useful for any visual
+ * asset that needs to be tested against both surfaces:
+ *   .asset-card-preview--light  — uses --background-faded
+ *   .asset-card-preview--dark   — uses --neutral-950 + light text
+ *
+ * Edges stay square — no border-radius (project rule).
+ *
+ * See cms/asset-card.md for usage.
+ */
+
+.asset-card {
+  display: flex;
+  flex-direction: column;
+  border: var(--border-s) solid var(--border-faded);
+  background: var(--background-plain);
+}
+
+.asset-card-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-height: 220px;
+  padding: var(--space-3xl);
+}
+
+.asset-card-preview--light {
+  background-color: var(--background-faded);
+  color: var(--text-primary);
+}
+
+.asset-card-preview--dark {
+  background-color: var(--neutral-950);
+  color: var(--white);
+}
+
+.asset-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+  padding: var(--space-m) var(--space-l);
+  border-top: var(--border-s) solid var(--border-faded);
+  background: var(--background-plain);
+}
+
+.asset-card-title {
+  margin: 0;
+  font-family: var(--font-secondary);
+  font-size: var(--font-l);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.asset-card-actions {
+  display: flex;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}
+
+/* Compact icon-only buttons inside the actions slot */
+.asset-card-actions .button {
+  padding: var(--space-s);
+}
+
+/* Logo preview — constrains the rendered logo width inside an asset card.
+ * Apply alongside .asset-card-preview when the slot contains a logo image.
+ * Change the max-width here to resize every logo card at once. */
+.asset-card-preview.logo-preview img {
+  max-width: 200px;
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+}
+
+
+/* ------ 6. DON'T CARD ------
+ * .dont-card extends .card to communicate a "don't" rule —
+ * used in brand and design-system docs to flag prohibited
+ * patterns.
+ *
+ *   <div class="card dont-card">
+ *     <div class="icn-svg dont-card-icon">{{icon:close-circled}}</div>
+ *     <h4 class="card-title">Rule title</h4>
+ *     <p class="card-description">Why it's a don't.</p>
+ *   </div>
+ *
+ * Pair with .grid.cols-3.gap-m for a rules grid.
+ */
+
+.dont-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.dont-card-icon {
+  color: var(--status-danger);
+}
+
+.dont-card-icon .icn-svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.dont-card .card-title {
+  font-size: var(--font-l);
+  margin-bottom: 0;
+}
+
+.dont-card .card-description {
+  font-size: var(--font-s);
+}

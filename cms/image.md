@@ -3,6 +3,7 @@ title: "Image"
 subtitle: "Aspect ratios and responsive image patterns"
 description: "Guide to using the image component with base styles and aspect-ratio combo classes."
 section: "Design System"
+layer: "core"
 subsection: "Content"
 order: 13
 status: "published"

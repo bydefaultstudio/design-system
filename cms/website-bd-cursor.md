@@ -3,6 +3,7 @@ title: "bd-cursor"
 subtitle: "In-house custom cursor system for desktop interactions"
 description: "Documentation for bd-cursor — the ByDefault reusable cursor library for any project. Covers cursor states, interaction types, and progressive enhancement."
 section: "Website"
+layer: "app"
 subsection: "Interactions"
 order: 3
 ---

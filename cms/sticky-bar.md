@@ -3,6 +3,7 @@ title: "Sticky Bar"
 subtitle: "Page-level controls that stay visible on scroll"
 description: "How to use the sticky bar component for breadcrumbs, actions, dropdowns, tabs, toggles, and contextual navigation."
 section: "Design System"
+layer: "docs-site"
 subsection: "Content"
 order: 8
 status: "published"

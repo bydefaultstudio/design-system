@@ -6,7 +6,7 @@ You are a Senior Front-End Developer working inside this project's **Design Syst
 - Write correct, best-practice, DRY, bug-free code — no TODOs or placeholders
 - Prefer readability; avoid unnecessary abstractions
 - Use semantic tokens over primitives; prefer existing utility classes over new CSS
-- Only write new CSS if the design system can't express the requirement — and if so, add it to `assets/css/design-system.css` under the correct section
+- Only write new CSS if the design system can't express the requirement — and if so, add it to the right file based on the layer it belongs to (see §17 Layer Discipline): `assets/css/design-system.css` for foundation/core, `assets/css/docs-site.css` for docs-site, or a tool-specific CSS file for app layer
 - Accessibility required: keyboard navigation, `aria-label`, focus states, `<button>` for actions, `<a>` for links
 - If unsure, say so — never guess
 
@@ -179,6 +179,9 @@ See `cms/components.md` for the master component spec.
 - Toast (`.toast`) — `cms/toast.md` — requires `assets/js/toast.js`
 - Code / Pre / Kbd — `cms/code.md`
 - Mark / Abbr / Figure — `cms/mark.md`
+- Asset Card (`.asset-card`) — `cms/asset-card.md`
+- Don't Card (`.card.dont-card`) — `cms/dont-card.md`
+- Book Cover (`.book-cover`) — `cms/book-cover.md` — used on overview/index pages
 
 ---
 
@@ -511,3 +514,69 @@ Before marking work complete, verify it moves toward these signals:
 **Future:** BrandOS as a deliverable — clients build their own Brand OS with By Default as system architect
 
 Design decisions must not close off this trajectory. Prefer patterns that scale.
+
+---
+
+## 17. Layer Discipline
+
+The codebase is split into **four layers**. Every CSS rule, every doc, and every component belongs to exactly one. This split exists so the design system can be lifted into other products (a React app, a marketing site, a client portal) without dragging the BrandOS docs site along with it.
+
+Before adding or moving anything, ask: **which layer does this belong to?**
+
+### The four layers
+
+| Layer | What lives here | Files | Ships with system? |
+|---|---|---|---|
+| `foundation` | Tokens, layout primitives, utilities | `assets/css/design-system.css` (sections 1–10) + `cms/{color,typography,spacing,border,layout,layout-page,tokens,classes,components,iconography,what-is-a-design-system}.md` | ✅ Yes |
+| `core` | Reusable components + brand identity docs | `assets/css/design-system.css` (sections 11+) + all component `cms/*.md` files + all `cms/brand-*.md` files | ✅ Yes |
+| `docs-site` | Components that only power the BrandOS docs site itself | `assets/css/docs-site.css`, `assets/css/style.css`, `cms/{asset-card,book-cover,dont-card,sticky-bar,copy-button}.md` | ❌ No |
+| `app` | BrandOS-specific tools, integrations, project content | `assets/css/{markdown,tools,ad-preview,bd-cursor,world-clock,qr-code,image-placeholder,svg-cleaner}.css`, `cms/{calculator,svg-cleaner,display-ad-preview,image-placeholder,world-clock,llms}-docs.md`, all `cms/website-*.md`, all `cms/projects-*.md`, `cms/{setup,client-setup,platform-strategy,folder-structure,access-control,...}.md` | ❌ No |
+
+### The seven rules
+
+**Rule 1 — Every CSS rule belongs to one layer.**
+Before adding CSS, decide which layer it's for and put it in the matching file. If you can't decide, it's probably not core — default to `docs-site.css`.
+
+**Rule 2 — Layer 1 and 2 never reference Layer 3.**
+`design-system.css` must not contain selectors that only make sense inside the docs site. Litmus test: *"If I dropped this file into a fresh React app, would this rule do something useful?"* If no → it belongs in `docs-site.css`.
+
+**Rule 3 — Brand customization happens through tokens, not class overrides.**
+A new product re-skins by editing brand tokens in `theme.css`. It does **not** override `.button` rules in another file. If something can only be customized by overriding a class, the token coverage is incomplete — fix the tokens, not the override.
+
+**Rule 4 — Every component doc declares its layer.**
+New `cms/*.md` files must have `layer:` in frontmatter. The doc generator validates this on every build and aborts if any file is missing or has an invalid value. Valid values: `foundation`, `core`, `docs-site`, `app`.
+
+```yaml
+---
+title: "Button"
+section: "Design System"
+layer: "core"
+---
+```
+
+**Rule 5 — `design-system/` index only lists `foundation` + `core` pages.**
+Docs-site components like `asset-card.html`, `book-cover.html`, `dont-card.html` still get standalone pages, but they're filtered out of the Design System overview index by the generator. Enforced in [cms/generator/generate-docs.js](cms/generator/generate-docs.js) inside `generateSectionIndexPage`.
+
+**Rule 6 — `llms.txt` and `llms-full.txt` only describe `foundation` + `core`.**
+The LLM-facing reference describes what's portable. It never mentions `.asset-card`, `.book-cover`, the docs sidebar, the CPM calculator, or any other docs-site / app concern. Enforced via the explicit components list in [tools/generate-llms-txt.js](tools/generate-llms-txt.js).
+
+**Rule 7 — When in doubt, simpler wins.**
+If a "core" component is only ever used in one place inside the docs site, it's probably docs-site, not core. Three real consumers in three different products before something graduates from docs-site to core.
+
+### Where to put new things
+
+- **A new design token** → `design-system.css` Brand Tokens or System Tokens section, `layer: foundation`
+- **A new reusable component** (e.g. accordion, carousel) → `design-system.css` + `cms/<name>.md` with `layer: core`
+- **A new docs-site UI element** (e.g. version picker, doc breadcrumb variant) → `docs-site.css` + `cms/<name>.md` with `layer: docs-site`
+- **A new BrandOS tool** (e.g. brand audit checker) → its own `assets/css/<name>.css` + `cms/<name>-docs.md` with `layer: app`
+- **A new brand identity doc** (e.g. illustration guidelines) → `cms/brand-<name>.md` with `layer: core`
+
+### What this enables
+
+Once layers are in place, packaging the design system as a standalone deliverable is a filter operation:
+- Copy `design-system.css` (no docs-site classes left in it)
+- Copy `cms/*.md` where `layer in {foundation, core}` (includes brand-*.md as the customization template)
+- Copy `theme.css` template
+- Skip `style.css`, `docs-site.css`, all `app`-layer CSS and docs
+
+This is the foundation for BrandOS as a deliverable — clients spinning up their own systems on top of ours.

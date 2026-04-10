@@ -3,6 +3,7 @@ title: "Slider"
 subtitle: "Select a value within a range"
 description: "How to use the slider component for range selection with live value display."
 section: "Design System"
+layer: "core"
 subsection: "Data Entry"
 order: 6
 status: "published"

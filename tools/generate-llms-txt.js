@@ -191,7 +191,16 @@ function buildReference() {
   parts.push(readCmsFile('layout.md'));
   parts.push('\n\n---\n');
 
-  // 3. Design Tokens (from CSS)
+  // 3. Code Standards (CSS + JS) — placed early so AI tools see conventions before writing tokens or components
+  parts.push('\n## CSS Conventions\n');
+  parts.push(readCmsFile('css-code-struture.md'));
+  parts.push('\n\n---\n');
+
+  parts.push('\n## JavaScript Conventions\n');
+  parts.push(readCmsFile('js-code-structure.md'));
+  parts.push('\n\n---\n');
+
+  // 4. Design Tokens (from CSS)
   console.log('  Extracting CSS tokens...');
   const css = readFile(CSS_FILE);
   const tokenSections = extractCssTokens(css);
@@ -230,6 +239,10 @@ function buildReference() {
   parts.push('\n\n---\n');
 
   // 9. Individual Components
+  // Layer Discipline (CLAUDE.md §17): only foundation + core layer components
+  // are listed here. Docs-site components (asset-card, book-cover, dont-card,
+  // sticky-bar, copy-button) are intentionally excluded so the LLM reference
+  // describes only what's portable to other products built on this system.
   const components = [
     ['Button', 'button.md'],
     ['Card', 'card.md'],
@@ -264,11 +277,6 @@ function buildReference() {
   // 10. Icon System
   parts.push('\n## Icon System\n');
   parts.push(readCmsFile('iconography.md'));
-  parts.push('\n\n---\n');
-
-  // 11. CSS Conventions
-  parts.push('\n## CSS Conventions\n');
-  parts.push(readCmsFile('css-code-struture.md'));
   parts.push('\n');
 
   // Final assembly

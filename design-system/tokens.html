@@ -31,6 +31,9 @@
     <!-- Site styles -->
     <link rel="stylesheet" href="../assets/css/style.css">
 
+    <!-- Docs-site components (asset-card, book-cover, dont-card, sticky-bar, copy-btn, token-copy) -->
+    <link rel="stylesheet" href="../assets/css/docs-site.css">
+
     
 
     <!-- Early theme loader: apply cached client theme before first paint -->
@@ -63,6 +66,15 @@
     <div id="site-nav" data-base="../"></div>
 
     <div class="docs-main-area">
+        <!-- Page Header (full width, outside grid) -->
+        <div class="page-header">
+      <div class="container-small">
+        <h1>Tokens</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">Every visual decision in one place</p>
+        
+      </div>
+    </div>
+
         <!-- Page sub-header bar (full width, sticky — breadcrumb + filename + actions) -->
         <div class="sticky-bar sticky-bar-page">
       <div class="sticky-bar-container">
@@ -106,11 +118,6 @@
             <!-- Main Content -->
             <main class="docs-main">
                 <article>
-                    <header class="docs-page-header">
-      <h1>Tokens</h1>
-      <p class="docs-page-subtitle" data-text-wrap="pretty">Every visual decision in one place</p>
-      
-    </header>
                     <p>Design tokens are the single source of truth for every visual decision in the system. They capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync. This page lists every token defined in <code>design-system.css</code> for quick reference.</p>
 <p>Tokens are organised into two layers: <strong>primitive tokens</strong> (raw values) and <strong>semantic tokens</strong> (intent-based aliases that reference primitives). Always prefer semantic tokens in production code.</p>
 <p>Every token, value, and hex on this page is a click-to-copy chip. The convention is intentionally explicit so the syntax in the markdown source matches what you copy:</p>

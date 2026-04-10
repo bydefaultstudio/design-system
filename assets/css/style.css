@@ -1020,22 +1020,42 @@ section[id] {
   scroll-margin-top: calc(var(--header-height) + var(--sticky-bar-height) + var(--space-xl));
 }
 
-/* -- Inline page header (top of article, not full-bleed) -- */
-.docs-page-header {
-  margin-bottom: var(--space-xl);
+/* -- Page header (full width, sits between sticky bar and content grid) -- */
+.page-header {
+  width: 100%;
+  padding-top: var(--section-l);
+  padding-bottom: var(--section-l);
+  background: var(--background-faded);
+  border-bottom: var(--border-s) solid var(--border-secondary);
   text-wrap: balance;
 }
 
-.docs-page-header h1 {
+.page-header .container-small {
+  text-align: center;
+}
+
+.page-header h1 {
+  text-align: center;
   margin-top: 0;
   margin-bottom: var(--space-m);
 }
 
-.docs-page-subtitle {
+.page-header .eyebrow {
+  text-align: center;
+  margin: 0 0 var(--space-s);
+}
+
+.page-subtitle {
   color: var(--text-secondary);
   font-size: var(--font-m);
   margin-top: 0;
   margin-bottom: var(--space-m);
+  text-align: center;
+}
+
+.page-source-link,
+.page-action-link {
+  display: inline-block;
 }
 
 /* -- Brand book section spacing -- */
@@ -1061,7 +1081,7 @@ section[id] {
 
 
 /* -- Docs sticky sub-header bar (sits below site header, constrained to article width) -- */
-/* Base .sticky-bar component is in design-system.css */
+/* Base .sticky-bar component is in docs-site.css */
 
 .sticky-bar-page {
   top: var(--header-height);

@@ -3,6 +3,7 @@ title: "Color"
 subtitle: "Palette, scales, and semantic colour mappings"
 description: "Visual reference for all color tokens — brand palette, primitive scales, and semantic mappings."
 section: "Design System"
+layer: "foundation"
 subsection: ""
 order: 3
 status: "published"
@@ -201,7 +202,9 @@ Status tokens now reference the dark shade of each accent colour family. `var(--
 
 ## Dark Mode
 
-The design system uses a `data-theme` attribute to switch between light and dark modes. Light mode is the default. Dark mode activates when `data-theme="dark"` is set on any element.
+The design system uses a `data-theme` attribute to switch between light and dark modes. **Light mode is the default** — dark mode is an opt-in override, not a baseline. Activate it by setting `data-theme="dark"` on any element; tokens inherit through the cascade.
+
+Dark mode values (e.g. `#1a1a1a`, `#e8e6e3`) are **overrides applied via `[data-theme="dark"]`** — never use them as primary values, and never hardcode them. If you're working from a dark-looking screenshot, confirm the intended theme before writing code.
 
 ### How It Works
 

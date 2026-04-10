@@ -3,6 +3,7 @@ title: "Badge"
 subtitle: "Status labels and category indicators"
 description: "How to use badge and pill components for status labels, version tags, and category indicators."
 section: "Design System"
+layer: "core"
 subsection: "Feedback"
 order: 2
 status: "published"

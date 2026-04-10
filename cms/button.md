@@ -3,6 +3,7 @@ title: "Button"
 subtitle: "Actions that communicate intent and hierarchy"
 description: "How to use button styles and modifiers in the design system."
 section: "Design System"
+layer: "core"
 subsection: "Data Entry"
 order: 1
 status: "published"

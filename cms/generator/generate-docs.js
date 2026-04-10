@@ -106,6 +106,40 @@ function getRawIcon(name) {
   return entry.svg;
 }
 
+/**
+ * Render a .book-cover anchor with the standard header/content/footer layout.
+ *
+ *   header  → full-screen icon (top right)
+ *   content → card-title + optional card-description
+ *   footer  → author (left) + add icon (right placeholder for future meta)
+ *
+ * @param {object} opts
+ * @param {string} opts.href      - link target
+ * @param {string} opts.title     - card title (required)
+ * @param {string} [opts.subtitle] - card description (optional)
+ * @param {string} [opts.author]  - footer author label (defaults to "Studio")
+ * @param {string} [opts.access]  - data-access value (omitted if falsy)
+ * @returns {string} HTML string
+ */
+function renderBookCover(opts) {
+  const author = opts.author || 'Studio';
+  const accessAttr = opts.access ? ` data-access="${opts.access}"` : '';
+  const description = opts.subtitle
+    ? `<p class="book-cover-description" data-text-wrap="pretty">${opts.subtitle}</p>`
+    : '';
+  return `<a href="${opts.href}" class="book-cover"${accessAttr}>
+        <header class="book-cover-header">${getIcon('full-screen')}</header>
+        <div class="book-cover-content">
+          <h3 class="book-cover-title">${opts.title}</h3>
+          ${description}
+        </div>
+        <footer class="book-cover-footer">
+          <span class="book-cover-author"><em>by</em> ${author}</span>
+          ${getIcon('add')}
+        </footer>
+      </a>`;
+}
+
 //------- Section-to-Folder Mapping -------//
 
 const SECTION_FOLDERS = {
@@ -533,21 +567,18 @@ function generateTableOfContents(html) {
 function generateIndexPage(template, filesBySection) {
   // Simplified index: one card per section in a 2-column grid
   const sectionCards = [
-    { title: 'Brand Book', href: 'brand/', subtitle: 'Brand identity, values, positioning, and visual guidelines', access: '' },
-    { title: 'Design System', href: 'design-system/', subtitle: 'Tokens, components, and styling patterns', access: '' },
-    { title: 'Tools', href: 'tools/', subtitle: 'Utilities for ad operations, SVG processing, and more', access: ' data-access="team"' },
-    { title: 'Documentation', href: 'docs/', subtitle: 'Technical docs for layout, CSS, JavaScript, and project setup', access: '' },
+    { title: 'Brand Book', href: 'brand/', subtitle: 'Brand identity, values, positioning, and visual guidelines' },
+    { title: 'Design System', href: 'design-system/', subtitle: 'Tokens, components, and styling patterns' },
+    { title: 'Tools', href: 'tools/', subtitle: 'Utilities for ad operations, SVG processing, and more', access: 'team' },
+    { title: 'Documentation', href: 'docs/', subtitle: 'Technical docs for layout, CSS, JavaScript, and project setup' },
   ];
 
   let cards = `<div class="docs-section">
-      <div class="grid gap-xl">`;
+      <div class="grid cols-2 gap-xl">`;
 
   for (const card of sectionCards) {
     cards += `
-        <a href="${card.href}" class="card card--interactive"${card.access}>
-          <h3 class="card-title">${card.title}</h3>
-          <p class="card-description" data-text-wrap="pretty">${card.subtitle}</p>
-        </a>`;
+        ${renderBookCover(card)}`;
   }
 
   cards += `
@@ -589,6 +620,17 @@ function generateSectionIndexPage(section, template, files, filesBySection) {
   const sectionFolder = SECTION_FOLDERS[section];
   if (!sectionFolder) return null;
 
+  // Layer Discipline (CLAUDE.md §17): the Design System index lists only
+  // foundation + core layer pages. Docs-site components like asset-card,
+  // book-cover, dont-card etc. still get standalone pages but are hidden
+  // from the index so the design system surface stays portable.
+  if (section === 'Design System') {
+    files = files.filter(f => {
+      const layer = f.frontmatter.layer;
+      return layer === 'foundation' || layer === 'core';
+    });
+  }
+
   // Sort files by order
   const sorted = [...files].sort((a, b) => {
     const orderA = a.frontmatter.order || 999;
@@ -614,7 +656,7 @@ function generateSectionIndexPage(section, template, files, filesBySection) {
 
   // Ungrouped files first
   if (ungrouped.length > 0) {
-    cards += `<div class="docs-section"><div class="grid cols-3 gap-xl">`;
+    cards += `<div class="docs-section"><div class="grid cols-2 gap-xl">`;
     for (const file of ungrouped) {
       let cardHref = file.htmlName;
       let cardAccess = deriveDataAccess(file.frontmatter);
@@ -623,12 +665,13 @@ function generateSectionIndexPage(section, template, files, filesBySection) {
         cardHref = cardActionUrl;
         cardAccess = file.frontmatter.actionAccess || file.frontmatter.toolAccess || cardAccess;
       }
-      cards += `<a href="${cardHref}" class="card card--interactive" data-access="${cardAccess}"><h3 class="card-title">${file.title}</h3>${file.frontmatter.subtitle ? `<p class="card-description" data-text-wrap="pretty">${file.frontmatter.subtitle}</p>` : ''}</a>`;
-    }
-
-    // Append special cards for Brand
-    if (section === 'Brand Book') {
-      cards += `<a href="visual-identity.html" class="card card--interactive"><h3 class="card-title">Visual Identity</h3><p class="card-description" data-text-wrap="pretty">Visual brand identity — logo, palette, typography, and icons</p></a>`;
+      cards += renderBookCover({
+        href: cardHref,
+        title: file.title,
+        subtitle: file.frontmatter.subtitle,
+        author: file.frontmatter.author,
+        access: cardAccess,
+      });
     }
 
     cards += `</div></div>`;
@@ -645,10 +688,15 @@ function generateSectionIndexPage(section, template, files, filesBySection) {
   });
 
   for (const sub of subs) {
-    cards += `<div class="docs-section"><h2 class="eyebrow">${sub}</h2><div class="grid cols-3 gap-xl">`;
+    cards += `<div class="docs-section"><h2 class="eyebrow">${sub}</h2><div class="grid cols-2 gap-xl">`;
     for (const file of grouped[sub]) {
-      const cardAccess = deriveDataAccess(file.frontmatter);
-      cards += `<a href="${file.htmlName}" class="card card--interactive" data-access="${cardAccess}"><h3 class="card-title">${file.title}</h3>${file.frontmatter.subtitle ? `<p class="card-description" data-text-wrap="pretty">${file.frontmatter.subtitle}</p>` : ''}</a>`;
+      cards += renderBookCover({
+        href: file.htmlName,
+        title: file.title,
+        subtitle: file.frontmatter.subtitle,
+        author: file.frontmatter.author,
+        access: deriveDataAccess(file.frontmatter),
+      });
     }
     cards += `</div></div>`;
   }
@@ -661,10 +709,15 @@ function generateSectionIndexPage(section, template, files, filesBySection) {
       if (orderA !== orderB) return orderA - orderB;
       return a.title.localeCompare(b.title);
     });
-    cards += `<div class="docs-section"><h2 class="eyebrow">Tools</h2><div class="grid cols-3 gap-xl">`;
+    cards += `<div class="docs-section"><h2 class="eyebrow">Tools</h2><div class="grid cols-2 gap-xl">`;
     for (const file of toolFiles) {
-      const cardAccess = deriveDataAccess(file.frontmatter);
-      cards += `<a href="../${file.htmlPath}" class="card card--interactive" data-access="${cardAccess}"><h3 class="card-title">${file.title}</h3>${file.frontmatter.subtitle ? `<p class="card-description" data-text-wrap="pretty">${file.frontmatter.subtitle}</p>` : ''}</a>`;
+      cards += renderBookCover({
+        href: `../${file.htmlPath}`,
+        title: file.title,
+        subtitle: file.frontmatter.subtitle,
+        author: file.frontmatter.author,
+        access: deriveDataAccess(file.frontmatter),
+      });
     }
     cards += `</div></div>`;
   }
@@ -909,21 +962,23 @@ function generatePage(file, template, pageOrder) {
   const tableOfContents = generateTableOfContents(htmlContent);
   const access = deriveDataAccess(frontmatter);
 
-  // Generate inline page header (lives at the top of the article, no full-bleed box)
+  // Generate full-width page header (lives outside the content grid)
   let pageHeader = '';
   const actionUrl = frontmatter.actionUrl || frontmatter.toolUrl;
   const actionLabel = frontmatter.actionLabel || frontmatter.toolLabel || 'Open';
   const actionLinkHtml = actionUrl
-    ? `<div class="button-group">
+    ? `<div class="button-group justify-center">
         <a href="${actionUrl}" class="button is-small page-action-link">${actionLabel}</a>
       </div>`
     : '';
   if (frontmatter.title) {
-    pageHeader = `<header class="docs-page-header">
-      <h1>${frontmatter.title}</h1>
-      ${frontmatter.subtitle ? `<p class="docs-page-subtitle" data-text-wrap="pretty">${frontmatter.subtitle}</p>` : ''}
-      ${actionLinkHtml}
-    </header>`;
+    pageHeader = `<div class="page-header">
+      <div class="container-small">
+        <h1>${frontmatter.title}</h1>
+        ${frontmatter.subtitle ? `<p class="page-subtitle" data-text-wrap="pretty">${frontmatter.subtitle}</p>` : ''}
+        ${actionLinkHtml}
+      </div>
+    </div>`;
   }
 
   // Generate sticky sub-header bar (breadcrumb + markdown dropdown)
@@ -1360,10 +1415,6 @@ function buildNavSectionsHtml(filesBySection) {
       }
     }
 
-    if (section === 'Brand Book') {
-      html += `<li><a href="../brand/visual-identity.html" class="nav-link" data-access="team"><span>Visual Identity</span></a></li>`;
-    }
-
     html += `</ul></details>`;
   }
 
@@ -1475,21 +1526,23 @@ function generateClientDocs(template) {
       const sectionSlug = frontmatter.section ? frontmatter.section.toLowerCase().replace(/\s+/g, '-') : '';
       const navBase = sectionSlug ? '../../' : '../';
 
-      // Inline page header (lives at top of article, no full-bleed box)
+      // Full-width page header (lives outside the content grid)
       let pageHeader = '';
       const clientActionUrl = frontmatter.actionUrl || frontmatter.toolUrl;
       const clientActionLabel = frontmatter.actionLabel || frontmatter.toolLabel || 'Open';
       const clientActionHtml = clientActionUrl
-        ? `<div class="button-group">
+        ? `<div class="button-group justify-center">
             <a href="${clientActionUrl}" class="button is-small page-action-link">${clientActionLabel}</a>
           </div>`
         : '';
       if (title) {
-        pageHeader = `<header class="docs-page-header">
-          <h1>${title}</h1>
-          ${frontmatter.subtitle ? `<p class="docs-page-subtitle" data-text-wrap="pretty">${frontmatter.subtitle}</p>` : ''}
-          ${clientActionHtml}
-        </header>`;
+        pageHeader = `<div class="page-header">
+          <div class="container-small">
+            <h1>${title}</h1>
+            ${frontmatter.subtitle ? `<p class="page-subtitle" data-text-wrap="pretty">${frontmatter.subtitle}</p>` : ''}
+            ${clientActionHtml}
+          </div>
+        </div>`;
       }
 
       // Build sticky sub-header bar (breadcrumb + markdown dropdown)
@@ -1784,11 +1837,16 @@ function generateClientSectionOverviews(template) {
     // Docs overview — cards for all pages in the Docs section
     const docsPages = (theme.pages || []).filter(p => p.section === 'Docs' && p.title !== 'Overview');
     if (docsPages.length > 0) {
-      let cards = '<div class="docs-section"><div class="grid cols-3 gap-xl">';
+      let cards = '<div class="docs-section"><div class="grid cols-2 gap-xl">';
       for (const page of docsPages) {
         // Extract just the filename — overview and pages are in the same directory
         const href = page.href.split('/').pop();
-        cards += `<a href="${href}" class="card card--interactive"><h3 class="card-title">${page.title}</h3>${page.subtitle ? `<p class="card-description" data-text-wrap="pretty">${page.subtitle}</p>` : ''}</a>`;
+        cards += renderBookCover({
+          href,
+          title: page.title,
+          subtitle: page.subtitle,
+          author: page.author,
+        });
       }
       cards += '</div></div>';
       const docsDir = path.join(dir, 'docs');
@@ -1800,10 +1858,15 @@ function generateClientSectionOverviews(template) {
     // Tools overview — cards for tools this client has access to (from frontmatter)
     const clientToolKeys = Object.keys(toolRegistry).filter(slug => clientHasToolAccess(toolRegistry[slug].toolAccess, clientKey));
     if (clientToolKeys.length > 0) {
-      let cards = '<div class="docs-section"><div class="grid cols-3 gap-xl">';
+      let cards = '<div class="docs-section"><div class="grid cols-2 gap-xl">';
       for (const toolKey of clientToolKeys) {
         const tool = toolRegistry[toolKey];
-        cards += `<a href="../../tools/${toolKey}.html" class="card card--interactive"><h3 class="card-title">${tool.title}</h3><p class="card-description" data-text-wrap="pretty">${tool.subtitle}</p></a>`;
+        cards += renderBookCover({
+          href: `../../tools/${toolKey}.html`,
+          title: tool.title,
+          subtitle: tool.subtitle,
+          author: tool.author,
+        });
       }
       cards += '</div></div>';
       const toolsDir = path.join(dir, 'tools');
@@ -1923,14 +1986,17 @@ function generateBrandBook(template) {
     const pageSubtitle = frontmatter.subtitle || 'Logo, colour, typography, and interface elements styled with your brand tokens';
     const pageDescription = frontmatter.description || `${clientLabel} brand book.`;
 
+    // Build the full-width page header (slots into PAGE_HEADER, outside the content grid)
+    const brandBookPageHeader = `<div class="page-header">
+      <div class="container-small">
+        <p class="eyebrow">${clientLabel}</p>
+        <h1>${pageTitle}</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">${pageSubtitle}</p>
+      </div>
+    </div>`;
+
     // Build page content
     let contentHtml = '';
-
-    // Inline page header — title + subtitle only, no eyebrow or icon
-    contentHtml += `<header class="docs-page-header">
-      <h1>${pageTitle}</h1>
-      <p class="docs-page-subtitle" data-text-wrap="pretty">${pageSubtitle}</p>
-    </header>`;
 
     // Custom intro from brand-book.md
     if (introHtml) {
@@ -2231,22 +2297,13 @@ function generateBrandBook(template) {
     </section>`;
 
     // ─── SCENARIO 2: Card grid ───────────────────────────────
-    // Demonstrates: card, card-title, card-description, button, grid layout, inline links.
+    // Demonstrates: book-cover, card-title, card-description, grid layout.
     contentHtml += `<section class="brand-book-section block gap-l">
       <h2>Three things worth your time</h2>
       <div class="grid cols-3 gap-l">
-        <a href="#" class="card card--interactive">
-          <h3 class="card-title">Catchy article title example</h3>
-          <p class="card-description">A short preview of the article content, crafted to grab attention and spark curiosity. Just enough to tempt the reader to click.</p>
-        </a>
-        <a href="#" class="card card--interactive">
-          <h3 class="card-title">Bold title for a blog post</h3>
-          <p class="card-description">A few compelling lines that hint at the story within. Use this space to draw the reader in with tone, intrigue, or a bold statement.</p>
-        </a>
-        <a href="#" class="card card--interactive">
-          <h3 class="card-title">Short and scroll-stopping</h3>
-          <p class="card-description">Bold insights, fresh thinking, and a reason to scroll. This placeholder shows how a post excerpt will look in your feed layout.</p>
-        </a>
+        ${renderBookCover({ href: '#', title: 'Catchy article title example', subtitle: 'A short preview of the article content, crafted to grab attention and spark curiosity. Just enough to tempt the reader to click.' })}
+        ${renderBookCover({ href: '#', title: 'Bold title for a blog post', subtitle: 'A few compelling lines that hint at the story within. Use this space to draw the reader in with tone, intrigue, or a bold statement.' })}
+        ${renderBookCover({ href: '#', title: 'Short and scroll-stopping', subtitle: 'Bold insights, fresh thinking, and a reason to scroll. This placeholder shows how a post excerpt will look in your feed layout.' })}
       </div>
     </section>`;
 
@@ -2295,7 +2352,7 @@ function generateBrandBook(template) {
       .replace(/\{\{META_DESCRIPTION\}\}/g, pageDescription)
       .replace(/\{\{NAV_BASE\}\}/g, navBase)
       .replace(/\{\{PAGE_ACCESS\}\}/g, deriveDataAccess(frontmatter))
-      .replace('{{PAGE_HEADER}}', '')
+      .replace('{{PAGE_HEADER}}', brandBookPageHeader)
       .replace('{{PAGE_STICKY_BAR}}', '')
       .replace('{{PAGE_CONTENT}}', contentHtml)
       .replace('{{TOC_SECTION}}', '')
@@ -2370,15 +2427,17 @@ function generateClientIndexPages(template) {
 
       contentHtml += `<div class="docs-section">
       <h2 class="eyebrow">${section}</h2>
-      <div class="grid cols-3 gap-xl">`;
+      <div class="grid cols-2 gap-xl">`;
       for (const page of sectionGroups[section]) {
         const href = page.href.startsWith(clientKey + '/')
           ? page.href.replace(clientKey + '/', '')
           : page.href;
-        contentHtml += `<a href="${href}" class="card card--interactive">
-          <h3 class="card-title">${page.title}</h3>
-          ${page.subtitle ? `<p class="card-description" data-text-wrap="pretty">${page.subtitle}</p>` : ''}
-        </a>`;
+        contentHtml += renderBookCover({
+          href,
+          title: page.title,
+          subtitle: page.subtitle,
+          author: page.author,
+        });
       }
       contentHtml += `</div></div>`;
     }
@@ -2388,19 +2447,25 @@ function generateClientIndexPages(template) {
     if (clientToolKeys.length > 0) {
       contentHtml += `<div class="docs-section">
       <h2 class="eyebrow">Tools</h2>
-      <div class="grid cols-3 gap-xl">`;
+      <div class="grid cols-2 gap-xl">`;
       // Tools overview card first
       const toolsOverviewPage = (theme.pages || []).find(p => p.section === 'Tools' && p.title === 'Overview');
       if (toolsOverviewPage) {
         const overviewHref = toolsOverviewPage.href.startsWith(clientKey + '/') ? toolsOverviewPage.href.replace(clientKey + '/', '') : toolsOverviewPage.href;
-        contentHtml += `<a href="${overviewHref}" class="card card--interactive"><h3 class="card-title">Overview</h3><p class="card-description" data-text-wrap="pretty">All available tools and utilities</p></a>`;
+        contentHtml += renderBookCover({
+          href: overviewHref,
+          title: 'Overview',
+          subtitle: 'All available tools and utilities',
+        });
       }
       for (const toolKey of clientToolKeys) {
         const tool = toolRegistry[toolKey];
-        contentHtml += `<a href="../tools/${toolKey}.html" class="card card--interactive">
-          <h3 class="card-title">${tool.title}</h3>
-          <p class="card-description" data-text-wrap="pretty">${tool.subtitle}</p>
-        </a>`;
+        contentHtml += renderBookCover({
+          href: `../tools/${toolKey}.html`,
+          title: tool.title,
+          subtitle: tool.subtitle,
+          author: tool.author,
+        });
       }
       contentHtml += `</div></div>`;
     }
@@ -2519,6 +2584,12 @@ async function generateDocs() {
   // Load folder defaults for the cms/ directory
   const cmsDefaults = loadDefaults(DOCS_DIR);
 
+  // Layer validation (see CLAUDE.md §17 — Layer Discipline)
+  // Every published cms/*.md file must declare which layer it belongs to.
+  // This drives docs-site index filtering and llms.txt scope.
+  const VALID_LAYERS = new Set(['foundation', 'core', 'docs-site', 'app']);
+  const layerErrors = [];
+
   for (const filename of markdownFiles) {
     const filePath = path.join(DOCS_DIR, filename);
     const content = fs.readFileSync(filePath, 'utf8');
@@ -2531,6 +2602,13 @@ async function generateDocs() {
     if (frontmatter.status === 'draft') {
       console.log(`⏭️  Skipped (draft): ${filename}`);
       continue;
+    }
+
+    // Validate layer (required, see CLAUDE.md §17)
+    if (!frontmatter.layer) {
+      layerErrors.push(`  ${filename} — missing 'layer:' field`);
+    } else if (!VALID_LAYERS.has(frontmatter.layer)) {
+      layerErrors.push(`  ${filename} — invalid layer "${frontmatter.layer}" (must be one of: foundation, core, docs-site, app)`);
     }
 
     const title = frontmatter.title || filename.replace('.md', '');
@@ -2561,6 +2639,15 @@ async function generateDocs() {
   }
 
   console.log(`📂 Found sections: ${Object.keys(filesBySection).join(', ')}`);
+
+  // Fail the build if any file is missing a valid layer (see CLAUDE.md §17)
+  if (layerErrors.length > 0) {
+    console.error('\n❌ Layer Discipline violation — every cms/*.md file must declare a valid layer:');
+    console.error(layerErrors.join('\n'));
+    console.error('\nValid layers: foundation, core, docs-site, app');
+    console.error('See CLAUDE.md §17 (Layer Discipline) for details.\n');
+    process.exit(1);
+  }
 
   // Build ordered page list for prev/next navigation
   const pageOrder = buildPageOrder(filesBySection);

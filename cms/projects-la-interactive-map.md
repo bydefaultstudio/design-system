@@ -3,6 +3,7 @@ title: "LA Interactive Map"
 subtitle: "A city guide to Los Angeles"
 description: "An interactive city guide to Los Angeles — explore culture, food, activities, and landmarks across the city's neighbourhoods."
 section: "Projects"
+layer: "app"
 order: 2
 status: "published"
 access: "team"

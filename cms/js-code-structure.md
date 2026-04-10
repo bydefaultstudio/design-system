@@ -3,6 +3,7 @@ title: "JavaScript"
 subtitle: "JavaScript coding standards and organization guidelines"
 description: "Guide defining how JavaScript should be structured and organized."
 section: "Docs"
+layer: "app"
 subsection: "Code Standards"
 order: 1
 status: "published"

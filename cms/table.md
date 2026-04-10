@@ -3,6 +3,7 @@ title: "Table"
 subtitle: "Structured data in rows and columns"
 description: "Guide to using the table component with base styles and modifier classes."
 section: "Design System"
+layer: "core"
 subsection: "Content"
 order: 10
 status: "published"

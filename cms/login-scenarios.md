@@ -3,6 +3,7 @@ title: "Login Scenarios"
 subtitle: "Auth flow testing and login states"
 description: "Reference page for testing all authentication flows — login, forgot password, reset, invitation, and confirmation."
 section: "Docs"
+layer: "app"
 subsection: "Dev"
 order: 4
 status: "published"

@@ -3,6 +3,7 @@ title: "HTML Layout"
 subtitle: "Page layout and structure primitives"
 description: "How to structure pages using sections, containers, blocks, and grids."
 section: "Docs"
+layer: "foundation"
 subsection: "Code Standards"
 order: 3
 status: "published"

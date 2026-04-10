@@ -3,6 +3,7 @@ title: "Progress"
 subtitle: "Show how far along something is"
 description: "How to use the progress bar component for showing completion status."
 section: "Design System"
+layer: "core"
 subsection: "Feedback"
 order: 4
 status: "published"

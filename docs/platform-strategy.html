@@ -31,6 +31,9 @@
     <!-- Site styles -->
     <link rel="stylesheet" href="../assets/css/style.css">
 
+    <!-- Docs-site components (asset-card, book-cover, dont-card, sticky-bar, copy-btn, token-copy) -->
+    <link rel="stylesheet" href="../assets/css/docs-site.css">
+
     
 
     <!-- Early theme loader: apply cached client theme before first paint -->
@@ -63,6 +66,15 @@
     <div id="site-nav" data-base="../"></div>
 
     <div class="docs-main-area">
+        <!-- Page Header (full width, outside grid) -->
+        <div class="page-header">
+      <div class="container-small">
+        <h1>Platform Strategy</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">What BrandOS is, who it serves, and how it should sound</p>
+        
+      </div>
+    </div>
+
         <!-- Page sub-header bar (full width, sticky — breadcrumb + filename + actions) -->
         <div class="sticky-bar sticky-bar-page">
       <div class="sticky-bar-container">
@@ -106,11 +118,6 @@
             <!-- Main Content -->
             <main class="docs-main">
                 <article>
-                    <header class="docs-page-header">
-      <h1>Platform Strategy</h1>
-      <p class="docs-page-subtitle" data-text-wrap="pretty">What BrandOS is, who it serves, and how it should sound</p>
-      
-    </header>
                     <p class="drop-cap">By Default BrandOS is an interactive brand infrastructure platform. It gives clients, partners, and the internal team a shared environment to build, access, and optimise the brand systems that power effective interactive advertising.</p>
 <p>Where traditional brand portals are static — guidelines in a PDF, logos in a folder — BrandOS is operational. It holds design tokens, brand frameworks, advertising tools, and client-specific environments in one place, structured so that every project begins from the same high-quality foundation and every output is measurably on-brand.</p>
 <p><strong>In one sentence:</strong> BrandOS is where By Default&#39;s interactive advertising methodology becomes something clients can build with, not just look at.</p>
@@ -118,6 +125,16 @@
 <h2 id="what-it-is-not">What It Is Not</h2>
 <p>BrandOS is not a design system documentation site. It is not a file library. It is not a static brand guidelines PDF. The design system lives inside it as infrastructure — not as its purpose.</p>
 <p>If a decision can be made by reading a token, the platform is doing its job. If a decision requires a meeting, the platform is not yet doing its job.</p>
+<hr>
+<h2 id="how-the-codebase-is-layered">How the codebase is layered</h2>
+<p>The repository is split into <strong>four layers</strong> so the design system can be lifted into other products without dragging this docs site along with it:</p>
+<ul>
+<li><strong><code>foundation</code></strong> — design tokens, layout primitives, type and colour utilities. The unopinionated base every product needs.</li>
+<li><strong><code>core</code></strong> — reusable components (button, card, dropdown, …) and brand identity docs. The branded-but-functionally-generic layer.</li>
+<li><strong><code>docs-site</code></strong> — components that only exist to power <em>this</em> BrandOS site (asset-card, book-cover, dont-card, sticky-bar, copy-button). Not portable.</li>
+<li><strong><code>app</code></strong> — BrandOS-specific tools and project content (CPM calculator, ad preview, world clock, project case studies, internal setup docs). Not portable.</li>
+</ul>
+<p>Foundation and core ship together when the system is packaged for a new product. Docs-site and app stay with BrandOS itself. The full ruleset, including the &quot;where to put new things&quot; decision tree, lives in CLAUDE.md §17 (Layer Discipline).</p>
 <hr>
 <h2 id="audience">Audience</h2>
 <p>BrandOS serves three distinct audiences. Copy, navigation, and content decisions must specify which audience they serve before they are written.</p>
@@ -368,7 +385,7 @@
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#what-it-is-not" class="toc-link">What It Is Not</a></li><li class="toc-item toc-level-2"><a href="#audience" class="toc-link">Audience</a></li><li class="toc-item toc-level-2"><a href="#platform-architecture" class="toc-link">Platform Architecture</a></li><li class="toc-item toc-level-2"><a href="#ux-copy" class="toc-link">UX Copy</a></li><li class="toc-item toc-level-2"><a href="#copy-update-process" class="toc-link">Copy Update Process</a></li><li class="toc-item toc-level-2"><a href="#outcome-signals" class="toc-link">Outcome Signals</a></li><li class="toc-item toc-level-2"><a href="#related-docs" class="toc-link">Related Docs</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#what-it-is-not" class="toc-link">What It Is Not</a></li><li class="toc-item toc-level-2"><a href="#how-the-codebase-is-layered" class="toc-link">How the codebase is layered</a></li><li class="toc-item toc-level-2"><a href="#audience" class="toc-link">Audience</a></li><li class="toc-item toc-level-2"><a href="#platform-architecture" class="toc-link">Platform Architecture</a></li><li class="toc-item toc-level-2"><a href="#ux-copy" class="toc-link">UX Copy</a></li><li class="toc-item toc-level-2"><a href="#copy-update-process" class="toc-link">Copy Update Process</a></li><li class="toc-item toc-level-2"><a href="#outcome-signals" class="toc-link">Outcome Signals</a></li><li class="toc-item toc-level-2"><a href="#related-docs" class="toc-link">Related Docs</a></li></ul></nav></div>
     </aside>
         </div>
 

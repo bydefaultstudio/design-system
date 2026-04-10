@@ -3,6 +3,7 @@ title: "Tag"
 subtitle: "Dismissible labels and filter chips"
 description: "How to use the tag component for labels, filters, and categorisation."
 section: "Design System"
+layer: "core"
 subsection: "Feedback"
 order: 3
 status: "published"

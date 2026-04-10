@@ -3,6 +3,7 @@ title: "FIFA WC26 Stadiums"
 subtitle: "Interactive stadium map for the 2026 World Cup"
 description: "A standalone interactive map showcasing every stadium hosting FIFA World Cup 2026 matches across the United States, Mexico, and Canada."
 section: "Projects"
+layer: "app"
 order: 1
 status: "published"
 access: "team"

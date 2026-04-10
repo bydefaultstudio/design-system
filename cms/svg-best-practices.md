@@ -3,6 +3,7 @@ title: "SVG Best Practices"
 subtitle: "How to optimise SVG files for the web"
 description: "Practical techniques for reducing SVG file size and keeping page load times fast."
 section: "Docs"
+layer: "app"
 subsection: "Code Standards"
 order: 5
 status: "published"

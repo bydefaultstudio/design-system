@@ -3,6 +3,7 @@ title: "Tabs"
 subtitle: "Switch between related content without leaving the page"
 description: "How to use the tabs component for switching between content panels."
 section: "Design System"
+layer: "core"
 subsection: "Content"
 order: 4
 status: "published"

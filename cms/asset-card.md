@@ -3,6 +3,7 @@ title: "Asset Card"
 subtitle: "A consistent wrapper for presenting brand assets — logos, fonts, icons, images"
 description: "How to use the asset card component to present brand assets in a consistent format across the brand book and showcase pages."
 section: "Design System"
+layer: "docs-site"
 subsection: "Content"
 order: 2
 status: "published"
@@ -42,10 +43,24 @@ It composes three parts: a preview area, an optional footer with a title and act
 | Footer | `.asset-card-footer` | Bottom row, title on the left, actions on the right |
 | Footer title | `.asset-card-title` | Asset name in the brand serif |
 | Footer actions | `.asset-card-actions` | Action button group (compact icon-only buttons) |
+| Logo preview slot | `.asset-card-preview.logo-preview` | Constrains the rendered logo width (single source of truth in CSS) |
 
 ---
 
 ## Logo asset
+
+Add the `.logo-preview` modifier to the preview slot whenever the content is a logo `<img>`. It constrains the rendered logo width from a single CSS rule (`max-width: 240px`), so resizing every logo card across the site is a one-line change in `design-system.css`. No inline `style` on the `<img>` is needed.
+
+```html
+<div class="asset-card">
+  <div class="asset-card-preview asset-card-preview--light logo-preview">
+    <img src="assets/images/logos/bydefault/logo_bydefault-primary.svg" alt="By Default primary logotype">
+  </div>
+  <div class="asset-card-footer">
+    <p class="asset-card-title">Light</p>
+  </div>
+</div>
+```
 
 A logo card with a light preview and copy/download actions in the footer.
 

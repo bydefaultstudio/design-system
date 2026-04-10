@@ -3,6 +3,7 @@ title: "Upgrading the Docs Engine"
 subtitle: "How to update the doc site across projects"
 description: "Guide to upgrading the documentation engine without affecting project content."
 section: "Docs"
+layer: "app"
 subsection: "Dev"
 order: 3
 status: "published"
@@ -72,7 +73,7 @@ module.exports = {
 };
 ```
 
-Replace the logo by swapping `assets/images/logos/logo.svg`.
+Replace the logo by swapping the files in `assets/images/logos/bydefault/` (six variants: primary, primary-white, primary-centered, primary-centered-white, avatar, avatar-white).
 Replace favicons by swapping `assets/icons/favicon.svg` and `assets/icons/favicon.ico`.
 
 ---

@@ -3,6 +3,7 @@ title: "Platform Strategy"
 subtitle: "What BrandOS is, who it serves, and how it should sound"
 description: "Platform identity, audience definitions, UX copy principles, and outcome signals for By Default BrandOS."
 section: "Docs"
+layer: "app"
 order: 1
 status: "published"
 access: "team"
@@ -23,6 +24,19 @@ Where traditional brand portals are static — guidelines in a PDF, logos in a f
 BrandOS is not a design system documentation site. It is not a file library. It is not a static brand guidelines PDF. The design system lives inside it as infrastructure — not as its purpose.
 
 If a decision can be made by reading a token, the platform is doing its job. If a decision requires a meeting, the platform is not yet doing its job.
+
+---
+
+## How the codebase is layered
+
+The repository is split into **four layers** so the design system can be lifted into other products without dragging this docs site along with it:
+
+- **`foundation`** — design tokens, layout primitives, type and colour utilities. The unopinionated base every product needs.
+- **`core`** — reusable components (button, card, dropdown, …) and brand identity docs. The branded-but-functionally-generic layer.
+- **`docs-site`** — components that only exist to power *this* BrandOS site (asset-card, book-cover, dont-card, sticky-bar, copy-button). Not portable.
+- **`app`** — BrandOS-specific tools and project content (CPM calculator, ad preview, world clock, project case studies, internal setup docs). Not portable.
+
+Foundation and core ship together when the system is packaged for a new product. Docs-site and app stay with BrandOS itself. The full ruleset, including the "where to put new things" decision tree, lives in CLAUDE.md §17 (Layer Discipline).
 
 ---
 

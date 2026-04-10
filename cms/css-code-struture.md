@@ -3,6 +3,7 @@ title: "CSS"
 subtitle: "CSS coding standards, organization, and commenting guidelines"
 description: "Guide defining how CSS should be structured, organized, and commented for maintainability."
 section: "Docs"
+layer: "app"
 subsection: "Code Standards"
 order: 2
 status: "published"

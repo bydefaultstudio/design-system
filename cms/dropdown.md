@@ -3,6 +3,7 @@ title: "Dropdown"
 subtitle: "Contextual menus and action lists"
 description: "How to use the dropdown component for contextual menus, action lists, settings panels, and navigation."
 section: "Design System"
+layer: "core"
 subsection: "Content"
 order: 5
 status: "published"

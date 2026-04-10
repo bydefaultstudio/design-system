@@ -324,7 +324,7 @@
       }
     });
 
-    var docCards = document.querySelectorAll('.card[data-access]');
+    var docCards = document.querySelectorAll('.card[data-access], .book-cover[data-access]');
     docCards.forEach(function (card) {
       var requiredAccess = card.getAttribute('data-access');
       if (requiredAccess && !hasAccessForValue(userRole, requiredAccess, user)) {
@@ -358,7 +358,8 @@
         return;
       }
       // Fallback: hide if all child cards are hidden
-      var visibleCards = section.querySelectorAll('.card');
+      var visibleCards = section.querySelectorAll('.card, .book-cover');
+      if (visibleCards.length === 0) return; // section has no cards at all — leave it visible
       var allHidden = true;
       visibleCards.forEach(function (card) {
         if (card.style.display !== 'none') allHidden = false;

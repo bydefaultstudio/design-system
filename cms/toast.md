@@ -3,6 +3,7 @@ title: "Toast"
 subtitle: "Temporary feedback that confirms an action"
 description: "How to use the toast component for temporary notification messages."
 section: "Design System"
+layer: "core"
 subsection: "Feedback"
 order: 6
 status: "published"

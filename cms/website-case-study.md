@@ -3,6 +3,7 @@ title: "Case Study"
 subtitle: "Intelligent content pinning system for case study pages with responsive behavior"
 description: "Documentation for the case study content pinning system that provides intelligent pinning behavior for content blocks with automatic height and viewport detection."
 section: "Website"
+layer: "app"
 subsection: "Pages"
 order: 5
 ---

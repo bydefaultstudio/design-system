@@ -3,6 +3,7 @@ title: "SVG Cleaner"
 subtitle: "Prepare SVGs for the design system"
 description: "Paste raw SVG code and get a cleaned, optimised version ready for the design system."
 section: "Tools"
+layer: "app"
 subsection: ""
 order: 2
 status: "published"
@@ -108,7 +109,7 @@ node assets/js/svg-clean.js --logo --logo-name brand --current-color --strip-com
 SVGEOF
 
 # Image file
-node assets/js/svg-clean.js --standalone --strip-comments -o assets/images/logos/logo.svg <<'SVGEOF'
+node assets/js/svg-clean.js --standalone --strip-comments -o assets/images/logos/bydefault/logo_bydefault-primary.svg <<'SVGEOF'
 <svg>...pasted code...</svg>
 SVGEOF
 ```

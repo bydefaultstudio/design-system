@@ -3,6 +3,7 @@ title: "Icon"
 subtitle: "Brand icon standards and the full registry"
 description: "How to use icons in the design system — SVG standards, wrapper classes, accessibility, tooling, and the full registry of brand icons."
 section: "Design System"
+layer: "foundation"
 subsection: ""
 order: 7
 status: "published"

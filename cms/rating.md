@@ -3,6 +3,7 @@ title: "Rating"
 subtitle: "Interactive and read-only star ratings"
 description: "How to use the rating component for star-based ratings and reviews."
 section: "Design System"
+layer: "core"
 subsection: "Feedback"
 order: 5
 status: "published"

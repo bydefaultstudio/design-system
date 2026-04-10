@@ -142,7 +142,7 @@ Examples:
   cat logo.svg | node svg-clean.js --current-color
 
   # Standalone .svg file (keeps colors and dimensions, adds xmlns)
-  cat logo.svg | node svg-clean.js --standalone -o assets/images/logos/logo.svg
+  cat logo.svg | node svg-clean.js --standalone -o assets/images/logos/bydefault/logo_bydefault-primary.svg
 
   # Icon for inline use
   cat icon.svg | node svg-clean.js --current-color --icon --icon-name "arrow-right"

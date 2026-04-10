@@ -29,6 +29,9 @@
     <!-- Site styles -->
     <link rel="stylesheet" href="{{NAV_BASE}}assets/css/style.css">
 
+    <!-- Docs-site components (asset-card, book-cover, dont-card, sticky-bar, copy-btn, token-copy) -->
+    <link rel="stylesheet" href="{{NAV_BASE}}assets/css/docs-site.css">
+
     {{CLIENT_THEME_CSS}}
 
     <!-- Early theme loader: apply cached client theme before first paint -->
@@ -61,6 +64,9 @@
     <div id="site-nav" data-base="{{NAV_BASE}}"></div>
 
     <div class="docs-main-area">
+        <!-- Page Header (full width, outside grid) -->
+        {{PAGE_HEADER}}
+
         <!-- Page sub-header bar (full width, sticky — breadcrumb + filename + actions) -->
         {{PAGE_STICKY_BAR}}
 
@@ -69,7 +75,6 @@
             <!-- Main Content -->
             <main class="docs-main">
                 <article>
-                    {{PAGE_HEADER}}
                     {{PAGE_CONTENT}}
                 </article>
             </main>

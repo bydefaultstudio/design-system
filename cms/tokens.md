@@ -3,6 +3,7 @@ title: "Tokens"
 subtitle: "Every visual decision in one place"
 description: "Every design token in one place — colors, typography, spacing, borders, and component tokens."
 section: "Design System"
+layer: "foundation"
 subsection: ""
 order: 1
 status: "published"

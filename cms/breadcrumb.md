@@ -3,6 +3,7 @@ title: "Breadcrumb"
 subtitle: "Show where you are in the hierarchy"
 description: "How to use the breadcrumb component for showing navigation hierarchy."
 section: "Design System"
+layer: "core"
 subsection: "Content"
 order: 3
 status: "published"

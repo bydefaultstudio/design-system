@@ -3,6 +3,7 @@ title: "Dialog"
 subtitle: "Focused interactions that require a response"
 description: "How to use the dialog component for modal windows, confirmations, and form overlays."
 section: "Design System"
+layer: "core"
 subsection: "Content"
 order: 6
 status: "published"

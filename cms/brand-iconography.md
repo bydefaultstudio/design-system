@@ -3,8 +3,9 @@ title: "Iconography"
 subtitle: "Complete brand icon set"
 description: "Browse, copy, and download every icon in the brand icon set."
 section: "Brand Book"
-subsection: ""
-order: 8
+layer: "core"
+subsection: "Visual Identity"
+order: 4
 status: "published"
 access: "team"
 client: "internal"

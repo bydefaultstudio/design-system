@@ -3,6 +3,7 @@ title: "Markdown"
 subtitle: "Styling guidelines for markdown content"
 description: "Documentation for markdown styling and design system integration"
 section: "Docs"
+layer: "app"
 subsection: "Code Standards"
 order: 6
 status: "published"

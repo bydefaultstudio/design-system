@@ -31,6 +31,9 @@
     <!-- Site styles -->
     <link rel="stylesheet" href="../assets/css/style.css">
 
+    <!-- Docs-site components (asset-card, book-cover, dont-card, sticky-bar, copy-btn, token-copy) -->
+    <link rel="stylesheet" href="../assets/css/docs-site.css">
+
     
 
     <!-- Early theme loader: apply cached client theme before first paint -->
@@ -63,6 +66,15 @@
     <div id="site-nav" data-base="../"></div>
 
     <div class="docs-main-area">
+        <!-- Page Header (full width, outside grid) -->
+        <div class="page-header">
+      <div class="container-small">
+        <h1>Color</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">Palette, scales, and semantic colour mappings</p>
+        
+      </div>
+    </div>
+
         <!-- Page sub-header bar (full width, sticky — breadcrumb + filename + actions) -->
         <div class="sticky-bar sticky-bar-page">
       <div class="sticky-bar-container">
@@ -106,11 +118,6 @@
             <!-- Main Content -->
             <main class="docs-main">
                 <article>
-                    <header class="docs-page-header">
-      <h1>Color</h1>
-      <p class="docs-page-subtitle" data-text-wrap="pretty">Palette, scales, and semantic colour mappings</p>
-      
-    </header>
                     <p>Color tokens define the shared, reusable color values that power both design and code. This page shows what each color looks like. For the full token list with values, see the <a href="tokens.html">Tokens</a> page.</p>
 <p>Colors are organised into two layers: <strong>primitive tokens</strong> (raw values) and <strong>semantic tokens</strong> (intent-based aliases). Always use semantic tokens in production code — primitives are the building blocks that semantic tokens reference.</p>
 <hr>
@@ -275,7 +282,8 @@
 
 <hr>
 <h2 id="dark-mode">Dark Mode</h2>
-<p>The design system uses a <code>data-theme</code> attribute to switch between light and dark modes. Light mode is the default. Dark mode activates when <code>data-theme=&quot;dark&quot;</code> is set on any element.</p>
+<p>The design system uses a <code>data-theme</code> attribute to switch between light and dark modes. <strong>Light mode is the default</strong> — dark mode is an opt-in override, not a baseline. Activate it by setting <code>data-theme=&quot;dark&quot;</code> on any element; tokens inherit through the cascade.</p>
+<p>Dark mode values (e.g. <button type="button" class="token-copy has-swatch" data-copy="#1a1a1a" aria-label="Copy #1a1a1a"><code>#1a1a1a</code><span class="token-swatch" style="background:#1a1a1a;" aria-hidden="true"></span></button>, <button type="button" class="token-copy has-swatch" data-copy="#e8e6e3" aria-label="Copy #e8e6e3"><code>#e8e6e3</code><span class="token-swatch" style="background:#e8e6e3;" aria-hidden="true"></span></button>) are <strong>overrides applied via <code>[data-theme=&quot;dark&quot;]</code></strong> — never use them as primary values, and never hardcode them. If you&#39;re working from a dark-looking screenshot, confirm the intended theme before writing code.</p>
 <h3 id="how-it-works">How It Works</h3>
 <ul>
 <li><strong><code>:root</code></strong> — light mode tokens (always present)</li>
@@ -308,8 +316,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-pth2fpq7n" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-pth2fpq7n" class="language-html">&lt;!-- Dark card on a light page --&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-ghrzpqprl" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-ghrzpqprl" class="language-html">&lt;!-- Dark card on a light page --&gt;
 &lt;div data-theme=&quot;dark&quot; class=&quot;card&quot;&gt;
   &lt;p&gt;This section uses dark mode tokens&lt;/p&gt;
 &lt;/div&gt;

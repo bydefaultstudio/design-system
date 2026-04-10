@@ -3,6 +3,7 @@ title: "Homepage"
 subtitle: "Complete guide to homepage-specific features including video interactions, logo animations, and slider components"
 description: "Documentation for homepage JavaScript functionality including video hover effects, mobile autoplay, logo scroll animations, testimonial sliders, and sticky service cards."
 section: "Website"
+layer: "app"
 subsection: "Pages"
 order: 1
 ---

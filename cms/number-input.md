@@ -3,6 +3,7 @@ title: "Number Input"
 subtitle: "Precise numeric entry with step controls"
 description: "How to use the number input component with stepper buttons for precise numeric entry."
 section: "Design System"
+layer: "core"
 subsection: "Data Entry"
 order: 4
 status: "published"

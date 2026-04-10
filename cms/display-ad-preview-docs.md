@@ -3,6 +3,7 @@ title: "Display Ad Preview"
 subtitle: "Preview ad creatives across IAB formats and devices"
 description: "Generate Celtra ad preview sandbox URLs with device simulation and publisher context."
 section: "Tools"
+layer: "app"
 subsection: ""
 order: 3
 status: "published"

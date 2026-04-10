@@ -3,6 +3,7 @@ title: "Components"
 subtitle: "Component specification and build rules"
 description: "Master specification for all design system components — naming, tokens, accessibility, and build process."
 section: "Docs"
+layer: "foundation"
 subsection: "Dev"
 order: 20
 status: "published"
@@ -11,6 +12,29 @@ client: "internal"
 ---
 
 This document defines the rules and conventions for building components in the By Default design system. All contributors must follow these patterns to keep the system consistent and predictable.
+
+---
+
+## How this system is organized
+
+Components are split across **four layers** so the design system can be lifted into other products without dragging the BrandOS docs site along with it:
+
+- **`foundation`** — tokens, layout primitives, utilities. Lives in `assets/css/design-system.css`. Ships with every product.
+- **`core`** — reusable components (button, card, dropdown, …) plus brand identity docs (`brand-*.md`). Lives in `design-system.css`. Ships with every product.
+- **`docs-site`** — components that only power *this* BrandOS docs site (asset-card, book-cover, dont-card, sticky-bar, copy-button). Lives in `assets/css/docs-site.css`. Does **not** ship.
+- **`app`** — BrandOS-specific tools, integrations, and project content (calculators, world clock, ad preview, project case studies). Does **not** ship.
+
+Every `cms/*.md` doc declares its layer in frontmatter:
+
+```yaml
+---
+title: "Button"
+section: "Design System"
+layer: "core"
+---
+```
+
+The `layer` field is **required** — the doc generator validates it on every build. See CLAUDE.md §17 (Layer Discipline) for the seven rules that govern this split.
 
 ---
 
@@ -92,6 +116,8 @@ Every interactive component must include:
 | Toast | `.toast` | Yes (`toast.js`) | `toast.md` |
 | Code / Pre / Kbd | `code`, `pre`, `kbd` | No | `code.md` |
 | Mark / Abbr / Figure | `mark`, `abbr`, `figure` | No | `mark.md` |
+
+> Asset Card, Book Cover, Don't Card, Sticky Bar and Copy Button are documented separately as **docs-site components** — they only exist to power this BrandOS docs site and are not part of the portable design system. See [Layer Discipline](../docs/setup.html) and CLAUDE.md §17.
 
 ---
 

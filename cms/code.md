@@ -3,6 +3,7 @@ title: "Code"
 subtitle: "Inline code, code blocks, and keyboard shortcuts"
 description: "How to use code, pre, and kbd elements in the design system."
 section: "Design System"
+layer: "core"
 subsection: "Content"
 order: 11
 status: "published"

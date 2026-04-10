@@ -3,6 +3,7 @@ title: "Folders"
 subtitle: "File organization and directory structure"
 description: "Guide defining where files live and why in the project structure."
 section: "Docs"
+layer: "app"
 subsection: "Dev"
 order: 2
 status: "published"
