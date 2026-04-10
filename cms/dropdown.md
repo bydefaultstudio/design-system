@@ -4,7 +4,7 @@ subtitle: "Contextual menus and action lists"
 description: "How to use the dropdown component for contextual menus, action lists, settings panels, and navigation."
 section: "Design System"
 subsection: "Content"
-order: 8
+order: 5
 status: "published"
 access: "team"
 client: "internal"
@@ -18,11 +18,11 @@ Dropdowns show a contextual menu when a trigger is clicked. They are the univers
 
 | Token | Default | Purpose |
 |-------|---------|---------|
-| `--dropdown-background` | `var(--background-primary)` | Menu background |
-| `--dropdown-border` | `var(--border-faded)` | Menu and divider border |
-| `--dropdown-item-hover` | `var(--background-faded)` | Item hover background |
-| `--dropdown-item-padding-y` | `var(--space-l)` | Item vertical padding |
-| `--dropdown-item-padding-x` | `var(--space-m)` | Item horizontal padding |
+| `var(--dropdown-background)` | `var(--background-primary)` | Menu background |
+| `var(--dropdown-border)` | `var(--border-faded)` | Menu and divider border |
+| `var(--dropdown-item-hover)` | `var(--background-faded)` | Item hover background |
+| `var(--dropdown-item-padding-y)` | `var(--space-l)` | Item vertical padding |
+| `var(--dropdown-item-padding-x)` | `var(--space-m)` | Item horizontal padding |
 
 ---
 

@@ -82,6 +82,10 @@ Hover over each element to see the cursor change. Desktop only.
       <div><button class="button is-outline" data-cursor="plus">Hover for plus cursor</button></div>
     </div>
     <div class="block gap-m">
+      <p class="demo-eyebrow">Play</p>
+      <div><button class="button is-outline" data-cursor="play">Hover for play cursor</button></div>
+    </div>
+    <div class="block gap-m">
       <p class="demo-eyebrow">Close</p>
       <div><button class="button is-outline" data-cursor="close">Hover for close cursor</button></div>
     </div>
@@ -102,6 +106,7 @@ Hover over each element to see the cursor change. Desktop only.
 
 ```html
 <button data-cursor="plus">Plus</button>
+<button data-cursor="play">Play</button>
 <button data-cursor="close">Close</button>
 <button data-cursor="check">Check</button>
 <button data-cursor="search">Search</button>
@@ -208,6 +213,7 @@ Hover over each element to see the cursor change. Desktop only.
 | `external` | External link icon |
 | `home` | Home icon |
 | `plus` | Plus / add |
+| `play` | Play / media trigger |
 | `close` | Close / X |
 | `check` | Checkmark |
 | `search` | Search icon |

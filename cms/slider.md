@@ -18,13 +18,13 @@ Sliders style the native `<input type="range">` element with design system token
 
 | Token | Default | Purpose |
 |-------|---------|---------|
-| `--slider-track-height` | `4px` | Track height |
-| `--slider-thumb-size` | `18px` | Thumb diameter |
-| `--slider-track-background` | `var(--background-darker)` | Track fill |
-| `--slider-fill` | `var(--text-primary)` | Active fill colour |
-| `--slider-thumb-background` | `var(--text-primary)` | Thumb colour |
-| `--slider-thumb-border` | `var(--background-primary)` | Thumb border |
-| `--slider-radius` | `var(--radius-pill)` | Track corner radius |
+| `var(--slider-track-height)` | `4px` | Track height |
+| `var(--slider-thumb-size)` | `18px` | Thumb diameter |
+| `var(--slider-track-background)` | `var(--background-darker)` | Track fill |
+| `var(--slider-fill)` | `var(--text-primary)` | Active fill colour |
+| `var(--slider-thumb-background)` | `var(--text-primary)` | Thumb colour |
+| `var(--slider-thumb-border)` | `var(--background-primary)` | Thumb border |
+| `var(--slider-radius)` | `var(--radius-pill)` | Track corner radius |
 
 ---
 

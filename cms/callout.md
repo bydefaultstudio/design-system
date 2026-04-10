@@ -4,7 +4,7 @@ subtitle: "Draw attention to what matters"
 description: "How to use callout styles and semantic variants in the design system."
 section: "Design System"
 subsection: "Feedback"
-order: 2
+order: 1
 status: "published"
 access: "team"
 client: "internal"
@@ -29,16 +29,16 @@ Callout variants are powered by status color tokens defined in `:root`. Each sta
 
 | Token | Default | Purpose |
 |---|---|---|
-| `--status-info` | `var(--blue)` | Informational, notes |
-| `--status-info-bg` | `var(--blue-lighter)` | Info background |
-| `--status-success` | `var(--green)` | Tips, positive feedback |
-| `--status-success-bg` | `var(--green-lighter)` | Success background |
-| `--status-warning` | `var(--yellow-darker)` | Warnings, attention needed |
-| `--status-warning-bg` | `var(--yellow-lighter)` | Warning background |
-| `--status-danger` | `var(--red)` | Caution, destructive actions |
-| `--status-danger-bg` | `var(--red-lighter)` | Danger background |
-| `--status-accent` | `var(--purple)` | Important, emphasis |
-| `--status-accent-bg` | `var(--purple-lighter)` | Accent background |
+| `var(--status-info)` | `var(--blue)` | Informational, notes |
+| `var(--status-info-bg)` | `var(--blue-lighter)` | Info background |
+| `var(--status-success)` | `var(--green)` | Tips, positive feedback |
+| `var(--status-success-bg)` | `var(--green-lighter)` | Success background |
+| `var(--status-warning)` | `var(--yellow-darker)` | Warnings, attention needed |
+| `var(--status-warning-bg)` | `var(--yellow-lighter)` | Warning background |
+| `var(--status-danger)` | `var(--red)` | Caution, destructive actions |
+| `var(--status-danger-bg)` | `var(--red-lighter)` | Danger background |
+| `var(--status-accent)` | `var(--purple)` | Important, emphasis |
+| `var(--status-accent-bg)` | `var(--purple-lighter)` | Accent background |
 
 Callouts, badges, and other components reference these tokens directly — no intermediate `--callout-*` layer needed.
 
@@ -61,9 +61,9 @@ The `.callout` class provides the structural foundation:
 ```
 
 **Structural properties:**
-- Left border using `--border-l` width (4px)
+- Left border using `var(--border-l)` width (4px)
 - Padding using spacing tokens
-- Neutral background (`--background-faded`)
+- Neutral background (`var(--background-faded)`)
 - First/last child margin normalization
 
 ---

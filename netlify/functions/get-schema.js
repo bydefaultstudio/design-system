@@ -32,12 +32,22 @@ exports.handler = async function getSchema(event) {
 
   var formConfig = config.getFormConfig(formType);
 
-  if (!formConfig) {
-    return {
-      statusCode: 400,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ error: 'Unknown form type' })
-    };
+  if (!formConfig.ok) {
+    if (formConfig.reason === 'unknown') {
+      return {
+        statusCode: 400,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: 'Unknown form type: ' + formType })
+      };
+    }
+    if (formConfig.reason === 'missing-env') {
+      console.error('get-schema: env var ' + formConfig.envKey + ' not set for formType ' + formType);
+      return {
+        statusCode: 500,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: 'Form not configured: set ' + formConfig.envKey + ' in Netlify environment variables' })
+      };
+    }
   }
 
   var apiKey = process.env.NOTION_API_KEY;

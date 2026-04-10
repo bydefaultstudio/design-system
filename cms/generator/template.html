@@ -61,10 +61,7 @@
     <div id="site-nav" data-base="{{NAV_BASE}}"></div>
 
     <div class="docs-main-area">
-        <!-- Page Header (full width, outside grid) -->
-        {{PAGE_HEADER}}
-
-        <!-- Sticky Bar (breadcrumbs + actions) -->
+        <!-- Page sub-header bar (full width, sticky — breadcrumb + filename + actions) -->
         {{PAGE_STICKY_BAR}}
 
         <!-- Main Content + TOC grid -->
@@ -72,6 +69,7 @@
             <!-- Main Content -->
             <main class="docs-main">
                 <article>
+                    {{PAGE_HEADER}}
                     {{PAGE_CONTENT}}
                 </article>
             </main>
@@ -90,7 +88,11 @@
                 <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
                 <div class="button-group">
                     <button class="button" data-feedback="yes" type="button">{{icon:thumbs-up}} Yes</button>
-                    <button class="button is-outline is-faded" data-feedback="no" type="button">{{icon:thumbs-down}} No</button>
+                    <button class="button is-faded" data-feedback="no" type="button">{{icon:thumbs-down}} No</button>
+                </div>
+                <div class="page-feedback-success" aria-live="polite">
+                    <div class="page-feedback-success-icon">{{icon:status-check}}</div>
+                    <h3 class="page-feedback-success-title">Thanks for your feedback</h3>
                 </div>
             </div>
         </section>

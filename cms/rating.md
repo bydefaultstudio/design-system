@@ -4,7 +4,7 @@ subtitle: "Interactive and read-only star ratings"
 description: "How to use the rating component for star-based ratings and reviews."
 section: "Design System"
 subsection: "Feedback"
-order: 4
+order: 5
 status: "published"
 access: "team"
 client: "internal"
@@ -18,9 +18,9 @@ Ratings display a star-based score. They can be interactive (click to rate) or r
 
 | Token | Default (Light) | Default (Dark) | Purpose |
 |-------|-----------------|----------------|---------|
-| `--rating-color` | `var(--yellow)` | — | Filled star colour |
-| `--rating-color-empty` | `var(--neutral-300)` | `var(--neutral-700)` | Empty star colour |
-| `--rating-size` | `1.5rem` | — | Star size |
+| `var(--rating-color)` | `var(--yellow)` | — | Filled star colour |
+| `var(--rating-color-empty)` | `var(--neutral-300)` | `var(--neutral-700)` | Empty star colour |
+| `var(--rating-size)` | `1.5rem` | — | Star size |
 
 ---
 

@@ -4,7 +4,7 @@ subtitle: "Show how far along something is"
 description: "How to use the progress bar component for showing completion status."
 section: "Design System"
 subsection: "Feedback"
-order: 3
+order: 4
 status: "published"
 access: "team"
 client: "internal"
@@ -18,10 +18,10 @@ Progress bars use the native `<progress>` element styled with design system toke
 
 | Token | Default | Purpose |
 |-------|---------|---------|
-| `--progress-track` | `var(--background-darker)` | Track (unfilled) background |
-| `--progress-fill` | `var(--text-primary)` | Fill (completed) colour |
-| `--progress-radius` | `var(--radius-pill)` | Corner radius |
-| `--progress-height` | `var(--space-s)` | Bar height |
+| `var(--progress-track)` | `var(--background-darker)` | Track (unfilled) background |
+| `var(--progress-fill)` | `var(--text-primary)` | Fill (completed) colour |
+| `var(--progress-radius)` | `var(--radius-pill)` | Corner radius |
+| `var(--progress-height)` | `var(--space-s)` | Bar height |
 
 ---
 

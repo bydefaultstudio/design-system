@@ -26,27 +26,6 @@ client: "dianomi"
 
 ---
 
-## Workflow
-
-```mermaid
-flowchart TD
-  A["1) Client Intake Form — R01<br/><b>Client → PM/Creative</b><br/><i>1 business day</i>"]
-  B["2) Creative brief + kickoff + Asana setup — R01<br/><b>PM → Creative</b><br/><i>1 business day</i>"]
-  C["3) Creative production + internal review — R02<br/><b>Creative</b><br/><i>5 business days</i>"]
-  D["4) Client approval — R03<br/><b>Client → PM → Creative</b><br/><i>1–2 business days</i>"]
-  E["5) Final creative amends — R04<br/><b>Creative</b><br/><i>1–2 business days</i>"]
-  F["6) Trafficking in Celtra — R05<br/><b>Trafficking / Ad Ops</b><br/><i>1–2 business days</i>"]
-  G["7) Test launch + QA — R05<br/><b>PM + Trafficking + Creative</b><br/><i>1–2 business days</i>"]
-  H["8) Go live — R06<br/><b>Trafficking</b><br/><i>1–2 business days</i>"]
-  I["9) Reporting setup — R06<br/><b>PM / Reporting owner</b><br/><i>1–2 business days</i>"]
-
-  A --> B --> C --> D --> E
-  E -- Amends needed --> F --> G --> E
-  E -- Approved --> H --> I
-```
-
----
-
 ## Round Checklists
 
 ### R01: Brief

@@ -4,7 +4,7 @@ subtitle: "Visual breaks between content sections"
 description: "How to use the divider component for visual separation between content sections."
 section: "Design System"
 subsection: "Content"
-order: 6
+order: 9
 status: "published"
 access: "team"
 client: "internal"
@@ -18,9 +18,9 @@ Dividers create visual separation between content sections. They use semantic to
 
 | Token | Default | Purpose |
 |-------|---------|---------|
-| `--divider-color` | `var(--border-faded)` | Line colour |
-| `--divider-thickness` | `var(--border-s)` | Line thickness |
-| `--divider-spacing` | `var(--space-xl)` | Vertical margin |
+| `var(--divider-color)` | `var(--border-faded)` | Line colour |
+| `var(--divider-thickness)` | `var(--border-s)` | Line thickness |
+| `var(--divider-spacing)` | `var(--space-xl)` | Vertical margin |
 
 ---
 
@@ -102,8 +102,8 @@ Use `.divider--vertical` inside a flex row to separate inline content.
 
 **Do:**
 - Use dividers to separate distinct content groups
-- Use `--subtle` for minor separation within a section
-- Use `--strong` for major section boundaries
+- Use `var(--subtle)` for minor separation within a section
+- Use `var(--strong)` for major section boundaries
 
 **Don't:**
 - Don't use dividers where spacing alone provides sufficient separation

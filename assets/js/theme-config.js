@@ -45,7 +45,7 @@ var THEME_CONFIG = {
         { title: 'Image Placeholder', href: 'tools/image-placeholder.html', section: 'Tools' },
         { title: 'World Clock', href: 'tools/world-clock.html', section: 'Tools' },
         { title: 'Welcome', href: 'client-template/docs/welcome.html', subtitle: 'Your brand system starts here', section: 'Docs' },
-        { title: 'Brand Identity', href: 'client-template/brand-book.html', subtitle: 'Visual identity, logo, palette, and typography' }
+        { title: 'Brand Book', href: 'client-template/brand-book.html', subtitle: 'Logo, colour, typography, and interface elements styled with your brand tokens' }
       ]
     },
 
@@ -61,7 +61,6 @@ var THEME_CONFIG = {
         { title: 'CPM Calculator', href: 'tools/cpm-calculator.html', section: 'Tools' },
         { title: 'Display Ad Preview', href: 'tools/display-ad-preview.html', section: 'Tools' },
         { title: 'Image Placeholder', href: 'tools/image-placeholder.html', section: 'Tools' },
-        { title: 'Start Here', href: 'dianomi/docs/start-here.html', subtitle: 'Welcome to Dianomi Interactive', section: 'Docs' },
         { title: 'World Clock', href: 'tools/world-clock.html', section: 'Tools' },
         { title: 'Start Here', href: 'dianomi/docs/welcome.html', subtitle: 'Welcome to Dianomi Interactive', section: 'Docs' },
         { title: 'How To Sell Rich Media', href: 'dianomi/docs/how-to-sell-rich-media.html', subtitle: 'A guide for positioning rich media confidently', section: 'Docs' },
@@ -71,10 +70,9 @@ var THEME_CONFIG = {
         { title: 'Working with By Default', href: 'dianomi/docs/working-with-by-default.html', subtitle: 'Why By Default as a rich media partner', section: 'Docs' },
         { title: 'Format Links', href: 'dianomi/docs/format-links.html', subtitle: 'Preview links for all rich media formats', section: 'Docs' },
         { title: 'Publishers & Industries', href: 'dianomi/docs/publishers-industries.html', subtitle: 'Network publishers and industry verticals', section: 'Docs' },
-        { title: 'White Label Mockups', href: 'dianomi/docs/white-label-mockups.html', subtitle: 'GIF and static mockup previews', section: 'Docs' },
         { title: 'New Campaign Form', href: 'dianomi/docs/new-campaign-form.html', subtitle: 'Submit a new campaign request', section: 'Docs' },
         { title: 'New Proposal Form', href: 'dianomi/docs/new-proposal-form.html', subtitle: 'Submit a new proposal request', section: 'Docs' },
-        { title: 'Brand Identity', href: 'dianomi/brand-book.html', subtitle: 'Visual identity, logo, palette, and typography' }
+        { title: 'Brand Book', href: 'dianomi/brand-book.html', subtitle: 'Logo, colour, typography, and interface elements styled with your brand tokens' }
       ]
     }
 

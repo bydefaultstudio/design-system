@@ -22,22 +22,22 @@ The space scale provides a visual reference for the spacing tokens used througho
 
 | Token | Value | px Equivalent |
 | --- | --- | --- |
-| `--space-none` | 0 | 0px |
-| `--space-2xs` | 0.125rem | 2px |
-| `--space-xs` | 0.25rem | 4px |
-| `--space-s` | 0.5rem | 8px |
-| `--space-m` | 0.75rem | 12px |
-| `--space-l` | 1rem | 16px |
-| `--space-xl` | 1.5rem | 24px |
-| `--space-2xl` | 2rem | 32px |
-| `--space-3xl` | 2.5rem | 40px |
-| `--space-4xl` | 3rem | 48px |
-| `--space-5xl` | 3.5rem | 56px |
-| `--space-6xl` | 4rem | 64px |
-| `--space-7xl` | 4.5rem | 72px |
-| `--space-8xl` | 5rem | 80px |
-| `--space-9xl` | 5.5rem | 88px |
-| `--space-10xl` | 6rem | 96px |
+| `var(--space-none)` | 0 | 0px |
+| `var(--space-2xs)` | 0.125rem | 2px |
+| `var(--space-xs)` | 0.25rem | 4px |
+| `var(--space-s)` | 0.5rem | 8px |
+| `var(--space-m)` | 0.75rem | 12px |
+| `var(--space-l)` | 1rem | 16px |
+| `var(--space-xl)` | 1.5rem | 24px |
+| `var(--space-2xl)` | 2rem | 32px |
+| `var(--space-3xl)` | 2.5rem | 40px |
+| `var(--space-4xl)` | 3rem | 48px |
+| `var(--space-5xl)` | 3.5rem | 56px |
+| `var(--space-6xl)` | 4rem | 64px |
+| `var(--space-7xl)` | 4.5rem | 72px |
+| `var(--space-8xl)` | 5rem | 80px |
+| `var(--space-9xl)` | 5.5rem | 88px |
+| `var(--space-10xl)` | 6rem | 96px |
 
 <div class="demo-preview is-joined">
   <div class="block gap-l">
@@ -102,7 +102,7 @@ margin-bottom: var(--space-l);
 
 ## Gap
 
-Gap modifiers control the space between child elements inside a `.block`. The default gap is `--space-m`.
+Gap modifiers control the space between child elements inside a `.block`. The default gap is `var(--space-m)`.
 
 <div class="demo-preview is-joined">
   <div class="block gap-xl">
@@ -180,13 +180,13 @@ Gap modifiers control the space between child elements inside a `.block`. The de
 | Class | Value | px Equivalent |
 | --- | --- | --- |
 | `.gap-none` | 0 | 0px |
-| `.gap-xs` | `--space-xs` | 4px |
-| `.gap-s` | `--space-s` | 8px |
-| `.gap-m` | `--space-m` | 12px |
-| `.gap-l` | `--space-l` | 16px |
-| `.gap-xl` | `--space-xl` | 24px |
-| `.gap-2xl` | `--space-2xl` | 32px |
-| `.gap-3xl` | `--space-3xl` | 40px |
+| `.gap-xs` | `var(--space-xs)` | 4px |
+| `.gap-s` | `var(--space-s)` | 8px |
+| `.gap-m` | `var(--space-m)` | 12px |
+| `.gap-l` | `var(--space-l)` | 16px |
+| `.gap-xl` | `var(--space-xl)` | 24px |
+| `.gap-2xl` | `var(--space-2xl)` | 32px |
+| `.gap-3xl` | `var(--space-3xl)` | 40px |
 
 ---
 
@@ -231,12 +231,12 @@ Padding utilities apply internal spacing to an element on all sides.
 
 | Class | Value | px Equivalent |
 | --- | --- | --- |
-| `.padding-s` | `--space-s` | 8px |
-| `.padding-m` | `--space-m` | 12px |
-| `.padding-l` | `--space-l` | 16px |
-| `.padding-xl` | `--space-xl` | 24px |
-| `.padding-2xl` | `--space-2xl` | 32px |
-| `.padding-3xl` | `--space-3xl` | 40px |
+| `.padding-s` | `var(--space-s)` | 8px |
+| `.padding-m` | `var(--space-m)` | 12px |
+| `.padding-l` | `var(--space-l)` | 16px |
+| `.padding-xl` | `var(--space-xl)` | 24px |
+| `.padding-2xl` | `var(--space-2xl)` | 32px |
+| `.padding-3xl` | `var(--space-3xl)` | 40px |
 
 ---
 
@@ -315,7 +315,7 @@ Section spacing controls the vertical rhythm between major page sections. Apply 
 
 | Class | Token | Desktop | Mobile |
 | --- | --- | --- | --- |
-| `.top-small` / `.bottom-small` | `--section-s` | 32px | 24px |
-| `.top-medium` / `.bottom-medium` | `--section-m` | 64px | 32px |
-| `.top-large` / `.bottom-large` | `--section-l` | 96px | 56px |
-| `.top-xl` / `.bottom-xl` | `--section-xl` | 160px | 80px |
+| `.top-small` / `.bottom-small` | `var(--section-s)` | 32px | 24px |
+| `.top-medium` / `.bottom-medium` | `var(--section-m)` | 64px | 32px |
+| `.top-large` / `.bottom-large` | `var(--section-l)` | 96px | 56px |
+| `.top-xl` / `.bottom-xl` | `var(--section-xl)` | 160px | 80px |

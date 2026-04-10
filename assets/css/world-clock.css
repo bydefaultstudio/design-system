@@ -4,7 +4,6 @@
 .clock-preview-frame {
   position: relative;
   background-color: var(--background-faded);
-  border-radius: var(--radius-m);
   overflow: hidden;
 }
 
@@ -26,17 +25,15 @@
 
 .clock-search-results {
   position: absolute;
-  top: 100%;
+  top: calc(100% + var(--space-xs));
   left: 0;
   right: 0;
-  z-index: 10;
-  max-height: 240px;
+  z-index: 50;
+  max-height: 320px;
   overflow-y: auto;
-  background: var(--background-primary);
-  border: var(--border-s) solid var(--border-faded);
-  border-radius: var(--radius-s);
-  box-shadow: var(--shadow-m);
-  margin-top: var(--space-2xs);
+  background: var(--background-plain);
+  border: var(--border-s) solid var(--border-secondary);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   display: none;
 }
 
@@ -48,14 +45,21 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--space-xs) var(--space-s);
+  gap: var(--space-m);
+  padding: var(--space-m) var(--space-l);
   cursor: pointer;
-  font-size: var(--font-s);
+  font-size: var(--font-m);
   color: var(--text-primary);
   border: none;
+  border-bottom: var(--border-s) solid var(--border-faded);
   background: none;
   width: 100%;
   text-align: left;
+  transition: background 0.12s;
+}
+
+.clock-search-result:last-child {
+  border-bottom: none;
 }
 
 .clock-search-result:hover,
@@ -64,8 +68,10 @@
 }
 
 .clock-search-result-tz {
-  font-size: var(--font-xs);
+  font-size: var(--font-s);
   color: var(--text-faded);
+  font-family: var(--font-tertiary);
+  flex-shrink: 0;
 }
 
 /* -- Preset buttons -- */

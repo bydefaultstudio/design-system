@@ -63,17 +63,8 @@
     <div id="site-nav" data-base="../"></div>
 
     <div class="docs-main-area">
-        <!-- Page Header (full width, outside grid) -->
-        <div class="page-header">
-      <div class="container-small">
-        <h1>Tokens</h1>
-        <p class="page-subtitle" data-text-wrap="pretty">Every visual decision in one place</p>
-        
-      </div>
-    </div>
-
-        <!-- Sticky Bar (breadcrumbs + actions) -->
-        <div class="sticky-bar">
+        <!-- Page sub-header bar (full width, sticky — breadcrumb + filename + actions) -->
+        <div class="sticky-bar sticky-bar-page">
       <div class="sticky-bar-container">
         <div class="sticky-bar-content">
           <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
@@ -115,8 +106,19 @@
             <!-- Main Content -->
             <main class="docs-main">
                 <article>
+                    <header class="docs-page-header">
+      <h1>Tokens</h1>
+      <p class="docs-page-subtitle" data-text-wrap="pretty">Every visual decision in one place</p>
+      
+    </header>
                     <p>Design tokens are the single source of truth for every visual decision in the system. They capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync. This page lists every token defined in <code>design-system.css</code> for quick reference.</p>
 <p>Tokens are organised into two layers: <strong>primitive tokens</strong> (raw values) and <strong>semantic tokens</strong> (intent-based aliases that reference primitives). Always prefer semantic tokens in production code.</p>
+<p>Every token, value, and hex on this page is a click-to-copy chip. The convention is intentionally explicit so the syntax in the markdown source matches what you copy:</p>
+<ul>
+<li><code>`var(--token-name)`</code> → CSS variable, copies <button type="button" class="token-copy is-token" data-copy="var(--token-name)" aria-label="Copy var(--token-name)"><code>var(--token-name)</code></button></li>
+<li><code>`.class-name`</code> → utility class, copies <button type="button" class="token-copy is-class" data-copy=".class-name" aria-label="Copy .class-name"><code>.class-name</code></button></li>
+<li><code>`#abc123`</code> → hex colour, copies <button type="button" class="token-copy has-swatch" data-copy="#abc123" aria-label="Copy #abc123"><code>#abc123</code><span class="token-swatch" style="background:#abc123;" aria-hidden="true"></span></button> and renders a swatch</li>
+</ul>
 <hr>
 <h2 id="brand-tokens">Brand Tokens</h2>
 <h3 id="font-families">Font Families</h3>
@@ -130,18 +132,18 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--font-primary</code></td>
-<td>&quot;Inclusive Sans&quot;, sans-serif</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-primary)" aria-label="Copy var(--font-primary)"><code>var(--font-primary)</code></button></td>
+<td><code>&quot;Inclusive Sans&quot;, sans-serif</code></td>
 <td>Body text and UI</td>
 </tr>
 <tr>
-<td><code>--font-secondary</code></td>
-<td>&quot;RecifeText&quot;, Georgia, serif</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-secondary)" aria-label="Copy var(--font-secondary)"><code>var(--font-secondary)</code></button></td>
+<td><code>&quot;RecifeText&quot;, Georgia, serif</code></td>
 <td>Headings and display</td>
 </tr>
 <tr>
-<td><code>--font-tertiary</code></td>
-<td>&quot;IBM Plex Mono&quot;, monospace</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-tertiary)" aria-label="Copy var(--font-tertiary)"><code>var(--font-tertiary)</code></button></td>
+<td><code>&quot;IBM Plex Mono&quot;, monospace</code></td>
 <td>Code and monospace</td>
 </tr>
 </tbody></table></div>
@@ -156,123 +158,123 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--off-white</code></td>
-<td><button type="button" class="color-copy" data-copy="#fff7f1" aria-label="Copy #fff7f1">#fff7f1<span class="color-swatch" style="background:#fff7f1;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--off-white)" aria-label="Copy var(--off-white)"><code>var(--off-white)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#fff7f1" aria-label="Copy #fff7f1"><code>#fff7f1</code><span class="token-swatch" style="background:#fff7f1;" aria-hidden="true"></span></button></td>
 <td>Light brand color</td>
 </tr>
 <tr>
-<td><code>--warm-white</code></td>
-<td><button type="button" class="color-copy" data-copy="#f5ebe3" aria-label="Copy #f5ebe3">#f5ebe3<span class="color-swatch" style="background:#f5ebe3;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--warm-white)" aria-label="Copy var(--warm-white)"><code>var(--warm-white)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#f5ebe3" aria-label="Copy #f5ebe3"><code>#f5ebe3</code><span class="token-swatch" style="background:#f5ebe3;" aria-hidden="true"></span></button></td>
 <td>Warm light tone</td>
 </tr>
 <tr>
-<td><code>--warm-black</code></td>
-<td><button type="button" class="color-copy" data-copy="#221f1c" aria-label="Copy #221f1c">#221f1c<span class="color-swatch" style="background:#221f1c;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--warm-black)" aria-label="Copy var(--warm-black)"><code>var(--warm-black)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#221f1c" aria-label="Copy #221f1c"><code>#221f1c</code><span class="token-swatch" style="background:#221f1c;" aria-hidden="true"></span></button></td>
 <td>Dark brand color</td>
 </tr>
 <tr>
-<td><code>--off-black</code></td>
-<td><button type="button" class="color-copy" data-copy="#0f0e0e" aria-label="Copy #0f0e0e">#0f0e0e<span class="color-swatch" style="background:#0f0e0e;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--off-black)" aria-label="Copy var(--off-black)"><code>var(--off-black)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#0f0e0e" aria-label="Copy #0f0e0e"><code>#0f0e0e</code><span class="token-swatch" style="background:#0f0e0e;" aria-hidden="true"></span></button></td>
 <td>Near-black</td>
 </tr>
 <tr>
-<td><code>--red-lighter</code></td>
-<td><button type="button" class="color-copy" data-copy="#FFE8E3" aria-label="Copy #FFE8E3">#FFE8E3<span class="color-swatch" style="background:#FFE8E3;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--red-lighter)" aria-label="Copy var(--red-lighter)"><code>var(--red-lighter)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#FFE8E3" aria-label="Copy #FFE8E3"><code>#FFE8E3</code><span class="token-swatch" style="background:#FFE8E3;" aria-hidden="true"></span></button></td>
 <td>Lighter red (backgrounds)</td>
 </tr>
 <tr>
-<td><code>--red-light</code></td>
-<td><button type="button" class="color-copy" data-copy="#FFD6CD" aria-label="Copy #FFD6CD">#FFD6CD<span class="color-swatch" style="background:#FFD6CD;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--red-light)" aria-label="Copy var(--red-light)"><code>var(--red-light)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#FFD6CD" aria-label="Copy #FFD6CD"><code>#FFD6CD</code><span class="token-swatch" style="background:#FFD6CD;" aria-hidden="true"></span></button></td>
 <td>Light red</td>
 </tr>
 <tr>
-<td><code>--red</code></td>
-<td><button type="button" class="color-copy" data-copy="#D92A27" aria-label="Copy #D92A27">#D92A27<span class="color-swatch" style="background:#D92A27;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--red)" aria-label="Copy var(--red)"><code>var(--red)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#D92A27" aria-label="Copy #D92A27"><code>#D92A27</code><span class="token-swatch" style="background:#D92A27;" aria-hidden="true"></span></button></td>
 <td>Accent red</td>
 </tr>
 <tr>
-<td><code>--red-dark</code></td>
-<td><button type="button" class="color-copy" data-copy="#99333D" aria-label="Copy #99333D">#99333D<span class="color-swatch" style="background:#99333D;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--red-dark)" aria-label="Copy var(--red-dark)"><code>var(--red-dark)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#99333D" aria-label="Copy #99333D"><code>#99333D</code><span class="token-swatch" style="background:#99333D;" aria-hidden="true"></span></button></td>
 <td>Dark red</td>
 </tr>
 <tr>
-<td><code>--blue-lighter</code></td>
-<td><button type="button" class="color-copy" data-copy="#D5F3FF" aria-label="Copy #D5F3FF">#D5F3FF<span class="color-swatch" style="background:#D5F3FF;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--blue-lighter)" aria-label="Copy var(--blue-lighter)"><code>var(--blue-lighter)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#D5F3FF" aria-label="Copy #D5F3FF"><code>#D5F3FF</code><span class="token-swatch" style="background:#D5F3FF;" aria-hidden="true"></span></button></td>
 <td>Lighter blue (backgrounds)</td>
 </tr>
 <tr>
-<td><code>--blue-light</code></td>
-<td><button type="button" class="color-copy" data-copy="#B1E6FC" aria-label="Copy #B1E6FC">#B1E6FC<span class="color-swatch" style="background:#B1E6FC;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--blue-light)" aria-label="Copy var(--blue-light)"><code>var(--blue-light)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#B1E6FC" aria-label="Copy #B1E6FC"><code>#B1E6FC</code><span class="token-swatch" style="background:#B1E6FC;" aria-hidden="true"></span></button></td>
 <td>Light blue</td>
 </tr>
 <tr>
-<td><code>--blue</code></td>
-<td><button type="button" class="color-copy" data-copy="#1A54D6" aria-label="Copy #1A54D6">#1A54D6<span class="color-swatch" style="background:#1A54D6;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--blue)" aria-label="Copy var(--blue)"><code>var(--blue)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#1A54D6" aria-label="Copy #1A54D6"><code>#1A54D6</code><span class="token-swatch" style="background:#1A54D6;" aria-hidden="true"></span></button></td>
 <td>Accent blue</td>
 </tr>
 <tr>
-<td><code>--blue-dark</code></td>
-<td><button type="button" class="color-copy" data-copy="#152F57" aria-label="Copy #152F57">#152F57<span class="color-swatch" style="background:#152F57;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--blue-dark)" aria-label="Copy var(--blue-dark)"><code>var(--blue-dark)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#152F57" aria-label="Copy #152F57"><code>#152F57</code><span class="token-swatch" style="background:#152F57;" aria-hidden="true"></span></button></td>
 <td>Dark blue</td>
 </tr>
 <tr>
-<td><code>--yellow-lighter</code></td>
-<td><button type="button" class="color-copy" data-copy="#FFF3B8" aria-label="Copy #FFF3B8">#FFF3B8<span class="color-swatch" style="background:#FFF3B8;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--yellow-lighter)" aria-label="Copy var(--yellow-lighter)"><code>var(--yellow-lighter)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#FFF3B8" aria-label="Copy #FFF3B8"><code>#FFF3B8</code><span class="token-swatch" style="background:#FFF3B8;" aria-hidden="true"></span></button></td>
 <td>Lighter yellow (backgrounds)</td>
 </tr>
 <tr>
-<td><code>--yellow-light</code></td>
-<td><button type="button" class="color-copy" data-copy="#FFEA83" aria-label="Copy #FFEA83">#FFEA83<span class="color-swatch" style="background:#FFEA83;" aria-hidden="true"></span></button></td>
-<td>Light yellow (replaces yellow-light)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--yellow-light)" aria-label="Copy var(--yellow-light)"><code>var(--yellow-light)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#FFEA83" aria-label="Copy #FFEA83"><code>#FFEA83</code><span class="token-swatch" style="background:#FFEA83;" aria-hidden="true"></span></button></td>
+<td>Light yellow</td>
 </tr>
 <tr>
-<td><code>--yellow</code></td>
-<td><button type="button" class="color-copy" data-copy="#FFB533" aria-label="Copy #FFB533">#FFB533<span class="color-swatch" style="background:#FFB533;" aria-hidden="true"></span></button></td>
-<td>Accent yellow (replaces yellow)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--yellow)" aria-label="Copy var(--yellow)"><code>var(--yellow)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#FFB533" aria-label="Copy #FFB533"><code>#FFB533</code><span class="token-swatch" style="background:#FFB533;" aria-hidden="true"></span></button></td>
+<td>Accent yellow</td>
 </tr>
 <tr>
-<td><code>--yellow-dark</code></td>
-<td><button type="button" class="color-copy" data-copy="#7E5700" aria-label="Copy #7E5700">#7E5700<span class="color-swatch" style="background:#7E5700;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--yellow-dark)" aria-label="Copy var(--yellow-dark)"><code>var(--yellow-dark)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#7E5700" aria-label="Copy #7E5700"><code>#7E5700</code><span class="token-swatch" style="background:#7E5700;" aria-hidden="true"></span></button></td>
 <td>Dark yellow</td>
 </tr>
 <tr>
-<td><code>--green-lighter</code></td>
-<td><button type="button" class="color-copy" data-copy="#DBF7CC" aria-label="Copy #DBF7CC">#DBF7CC<span class="color-swatch" style="background:#DBF7CC;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--green-lighter)" aria-label="Copy var(--green-lighter)"><code>var(--green-lighter)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#DBF7CC" aria-label="Copy #DBF7CC"><code>#DBF7CC</code><span class="token-swatch" style="background:#DBF7CC;" aria-hidden="true"></span></button></td>
 <td>Lighter green (backgrounds)</td>
 </tr>
 <tr>
-<td><code>--green-light</code></td>
-<td><button type="button" class="color-copy" data-copy="#B6D6A5" aria-label="Copy #B6D6A5">#B6D6A5<span class="color-swatch" style="background:#B6D6A5;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--green-light)" aria-label="Copy var(--green-light)"><code>var(--green-light)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#B6D6A5" aria-label="Copy #B6D6A5"><code>#B6D6A5</code><span class="token-swatch" style="background:#B6D6A5;" aria-hidden="true"></span></button></td>
 <td>Light green</td>
 </tr>
 <tr>
-<td><code>--green</code></td>
-<td><button type="button" class="color-copy" data-copy="#167255" aria-label="Copy #167255">#167255<span class="color-swatch" style="background:#167255;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--green)" aria-label="Copy var(--green)"><code>var(--green)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#167255" aria-label="Copy #167255"><code>#167255</code><span class="token-swatch" style="background:#167255;" aria-hidden="true"></span></button></td>
 <td>Accent green</td>
 </tr>
 <tr>
-<td><code>--green-dark</code></td>
-<td><button type="button" class="color-copy" data-copy="#094C45" aria-label="Copy #094C45">#094C45<span class="color-swatch" style="background:#094C45;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--green-dark)" aria-label="Copy var(--green-dark)"><code>var(--green-dark)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#094C45" aria-label="Copy #094C45"><code>#094C45</code><span class="token-swatch" style="background:#094C45;" aria-hidden="true"></span></button></td>
 <td>Dark green</td>
 </tr>
 <tr>
-<td><code>--purple-lighter</code></td>
-<td><button type="button" class="color-copy" data-copy="#F9E2FF" aria-label="Copy #F9E2FF">#F9E2FF<span class="color-swatch" style="background:#F9E2FF;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--purple-lighter)" aria-label="Copy var(--purple-lighter)"><code>var(--purple-lighter)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#F9E2FF" aria-label="Copy #F9E2FF"><code>#F9E2FF</code><span class="token-swatch" style="background:#F9E2FF;" aria-hidden="true"></span></button></td>
 <td>Lighter purple (backgrounds)</td>
 </tr>
 <tr>
-<td><code>--purple-light</code></td>
-<td><button type="button" class="color-copy" data-copy="#F5CDFF" aria-label="Copy #F5CDFF">#F5CDFF<span class="color-swatch" style="background:#F5CDFF;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--purple-light)" aria-label="Copy var(--purple-light)"><code>var(--purple-light)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#F5CDFF" aria-label="Copy #F5CDFF"><code>#F5CDFF</code><span class="token-swatch" style="background:#F5CDFF;" aria-hidden="true"></span></button></td>
 <td>Light purple</td>
 </tr>
 <tr>
-<td><code>--purple</code></td>
-<td><button type="button" class="color-copy" data-copy="#AA4FE3" aria-label="Copy #AA4FE3">#AA4FE3<span class="color-swatch" style="background:#AA4FE3;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--purple)" aria-label="Copy var(--purple)"><code>var(--purple)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#AA4FE3" aria-label="Copy #AA4FE3"><code>#AA4FE3</code><span class="token-swatch" style="background:#AA4FE3;" aria-hidden="true"></span></button></td>
 <td>Accent purple</td>
 </tr>
 <tr>
-<td><code>--purple-dark</code></td>
-<td><button type="button" class="color-copy" data-copy="#600E83" aria-label="Copy #600E83">#600E83<span class="color-swatch" style="background:#600E83;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--purple-dark)" aria-label="Copy var(--purple-dark)"><code>var(--purple-dark)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#600E83" aria-label="Copy #600E83"><code>#600E83</code><span class="token-swatch" style="background:#600E83;" aria-hidden="true"></span></button></td>
 <td>Dark purple</td>
 </tr>
 </tbody></table></div>
@@ -289,84 +291,84 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--font-3xs</code></td>
-<td>0.625rem</td>
-<td>10px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-3xs)" aria-label="Copy var(--font-3xs)"><code>var(--font-3xs)</code></button></td>
+<td><code>0.625rem</code></td>
+<td><code>10px</code></td>
 </tr>
 <tr>
-<td><code>--font-2xs</code></td>
-<td>0.75rem</td>
-<td>12px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-2xs)" aria-label="Copy var(--font-2xs)"><code>var(--font-2xs)</code></button></td>
+<td><code>0.75rem</code></td>
+<td><code>12px</code></td>
 </tr>
 <tr>
-<td><code>--font-xs</code></td>
-<td>0.875rem</td>
-<td>14px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-xs)" aria-label="Copy var(--font-xs)"><code>var(--font-xs)</code></button></td>
+<td><code>0.875rem</code></td>
+<td><code>14px</code></td>
 </tr>
 <tr>
-<td><code>--font-s</code></td>
-<td>1rem</td>
-<td>16px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-s)" aria-label="Copy var(--font-s)"><code>var(--font-s)</code></button></td>
+<td><code>1rem</code></td>
+<td><code>16px</code></td>
 </tr>
 <tr>
-<td><code>--font-m</code></td>
-<td>1.125rem</td>
-<td>18px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-m)" aria-label="Copy var(--font-m)"><code>var(--font-m)</code></button></td>
+<td><code>1.125rem</code></td>
+<td><code>18px</code></td>
 </tr>
 <tr>
-<td><code>--font-l</code></td>
-<td>1.25rem</td>
-<td>20px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-l)" aria-label="Copy var(--font-l)"><code>var(--font-l)</code></button></td>
+<td><code>1.25rem</code></td>
+<td><code>20px</code></td>
 </tr>
 <tr>
-<td><code>--font-xl</code></td>
-<td>1.375rem</td>
-<td>22px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-xl)" aria-label="Copy var(--font-xl)"><code>var(--font-xl)</code></button></td>
+<td><code>1.375rem</code></td>
+<td><code>22px</code></td>
 </tr>
 <tr>
-<td><code>--font-2xl</code></td>
-<td>1.5rem</td>
-<td>24px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-2xl)" aria-label="Copy var(--font-2xl)"><code>var(--font-2xl)</code></button></td>
+<td><code>1.5rem</code></td>
+<td><code>24px</code></td>
 </tr>
 <tr>
-<td><code>--font-3xl</code></td>
-<td>1.75rem</td>
-<td>28px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-3xl)" aria-label="Copy var(--font-3xl)"><code>var(--font-3xl)</code></button></td>
+<td><code>1.75rem</code></td>
+<td><code>28px</code></td>
 </tr>
 <tr>
-<td><code>--font-4xl</code></td>
-<td>2rem</td>
-<td>32px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-4xl)" aria-label="Copy var(--font-4xl)"><code>var(--font-4xl)</code></button></td>
+<td><code>2rem</code></td>
+<td><code>32px</code></td>
 </tr>
 <tr>
-<td><code>--font-5xl</code></td>
-<td>2.25rem</td>
-<td>36px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-5xl)" aria-label="Copy var(--font-5xl)"><code>var(--font-5xl)</code></button></td>
+<td><code>2.25rem</code></td>
+<td><code>36px</code></td>
 </tr>
 <tr>
-<td><code>--font-6xl</code></td>
-<td>2.5rem</td>
-<td>40px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-6xl)" aria-label="Copy var(--font-6xl)"><code>var(--font-6xl)</code></button></td>
+<td><code>2.5rem</code></td>
+<td><code>40px</code></td>
 </tr>
 <tr>
-<td><code>--font-7xl</code></td>
-<td>3rem</td>
-<td>48px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-7xl)" aria-label="Copy var(--font-7xl)"><code>var(--font-7xl)</code></button></td>
+<td><code>3rem</code></td>
+<td><code>48px</code></td>
 </tr>
 <tr>
-<td><code>--font-8xl</code></td>
-<td>3.5rem</td>
-<td>56px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-8xl)" aria-label="Copy var(--font-8xl)"><code>var(--font-8xl)</code></button></td>
+<td><code>3.5rem</code></td>
+<td><code>56px</code></td>
 </tr>
 <tr>
-<td><code>--font-9xl</code></td>
-<td>4rem</td>
-<td>64px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-9xl)" aria-label="Copy var(--font-9xl)"><code>var(--font-9xl)</code></button></td>
+<td><code>4rem</code></td>
+<td><code>64px</code></td>
 </tr>
 <tr>
-<td><code>--font-10xl</code></td>
-<td>4.5rem</td>
-<td>72px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-10xl)" aria-label="Copy var(--font-10xl)"><code>var(--font-10xl)</code></button></td>
+<td><code>4.5rem</code></td>
+<td><code>72px</code></td>
 </tr>
 </tbody></table></div>
 <h3 id="semantic-font-sizes">Semantic Font Sizes</h3>
@@ -380,18 +382,18 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--text-body</code></td>
-<td>var(--font-m)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-body)" aria-label="Copy var(--text-body)"><code>var(--text-body)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-m)" aria-label="Copy var(--font-m)"><code>var(--font-m)</code></button></td>
 <td>Global body text size</td>
 </tr>
 <tr>
-<td><code>--button-font-size</code></td>
-<td>var(--text-body)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--button-font-size)" aria-label="Copy var(--button-font-size)"><code>var(--button-font-size)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-body)" aria-label="Copy var(--text-body)"><code>var(--text-body)</code></button></td>
 <td>Default button text</td>
 </tr>
 <tr>
-<td><code>--button-font-size-small</code></td>
-<td>var(--font-2xs)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--button-font-size-small)" aria-label="Copy var(--button-font-size-small)"><code>var(--button-font-size-small)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-2xs)" aria-label="Copy var(--font-2xs)"><code>var(--font-2xs)</code></button></td>
 <td>Small button text</td>
 </tr>
 </tbody></table></div>
@@ -406,33 +408,33 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--line-height-xs</code></td>
-<td>0.7</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-xs)" aria-label="Copy var(--line-height-xs)"><code>var(--line-height-xs)</code></button></td>
+<td><code>0.7</code></td>
 <td>Tight display text</td>
 </tr>
 <tr>
-<td><code>--line-height-s</code></td>
-<td>1</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-s)" aria-label="Copy var(--line-height-s)"><code>var(--line-height-s)</code></button></td>
+<td><code>1</code></td>
 <td>Compact headings</td>
 </tr>
 <tr>
-<td><code>--line-height-m</code></td>
-<td>1.3</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-m)" aria-label="Copy var(--line-height-m)"><code>var(--line-height-m)</code></button></td>
+<td><code>1.3</code></td>
 <td>Default headings</td>
 </tr>
 <tr>
-<td><code>--line-height-l</code></td>
-<td>1.4</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-l)" aria-label="Copy var(--line-height-l)"><code>var(--line-height-l)</code></button></td>
+<td><code>1.4</code></td>
 <td>Short paragraphs</td>
 </tr>
 <tr>
-<td><code>--line-height-xl</code></td>
-<td>1.6</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-xl)" aria-label="Copy var(--line-height-xl)"><code>var(--line-height-xl)</code></button></td>
+<td><code>1.6</code></td>
 <td>Body text</td>
 </tr>
 <tr>
-<td><code>--line-height-2xl</code></td>
-<td>1.8</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-2xl)" aria-label="Copy var(--line-height-2xl)"><code>var(--line-height-2xl)</code></button></td>
+<td><code>1.8</code></td>
 <td>Loose body text</td>
 </tr>
 </tbody></table></div>
@@ -447,38 +449,38 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--font-weight-light</code></td>
-<td>300</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-weight-light)" aria-label="Copy var(--font-weight-light)"><code>var(--font-weight-light)</code></button></td>
+<td><code>300</code></td>
 <td>Light</td>
 </tr>
 <tr>
-<td><code>--font-weight-regular</code></td>
-<td>400</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-weight-regular)" aria-label="Copy var(--font-weight-regular)"><code>var(--font-weight-regular)</code></button></td>
+<td><code>400</code></td>
 <td>Regular</td>
 </tr>
 <tr>
-<td><code>--font-weight-medium</code></td>
-<td>500</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-weight-medium)" aria-label="Copy var(--font-weight-medium)"><code>var(--font-weight-medium)</code></button></td>
+<td><code>500</code></td>
 <td>Medium</td>
 </tr>
 <tr>
-<td><code>--font-weight-semi-bold</code></td>
-<td>600</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-weight-semi-bold)" aria-label="Copy var(--font-weight-semi-bold)"><code>var(--font-weight-semi-bold)</code></button></td>
+<td><code>600</code></td>
 <td>Semi-bold</td>
 </tr>
 <tr>
-<td><code>--font-weight-bold</code></td>
-<td>700</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-weight-bold)" aria-label="Copy var(--font-weight-bold)"><code>var(--font-weight-bold)</code></button></td>
+<td><code>700</code></td>
 <td>Bold</td>
 </tr>
 <tr>
-<td><code>--font-weight-extra-bold</code></td>
-<td>800</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-weight-extra-bold)" aria-label="Copy var(--font-weight-extra-bold)"><code>var(--font-weight-extra-bold)</code></button></td>
+<td><code>800</code></td>
 <td>Extra-bold</td>
 </tr>
 <tr>
-<td><code>--font-weight-black</code></td>
-<td>900</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-weight-black)" aria-label="Copy var(--font-weight-black)"><code>var(--font-weight-black)</code></button></td>
+<td><code>900</code></td>
 <td>Black</td>
 </tr>
 </tbody></table></div>
@@ -493,23 +495,23 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--letter-spacing-s</code></td>
-<td>0.03em</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--letter-spacing-s)" aria-label="Copy var(--letter-spacing-s)"><code>var(--letter-spacing-s)</code></button></td>
+<td><code>0.03em</code></td>
 <td>Subtle tracking</td>
 </tr>
 <tr>
-<td><code>--letter-spacing-m</code></td>
-<td>0.06em</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--letter-spacing-m)" aria-label="Copy var(--letter-spacing-m)"><code>var(--letter-spacing-m)</code></button></td>
+<td><code>0.06em</code></td>
 <td>Medium tracking</td>
 </tr>
 <tr>
-<td><code>--letter-spacing-l</code></td>
-<td>0.12em</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--letter-spacing-l)" aria-label="Copy var(--letter-spacing-l)"><code>var(--letter-spacing-l)</code></button></td>
+<td><code>0.12em</code></td>
 <td>Wide tracking</td>
 </tr>
 <tr>
-<td><code>--letter-spacing-xl</code></td>
-<td>0.24em</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--letter-spacing-xl)" aria-label="Copy var(--letter-spacing-xl)"><code>var(--letter-spacing-xl)</code></button></td>
+<td><code>0.24em</code></td>
 <td>Extra-wide (eyebrows, labels)</td>
 </tr>
 </tbody></table></div>
@@ -525,56 +527,56 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--neutral-50</code></td>
-<td><button type="button" class="color-copy" data-copy="#fff7f1" aria-label="Copy #fff7f1">#fff7f1<span class="color-swatch" style="background:#fff7f1;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--neutral-50)" aria-label="Copy var(--neutral-50)"><code>var(--neutral-50)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#fff7f1" aria-label="Copy #fff7f1"><code>#fff7f1</code><span class="token-swatch" style="background:#fff7f1;" aria-hidden="true"></span></button></td>
 </tr>
 <tr>
-<td><code>--neutral-100</code></td>
-<td><button type="button" class="color-copy" data-copy="#e8e1dc" aria-label="Copy #e8e1dc">#e8e1dc<span class="color-swatch" style="background:#e8e1dc;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--neutral-100)" aria-label="Copy var(--neutral-100)"><code>var(--neutral-100)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#e8e1dc" aria-label="Copy #e8e1dc"><code>#e8e1dc</code><span class="token-swatch" style="background:#e8e1dc;" aria-hidden="true"></span></button></td>
 </tr>
 <tr>
-<td><code>--neutral-150</code></td>
-<td><button type="button" class="color-copy" data-copy="#ddd6d1" aria-label="Copy #ddd6d1">#ddd6d1<span class="color-swatch" style="background:#ddd6d1;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--neutral-150)" aria-label="Copy var(--neutral-150)"><code>var(--neutral-150)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#ddd6d1" aria-label="Copy #ddd6d1"><code>#ddd6d1</code><span class="token-swatch" style="background:#ddd6d1;" aria-hidden="true"></span></button></td>
 </tr>
 <tr>
-<td><code>--neutral-200</code></td>
-<td><button type="button" class="color-copy" data-copy="#d2cbc6" aria-label="Copy #d2cbc6">#d2cbc6<span class="color-swatch" style="background:#d2cbc6;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--neutral-200)" aria-label="Copy var(--neutral-200)"><code>var(--neutral-200)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#d2cbc6" aria-label="Copy #d2cbc6"><code>#d2cbc6</code><span class="token-swatch" style="background:#d2cbc6;" aria-hidden="true"></span></button></td>
 </tr>
 <tr>
-<td><code>--neutral-300</code></td>
-<td><button type="button" class="color-copy" data-copy="#bbb5b1" aria-label="Copy #bbb5b1">#bbb5b1<span class="color-swatch" style="background:#bbb5b1;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--neutral-300)" aria-label="Copy var(--neutral-300)"><code>var(--neutral-300)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#bbb5b1" aria-label="Copy #bbb5b1"><code>#bbb5b1</code><span class="token-swatch" style="background:#bbb5b1;" aria-hidden="true"></span></button></td>
 </tr>
 <tr>
-<td><code>--neutral-400</code></td>
-<td><button type="button" class="color-copy" data-copy="#a59f9b" aria-label="Copy #a59f9b">#a59f9b<span class="color-swatch" style="background:#a59f9b;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--neutral-400)" aria-label="Copy var(--neutral-400)"><code>var(--neutral-400)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#a59f9b" aria-label="Copy #a59f9b"><code>#a59f9b</code><span class="token-swatch" style="background:#a59f9b;" aria-hidden="true"></span></button></td>
 </tr>
 <tr>
-<td><code>--neutral-500</code></td>
-<td><button type="button" class="color-copy" data-copy="#8e8986" aria-label="Copy #8e8986">#8e8986<span class="color-swatch" style="background:#8e8986;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--neutral-500)" aria-label="Copy var(--neutral-500)"><code>var(--neutral-500)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#8e8986" aria-label="Copy #8e8986"><code>#8e8986</code><span class="token-swatch" style="background:#8e8986;" aria-hidden="true"></span></button></td>
 </tr>
 <tr>
-<td><code>--neutral-600</code></td>
-<td><button type="button" class="color-copy" data-copy="#777371" aria-label="Copy #777371">#777371<span class="color-swatch" style="background:#777371;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--neutral-600)" aria-label="Copy var(--neutral-600)"><code>var(--neutral-600)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#777371" aria-label="Copy #777371"><code>#777371</code><span class="token-swatch" style="background:#777371;" aria-hidden="true"></span></button></td>
 </tr>
 <tr>
-<td><code>--neutral-700</code></td>
-<td><button type="button" class="color-copy" data-copy="#615d5b" aria-label="Copy #615d5b">#615d5b<span class="color-swatch" style="background:#615d5b;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--neutral-700)" aria-label="Copy var(--neutral-700)"><code>var(--neutral-700)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#615d5b" aria-label="Copy #615d5b"><code>#615d5b</code><span class="token-swatch" style="background:#615d5b;" aria-hidden="true"></span></button></td>
 </tr>
 <tr>
-<td><code>--neutral-800</code></td>
-<td><button type="button" class="color-copy" data-copy="#4a4846" aria-label="Copy #4a4846">#4a4846<span class="color-swatch" style="background:#4a4846;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--neutral-800)" aria-label="Copy var(--neutral-800)"><code>var(--neutral-800)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#4a4846" aria-label="Copy #4a4846"><code>#4a4846</code><span class="token-swatch" style="background:#4a4846;" aria-hidden="true"></span></button></td>
 </tr>
 <tr>
-<td><code>--neutral-900</code></td>
-<td><button type="button" class="color-copy" data-copy="#343230" aria-label="Copy #343230">#343230<span class="color-swatch" style="background:#343230;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--neutral-900)" aria-label="Copy var(--neutral-900)"><code>var(--neutral-900)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#343230" aria-label="Copy #343230"><code>#343230</code><span class="token-swatch" style="background:#343230;" aria-hidden="true"></span></button></td>
 </tr>
 <tr>
-<td><code>--neutral-950</code></td>
-<td><button type="button" class="color-copy" data-copy="#1d1c1b" aria-label="Copy #1d1c1b">#1d1c1b<span class="color-swatch" style="background:#1d1c1b;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--neutral-950)" aria-label="Copy var(--neutral-950)"><code>var(--neutral-950)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#1d1c1b" aria-label="Copy #1d1c1b"><code>#1d1c1b</code><span class="token-swatch" style="background:#1d1c1b;" aria-hidden="true"></span></button></td>
 </tr>
 <tr>
-<td><code>--neutral-990</code></td>
-<td><button type="button" class="color-copy" data-copy="#0f0e0e" aria-label="Copy #0f0e0e">#0f0e0e<span class="color-swatch" style="background:#0f0e0e;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--neutral-990)" aria-label="Copy var(--neutral-990)"><code>var(--neutral-990)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#0f0e0e" aria-label="Copy #0f0e0e"><code>#0f0e0e</code><span class="token-swatch" style="background:#0f0e0e;" aria-hidden="true"></span></button></td>
 </tr>
 </tbody></table></div>
 <h3 id="black-alpha-scale">Black Alpha Scale</h3>
@@ -588,73 +590,73 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--black</code></td>
-<td><button type="button" class="color-copy" data-copy="#000000" aria-label="Copy #000000">#000000<span class="color-swatch" style="background:#000000;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black)" aria-label="Copy var(--black)"><code>var(--black)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#000000" aria-label="Copy #000000"><code>#000000</code><span class="token-swatch" style="background:#000000;" aria-hidden="true"></span></button></td>
 <td>100%</td>
 </tr>
 <tr>
-<td><code>--black-alpha-3</code></td>
-<td><button type="button" class="color-copy" data-copy="#00000008" aria-label="Copy #00000008">#00000008<span class="color-swatch" style="background:#00000008;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black-alpha-3)" aria-label="Copy var(--black-alpha-3)"><code>var(--black-alpha-3)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#00000008" aria-label="Copy #00000008"><code>#00000008</code><span class="token-swatch" style="background:#00000008;" aria-hidden="true"></span></button></td>
 <td>3%</td>
 </tr>
 <tr>
-<td><code>--black-alpha-5</code></td>
-<td><button type="button" class="color-copy" data-copy="#0000000d" aria-label="Copy #0000000d">#0000000d<span class="color-swatch" style="background:#0000000d;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black-alpha-5)" aria-label="Copy var(--black-alpha-5)"><code>var(--black-alpha-5)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#0000000d" aria-label="Copy #0000000d"><code>#0000000d</code><span class="token-swatch" style="background:#0000000d;" aria-hidden="true"></span></button></td>
 <td>5%</td>
 </tr>
 <tr>
-<td><code>--black-alpha-10</code></td>
-<td><button type="button" class="color-copy" data-copy="#0000001a" aria-label="Copy #0000001a">#0000001a<span class="color-swatch" style="background:#0000001a;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black-alpha-10)" aria-label="Copy var(--black-alpha-10)"><code>var(--black-alpha-10)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#0000001a" aria-label="Copy #0000001a"><code>#0000001a</code><span class="token-swatch" style="background:#0000001a;" aria-hidden="true"></span></button></td>
 <td>10%</td>
 </tr>
 <tr>
-<td><code>--black-alpha-15</code></td>
-<td><button type="button" class="color-copy" data-copy="#00000026" aria-label="Copy #00000026">#00000026<span class="color-swatch" style="background:#00000026;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black-alpha-15)" aria-label="Copy var(--black-alpha-15)"><code>var(--black-alpha-15)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#00000026" aria-label="Copy #00000026"><code>#00000026</code><span class="token-swatch" style="background:#00000026;" aria-hidden="true"></span></button></td>
 <td>15%</td>
 </tr>
 <tr>
-<td><code>--black-alpha-20</code></td>
-<td><button type="button" class="color-copy" data-copy="#00000033" aria-label="Copy #00000033">#00000033<span class="color-swatch" style="background:#00000033;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black-alpha-20)" aria-label="Copy var(--black-alpha-20)"><code>var(--black-alpha-20)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#00000033" aria-label="Copy #00000033"><code>#00000033</code><span class="token-swatch" style="background:#00000033;" aria-hidden="true"></span></button></td>
 <td>20%</td>
 </tr>
 <tr>
-<td><code>--black-alpha-30</code></td>
-<td><button type="button" class="color-copy" data-copy="#0000004d" aria-label="Copy #0000004d">#0000004d<span class="color-swatch" style="background:#0000004d;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black-alpha-30)" aria-label="Copy var(--black-alpha-30)"><code>var(--black-alpha-30)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#0000004d" aria-label="Copy #0000004d"><code>#0000004d</code><span class="token-swatch" style="background:#0000004d;" aria-hidden="true"></span></button></td>
 <td>30%</td>
 </tr>
 <tr>
-<td><code>--black-alpha-40</code></td>
-<td><button type="button" class="color-copy" data-copy="#00000066" aria-label="Copy #00000066">#00000066<span class="color-swatch" style="background:#00000066;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black-alpha-40)" aria-label="Copy var(--black-alpha-40)"><code>var(--black-alpha-40)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#00000066" aria-label="Copy #00000066"><code>#00000066</code><span class="token-swatch" style="background:#00000066;" aria-hidden="true"></span></button></td>
 <td>40%</td>
 </tr>
 <tr>
-<td><code>--black-alpha-50</code></td>
-<td><button type="button" class="color-copy" data-copy="#00000080" aria-label="Copy #00000080">#00000080<span class="color-swatch" style="background:#00000080;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black-alpha-50)" aria-label="Copy var(--black-alpha-50)"><code>var(--black-alpha-50)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#00000080" aria-label="Copy #00000080"><code>#00000080</code><span class="token-swatch" style="background:#00000080;" aria-hidden="true"></span></button></td>
 <td>50%</td>
 </tr>
 <tr>
-<td><code>--black-alpha-60</code></td>
-<td><button type="button" class="color-copy" data-copy="#00000099" aria-label="Copy #00000099">#00000099<span class="color-swatch" style="background:#00000099;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black-alpha-60)" aria-label="Copy var(--black-alpha-60)"><code>var(--black-alpha-60)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#00000099" aria-label="Copy #00000099"><code>#00000099</code><span class="token-swatch" style="background:#00000099;" aria-hidden="true"></span></button></td>
 <td>60%</td>
 </tr>
 <tr>
-<td><code>--black-alpha-70</code></td>
-<td><button type="button" class="color-copy" data-copy="#000000b3" aria-label="Copy #000000b3">#000000b3<span class="color-swatch" style="background:#000000b3;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black-alpha-70)" aria-label="Copy var(--black-alpha-70)"><code>var(--black-alpha-70)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#000000b3" aria-label="Copy #000000b3"><code>#000000b3</code><span class="token-swatch" style="background:#000000b3;" aria-hidden="true"></span></button></td>
 <td>70%</td>
 </tr>
 <tr>
-<td><code>--black-alpha-80</code></td>
-<td><button type="button" class="color-copy" data-copy="#000000cc" aria-label="Copy #000000cc">#000000cc<span class="color-swatch" style="background:#000000cc;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black-alpha-80)" aria-label="Copy var(--black-alpha-80)"><code>var(--black-alpha-80)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#000000cc" aria-label="Copy #000000cc"><code>#000000cc</code><span class="token-swatch" style="background:#000000cc;" aria-hidden="true"></span></button></td>
 <td>80%</td>
 </tr>
 <tr>
-<td><code>--black-alpha-90</code></td>
-<td><button type="button" class="color-copy" data-copy="#000000e6" aria-label="Copy #000000e6">#000000e6<span class="color-swatch" style="background:#000000e6;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black-alpha-90)" aria-label="Copy var(--black-alpha-90)"><code>var(--black-alpha-90)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#000000e6" aria-label="Copy #000000e6"><code>#000000e6</code><span class="token-swatch" style="background:#000000e6;" aria-hidden="true"></span></button></td>
 <td>90%</td>
 </tr>
 <tr>
-<td><code>--black-alpha-95</code></td>
-<td><button type="button" class="color-copy" data-copy="#000000f2" aria-label="Copy #000000f2">#000000f2<span class="color-swatch" style="background:#000000f2;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black-alpha-95)" aria-label="Copy var(--black-alpha-95)"><code>var(--black-alpha-95)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#000000f2" aria-label="Copy #000000f2"><code>#000000f2</code><span class="token-swatch" style="background:#000000f2;" aria-hidden="true"></span></button></td>
 <td>95%</td>
 </tr>
 </tbody></table></div>
@@ -669,68 +671,68 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--white</code></td>
-<td><button type="button" class="color-copy" data-copy="#ffffff" aria-label="Copy #ffffff">#ffffff<span class="color-swatch" style="background:#ffffff;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--white)" aria-label="Copy var(--white)"><code>var(--white)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#ffffff" aria-label="Copy #ffffff"><code>#ffffff</code><span class="token-swatch" style="background:#ffffff;" aria-hidden="true"></span></button></td>
 <td>100%</td>
 </tr>
 <tr>
-<td><code>--white-alpha-5</code></td>
-<td><button type="button" class="color-copy" data-copy="#ffffff0d" aria-label="Copy #ffffff0d">#ffffff0d<span class="color-swatch" style="background:#ffffff0d;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--white-alpha-5)" aria-label="Copy var(--white-alpha-5)"><code>var(--white-alpha-5)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#ffffff0d" aria-label="Copy #ffffff0d"><code>#ffffff0d</code><span class="token-swatch" style="background:#ffffff0d;" aria-hidden="true"></span></button></td>
 <td>5%</td>
 </tr>
 <tr>
-<td><code>--white-alpha-10</code></td>
-<td><button type="button" class="color-copy" data-copy="#ffffff1a" aria-label="Copy #ffffff1a">#ffffff1a<span class="color-swatch" style="background:#ffffff1a;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--white-alpha-10)" aria-label="Copy var(--white-alpha-10)"><code>var(--white-alpha-10)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#ffffff1a" aria-label="Copy #ffffff1a"><code>#ffffff1a</code><span class="token-swatch" style="background:#ffffff1a;" aria-hidden="true"></span></button></td>
 <td>10%</td>
 </tr>
 <tr>
-<td><code>--white-alpha-15</code></td>
-<td><button type="button" class="color-copy" data-copy="#ffffff26" aria-label="Copy #ffffff26">#ffffff26<span class="color-swatch" style="background:#ffffff26;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--white-alpha-15)" aria-label="Copy var(--white-alpha-15)"><code>var(--white-alpha-15)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#ffffff26" aria-label="Copy #ffffff26"><code>#ffffff26</code><span class="token-swatch" style="background:#ffffff26;" aria-hidden="true"></span></button></td>
 <td>15%</td>
 </tr>
 <tr>
-<td><code>--white-alpha-20</code></td>
-<td><button type="button" class="color-copy" data-copy="#ffffff33" aria-label="Copy #ffffff33">#ffffff33<span class="color-swatch" style="background:#ffffff33;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--white-alpha-20)" aria-label="Copy var(--white-alpha-20)"><code>var(--white-alpha-20)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#ffffff33" aria-label="Copy #ffffff33"><code>#ffffff33</code><span class="token-swatch" style="background:#ffffff33;" aria-hidden="true"></span></button></td>
 <td>20%</td>
 </tr>
 <tr>
-<td><code>--white-alpha-30</code></td>
-<td><button type="button" class="color-copy" data-copy="#ffffff4d" aria-label="Copy #ffffff4d">#ffffff4d<span class="color-swatch" style="background:#ffffff4d;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--white-alpha-30)" aria-label="Copy var(--white-alpha-30)"><code>var(--white-alpha-30)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#ffffff4d" aria-label="Copy #ffffff4d"><code>#ffffff4d</code><span class="token-swatch" style="background:#ffffff4d;" aria-hidden="true"></span></button></td>
 <td>30%</td>
 </tr>
 <tr>
-<td><code>--white-alpha-40</code></td>
-<td><button type="button" class="color-copy" data-copy="#ffffff66" aria-label="Copy #ffffff66">#ffffff66<span class="color-swatch" style="background:#ffffff66;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--white-alpha-40)" aria-label="Copy var(--white-alpha-40)"><code>var(--white-alpha-40)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#ffffff66" aria-label="Copy #ffffff66"><code>#ffffff66</code><span class="token-swatch" style="background:#ffffff66;" aria-hidden="true"></span></button></td>
 <td>40%</td>
 </tr>
 <tr>
-<td><code>--white-alpha-50</code></td>
-<td><button type="button" class="color-copy" data-copy="#ffffff80" aria-label="Copy #ffffff80">#ffffff80<span class="color-swatch" style="background:#ffffff80;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--white-alpha-50)" aria-label="Copy var(--white-alpha-50)"><code>var(--white-alpha-50)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#ffffff80" aria-label="Copy #ffffff80"><code>#ffffff80</code><span class="token-swatch" style="background:#ffffff80;" aria-hidden="true"></span></button></td>
 <td>50%</td>
 </tr>
 <tr>
-<td><code>--white-alpha-60</code></td>
-<td><button type="button" class="color-copy" data-copy="#ffffff99" aria-label="Copy #ffffff99">#ffffff99<span class="color-swatch" style="background:#ffffff99;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--white-alpha-60)" aria-label="Copy var(--white-alpha-60)"><code>var(--white-alpha-60)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#ffffff99" aria-label="Copy #ffffff99"><code>#ffffff99</code><span class="token-swatch" style="background:#ffffff99;" aria-hidden="true"></span></button></td>
 <td>60%</td>
 </tr>
 <tr>
-<td><code>--white-alpha-70</code></td>
-<td><button type="button" class="color-copy" data-copy="#ffffffb3" aria-label="Copy #ffffffb3">#ffffffb3<span class="color-swatch" style="background:#ffffffb3;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--white-alpha-70)" aria-label="Copy var(--white-alpha-70)"><code>var(--white-alpha-70)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#ffffffb3" aria-label="Copy #ffffffb3"><code>#ffffffb3</code><span class="token-swatch" style="background:#ffffffb3;" aria-hidden="true"></span></button></td>
 <td>70%</td>
 </tr>
 <tr>
-<td><code>--white-alpha-80</code></td>
-<td><button type="button" class="color-copy" data-copy="#ffffffcc" aria-label="Copy #ffffffcc">#ffffffcc<span class="color-swatch" style="background:#ffffffcc;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--white-alpha-80)" aria-label="Copy var(--white-alpha-80)"><code>var(--white-alpha-80)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#ffffffcc" aria-label="Copy #ffffffcc"><code>#ffffffcc</code><span class="token-swatch" style="background:#ffffffcc;" aria-hidden="true"></span></button></td>
 <td>80%</td>
 </tr>
 <tr>
-<td><code>--white-alpha-90</code></td>
-<td><button type="button" class="color-copy" data-copy="#ffffffe6" aria-label="Copy #ffffffe6">#ffffffe6<span class="color-swatch" style="background:#ffffffe6;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--white-alpha-90)" aria-label="Copy var(--white-alpha-90)"><code>var(--white-alpha-90)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#ffffffe6" aria-label="Copy #ffffffe6"><code>#ffffffe6</code><span class="token-swatch" style="background:#ffffffe6;" aria-hidden="true"></span></button></td>
 <td>90%</td>
 </tr>
 <tr>
-<td><code>--white-alpha-95</code></td>
-<td><button type="button" class="color-copy" data-copy="#fffffff2" aria-label="Copy #fffffff2">#fffffff2<span class="color-swatch" style="background:#fffffff2;" aria-hidden="true"></span></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--white-alpha-95)" aria-label="Copy var(--white-alpha-95)"><code>var(--white-alpha-95)</code></button></td>
+<td><button type="button" class="token-copy has-swatch" data-copy="#fffffff2" aria-label="Copy #fffffff2"><code>#fffffff2</code><span class="token-swatch" style="background:#fffffff2;" aria-hidden="true"></span></button></td>
 <td>95%</td>
 </tr>
 </tbody></table></div>
@@ -744,80 +746,80 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--alpha-5</code></td>
-<td>transparent 5%</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--alpha-5)" aria-label="Copy var(--alpha-5)"><code>var(--alpha-5)</code></button></td>
+<td><code>transparent 5%</code></td>
 </tr>
 <tr>
-<td><code>--alpha-10</code></td>
-<td>transparent 10%</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--alpha-10)" aria-label="Copy var(--alpha-10)"><code>var(--alpha-10)</code></button></td>
+<td><code>transparent 10%</code></td>
 </tr>
 <tr>
-<td><code>--alpha-15</code></td>
-<td>transparent 15%</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--alpha-15)" aria-label="Copy var(--alpha-15)"><code>var(--alpha-15)</code></button></td>
+<td><code>transparent 15%</code></td>
 </tr>
 <tr>
-<td><code>--alpha-20</code></td>
-<td>transparent 20%</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--alpha-20)" aria-label="Copy var(--alpha-20)"><code>var(--alpha-20)</code></button></td>
+<td><code>transparent 20%</code></td>
 </tr>
 <tr>
-<td><code>--alpha-25</code></td>
-<td>transparent 25%</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--alpha-25)" aria-label="Copy var(--alpha-25)"><code>var(--alpha-25)</code></button></td>
+<td><code>transparent 25%</code></td>
 </tr>
 <tr>
-<td><code>--alpha-30</code></td>
-<td>transparent 30%</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--alpha-30)" aria-label="Copy var(--alpha-30)"><code>var(--alpha-30)</code></button></td>
+<td><code>transparent 30%</code></td>
 </tr>
 <tr>
-<td><code>--alpha-35</code></td>
-<td>transparent 35%</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--alpha-35)" aria-label="Copy var(--alpha-35)"><code>var(--alpha-35)</code></button></td>
+<td><code>transparent 35%</code></td>
 </tr>
 <tr>
-<td><code>--alpha-40</code></td>
-<td>transparent 40%</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--alpha-40)" aria-label="Copy var(--alpha-40)"><code>var(--alpha-40)</code></button></td>
+<td><code>transparent 40%</code></td>
 </tr>
 <tr>
-<td><code>--alpha-45</code></td>
-<td>transparent 45%</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--alpha-45)" aria-label="Copy var(--alpha-45)"><code>var(--alpha-45)</code></button></td>
+<td><code>transparent 45%</code></td>
 </tr>
 <tr>
-<td><code>--alpha-50</code></td>
-<td>transparent 50%</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--alpha-50)" aria-label="Copy var(--alpha-50)"><code>var(--alpha-50)</code></button></td>
+<td><code>transparent 50%</code></td>
 </tr>
 <tr>
-<td><code>--alpha-55</code></td>
-<td>transparent 55%</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--alpha-55)" aria-label="Copy var(--alpha-55)"><code>var(--alpha-55)</code></button></td>
+<td><code>transparent 55%</code></td>
 </tr>
 <tr>
-<td><code>--alpha-60</code></td>
-<td>transparent 60%</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--alpha-60)" aria-label="Copy var(--alpha-60)"><code>var(--alpha-60)</code></button></td>
+<td><code>transparent 60%</code></td>
 </tr>
 <tr>
-<td><code>--alpha-65</code></td>
-<td>transparent 65%</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--alpha-65)" aria-label="Copy var(--alpha-65)"><code>var(--alpha-65)</code></button></td>
+<td><code>transparent 65%</code></td>
 </tr>
 <tr>
-<td><code>--alpha-70</code></td>
-<td>transparent 70%</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--alpha-70)" aria-label="Copy var(--alpha-70)"><code>var(--alpha-70)</code></button></td>
+<td><code>transparent 70%</code></td>
 </tr>
 <tr>
-<td><code>--alpha-75</code></td>
-<td>transparent 75%</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--alpha-75)" aria-label="Copy var(--alpha-75)"><code>var(--alpha-75)</code></button></td>
+<td><code>transparent 75%</code></td>
 </tr>
 <tr>
-<td><code>--alpha-80</code></td>
-<td>transparent 80%</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--alpha-80)" aria-label="Copy var(--alpha-80)"><code>var(--alpha-80)</code></button></td>
+<td><code>transparent 80%</code></td>
 </tr>
 <tr>
-<td><code>--alpha-85</code></td>
-<td>transparent 85%</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--alpha-85)" aria-label="Copy var(--alpha-85)"><code>var(--alpha-85)</code></button></td>
+<td><code>transparent 85%</code></td>
 </tr>
 <tr>
-<td><code>--alpha-90</code></td>
-<td>transparent 90%</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--alpha-90)" aria-label="Copy var(--alpha-90)"><code>var(--alpha-90)</code></button></td>
+<td><code>transparent 90%</code></td>
 </tr>
 <tr>
-<td><code>--alpha-95</code></td>
-<td>transparent 95%</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--alpha-95)" aria-label="Copy var(--alpha-95)"><code>var(--alpha-95)</code></button></td>
+<td><code>transparent 95%</code></td>
 </tr>
 </tbody></table></div>
 <h3 id="text-colors">Text Colors</h3>
@@ -831,48 +833,48 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--text-primary</code></td>
-<td>var(--warm-black)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--warm-black)" aria-label="Copy var(--warm-black)"><code>var(--warm-black)</code></button></td>
 <td>Primary body text</td>
 </tr>
 <tr>
-<td><code>--text-secondary</code></td>
-<td>var(--neutral-800)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-secondary)" aria-label="Copy var(--text-secondary)"><code>var(--text-secondary)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--neutral-800)" aria-label="Copy var(--neutral-800)"><code>var(--neutral-800)</code></button></td>
 <td>Secondary/supporting text</td>
 </tr>
 <tr>
-<td><code>--text-plain</code></td>
-<td>var(--black)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-plain)" aria-label="Copy var(--text-plain)"><code>var(--text-plain)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black)" aria-label="Copy var(--black)"><code>var(--black)</code></button></td>
 <td>Pure black text</td>
 </tr>
 <tr>
-<td><code>--text-faded</code></td>
-<td>var(--black-alpha-50)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-faded)" aria-label="Copy var(--text-faded)"><code>var(--text-faded)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black-alpha-50)" aria-label="Copy var(--black-alpha-50)"><code>var(--black-alpha-50)</code></button></td>
 <td>De-emphasised text</td>
 </tr>
 <tr>
-<td><code>--text-accent</code></td>
-<td>var(--green)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-accent)" aria-label="Copy var(--text-accent)"><code>var(--text-accent)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--green)" aria-label="Copy var(--green)"><code>var(--green)</code></button></td>
 <td>Accent/highlight text</td>
 </tr>
 <tr>
-<td><code>--text-link</code></td>
-<td>var(--green)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-link)" aria-label="Copy var(--text-link)"><code>var(--text-link)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--green)" aria-label="Copy var(--green)"><code>var(--green)</code></button></td>
 <td>Link text</td>
 </tr>
 <tr>
-<td><code>--text-inverted</code></td>
-<td>var(--off-white)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-inverted)" aria-label="Copy var(--text-inverted)"><code>var(--text-inverted)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--off-white)" aria-label="Copy var(--off-white)"><code>var(--off-white)</code></button></td>
 <td>Text on dark backgrounds</td>
 </tr>
 <tr>
-<td><code>--text-sidebar</code></td>
-<td>var(--text-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-sidebar)" aria-label="Copy var(--text-sidebar)"><code>var(--text-sidebar)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button></td>
 <td>Sidebar navigation text</td>
 </tr>
 <tr>
-<td><code>--text-site-header</code></td>
-<td>var(--text-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-site-header)" aria-label="Copy var(--text-site-header)"><code>var(--text-site-header)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button></td>
 <td>Site header text</td>
 </tr>
 </tbody></table></div>
@@ -887,48 +889,48 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--background-primary</code></td>
-<td>var(--off-white)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-primary)" aria-label="Copy var(--background-primary)"><code>var(--background-primary)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--off-white)" aria-label="Copy var(--off-white)"><code>var(--off-white)</code></button></td>
 <td>Main page background</td>
 </tr>
 <tr>
-<td><code>--background-secondary</code></td>
-<td>var(--warm-white)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-secondary)" aria-label="Copy var(--background-secondary)"><code>var(--background-secondary)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--warm-white)" aria-label="Copy var(--warm-white)"><code>var(--warm-white)</code></button></td>
 <td>Secondary/alternate background</td>
 </tr>
 <tr>
-<td><code>--background-plain</code></td>
-<td>var(--white)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-plain)" aria-label="Copy var(--background-plain)"><code>var(--background-plain)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--white)" aria-label="Copy var(--white)"><code>var(--white)</code></button></td>
 <td>Clean white background</td>
 </tr>
 <tr>
-<td><code>--background-faded</code></td>
-<td>var(--black-alpha-5)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-faded)" aria-label="Copy var(--background-faded)"><code>var(--background-faded)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black-alpha-5)" aria-label="Copy var(--black-alpha-5)"><code>var(--black-alpha-5)</code></button></td>
 <td>Subtle tinted background</td>
 </tr>
 <tr>
-<td><code>--background-darker</code></td>
-<td>var(--black-alpha-10)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-darker)" aria-label="Copy var(--background-darker)"><code>var(--background-darker)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black-alpha-10)" aria-label="Copy var(--black-alpha-10)"><code>var(--black-alpha-10)</code></button></td>
 <td>Darker tinted background</td>
 </tr>
 <tr>
-<td><code>--background-lighter</code></td>
-<td>var(--white-alpha-10)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-lighter)" aria-label="Copy var(--background-lighter)"><code>var(--background-lighter)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--white-alpha-10)" aria-label="Copy var(--white-alpha-10)"><code>var(--white-alpha-10)</code></button></td>
 <td>Lighter overlay background</td>
 </tr>
 <tr>
-<td><code>--background-modal</code></td>
-<td>rgba(0, 0, 0, 0.75)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-modal)" aria-label="Copy var(--background-modal)"><code>var(--background-modal)</code></button></td>
+<td><code>rgba(0, 0, 0, 0.75)</code></td>
 <td>Modal backdrop</td>
 </tr>
 <tr>
-<td><code>--background-sidebar</code></td>
-<td>var(--background-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-sidebar)" aria-label="Copy var(--background-sidebar)"><code>var(--background-sidebar)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-primary)" aria-label="Copy var(--background-primary)"><code>var(--background-primary)</code></button></td>
 <td>Sidebar background</td>
 </tr>
 <tr>
-<td><code>--background-site-header</code></td>
-<td>var(--background-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-site-header)" aria-label="Copy var(--background-site-header)"><code>var(--background-site-header)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-primary)" aria-label="Copy var(--background-primary)"><code>var(--background-primary)</code></button></td>
 <td>Site header background</td>
 </tr>
 </tbody></table></div>
@@ -943,18 +945,18 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--border-primary</code></td>
-<td>var(--text-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-primary)" aria-label="Copy var(--border-primary)"><code>var(--border-primary)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button></td>
 <td>Strong/prominent borders</td>
 </tr>
 <tr>
-<td><code>--border-secondary</code></td>
-<td>var(--neutral-300)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-secondary)" aria-label="Copy var(--border-secondary)"><code>var(--border-secondary)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--neutral-300)" aria-label="Copy var(--neutral-300)"><code>var(--neutral-300)</code></button></td>
 <td>Medium borders</td>
 </tr>
 <tr>
-<td><code>--border-faded</code></td>
-<td>var(--black-alpha-15)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-faded)" aria-label="Copy var(--border-faded)"><code>var(--border-faded)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black-alpha-15)" aria-label="Copy var(--black-alpha-15)"><code>var(--black-alpha-15)</code></button></td>
 <td>Subtle/light borders</td>
 </tr>
 </tbody></table></div>
@@ -969,13 +971,13 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--selection-text</code></td>
-<td>var(--background-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--selection-text)" aria-label="Copy var(--selection-text)"><code>var(--selection-text)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-primary)" aria-label="Copy var(--background-primary)"><code>var(--background-primary)</code></button></td>
 <td>Text color when selected</td>
 </tr>
 <tr>
-<td><code>--selection-background</code></td>
-<td>var(--text-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--selection-background)" aria-label="Copy var(--selection-background)"><code>var(--selection-background)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button></td>
 <td>Highlight color when selected</td>
 </tr>
 </tbody></table></div>
@@ -992,28 +994,28 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--button-primary</code></td>
-<td>var(--text-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--button-primary)" aria-label="Copy var(--button-primary)"><code>var(--button-primary)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button></td>
 <td>Primary button background</td>
 </tr>
 <tr>
-<td><code>--button-text</code></td>
-<td>var(--off-white)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--button-text)" aria-label="Copy var(--button-text)"><code>var(--button-text)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--off-white)" aria-label="Copy var(--off-white)"><code>var(--off-white)</code></button></td>
 <td>Primary button text</td>
 </tr>
 <tr>
-<td><code>--button-secondary</code></td>
-<td>var(--black)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--button-secondary)" aria-label="Copy var(--button-secondary)"><code>var(--button-secondary)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black)" aria-label="Copy var(--black)"><code>var(--black)</code></button></td>
 <td>Secondary button background</td>
 </tr>
 <tr>
-<td><code>--button-secondary-text</code></td>
-<td>var(--off-white)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--button-secondary-text)" aria-label="Copy var(--button-secondary-text)"><code>var(--button-secondary-text)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--off-white)" aria-label="Copy var(--off-white)"><code>var(--off-white)</code></button></td>
 <td>Secondary button text</td>
 </tr>
 <tr>
-<td><code>--button-faded</code></td>
-<td>var(--black-alpha-15)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--button-faded)" aria-label="Copy var(--button-faded)"><code>var(--button-faded)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black-alpha-15)" aria-label="Copy var(--black-alpha-15)"><code>var(--black-alpha-15)</code></button></td>
 <td>Faded/ghost button background</td>
 </tr>
 </tbody></table></div>
@@ -1028,53 +1030,53 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--status-info</code></td>
-<td>var(--blue)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--status-info)" aria-label="Copy var(--status-info)"><code>var(--status-info)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--blue)" aria-label="Copy var(--blue)"><code>var(--blue)</code></button></td>
 <td>Informational</td>
 </tr>
 <tr>
-<td><code>--status-info-bg</code></td>
-<td>var(--blue-lighter)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--status-info-bg)" aria-label="Copy var(--status-info-bg)"><code>var(--status-info-bg)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--blue-lighter)" aria-label="Copy var(--blue-lighter)"><code>var(--blue-lighter)</code></button></td>
 <td>Info background</td>
 </tr>
 <tr>
-<td><code>--status-success</code></td>
-<td>var(--green)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--status-success)" aria-label="Copy var(--status-success)"><code>var(--status-success)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--green)" aria-label="Copy var(--green)"><code>var(--green)</code></button></td>
 <td>Success</td>
 </tr>
 <tr>
-<td><code>--status-success-bg</code></td>
-<td>var(--green-lighter)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--status-success-bg)" aria-label="Copy var(--status-success-bg)"><code>var(--status-success-bg)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--green-lighter)" aria-label="Copy var(--green-lighter)"><code>var(--green-lighter)</code></button></td>
 <td>Success background</td>
 </tr>
 <tr>
-<td><code>--status-warning</code></td>
-<td>var(--yellow-darker)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--status-warning)" aria-label="Copy var(--status-warning)"><code>var(--status-warning)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--yellow-darker)" aria-label="Copy var(--yellow-darker)"><code>var(--yellow-darker)</code></button></td>
 <td>Warning</td>
 </tr>
 <tr>
-<td><code>--status-warning-bg</code></td>
-<td>var(--yellow-lighter)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--status-warning-bg)" aria-label="Copy var(--status-warning-bg)"><code>var(--status-warning-bg)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--yellow-lighter)" aria-label="Copy var(--yellow-lighter)"><code>var(--yellow-lighter)</code></button></td>
 <td>Warning background</td>
 </tr>
 <tr>
-<td><code>--status-danger</code></td>
-<td>var(--red)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--status-danger)" aria-label="Copy var(--status-danger)"><code>var(--status-danger)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--red)" aria-label="Copy var(--red)"><code>var(--red)</code></button></td>
 <td>Danger/error</td>
 </tr>
 <tr>
-<td><code>--status-danger-bg</code></td>
-<td>var(--red-lighter)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--status-danger-bg)" aria-label="Copy var(--status-danger-bg)"><code>var(--status-danger-bg)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--red-lighter)" aria-label="Copy var(--red-lighter)"><code>var(--red-lighter)</code></button></td>
 <td>Danger background</td>
 </tr>
 <tr>
-<td><code>--status-accent</code></td>
-<td>var(--purple)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--status-accent)" aria-label="Copy var(--status-accent)"><code>var(--status-accent)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--purple)" aria-label="Copy var(--purple)"><code>var(--purple)</code></button></td>
 <td>Accent/highlight</td>
 </tr>
 <tr>
-<td><code>--status-accent-bg</code></td>
-<td>var(--purple-lighter)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--status-accent-bg)" aria-label="Copy var(--status-accent-bg)"><code>var(--status-accent-bg)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--purple-lighter)" aria-label="Copy var(--purple-lighter)"><code>var(--purple-lighter)</code></button></td>
 <td>Accent background</td>
 </tr>
 </tbody></table></div>
@@ -1089,78 +1091,78 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--input-border</code></td>
-<td>var(--border-secondary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--input-border)" aria-label="Copy var(--input-border)"><code>var(--input-border)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-secondary)" aria-label="Copy var(--border-secondary)"><code>var(--border-secondary)</code></button></td>
 <td>Input border</td>
 </tr>
 <tr>
-<td><code>--input-background</code></td>
-<td>var(--black-alpha-5)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--input-background)" aria-label="Copy var(--input-background)"><code>var(--input-background)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black-alpha-5)" aria-label="Copy var(--black-alpha-5)"><code>var(--black-alpha-5)</code></button></td>
 <td>Input background</td>
 </tr>
 <tr>
-<td><code>--input-text</code></td>
-<td>var(--text-plain)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--input-text)" aria-label="Copy var(--input-text)"><code>var(--input-text)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-plain)" aria-label="Copy var(--text-plain)"><code>var(--text-plain)</code></button></td>
 <td>Input text</td>
 </tr>
 <tr>
-<td><code>--input-placeholder</code></td>
-<td>var(--text-faded)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--input-placeholder)" aria-label="Copy var(--input-placeholder)"><code>var(--input-placeholder)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-faded)" aria-label="Copy var(--text-faded)"><code>var(--text-faded)</code></button></td>
 <td>Placeholder text</td>
 </tr>
 <tr>
-<td><code>--input-focus</code></td>
-<td>var(--green)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--input-focus)" aria-label="Copy var(--input-focus)"><code>var(--input-focus)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--green)" aria-label="Copy var(--green)"><code>var(--green)</code></button></td>
 <td>Focus ring color</td>
 </tr>
 <tr>
-<td><code>--input-disabled-bg</code></td>
-<td>var(--background-faded)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--input-disabled-bg)" aria-label="Copy var(--input-disabled-bg)"><code>var(--input-disabled-bg)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-faded)" aria-label="Copy var(--background-faded)"><code>var(--background-faded)</code></button></td>
 <td>Disabled input background</td>
 </tr>
 <tr>
-<td><code>--input-disabled-text</code></td>
-<td>var(--text-faded)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--input-disabled-text)" aria-label="Copy var(--input-disabled-text)"><code>var(--input-disabled-text)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-faded)" aria-label="Copy var(--text-faded)"><code>var(--text-faded)</code></button></td>
 <td>Disabled input text</td>
 </tr>
 <tr>
-<td><code>--checkbox-background</code></td>
-<td>var(--neutral-100)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--checkbox-background)" aria-label="Copy var(--checkbox-background)"><code>var(--checkbox-background)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--neutral-100)" aria-label="Copy var(--neutral-100)"><code>var(--neutral-100)</code></button></td>
 <td>Checkbox background</td>
 </tr>
 <tr>
-<td><code>--checkbox-selected</code></td>
-<td>var(--text-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--checkbox-selected)" aria-label="Copy var(--checkbox-selected)"><code>var(--checkbox-selected)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button></td>
 <td>Checkbox selected fill</td>
 </tr>
 <tr>
-<td><code>--checkbox-border</code></td>
-<td>var(--border-faded)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--checkbox-border)" aria-label="Copy var(--checkbox-border)"><code>var(--checkbox-border)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-faded)" aria-label="Copy var(--border-faded)"><code>var(--border-faded)</code></button></td>
 <td>Checkbox border</td>
 </tr>
 <tr>
-<td><code>--checkbox-checkmark</code></td>
-<td>var(--off-white)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--checkbox-checkmark)" aria-label="Copy var(--checkbox-checkmark)"><code>var(--checkbox-checkmark)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--off-white)" aria-label="Copy var(--off-white)"><code>var(--off-white)</code></button></td>
 <td>Checkmark color</td>
 </tr>
 <tr>
-<td><code>--toggle-track</code></td>
-<td>var(--black-alpha-3)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--toggle-track)" aria-label="Copy var(--toggle-track)"><code>var(--toggle-track)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--black-alpha-3)" aria-label="Copy var(--black-alpha-3)"><code>var(--black-alpha-3)</code></button></td>
 <td>Toggle track background</td>
 </tr>
 <tr>
-<td><code>--toggle-knob</code></td>
-<td>var(--neutral-500)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--toggle-knob)" aria-label="Copy var(--toggle-knob)"><code>var(--toggle-knob)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--neutral-500)" aria-label="Copy var(--neutral-500)"><code>var(--neutral-500)</code></button></td>
 <td>Toggle knob</td>
 </tr>
 <tr>
-<td><code>--toggle-selected</code></td>
-<td>var(--text-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--toggle-selected)" aria-label="Copy var(--toggle-selected)"><code>var(--toggle-selected)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button></td>
 <td>Toggle selected track</td>
 </tr>
 <tr>
-<td><code>--toggle-knob-selected</code></td>
-<td>var(--off-white)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--toggle-knob-selected)" aria-label="Copy var(--toggle-knob-selected)"><code>var(--toggle-knob-selected)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--off-white)" aria-label="Copy var(--off-white)"><code>var(--off-white)</code></button></td>
 <td>Toggle selected knob</td>
 </tr>
 </tbody></table></div>
@@ -1175,18 +1177,18 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--card-background</code></td>
-<td>var(--background-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--card-background)" aria-label="Copy var(--card-background)"><code>var(--card-background)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-primary)" aria-label="Copy var(--background-primary)"><code>var(--background-primary)</code></button></td>
 <td>Card background</td>
 </tr>
 <tr>
-<td><code>--card-border</code></td>
-<td>var(--border-faded)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--card-border)" aria-label="Copy var(--card-border)"><code>var(--card-border)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-faded)" aria-label="Copy var(--border-faded)"><code>var(--border-faded)</code></button></td>
 <td>Card border</td>
 </tr>
 <tr>
-<td><code>--card-border-hover</code></td>
-<td>var(--border-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--card-border-hover)" aria-label="Copy var(--card-border-hover)"><code>var(--card-border-hover)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-primary)" aria-label="Copy var(--border-primary)"><code>var(--border-primary)</code></button></td>
 <td>Card border on hover</td>
 </tr>
 </tbody></table></div>
@@ -1201,13 +1203,13 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--tooltip-background</code></td>
-<td>var(--warm-black)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--tooltip-background)" aria-label="Copy var(--tooltip-background)"><code>var(--tooltip-background)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--warm-black)" aria-label="Copy var(--warm-black)"><code>var(--warm-black)</code></button></td>
 <td>Tooltip background</td>
 </tr>
 <tr>
-<td><code>--tooltip-text</code></td>
-<td>var(--off-white)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--tooltip-text)" aria-label="Copy var(--tooltip-text)"><code>var(--tooltip-text)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--off-white)" aria-label="Copy var(--off-white)"><code>var(--off-white)</code></button></td>
 <td>Tooltip text</td>
 </tr>
 </tbody></table></div>
@@ -1222,13 +1224,13 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--toast-background</code></td>
-<td>var(--warm-black)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--toast-background)" aria-label="Copy var(--toast-background)"><code>var(--toast-background)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--warm-black)" aria-label="Copy var(--warm-black)"><code>var(--warm-black)</code></button></td>
 <td>Toast background</td>
 </tr>
 <tr>
-<td><code>--toast-text</code></td>
-<td>var(--off-white)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--toast-text)" aria-label="Copy var(--toast-text)"><code>var(--toast-text)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--off-white)" aria-label="Copy var(--off-white)"><code>var(--off-white)</code></button></td>
 <td>Toast text</td>
 </tr>
 </tbody></table></div>
@@ -1243,18 +1245,18 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--tab-active-color</code></td>
-<td>var(--text-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--tab-active-color)" aria-label="Copy var(--tab-active-color)"><code>var(--tab-active-color)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button></td>
 <td>Active tab text</td>
 </tr>
 <tr>
-<td><code>--tab-inactive-color</code></td>
-<td>var(--text-faded)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--tab-inactive-color)" aria-label="Copy var(--tab-inactive-color)"><code>var(--tab-inactive-color)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-faded)" aria-label="Copy var(--text-faded)"><code>var(--text-faded)</code></button></td>
 <td>Inactive tab text</td>
 </tr>
 <tr>
-<td><code>--tab-indicator-color</code></td>
-<td>var(--text-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--tab-indicator-color)" aria-label="Copy var(--tab-indicator-color)"><code>var(--tab-indicator-color)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button></td>
 <td>Tab underline indicator</td>
 </tr>
 </tbody></table></div>
@@ -1269,13 +1271,13 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--progress-track</code></td>
-<td>var(--background-darker)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--progress-track)" aria-label="Copy var(--progress-track)"><code>var(--progress-track)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-darker)" aria-label="Copy var(--background-darker)"><code>var(--background-darker)</code></button></td>
 <td>Track background</td>
 </tr>
 <tr>
-<td><code>--progress-fill</code></td>
-<td>var(--text-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--progress-fill)" aria-label="Copy var(--progress-fill)"><code>var(--progress-fill)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button></td>
 <td>Fill/bar color</td>
 </tr>
 </tbody></table></div>
@@ -1290,8 +1292,8 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--divider-color</code></td>
-<td>var(--border-faded)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--divider-color)" aria-label="Copy var(--divider-color)"><code>var(--divider-color)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-faded)" aria-label="Copy var(--border-faded)"><code>var(--border-faded)</code></button></td>
 <td>Divider line color</td>
 </tr>
 </tbody></table></div>
@@ -1306,18 +1308,18 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--dropdown-background</code></td>
-<td>var(--background-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--dropdown-background)" aria-label="Copy var(--dropdown-background)"><code>var(--dropdown-background)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-primary)" aria-label="Copy var(--background-primary)"><code>var(--background-primary)</code></button></td>
 <td>Dropdown background</td>
 </tr>
 <tr>
-<td><code>--dropdown-border</code></td>
-<td>var(--border-faded)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--dropdown-border)" aria-label="Copy var(--dropdown-border)"><code>var(--dropdown-border)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-faded)" aria-label="Copy var(--border-faded)"><code>var(--border-faded)</code></button></td>
 <td>Dropdown border</td>
 </tr>
 <tr>
-<td><code>--dropdown-item-hover</code></td>
-<td>var(--background-faded)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--dropdown-item-hover)" aria-label="Copy var(--dropdown-item-hover)"><code>var(--dropdown-item-hover)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-faded)" aria-label="Copy var(--background-faded)"><code>var(--background-faded)</code></button></td>
 <td>Hovered item background</td>
 </tr>
 </tbody></table></div>
@@ -1332,13 +1334,13 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--tag-background</code></td>
-<td>var(--background-darker)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--tag-background)" aria-label="Copy var(--tag-background)"><code>var(--tag-background)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-darker)" aria-label="Copy var(--background-darker)"><code>var(--background-darker)</code></button></td>
 <td>Tag background</td>
 </tr>
 <tr>
-<td><code>--tag-border</code></td>
-<td>var(--border-faded)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--tag-border)" aria-label="Copy var(--tag-border)"><code>var(--tag-border)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-faded)" aria-label="Copy var(--border-faded)"><code>var(--border-faded)</code></button></td>
 <td>Tag border</td>
 </tr>
 </tbody></table></div>
@@ -1353,23 +1355,23 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--dialog-background</code></td>
-<td>var(--background-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--dialog-background)" aria-label="Copy var(--dialog-background)"><code>var(--dialog-background)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-primary)" aria-label="Copy var(--background-primary)"><code>var(--background-primary)</code></button></td>
 <td>Dialog background</td>
 </tr>
 <tr>
-<td><code>--dialog-max-width</code></td>
-<td>560px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--dialog-max-width)" aria-label="Copy var(--dialog-max-width)"><code>var(--dialog-max-width)</code></button></td>
+<td><code>560px</code></td>
 <td>Dialog maximum width</td>
 </tr>
 <tr>
-<td><code>--dialog-shadow</code></td>
-<td>0 8px 32px var(--black-alpha-20)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--dialog-shadow)" aria-label="Copy var(--dialog-shadow)"><code>var(--dialog-shadow)</code></button></td>
+<td><code>0 8px 32px var(--black-alpha-20)</code></td>
 <td>Dialog drop shadow</td>
 </tr>
 <tr>
-<td><code>--dialog-backdrop</code></td>
-<td>rgba(0, 0, 0, 0.6)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--dialog-backdrop)" aria-label="Copy var(--dialog-backdrop)"><code>var(--dialog-backdrop)</code></button></td>
+<td><code>rgba(0, 0, 0, 0.6)</code></td>
 <td>Dialog backdrop overlay</td>
 </tr>
 </tbody></table></div>
@@ -1384,23 +1386,23 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--slider-track-background</code></td>
-<td>var(--background-darker)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--slider-track-background)" aria-label="Copy var(--slider-track-background)"><code>var(--slider-track-background)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-darker)" aria-label="Copy var(--background-darker)"><code>var(--background-darker)</code></button></td>
 <td>Slider track</td>
 </tr>
 <tr>
-<td><code>--slider-fill</code></td>
-<td>var(--text-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--slider-fill)" aria-label="Copy var(--slider-fill)"><code>var(--slider-fill)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button></td>
 <td>Slider filled portion</td>
 </tr>
 <tr>
-<td><code>--slider-thumb-background</code></td>
-<td>var(--text-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--slider-thumb-background)" aria-label="Copy var(--slider-thumb-background)"><code>var(--slider-thumb-background)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button></td>
 <td>Thumb fill</td>
 </tr>
 <tr>
-<td><code>--slider-thumb-border</code></td>
-<td>var(--background-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--slider-thumb-border)" aria-label="Copy var(--slider-thumb-border)"><code>var(--slider-thumb-border)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-primary)" aria-label="Copy var(--background-primary)"><code>var(--background-primary)</code></button></td>
 <td>Thumb border</td>
 </tr>
 </tbody></table></div>
@@ -1415,18 +1417,18 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--rating-color</code></td>
-<td>var(--yellow)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--rating-color)" aria-label="Copy var(--rating-color)"><code>var(--rating-color)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--yellow)" aria-label="Copy var(--yellow)"><code>var(--yellow)</code></button></td>
 <td>Filled star color</td>
 </tr>
 <tr>
-<td><code>--rating-color-empty</code></td>
-<td>var(--background-faded)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--rating-color-empty)" aria-label="Copy var(--rating-color-empty)"><code>var(--rating-color-empty)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-faded)" aria-label="Copy var(--background-faded)"><code>var(--background-faded)</code></button></td>
 <td>Empty star color</td>
 </tr>
 <tr>
-<td><code>--rating-size</code></td>
-<td>1.5rem</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--rating-size)" aria-label="Copy var(--rating-size)"><code>var(--rating-size)</code></button></td>
+<td><code>1.5rem</code></td>
 <td>Star size</td>
 </tr>
 </tbody></table></div>
@@ -1443,104 +1445,104 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--none</code></td>
-<td>0</td>
-<td>0px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--none)" aria-label="Copy var(--none)"><code>var(--none)</code></button></td>
+<td><code>0</code></td>
+<td><code>0px</code></td>
 </tr>
 <tr>
-<td><code>--2xs</code></td>
-<td>0.125rem</td>
-<td>2px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--2xs)" aria-label="Copy var(--2xs)"><code>var(--2xs)</code></button></td>
+<td><code>0.125rem</code></td>
+<td><code>2px</code></td>
 </tr>
 <tr>
-<td><code>--xs</code></td>
-<td>0.25rem</td>
-<td>4px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--xs)" aria-label="Copy var(--xs)"><code>var(--xs)</code></button></td>
+<td><code>0.25rem</code></td>
+<td><code>4px</code></td>
 </tr>
 <tr>
-<td><code>--s</code></td>
-<td>0.5rem</td>
-<td>8px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--s)" aria-label="Copy var(--s)"><code>var(--s)</code></button></td>
+<td><code>0.5rem</code></td>
+<td><code>8px</code></td>
 </tr>
 <tr>
-<td><code>--m</code></td>
-<td>0.75rem</td>
-<td>12px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--m)" aria-label="Copy var(--m)"><code>var(--m)</code></button></td>
+<td><code>0.75rem</code></td>
+<td><code>12px</code></td>
 </tr>
 <tr>
-<td><code>--l</code></td>
-<td>1rem</td>
-<td>16px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--l)" aria-label="Copy var(--l)"><code>var(--l)</code></button></td>
+<td><code>1rem</code></td>
+<td><code>16px</code></td>
 </tr>
 <tr>
-<td><code>--xl</code></td>
-<td>1.5rem</td>
-<td>24px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--xl)" aria-label="Copy var(--xl)"><code>var(--xl)</code></button></td>
+<td><code>1.5rem</code></td>
+<td><code>24px</code></td>
 </tr>
 <tr>
-<td><code>--2xl</code></td>
-<td>2rem</td>
-<td>32px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--2xl)" aria-label="Copy var(--2xl)"><code>var(--2xl)</code></button></td>
+<td><code>2rem</code></td>
+<td><code>32px</code></td>
 </tr>
 <tr>
-<td><code>--3xl</code></td>
-<td>2.5rem</td>
-<td>40px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--3xl)" aria-label="Copy var(--3xl)"><code>var(--3xl)</code></button></td>
+<td><code>2.5rem</code></td>
+<td><code>40px</code></td>
 </tr>
 <tr>
-<td><code>--4xl</code></td>
-<td>3rem</td>
-<td>48px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--4xl)" aria-label="Copy var(--4xl)"><code>var(--4xl)</code></button></td>
+<td><code>3rem</code></td>
+<td><code>48px</code></td>
 </tr>
 <tr>
-<td><code>--5xl</code></td>
-<td>3.5rem</td>
-<td>56px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--5xl)" aria-label="Copy var(--5xl)"><code>var(--5xl)</code></button></td>
+<td><code>3.5rem</code></td>
+<td><code>56px</code></td>
 </tr>
 <tr>
-<td><code>--6xl</code></td>
-<td>4rem</td>
-<td>64px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--6xl)" aria-label="Copy var(--6xl)"><code>var(--6xl)</code></button></td>
+<td><code>4rem</code></td>
+<td><code>64px</code></td>
 </tr>
 <tr>
-<td><code>--7xl</code></td>
-<td>4.5rem</td>
-<td>72px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--7xl)" aria-label="Copy var(--7xl)"><code>var(--7xl)</code></button></td>
+<td><code>4.5rem</code></td>
+<td><code>72px</code></td>
 </tr>
 <tr>
-<td><code>--8xl</code></td>
-<td>5rem</td>
-<td>80px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--8xl)" aria-label="Copy var(--8xl)"><code>var(--8xl)</code></button></td>
+<td><code>5rem</code></td>
+<td><code>80px</code></td>
 </tr>
 <tr>
-<td><code>--9xl</code></td>
-<td>5.5rem</td>
-<td>88px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--9xl)" aria-label="Copy var(--9xl)"><code>var(--9xl)</code></button></td>
+<td><code>5.5rem</code></td>
+<td><code>88px</code></td>
 </tr>
 <tr>
-<td><code>--10xl</code></td>
-<td>6rem</td>
-<td>96px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--10xl)" aria-label="Copy var(--10xl)"><code>var(--10xl)</code></button></td>
+<td><code>6rem</code></td>
+<td><code>96px</code></td>
 </tr>
 <tr>
-<td><code>--11xl</code></td>
-<td>6.5rem</td>
-<td>104px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--11xl)" aria-label="Copy var(--11xl)"><code>var(--11xl)</code></button></td>
+<td><code>6.5rem</code></td>
+<td><code>104px</code></td>
 </tr>
 <tr>
-<td><code>--12xl</code></td>
-<td>7rem</td>
-<td>112px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--12xl)" aria-label="Copy var(--12xl)"><code>var(--12xl)</code></button></td>
+<td><code>7rem</code></td>
+<td><code>112px</code></td>
 </tr>
 <tr>
-<td><code>--13xl</code></td>
-<td>7.5rem</td>
-<td>120px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--13xl)" aria-label="Copy var(--13xl)"><code>var(--13xl)</code></button></td>
+<td><code>7.5rem</code></td>
+<td><code>120px</code></td>
 </tr>
 <tr>
-<td><code>--14xl</code></td>
-<td>10rem</td>
-<td>160px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--14xl)" aria-label="Copy var(--14xl)"><code>var(--14xl)</code></button></td>
+<td><code>10rem</code></td>
+<td><code>160px</code></td>
 </tr>
 </tbody></table></div>
 <h3 id="space-tokens">Space Tokens</h3>
@@ -1554,104 +1556,104 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--space-none</code></td>
-<td>var(--none)</td>
-<td>0px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-none)" aria-label="Copy var(--space-none)"><code>var(--space-none)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--none)" aria-label="Copy var(--none)"><code>var(--none)</code></button></td>
+<td><code>0px</code></td>
 </tr>
 <tr>
-<td><code>--space-2xs</code></td>
-<td>var(--2xs)</td>
-<td>2px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-2xs)" aria-label="Copy var(--space-2xs)"><code>var(--space-2xs)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--2xs)" aria-label="Copy var(--2xs)"><code>var(--2xs)</code></button></td>
+<td><code>2px</code></td>
 </tr>
 <tr>
-<td><code>--space-xs</code></td>
-<td>var(--xs)</td>
-<td>4px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-xs)" aria-label="Copy var(--space-xs)"><code>var(--space-xs)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--xs)" aria-label="Copy var(--xs)"><code>var(--xs)</code></button></td>
+<td><code>4px</code></td>
 </tr>
 <tr>
-<td><code>--space-s</code></td>
-<td>var(--s)</td>
-<td>8px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-s)" aria-label="Copy var(--space-s)"><code>var(--space-s)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--s)" aria-label="Copy var(--s)"><code>var(--s)</code></button></td>
+<td><code>8px</code></td>
 </tr>
 <tr>
-<td><code>--space-m</code></td>
-<td>var(--m)</td>
-<td>12px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-m)" aria-label="Copy var(--space-m)"><code>var(--space-m)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--m)" aria-label="Copy var(--m)"><code>var(--m)</code></button></td>
+<td><code>12px</code></td>
 </tr>
 <tr>
-<td><code>--space-l</code></td>
-<td>var(--l)</td>
-<td>16px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-l)" aria-label="Copy var(--space-l)"><code>var(--space-l)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--l)" aria-label="Copy var(--l)"><code>var(--l)</code></button></td>
+<td><code>16px</code></td>
 </tr>
 <tr>
-<td><code>--space-xl</code></td>
-<td>var(--xl)</td>
-<td>24px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-xl)" aria-label="Copy var(--space-xl)"><code>var(--space-xl)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--xl)" aria-label="Copy var(--xl)"><code>var(--xl)</code></button></td>
+<td><code>24px</code></td>
 </tr>
 <tr>
-<td><code>--space-2xl</code></td>
-<td>var(--2xl)</td>
-<td>32px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-2xl)" aria-label="Copy var(--space-2xl)"><code>var(--space-2xl)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--2xl)" aria-label="Copy var(--2xl)"><code>var(--2xl)</code></button></td>
+<td><code>32px</code></td>
 </tr>
 <tr>
-<td><code>--space-3xl</code></td>
-<td>var(--3xl)</td>
-<td>40px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-3xl)" aria-label="Copy var(--space-3xl)"><code>var(--space-3xl)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--3xl)" aria-label="Copy var(--3xl)"><code>var(--3xl)</code></button></td>
+<td><code>40px</code></td>
 </tr>
 <tr>
-<td><code>--space-4xl</code></td>
-<td>var(--4xl)</td>
-<td>48px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-4xl)" aria-label="Copy var(--space-4xl)"><code>var(--space-4xl)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--4xl)" aria-label="Copy var(--4xl)"><code>var(--4xl)</code></button></td>
+<td><code>48px</code></td>
 </tr>
 <tr>
-<td><code>--space-5xl</code></td>
-<td>var(--5xl)</td>
-<td>56px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-5xl)" aria-label="Copy var(--space-5xl)"><code>var(--space-5xl)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--5xl)" aria-label="Copy var(--5xl)"><code>var(--5xl)</code></button></td>
+<td><code>56px</code></td>
 </tr>
 <tr>
-<td><code>--space-6xl</code></td>
-<td>var(--6xl)</td>
-<td>64px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-6xl)" aria-label="Copy var(--space-6xl)"><code>var(--space-6xl)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--6xl)" aria-label="Copy var(--6xl)"><code>var(--6xl)</code></button></td>
+<td><code>64px</code></td>
 </tr>
 <tr>
-<td><code>--space-7xl</code></td>
-<td>var(--7xl)</td>
-<td>72px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-7xl)" aria-label="Copy var(--space-7xl)"><code>var(--space-7xl)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--7xl)" aria-label="Copy var(--7xl)"><code>var(--7xl)</code></button></td>
+<td><code>72px</code></td>
 </tr>
 <tr>
-<td><code>--space-8xl</code></td>
-<td>var(--8xl)</td>
-<td>80px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-8xl)" aria-label="Copy var(--space-8xl)"><code>var(--space-8xl)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--8xl)" aria-label="Copy var(--8xl)"><code>var(--8xl)</code></button></td>
+<td><code>80px</code></td>
 </tr>
 <tr>
-<td><code>--space-9xl</code></td>
-<td>var(--9xl)</td>
-<td>88px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-9xl)" aria-label="Copy var(--space-9xl)"><code>var(--space-9xl)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--9xl)" aria-label="Copy var(--9xl)"><code>var(--9xl)</code></button></td>
+<td><code>88px</code></td>
 </tr>
 <tr>
-<td><code>--space-10xl</code></td>
-<td>var(--10xl)</td>
-<td>96px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-10xl)" aria-label="Copy var(--space-10xl)"><code>var(--space-10xl)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--10xl)" aria-label="Copy var(--10xl)"><code>var(--10xl)</code></button></td>
+<td><code>96px</code></td>
 </tr>
 <tr>
-<td><code>--space-11xl</code></td>
-<td>var(--11xl)</td>
-<td>104px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-11xl)" aria-label="Copy var(--space-11xl)"><code>var(--space-11xl)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--11xl)" aria-label="Copy var(--11xl)"><code>var(--11xl)</code></button></td>
+<td><code>104px</code></td>
 </tr>
 <tr>
-<td><code>--space-12xl</code></td>
-<td>var(--12xl)</td>
-<td>112px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-12xl)" aria-label="Copy var(--space-12xl)"><code>var(--space-12xl)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--12xl)" aria-label="Copy var(--12xl)"><code>var(--12xl)</code></button></td>
+<td><code>112px</code></td>
 </tr>
 <tr>
-<td><code>--space-13xl</code></td>
-<td>var(--13xl)</td>
-<td>120px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-13xl)" aria-label="Copy var(--space-13xl)"><code>var(--space-13xl)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--13xl)" aria-label="Copy var(--13xl)"><code>var(--13xl)</code></button></td>
+<td><code>120px</code></td>
 </tr>
 <tr>
-<td><code>--space-14xl</code></td>
-<td>var(--14xl)</td>
-<td>160px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-14xl)" aria-label="Copy var(--space-14xl)"><code>var(--space-14xl)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--14xl)" aria-label="Copy var(--14xl)"><code>var(--14xl)</code></button></td>
+<td><code>160px</code></td>
 </tr>
 </tbody></table></div>
 <h3 id="section-spacing">Section Spacing</h3>
@@ -1665,29 +1667,29 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--section-xs</code></td>
-<td>var(--space-xl)</td>
-<td>24px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--section-xs)" aria-label="Copy var(--section-xs)"><code>var(--section-xs)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-xl)" aria-label="Copy var(--space-xl)"><code>var(--space-xl)</code></button></td>
+<td><code>24px</code></td>
 </tr>
 <tr>
-<td><code>--section-s</code></td>
-<td>var(--space-2xl)</td>
-<td>32px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--section-s)" aria-label="Copy var(--section-s)"><code>var(--section-s)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-2xl)" aria-label="Copy var(--space-2xl)"><code>var(--space-2xl)</code></button></td>
+<td><code>32px</code></td>
 </tr>
 <tr>
-<td><code>--section-m</code></td>
-<td>var(--space-6xl)</td>
-<td>64px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--section-m)" aria-label="Copy var(--section-m)"><code>var(--section-m)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-6xl)" aria-label="Copy var(--space-6xl)"><code>var(--space-6xl)</code></button></td>
+<td><code>64px</code></td>
 </tr>
 <tr>
-<td><code>--section-l</code></td>
-<td>var(--space-10xl)</td>
-<td>96px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--section-l)" aria-label="Copy var(--section-l)"><code>var(--section-l)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-10xl)" aria-label="Copy var(--space-10xl)"><code>var(--space-10xl)</code></button></td>
+<td><code>96px</code></td>
 </tr>
 <tr>
-<td><code>--section-xl</code></td>
-<td>var(--space-14xl)</td>
-<td>160px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--section-xl)" aria-label="Copy var(--section-xl)"><code>var(--section-xl)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-14xl)" aria-label="Copy var(--space-14xl)"><code>var(--space-14xl)</code></button></td>
+<td><code>160px</code></td>
 </tr>
 </tbody></table></div>
 <hr>
@@ -1703,23 +1705,23 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--border-s</code></td>
-<td>1.5px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-s)" aria-label="Copy var(--border-s)"><code>var(--border-s)</code></button></td>
+<td><code>1.5px</code></td>
 <td>Default/thin border</td>
 </tr>
 <tr>
-<td><code>--border-m</code></td>
-<td>2px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-m)" aria-label="Copy var(--border-m)"><code>var(--border-m)</code></button></td>
+<td><code>2px</code></td>
 <td>Medium border</td>
 </tr>
 <tr>
-<td><code>--border-l</code></td>
-<td>4px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-l)" aria-label="Copy var(--border-l)"><code>var(--border-l)</code></button></td>
+<td><code>4px</code></td>
 <td>Thick/accent border</td>
 </tr>
 </tbody></table></div>
 <h3 id="border-composition">Border Composition</h3>
-<p>Default values applied when using structural border classes like <code>.border</code> or <code>.border-top</code>.</p>
+<p>Default values applied when using structural border classes like <button type="button" class="token-copy is-class" data-copy=".border" aria-label="Copy .border"><code>.border</code></button> or <button type="button" class="token-copy is-class" data-copy=".border-top" aria-label="Copy .border-top"><code>.border-top</code></button>.</p>
 <div class="table-scroll"><table class="table">
 <thead>
 <tr>
@@ -1729,18 +1731,18 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--border-width</code></td>
-<td>var(--border-s)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-width)" aria-label="Copy var(--border-width)"><code>var(--border-width)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-s)" aria-label="Copy var(--border-s)"><code>var(--border-s)</code></button></td>
 <td>Default border width</td>
 </tr>
 <tr>
-<td><code>--border-style</code></td>
-<td>solid</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-style)" aria-label="Copy var(--border-style)"><code>var(--border-style)</code></button></td>
+<td><code>solid</code></td>
 <td>Default border style</td>
 </tr>
 <tr>
-<td><code>--border-color</code></td>
-<td>var(--border-primary)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-color)" aria-label="Copy var(--border-color)"><code>var(--border-color)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-primary)" aria-label="Copy var(--border-primary)"><code>var(--border-primary)</code></button></td>
 <td>Default border color</td>
 </tr>
 </tbody></table></div>
@@ -1755,33 +1757,33 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--radius-xs</code></td>
-<td>4px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--radius-xs)" aria-label="Copy var(--radius-xs)"><code>var(--radius-xs)</code></button></td>
+<td><code>4px</code></td>
 <td>Subtle rounding</td>
 </tr>
 <tr>
-<td><code>--radius-s</code></td>
-<td>6px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--radius-s)" aria-label="Copy var(--radius-s)"><code>var(--radius-s)</code></button></td>
+<td><code>6px</code></td>
 <td>Small rounding</td>
 </tr>
 <tr>
-<td><code>--radius-m</code></td>
-<td>10px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--radius-m)" aria-label="Copy var(--radius-m)"><code>var(--radius-m)</code></button></td>
+<td><code>10px</code></td>
 <td>Medium rounding</td>
 </tr>
 <tr>
-<td><code>--radius-l</code></td>
-<td>16px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--radius-l)" aria-label="Copy var(--radius-l)"><code>var(--radius-l)</code></button></td>
+<td><code>16px</code></td>
 <td>Large rounding</td>
 </tr>
 <tr>
-<td><code>--radius-xl</code></td>
-<td>24px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--radius-xl)" aria-label="Copy var(--radius-xl)"><code>var(--radius-xl)</code></button></td>
+<td><code>24px</code></td>
 <td>Extra-large rounding</td>
 </tr>
 <tr>
-<td><code>--radius-pill</code></td>
-<td>999px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--radius-pill)" aria-label="Copy var(--radius-pill)"><code>var(--radius-pill)</code></button></td>
+<td><code>999px</code></td>
 <td>Fully rounded / pill shape</td>
 </tr>
 </tbody></table></div>
@@ -1804,11 +1806,11 @@
         
         <h3 class="page-nav-title">What is a Design System?</h3>
       </span>
-    </a><a href="color.html" class="page-nav-link page-nav-next" rel="next">
+    </a><a href="classes.html" class="page-nav-link page-nav-next" rel="next">
       <span class="page-nav-text">
         <span class="page-nav-label">Next</span>
         
-        <h3 class="page-nav-title">Color</h3>
+        <h3 class="page-nav-title">Classes</h3>
       </span>
       <div class="icn-svg page-nav-arrow" data-icon="chevron-right-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
     </a></div></nav>
@@ -1820,7 +1822,11 @@
                 <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
                 <div class="button-group">
                     <button class="button" data-feedback="yes" type="button"><div class="icn-svg" data-icon="thumbs-up" data-file="thumbs-up.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 3L14.5 8H23V12.5L19.5 21H2V8H7L14 1L16 3ZM9.29289 8.53426C9.10536 8.72179 9 8.97615 9 9.24136V17C9 18.1046 9.89543 19 11 19H16.8208C17.6312 19 18.3616 18.5109 18.6701 17.7615L21 12.1035V11C21 10.4477 20.5523 10 20 10H13.1555C12.4856 10 12.0052 9.35431 12.1976 8.71271L13.2907 5.06833C13.3504 4.86932 13.1046 4.72254 12.9577 4.86945L9.29289 8.53426ZM5 10C4.44772 10 4 10.4477 4 11V18C4 18.5523 4.44772 19 5 19H6C6.55228 19 7 18.5523 7 18V11C7 10.4477 6.55228 10 6 10H5Z" fill="currentColor"/></svg></div> Yes</button>
-                    <button class="button is-outline is-faded" data-feedback="no" type="button"><div class="icn-svg" data-icon="thumbs-down" data-file="thumbs-down.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21L9.5 16H1L1 11.5L4.5 3L22 3L22 16L17 16L10 23L8 21ZM14.7071 15.4657C14.8946 15.2782 15 15.0239 15 14.7586L15 7C15 5.89543 14.1046 5 13 5L7.17921 5C6.36877 5 5.63845 5.48908 5.32986 6.23847L3 11.8965L3 13C3 13.5523 3.44772 14 4 14L10.8445 14C11.5144 14 11.9948 14.6457 11.8024 15.2873L10.7093 18.9317C10.6496 19.1307 10.8954 19.2775 11.0423 19.1305L14.7071 15.4657ZM19 14C19.5523 14 20 13.5523 20 13V6C20 5.44772 19.5523 5 19 5H18C17.4477 5 17 5.44772 17 6V13C17 13.5523 17.4477 14 18 14H19Z" fill="currentColor"/></svg></div> No</button>
+                    <button class="button is-faded" data-feedback="no" type="button"><div class="icn-svg" data-icon="thumbs-down" data-file="thumbs-down.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21L9.5 16H1L1 11.5L4.5 3L22 3L22 16L17 16L10 23L8 21ZM14.7071 15.4657C14.8946 15.2782 15 15.0239 15 14.7586L15 7C15 5.89543 14.1046 5 13 5L7.17921 5C6.36877 5 5.63845 5.48908 5.32986 6.23847L3 11.8965L3 13C3 13.5523 3.44772 14 4 14L10.8445 14C11.5144 14 11.9948 14.6457 11.8024 15.2873L10.7093 18.9317C10.6496 19.1307 10.8954 19.2775 11.0423 19.1305L14.7071 15.4657ZM19 14C19.5523 14 20 13.5523 20 13V6C20 5.44772 19.5523 5 19 5H18C17.4477 5 17 5.44772 17 6V13C17 13.5523 17.4477 14 18 14H19Z" fill="currentColor"/></svg></div> No</button>
+                </div>
+                <div class="page-feedback-success" aria-live="polite">
+                    <div class="page-feedback-success-icon"><div class="icn-svg" data-icon="status-check" data-file="status-check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_14441_253)"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.0004 0.000396729C18.6276 0.000611138 24.0004 5.37311 24.0004 12.0004C24.0002 18.6275 18.6275 24.0002 12.0004 24.0004C5.37311 24.0004 0.000611143 18.6276 0.000396729 12.0004C0.000396729 5.37298 5.37298 0.000396729 12.0004 0.000396729ZM11.9643 13.7357C11.1833 14.5167 9.9172 14.5166 9.13614 13.7357L6.27481 10.8754L4.85001 12.3002L10.5502 18.0004L20.1498 8.39981L18.725 6.97501L11.9643 13.7357Z" fill="currentColor"/></g><defs><clipPath id="clip0_14441_253"><rect width="24" height="24" fill="white"/></clipPath></defs></svg></div></div>
+                    <h3 class="page-feedback-success-title">Thanks for your feedback</h3>
                 </div>
             </div>
         </section>

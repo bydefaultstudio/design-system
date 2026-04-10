@@ -25,7 +25,7 @@ All markdown files should follow these standardized patterns to ensure:
 
 ## Frontmatter
 
-Every markdown file must start with YAML frontmatter between `---` delimiters. The generator reads these fields to determine page output, navigation, access control, and rendering.
+Every markdown file must start with YAML frontmatter between `var(---)` delimiters. The generator reads these fields to determine page output, navigation, access control, and rendering.
 
 ### Core Fields
 
@@ -396,21 +396,21 @@ Design system spacing tokens:
 
 | Token | Value | Pixels | Usage |
 | ----- |:-----:| -----: | ----- |
-| `--space-xs` | 0.25rem | 4px | Tight spacing |
-| `--space-s` | 0.5rem | 8px | Small gaps |
-| `--space-m` | 0.75rem | 12px | Medium spacing |
-| `--space-l` | 1rem | 16px | Standard spacing |
-| `--space-xl` | 1.5rem | 24px | Large spacing |
+| `var(--space-xs)` | 0.25rem | 4px | Tight spacing |
+| `var(--space-s)` | 0.5rem | 8px | Small gaps |
+| `var(--space-m)` | 0.75rem | 12px | Medium spacing |
+| `var(--space-l)` | 1rem | 16px | Standard spacing |
+| `var(--space-xl)` | 1.5rem | 24px | Large spacing |
 
 Typography scale tokens:
 
 | Token | Size | Line Height | Use Case |
 | --- | --- | --- | --- |
-| `--font-xs` | 14px | 1.4 | Small text |
-| `--font-s` | 16px | 1.4 | Body text |
-| `--font-m` | 18px | 1.4 | Default |
-| `--font-l` | 20px | 1.4 | Subheadings |
-| `--font-xl` | 22px | 1.2 | Headings |
+| `var(--font-xs)` | 14px | 1.4 | Small text |
+| `var(--font-s)` | 16px | 1.4 | Body text |
+| `var(--font-m)` | 18px | 1.4 | Default |
+| `var(--font-l)` | 20px | 1.4 | Subheadings |
+| `var(--font-xl)` | 22px | 1.2 | Headings |
 
 ```markdown
 Design system spacing tokens:

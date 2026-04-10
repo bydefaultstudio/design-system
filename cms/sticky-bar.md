@@ -4,7 +4,7 @@ subtitle: "Page-level controls that stay visible on scroll"
 description: "How to use the sticky bar component for breadcrumbs, actions, dropdowns, tabs, toggles, and contextual navigation."
 section: "Design System"
 subsection: "Content"
-order: 11
+order: 8
 status: "published"
 access: "team"
 client: "internal"
@@ -323,23 +323,41 @@ Any of these components automatically adapt when placed inside a `.sticky-bar`:
 
 ---
 
-## Docs site overrides
+## Docs site: page sub-header variant
 
-On the documentation site, `style.css` overrides the default `top: 0` to sit below the fixed site header:
+Doc and tool pages use a `.sticky-bar-page` modifier that promotes the sticky bar to act as the page's sub-header (carrying breadcrumb and the markdown actions menu). It sits directly below the fixed site header and is constrained to the article column width.
+
+```html
+<div class="sticky-bar sticky-bar-page">
+  <div class="sticky-bar-container">
+    <div class="sticky-bar-content">
+      <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
+        <a href="../design-system/index.html">Design System</a>
+        <span class="breadcrumb-separator">/</span>
+        <span>Button</span>
+      </nav>
+    </div>
+    <div class="sticky-bar-actions">
+      <div class="dropdown">…</div>
+    </div>
+  </div>
+</div>
+```
 
 ```css
-.sticky-bar {
+.sticky-bar-page {
   top: var(--header-height);
 }
 
-.sticky-bar-container {
+.sticky-bar-page .sticky-bar-container {
   max-width: 1080px;
   margin: 0 auto;
   height: var(--sticky-bar-height);
+  padding-left: var(--space-l);
 }
 ```
 
-Tool pages (calculator, SVG cleaner) may set their own `max-width` and `padding` on `.sticky-bar-container` to match their layout.
+Tool pages (calculator, SVG cleaner) may set their own `padding` on `.sticky-bar-container` to match their layout.
 
 ---
 

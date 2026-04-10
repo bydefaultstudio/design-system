@@ -129,17 +129,17 @@ The theme file groups tokens by concern. Only uncomment and change what differs 
 
 | Category | Tokens | Purpose |
 |----------|--------|---------|
-| **Typography** | `--font-primary`, `--font-secondary`, `--font-tertiary` | Client fonts (add `@font-face` if using local fonts) |
-| **Neutral scale** | `--neutral-50` through `--neutral-990` | Grey ramp (uncommented by default with pure greys) |
-| **Text** | `--text-primary`, `--text-secondary`, `--text-accent`, `--text-link`, `--text-inverted` | Core text colours |
-| **Backgrounds** | `--background-primary`, `--background-secondary` | Surface colours |
-| **Borders** | `--border-primary`, `--border-secondary` | Border colours |
-| **Buttons** | `--button-primary`, `--button-text`, `--button-secondary`, `--button-secondary-text` | Button colours |
-| **Accent** | `--status-info`, `--input-focus`, `--checkbox-selected` | Accent colour used across UI |
+| **Typography** | `var(--font-primary)`, `var(--font-secondary)`, `var(--font-tertiary)` | Client fonts (add `@font-face` if using local fonts) |
+| **Neutral scale** | `var(--neutral-50)` through `var(--neutral-990)` | Grey ramp (uncommented by default with pure greys) |
+| **Text** | `var(--text-primary)`, `var(--text-secondary)`, `var(--text-accent)`, `var(--text-link)`, `var(--text-inverted)` | Core text colours |
+| **Backgrounds** | `var(--background-primary)`, `var(--background-secondary)` | Surface colours |
+| **Borders** | `var(--border-primary)`, `var(--border-secondary)` | Border colours |
+| **Buttons** | `var(--button-primary)`, `var(--button-text)`, `var(--button-secondary)`, `var(--button-secondary-text)` | Button colours |
+| **Accent** | `var(--status-info)`, `var(--input-focus)`, `var(--checkbox-selected)` | Accent colour used across UI |
 
 ### Tokens you usually don't need to override
 
-- `--text-faded`, `--background-faded`, `--border-faded` — use alpha transparency, work across any theme
+- `var(--text-faded)`, `var(--background-faded)`, `var(--border-faded)` — use alpha transparency, work across any theme
 - `--status-*-bg` — background tints derived from lighter accent primitives, used by callouts and badges
 - `--selection-*` — selection highlight, inherits from primary tokens
 

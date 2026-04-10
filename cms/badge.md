@@ -4,13 +4,13 @@ subtitle: "Status labels and category indicators"
 description: "How to use badge and pill components for status labels, version tags, and category indicators."
 section: "Design System"
 subsection: "Feedback"
-order: 1
+order: 2
 status: "published"
 access: "team"
 client: "internal"
 ---
 
-Badges are small inline labels used to indicate status, category, or metadata. They use the mono font (`--font-tertiary`) and pill shape by default.
+Badges are small inline labels used to indicate status, category, or metadata. They use the mono font (`var(--font-tertiary)`) and pill shape by default.
 
 ---
 
@@ -18,10 +18,10 @@ Badges are small inline labels used to indicate status, category, or metadata. T
 
 | Token | Default | Purpose |
 |-------|---------|---------|
-| `--badge-font-size` | `var(--font-2xs)` | Font size |
-| `--badge-padding-y` | `var(--space-2xs)` | Vertical padding |
-| `--badge-padding-x` | `var(--space-s)` | Horizontal padding |
-| `--badge-radius` | `var(--radius-pill)` | Border radius (pill) |
+| `var(--badge-font-size)` | `var(--font-2xs)` | Font size |
+| `var(--badge-padding-y)` | `var(--space-2xs)` | Vertical padding |
+| `var(--badge-padding-x)` | `var(--space-s)` | Horizontal padding |
+| `var(--badge-radius)` | `var(--radius-pill)` | Border radius (pill) |
 
 Status variants reuse the global `--status-*` tokens.
 

@@ -63,17 +63,8 @@
     <div id="site-nav" data-base="../"></div>
 
     <div class="docs-main-area">
-        <!-- Page Header (full width, outside grid) -->
-        <div class="page-header">
-      <div class="container-small">
-        <h1>Border</h1>
-        <p class="page-subtitle" data-text-wrap="pretty">Composable borders — position, width, style, colour</p>
-        
-      </div>
-    </div>
-
-        <!-- Sticky Bar (breadcrumbs + actions) -->
-        <div class="sticky-bar">
+        <!-- Page sub-header bar (full width, sticky — breadcrumb + filename + actions) -->
+        <div class="sticky-bar sticky-bar-page">
       <div class="sticky-bar-container">
         <div class="sticky-bar-content">
           <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
@@ -115,10 +106,15 @@
             <!-- Main Content -->
             <main class="docs-main">
                 <article>
+                    <header class="docs-page-header">
+      <h1>Border</h1>
+      <p class="docs-page-subtitle" data-text-wrap="pretty">Composable borders — position, width, style, colour</p>
+      
+    </header>
                     <p>Borders use a <strong>composable architecture</strong> that separates positioning from styling. Structural classes define where the border appears, and combo classes modify width, style, and color independently. For border token values, see the <a href="tokens.html">Tokens</a> page.</p>
 <hr>
 <h2 id="structure">Structure</h2>
-<p>Structural classes define <strong>where</strong> the border appears. By default, borders use <code>--border-s</code> width, solid style, and <code>--border-primary</code> color.</p>
+<p>Structural classes define <strong>where</strong> the border appears. By default, borders use <button type="button" class="token-copy is-token" data-copy="var(--border-s)" aria-label="Copy var(--border-s)"><code>var(--border-s)</code></button> width, solid style, and <button type="button" class="token-copy is-token" data-copy="var(--border-primary)" aria-label="Copy var(--border-primary)"><code>var(--border-primary)</code></button> color.</p>
 <div class="demo-preview is-joined">
   <div class="block gap-xl">
     <div class="block gap-m">
@@ -146,8 +142,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-bk357bxzt" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-bk357bxzt" class="language-html">&lt;div class=&quot;border&quot;&gt;All sides&lt;/div&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-eldjk8h4i" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-eldjk8h4i" class="language-html">&lt;div class=&quot;border&quot;&gt;All sides&lt;/div&gt;
 &lt;div class=&quot;border-top&quot;&gt;Top only&lt;/div&gt;
 &lt;div class=&quot;border-bottom&quot;&gt;Bottom only&lt;/div&gt;
 &lt;div class=&quot;border-left&quot;&gt;Left only&lt;/div&gt;
@@ -163,29 +159,29 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>.border</code></td>
+<td><button type="button" class="token-copy is-class" data-copy=".border" aria-label="Copy .border"><code>.border</code></button></td>
 <td>Border on all sides</td>
 </tr>
 <tr>
-<td><code>.border-top</code></td>
+<td><button type="button" class="token-copy is-class" data-copy=".border-top" aria-label="Copy .border-top"><code>.border-top</code></button></td>
 <td>Top only</td>
 </tr>
 <tr>
-<td><code>.border-bottom</code></td>
+<td><button type="button" class="token-copy is-class" data-copy=".border-bottom" aria-label="Copy .border-bottom"><code>.border-bottom</code></button></td>
 <td>Bottom only</td>
 </tr>
 <tr>
-<td><code>.border-left</code></td>
+<td><button type="button" class="token-copy is-class" data-copy=".border-left" aria-label="Copy .border-left"><code>.border-left</code></button></td>
 <td>Left only</td>
 </tr>
 <tr>
-<td><code>.border-right</code></td>
+<td><button type="button" class="token-copy is-class" data-copy=".border-right" aria-label="Copy .border-right"><code>.border-right</code></button></td>
 <td>Right only</td>
 </tr>
 </tbody></table></div>
 <hr>
 <h2 id="width">Width</h2>
-<p>Width classes modify the border thickness. The default is <code>--border-s</code>.</p>
+<p>Width classes modify the border thickness. The default is <button type="button" class="token-copy is-token" data-copy="var(--border-s)" aria-label="Copy var(--border-s)"><code>var(--border-s)</code></button>.</p>
 <div class="demo-preview is-joined">
   <div class="block gap-xl">
     <div class="block gap-m">
@@ -205,8 +201,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-pxxzl2ray" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-pxxzl2ray" class="language-html">&lt;div class=&quot;border border-m&quot;&gt;Medium border on all sides&lt;/div&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-y2nrjf5nc" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-y2nrjf5nc" class="language-html">&lt;div class=&quot;border border-m&quot;&gt;Medium border on all sides&lt;/div&gt;
 </code></pre>
       </div>
     
@@ -219,18 +215,18 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>.border-s</code></td>
-<td><code>--border-s</code></td>
+<td><button type="button" class="token-copy is-class" data-copy=".border-s" aria-label="Copy .border-s"><code>.border-s</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-s)" aria-label="Copy var(--border-s)"><code>var(--border-s)</code></button></td>
 <td>1.5px</td>
 </tr>
 <tr>
-<td><code>.border-m</code></td>
-<td><code>--border-m</code></td>
+<td><button type="button" class="token-copy is-class" data-copy=".border-m" aria-label="Copy .border-m"><code>.border-m</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-m)" aria-label="Copy var(--border-m)"><code>var(--border-m)</code></button></td>
 <td>2px</td>
 </tr>
 <tr>
-<td><code>.border-l</code></td>
-<td><code>--border-l</code></td>
+<td><button type="button" class="token-copy is-class" data-copy=".border-l" aria-label="Copy .border-l"><code>.border-l</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-l)" aria-label="Copy var(--border-l)"><code>var(--border-l)</code></button></td>
 <td>4px</td>
 </tr>
 </tbody></table></div>
@@ -256,8 +252,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-yf3313mbn" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-yf3313mbn" class="language-html">&lt;div class=&quot;border border-dashed&quot;&gt;Dashed border&lt;/div&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-b7c0j93t5" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-b7c0j93t5" class="language-html">&lt;div class=&quot;border border-dashed&quot;&gt;Dashed border&lt;/div&gt;
 </code></pre>
       </div>
     
@@ -269,15 +265,15 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>.border-solid</code></td>
+<td><button type="button" class="token-copy is-class" data-copy=".border-solid" aria-label="Copy .border-solid"><code>.border-solid</code></button></td>
 <td>Solid (default)</td>
 </tr>
 <tr>
-<td><code>.border-dashed</code></td>
+<td><button type="button" class="token-copy is-class" data-copy=".border-dashed" aria-label="Copy .border-dashed"><code>.border-dashed</code></button></td>
 <td>Dashed</td>
 </tr>
 <tr>
-<td><code>.border-dotted</code></td>
+<td><button type="button" class="token-copy is-class" data-copy=".border-dotted" aria-label="Copy .border-dotted"><code>.border-dotted</code></button></td>
 <td>Dotted</td>
 </tr>
 </tbody></table></div>
@@ -303,8 +299,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-wf076ev8q" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-wf076ev8q" class="language-html">&lt;div class=&quot;border border-faded&quot;&gt;Subtle border&lt;/div&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-4ci9wd5kg" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-4ci9wd5kg" class="language-html">&lt;div class=&quot;border border-faded&quot;&gt;Subtle border&lt;/div&gt;
 </code></pre>
       </div>
     
@@ -316,16 +312,16 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>.border-primary</code></td>
-<td><code>--border-primary</code></td>
+<td><button type="button" class="token-copy is-class" data-copy=".border-primary" aria-label="Copy .border-primary"><code>.border-primary</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-primary)" aria-label="Copy var(--border-primary)"><code>var(--border-primary)</code></button></td>
 </tr>
 <tr>
-<td><code>.border-secondary</code></td>
-<td><code>--border-secondary</code></td>
+<td><button type="button" class="token-copy is-class" data-copy=".border-secondary" aria-label="Copy .border-secondary"><code>.border-secondary</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-secondary)" aria-label="Copy var(--border-secondary)"><code>var(--border-secondary)</code></button></td>
 </tr>
 <tr>
-<td><code>.border-faded</code></td>
-<td><code>--border-faded</code></td>
+<td><button type="button" class="token-copy is-class" data-copy=".border-faded" aria-label="Copy .border-faded"><code>.border-faded</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--border-faded)" aria-label="Copy var(--border-faded)"><code>var(--border-faded)</code></button></td>
 </tr>
 </tbody></table></div>
 <hr>
@@ -362,8 +358,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-sljh2u76a" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-sljh2u76a" class="language-css">border-radius: var(--radius-m);
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-a0pmh9w9w" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-a0pmh9w9w" class="language-css">border-radius: var(--radius-m);
 </code></pre>
       </div>
     
@@ -375,27 +371,27 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>--radius-xs</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--radius-xs)" aria-label="Copy var(--radius-xs)"><code>var(--radius-xs)</code></button></td>
 <td>4px</td>
 </tr>
 <tr>
-<td><code>--radius-s</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--radius-s)" aria-label="Copy var(--radius-s)"><code>var(--radius-s)</code></button></td>
 <td>6px</td>
 </tr>
 <tr>
-<td><code>--radius-m</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--radius-m)" aria-label="Copy var(--radius-m)"><code>var(--radius-m)</code></button></td>
 <td>10px</td>
 </tr>
 <tr>
-<td><code>--radius-l</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--radius-l)" aria-label="Copy var(--radius-l)"><code>var(--radius-l)</code></button></td>
 <td>16px</td>
 </tr>
 <tr>
-<td><code>--radius-xl</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--radius-xl)" aria-label="Copy var(--radius-xl)"><code>var(--radius-xl)</code></button></td>
 <td>24px</td>
 </tr>
 <tr>
-<td><code>--radius-pill</code></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--radius-pill)" aria-label="Copy var(--radius-pill)"><code>var(--radius-pill)</code></button></td>
 <td>999px</td>
 </tr>
 </tbody></table></div>
@@ -421,8 +417,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-s3gj27mec" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-s3gj27mec" class="language-html">&lt;div class=&quot;border-top border-m border-dashed border-secondary&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-3t5dq6r0k" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-3t5dq6r0k" class="language-html">&lt;div class=&quot;border-top border-m border-dashed border-secondary&quot;&gt;
   Composed: top + medium + dashed + secondary
 &lt;/div&gt;
 </code></pre>
@@ -463,7 +459,11 @@
                 <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
                 <div class="button-group">
                     <button class="button" data-feedback="yes" type="button"><div class="icn-svg" data-icon="thumbs-up" data-file="thumbs-up.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 3L14.5 8H23V12.5L19.5 21H2V8H7L14 1L16 3ZM9.29289 8.53426C9.10536 8.72179 9 8.97615 9 9.24136V17C9 18.1046 9.89543 19 11 19H16.8208C17.6312 19 18.3616 18.5109 18.6701 17.7615L21 12.1035V11C21 10.4477 20.5523 10 20 10H13.1555C12.4856 10 12.0052 9.35431 12.1976 8.71271L13.2907 5.06833C13.3504 4.86932 13.1046 4.72254 12.9577 4.86945L9.29289 8.53426ZM5 10C4.44772 10 4 10.4477 4 11V18C4 18.5523 4.44772 19 5 19H6C6.55228 19 7 18.5523 7 18V11C7 10.4477 6.55228 10 6 10H5Z" fill="currentColor"/></svg></div> Yes</button>
-                    <button class="button is-outline is-faded" data-feedback="no" type="button"><div class="icn-svg" data-icon="thumbs-down" data-file="thumbs-down.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21L9.5 16H1L1 11.5L4.5 3L22 3L22 16L17 16L10 23L8 21ZM14.7071 15.4657C14.8946 15.2782 15 15.0239 15 14.7586L15 7C15 5.89543 14.1046 5 13 5L7.17921 5C6.36877 5 5.63845 5.48908 5.32986 6.23847L3 11.8965L3 13C3 13.5523 3.44772 14 4 14L10.8445 14C11.5144 14 11.9948 14.6457 11.8024 15.2873L10.7093 18.9317C10.6496 19.1307 10.8954 19.2775 11.0423 19.1305L14.7071 15.4657ZM19 14C19.5523 14 20 13.5523 20 13V6C20 5.44772 19.5523 5 19 5H18C17.4477 5 17 5.44772 17 6V13C17 13.5523 17.4477 14 18 14H19Z" fill="currentColor"/></svg></div> No</button>
+                    <button class="button is-faded" data-feedback="no" type="button"><div class="icn-svg" data-icon="thumbs-down" data-file="thumbs-down.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21L9.5 16H1L1 11.5L4.5 3L22 3L22 16L17 16L10 23L8 21ZM14.7071 15.4657C14.8946 15.2782 15 15.0239 15 14.7586L15 7C15 5.89543 14.1046 5 13 5L7.17921 5C6.36877 5 5.63845 5.48908 5.32986 6.23847L3 11.8965L3 13C3 13.5523 3.44772 14 4 14L10.8445 14C11.5144 14 11.9948 14.6457 11.8024 15.2873L10.7093 18.9317C10.6496 19.1307 10.8954 19.2775 11.0423 19.1305L14.7071 15.4657ZM19 14C19.5523 14 20 13.5523 20 13V6C20 5.44772 19.5523 5 19 5H18C17.4477 5 17 5.44772 17 6V13C17 13.5523 17.4477 14 18 14H19Z" fill="currentColor"/></svg></div> No</button>
+                </div>
+                <div class="page-feedback-success" aria-live="polite">
+                    <div class="page-feedback-success-icon"><div class="icn-svg" data-icon="status-check" data-file="status-check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_14441_253)"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.0004 0.000396729C18.6276 0.000611138 24.0004 5.37311 24.0004 12.0004C24.0002 18.6275 18.6275 24.0002 12.0004 24.0004C5.37311 24.0004 0.000611143 18.6276 0.000396729 12.0004C0.000396729 5.37298 5.37298 0.000396729 12.0004 0.000396729ZM11.9643 13.7357C11.1833 14.5167 9.9172 14.5166 9.13614 13.7357L6.27481 10.8754L4.85001 12.3002L10.5502 18.0004L20.1498 8.39981L18.725 6.97501L11.9643 13.7357Z" fill="currentColor"/></g><defs><clipPath id="clip0_14441_253"><rect width="24" height="24" fill="white"/></clipPath></defs></svg></div></div>
+                    <h3 class="page-feedback-success-title">Thanks for your feedback</h3>
                 </div>
             </div>
         </section>

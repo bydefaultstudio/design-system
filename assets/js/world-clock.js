@@ -126,6 +126,7 @@
   var previewIframe;
   var urlOutput;
   var iframeOutput;
+  var scriptOutput;
   var optShowCity;
   var optShowTz;
   var optShowSeconds;
@@ -320,7 +321,11 @@
   /* ---- Preview & Output ---- */
 
   function buildEmbedUrl(opts) {
-    var base = window.location.origin + window.location.pathname.replace('world-clock.html', 'world-clock-embed.html');
+    /* Derive embed URL from current directory so it works whether the host
+       page is served as /tools/world-clock.html (local) or /tools/world-clock
+       (Netlify pretty URLs). */
+    var dir = window.location.pathname.replace(/[^/]*$/, '');
+    var base = window.location.origin + dir + 'world-clock-embed.html';
     var params = [];
 
     if (opts.cities.length > 0) {
@@ -336,6 +341,19 @@
 
   function buildIframeSnippet(url) {
     return '<iframe src="' + url + '" width="100%" height="140" frameborder="0" style="border:none;"></iframe>';
+  }
+
+  function buildScriptSnippet(url) {
+    return '<div id="bd-clock"></div>\n'
+      + '<script>\n'
+      + '(function(){\n'
+      + '  var f=document.createElement("iframe");\n'
+      + '  f.src="' + url + '";\n'
+      + '  f.width="100%"; f.height="140";\n'
+      + '  f.frameBorder="0"; f.style.border="none";\n'
+      + '  document.getElementById("bd-clock").appendChild(f);\n'
+      + '})();\n'
+      + '<\/script>';
   }
 
   function updatePreviewAndOutput() {
@@ -355,6 +373,7 @@
     /* Update output fields */
     if (urlOutput) urlOutput.value = url;
     if (iframeOutput) iframeOutput.value = buildIframeSnippet(url);
+    if (scriptOutput) scriptOutput.value = buildScriptSnippet(url);
   }
 
   function scheduleUpdate() {
@@ -394,6 +413,7 @@
     previewIframe = document.getElementById('clock-preview');
     urlOutput = document.getElementById('embed-url-output');
     iframeOutput = document.getElementById('iframe-output');
+    scriptOutput = document.getElementById('script-output');
     optShowCity = document.getElementById('opt-show-city');
     optShowTz = document.getElementById('opt-show-tz');
     optShowSeconds = document.getElementById('opt-show-seconds');

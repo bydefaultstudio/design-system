@@ -47,16 +47,24 @@ var FORMS = {
   }
 };
 
+/**
+ * Resolve a form type to its full config.
+ * Returns one of:
+ *   { ok: false, reason: 'unknown' }      — form type not in registry
+ *   { ok: false, reason: 'missing-env', envKey } — env var for db id not set
+ *   { ok: true, databaseId, ...config }   — fully resolved
+ */
 function getFormConfig(formType) {
   var config = FORMS[formType];
   if (!config) {
-    return null;
+    return { ok: false, reason: 'unknown' };
   }
   var databaseId = process.env[config.envKey];
   if (!databaseId) {
-    return null;
+    return { ok: false, reason: 'missing-env', envKey: config.envKey };
   }
   return {
+    ok: true,
     databaseId: databaseId,
     successMessage: config.successMessage,
     propertyOrder: config.propertyOrder,

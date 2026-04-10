@@ -4,7 +4,7 @@ subtitle: "Aspect ratios and responsive image patterns"
 description: "Guide to using the image component with base styles and aspect-ratio combo classes."
 section: "Design System"
 subsection: "Content"
-order: 9
+order: 13
 status: "published"
 access: "team"
 client: "internal"

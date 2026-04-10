@@ -731,7 +731,7 @@
       toggle.setAttribute('aria-haspopup', 'true');
       toggle.setAttribute('aria-expanded', 'false');
       toggle.innerHTML = '<div class="icn-svg" data-icon="user">' + ICON_USER + '</div>'
-        + '<span>' + toggleLabel + '</span>'
+        + '<span class="header-link-label">' + toggleLabel + '</span>'
         + '<div class="icn-svg dropdown-chevron" data-icon="chevron-down">' + ICON_CHEVRON + '</div>';
       dropdown.appendChild(toggle);
 
@@ -891,7 +891,7 @@
         loginLink.className = 'header-link';
         loginLink.href = LOGIN_PAGE;
         loginLink.innerHTML = '<div class="icn-svg" data-icon="user">' + ICON_USER + '</div>'
-          + '<span>Log in</span>';
+          + '<span class="header-link-label">Log in</span>';
         container.appendChild(loginLink);
       }
     }

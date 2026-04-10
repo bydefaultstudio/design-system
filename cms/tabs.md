@@ -4,7 +4,7 @@ subtitle: "Switch between related content without leaving the page"
 description: "How to use the tabs component for switching between content panels."
 section: "Design System"
 subsection: "Content"
-order: 13
+order: 4
 status: "published"
 access: "team"
 client: "internal"
@@ -18,9 +18,9 @@ Tabs organise content into panels that the user switches between. The component 
 
 | Token | Default | Purpose |
 |-------|---------|---------|
-| `--tab-active-color` | `var(--text-primary)` | Active tab text colour |
-| `--tab-inactive-color` | `var(--text-faded)` | Inactive tab text colour |
-| `--tab-indicator-color` | `var(--text-primary)` | Bottom border indicator |
+| `var(--tab-active-color)` | `var(--text-primary)` | Active tab text colour |
+| `var(--tab-inactive-color)` | `var(--text-faded)` | Inactive tab text colour |
+| `var(--tab-indicator-color)` | `var(--text-primary)` | Bottom border indicator |
 
 ---
 

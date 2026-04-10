@@ -24,28 +24,28 @@ The scale uses a **progressive step** approach: +2px in the body range, +4px in 
 
 | Token | Value | px Equivalent | Step |
 | --- | --- | --- | --- |
-| `--font-3xs` | 0.625rem | 10px | — |
-| `--font-2xs` | 0.75rem | 12px | +2px |
-| `--font-xs` | 0.875rem | 14px | +2px |
-| `--font-s` | 1rem | 16px | +2px |
-| `--font-m` | 1.125rem | 18px | +2px |
-| `--font-l` | 1.25rem | 20px | +2px |
-| `--font-xl` | 1.375rem | 22px | +2px |
-| `--font-2xl` | 1.5rem | 24px | +2px |
-| `--font-3xl` | 1.75rem | 28px | +4px |
-| `--font-4xl` | 2rem | 32px | +4px |
-| `--font-5xl` | 2.25rem | 36px | +4px |
-| `--font-6xl` | 2.5rem | 40px | +4px |
-| `--font-7xl` | 3rem | 48px | +8px |
-| `--font-8xl` | 3.5rem | 56px | +8px |
-| `--font-9xl` | 4rem | 64px | +8px |
-| `--font-10xl` | 4.5rem | 72px | +8px |
+| `var(--font-3xs)` | 0.625rem | 10px | — |
+| `var(--font-2xs)` | 0.75rem | 12px | +2px |
+| `var(--font-xs)` | 0.875rem | 14px | +2px |
+| `var(--font-s)` | 1rem | 16px | +2px |
+| `var(--font-m)` | 1.125rem | 18px | +2px |
+| `var(--font-l)` | 1.25rem | 20px | +2px |
+| `var(--font-xl)` | 1.375rem | 22px | +2px |
+| `var(--font-2xl)` | 1.5rem | 24px | +2px |
+| `var(--font-3xl)` | 1.75rem | 28px | +4px |
+| `var(--font-4xl)` | 2rem | 32px | +4px |
+| `var(--font-5xl)` | 2.25rem | 36px | +4px |
+| `var(--font-6xl)` | 2.5rem | 40px | +4px |
+| `var(--font-7xl)` | 3rem | 48px | +8px |
+| `var(--font-8xl)` | 3.5rem | 56px | +8px |
+| `var(--font-9xl)` | 4rem | 64px | +8px |
+| `var(--font-10xl)` | 4.5rem | 72px | +8px |
 
 ---
 
 ## Headings
 
-All headings use `--font-secondary` (RecifeText) at `--font-weight-regular` (400). Each level steps down in size to create a clear visual hierarchy.
+All headings use `var(--font-secondary)` (RecifeText) at `var(--font-weight-regular)` (400). Each level steps down in size to create a clear visual hierarchy.
 
 <div class="demo-preview is-joined">
   <div class="block gap-xl">
@@ -82,20 +82,22 @@ All headings use `--font-secondary` (RecifeText) at `--font-weight-regular` (400
 <h3>Structure creates clarity in complexity</h3>
 ```
 
-| Element | Token | px | Line Height | Value |
-| --- | --- | --- | --- | --- |
-| `h1` | `--font-7xl` | 48px | `--line-height-s` | 1 |
-| `h2` | `--font-6xl` | 40px | `--line-height-s` | 1 |
-| `h3` | `--font-4xl` | 32px | `--line-height-s` | 1 |
-| `h4` | `--font-3xl` | 28px | `--line-height-s` | 1 |
-| `h5` | `--font-xl` | 22px | `--line-height-s` | 1 |
-| `h6` | `--font-xl` | 22px | `--line-height-l` | 1.4 |
+| Element | Token | px | Mobile (≤768px) | Line Height | Value |
+| --- | --- | --- | --- | --- | --- |
+| `h1` | `var(--font-7xl)` | 48px | `var(--font-5xl)` (36px) | `var(--line-height-m)` | 1.3 |
+| `h2` | `var(--font-5xl)` | 36px | `var(--font-3xl)` (28px) | `var(--line-height-m)` | 1.3 |
+| `h3` | `var(--font-3xl)` | 28px | — | `var(--line-height-m)` | 1.3 |
+| `h4` | `var(--font-2xl)` | 24px | — | `var(--line-height-m)` | 1.3 |
+| `h5` | `var(--font-xl)` | 22px | — | `var(--line-height-m)` | 1.3 |
+| `h6` | `var(--font-xl)` | 22px | — | `var(--line-height-l)` | 1.4 |
+
+Headings use `var(--line-height-m)` (1.3) so multi-line titles have breathing room. On mobile (≤768px), `h1` and `h2` step down a level to prevent giant titles from dominating small viewports.
 
 ---
 
 ## Body Text
 
-The default paragraph style used for all running content. The `--text-body` token controls the base size globally — changing it updates paragraphs, inputs, code, tables, and buttons at once. Size modifier classes let you step up or down from the default.
+The default paragraph style used for all running content. The `var(--text-body)` token controls the base size globally — changing it updates paragraphs, inputs, code, tables, and buttons at once. Size modifier classes let you step up or down from the default.
 
 <div class="demo-preview is-joined">
   <div class="block gap-xl">
@@ -132,11 +134,11 @@ The default paragraph style used for all running content. The `--text-body` toke
 
 | Element | Token | px | Line Height | Value |
 | --- | --- | --- | --- | --- |
-| `.text-size-xlarge` | `--font-3xl` | 28px | `--line-height-l` | 1.4 |
-| `.text-size-large` | `--font-xl` | 22px | `--line-height-l` | 1.4 |
-| `p` (default) | `--font-m` | 18px | `--line-height-l` | 1.4 |
-| `.text-size-small` | `--font-s` | 16px | `--line-height-xl` | 1.6 |
-| `.text-size-xsmall` | `--font-xs` | 14px | `--line-height-xl` | 1.6 |
+| `.text-size-xlarge` | `var(--font-3xl)` | 28px | `var(--line-height-l)` | 1.4 |
+| `.text-size-large` | `var(--font-xl)` | 22px | `var(--line-height-l)` | 1.4 |
+| `p` (default) | `var(--font-m)` | 18px | `var(--line-height-l)` | 1.4 |
+| `.text-size-small` | `var(--font-s)` | 16px | `var(--line-height-xl)` | 1.6 |
+| `.text-size-xsmall` | `var(--font-xs)` | 14px | `var(--line-height-xl)` | 1.6 |
 
 ---
 
@@ -177,7 +179,7 @@ A small, uppercase label used to provide context above headings, within sections
 
 | Element | Token | Line Height | Value |
 | --- | --- | --- | --- |
-| `.eyebrow` | `--font-xs` | `--line-height-m` | 1.3 |
+| `.eyebrow` | `var(--font-xs)` | `var(--line-height-m)` | 1.3 |
 
 ---
 
@@ -210,13 +212,13 @@ Used for pullquotes and highlighted passages. Renders in the secondary serif fon
 
 | Element | Token | Line Height | Value |
 | --- | --- | --- | --- |
-| `blockquote` | `--font-m` | `--line-height-l` | 1.4 |
+| `blockquote` | `var(--font-m)` | `var(--line-height-l)` | 1.4 |
 
 ---
 
 ## Links
 
-Links use text-color underlines with a hover transition. The default state shows `--text-plain` text with a `--text-link` coloured underline. On hover, the text colour shifts to `--text-link` and the underline moves down slightly. External links (`target="_blank"`) automatically show a share icon via `::after` that inherits the link colour.
+Links use text-color underlines with a hover transition. The default state shows `var(--text-plain)` text with a `var(--text-link)` coloured underline. On hover, the text colour shifts to `var(--text-link)` and the underline moves down slightly. External links (`target="_blank"`) automatically show a share icon via `::after` that inherits the link colour.
 
 <div class="demo-preview is-joined">
   <div class="block gap-xl">
@@ -241,9 +243,9 @@ Links use text-color underlines with a hover transition. The default state shows
 
 | Property | Value |
 | --- | --- |
-| Default colour | `--text-plain` |
-| Underline colour | `--text-link` |
-| Hover colour | `--text-link` |
+| Default colour | `var(--text-plain)` |
+| Underline colour | `var(--text-link)` |
+| Hover colour | `var(--text-link)` |
 | Underline offset | 2.5px → 4px on hover |
 | Underline thickness | 1.5px |
 | Transition | 0.3s all |
@@ -284,10 +286,10 @@ code, pre, kbd { font-family: var(--font-tertiary); }
 
 | Token | Font | Used For |
 | --- | --- | --- |
-| `--font-primary` | Inclusive Sans | Body text, UI, labels |
-| `--font-secondary` | RecifeText | Headings, blockquotes |
-| `--font-tertiary` | IBM Plex Mono | Code, pre, kbd |
-| `--font-quaternary` | Bugrino | TBD |
+| `var(--font-primary)` | Inclusive Sans | Body text, UI, labels |
+| `var(--font-secondary)` | RecifeText | Headings, blockquotes |
+| `var(--font-tertiary)` | IBM Plex Mono | Code, pre, kbd |
+| `var(--font-quaternary)` | Bugrino | TBD |
 
 ---
 
@@ -334,13 +336,13 @@ font-weight: var(--font-weight-bold);
 
 | Token | Value |
 | --- | --- |
-| `--font-weight-light` | 300 |
-| `--font-weight-regular` | 400 |
-| `--font-weight-medium` | 500 |
-| `--font-weight-semi-bold` | 600 |
-| `--font-weight-bold` | 700 |
-| `--font-weight-extra-bold` | 800 |
-| `--font-weight-black` | 900 |
+| `var(--font-weight-light)` | 300 |
+| `var(--font-weight-regular)` | 400 |
+| `var(--font-weight-medium)` | 500 |
+| `var(--font-weight-semi-bold)` | 600 |
+| `var(--font-weight-bold)` | 700 |
+| `var(--font-weight-extra-bold)` | 800 |
+| `var(--font-weight-black)` | 900 |
 
 ---
 
@@ -383,12 +385,12 @@ line-height: var(--line-height-l);
 
 | Token | Value | Used For |
 | --- | --- | --- |
-| `--line-height-xs` | 0.7 | Tight display text |
-| `--line-height-s` | 1 | Headings |
-| `--line-height-m` | 1.3 | Subheadings, eyebrows |
-| `--line-height-l` | 1.4 | Body text, paragraphs |
-| `--line-height-xl` | 1.6 | Small text, captions |
-| `--line-height-2xl` | 1.8 | Spacious body text |
+| `var(--line-height-xs)` | 0.7 | Tight display text |
+| `var(--line-height-s)` | 1 | Tight display text |
+| `var(--line-height-m)` | 1.3 | Headings, eyebrows |
+| `var(--line-height-l)` | 1.4 | Body text, paragraphs |
+| `var(--line-height-xl)` | 1.6 | Small text, captions |
+| `var(--line-height-2xl)` | 1.8 | Spacious body text |
 
 ---
 
@@ -423,7 +425,7 @@ letter-spacing: var(--letter-spacing-xl);
 
 | Token | Value | Used For |
 | --- | --- | --- |
-| `--letter-spacing-s` | 0.03em | Subtle tracking |
-| `--letter-spacing-m` | 0.06em | Medium tracking |
-| `--letter-spacing-l` | 0.12em | Wide tracking |
-| `--letter-spacing-xl` | 0.24em | Eyebrows, labels |
+| `var(--letter-spacing-s)` | 0.03em | Subtle tracking |
+| `var(--letter-spacing-m)` | 0.06em | Medium tracking |
+| `var(--letter-spacing-l)` | 0.12em | Wide tracking |
+| `var(--letter-spacing-xl)` | 0.24em | Eyebrows, labels |
