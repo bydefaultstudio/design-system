@@ -2,6 +2,7 @@
 title: "Markdown"
 subtitle: "Styling guidelines for markdown content"
 description: "Documentation for markdown styling and design system integration"
+author: "Studio"
 section: "Docs"
 layer: "app"
 subsection: "Code Standards"
@@ -36,6 +37,8 @@ Every markdown file must start with YAML frontmatter between `var(---)` delimite
 | `subtitle` | No | — | Secondary heading below the title |
 | `description` | No | — | Meta description for SEO and social sharing |
 | `section` | No | uncategorized | Navigation group — determines output folder (`Brand Book`, `Design System`, `Docs`, `Tools`, `Projects`, `Website`) |
+| `layer` | Yes | — | Architectural layer: `foundation`, `core`, `docs-site`, or `app`. Build aborts if missing or invalid. See §17 in `CLAUDE.md`. |
+| `author` | No | "Studio" | Page author name. Renders inside book cover cards as "by {author}". |
 | `subsection` | No | — | Sub-category within a section for nav grouping |
 | `order` | No | 999 | Sort position within section (lower = first) |
 | `status` | No | published | Set to `"draft"` to exclude from generation |
@@ -61,6 +64,16 @@ Any page can display a header button linking to an external resource (tool, Figm
 
 **Available scripts:** `gsap`, `scroll-trigger`, `split-text`, `scroll-smoother`, `draggable`, `scroll-to`, `bd-animations`, `bd-audio`, `bd-cursor`, `splide`, `splide-auto-scroll`, `splide-intersection`, `notion-form`
 
+### Opt-out Flags
+
+These flags suppress parts of the standard page layout. All default to enabled — set to `false` only when needed.
+
+| Field | Default | Effect when `false` |
+|---|---|---|
+| `toc` | true | Suppresses the table of contents block |
+| `sticky-bar` | true | Suppresses the sticky sub-bar (breadcrumb + section dropdown) |
+| `pagination` | true | Suppresses the prev/next page nav at the bottom |
+
 ### Example
 
 ```markdown
@@ -69,6 +82,8 @@ title: "CPM Calculator"
 subtitle: "Plan campaign impressions, fees, and payouts"
 description: "Calculate campaign impressions, fees, payouts, and margins."
 section: "Tools"
+layer: "app"
+author: "Studio"
 order: 1
 status: "published"
 access: "admin"

@@ -2,6 +2,7 @@
 title: "Rating"
 subtitle: "Interactive and read-only star ratings"
 description: "How to use the rating component for star-based ratings and reviews."
+author: "Studio"
 section: "Design System"
 layer: "core"
 subsection: "Feedback"

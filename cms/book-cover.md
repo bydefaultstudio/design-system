@@ -2,6 +2,7 @@
 title: "Book Cover"
 subtitle: "The card variant used on overview and landing index pages"
 description: "How to use the book-cover pattern to build scannable section index grids."
+author: "Studio"
 section: "Design System"
 layer: "docs-site"
 subsection: "Content"
@@ -22,23 +23,22 @@ It pairs with `.grid.cols-2.gap-xl` for a calm, two-column index layout. The hea
 ```
 a.book-cover
   header.book-cover-header
-    .icn-svg                ← full-screen icon (top right)
+    .icn-svg                ← open-full icon (top right, hover only)
   .book-cover-content
     .book-cover-title       ← short section name
     .book-cover-description ← one-line subtitle (optional)
   footer.book-cover-footer
     .book-cover-author      ← author label (left)
-    .icn-svg                ← meta icon placeholder (right)
 ```
 
 | Element | Class | Purpose |
 |---|---|---|
 | Wrapper | `a.book-cover` | Self-contained interactive card — no `.card` needed |
-| Header | `header.book-cover-header` | Full-width strip with the section affordance icon (top right) |
+| Header | `header.book-cover-header` | Full-width strip with the open-full icon (top right, fades in on hover) |
 | Content | `.book-cover-content` | Centred title + subtitle, fills the remaining vertical space |
 | Title | `.book-cover-title` | Short section name (1–4 words) |
 | Subtitle | `.book-cover-description` | One-line description (optional) |
-| Footer | `footer.book-cover-footer` | Full-width strip with author (left) and a meta slot (right) |
+| Footer | `footer.book-cover-footer` | Full-width strip with author (left), reserved for future meta on the right |
 | Author | `.book-cover-author` | Author label, defaults to `Studio` |
 
 Defaults:
@@ -55,14 +55,13 @@ Defaults:
 
 <div class="demo-preview">
   <a href="#" class="book-cover">
-    <header class="book-cover-header">{{icon:full-screen}}</header>
+    <header class="book-cover-header">{{icon:open-full}}</header>
     <div class="book-cover-content">
       <h3 class="book-cover-title">Brand Book</h3>
       <p class="book-cover-description" data-text-wrap="pretty">Brand identity, values, positioning, and visual guidelines</p>
     </div>
     <footer class="book-cover-footer">
       <span class="book-cover-author"><em>by</em> Studio</span>
-      {{icon:add}}
     </footer>
   </a>
 </div>
@@ -70,7 +69,7 @@ Defaults:
 ```html
 <a href="brand/" class="book-cover">
   <header class="book-cover-header">
-    <div class="icn-svg" data-icon="full-screen"><!-- inline svg --></div>
+    <div class="icn-svg" data-icon="open-full"><!-- inline svg --></div>
   </header>
   <div class="book-cover-content">
     <h3 class="book-cover-title">Brand Book</h3>
@@ -78,7 +77,6 @@ Defaults:
   </div>
   <footer class="book-cover-footer">
     <span class="book-cover-author"><em>by</em> Studio</span>
-    <div class="icn-svg" data-icon="add"><!-- inline svg --></div>
   </footer>
 </a>
 ```
@@ -101,47 +99,43 @@ Use `.grid.cols-2.gap-xl` for the standard overview layout. Two columns gives ev
 <div class="demo-preview">
   <div class="grid cols-2 gap-xl">
     <a href="#" class="book-cover">
-      <header class="book-cover-header">{{icon:full-screen}}</header>
+      <header class="book-cover-header">{{icon:open-full}}</header>
       <div class="book-cover-content">
         <h3 class="book-cover-title">Brand Book</h3>
         <p class="book-cover-description" data-text-wrap="pretty">Brand identity, values, positioning, and visual guidelines</p>
       </div>
       <footer class="book-cover-footer">
         <span class="book-cover-author"><em>by</em> Studio</span>
-        {{icon:add}}
       </footer>
     </a>
     <a href="#" class="book-cover">
-      <header class="book-cover-header">{{icon:full-screen}}</header>
+      <header class="book-cover-header">{{icon:open-full}}</header>
       <div class="book-cover-content">
         <h3 class="book-cover-title">Design System</h3>
         <p class="book-cover-description" data-text-wrap="pretty">Tokens, components, and styling patterns</p>
       </div>
       <footer class="book-cover-footer">
         <span class="book-cover-author"><em>by</em> Erlen</span>
-        {{icon:add}}
       </footer>
     </a>
     <a href="#" class="book-cover">
-      <header class="book-cover-header">{{icon:full-screen}}</header>
+      <header class="book-cover-header">{{icon:open-full}}</header>
       <div class="book-cover-content">
         <h3 class="book-cover-title">Tools</h3>
         <p class="book-cover-description" data-text-wrap="pretty">Utilities for ad operations, SVG processing, and more</p>
       </div>
       <footer class="book-cover-footer">
         <span class="book-cover-author"><em>by</em> Studio</span>
-        {{icon:add}}
       </footer>
     </a>
     <a href="#" class="book-cover">
-      <header class="book-cover-header">{{icon:full-screen}}</header>
+      <header class="book-cover-header">{{icon:open-full}}</header>
       <div class="book-cover-content">
         <h3 class="book-cover-title">Documentation</h3>
         <p class="book-cover-description" data-text-wrap="pretty">Technical docs for layout, CSS, JavaScript, and project setup</p>
       </div>
       <footer class="book-cover-footer">
         <span class="book-cover-author"><em>by</em> Studio</span>
-        {{icon:add}}
       </footer>
     </a>
   </div>
@@ -150,14 +144,13 @@ Use `.grid.cols-2.gap-xl` for the standard overview layout. Two columns gives ev
 ```html
 <div class="grid cols-2 gap-xl">
   <a href="brand/" class="book-cover">
-    <header class="book-cover-header">{{icon:full-screen}}</header>
+    <header class="book-cover-header">{{icon:open-full}}</header>
     <div class="book-cover-content">
       <h3 class="book-cover-title">Brand Book</h3>
       <p class="book-cover-description" data-text-wrap="pretty">Brand identity, values, positioning, and visual guidelines</p>
     </div>
     <footer class="book-cover-footer">
       <span class="book-cover-author"><em>by</em> Studio</span>
-      {{icon:add}}
     </footer>
   </a>
   <!-- repeat for each section -->
@@ -193,6 +186,6 @@ Change the `min-height` on `.book-cover` in `design-system.css` to resize every 
 - Don't use `.book-cover` for editorial cards inside an article — use `.card.card--interactive` for that
 - Don't override `min-height` per-card — uniform height is the point
 - Don't put extra content inside `.book-cover-content` — the centred slot is title + subtitle only
-- Don't swap the header icon per-card — keeping `full-screen` everywhere is what tells the visitor "this opens"
+- Don't swap the header icon per-card — keeping `open-full` everywhere is what tells the visitor "this opens"
 - Don't combine with `.card` — `.book-cover` is fully standalone and ships with its own background, border, and hover states
 - Don't mix `.book-cover` and `.card.card--interactive` in the same grid — pick one pattern per surface

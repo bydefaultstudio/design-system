@@ -190,7 +190,7 @@
       ? basePath + clientFolder + '/index.html'
       : basePath + 'index.html';
 
-    var logoLink = document.querySelector('.site-header-logo-link');
+    var logoLink = document.querySelector('.top-nav-logo-link');
     if (logoLink) logoLink.href = href;
 
     var homeLinks = document.querySelectorAll('[data-home-link]');

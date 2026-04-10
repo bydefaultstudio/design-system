@@ -2,6 +2,7 @@
 title: "Disclosure"
 subtitle: "Reveal content on demand"
 description: "How to use the native details/summary disclosure pattern in the design system."
+author: "Studio"
 section: "Design System"
 layer: "core"
 subsection: "Content"

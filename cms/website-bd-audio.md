@@ -2,6 +2,7 @@
 title: "bd-audio"
 subtitle: "In-house sound feedback system for user interactions"
 description: "Documentation for bd-audio — the ByDefault reusable audio library for any project. Covers sound attributes, volume controls, and accessibility features."
+author: "Studio"
 section: "Website"
 layer: "app"
 subsection: "Interactions"

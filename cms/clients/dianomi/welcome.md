@@ -2,6 +2,7 @@
 title: "Start Here"
 subtitle: "Welcome to Dianomi Interactive"
 description: "The central hub for everything related to rich media on Dianomi, built in partnership with By Default."
+author: "Studio"
 section: "Docs"
 subsection: ""
 order: 1

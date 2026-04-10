@@ -2,6 +2,7 @@
 title: "Components"
 subtitle: "Component specification and build rules"
 description: "Master specification for all design system components — naming, tokens, accessibility, and build process."
+author: "Studio"
 section: "Docs"
 layer: "foundation"
 subsection: "Dev"

@@ -2,6 +2,7 @@
 title: "Brand Book"
 subtitle: "Logo, colour, typography, and interface elements styled with your brand tokens"
 description: "Dianomi brand book — logo variants, colour palette, typography, and a live preview of UI elements."
+author: "Studio"
 access: "client"
 client: "dianomi"
 ---

@@ -2,6 +2,7 @@
 title: "LLMs"
 subtitle: "AI-readable design system reference"
 description: "How to use the BrandOS design system with AI tools like Claude, Cursor, Copilot, and ChatGPT."
+author: "Studio"
 section: "Docs"
 layer: "app"
 subsection: "Dev"

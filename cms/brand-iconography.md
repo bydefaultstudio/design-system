@@ -2,6 +2,7 @@
 title: "Iconography"
 subtitle: "Complete brand icon set"
 description: "Browse, copy, and download every icon in the brand icon set."
+author: "Studio"
 section: "Brand Book"
 layer: "core"
 subsection: "Visual Identity"

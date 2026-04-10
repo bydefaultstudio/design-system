@@ -2,6 +2,7 @@
 title: "Classes"
 subtitle: "Every utility class in one place"
 description: "Every utility class in BrandOS — text, color, spacing, layout, and borders. Click any class to copy."
+author: "Studio"
 section: "Design System"
 layer: "foundation"
 subsection: ""

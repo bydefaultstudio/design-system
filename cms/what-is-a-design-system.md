@@ -2,6 +2,7 @@
 title: "What is a Design System?"
 subtitle: "A shared toolkit for consistent, high-quality digital products"
 description: "What a design system is, why it matters, and what's inside it."
+author: "Studio"
 section: "Design System"
 layer: "foundation"
 subsection: ""

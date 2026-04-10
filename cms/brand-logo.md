@@ -2,6 +2,7 @@
 title: "Logo"
 subtitle: "Brand mark and wordmark variants"
 description: "Every By Default logo variant — primary, centered, secondary, tertiary, and avatar — with light and dark versions for download."
+author: "Studio"
 section: "Brand Book"
 layer: "core"
 subsection: "Visual Identity"

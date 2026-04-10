@@ -2,6 +2,7 @@
 title: "Tooltip"
 subtitle: "Additional context on hover — no JavaScript required"
 description: "How to use the tooltip component for showing additional context on hover."
+author: "Studio"
 section: "Design System"
 layer: "core"
 subsection: "Feedback"

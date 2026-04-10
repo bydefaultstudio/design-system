@@ -2,6 +2,7 @@
 title: "Client Setup"
 subtitle: "Setting up a new client environment"
 description: "Complete guide to creating client folders, themes, logos, and user accounts."
+author: "Studio"
 section: "Docs"
 layer: "app"
 subsection: "Site Management"

@@ -2,6 +2,7 @@
 title: "Brand Personality"
 subtitle: "The human traits behind the brand"
 description: "The personality traits and character that define how the brand presents itself to the world."
+author: "Studio"
 section: "Brand Book"
 layer: "core"
 subsection: "Strategy"

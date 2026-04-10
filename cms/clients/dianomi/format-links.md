@@ -2,6 +2,7 @@
 title: "Format Links"
 subtitle: "Preview links for all rich media formats"
 description: "Display ad preview links showing how ads appear on desktop and mobile devices across different brand examples."
+author: "Studio"
 section: "Docs"
 subsection: ""
 order: 8

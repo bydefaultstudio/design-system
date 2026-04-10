@@ -2,6 +2,7 @@
 title: "Card"
 subtitle: "Contained content surfaces"
 description: "How to use the card component for grouping related content in a contained surface."
+author: "Studio"
 section: "Design System"
 layer: "core"
 subsection: "Content"

@@ -2,6 +2,7 @@
 title: "Breadcrumb"
 subtitle: "Show where you are in the hierarchy"
 description: "How to use the breadcrumb component for showing navigation hierarchy."
+author: "Studio"
 section: "Design System"
 layer: "core"
 subsection: "Content"

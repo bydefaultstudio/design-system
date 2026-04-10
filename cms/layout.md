@@ -2,6 +2,7 @@
 title: "HTML Layout"
 subtitle: "Page layout and structure primitives"
 description: "How to structure pages using sections, containers, blocks, and grids."
+author: "Studio"
 section: "Docs"
 layer: "foundation"
 subsection: "Code Standards"

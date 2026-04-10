@@ -692,7 +692,7 @@
    * @param {string|null} activeRole — when set, shows role switcher sections (admin only)
    */
   function renderAuthHeaderDropdown(user, activeRole) {
-    var container = document.querySelector('.auth-header-container');
+    var container = document.querySelector('.top-nav-auth-container');
     if (!container) return;
 
     container.innerHTML = '';
@@ -720,7 +720,7 @@
 
       // Dropdown wrapper
       var dropdown = document.createElement('div');
-      dropdown.id = 'auth-header-dropdown';
+      dropdown.id = 'top-nav-auth-dropdown';
       dropdown.className = 'dropdown';
 
       // Toggle — user icon + role label + chevron
@@ -732,7 +732,7 @@
       toggle.setAttribute('aria-haspopup', 'true');
       toggle.setAttribute('aria-expanded', 'false');
       toggle.innerHTML = '<div class="icn-svg" data-icon="user">' + ICON_USER + '</div>'
-        + '<span class="header-link-label">' + toggleLabel + '</span>'
+        + '<span class="top-nav-link-label">' + toggleLabel + '</span>'
         + '<div class="icn-svg dropdown-chevron" data-icon="chevron-down">' + ICON_CHEVRON + '</div>';
       dropdown.appendChild(toggle);
 
@@ -889,10 +889,10 @@
       var requiredRole = getRequiredRole();
       if (requiredRole !== 'public') {
         var loginLink = document.createElement('a');
-        loginLink.className = 'header-link';
+        loginLink.className = 'top-nav-link';
         loginLink.href = LOGIN_PAGE;
         loginLink.innerHTML = '<div class="icn-svg" data-icon="user">' + ICON_USER + '</div>'
-          + '<span class="header-link-label">Log in</span>';
+          + '<span class="top-nav-link-label">Log in</span>';
         container.appendChild(loginLink);
       }
     }

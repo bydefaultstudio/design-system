@@ -2,6 +2,7 @@
 title: "Setup"
 subtitle: "Getting started with this template"
 description: "Guide to customizing this project template for your new project."
+author: "Studio"
 section: "Docs"
 layer: "app"
 subsection: "Dev"

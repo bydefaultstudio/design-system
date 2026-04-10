@@ -2,6 +2,7 @@
 title: "Layout"
 subtitle: "How content is structured, spaced, and contained"
 description: "How to use blocks, grids, containers, max-width utilities, and section spacing to compose page layouts."
+author: "Studio"
 section: "Design System"
 layer: "foundation"
 subsection: ""

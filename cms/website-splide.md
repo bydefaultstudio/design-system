@@ -2,6 +2,7 @@
 title: "Splide"
 subtitle: "Lightweight carousel library — setup, extensions, and best practices"
 description: "Quick reference for Splide slider setup across projects including CDN links, common configurations, and responsive patterns."
+author: "Studio"
 section: "Website"
 layer: "app"
 subsection: "Libraries"

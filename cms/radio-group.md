@@ -2,6 +2,7 @@
 title: "Radio Group"
 subtitle: "Choose one option from a set"
 description: "How to use the radio group component for single-selection option lists."
+author: "Studio"
 section: "Design System"
 layer: "core"
 subsection: "Data Entry"

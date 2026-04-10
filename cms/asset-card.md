@@ -2,6 +2,7 @@
 title: "Asset Card"
 subtitle: "A consistent wrapper for presenting brand assets — logos, fonts, icons, images"
 description: "How to use the asset card component to present brand assets in a consistent format across the brand book and showcase pages."
+author: "Studio"
 section: "Design System"
 layer: "docs-site"
 subsection: "Content"

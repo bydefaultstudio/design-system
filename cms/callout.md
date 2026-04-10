@@ -2,6 +2,7 @@
 title: "Callout"
 subtitle: "Draw attention to what matters"
 description: "How to use callout styles and semantic variants in the design system."
+author: "Studio"
 section: "Design System"
 layer: "core"
 subsection: "Feedback"

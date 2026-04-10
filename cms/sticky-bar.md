@@ -2,6 +2,7 @@
 title: "Sticky Bar"
 subtitle: "Page-level controls that stay visible on scroll"
 description: "How to use the sticky bar component for breadcrumbs, actions, dropdowns, tabs, toggles, and contextual navigation."
+author: "Studio"
 section: "Design System"
 layer: "docs-site"
 subsection: "Content"
@@ -347,7 +348,7 @@ Doc and tool pages use a `.sticky-bar-page` modifier that promotes the sticky ba
 
 ```css
 .sticky-bar-page {
-  top: var(--header-height);
+  top: var(--top-nav-height);
 }
 
 .sticky-bar-page .sticky-bar-container {

@@ -2,6 +2,7 @@
 title: "Mark, Abbr & Figure"
 subtitle: "Highlighted text, abbreviations, and media captions"
 description: "How to use mark, abbr, and figure elements in the design system."
+author: "Studio"
 section: "Design System"
 layer: "core"
 subsection: "Content"

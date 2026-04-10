@@ -2,6 +2,7 @@
 title: "Form"
 subtitle: "Inputs, controls, and data collection patterns"
 description: "How to use form elements, labels, inputs, and layout patterns in the design system."
+author: "Studio"
 section: "Design System"
 layer: "core"
 subsection: "Data Entry"

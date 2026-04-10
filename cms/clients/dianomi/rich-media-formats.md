@@ -2,6 +2,7 @@
 title: "Rich Media Formats & Ad Specs"
 subtitle: "Available formats and creative types"
 description: "A selection of rich media ad formats for brands to use across premium destinations, including specs, creative types, and naming conventions."
+author: "Studio"
 section: "Docs"
 subsection: ""
 order: 4

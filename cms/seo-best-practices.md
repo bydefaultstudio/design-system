@@ -2,6 +2,7 @@
 title: "SEO"
 subtitle: "SEO meta tags and social sharing guidelines"
 description: "Complete guide to SEO meta tags, Open Graph, X Cards, and structured data."
+author: "Studio"
 section: "Docs"
 layer: "app"
 subsection: "Code Standards"

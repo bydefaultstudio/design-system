@@ -2,6 +2,7 @@
 title: "Welcome"
 subtitle: "Your brand system starts here"
 description: "Everything you need to build, reference, and maintain your brand — identity guidelines, design tokens, and operational tools."
+author: "Studio"
 section: "Docs"
 subsection: ""
 order: 1

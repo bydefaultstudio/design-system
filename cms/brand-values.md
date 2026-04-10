@@ -2,6 +2,7 @@
 title: "Brand Values"
 subtitle: "The principles that guide every decision"
 description: "The core values that shape how the brand thinks, acts, and communicates."
+author: "Studio"
 section: "Brand Book"
 layer: "core"
 subsection: "Strategy"

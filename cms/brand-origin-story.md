@@ -2,6 +2,7 @@
 title: "Origin Story"
 subtitle: "Where the brand came from"
 description: "The story of how the brand came to be — its history, inspiration, and founding moments."
+author: "Studio"
 section: "Brand Book"
 layer: "core"
 subsection: "Strategy"

@@ -2,6 +2,7 @@
 title: "Color"
 subtitle: "Brand palette and how to use it"
 description: "The brand colour palette — neutrals, accents, and the rules that decide which one to reach for in any given context."
+author: "Studio"
 section: "Brand Book"
 layer: "core"
 subsection: "Visual Identity"

@@ -2,6 +2,7 @@
 title: "Code"
 subtitle: "Inline code, code blocks, and keyboard shortcuts"
 description: "How to use code, pre, and kbd elements in the design system."
+author: "Studio"
 section: "Design System"
 layer: "core"
 subsection: "Content"

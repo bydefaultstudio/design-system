@@ -2,6 +2,7 @@
 title: "Rich Media Asset Guidelines"
 subtitle: "Creative asset requirements by format"
 description: "Asset checklists and guidance for each rich media format, including core requirements and format-specific assets."
+author: "Studio"
 section: "Docs"
 subsection: ""
 order: 5

@@ -2,6 +2,7 @@
 title: "SVG Cleaner"
 subtitle: "Prepare SVGs for the design system"
 description: "Paste raw SVG code and get a cleaned, optimised version ready for the design system."
+author: "Studio"
 section: "Tools"
 layer: "app"
 subsection: ""

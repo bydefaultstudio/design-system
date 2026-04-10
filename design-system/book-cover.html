@@ -124,16 +124,15 @@
 <h2 id="anatomy">Anatomy</h2>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-z72xrveg7" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-z72xrveg7">a.book-cover
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-cfagobjpj" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-cfagobjpj">a.book-cover
   header.book-cover-header
-    .icn-svg                ← full-screen icon (top right)
+    .icn-svg                ← open-full icon (top right, hover only)
   .book-cover-content
     .book-cover-title       ← short section name
     .book-cover-description ← one-line subtitle (optional)
   footer.book-cover-footer
     .book-cover-author      ← author label (left)
-    .icn-svg                ← meta icon placeholder (right)
 </code></pre>
       </div>
     
@@ -153,7 +152,7 @@
 <tr>
 <td>Header</td>
 <td><code>header.book-cover-header</code></td>
-<td>Full-width strip with the section affordance icon (top right)</td>
+<td>Full-width strip with the open-full icon (top right, fades in on hover)</td>
 </tr>
 <tr>
 <td>Content</td>
@@ -173,7 +172,7 @@
 <tr>
 <td>Footer</td>
 <td><code>footer.book-cover-footer</code></td>
-<td>Full-width strip with author (left) and a meta slot (right)</td>
+<td>Full-width strip with author (left), reserved for future meta on the right</td>
 </tr>
 <tr>
 <td>Author</td>
@@ -193,24 +192,23 @@
 <h2 id="single-cover">Single cover</h2>
 <div class="demo-preview">
   <a href="#" class="book-cover">
-    <header class="book-cover-header"><div class="icn-svg" data-icon="full-screen" data-file="full-screen.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.70703 15.707L6.26762 19.1464C5.95263 19.4614 6.17572 20 6.62117 20H9V22H2V15H4V17.3788C4 17.8243 4.53857 18.0474 4.85355 17.7324L8.29297 14.293L9.70703 15.707ZM19.1464 17.7324C19.4614 18.0474 20 17.8243 20 17.3788V15H22V22H15V20H17.3788C17.8243 20 18.0474 19.4614 17.7324 19.1464L14.293 15.707L15.707 14.293L19.1464 17.7324ZM9 2V4H6.62117C6.17572 4 5.95263 4.53857 6.26762 4.85355L9.70703 8.29297L8.29297 9.70703L4.85355 6.26762C4.53857 5.95263 4 6.17572 4 6.62117V9H2V2H9ZM22 9H20V6.62117C20 6.17572 19.4614 5.95263 19.1464 6.26762L15.707 9.70703L14.293 8.29297L17.7324 4.85355C18.0474 4.53857 17.8243 4 17.3788 4H15V2H22V9Z" fill="currentColor"/></svg></div></header>
+    <header class="book-cover-header"><div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div></header>
     <div class="book-cover-content">
       <h3 class="book-cover-title">Brand Book</h3>
       <p class="book-cover-description" data-text-wrap="pretty">Brand identity, values, positioning, and visual guidelines</p>
     </div>
     <footer class="book-cover-footer">
       <span class="book-cover-author"><em>by</em> Studio</span>
-      <div class="icn-svg" data-icon="add" data-file="add.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>
     </footer>
   </a>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-gy42352ur" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-gy42352ur" class="language-html">&lt;a href=&quot;brand/&quot; class=&quot;book-cover&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-66uddm5tl" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-66uddm5tl" class="language-html">&lt;a href=&quot;brand/&quot; class=&quot;book-cover&quot;&gt;
   &lt;header class=&quot;book-cover-header&quot;&gt;
-    &lt;div class=&quot;icn-svg&quot; data-icon=&quot;full-screen&quot;&gt;&lt;!-- inline svg --&gt;&lt;/div&gt;
+    &lt;div class=&quot;icn-svg&quot; data-icon=&quot;open-full&quot;&gt;&lt;!-- inline svg --&gt;&lt;/div&gt;
   &lt;/header&gt;
   &lt;div class=&quot;book-cover-content&quot;&gt;
     &lt;h3 class=&quot;book-cover-title&quot;&gt;Brand Book&lt;/h3&gt;
@@ -218,7 +216,6 @@
   &lt;/div&gt;
   &lt;footer class=&quot;book-cover-footer&quot;&gt;
     &lt;span class=&quot;book-cover-author&quot;&gt;&lt;em&gt;by&lt;/em&gt; Studio&lt;/span&gt;
-    &lt;div class=&quot;icn-svg&quot; data-icon=&quot;add&quot;&gt;&lt;!-- inline svg --&gt;&lt;/div&gt;
   &lt;/footer&gt;
 &lt;/a&gt;
 </code></pre>
@@ -227,8 +224,8 @@
 <p>For auto-generated covers (the doc generator builds these from <code>cms/*.md</code> frontmatter), set the author with the <code>author:</code> frontmatter field — it falls back to <code>Studio</code> when omitted.</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-okbvhg7j3" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-okbvhg7j3" class="language-yaml">---
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-s61a6wcia" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-s61a6wcia" class="language-yaml">---
 title: &quot;Brand Book&quot;
 author: &quot;Erlen&quot;
 ---
@@ -241,47 +238,43 @@ author: &quot;Erlen&quot;
 <div class="demo-preview">
   <div class="grid cols-2 gap-xl">
     <a href="#" class="book-cover">
-      <header class="book-cover-header"><div class="icn-svg" data-icon="full-screen" data-file="full-screen.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.70703 15.707L6.26762 19.1464C5.95263 19.4614 6.17572 20 6.62117 20H9V22H2V15H4V17.3788C4 17.8243 4.53857 18.0474 4.85355 17.7324L8.29297 14.293L9.70703 15.707ZM19.1464 17.7324C19.4614 18.0474 20 17.8243 20 17.3788V15H22V22H15V20H17.3788C17.8243 20 18.0474 19.4614 17.7324 19.1464L14.293 15.707L15.707 14.293L19.1464 17.7324ZM9 2V4H6.62117C6.17572 4 5.95263 4.53857 6.26762 4.85355L9.70703 8.29297L8.29297 9.70703L4.85355 6.26762C4.53857 5.95263 4 6.17572 4 6.62117V9H2V2H9ZM22 9H20V6.62117C20 6.17572 19.4614 5.95263 19.1464 6.26762L15.707 9.70703L14.293 8.29297L17.7324 4.85355C18.0474 4.53857 17.8243 4 17.3788 4H15V2H22V9Z" fill="currentColor"/></svg></div></header>
+      <header class="book-cover-header"><div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div></header>
       <div class="book-cover-content">
         <h3 class="book-cover-title">Brand Book</h3>
         <p class="book-cover-description" data-text-wrap="pretty">Brand identity, values, positioning, and visual guidelines</p>
       </div>
       <footer class="book-cover-footer">
         <span class="book-cover-author"><em>by</em> Studio</span>
-        <div class="icn-svg" data-icon="add" data-file="add.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>
       </footer>
     </a>
     <a href="#" class="book-cover">
-      <header class="book-cover-header"><div class="icn-svg" data-icon="full-screen" data-file="full-screen.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.70703 15.707L6.26762 19.1464C5.95263 19.4614 6.17572 20 6.62117 20H9V22H2V15H4V17.3788C4 17.8243 4.53857 18.0474 4.85355 17.7324L8.29297 14.293L9.70703 15.707ZM19.1464 17.7324C19.4614 18.0474 20 17.8243 20 17.3788V15H22V22H15V20H17.3788C17.8243 20 18.0474 19.4614 17.7324 19.1464L14.293 15.707L15.707 14.293L19.1464 17.7324ZM9 2V4H6.62117C6.17572 4 5.95263 4.53857 6.26762 4.85355L9.70703 8.29297L8.29297 9.70703L4.85355 6.26762C4.53857 5.95263 4 6.17572 4 6.62117V9H2V2H9ZM22 9H20V6.62117C20 6.17572 19.4614 5.95263 19.1464 6.26762L15.707 9.70703L14.293 8.29297L17.7324 4.85355C18.0474 4.53857 17.8243 4 17.3788 4H15V2H22V9Z" fill="currentColor"/></svg></div></header>
+      <header class="book-cover-header"><div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div></header>
       <div class="book-cover-content">
         <h3 class="book-cover-title">Design System</h3>
         <p class="book-cover-description" data-text-wrap="pretty">Tokens, components, and styling patterns</p>
       </div>
       <footer class="book-cover-footer">
         <span class="book-cover-author"><em>by</em> Erlen</span>
-        <div class="icn-svg" data-icon="add" data-file="add.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>
       </footer>
     </a>
     <a href="#" class="book-cover">
-      <header class="book-cover-header"><div class="icn-svg" data-icon="full-screen" data-file="full-screen.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.70703 15.707L6.26762 19.1464C5.95263 19.4614 6.17572 20 6.62117 20H9V22H2V15H4V17.3788C4 17.8243 4.53857 18.0474 4.85355 17.7324L8.29297 14.293L9.70703 15.707ZM19.1464 17.7324C19.4614 18.0474 20 17.8243 20 17.3788V15H22V22H15V20H17.3788C17.8243 20 18.0474 19.4614 17.7324 19.1464L14.293 15.707L15.707 14.293L19.1464 17.7324ZM9 2V4H6.62117C6.17572 4 5.95263 4.53857 6.26762 4.85355L9.70703 8.29297L8.29297 9.70703L4.85355 6.26762C4.53857 5.95263 4 6.17572 4 6.62117V9H2V2H9ZM22 9H20V6.62117C20 6.17572 19.4614 5.95263 19.1464 6.26762L15.707 9.70703L14.293 8.29297L17.7324 4.85355C18.0474 4.53857 17.8243 4 17.3788 4H15V2H22V9Z" fill="currentColor"/></svg></div></header>
+      <header class="book-cover-header"><div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div></header>
       <div class="book-cover-content">
         <h3 class="book-cover-title">Tools</h3>
         <p class="book-cover-description" data-text-wrap="pretty">Utilities for ad operations, SVG processing, and more</p>
       </div>
       <footer class="book-cover-footer">
         <span class="book-cover-author"><em>by</em> Studio</span>
-        <div class="icn-svg" data-icon="add" data-file="add.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>
       </footer>
     </a>
     <a href="#" class="book-cover">
-      <header class="book-cover-header"><div class="icn-svg" data-icon="full-screen" data-file="full-screen.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.70703 15.707L6.26762 19.1464C5.95263 19.4614 6.17572 20 6.62117 20H9V22H2V15H4V17.3788C4 17.8243 4.53857 18.0474 4.85355 17.7324L8.29297 14.293L9.70703 15.707ZM19.1464 17.7324C19.4614 18.0474 20 17.8243 20 17.3788V15H22V22H15V20H17.3788C17.8243 20 18.0474 19.4614 17.7324 19.1464L14.293 15.707L15.707 14.293L19.1464 17.7324ZM9 2V4H6.62117C6.17572 4 5.95263 4.53857 6.26762 4.85355L9.70703 8.29297L8.29297 9.70703L4.85355 6.26762C4.53857 5.95263 4 6.17572 4 6.62117V9H2V2H9ZM22 9H20V6.62117C20 6.17572 19.4614 5.95263 19.1464 6.26762L15.707 9.70703L14.293 8.29297L17.7324 4.85355C18.0474 4.53857 17.8243 4 17.3788 4H15V2H22V9Z" fill="currentColor"/></svg></div></header>
+      <header class="book-cover-header"><div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div></header>
       <div class="book-cover-content">
         <h3 class="book-cover-title">Documentation</h3>
         <p class="book-cover-description" data-text-wrap="pretty">Technical docs for layout, CSS, JavaScript, and project setup</p>
       </div>
       <footer class="book-cover-footer">
         <span class="book-cover-author"><em>by</em> Studio</span>
-        <div class="icn-svg" data-icon="add" data-file="add.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>
       </footer>
     </a>
   </div>
@@ -289,17 +282,16 @@ author: &quot;Erlen&quot;
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-2ocbzb0pz" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-2ocbzb0pz" class="language-html">&lt;div class=&quot;grid cols-2 gap-xl&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-9k1wfxw0p" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-9k1wfxw0p" class="language-html">&lt;div class=&quot;grid cols-2 gap-xl&quot;&gt;
   &lt;a href=&quot;brand/&quot; class=&quot;book-cover&quot;&gt;
-    &lt;header class=&quot;book-cover-header&quot;&gt;{{icon:full-screen}}&lt;/header&gt;
+    &lt;header class=&quot;book-cover-header&quot;&gt;{{icon:open-full}}&lt;/header&gt;
     &lt;div class=&quot;book-cover-content&quot;&gt;
       &lt;h3 class=&quot;book-cover-title&quot;&gt;Brand Book&lt;/h3&gt;
       &lt;p class=&quot;book-cover-description&quot; data-text-wrap=&quot;pretty&quot;&gt;Brand identity, values, positioning, and visual guidelines&lt;/p&gt;
     &lt;/div&gt;
     &lt;footer class=&quot;book-cover-footer&quot;&gt;
       &lt;span class=&quot;book-cover-author&quot;&gt;&lt;em&gt;by&lt;/em&gt; Studio&lt;/span&gt;
-      {{icon:add}}
     &lt;/footer&gt;
   &lt;/a&gt;
   &lt;!-- repeat for each section --&gt;
@@ -312,8 +304,8 @@ author: &quot;Erlen&quot;
 <p>Change the <code>min-height</code> on <button type="button" class="token-copy is-class" data-copy=".book-cover" aria-label="Copy .book-cover"><code>.book-cover</code></button> in <code>design-system.css</code> to resize every cover at once. Don&#39;t override per-card — the consistent height is what makes the index read as a shelf.</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-ri82xrfts" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-ri82xrfts" class="language-css">.book-cover {
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-qgz114ax7" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-qgz114ax7" class="language-css">.book-cover {
   min-height: 200px; /* edit this */
 }
 </code></pre>
@@ -334,7 +326,7 @@ author: &quot;Erlen&quot;
 <li>Don&#39;t use <button type="button" class="token-copy is-class" data-copy=".book-cover" aria-label="Copy .book-cover"><code>.book-cover</code></button> for editorial cards inside an article — use <code>.card.card--interactive</code> for that</li>
 <li>Don&#39;t override <code>min-height</code> per-card — uniform height is the point</li>
 <li>Don&#39;t put extra content inside <button type="button" class="token-copy is-class" data-copy=".book-cover-content" aria-label="Copy .book-cover-content"><code>.book-cover-content</code></button> — the centred slot is title + subtitle only</li>
-<li>Don&#39;t swap the header icon per-card — keeping <code>full-screen</code> everywhere is what tells the visitor &quot;this opens&quot;</li>
+<li>Don&#39;t swap the header icon per-card — keeping <code>open-full</code> everywhere is what tells the visitor &quot;this opens&quot;</li>
 <li>Don&#39;t combine with <button type="button" class="token-copy is-class" data-copy=".card" aria-label="Copy .card"><code>.card</code></button> — <button type="button" class="token-copy is-class" data-copy=".book-cover" aria-label="Copy .book-cover"><code>.book-cover</code></button> is fully standalone and ships with its own background, border, and hover states</li>
 <li>Don&#39;t mix <button type="button" class="token-copy is-class" data-copy=".book-cover" aria-label="Copy .book-cover"><code>.book-cover</code></button> and <code>.card.card--interactive</code> in the same grid — pick one pattern per surface</li>
 </ul>
@@ -504,7 +496,7 @@ author: &quot;Erlen&quot;
 
     <!-- Back to Top -->
     <div class="back-to-top-wrapper">
-      <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
+      <button class="button is-icon back-to-top-btn" aria-label="Back to top" type="button">
         <div class="icn-svg" data-icon="arrow-top" data-file="arrow-top.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M4 4V2H20V4H4Z" fill="currentColor"/><path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/></svg></div>
       </button>
     </div>

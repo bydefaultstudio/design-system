@@ -2,6 +2,7 @@
 title: "Upgrading the Docs Engine"
 subtitle: "How to update the doc site across projects"
 description: "Guide to upgrading the documentation engine without affecting project content."
+author: "Studio"
 section: "Docs"
 layer: "app"
 subsection: "Dev"

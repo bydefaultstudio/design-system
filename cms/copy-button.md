@@ -2,6 +2,7 @@
 title: "Copy Button"
 subtitle: "One-click clipboard copy with feedback"
 description: "How to use the copy button component for copying text to the clipboard with visual feedback."
+author: "Studio"
 section: "Design System"
 layer: "docs-site"
 subsection: "Data Entry"

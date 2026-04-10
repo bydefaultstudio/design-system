@@ -2,6 +2,7 @@
 title: "Typography"
 subtitle: "The three type families behind the brand"
 description: "The brand type system — a sans for interface, a serif for headlines, a mono for code — and where each one is loaded from."
+author: "Studio"
 section: "Brand Book"
 layer: "core"
 subsection: "Visual Identity"

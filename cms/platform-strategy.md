@@ -2,6 +2,7 @@
 title: "Platform Strategy"
 subtitle: "What BrandOS is, who it serves, and how it should sound"
 description: "Platform identity, audience definitions, UX copy principles, and outcome signals for By Default BrandOS."
+author: "Studio"
 section: "Docs"
 layer: "app"
 order: 1

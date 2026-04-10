@@ -2,6 +2,7 @@
 title: "Positioning"
 subtitle: "Where the brand stands in the market"
 description: "How the brand is positioned relative to its audience, competitors, and the broader market."
+author: "Studio"
 section: "Brand Book"
 layer: "core"
 subsection: "Strategy"

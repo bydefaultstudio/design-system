@@ -2,6 +2,7 @@
 title: "Hero Shapes Analytics Tracking"
 subtitle: "Analytics tracking system for Hero Shapes physics interactions"
 description: "Complete guide to the analytics events tracked in the Hero Shapes physics section, including event triggers, data properties, and implementation details."
+author: "Studio"
 section: "Website"
 layer: "app"
 subsection: "Pages"

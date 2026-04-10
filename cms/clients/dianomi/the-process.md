@@ -2,6 +2,7 @@
 title: "The Process"
 subtitle: "Campaign workflow from brief to launch"
 description: "The end-to-end production process for rich media campaigns, from client intake through to go-live and reporting."
+author: "Studio"
 section: "Docs"
 subsection: ""
 order: 6

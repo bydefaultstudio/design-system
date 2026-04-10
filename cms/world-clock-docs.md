@@ -2,6 +2,7 @@
 title: "World Clock"
 subtitle: "See every timezone your team works across"
 description: "Configure a multi-timezone clock and embed it in Notion, dashboards, or any HTML page. Search cities, pick presets, and generate embed URLs or iframe snippets."
+author: "Studio"
 section: "Tools"
 layer: "app"
 subsection: ""

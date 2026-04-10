@@ -2,6 +2,7 @@
 title: "Publishers & Industries"
 subtitle: "Network publishers and industry verticals"
 description: "Full publisher network with domains and industry categories, plus vertical targeting reference for rich media campaigns."
+author: "Studio"
 section: "Docs"
 subsection: ""
 order: 9

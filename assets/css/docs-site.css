@@ -32,6 +32,18 @@
   background: var(--background-primary);
 }
 
+/* -- Page sub-header variant: sits below the fixed top nav -- */
+.sticky-bar-page {
+  top: var(--top-nav-height);
+}
+
+.sticky-bar-page .sticky-bar-container {
+  max-width: 1080px;
+  margin: 0 auto;
+  height: var(--sticky-bar-height);
+  padding-left: var(--space-l);
+}
+
 .sticky-bar-container {
   display: flex;
   align-items: center;
@@ -285,15 +297,14 @@
  *
  *   <a href="brand/" class="book-cover">
  *     <header class="book-cover-header">
- *       <div class="icn-svg" data-icon="full-screen">…</div>
+ *       <div class="icn-svg" data-icon="open-full">…</div>
  *     </header>
  *     <div class="book-cover-content">
  *       <h3 class="card-title">Brand Book</h3>
  *       <p class="card-description">Brand identity, values…</p>
  *     </div>
  *     <footer class="book-cover-footer">
- *       <span class="book-cover-author">Studio</span>
- *       <div class="icn-svg" data-icon="add">…</div>
+ *       <span class="book-cover-author"><em>by</em> Studio</span>
  *     </footer>
  *   </a>
  *
@@ -314,7 +325,9 @@
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  transition: border 0.3s, background-color 0.3s, box-shadow 0.15s;
+  transition: border 0.3s, background-color 0.3s, box-shadow 0.2s ease, transform 0.2s ease;
+  text-wrap: pretty;
+
 }
 
 .book-cover-header,
@@ -327,6 +340,15 @@
 
 .book-cover-header {
   justify-content: flex-end;
+}
+
+.book-cover-header .icn-svg {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+a.book-cover:hover .book-cover-header .icn-svg {
+  opacity: 1;
 }
 
 .book-cover-footer {
@@ -363,16 +385,16 @@
   color: var(--text-secondary);
   font-size: var(--text-body);
   margin-bottom: 0;
-  text-wrap: pretty;
 }
 
-.book-cover:hover {
-  color: inherit;
+a.book-cover:hover {
+  color: var(--text-primary);
   background: var(--background-faded);
-  box-shadow: 0 4px 12px var(--black-alpha-10);
+  transform: translateY(-2px);
+  box-shadow: 0 7px 1px -3px var(--black-alpha-10);
 }
 
-.book-cover:focus-visible {
+a.book-cover:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus), var(--alpha-75));
 }

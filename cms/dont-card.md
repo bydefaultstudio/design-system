@@ -2,6 +2,7 @@
 title: "Don't Card"
 subtitle: "A card variant for flagging prohibited patterns"
 description: "How to use the don't card pattern to communicate non-negotiable rules in brand and design-system docs."
+author: "Studio"
 section: "Design System"
 layer: "docs-site"
 subsection: "Content"

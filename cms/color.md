@@ -2,6 +2,7 @@
 title: "Color"
 subtitle: "Palette, scales, and semantic colour mappings"
 description: "Visual reference for all color tokens — brand palette, primitive scales, and semantic mappings."
+author: "Studio"
 section: "Design System"
 layer: "foundation"
 subsection: ""

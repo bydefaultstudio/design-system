@@ -2,6 +2,7 @@
 title: "Slider"
 subtitle: "Select a value within a range"
 description: "How to use the slider component for range selection with live value display."
+author: "Studio"
 section: "Design System"
 layer: "core"
 subsection: "Data Entry"

@@ -2,6 +2,7 @@
 title: "Tone of Voice"
 subtitle: "How the brand speaks and writes"
 description: "The language, tone, and communication style that defines how the brand expresses itself."
+author: "Studio"
 section: "Brand Book"
 layer: "core"
 subsection: "Strategy"

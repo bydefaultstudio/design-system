@@ -2,6 +2,7 @@
 title: "Drop Cap"
 subtitle: "Decorative opening letters for editorial content"
 description: "How to use the drop cap style for decorative initial letters."
+author: "Studio"
 section: "Design System"
 layer: "core"
 subsection: "Content"

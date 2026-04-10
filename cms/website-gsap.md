@@ -2,6 +2,7 @@
 title: "GSAP"
 subtitle: "GreenSock Animation Platform — setup, plugins, and best practices"
 description: "Quick reference for GSAP setup across projects including required scripts, plugin registration, and performance best practices."
+author: "Studio"
 section: "Website"
 layer: "app"
 subsection: "Libraries"

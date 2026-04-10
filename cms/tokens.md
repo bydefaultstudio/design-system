@@ -2,6 +2,7 @@
 title: "Tokens"
 subtitle: "Every visual decision in one place"
 description: "Every design token in one place — colors, typography, spacing, borders, and component tokens."
+author: "Studio"
 section: "Design System"
 layer: "foundation"
 subsection: ""
@@ -246,7 +247,7 @@ Semantic tokens that control text color by intent, not by value.
 | `var(--text-link)` | `var(--green)` | Link text |
 | `var(--text-inverted)` | `var(--off-white)` | Text on dark backgrounds |
 | `var(--text-sidebar)` | `var(--text-primary)` | Sidebar navigation text |
-| `var(--text-site-header)` | `var(--text-primary)` | Site header text |
+| `var(--text-top-nav)` | `var(--text-primary)` | Top nav text |
 
 ### Background Colors
 
@@ -262,7 +263,7 @@ Semantic tokens for surface fills, from primary to overlays.
 | `var(--background-lighter)` | `var(--white-alpha-10)` | Lighter overlay background |
 | `var(--background-modal)` | `rgba(0, 0, 0, 0.75)` | Modal backdrop |
 | `var(--background-sidebar)` | `var(--background-primary)` | Sidebar background |
-| `var(--background-site-header)` | `var(--background-primary)` | Site header background |
+| `var(--background-top-nav)` | `var(--background-primary)` | Top nav background |
 
 ### Border Colors
 

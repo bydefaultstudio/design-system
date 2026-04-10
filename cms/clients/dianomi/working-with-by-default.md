@@ -2,6 +2,7 @@
 title: "Working with By Default"
 subtitle: "Why By Default as a rich media partner"
 description: "An overview of By Default's capabilities as a rich media production partner, including creative approach, data insights, and delivery standards."
+author: "Studio"
 section: "Docs"
 subsection: ""
 order: 7

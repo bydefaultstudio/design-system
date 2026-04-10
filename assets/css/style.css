@@ -310,12 +310,12 @@ td .icn-svg {
 
 
 :root {
-  --header-height: 80px;
+  --top-nav-height: 80px;
   --sticky-bar-height: 70px;
   --sidebar-width: 280px;
   --sidebar-collapsed-width: 64px;
   --toc-width: 220px;
-  --toc-top-offset: calc(var(--header-height) + var(--sticky-bar-height) + var(--space-xl));
+  --toc-top-offset: calc(var(--top-nav-height) + var(--sticky-bar-height) + var(--space-xl));
   --sidebar-transition: 0.3s ease;
 }
 
@@ -336,7 +336,7 @@ html {
   flex-direction: column;
   min-height: 100vh;
   position: relative;
-  margin-top: var(--header-height);
+  margin-top: var(--top-nav-height);
   margin-left: var(--sidebar-width);
   transition: margin-left var(--sidebar-transition);
 }
@@ -344,7 +344,7 @@ html {
 /* Standalone page wrapper offset — combo class keeps base .page-wrapper untouched */
 .page-wrapper.has-sidebar {
   width: auto;
-  margin-top: var(--header-height);
+  margin-top: var(--top-nav-height);
   margin-left: var(--sidebar-width);
   transition: margin-left var(--sidebar-transition);
 }
@@ -378,25 +378,25 @@ body.no-sidebar .page-wrapper.has-sidebar {
 }
 
 
-/* ------ 1B. SITE HEADER (Fixed) ------ */
+/* ------ 1B. TOP NAV (Fixed) ------ */
 
-.site-header {
+.top-nav {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: var(--header-height);
+  height: var(--top-nav-height);
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--space-l);
-  background: var(--background-site-header);
-  color: var(--text-site-header);
+  background: var(--background-top-nav);
+  color: var(--text-top-nav);
   border-bottom: var(--border-s) solid var(--black-alpha-10);
 }
 
-.site-header-left {
+.top-nav-left {
   display: flex;
   align-items: stretch;
   height: 100%;
@@ -404,13 +404,13 @@ body.no-sidebar .page-wrapper.has-sidebar {
   min-width: 0;
 }
 
-.site-header-right {
+.top-nav-right {
   display: flex;
   align-items: stretch;
   height: 100%;
 }
 
-.site-header-logo-link {
+.top-nav-logo-link {
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -430,8 +430,8 @@ body.no-sidebar .page-wrapper.has-sidebar {
 }
 
 
-/* Header links — standalone interactive items in site-header-right (login, theme toggle) */
-.header-link {
+/* Top-nav links — standalone interactive items in top-nav-right (login, theme toggle) */
+.top-nav-link {
   display: flex;
   align-items: center;
   align-self: stretch;
@@ -449,19 +449,19 @@ body.no-sidebar .page-wrapper.has-sidebar {
   transition: color 0.2s, background 0.2s;
 }
 
-.header-link:hover {
+.top-nav-link:hover {
   color: var(--text-plain);
   background: var(--background-faded);
 }
 
-.header-link .icn-svg {
+.top-nav-link .icn-svg {
   width: 1.25rem;
   height: 1.25rem;
 }
 
-/* -- Site header dropdown overrides -- */
-/* Dropdown triggers in the header bar have no vertical padding (bar height provides it) */
-.site-header-right .dropdown-trigger {
+/* -- Top nav dropdown overrides -- */
+/* Dropdown triggers in the top nav have no vertical padding (bar height provides it) */
+.top-nav-right .dropdown-trigger {
   padding: 0 var(--space-m);
 }
 
@@ -469,8 +469,8 @@ body.no-sidebar .page-wrapper.has-sidebar {
 [data-theme="dark"] .dark-mode-icon-light { display: none; }
 :root:not([data-theme="dark"]) .dark-mode-icon-dark { display: none; }
 
-/* Hamburger — visible on mobile only, uses header-link pattern */
-.site-header-hamburger {
+/* Hamburger — visible on mobile only, uses top-nav-link pattern */
+.top-nav-hamburger {
   display: none;
 }
 
@@ -479,14 +479,14 @@ body.no-sidebar .page-wrapper.has-sidebar {
 body.mobile-nav-open .hamburger-icon-open { display: none; }
 body.mobile-nav-open .hamburger-icon-close { display: block; }
 
-/* Auth header container (compact login/user in header) */
-.auth-header-container {
+/* Auth slot in top nav (compact login/user) */
+.top-nav-auth-container {
   display: flex;
   align-items: stretch;
   height: 100%;
 }
 
-.auth-header-container .auth-login-btn {
+.top-nav-auth-container .auth-login-btn {
   width: auto;
 }
 
@@ -495,7 +495,7 @@ body.mobile-nav-open .hamburger-icon-close { display: block; }
 
 .site-sidebar {
   position: fixed;
-  top: var(--header-height);
+  top: var(--top-nav-height);
   left: 0;
   bottom: 0;
   width: var(--sidebar-width);
@@ -559,7 +559,7 @@ body.sidebar-collapsed .sidebar-icon-close { display: block; }
   display: none;
   position: fixed;
   inset: 0;
-  top: var(--header-height);
+  top: var(--top-nav-height);
   z-index: 49;
   background: rgba(0, 0, 0, 0.5);
 }
@@ -792,7 +792,7 @@ body:not(.sidebar-collapsed) .nav-section[open] .nav-list {
 
 .docs-footer {
   background: var(--background-primary);
-  border-top: var(--border-s) solid var(--border-secondary);
+  border-top: var(--border-s) solid var(--border-faded);
   padding: var(--space-2xl) 0;
   margin-top: auto;
   width: 100%;
@@ -810,11 +810,16 @@ body:not(.sidebar-collapsed) .nav-section[open] .nav-list {
   margin: 0;
 }
 
+.back-to-top-btn {
+  --button-primary: var(--background-secondary);
+  --button-text: var(--text-primary);
+}
+
 
 /* ------ 2B. PAGE NAVIGATION (PREV / NEXT) ------ */
 
 .page-nav {
-  border-top: var(--border-s) solid var(--border-secondary);
+  border-top: var(--border-s) solid var(--border-faded);
 }
 
 .page-nav-inner {
@@ -902,7 +907,7 @@ body:not(.sidebar-collapsed) .nav-section[open] .nav-list {
 /* ------ 2C. PAGE FEEDBACK ------ */
 
 .page-feedback {
-  border-top: var(--border-s) solid var(--border-secondary);
+  border-top: var(--border-s) solid var(--border-faded);
   padding: var(--section-m) 0;
   text-align: center;
 }
@@ -1017,7 +1022,7 @@ h1[id],
 h2[id],
 h3[id],
 section[id] {
-  scroll-margin-top: calc(var(--header-height) + var(--sticky-bar-height) + var(--space-xl));
+  scroll-margin-top: calc(var(--top-nav-height) + var(--sticky-bar-height) + var(--space-xl));
 }
 
 /* -- Page header (full width, sits between sticky bar and content grid) -- */
@@ -1026,7 +1031,7 @@ section[id] {
   padding-top: var(--section-l);
   padding-bottom: var(--section-l);
   background: var(--background-faded);
-  border-bottom: var(--border-s) solid var(--border-secondary);
+  border-bottom: var(--border-s) solid var(--border-faded);
   text-wrap: balance;
 }
 
@@ -1079,20 +1084,6 @@ section[id] {
   display: inline-block;
 }
 
-
-/* -- Docs sticky sub-header bar (sits below site header, constrained to article width) -- */
-/* Base .sticky-bar component is in docs-site.css */
-
-.sticky-bar-page {
-  top: var(--header-height);
-}
-
-.sticky-bar-page .sticky-bar-container {
-  max-width: 1080px;
-  margin: 0 auto;
-  height: var(--sticky-bar-height);
-  padding-left: var(--space-l);
-}
 
 /* ------ 4. DOCS TABLE OF CONTENTS ------ */
 
@@ -1327,8 +1318,8 @@ section[id] {
     padding: var(--space-s) var(--space-m);
   }
 
-  /* Header: remove side padding, show hamburger */
-  .site-header {
+  /* Top nav: remove side padding, show hamburger */
+  .top-nav {
     padding: 0;
   }
 
@@ -1336,24 +1327,24 @@ section[id] {
     height: 45px;
   }
 
-  /* Mobile header right side: icons only — hide text labels, tighten padding */
-  .site-header-right .header-link-label {
+  /* Mobile top-nav right side: icons only — hide text labels, tighten padding */
+  .top-nav-right .top-nav-link-label {
     display: none;
   }
 
-  .site-header-right .header-link,
-  .site-header-right .dropdown-trigger {
+  .top-nav-right .top-nav-link,
+  .top-nav-right .dropdown-trigger {
     padding: 0 var(--space-l);
     gap: var(--space-xs);
   }
 
-  .site-header-hamburger {
+  .top-nav-hamburger {
     display: flex;
     padding: 0 var(--space-l);
   }
 
   /* No-sidebar pages: logo is first child, supply the left padding the hamburger would have */
-  .site-header-left > .site-header-logo-link:first-child {
+  .top-nav-left > .top-nav-logo-link:first-child {
     padding-left: var(--space-l);
   }
 
@@ -1447,7 +1438,7 @@ section[id] {
   .nav-home {
     margin-bottom: 0;
     padding-bottom: var(--space-s);
-    border-bottom: var(--border-s) solid var(--border-secondary);
+    border-bottom: var(--border-s) solid var(--border-faded);
   }
 
   /* Mobile: Collapsible nav sections */
@@ -1456,7 +1447,7 @@ section[id] {
     padding: 0;
     background: none;
     border: none;
-    border-bottom: var(--border-s) solid var(--border-secondary);
+    border-bottom: var(--border-s) solid var(--border-faded);
     transition: none;
   }
 
@@ -1798,8 +1789,8 @@ body.auth-role-public:not(.auth-role-client) .page-wrapper.has-sidebar {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - var(--header-height));
-  margin-top: var(--header-height);
+  min-height: calc(100vh - var(--top-nav-height));
+  margin-top: var(--top-nav-height);
   padding: var(--space-l);
   background: var(--background-primary);
 }

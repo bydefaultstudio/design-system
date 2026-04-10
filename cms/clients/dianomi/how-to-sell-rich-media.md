@@ -2,6 +2,7 @@
 title: "How To Sell Rich Media"
 subtitle: "A guide for positioning rich media confidently"
 description: "How to position rich media as a strategic tool for driving attention, interaction, and brand impact within Dianomi's premium environment."
+author: "Studio"
 section: "Docs"
 subsection: ""
 order: 3

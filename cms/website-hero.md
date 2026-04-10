@@ -2,6 +2,7 @@
 title: "Hero"
 subtitle: "Interactive portfolio showcase with key visual spawning system"
 description: "Complete guide to the hero section system including key visual spawning, interactive elements, and responsive design for the ByDefault website portfolio showcase."
+author: "Studio"
 section: "Website"
 layer: "app"
 subsection: "Pages"

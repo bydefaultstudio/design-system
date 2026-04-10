@@ -2,6 +2,7 @@
 title: "CPM Calculator"
 subtitle: "Plan campaign impressions, fees, and payouts"
 description: "Calculate campaign impressions, fees, payouts, and margins from monthly spend — with multi-partner support and currency switching."
+author: "Studio"
 section: "Tools"
 layer: "app"
 subsection: ""

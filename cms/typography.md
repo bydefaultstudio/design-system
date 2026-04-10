@@ -2,6 +2,7 @@
 title: "Typography"
 subtitle: "Type scale, weights, and reading rhythm"
 description: "Complete reference for typography tokens including font scale, line height, font weight, and letter spacing."
+author: "Studio"
 section: "Design System"
 layer: "foundation"
 subsection: ""
