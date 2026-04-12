@@ -78,7 +78,7 @@ function buildIconMap() {
 }
 
 /**
- * Return icon wrapped in the standard .icn-svg container.
+ * Return icon wrapped in the standard .svg-icn container.
  * @param {string} name - kebab-case icon key
  * @returns {string} HTML string
  */
@@ -88,7 +88,7 @@ function getIcon(name) {
     console.warn(`⚠️  Unknown icon: "${name}"`);
     return `<!-- unknown icon: ${name} -->`;
   }
-  return `<div class="icn-svg" data-icon="${name}" data-file="${entry.file}">${entry.svg}</div>`;
+  return `<div class="svg-icn" data-icon="${name}" data-file="${entry.file}">${entry.svg}</div>`;
 }
 
 /**
@@ -942,8 +942,8 @@ function generatePageNav(file, pageOrder) {
     return '../' + target.htmlPath;
   }
 
-  const arrowLeft = `<div class="icn-svg page-nav-arrow" data-icon="chevron-left-large">${getRawIcon('chevron-left-large')}</div>`;
-  const arrowRight = `<div class="icn-svg page-nav-arrow" data-icon="chevron-right-large">${getRawIcon('chevron-right-large')}</div>`;
+  const arrowLeft = `<div class="svg-icn page-nav-arrow" data-icon="chevron-left-large">${getRawIcon('chevron-left-large')}</div>`;
+  const arrowRight = `<div class="svg-icn page-nav-arrow" data-icon="chevron-right-large">${getRawIcon('chevron-right-large')}</div>`;
 
   let html = '<nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global">';
 
@@ -1224,8 +1224,8 @@ function generateNavJs(filesBySection, sidebarOrderMap) {
   if (hasSidebar) {
     // Hamburger for mobile sidebar
     headerLeft += '<div class="top-nav-link top-nav-hamburger" role="button" tabindex="0" aria-label="Open navigation">'
-      + '<div class="icn-svg hamburger-icon-open">' + ICON_HAMBURGER + '</div>'
-      + '<div class="icn-svg hamburger-icon-close">' + ICON_CLOSE + '</div>'
+      + '<div class="svg-icn hamburger-icon-open">' + ICON_HAMBURGER + '</div>'
+      + '<div class="svg-icn hamburger-icon-close">' + ICON_CLOSE + '</div>'
       + '</div>';
   }
 
@@ -1247,13 +1247,13 @@ function generateNavJs(filesBySection, sidebarOrderMap) {
 
   var headerRight = '<div class="top-nav-right">'
     + '<a href="' + base + 'support.html" class="top-nav-link top-nav-contact-link" aria-label="Contact">'
-    + '<div class="icn-svg" data-icon="mail">' + ICON_MAIL + '</div>'
+    + '<div class="svg-icn" data-icon="mail">' + ICON_MAIL + '</div>'
     + '<span class="top-nav-link-label">Contact</span>'
     + '</a>'
     + '<div class="top-nav-auth-container"></div>'
     + '<div class="top-nav-link dark-mode-toggle" role="button" tabindex="0" aria-label="Toggle dark mode">'
-    + '<div class="icn-svg dark-mode-icon-light">' + ICON_SUN + '</div>'
-    + '<div class="icn-svg dark-mode-icon-dark">' + ICON_MOON + '</div>'
+    + '<div class="svg-icn dark-mode-icon-light">' + ICON_SUN + '</div>'
+    + '<div class="svg-icn dark-mode-icon-dark">' + ICON_MOON + '</div>'
     + '</div>'
     + '</div>';
 
@@ -1265,13 +1265,13 @@ function generateNavJs(filesBySection, sidebarOrderMap) {
     sidebarHtml = '<aside class="site-sidebar" role="navigation" aria-label="Site navigation">'
       + '<div class="site-sidebar-header">'
       + '<button class="site-sidebar-toggle" aria-label="Collapse sidebar" type="button">'
-      + '<div class="icn-svg sidebar-icon-open">' + ICON_COLLAPSE + '</div>'
-      + '<div class="icn-svg sidebar-icon-close">' + ICON_EXPAND + '</div>'
+      + '<div class="svg-icn sidebar-icon-open">' + ICON_COLLAPSE + '</div>'
+      + '<div class="svg-icn sidebar-icon-close">' + ICON_EXPAND + '</div>'
       + '</button>'
       + '</div>'
       + '<div class="site-sidebar-content">'
       + '<a href="' + base + 'index.html" class="nav-link nav-home" data-access="team">'
-      + '<div class="icn-svg" data-icon="home">' + ICON_HOME + '</div>'
+      + '<div class="svg-icn" data-icon="home">' + ICON_HOME + '</div>'
       + '<span>Home</span>'
       + '</a>'
       + \`${esc(navSectionsHtml)}\`
@@ -1484,7 +1484,7 @@ function buildNavSectionsHtml(filesBySection, sidebarOrderMap = {}) {
     // Slug used by Phase 3 directional transitions to detect same/different section
     const sectionSlug = slugifySection(section);
     const iconHtml = sectionIcon
-      ? `<a href="${sectionIndexHref}" class="nav-section-icon" data-section="${sectionSlug}"><div class="icn-svg" data-icon="${sectionIcon.name}">${sectionIcon.icon}</div></a>`
+      ? `<a href="${sectionIndexHref}" class="nav-section-icon" data-section="${sectionSlug}"><div class="svg-icn" data-icon="${sectionIcon.name}">${sectionIcon.icon}</div></a>`
       : '';
 
     html += `<details class="nav-section">

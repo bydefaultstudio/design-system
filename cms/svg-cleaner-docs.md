@@ -45,12 +45,12 @@ Locks on: **Size 100%**, **currentColor**, **Strip Comments**
 
 ### Icon
 
-Wraps the SVG in a `<div class="icn-svg" data-icon="[name]">` container. See the [Iconography docs](../design-system/iconography/) for full icon guidelines.
+Wraps the SVG in a `<div class="svg-icn" data-icon="[name]">` container. See the [Iconography docs](../design-system/iconography/) for full icon guidelines.
 
 Locks on: **Size 100%**, **currentColor**, **Strip Comments**
 
 ```html
-<div class="icn-svg" data-icon="arrow-right">
+<div class="svg-icn" data-icon="arrow-right">
   <svg viewBox="0 0 24 24" width="100%" height="100%">
     <path d="M5 12h14M12 5l7 7-7 7" fill="currentColor"/>
   </svg>
@@ -78,7 +78,7 @@ Locks off: **Icon**, **Logo**, **currentColor**, **Size 100%**
 | `var(--minify)` | Collapses whitespace and optimises path data |
 | `var(--logo)` | Wraps in `<div class="svg-logo-NAME">` with aspect-ratio |
 | `--logo-name NAME` | Sets the logo class name |
-| `var(--icon)` | Wraps in `<div class="icn-svg">` |
+| `var(--icon)` | Wraps in `<div class="svg-icn">` |
 | `--icon-name NAME` | Sets the `data-icon` attribute |
 
 ---

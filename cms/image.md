@@ -135,6 +135,6 @@ When an aspect ratio is applied, the image may not match its natural proportions
 
 ## Do Not
 
-- Do not use `.img` on decorative SVG icons — use `.icn-svg` instead
+- Do not use `.img` on decorative SVG icons — use `.svg-icn` instead
 - Do not hardcode `width` and `height` attributes when using `.img` — the class manages sizing
 - Do not combine multiple aspect-ratio classes on one element

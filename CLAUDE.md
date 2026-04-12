@@ -149,8 +149,8 @@ See `cms/iconography.md` for complete icon guidelines and the full icon registry
 
 **Critical rules:**
 - **Brand icons only** — never use Material Design, Font Awesome, Heroicons, Feather, or any external icon library. Always check the Icon Registry section of `cms/iconography.md` first. If no brand icon exists for the need, flag it and request one from the design team — do not invent or substitute.
-- Always wrap icons in `<div class="icn-svg" data-icon="name">` — never use bare `<svg>`, `<span>`, or `<img>`
-- SVGs must use `width="100%" height="100%"` — the `.icn-svg` wrapper controls sizing
+- Always wrap icons in `<div class="svg-icn" data-icon="name">` — never use bare `<svg>`, `<span>`, or `<img>`
+- SVGs must use `width="100%" height="100%"` — the `.svg-icn` wrapper controls sizing
 - SVGs must use `fill="none"` on the `<svg>` element; paths use `fill="currentColor"`
 - Strip `xmlns` from inline SVGs
 - Include `data-icon` with a descriptive kebab-case name

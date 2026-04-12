@@ -390,7 +390,7 @@ Use `.is-icon` on a segment button for icon-only options:
 
 ```html
 <button class="segmented-control-btn is-icon" aria-label="Grid view">
-  <div class="icn-svg" data-icon="grid"><!-- SVG --></div>
+  <div class="svg-icn" data-icon="grid"><!-- SVG --></div>
 </button>
 ```
 

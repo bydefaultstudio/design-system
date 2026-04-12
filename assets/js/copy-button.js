@@ -66,7 +66,7 @@
     var btn = e.target.closest('.js-copy-url');
     if (!btn) return;
 
-    var iconEl = btn.querySelector('.icn-svg');
+    var iconEl = btn.querySelector('.svg-icn');
     var label = btn.querySelector('span');
     var originalIconHTML = iconEl ? iconEl.innerHTML : '';
     var originalText = label ? label.textContent : '';
@@ -104,8 +104,8 @@
     var buttons = document.querySelectorAll('.color-copy-btn');
     buttons.forEach(function (btn) {
       var label = btn.textContent;
-      btn.innerHTML = '<span class="copy-btn-default"><div class="icn-svg">' + ICON_COPY + '</div> ' + label + '</span>'
-        + '<span class="copy-btn-copied"><div class="icn-svg">' + ICON_CHECK + '</div> Copied</span>';
+      btn.innerHTML = '<span class="copy-btn-default"><div class="svg-icn">' + ICON_COPY + '</div> ' + label + '</span>'
+        + '<span class="copy-btn-copied"><div class="svg-icn">' + ICON_CHECK + '</div> Copied</span>';
     });
   }
 
@@ -137,7 +137,7 @@
   });
 
   // ── Icon table — auto-generate Copy + Download buttons ──
-  // Auto-detects tables whose first <td> contains .icn-svg[data-icon].
+  // Auto-detects tables whose first <td> contains .svg-icn[data-icon].
   // Appends ghost Copy and Download buttons to each matching row.
 
   var ICON_COPY = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
@@ -153,11 +153,11 @@
     var tables = document.querySelectorAll('table');
 
     tables.forEach(function (table) {
-      // Detect: first <td> in first body row must contain .icn-svg[data-icon]
+      // Detect: first <td> in first body row must contain .svg-icn[data-icon]
       var firstRow = table.querySelector('tbody tr');
       if (!firstRow) return;
       var firstCell = firstRow.querySelector('td:first-child');
-      if (!firstCell || !firstCell.querySelector('.icn-svg[data-icon]')) return;
+      if (!firstCell || !firstCell.querySelector('.svg-icn[data-icon]')) return;
 
       // Mark the table for CSS
       table.classList.add('icon-table');
@@ -170,7 +170,7 @@
 
       var rows = table.querySelectorAll('tbody tr');
       rows.forEach(function (row) {
-        var iconEl = row.querySelector('.icn-svg[data-icon]');
+        var iconEl = row.querySelector('.svg-icn[data-icon]');
         if (!iconEl) return;
 
         var iconName = iconEl.getAttribute('data-icon');
@@ -183,8 +183,8 @@
         copyBtn.className = 'copy-btn is-ghost';
         copyBtn.setAttribute('data-copy', iconHTML);
         copyBtn.setAttribute('aria-label', 'Copy ' + iconName + ' icon code');
-        copyBtn.innerHTML = '<span class="copy-btn-default"><div class="icn-svg">' + ICON_COPY + '</div> Copy</span>'
-          + '<span class="copy-btn-copied"><div class="icn-svg">' + ICON_CHECK + '</div> Copied</span>';
+        copyBtn.innerHTML = '<span class="copy-btn-default"><div class="svg-icn">' + ICON_COPY + '</div> Copy</span>'
+          + '<span class="copy-btn-copied"><div class="svg-icn">' + ICON_CHECK + '</div> Copied</span>';
         copyTd.appendChild(copyBtn);
         row.appendChild(copyTd);
 
@@ -193,7 +193,7 @@
         var dlBtn = document.createElement('button');
         dlBtn.className = 'copy-btn is-ghost';
         dlBtn.setAttribute('aria-label', 'Download ' + iconName + ' SVG');
-        dlBtn.innerHTML = '<div class="icn-svg">' + ICON_DOWNLOAD + '</div> Download';
+        dlBtn.innerHTML = '<div class="svg-icn">' + ICON_DOWNLOAD + '</div> Download';
         dlBtn.addEventListener('click', function () {
           var a = document.createElement('a');
           a.href = '../assets/images/svg-icons/' + encodeURIComponent(fileName);

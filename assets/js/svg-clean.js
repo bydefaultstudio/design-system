@@ -125,7 +125,7 @@ Options:
   --current-color    Set all shape fills to currentColor (for theme support)
   --size             Force width="100%" height="100%" (default for inline mode)
   --keep-size        Keep original width/height (default for --standalone mode)
-  --icon             Wrap output in <div class="icn-svg">
+  --icon             Wrap output in <div class="svg-icn">
   --icon-name NAME   Add data-icon attribute to the wrapper (use with --icon)
   --logo             Wrap in <div class="svg-logo-NAME"> with aspect-ratio
   --logo-name NAME   Set the logo name (e.g. svg-logo-brand)
@@ -218,7 +218,7 @@ function sanitiseName(name) {
 function processSVG(svgCode, options = {}) {
   let processedCode = svgCode;
 
-  // Strip wrapping <div> elements (e.g. pasted from HTML with icn-svg or svg-logo wrappers)
+  // Strip wrapping <div> elements (e.g. pasted from HTML with svg-icn or svg-logo wrappers)
   const svgMatch = processedCode.match(/<svg[\s\S]*<\/svg>/i);
   if (svgMatch) {
     processedCode = svgMatch[0];
@@ -347,7 +347,7 @@ function processSVG(svgCode, options = {}) {
   // Wrap in icon block if requested
   if (options.icon && !options.logo) {
     const dataAttr = options.iconName ? ` data-icon="${sanitiseName(options.iconName)}"` : '';
-    result = `<div class="icn-svg"${dataAttr}>\n  ${result}\n</div>`;
+    result = `<div class="svg-icn"${dataAttr}>\n  ${result}\n</div>`;
   }
 
   return result;

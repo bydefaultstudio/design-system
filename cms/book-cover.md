@@ -23,7 +23,7 @@ It pairs with `.grid.cols-2.gap-xl` for a calm, two-column index layout. The hea
 ```
 a.book-cover
   header.book-cover-header
-    .icn-svg                ← open-full icon (top right, hover only)
+    .svg-icn                ← open-full icon (top right, hover only)
   .book-cover-content
     .book-cover-title       ← short section name
     .book-cover-description ← one-line subtitle (optional)
@@ -69,7 +69,7 @@ Defaults:
 ```html
 <a href="brand/" class="book-cover">
   <header class="book-cover-header">
-    <div class="icn-svg" data-icon="open-full"><!-- inline svg --></div>
+    <div class="svg-icn" data-icon="open-full"><!-- inline svg --></div>
   </header>
   <div class="book-cover-content">
     <h3 class="book-cover-title">Brand Book</h3>

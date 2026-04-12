@@ -2031,7 +2031,7 @@ The default `.button` is the most prominent action on the page.
 
 </button>
         <button class="button is-icon is-faded" aria-label="Search">
-          <div class="icn-svg" data-icon="search">
+          <div class="svg-icn" data-icon="search">
             <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
               <path d="M18.6 20L15.5658 16.9658C14.8452 16.2452 13.7005 16.2131 12.7513 16.584C12.6932 16.6067 12.6344 16.6287 12.575 16.65C11.925 16.8833 11.2333 17 10.5 17C8.68333 17 7.14583 16.3708 5.8875 15.1125C4.62917 13.8542 4 12.3167 4 10.5C4 8.68333 4.62917 7.14583 5.8875 5.8875C7.14583 4.62917 8.68333 4 10.5 4C12.3167 4 13.8542 4.62917 15.1125 5.8875C16.3708 7.14583 17 8.68333 17 10.5C17 11.2333 16.8833 11.925 16.65 12.575C16.6287 12.6344 16.6067 12.6932 16.584 12.7513C16.2131 13.7005 16.2452 14.8452 16.9658 15.5658L20 18.6L18.6 20ZM10.5 15C11.75 15 12.8125 14.5625 13.6875 13.6875C14.5625 12.8125 15 11.75 15 10.5C15 9.25 14.5625 8.1875 13.6875 7.3125C12.8125 6.4375 11.75 6 10.5 6C9.25 6 8.1875 6.4375 7.3125 7.3125C6.4375 8.1875 6 9.25 6 10.5C6 11.75 6.4375 12.8125 7.3125 13.6875C8.1875 14.5625 9.25 15 10.5 15Z" fill="currentColor"/>
             </svg>
@@ -2043,7 +2043,7 @@ The default `.button` is the most prominent action on the page.
       <p class="demo-eyebrow">Disabled</p>
       <div class="block row gap-m">
         <button class="button is-icon" aria-label="Close" disabled>
-          <div class="icn-svg" data-icon="close">
+          <div class="svg-icn" data-icon="close">
             <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
               <path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/>
             </svg>
@@ -2056,11 +2056,11 @@ The default `.button` is the most prominent action on the page.
 
 ```html
 <button class="button is-icon" aria-label="Close">
-  <div class="icn-svg" data-icon="close"><!-- SVG icon --></div>
+  <div class="svg-icn" data-icon="close"><!-- SVG icon --></div>
 </button>
 
 <button class="button is-icon is-faded" aria-label="Search">
-  <div class="icn-svg" data-icon="search"><!-- SVG icon --></div>
+  <div class="svg-icn" data-icon="search"><!-- SVG icon --></div>
 </button>
 ```
 
@@ -2128,11 +2128,11 @@ A side-by-side comparison of every button style at default size.
 The `.copy-btn` adds clipboard copy functionality to any button. It copies the value from `data-copy` and shows a "Copied!" state. Three variants are available. See the [Copy Button](copy-button.html) docs for full details.
 
 Copy</span>
-          <span class="copy-btn-copied"><div class="icn-svg" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div> Copied!</span>
+          <span class="copy-btn-copied"><div class="svg-icn" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div> Copied!</span>
         </button>
         <button class="button is-small is-outline copy-btn is-copied" type="button">
-          <span class="copy-btn-default"><div class="icn-svg" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> Copy</span>
-          <span class="copy-btn-copied"><div class="icn-svg" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div> Copied!</span>
+          <span class="copy-btn-default"><div class="svg-icn" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> Copy</span>
+          <span class="copy-btn-copied"><div class="svg-icn" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div> Copied!</span>
         </button>
       </div>
     </div>
@@ -2140,12 +2140,12 @@ Copy</span>
       <p class="demo-eyebrow">Icon Only</p>
       <div class="block row gap-m">
         <button class="button is-small is-outline copy-btn is-icon-only" data-copy="var(--button-primary)" data-tooltip="Copy" type="button" aria-label="Copy">
-          <span class="copy-btn-default"><div class="icn-svg" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
-          <span class="copy-btn-copied"><div class="icn-svg" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
+          <span class="copy-btn-default"><div class="svg-icn" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
+          <span class="copy-btn-copied"><div class="svg-icn" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
         </button>
         <button class="button is-small is-outline copy-btn is-icon-only is-copied" data-tooltip="Copied!" type="button" aria-label="Copy">
-          <span class="copy-btn-default"><div class="icn-svg" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
-          <span class="copy-btn-copied"><div class="icn-svg" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
+          <span class="copy-btn-default"><div class="svg-icn" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
+          <span class="copy-btn-copied"><div class="svg-icn" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
         </button>
       </div>
     </div>
@@ -2153,12 +2153,12 @@ Copy</span>
       <p class="demo-eyebrow">Ghost</p>
       <div class="block row gap-m">
         <button class="button copy-btn is-ghost" data-copy="var(--button-primary)" data-tooltip="Copy" type="button" aria-label="Copy">
-          <span class="copy-btn-default"><div class="icn-svg" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
-          <span class="copy-btn-copied"><div class="icn-svg" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
+          <span class="copy-btn-default"><div class="svg-icn" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
+          <span class="copy-btn-copied"><div class="svg-icn" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
         </button>
         <button class="button copy-btn is-ghost is-copied" data-tooltip="Copied!" type="button" aria-label="Copy">
-          <span class="copy-btn-default"><div class="icn-svg" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
-          <span class="copy-btn-copied"><div class="icn-svg" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
+          <span class="copy-btn-default"><div class="svg-icn" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
+          <span class="copy-btn-copied"><div class="svg-icn" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
         </button>
       </div>
     </div>
@@ -2371,7 +2371,7 @@ Icons are **optional**. Add `.callout--icon` to the `.callout` element to enable
 
 ```html
 <div class="callout callout-note callout--icon">
-  <div class="icn-svg" data-icon="info"><!-- info SVG --></div>
+  <div class="svg-icn" data-icon="info"><!-- info SVG --></div>
   <div class="callout-title">Note</div>
   <p class="callout-description">This callout has an icon for extra visual context.</p>
 </div>
@@ -2379,15 +2379,15 @@ Icons are **optional**. Add `.callout--icon` to the `.callout` element to enable
 
 **How it works:**
 - `.callout--icon` switches the callout to a two-column CSS grid
-- The `.icn-svg` is pinned to row 1, column 1 — vertically centered with the title via `align-self: center`
+- The `.svg-icn` is pinned to row 1, column 1 — vertically centered with the title via `align-self: center`
 - `.callout-title` and `.callout-description` auto-flow into column 2
 - The icon stays aligned with the title regardless of title font size (`font-s`, `h2`, `h3`, etc.)
-- To remove the icon, drop `.callout--icon` and the `.icn-svg`
+- To remove the icon, drop `.callout--icon` and the `.svg-icn`
 
 | Class | Role |
 |---|---|
 | `.callout--icon` | Enables two-column grid layout |
-| `.icn-svg` | Icon (direct child, pinned to row 1, vertically centered with title) |
+| `.svg-icn` | Icon (direct child, pinned to row 1, vertically centered with title) |
 | `.callout-title` | Title text (row 1, column 2) |
 | `.callout-description` | Description content (below title, column 2) |
 
@@ -2432,7 +2432,7 @@ With icon:
 
 ```html
 <div class="callout callout-note callout--icon">
-  <div class="icn-svg" data-icon="info"><!-- info SVG --></div>
+  <div class="svg-icn" data-icon="info"><!-- info SVG --></div>
   <div class="callout-title">Note</div>
   <p class="callout-description">Useful information that users should know.</p>
 </div>
@@ -2461,7 +2461,7 @@ With icon:
 
 ```html
 <div class="callout callout-tip callout--icon">
-  <div class="icn-svg" data-icon="bolt"><!-- bolt SVG --></div>
+  <div class="svg-icn" data-icon="bolt"><!-- bolt SVG --></div>
   <div class="callout-title">Tip</div>
   <p class="callout-description">Helpful advice for doing things better.</p>
 </div>
@@ -2490,7 +2490,7 @@ With icon:
 
 ```html
 <div class="callout callout-warning callout--icon">
-  <div class="icn-svg" data-icon="warning"><!-- warning SVG --></div>
+  <div class="svg-icn" data-icon="warning"><!-- warning SVG --></div>
   <div class="callout-title">Warning</div>
   <p class="callout-description">Urgent information to avoid problems.</p>
 </div>
@@ -2519,7 +2519,7 @@ With icon:
 
 ```html
 <div class="callout callout-caution callout--icon">
-  <div class="icn-svg" data-icon="close-circled"><!-- close-circled SVG --></div>
+  <div class="svg-icn" data-icon="close-circled"><!-- close-circled SVG --></div>
   <div class="callout-title">Caution</div>
   <p class="callout-description">Risks or negative outcomes of certain actions.</p>
 </div>
@@ -2548,7 +2548,7 @@ With icon:
 
 ```html
 <div class="callout callout-important callout--icon">
-  <div class="icn-svg" data-icon="exclamation"><!-- exclamation SVG --></div>
+  <div class="svg-icn" data-icon="exclamation"><!-- exclamation SVG --></div>
   <div class="callout-title">Important</div>
   <p class="callout-description">Key information users need to know.</p>
 </div>
@@ -2871,7 +2871,7 @@ Use `.is-icon` on a segment button for icon-only options:
 
 ```html
 <button class="segmented-control-btn is-icon" aria-label="Grid view">
-  <div class="icn-svg" data-icon="grid"><!-- SVG --></div>
+  <div class="svg-icn" data-icon="grid"><!-- SVG --></div>
 </button>
 ```
 
@@ -3210,7 +3210,7 @@ The JS creates this markup automatically:
   <div class="toast toast--success" role="alert">
     <span class="toast-message">Changes saved.</span>
     <button class="toast-close" aria-label="Dismiss">
-      <div class="icn-svg" data-icon="close">...</div>
+      <div class="svg-icn" data-icon="close">...</div>
     </button>
   </div>
 </div>
@@ -3718,7 +3718,7 @@ The trigger is the element that opens the dropdown. `.dropdown-trigger` provides
 The most common trigger. The `.dropdown-chevron` rotates 180 degrees when the dropdown is open.
 
 <span>Account</span>
-      <div class="icn-svg dropdown-chevron" data-icon="chevron-down"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/></svg></div>
+      <div class="svg-icn dropdown-chevron" data-icon="chevron-down"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/></svg></div>
     </button>
     <div class="dropdown-menu">
       <button class="dropdown-item" role="menuitem" type="button">Profile</button>
@@ -3732,9 +3732,9 @@ The most common trigger. The `.dropdown-chevron` rotates 180 degrees when the dr
 ```html
 <div class="dropdown">
   <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false">
-    <div class="icn-svg" data-icon="user"><!-- svg --></div>
+    <div class="svg-icn" data-icon="user"><!-- svg --></div>
     <span>Account</span>
-    <div class="icn-svg dropdown-chevron" data-icon="chevron-down"><!-- svg --></div>
+    <div class="svg-icn dropdown-chevron" data-icon="chevron-down"><!-- svg --></div>
   </button>
   <div class="dropdown-menu">
     <!-- items -->
@@ -3758,7 +3758,7 @@ For toolbars and compact contexts. No text, no chevron — the icon alone signal
 
 ```html
 <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="More options">
-  <div class="icn-svg" data-icon="more-horizontal"><!-- svg --></div>
+  <div class="svg-icn" data-icon="more-horizontal"><!-- svg --></div>
 </button>
 ```
 
@@ -3778,7 +3778,7 @@ For page content where the trigger should look like a standard button.
 ```html
 <button class="dropdown-trigger button is-outline" type="button" ...>
   Options
-  <div class="icn-svg dropdown-chevron"><!-- chevron svg --></div>
+  <div class="svg-icn dropdown-chevron"><!-- chevron svg --></div>
 </button>
 ```
 
@@ -3833,16 +3833,16 @@ An icon before the text reinforces the action. Use for action verbs like Edit, D
 </button>
     <div class="dropdown-menu">
       <button class="dropdown-item" role="menuitem" type="button">
-        <div class="icn-svg" data-icon="settings"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M11 15H22V17H11V19H5V17H2V15H5V13H11V15ZM7 17H9V15H7V17Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M19 7H22V9H19V11H13V9H2V7H13V5H19V7ZM15 9H17V7H15V9Z" fill="currentColor"/></svg></div>
+        <div class="svg-icn" data-icon="settings"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M11 15H22V17H11V19H5V17H2V15H5V13H11V15ZM7 17H9V15H7V17Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M19 7H22V9H19V11H13V9H2V7H13V5H19V7ZM15 9H17V7H15V9Z" fill="currentColor"/></svg></div>
         <span>Settings</span>
       </button>
       <button class="dropdown-item" role="menuitem" type="button">
-        <div class="icn-svg" data-icon="download"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
+        <div class="svg-icn" data-icon="download"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
         <span>Download</span>
       </button>
       <div class="dropdown-divider" role="separator"></div>
       <button class="dropdown-item dropdown-item--danger" role="menuitem" type="button">
-        <div class="icn-svg" data-icon="close"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/></svg></div>
+        <div class="svg-icn" data-icon="close"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/></svg></div>
         <span>Delete</span>
       </button>
     </div>
@@ -3851,7 +3851,7 @@ An icon before the text reinforces the action. Use for action verbs like Edit, D
 
 ```html
 <button class="dropdown-item" role="menuitem" type="button">
-  <div class="icn-svg" data-icon="settings"><!-- svg --></div>
+  <div class="svg-icn" data-icon="settings"><!-- svg --></div>
   <span>Settings</span>
 </button>
 ```
@@ -3946,11 +3946,11 @@ For user menus showing the logged-in user's identity.
       </div>
       <div class="dropdown-divider" role="separator"></div>
       <button class="dropdown-item" role="menuitem" type="button">
-        <div class="icn-svg" data-icon="settings"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M11 15H22V17H11V19H5V17H2V15H5V13H11V15ZM7 17H9V15H7V17Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M19 7H22V9H19V11H13V9H2V7H13V5H19V7ZM15 9H17V7H15V9Z" fill="currentColor"/></svg></div>
+        <div class="svg-icn" data-icon="settings"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M11 15H22V17H11V19H5V17H2V15H5V13H11V15ZM7 17H9V15H7V17Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M19 7H22V9H19V11H13V9H2V7H13V5H19V7ZM15 9H17V7H15V9Z" fill="currentColor"/></svg></div>
         <span>Account</span>
       </button>
       <button class="dropdown-item dropdown-item--danger" role="menuitem" type="button">
-        <div class="icn-svg" data-icon="logout"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H12V5H5V19H12V21H5ZM16 17L14.625 15.55L17.175 13H9V11H17.175L14.625 8.45L16 7L21 12L16 17Z" fill="currentColor"/></svg></div>
+        <div class="svg-icn" data-icon="logout"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H12V5H5V19H12V21H5ZM16 17L14.625 15.55L17.175 13H9V11H17.175L14.625 8.45L16 7L21 12L16 17Z" fill="currentColor"/></svg></div>
         <span>Log out</span>
       </button>
     </div>
@@ -4336,24 +4336,24 @@ Icons are inline SVG elements wrapped in a container class. They inherit colour 
 
 ## Icon Wrapper
 
-Use `.icn-svg` to wrap inline SVG icons. This class constrains the icon to a fixed size and enforces the square aspect ratio.
+Use `.svg-icn` to wrap inline SVG icons. This class constrains the icon to a fixed size and enforces the square aspect ratio.
 
-<div class="icn-svg" data-icon="check">
+<div class="svg-icn" data-icon="check">
     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
       <path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/>
     </svg>
   </div>
-  <div class="icn-svg" data-icon="close">
+  <div class="svg-icn" data-icon="close">
     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
       <path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/>
     </svg>
   </div>
-  <div class="icn-svg" data-icon="search">
+  <div class="svg-icn" data-icon="search">
     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
       <path d="M18.6 20L15.5658 16.9658C14.8452 16.2452 13.7005 16.2131 12.7513 16.584C12.6932 16.6067 12.6344 16.6287 12.575 16.65C11.925 16.8833 11.2333 17 10.5 17C8.68333 17 7.14583 16.3708 5.8875 15.1125C4.62917 13.8542 4 12.3167 4 10.5C4 8.68333 4.62917 7.14583 5.8875 5.8875C7.14583 4.62917 8.68333 4 10.5 4C12.3167 4 13.8542 4.62917 15.1125 5.8875C16.3708 7.14583 17 8.68333 17 10.5C17 11.2333 16.8833 11.925 16.65 12.575C16.6287 12.6344 16.6067 12.6932 16.584 12.7513C16.2131 13.7005 16.2452 14.8452 16.9658 15.5658L20 18.6L18.6 20ZM10.5 15C11.75 15 12.8125 14.5625 13.6875 13.6875C14.5625 12.8125 15 11.75 15 10.5C15 9.25 14.5625 8.1875 13.6875 7.3125C12.8125 6.4375 11.75 6 10.5 6C9.25 6 8.1875 6.4375 7.3125 7.3125C6.4375 8.1875 6 9.25 6 10.5C6 11.75 6.4375 12.8125 7.3125 13.6875C8.1875 14.5625 9.25 15 10.5 15Z" fill="currentColor"/>
     </svg>
   </div>
-  <div class="icn-svg" data-icon="info">
+  <div class="svg-icn" data-icon="info">
     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
       <path d="M13 18H11V10H13V18Z" fill="currentColor"/><path d="M12 6C12.35 6 12.646 6.12064 12.8877 6.3623C13.1294 6.60397 13.25 6.9 13.25 7.25C13.25 7.6 13.1294 7.89603 12.8877 8.1377C12.646 8.37936 12.35 8.5 12 8.5C11.65 8.5 11.354 8.37936 11.1123 8.1377C10.8706 7.89603 10.75 7.6 10.75 7.25C10.75 6.9 10.8706 6.60397 11.1123 6.3623C11.354 6.12064 11.65 6 12 6Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/>
     </svg>
@@ -4362,7 +4362,7 @@ Use `.icn-svg` to wrap inline SVG icons. This class constrains the icon to a fix
 </div>
 
 ```html
-<div class="icn-svg" data-icon="arrow-right">
+<div class="svg-icn" data-icon="arrow-right">
   <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
     <path d="M5 12h14M12 5l7 7-7 7" fill="currentColor"/>
   </svg>
@@ -4385,9 +4385,9 @@ Use `.icn-svg` to wrap inline SVG icons. This class constrains the icon to a fix
 Always include a `data-icon` attribute with a descriptive name. This makes icons identifiable in code — raw SVG paths are unreadable without it.
 
 ```html
-<div class="icn-svg" data-icon="chevron-down">...</div>
-<div class="icn-svg" data-icon="close">...</div>
-<div class="icn-svg" data-icon="search">...</div>
+<div class="svg-icn" data-icon="chevron-down">...</div>
+<div class="svg-icn" data-icon="close">...</div>
+<div class="svg-icn" data-icon="search">...</div>
 ```
 
 Use lowercase kebab-case for icon names (e.g. `arrow-right`, `chevron-down`, `external-link`).
@@ -4396,11 +4396,11 @@ Use lowercase kebab-case for icon names (e.g. `arrow-right`, `chevron-down`, `ex
 
 ## Icon in Buttons
 
-For icon-only buttons, use `.is-icon` on the button and `.icn-svg` as the SVG wrapper.
+For icon-only buttons, use `.is-icon` on the button and `.svg-icn` as the SVG wrapper.
 
 </button>
   <button class="button is-icon" aria-label="Search">
-    <div class="icn-svg" data-icon="search">
+    <div class="svg-icn" data-icon="search">
       <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
         <path d="M18.6 20L15.5658 16.9658C14.8452 16.2452 13.7005 16.2131 12.7513 16.584C12.6932 16.6067 12.6344 16.6287 12.575 16.65C11.925 16.8833 11.2333 17 10.5 17C8.68333 17 7.14583 16.3708 5.8875 15.1125C4.62917 13.8542 4 12.3167 4 10.5C4 8.68333 4.62917 7.14583 5.8875 5.8875C7.14583 4.62917 8.68333 4 10.5 4C12.3167 4 13.8542 4.62917 15.1125 5.8875C16.3708 7.14583 17 8.68333 17 10.5C17 11.2333 16.8833 11.925 16.65 12.575C16.6287 12.6344 16.6067 12.6932 16.584 12.7513C16.2131 13.7005 16.2452 14.8452 16.9658 15.5658L20 18.6L18.6 20ZM10.5 15C11.75 15 12.8125 14.5625 13.6875 13.6875C14.5625 12.8125 15 11.75 15 10.5C15 9.25 14.5625 8.1875 13.6875 7.3125C12.8125 6.4375 11.75 6 10.5 6C9.25 6 8.1875 6.4375 7.3125 7.3125C6.4375 8.1875 6 9.25 6 10.5C6 11.75 6.4375 12.8125 7.3125 13.6875C8.1875 14.5625 9.25 15 10.5 15Z" fill="currentColor"/>
       </svg>
@@ -4411,7 +4411,7 @@ For icon-only buttons, use `.is-icon` on the button and `.icn-svg` as the SVG wr
 
 ```html
 <button class="button is-icon" aria-label="Close">
-  <div class="icn-svg">
+  <div class="svg-icn">
     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
       <path d="M18 6L6 18M6 6l12 12" fill="currentColor"/>
     </svg>
@@ -4432,7 +4432,7 @@ Every icon SVG must follow these rules before being added to the codebase:
 | `fill="currentColor"` | Yes | Inherits text colour from parent |
 | `viewBox` attribute | Yes | `viewBox="0 0 24 24"` defines the coordinate space |
 | No `xmlns` | Yes | Strip `xmlns` and `xmlns:xlink` — not needed inline |
-| `width="100%" height="100%"` | Yes | SVG fills its `.icn-svg` wrapper; sizing is controlled by the wrapper class |
+| `width="100%" height="100%"` | Yes | SVG fills its `.svg-icn` wrapper; sizing is controlled by the wrapper class |
 | `fill="none"` on `<svg>` | Yes | Prevents default black fill; paths use `fill="currentColor"` individually |
 | No XML comments | Recommended | Remove `<!-- ... -->` comments for cleaner code |
 
@@ -4450,7 +4450,7 @@ Use `0 0 24 24` as the default icon grid. If an icon uses a different coordinate
 
 ```html
 <!-- Decorative: icon next to text -->
-<div class="icn-svg" data-icon="check">
+<div class="svg-icn" data-icon="check">
   <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path d="M20 6L9 17l-5-5" fill="currentColor"/>
   </svg>
@@ -4458,7 +4458,7 @@ Use `0 0 24 24` as the default icon grid. If an icon uses a different coordinate
 
 <!-- Meaningful: icon button with no visible text -->
 <button class="button is-icon" aria-label="Close menu">
-  <div class="icn-svg">
+  <div class="svg-icn">
     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path d="M18 6L6 18M6 6l12 12" fill="currentColor"/>
     </svg>
@@ -4473,14 +4473,14 @@ Use `0 0 24 24` as the default icon grid. If an icon uses a different coordinate
 Icons inherit colour through `currentColor`. To change an icon's colour, change the text colour of its parent — never hardcode a fill value.
 
 <div style="color: var(--text-accent);">
-    <div class="icn-svg" data-icon="info">
+    <div class="svg-icn" data-icon="info">
       <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
         <path d="M13 18H11V10H13V18Z" fill="currentColor"/><path d="M12 6C12.35 6 12.646 6.12064 12.8877 6.3623C13.1294 6.60397 13.25 6.9 13.25 7.25C13.25 7.6 13.1294 7.89603 12.8877 8.1377C12.646 8.37936 12.35 8.5 12 8.5C11.65 8.5 11.354 8.37936 11.1123 8.1377C10.8706 7.89603 10.75 7.6 10.75 7.25C10.75 6.9 10.8706 6.60397 11.1123 6.3623C11.354 6.12064 11.65 6 12 6Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/>
       </svg>
     </div>
   </div>
   <div style="color: var(--text-faded);">
-    <div class="icn-svg" data-icon="info">
+    <div class="svg-icn" data-icon="info">
       <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
         <path d="M13 18H11V10H13V18Z" fill="currentColor"/><path d="M12 6C12.35 6 12.646 6.12064 12.8877 6.3623C13.1294 6.60397 13.25 6.9 13.25 7.25C13.25 7.6 13.1294 7.89603 12.8877 8.1377C12.646 8.37936 12.35 8.5 12 8.5C11.65 8.5 11.354 8.37936 11.1123 8.1377C10.8706 7.89603 10.75 7.6 10.75 7.25C10.75 6.9 10.8706 6.60397 11.1123 6.3623C11.354 6.12064 11.65 6 12 6Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/>
       </svg>
@@ -4492,7 +4492,7 @@ Icons inherit colour through `currentColor`. To change an icon's colour, change 
 ```html
 <!-- Icon inherits the faded text colour -->
 <div class="text-faded">
-  <div class="icn-svg" data-icon="info">
+  <div class="svg-icn" data-icon="info">
     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="currentColor"/>
     </svg>
@@ -4504,7 +4504,7 @@ Icons inherit colour through `currentColor`. To change an icon's colour, change 
 
 ## Icon Shorthand
 
-Use `{{icon:name}}` in any markdown file processed by the doc generator to render an inline icon. The shorthand is expanded at build time — the actual SVG is read from `assets/images/svg-icons/` and injected as a standard `.icn-svg` wrapper.
+Use `{{icon:name}}` in any markdown file processed by the doc generator to render an inline icon. The shorthand is expanded at build time — the actual SVG is read from `assets/images/svg-icons/` and injected as a standard `.svg-icn` wrapper.
 
 ```
 {{icon:check}}         → renders the check icon
@@ -4524,7 +4524,7 @@ Use the [SVG Cleaner](../tools/svg-cleaner.html) to prepare icons before adding 
 
 - Strips `xmlns` attributes
 - Sets fills to `currentColor` (when enabled)
-- Wraps in `.icn-svg` with `data-icon` attribute (when "Icon" is checked)
+- Wraps in `.svg-icn` with `data-icon` attribute (when "Icon" is checked)
 - Strips XML comments
 - Optional minification
 
@@ -4552,7 +4552,7 @@ echo '<svg>...</svg>' | node assets/js/svg-clean.js --current-color --icon --ico
 | Do | Don't |
 |---|---|
 | Use `fill="currentColor"` on all paths | Hardcode hex colours in SVG fills |
-| Use `.icn-svg` to wrap all icons | Use `<img>` tags for icons |
+| Use `.svg-icn` to wrap all icons | Use `<img>` tags for icons |
 | Include `data-icon` with a descriptive name | Leave icons unnamed |
 | Include `aria-hidden="true"` on decorative icons | Omit accessibility attributes |
 | Include `aria-label` on icon-only buttons | Rely on the icon alone to convey meaning |
@@ -4560,7 +4560,7 @@ echo '<svg>...</svg>' | node assets/js/svg-clean.js --current-color --icon --ico
 | Strip `xmlns` from inline SVGs | Keep attributes meant for standalone files |
 | Use `width="100%" height="100%"` on SVGs | Use fixed pixel/rem sizes on the SVG element |
 | Use `fill="none"` on the `<svg>` element | Omit `fill` on `<svg>` (defaults to black) |
-| Use `.icn-svg` wrapper to control icon size | Size icons via `width`/`height` on the SVG |
+| Use `.svg-icn` wrapper to control icon size | Size icons via `width`/`height` on the SVG |
 | Check the registry before using any icon | Use external icon libraries as a fallback |
 
 ---

@@ -1014,6 +1014,13 @@ section {
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
+/* -- Responsive collapse -- */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .token-col {
   grid-template-columns: 1fr auto;
   padding: var(--space-m);
@@ -1279,7 +1286,7 @@ button {
   border-radius: 50%;
 }
 
-.icn-svg {
+.svg-icn {
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -1289,7 +1296,7 @@ button {
   aspect-ratio: 1 / 1;
 }
 
-.icn-svg.is-preview {
+.svg-icn.is-preview {
   width: 2.5rem;
   height: 2.5rem;
 }
@@ -1645,7 +1652,7 @@ a:not([href]) {
   column-gap: var(--space-m);
 }
 
-.callout--icon > .icn-svg {
+.callout--icon > .svg-icn {
   grid-column: 1;
   grid-row: 1;
   width: 1.25rem;
@@ -1653,7 +1660,7 @@ a:not([href]) {
   align-self: center;
 }
 
-.callout--icon > :not(.icn-svg) {
+.callout--icon > :not(.svg-icn) {
   grid-column: 2;
 }
 
@@ -1669,7 +1676,7 @@ a:not([href]) {
 }
 
 .callout-note .callout-title,
-.callout-note > .icn-svg {
+.callout-note > .svg-icn {
   color: var(--status-info);
 }
 
@@ -1678,7 +1685,7 @@ a:not([href]) {
 }
 
 .callout-tip .callout-title,
-.callout-tip > .icn-svg {
+.callout-tip > .svg-icn {
   color: var(--status-success);
 }
 
@@ -1687,7 +1694,7 @@ a:not([href]) {
 }
 
 .callout-warning .callout-title,
-.callout-warning > .icn-svg {
+.callout-warning > .svg-icn {
   color: var(--status-warning);
 }
 
@@ -1696,7 +1703,7 @@ a:not([href]) {
 }
 
 .callout-caution .callout-title,
-.callout-caution > .icn-svg {
+.callout-caution > .svg-icn {
   color: var(--status-danger);
 }
 
@@ -1705,7 +1712,7 @@ a:not([href]) {
 }
 
 .callout-important .callout-title,
-.callout-important > .icn-svg {
+.callout-important > .svg-icn {
   color: var(--status-accent);
 }
 
@@ -2783,7 +2790,7 @@ abbr[title] {
   font-weight: var(--font-weight-semi-bold);
 }
 
-td .icn-svg {
+td .svg-icn {
   display: inline-flex;
 }
 
@@ -2861,7 +2868,7 @@ hr {
   color: var(--text-plain);
 }
 
-.dropdown-trigger .icn-svg {
+.dropdown-trigger .svg-icn {
   width: 1.25rem;
   height: 1.25rem;
   flex-shrink: 0;
@@ -2937,7 +2944,7 @@ hr {
   box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--input-focus), var(--alpha-75));
 }
 
-.dropdown-item .icn-svg {
+.dropdown-item .svg-icn {
   width: 1.25rem;
   height: 1.25rem;
 }
@@ -3049,7 +3056,7 @@ hr {
   border-radius: var(--radius-pill);
 }
 
-.tag-remove .icn-svg {
+.tag-remove .svg-icn {
   width: 0.625rem;
   height: 0.625rem;
 }

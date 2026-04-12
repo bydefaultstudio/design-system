@@ -38,7 +38,7 @@ Every page section uses this exact structure. Copy-paste, then fill in the block
 
 - `<button>` for actions, `<a href>` for navigation. Never the reverse, never `<div onclick>`.
 - Icon-only buttons need `aria-label`.
-- Icons must be wrapped: `<div class="icn-svg" data-icon="name"></div>` — never bare `<svg>`, `<span>`, or `<img>`. Brand icons only.
+- Icons must be wrapped: `<div class="svg-icn" data-icon="name"></div>` — never bare `<svg>`, `<span>`, or `<img>`. Brand icons only.
 - Use the page template at `templates/page-template.html` as the starting point for new pages — it includes the required SEO meta tags.
 
 ## Theme Defaults

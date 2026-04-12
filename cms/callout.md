@@ -106,7 +106,7 @@ Icons are **optional**. Add `.callout--icon` to the `.callout` element to enable
 
 ```html
 <div class="callout callout-note callout--icon">
-  <div class="icn-svg" data-icon="info"><!-- info SVG --></div>
+  <div class="svg-icn" data-icon="info"><!-- info SVG --></div>
   <div class="callout-title">Note</div>
   <p class="callout-description">This callout has an icon for extra visual context.</p>
 </div>
@@ -114,15 +114,15 @@ Icons are **optional**. Add `.callout--icon` to the `.callout` element to enable
 
 **How it works:**
 - `.callout--icon` switches the callout to a two-column CSS grid
-- The `.icn-svg` is pinned to row 1, column 1 — vertically centered with the title via `align-self: center`
+- The `.svg-icn` is pinned to row 1, column 1 — vertically centered with the title via `align-self: center`
 - `.callout-title` and `.callout-description` auto-flow into column 2
 - The icon stays aligned with the title regardless of title font size (`font-s`, `h2`, `h3`, etc.)
-- To remove the icon, drop `.callout--icon` and the `.icn-svg`
+- To remove the icon, drop `.callout--icon` and the `.svg-icn`
 
 | Class | Role |
 |---|---|
 | `.callout--icon` | Enables two-column grid layout |
-| `.icn-svg` | Icon (direct child, pinned to row 1, vertically centered with title) |
+| `.svg-icn` | Icon (direct child, pinned to row 1, vertically centered with title) |
 | `.callout-title` | Title text (row 1, column 2) |
 | `.callout-description` | Description content (below title, column 2) |
 
@@ -174,7 +174,7 @@ With icon:
 
 ```html
 <div class="callout callout-note callout--icon">
-  <div class="icn-svg" data-icon="info"><!-- info SVG --></div>
+  <div class="svg-icn" data-icon="info"><!-- info SVG --></div>
   <div class="callout-title">Note</div>
   <p class="callout-description">Useful information that users should know.</p>
 </div>
@@ -210,7 +210,7 @@ With icon:
 
 ```html
 <div class="callout callout-tip callout--icon">
-  <div class="icn-svg" data-icon="bolt"><!-- bolt SVG --></div>
+  <div class="svg-icn" data-icon="bolt"><!-- bolt SVG --></div>
   <div class="callout-title">Tip</div>
   <p class="callout-description">Helpful advice for doing things better.</p>
 </div>
@@ -246,7 +246,7 @@ With icon:
 
 ```html
 <div class="callout callout-warning callout--icon">
-  <div class="icn-svg" data-icon="warning"><!-- warning SVG --></div>
+  <div class="svg-icn" data-icon="warning"><!-- warning SVG --></div>
   <div class="callout-title">Warning</div>
   <p class="callout-description">Urgent information to avoid problems.</p>
 </div>
@@ -282,7 +282,7 @@ With icon:
 
 ```html
 <div class="callout callout-caution callout--icon">
-  <div class="icn-svg" data-icon="close-circled"><!-- close-circled SVG --></div>
+  <div class="svg-icn" data-icon="close-circled"><!-- close-circled SVG --></div>
   <div class="callout-title">Caution</div>
   <p class="callout-description">Risks or negative outcomes of certain actions.</p>
 </div>
@@ -318,7 +318,7 @@ With icon:
 
 ```html
 <div class="callout callout-important callout--icon">
-  <div class="icn-svg" data-icon="exclamation"><!-- exclamation SVG --></div>
+  <div class="svg-icn" data-icon="exclamation"><!-- exclamation SVG --></div>
   <div class="callout-title">Important</div>
   <p class="callout-description">Key information users need to know.</p>
 </div>

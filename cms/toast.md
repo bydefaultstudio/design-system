@@ -112,7 +112,7 @@ The JS creates this markup automatically:
   <div class="toast toast--success" role="alert">
     <span class="toast-message">Changes saved.</span>
     <button class="toast-close" aria-label="Dismiss">
-      <div class="icn-svg" data-icon="close">...</div>
+      <div class="svg-icn" data-icon="close">...</div>
     </button>
   </div>
 </div>
