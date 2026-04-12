@@ -28,10 +28,7 @@
 
     <!-- Markdown CSS -->
 
-    <!-- Site styles -->
-    <link rel="stylesheet" href="../assets/css/style.css">
-
-    <!-- Docs-site components (asset-card, book-cover, dont-card, sticky-bar, copy-btn, token-copy) -->
+    <!-- Docs-site styles (layout, nav, page chrome, components, auth) -->
     <link rel="stylesheet" href="../assets/css/docs-site.css">
 
     
@@ -65,11 +62,12 @@
     <!-- Site Navigation (header + sidebar injected by nav.js) -->
     <div id="site-nav" data-base="../"></div>
 
-    <div class="docs-main-area">
+    <div data-barba="wrapper">
+    <div class="docs-main-area" data-barba="container" data-barba-namespace="design-system" data-section="design-system" data-order="15" data-level="2">
         <!-- Page Header (full width, outside grid) -->
         <div class="page-header">
       <div class="container-small">
-        <h1>Radio Group</h1>
+        <h1 data-flip-id="radio-group">Radio Group</h1>
         <p class="page-subtitle" data-text-wrap="pretty">Choose one option from a set</p>
         
       </div>
@@ -109,6 +107,9 @@
               </div>
             </div>
           </div>
+          <a href="../design-system/index.html" class="sticky-bar-close" aria-label="Close Radio Group">
+            <div class="icn-svg" data-icon="close-large" data-file="close-large.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M5.4 20L4 18.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L4 5.4L5.4 4L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L18.6 4L20 5.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L20 18.6L18.6 20L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L5.4 20Z" fill="currentColor"/></svg></div>
+          </a>
         </div>
       </div>
     </div>
@@ -140,8 +141,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-zlo19x8fg" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-zlo19x8fg" class="language-html">&lt;div class=&quot;radio-group&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-f96wgqksk" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-f96wgqksk" class="language-html">&lt;div class=&quot;radio-group&quot;&gt;
   &lt;div class=&quot;form-check&quot;&gt;
     &lt;input type=&quot;radio&quot; name=&quot;plan&quot; id=&quot;plan-free&quot; checked&gt;
     &lt;label for=&quot;plan-free&quot;&gt;Free&lt;/label&gt;
@@ -179,8 +180,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-sjj5csm77" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-sjj5csm77" class="language-html">&lt;div class=&quot;radio-group is-horizontal&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-t9nv9r1cy" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-t9nv9r1cy" class="language-html">&lt;div class=&quot;radio-group is-horizontal&quot;&gt;
   ...
 &lt;/div&gt;
 </code></pre>
@@ -210,8 +211,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-x1576fzj9" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-x1576fzj9" class="language-html">&lt;fieldset&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-9gdujs4vk" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-9gdujs4vk" class="language-html">&lt;fieldset&gt;
   &lt;legend class=&quot;radio-group-label&quot;&gt;Shipping method&lt;/legend&gt;
   &lt;div class=&quot;radio-group&quot;&gt;
     ...
@@ -245,8 +246,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-ahkkznsoj" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-ahkkznsoj" class="language-html">&lt;span class=&quot;radio-group-hint&quot;&gt;Choose how often you want to receive notifications.&lt;/span&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-z5sc4ac1e" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-z5sc4ac1e" class="language-html">&lt;span class=&quot;radio-group-hint&quot;&gt;Choose how often you want to receive notifications.&lt;/span&gt;
 </code></pre>
       </div>
     
@@ -351,78 +352,82 @@
                 <p class="docs-footer-text">© 2026 By Default</p>
             </div>
         </footer>
+
+        <!-- Per-page scripts (inside Barba container so they re-execute on transition) -->
+        
     </div>
+    </div><!-- /data-barba="wrapper" -->
 
     <!-- Highlight.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
-    <!-- Initialize Highlight.js, Copy, and TOC -->
+    <!-- Initialize Highlight.js and TOC (re-callable for Barba transitions) -->
     <script>
         (function() {
             'use strict';
 
-            function initHighlight() {
-                document.querySelectorAll('pre code').forEach((block) => {
+            // Track TOC observer + scroll listener so we can clean up before re-init
+            var tocObserver = null;
+            var tocScrollHandler = null;
+
+            window.bdInitHighlight = function initHighlight() {
+                if (!window.hljs) return;
+                document.querySelectorAll('pre code').forEach(function(block) {
                     hljs.highlightElement(block);
                 });
-            }
+            };
 
-            function initTOCActiveState() {
-                const tocLinks = document.querySelectorAll('.toc-link');
-                const headings = document.querySelectorAll('h1[id], h2[id]');
+            window.bdInitTOCActiveState = function initTOCActiveState() {
+                // Tear down any prior observer + scroll listener (Barba re-init)
+                if (tocObserver) { tocObserver.disconnect(); tocObserver = null; }
+                if (tocScrollHandler) {
+                    window.removeEventListener('scroll', tocScrollHandler);
+                    tocScrollHandler = null;
+                }
 
+                var tocLinks = document.querySelectorAll('.toc-link');
+                var headings = document.querySelectorAll('h1[id], h2[id]');
                 if (tocLinks.length === 0 || headings.length === 0) return;
 
-                const linkMap = new Map();
-                tocLinks.forEach(link => {
-                    const href = link.getAttribute('href');
+                var linkMap = new Map();
+                tocLinks.forEach(function(link) {
+                    var href = link.getAttribute('href');
                     if (href && href.startsWith('#')) {
-                        const id = href.substring(1);
-                        linkMap.set(id, link);
+                        linkMap.set(href.substring(1), link);
                     }
                 });
 
-                const observerOptions = {
-                    rootMargin: '-20% 0px -70% 0px',
-                    threshold: 0
-                };
+                var observerOptions = { rootMargin: '-20% 0px -70% 0px', threshold: 0 };
 
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        const id = entry.target.id;
-                        const link = linkMap.get(id);
-
+                tocObserver = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        var id = entry.target.id;
+                        var link = linkMap.get(id);
                         if (entry.isIntersecting) {
-                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
-                            if (link) {
-                                link.classList.add('toc-link-active');
-                            }
+                            tocLinks.forEach(function(l) { l.classList.remove('toc-link-active'); });
+                            if (link) link.classList.add('toc-link-active');
                         }
                     });
                 }, observerOptions);
 
-                headings.forEach(heading => {
-                    if (heading.id) {
-                        observer.observe(heading);
-                    }
+                headings.forEach(function(heading) {
+                    if (heading.id) tocObserver.observe(heading);
                 });
 
                 function setInitialActive() {
-                    let activeHeading = null;
-                    let maxTop = -Infinity;
-
-                    headings.forEach(heading => {
-                        const rect = heading.getBoundingClientRect();
+                    var activeHeading = null;
+                    var maxTop = -Infinity;
+                    headings.forEach(function(heading) {
+                        var rect = heading.getBoundingClientRect();
                         if (rect.top <= 100 && rect.top > maxTop) {
                             maxTop = rect.top;
                             activeHeading = heading;
                         }
                     });
-
                     if (activeHeading && activeHeading.id) {
-                        const link = linkMap.get(activeHeading.id);
+                        var link = linkMap.get(activeHeading.id);
                         if (link) {
-                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            tocLinks.forEach(function(l) { l.classList.remove('toc-link-active'); });
                             link.classList.add('toc-link-active');
                         }
                     }
@@ -430,16 +435,17 @@
 
                 setInitialActive();
 
-                let scrollTimeout;
-                window.addEventListener('scroll', () => {
+                var scrollTimeout;
+                tocScrollHandler = function() {
                     clearTimeout(scrollTimeout);
                     scrollTimeout = setTimeout(setInitialActive, 100);
-                });
-            }
+                };
+                window.addEventListener('scroll', tocScrollHandler);
+            };
 
             function init() {
-                initHighlight();
-                initTOCActiveState();
+                window.bdInitHighlight();
+                window.bdInitTOCActiveState();
             }
 
             if (document.readyState === 'loading') {
@@ -497,9 +503,12 @@
     <script src="../assets/js/rating.js"></script>
     <!-- Markdown download/open — strips frontmatter and block HTML -->
     <script src="../assets/js/md-strip.js"></script>
+    <!-- Barba.js page transitions (vendored locally) — must load after auth/nav/theme -->
+    <script src="../assets/js/vendor/barba/barba.min.js"></script>
+    <script src="../assets/js/barba-init.js"></script>
 
     <script>
-      /* Tag dismiss */
+      /* Tag dismiss — delegated to document, attached once */
       document.addEventListener('click', function (e) {
         var removeBtn = e.target.closest('.tag-remove');
         if (removeBtn) {
@@ -508,11 +517,8 @@
         }
       });
 
-      /* Table scroll overflow hint */
-      (function initTableScroll() {
-        var wrappers = document.querySelectorAll('.table-scroll');
-        if (!wrappers.length) return;
-
+      /* Table scroll overflow hint — re-callable for Barba transitions */
+      (function() {
         function checkOverflow(wrapper) {
           var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
           var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
@@ -520,18 +526,29 @@
           wrapper.classList.toggle('is-scrolled-end', isAtEnd);
         }
 
-        wrappers.forEach(function(wrapper) {
-          checkOverflow(wrapper);
-          wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+        window.bdInitTableScroll = function initTableScroll() {
+          var wrappers = document.querySelectorAll('.table-scroll');
+          wrappers.forEach(function(wrapper) {
+            if (wrapper.__bdTableScrollBound) return;
+            wrapper.__bdTableScrollBound = true;
+            checkOverflow(wrapper);
+            wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+          });
+        };
+
+        // Window resize handler attached once — re-checks all wrappers
+        window.addEventListener('resize', function() {
+          document.querySelectorAll('.table-scroll').forEach(checkOverflow);
         });
 
-        window.addEventListener('resize', function() {
-          wrappers.forEach(checkOverflow);
-        });
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', window.bdInitTableScroll);
+        } else {
+          window.bdInitTableScroll();
+        }
       })();
     </script>
     <div class="cursor-default"></div>
     <div class="cursor-halo"></div>
-    
 </body>
 </html>

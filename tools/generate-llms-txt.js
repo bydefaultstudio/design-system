@@ -260,6 +260,7 @@ function buildReference() {
     ['Tag', 'tag.md'],
     ['Code / Pre / Kbd', 'code.md'],
     ['Mark / Abbr / Figure', 'mark.md'],
+    ['Table', 'table.md'],
   ];
 
   parts.push('\n## Components\n\n');

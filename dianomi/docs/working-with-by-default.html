@@ -28,10 +28,7 @@
 
     <!-- Markdown CSS -->
 
-    <!-- Site styles -->
-    <link rel="stylesheet" href="../../assets/css/style.css">
-
-    <!-- Docs-site components (asset-card, book-cover, dont-card, sticky-bar, copy-btn, token-copy) -->
+    <!-- Docs-site styles (layout, nav, page chrome, components, auth) -->
     <link rel="stylesheet" href="../../assets/css/docs-site.css">
 
     <!-- Client Theme Override (must load last to override base styles) -->
@@ -66,11 +63,12 @@
     <!-- Site Navigation (header + sidebar injected by nav.js) -->
     <div id="site-nav" data-base="../../"></div>
 
-    <div class="docs-main-area">
+    <div data-barba="wrapper">
+    <div class="docs-main-area" data-barba="container" data-barba-namespace="dianomi-docs" data-section="dianomi-docs" data-order="7" data-level="2">
         <!-- Page Header (full width, outside grid) -->
         <div class="page-header">
           <div class="container-small">
-            <h1>Working with By Default</h1>
+            <h1 data-flip-id="working-with-by-default">Working with By Default</h1>
             <p class="page-subtitle" data-text-wrap="pretty">Why By Default as a rich media partner</p>
             
           </div>
@@ -110,6 +108,9 @@
                   </div>
                 </div>
               </div>
+              <a href="index.html" class="sticky-bar-close" aria-label="Close Working with By Default">
+                <div class="icn-svg" data-icon="close-large" data-file="close-large.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M5.4 20L4 18.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L4 5.4L5.4 4L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L18.6 4L20 5.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L20 18.6L18.6 20L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L5.4 20Z" fill="currentColor"/></svg></div>
+              </a>
             </div>
           </div>
         </div>
@@ -311,78 +312,82 @@
                 <p class="docs-footer-text">© 2026 By Default</p>
             </div>
         </footer>
+
+        <!-- Per-page scripts (inside Barba container so they re-execute on transition) -->
+        
     </div>
+    </div><!-- /data-barba="wrapper" -->
 
     <!-- Highlight.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
-    <!-- Initialize Highlight.js, Copy, and TOC -->
+    <!-- Initialize Highlight.js and TOC (re-callable for Barba transitions) -->
     <script>
         (function() {
             'use strict';
 
-            function initHighlight() {
-                document.querySelectorAll('pre code').forEach((block) => {
+            // Track TOC observer + scroll listener so we can clean up before re-init
+            var tocObserver = null;
+            var tocScrollHandler = null;
+
+            window.bdInitHighlight = function initHighlight() {
+                if (!window.hljs) return;
+                document.querySelectorAll('pre code').forEach(function(block) {
                     hljs.highlightElement(block);
                 });
-            }
+            };
 
-            function initTOCActiveState() {
-                const tocLinks = document.querySelectorAll('.toc-link');
-                const headings = document.querySelectorAll('h1[id], h2[id]');
+            window.bdInitTOCActiveState = function initTOCActiveState() {
+                // Tear down any prior observer + scroll listener (Barba re-init)
+                if (tocObserver) { tocObserver.disconnect(); tocObserver = null; }
+                if (tocScrollHandler) {
+                    window.removeEventListener('scroll', tocScrollHandler);
+                    tocScrollHandler = null;
+                }
 
+                var tocLinks = document.querySelectorAll('.toc-link');
+                var headings = document.querySelectorAll('h1[id], h2[id]');
                 if (tocLinks.length === 0 || headings.length === 0) return;
 
-                const linkMap = new Map();
-                tocLinks.forEach(link => {
-                    const href = link.getAttribute('href');
+                var linkMap = new Map();
+                tocLinks.forEach(function(link) {
+                    var href = link.getAttribute('href');
                     if (href && href.startsWith('#')) {
-                        const id = href.substring(1);
-                        linkMap.set(id, link);
+                        linkMap.set(href.substring(1), link);
                     }
                 });
 
-                const observerOptions = {
-                    rootMargin: '-20% 0px -70% 0px',
-                    threshold: 0
-                };
+                var observerOptions = { rootMargin: '-20% 0px -70% 0px', threshold: 0 };
 
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        const id = entry.target.id;
-                        const link = linkMap.get(id);
-
+                tocObserver = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        var id = entry.target.id;
+                        var link = linkMap.get(id);
                         if (entry.isIntersecting) {
-                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
-                            if (link) {
-                                link.classList.add('toc-link-active');
-                            }
+                            tocLinks.forEach(function(l) { l.classList.remove('toc-link-active'); });
+                            if (link) link.classList.add('toc-link-active');
                         }
                     });
                 }, observerOptions);
 
-                headings.forEach(heading => {
-                    if (heading.id) {
-                        observer.observe(heading);
-                    }
+                headings.forEach(function(heading) {
+                    if (heading.id) tocObserver.observe(heading);
                 });
 
                 function setInitialActive() {
-                    let activeHeading = null;
-                    let maxTop = -Infinity;
-
-                    headings.forEach(heading => {
-                        const rect = heading.getBoundingClientRect();
+                    var activeHeading = null;
+                    var maxTop = -Infinity;
+                    headings.forEach(function(heading) {
+                        var rect = heading.getBoundingClientRect();
                         if (rect.top <= 100 && rect.top > maxTop) {
                             maxTop = rect.top;
                             activeHeading = heading;
                         }
                     });
-
                     if (activeHeading && activeHeading.id) {
-                        const link = linkMap.get(activeHeading.id);
+                        var link = linkMap.get(activeHeading.id);
                         if (link) {
-                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            tocLinks.forEach(function(l) { l.classList.remove('toc-link-active'); });
                             link.classList.add('toc-link-active');
                         }
                     }
@@ -390,16 +395,17 @@
 
                 setInitialActive();
 
-                let scrollTimeout;
-                window.addEventListener('scroll', () => {
+                var scrollTimeout;
+                tocScrollHandler = function() {
                     clearTimeout(scrollTimeout);
                     scrollTimeout = setTimeout(setInitialActive, 100);
-                });
-            }
+                };
+                window.addEventListener('scroll', tocScrollHandler);
+            };
 
             function init() {
-                initHighlight();
-                initTOCActiveState();
+                window.bdInitHighlight();
+                window.bdInitTOCActiveState();
             }
 
             if (document.readyState === 'loading') {
@@ -457,9 +463,12 @@
     <script src="../../assets/js/rating.js"></script>
     <!-- Markdown download/open — strips frontmatter and block HTML -->
     <script src="../../assets/js/md-strip.js"></script>
+    <!-- Barba.js page transitions (vendored locally) — must load after auth/nav/theme -->
+    <script src="../../assets/js/vendor/barba/barba.min.js"></script>
+    <script src="../../assets/js/barba-init.js"></script>
 
     <script>
-      /* Tag dismiss */
+      /* Tag dismiss — delegated to document, attached once */
       document.addEventListener('click', function (e) {
         var removeBtn = e.target.closest('.tag-remove');
         if (removeBtn) {
@@ -468,11 +477,8 @@
         }
       });
 
-      /* Table scroll overflow hint */
-      (function initTableScroll() {
-        var wrappers = document.querySelectorAll('.table-scroll');
-        if (!wrappers.length) return;
-
+      /* Table scroll overflow hint — re-callable for Barba transitions */
+      (function() {
         function checkOverflow(wrapper) {
           var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
           var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
@@ -480,18 +486,29 @@
           wrapper.classList.toggle('is-scrolled-end', isAtEnd);
         }
 
-        wrappers.forEach(function(wrapper) {
-          checkOverflow(wrapper);
-          wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+        window.bdInitTableScroll = function initTableScroll() {
+          var wrappers = document.querySelectorAll('.table-scroll');
+          wrappers.forEach(function(wrapper) {
+            if (wrapper.__bdTableScrollBound) return;
+            wrapper.__bdTableScrollBound = true;
+            checkOverflow(wrapper);
+            wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+          });
+        };
+
+        // Window resize handler attached once — re-checks all wrappers
+        window.addEventListener('resize', function() {
+          document.querySelectorAll('.table-scroll').forEach(checkOverflow);
         });
 
-        window.addEventListener('resize', function() {
-          wrappers.forEach(checkOverflow);
-        });
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', window.bdInitTableScroll);
+        } else {
+          window.bdInitTableScroll();
+        }
       })();
     </script>
     <div class="cursor-default"></div>
     <div class="cursor-halo"></div>
-    
 </body>
 </html>

@@ -23,7 +23,7 @@ Update brand colors in `assets/css/design-system.css` under the **Brand Tokens**
 **What to change:**
 - `var(--off-white)`, `var(--warm-black)`, etc. — Your palette colours
 - `var(--green)`, `var(--red)`, `var(--blue)`, etc. — Your accent colours
-- `var(--font-primary)`, `var(--font-secondary)`, `var(--font-tertiary)` — Your fonts
+- `var(--font-primary)`, `var(--font-secondary)`, `var(--font-tertiary)`, `var(--font-quaternary)` — Your fonts
 
 **Example:**
 ```css
@@ -44,7 +44,8 @@ Update font families in `assets/css/design-system.css` under the **Brand Tokens*
 **What to change:**
 - `var(--font-primary)` — Your primary font family
 - `var(--font-secondary)` — Your secondary font family (if used)
-- `var(--font-tertiary)` — Your monospace font (if used)
+- `var(--font-tertiary)` — Your tertiary brand display font (if used)
+- `var(--font-quaternary)` — Your monospace font (if used)
 
 **Also update:**
 - Google Fonts link in `cms/docs.config.js` (if using Google Fonts)
@@ -111,26 +112,26 @@ The theme system uses the auth module to determine which theme to load:
 
 ```
 assets/css/design-system.css →  Brand primitives + semantic tokens
-style.css                   →  Uses semantic tokens (gets themed values)
+docs-site.css               →  Uses semantic tokens (gets themed values)
 themes/client.css           →  Overrides tokens + component styles (must load last)
 ```
 
 ### Stylesheet load order
 
-Theme CSS **must always load after** all other stylesheets (`design-system.css`, `style.css`). This ensures theme overrides win via the CSS cascade — no `!important` needed.
+Theme CSS **must always load after** all other stylesheets (`design-system.css`, `docs-site.css`). This ensures theme overrides win via the CSS cascade — no `!important` needed.
 
 ```html
 <!-- 1. Design System Framework -->
 <link rel="stylesheet" href="../assets/css/design-system.css" />
 <!-- 2. Google Fonts -->
 ...
-<!-- 3. Site styles (includes markdown content rendering) -->
-<link rel="stylesheet" href="../assets/css/style.css">
+<!-- 3. Docs-site styles (layout, nav, page chrome, components, auth) -->
+<link rel="stylesheet" href="../assets/css/docs-site.css">
 <!-- 4. Client Theme Override (must load last to override base styles) -->
 <link rel="stylesheet" href="theme.css">
 ```
 
-When overriding component styles (not just tokens), match the specificity of the base selector. For example, `style.css` uses `.svg-logo.nav-logo` — so the theme should use `.svg-logo.nav-logo`, not just `.nav-logo`.
+When overriding component styles (not just tokens), match the specificity of the base selector. For example, `docs-site.css` uses `.svg-logo.nav-logo` — so the theme should use `.svg-logo.nav-logo`, not just `.nav-logo`.
 
 ### Creating a theme
 
@@ -163,7 +164,7 @@ The template groups tokens by concern. Only uncomment what differs from the defa
 
 | Category | Tokens | Purpose |
 |----------|--------|---------|
-| **Typography** | `var(--font-primary)`, `var(--font-secondary)`, `var(--font-tertiary)` | Client fonts (add `@font-face` too) |
+| **Typography** | `var(--font-primary)`, `var(--font-secondary)`, `var(--font-tertiary)`, `var(--font-quaternary)` | Client fonts (add `@font-face` too) |
 | **Neutral scale** | `var(--neutral-50)` through `var(--neutral-990)` | Generic grey ramp (uncommented by default) |
 | **Text** | `var(--text-primary)`, `var(--text-secondary)`, `var(--text-accent)`, `var(--text-link)`, `var(--text-inverted)` | Core text colours |
 | **Backgrounds** | `var(--background-primary)`, `var(--background-secondary)` | Surface colours |

@@ -73,7 +73,7 @@ IBM's open monospace from the Plex superfamily. Rounded, even, and unmistakably 
 
 <div class="asset-card">
   <div class="asset-card-preview asset-card-preview--light" style="text-align: center;">
-    <div style="font-family: var(--font-tertiary);">
+    <div style="font-family: var(--font-quaternary);">
       <p style="font-size: var(--font-10xl); margin: 0; line-height: 1; font-weight: 500;">Aa</p>
       <p style="font-size: var(--font-s); margin: var(--space-l) 0 0;">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>0123456789</p>
     </div>
@@ -97,7 +97,7 @@ IBM's open monospace from the Plex superfamily. Rounded, even, and unmistakably 
 | Buttons, form fields, navigation | Inclusive Sans | `var(--font-primary)` |
 | Page headings (`h1`–`h6`) | RecifeText | `var(--font-secondary)` |
 | Hero statements, pull quotes | RecifeText | `var(--font-secondary)` |
-| Code blocks, file paths, kbd | IBM Plex Mono | `var(--font-tertiary)` |
+| Code blocks, file paths, kbd | IBM Plex Mono | `var(--font-quaternary)` |
 
 ---
 

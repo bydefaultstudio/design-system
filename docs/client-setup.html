@@ -28,10 +28,7 @@
 
     <!-- Markdown CSS -->
 
-    <!-- Site styles -->
-    <link rel="stylesheet" href="../assets/css/style.css">
-
-    <!-- Docs-site components (asset-card, book-cover, dont-card, sticky-bar, copy-btn, token-copy) -->
+    <!-- Docs-site styles (layout, nav, page chrome, components, auth) -->
     <link rel="stylesheet" href="../assets/css/docs-site.css">
 
     
@@ -65,11 +62,12 @@
     <!-- Site Navigation (header + sidebar injected by nav.js) -->
     <div id="site-nav" data-base="../"></div>
 
-    <div class="docs-main-area">
+    <div data-barba="wrapper">
+    <div class="docs-main-area" data-barba="container" data-barba-namespace="docs" data-section="docs" data-order="15" data-level="2">
         <!-- Page Header (full width, outside grid) -->
         <div class="page-header">
       <div class="container-small">
-        <h1>Client Setup</h1>
+        <h1 data-flip-id="client-setup">Client Setup</h1>
         <p class="page-subtitle" data-text-wrap="pretty">Setting up a new client environment</p>
         
       </div>
@@ -109,6 +107,9 @@
               </div>
             </div>
           </div>
+          <a href="../docs/index.html" class="sticky-bar-close" aria-label="Close Client Setup">
+            <div class="icn-svg" data-icon="close-large" data-file="close-large.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M5.4 20L4 18.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L4 5.4L5.4 4L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L18.6 4L20 5.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L20 18.6L18.6 20L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L5.4 20Z" fill="currentColor"/></svg></div>
+          </a>
         </div>
       </div>
     </div>
@@ -175,16 +176,16 @@
 <p>Copy the <code>cms/clients/client-template/</code> folder and rename it to the client name. Use lowercase, hyphenated names.</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-jp4fzdqgi" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-jp4fzdqgi">cp -r cms/clients/client-template/ cms/clients/your-client/
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-1e43u98vy" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-1e43u98vy">cp -r cms/clients/client-template/ cms/clients/your-client/
 </code></pre>
       </div>
     
 <p>The source folder contains:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-qpd0wgiqf" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-qpd0wgiqf">cms/clients/your-client/
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-jp4t034js" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-jp4t034js">cms/clients/your-client/
   _defaults.md    — Access control defaults
   assets/
     theme.css     — Design system token overrides
@@ -198,8 +199,8 @@
 <p>You also need to copy the static <code>brand-book.html</code> from the output template:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-wrb8sxutp" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-wrb8sxutp">cp client-template/brand-book.html your-client/brand-book.html
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-4n7tjzd8d" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-4n7tjzd8d">cp client-template/brand-book.html your-client/brand-book.html
 </code></pre>
       </div>
     
@@ -208,8 +209,8 @@
 <p>Update <code>cms/clients/your-client/_defaults.md</code>:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-mbisw21ve" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-mbisw21ve" class="language-yaml">---
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-9u5jnq17y" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-9u5jnq17y" class="language-yaml">---
 access: &quot;client:your-client&quot;
 ---
 </code></pre>
@@ -221,8 +222,8 @@ access: &quot;client:your-client&quot;
 <p>Logo files live in the client source folder with fixed names:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-57tk0autc" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-57tk0autc">cms/clients/your-client/assets/logo.svg        — Full header logo (desktop)
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-2pd9tix9d" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-2pd9tix9d">cms/clients/your-client/assets/logo.svg        — Full header logo (desktop)
 cms/clients/your-client/assets/logo-small.svg   — Compact variant (mobile, future use)
 </code></pre>
       </div>
@@ -237,8 +238,8 @@ cms/clients/your-client/assets/logo-small.svg   — Compact variant (mobile, fut
 </ul>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-dw8odwsar" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-dw8odwsar" class="language-bash">node assets/js/svg-clean.js --strip-comments --size -o cms/clients/your-client/assets/logo.svg &lt;&lt;&#39;SVGEOF&#39;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-9vxzi8c9m" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-9vxzi8c9m" class="language-bash">node assets/js/svg-clean.js --strip-comments --size -o cms/clients/your-client/assets/logo.svg &lt;&lt;&#39;SVGEOF&#39;
 &lt;svg&gt;...paste logo SVG here...&lt;/svg&gt;
 SVGEOF
 </code></pre>
@@ -261,7 +262,7 @@ SVGEOF
 </thead>
 <tbody><tr>
 <td><strong>Typography</strong></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--font-primary)" aria-label="Copy var(--font-primary)"><code>var(--font-primary)</code></button>, <button type="button" class="token-copy is-token" data-copy="var(--font-secondary)" aria-label="Copy var(--font-secondary)"><code>var(--font-secondary)</code></button>, <button type="button" class="token-copy is-token" data-copy="var(--font-tertiary)" aria-label="Copy var(--font-tertiary)"><code>var(--font-tertiary)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-primary)" aria-label="Copy var(--font-primary)"><code>var(--font-primary)</code></button>, <button type="button" class="token-copy is-token" data-copy="var(--font-secondary)" aria-label="Copy var(--font-secondary)"><code>var(--font-secondary)</code></button>, <button type="button" class="token-copy is-token" data-copy="var(--font-tertiary)" aria-label="Copy var(--font-tertiary)"><code>var(--font-tertiary)</code></button>, <button type="button" class="token-copy is-token" data-copy="var(--font-quaternary)" aria-label="Copy var(--font-quaternary)"><code>var(--font-quaternary)</code></button></td>
 <td>Client fonts (add <code>@font-face</code> if using local fonts)</td>
 </tr>
 <tr>
@@ -310,8 +311,8 @@ SVGEOF
 <p>Add an entry to <code>assets/js/theme-config.js</code>:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-dkg5lz5dt" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-dkg5lz5dt" class="language-js">&#39;your-client&#39;: {
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-gz5gknb33" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-gz5gknb33" class="language-js">&#39;your-client&#39;: {
   label: &#39;Your Client&#39;,
   css: &#39;your-client/assets/theme.css&#39;,
   fonts: &#39;https://fonts.googleapis.com/css2?family=YourFont:wght@300;400;500;600;700&amp;display=swap&#39;,
@@ -399,8 +400,8 @@ SVGEOF
 <li>Open <code>assets/js/auth-config.js</code></li>
 <li>Set <code>devMode.clientFolder</code> to your client name:
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-xalkm26sd" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-xalkm26sd" class="language-js">devMode: {
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-zo2dpi8zy" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-zo2dpi8zy" class="language-js">devMode: {
   defaultRole: &#39;client&#39;,
   email: &#39;dev@bydefault.studio&#39;,
   clientFolder: &#39;your-client&#39;
@@ -427,8 +428,8 @@ SVGEOF
 <p>Here is the complete workflow for adding a new client called &quot;acme&quot;:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-auhl50pc4" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-auhl50pc4" class="language-bash"># 1. Copy the client source template
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-ky7n2febw" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-ky7n2febw" class="language-bash"># 1. Copy the client source template
 cp -r cms/clients/client-template/ cms/clients/acme/
 
 # 2. Clean and add logos
@@ -450,8 +451,8 @@ SVGEOF
 <li>Edit <code>cms/clients/acme/assets/theme.css</code> — uncomment and set brand colours and fonts</li>
 <li>Update <code>cms/clients/acme/_defaults.md</code>:
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-2ku8uicw5" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-2ku8uicw5" class="language-yaml">---
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-3g54r250j" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-3g54r250j" class="language-yaml">---
 access: &quot;client:acme&quot;
 ---
 </code></pre>
@@ -461,8 +462,8 @@ access: &quot;client:acme&quot;
 <li>Edit <code>cms/clients/acme/welcome.md</code> if needed</li>
 <li>Add to <code>assets/js/theme-config.js</code>:
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-r1petfxvl" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-r1petfxvl" class="language-js">&#39;acme&#39;: {
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-iotfvt65h" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-iotfvt65h" class="language-js">&#39;acme&#39;: {
   label: &#39;Acme&#39;,
   css: &#39;acme/assets/theme.css&#39;,
   fonts: &#39;https://fonts.googleapis.com/css2?family=...&#39;,
@@ -484,8 +485,8 @@ access: &quot;client:acme&quot;
 <li>Run <code>cd cms/generator &amp;&amp; npm run docgen</code></li>
 <li>In Netlify Identity, create a user with:
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-n46b3u8a4" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-n46b3u8a4" class="language-json">{ &quot;roles&quot;: [&quot;client&quot;], &quot;clientFolder&quot;: &quot;acme&quot; }
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-yzyvt70t1" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-yzyvt70t1" class="language-json">{ &quot;roles&quot;: [&quot;client&quot;], &quot;clientFolder&quot;: &quot;acme&quot; }
 </code></pre>
       </div>
     
@@ -529,8 +530,8 @@ access: &quot;client:acme&quot;
 <h3 id="data-flow">Data flow</h3>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-skrkwvrho" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-skrkwvrho">User logs in
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-2h1b8dku4" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="icn-svg" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="icn-svg" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-2h1b8dku4">User logs in
   → auth.js resolves role + clientFolder from app_metadata
   → auth.js calls initThemeForUser(user)
   → theme-loader.js reads clientFolder
@@ -601,78 +602,82 @@ access: &quot;client:acme&quot;
                 <p class="docs-footer-text">© 2026 By Default</p>
             </div>
         </footer>
+
+        <!-- Per-page scripts (inside Barba container so they re-execute on transition) -->
+        
     </div>
+    </div><!-- /data-barba="wrapper" -->
 
     <!-- Highlight.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
-    <!-- Initialize Highlight.js, Copy, and TOC -->
+    <!-- Initialize Highlight.js and TOC (re-callable for Barba transitions) -->
     <script>
         (function() {
             'use strict';
 
-            function initHighlight() {
-                document.querySelectorAll('pre code').forEach((block) => {
+            // Track TOC observer + scroll listener so we can clean up before re-init
+            var tocObserver = null;
+            var tocScrollHandler = null;
+
+            window.bdInitHighlight = function initHighlight() {
+                if (!window.hljs) return;
+                document.querySelectorAll('pre code').forEach(function(block) {
                     hljs.highlightElement(block);
                 });
-            }
+            };
 
-            function initTOCActiveState() {
-                const tocLinks = document.querySelectorAll('.toc-link');
-                const headings = document.querySelectorAll('h1[id], h2[id]');
+            window.bdInitTOCActiveState = function initTOCActiveState() {
+                // Tear down any prior observer + scroll listener (Barba re-init)
+                if (tocObserver) { tocObserver.disconnect(); tocObserver = null; }
+                if (tocScrollHandler) {
+                    window.removeEventListener('scroll', tocScrollHandler);
+                    tocScrollHandler = null;
+                }
 
+                var tocLinks = document.querySelectorAll('.toc-link');
+                var headings = document.querySelectorAll('h1[id], h2[id]');
                 if (tocLinks.length === 0 || headings.length === 0) return;
 
-                const linkMap = new Map();
-                tocLinks.forEach(link => {
-                    const href = link.getAttribute('href');
+                var linkMap = new Map();
+                tocLinks.forEach(function(link) {
+                    var href = link.getAttribute('href');
                     if (href && href.startsWith('#')) {
-                        const id = href.substring(1);
-                        linkMap.set(id, link);
+                        linkMap.set(href.substring(1), link);
                     }
                 });
 
-                const observerOptions = {
-                    rootMargin: '-20% 0px -70% 0px',
-                    threshold: 0
-                };
+                var observerOptions = { rootMargin: '-20% 0px -70% 0px', threshold: 0 };
 
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        const id = entry.target.id;
-                        const link = linkMap.get(id);
-
+                tocObserver = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        var id = entry.target.id;
+                        var link = linkMap.get(id);
                         if (entry.isIntersecting) {
-                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
-                            if (link) {
-                                link.classList.add('toc-link-active');
-                            }
+                            tocLinks.forEach(function(l) { l.classList.remove('toc-link-active'); });
+                            if (link) link.classList.add('toc-link-active');
                         }
                     });
                 }, observerOptions);
 
-                headings.forEach(heading => {
-                    if (heading.id) {
-                        observer.observe(heading);
-                    }
+                headings.forEach(function(heading) {
+                    if (heading.id) tocObserver.observe(heading);
                 });
 
                 function setInitialActive() {
-                    let activeHeading = null;
-                    let maxTop = -Infinity;
-
-                    headings.forEach(heading => {
-                        const rect = heading.getBoundingClientRect();
+                    var activeHeading = null;
+                    var maxTop = -Infinity;
+                    headings.forEach(function(heading) {
+                        var rect = heading.getBoundingClientRect();
                         if (rect.top <= 100 && rect.top > maxTop) {
                             maxTop = rect.top;
                             activeHeading = heading;
                         }
                     });
-
                     if (activeHeading && activeHeading.id) {
-                        const link = linkMap.get(activeHeading.id);
+                        var link = linkMap.get(activeHeading.id);
                         if (link) {
-                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            tocLinks.forEach(function(l) { l.classList.remove('toc-link-active'); });
                             link.classList.add('toc-link-active');
                         }
                     }
@@ -680,16 +685,17 @@ access: &quot;client:acme&quot;
 
                 setInitialActive();
 
-                let scrollTimeout;
-                window.addEventListener('scroll', () => {
+                var scrollTimeout;
+                tocScrollHandler = function() {
                     clearTimeout(scrollTimeout);
                     scrollTimeout = setTimeout(setInitialActive, 100);
-                });
-            }
+                };
+                window.addEventListener('scroll', tocScrollHandler);
+            };
 
             function init() {
-                initHighlight();
-                initTOCActiveState();
+                window.bdInitHighlight();
+                window.bdInitTOCActiveState();
             }
 
             if (document.readyState === 'loading') {
@@ -747,9 +753,12 @@ access: &quot;client:acme&quot;
     <script src="../assets/js/rating.js"></script>
     <!-- Markdown download/open — strips frontmatter and block HTML -->
     <script src="../assets/js/md-strip.js"></script>
+    <!-- Barba.js page transitions (vendored locally) — must load after auth/nav/theme -->
+    <script src="../assets/js/vendor/barba/barba.min.js"></script>
+    <script src="../assets/js/barba-init.js"></script>
 
     <script>
-      /* Tag dismiss */
+      /* Tag dismiss — delegated to document, attached once */
       document.addEventListener('click', function (e) {
         var removeBtn = e.target.closest('.tag-remove');
         if (removeBtn) {
@@ -758,11 +767,8 @@ access: &quot;client:acme&quot;
         }
       });
 
-      /* Table scroll overflow hint */
-      (function initTableScroll() {
-        var wrappers = document.querySelectorAll('.table-scroll');
-        if (!wrappers.length) return;
-
+      /* Table scroll overflow hint — re-callable for Barba transitions */
+      (function() {
         function checkOverflow(wrapper) {
           var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
           var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
@@ -770,18 +776,29 @@ access: &quot;client:acme&quot;
           wrapper.classList.toggle('is-scrolled-end', isAtEnd);
         }
 
-        wrappers.forEach(function(wrapper) {
-          checkOverflow(wrapper);
-          wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+        window.bdInitTableScroll = function initTableScroll() {
+          var wrappers = document.querySelectorAll('.table-scroll');
+          wrappers.forEach(function(wrapper) {
+            if (wrapper.__bdTableScrollBound) return;
+            wrapper.__bdTableScrollBound = true;
+            checkOverflow(wrapper);
+            wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+          });
+        };
+
+        // Window resize handler attached once — re-checks all wrappers
+        window.addEventListener('resize', function() {
+          document.querySelectorAll('.table-scroll').forEach(checkOverflow);
         });
 
-        window.addEventListener('resize', function() {
-          wrappers.forEach(checkOverflow);
-        });
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', window.bdInitTableScroll);
+        } else {
+          window.bdInitTableScroll();
+        }
       })();
     </script>
     <div class="cursor-default"></div>
     <div class="cursor-halo"></div>
-    
 </body>
 </html>

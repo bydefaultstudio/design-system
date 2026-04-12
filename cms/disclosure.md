@@ -181,7 +181,7 @@ document.addEventListener('click', function (event) {
 |---|---|
 | `var(--border-s)` | Border width for container and content separator |
 | `var(--border-faded)` | Border color |
-| `var(--font-tertiary)` | Monospace font for summary and content |
+| `var(--font-quaternary)` | Monospace font for summary and content |
 | `var(--font-2xs)` | Font size for summary and content text |
 | `var(--text-faded)` | Summary text color, table labels |
 | `var(--text-secondary)` | Summary hover color, content text |

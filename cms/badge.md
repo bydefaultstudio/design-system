@@ -12,7 +12,7 @@ access: "team"
 client: "internal"
 ---
 
-Badges are small inline labels used to indicate status, category, or metadata. They use the mono font (`var(--font-tertiary)`) and pill shape by default.
+Badges are small inline labels used to indicate status, category, or metadata. They use the brand display font (`var(--font-tertiary)`) and pill shape by default.
 
 ---
 

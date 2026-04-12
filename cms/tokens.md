@@ -28,13 +28,14 @@ Every token, value, and hex on this page is a click-to-copy chip. The convention
 
 ### Font Families
 
-The three typeface stacks used across the system.
+The four typeface stacks used across the system.
 
 | Token | Value | Description |
 | --- | --- | --- |
 | `var(--font-primary)` | `"Inclusive Sans", sans-serif` | Body text and UI |
 | `var(--font-secondary)` | `"RecifeText", Georgia, serif` | Headings and display |
-| `var(--font-tertiary)` | `"IBM Plex Mono", monospace` | Code and monospace |
+| `var(--font-tertiary)` | `"Bugrino", sans-serif` | Brand display, eyebrows, buttons, badges |
+| `var(--font-quaternary)` | `"IBM Plex Mono", monospace` | Code and monospace |
 
 ### Brand Colors
 

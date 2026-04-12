@@ -28,10 +28,7 @@
 
     <!-- Markdown CSS -->
 
-    <!-- Site styles -->
-    <link rel="stylesheet" href="../assets/css/style.css">
-
-    <!-- Docs-site components (asset-card, book-cover, dont-card, sticky-bar, copy-btn, token-copy) -->
+    <!-- Docs-site styles (layout, nav, page chrome, components, auth) -->
     <link rel="stylesheet" href="../assets/css/docs-site.css">
 
     
@@ -65,7 +62,8 @@
     <!-- Site Navigation (header + sidebar injected by nav.js) -->
     <div id="site-nav" data-base="../"></div>
 
-    <div class="docs-main-area">
+    <div data-barba="wrapper">
+    <div class="docs-main-area" data-barba="container" data-barba-namespace="website-overview" data-section="website" data-order="2" data-level="1">
         <!-- Page Header (full width, outside grid) -->
         
 
@@ -80,7 +78,7 @@
                     <div class="docs-hero"><h1 class="docs-hero-title">Website</h1></div><div class="docs-section"><h2 class="eyebrow">Interactions</h2><div class="grid cols-2 gap-xl"><a href="bd-animations.html" class="book-cover" data-access="team">
         <header class="book-cover-header"><div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div></header>
         <div class="book-cover-content">
-          <h3 class="book-cover-title">bd-animations</h3>
+          <h3 class="book-cover-title" data-flip-id="bd-animations">bd-animations</h3>
           <p class="book-cover-description" data-text-wrap="pretty">In-house animation system built on GSAP and ScrollTrigger</p>
         </div>
         <footer class="book-cover-footer">
@@ -89,7 +87,7 @@
       </a><a href="bd-audio.html" class="book-cover" data-access="team">
         <header class="book-cover-header"><div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div></header>
         <div class="book-cover-content">
-          <h3 class="book-cover-title">bd-audio</h3>
+          <h3 class="book-cover-title" data-flip-id="bd-audio">bd-audio</h3>
           <p class="book-cover-description" data-text-wrap="pretty">In-house sound feedback system for user interactions</p>
         </div>
         <footer class="book-cover-footer">
@@ -98,7 +96,7 @@
       </a><a href="bd-cursor.html" class="book-cover" data-access="team">
         <header class="book-cover-header"><div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div></header>
         <div class="book-cover-content">
-          <h3 class="book-cover-title">bd-cursor</h3>
+          <h3 class="book-cover-title" data-flip-id="bd-cursor">bd-cursor</h3>
           <p class="book-cover-description" data-text-wrap="pretty">In-house custom cursor system for desktop interactions</p>
         </div>
         <footer class="book-cover-footer">
@@ -107,7 +105,7 @@
       </a></div></div><div class="docs-section"><h2 class="eyebrow">Libraries</h2><div class="grid cols-2 gap-xl"><a href="gsap.html" class="book-cover" data-access="team">
         <header class="book-cover-header"><div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div></header>
         <div class="book-cover-content">
-          <h3 class="book-cover-title">GSAP</h3>
+          <h3 class="book-cover-title" data-flip-id="gsap">GSAP</h3>
           <p class="book-cover-description" data-text-wrap="pretty">GreenSock Animation Platform — setup, plugins, and best practices</p>
         </div>
         <footer class="book-cover-footer">
@@ -116,7 +114,7 @@
       </a><a href="splide.html" class="book-cover" data-access="team">
         <header class="book-cover-header"><div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div></header>
         <div class="book-cover-content">
-          <h3 class="book-cover-title">Splide</h3>
+          <h3 class="book-cover-title" data-flip-id="splide">Splide</h3>
           <p class="book-cover-description" data-text-wrap="pretty">Lightweight carousel library — setup, extensions, and best practices</p>
         </div>
         <footer class="book-cover-footer">
@@ -125,7 +123,7 @@
       </a></div></div><div class="docs-section"><h2 class="eyebrow">Pages</h2><div class="grid cols-2 gap-xl"><a href="homepage.html" class="book-cover" data-access="team">
         <header class="book-cover-header"><div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div></header>
         <div class="book-cover-content">
-          <h3 class="book-cover-title">Homepage</h3>
+          <h3 class="book-cover-title" data-flip-id="homepage">Homepage</h3>
           <p class="book-cover-description" data-text-wrap="pretty">Complete guide to homepage-specific features including video interactions, logo animations, and slider components</p>
         </div>
         <footer class="book-cover-footer">
@@ -134,7 +132,7 @@
       </a><a href="hero.html" class="book-cover" data-access="team">
         <header class="book-cover-header"><div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div></header>
         <div class="book-cover-content">
-          <h3 class="book-cover-title">Hero</h3>
+          <h3 class="book-cover-title" data-flip-id="hero">Hero</h3>
           <p class="book-cover-description" data-text-wrap="pretty">Interactive portfolio showcase with key visual spawning system</p>
         </div>
         <footer class="book-cover-footer">
@@ -143,7 +141,7 @@
       </a><a href="hero-shapes-analytics.html" class="book-cover" data-access="team">
         <header class="book-cover-header"><div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div></header>
         <div class="book-cover-content">
-          <h3 class="book-cover-title">Hero Shapes Analytics Tracking</h3>
+          <h3 class="book-cover-title" data-flip-id="hero-shapes-analytics">Hero Shapes Analytics Tracking</h3>
           <p class="book-cover-description" data-text-wrap="pretty">Analytics tracking system for Hero Shapes physics interactions</p>
         </div>
         <footer class="book-cover-footer">
@@ -152,7 +150,7 @@
       </a><a href="stacking-shapes.html" class="book-cover" data-access="team">
         <header class="book-cover-header"><div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div></header>
         <div class="book-cover-content">
-          <h3 class="book-cover-title">Stacking Shapes</h3>
+          <h3 class="book-cover-title" data-flip-id="stacking-shapes">Stacking Shapes</h3>
           <p class="book-cover-description" data-text-wrap="pretty">Interactive physics-driven experience with draggable brand shapes and Matter.js</p>
         </div>
         <footer class="book-cover-footer">
@@ -161,7 +159,7 @@
       </a><a href="case-study.html" class="book-cover" data-access="team">
         <header class="book-cover-header"><div class="icn-svg" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div></header>
         <div class="book-cover-content">
-          <h3 class="book-cover-title">Case Study</h3>
+          <h3 class="book-cover-title" data-flip-id="case-study">Case Study</h3>
           <p class="book-cover-description" data-text-wrap="pretty">Intelligent content pinning system for case study pages with responsive behavior</p>
         </div>
         <footer class="book-cover-footer">
@@ -215,78 +213,82 @@
                 <p class="docs-footer-text">© 2026 By Default</p>
             </div>
         </footer>
+
+        <!-- Per-page scripts (inside Barba container so they re-execute on transition) -->
+        
     </div>
+    </div><!-- /data-barba="wrapper" -->
 
     <!-- Highlight.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
-    <!-- Initialize Highlight.js, Copy, and TOC -->
+    <!-- Initialize Highlight.js and TOC (re-callable for Barba transitions) -->
     <script>
         (function() {
             'use strict';
 
-            function initHighlight() {
-                document.querySelectorAll('pre code').forEach((block) => {
+            // Track TOC observer + scroll listener so we can clean up before re-init
+            var tocObserver = null;
+            var tocScrollHandler = null;
+
+            window.bdInitHighlight = function initHighlight() {
+                if (!window.hljs) return;
+                document.querySelectorAll('pre code').forEach(function(block) {
                     hljs.highlightElement(block);
                 });
-            }
+            };
 
-            function initTOCActiveState() {
-                const tocLinks = document.querySelectorAll('.toc-link');
-                const headings = document.querySelectorAll('h1[id], h2[id]');
+            window.bdInitTOCActiveState = function initTOCActiveState() {
+                // Tear down any prior observer + scroll listener (Barba re-init)
+                if (tocObserver) { tocObserver.disconnect(); tocObserver = null; }
+                if (tocScrollHandler) {
+                    window.removeEventListener('scroll', tocScrollHandler);
+                    tocScrollHandler = null;
+                }
 
+                var tocLinks = document.querySelectorAll('.toc-link');
+                var headings = document.querySelectorAll('h1[id], h2[id]');
                 if (tocLinks.length === 0 || headings.length === 0) return;
 
-                const linkMap = new Map();
-                tocLinks.forEach(link => {
-                    const href = link.getAttribute('href');
+                var linkMap = new Map();
+                tocLinks.forEach(function(link) {
+                    var href = link.getAttribute('href');
                     if (href && href.startsWith('#')) {
-                        const id = href.substring(1);
-                        linkMap.set(id, link);
+                        linkMap.set(href.substring(1), link);
                     }
                 });
 
-                const observerOptions = {
-                    rootMargin: '-20% 0px -70% 0px',
-                    threshold: 0
-                };
+                var observerOptions = { rootMargin: '-20% 0px -70% 0px', threshold: 0 };
 
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        const id = entry.target.id;
-                        const link = linkMap.get(id);
-
+                tocObserver = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        var id = entry.target.id;
+                        var link = linkMap.get(id);
                         if (entry.isIntersecting) {
-                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
-                            if (link) {
-                                link.classList.add('toc-link-active');
-                            }
+                            tocLinks.forEach(function(l) { l.classList.remove('toc-link-active'); });
+                            if (link) link.classList.add('toc-link-active');
                         }
                     });
                 }, observerOptions);
 
-                headings.forEach(heading => {
-                    if (heading.id) {
-                        observer.observe(heading);
-                    }
+                headings.forEach(function(heading) {
+                    if (heading.id) tocObserver.observe(heading);
                 });
 
                 function setInitialActive() {
-                    let activeHeading = null;
-                    let maxTop = -Infinity;
-
-                    headings.forEach(heading => {
-                        const rect = heading.getBoundingClientRect();
+                    var activeHeading = null;
+                    var maxTop = -Infinity;
+                    headings.forEach(function(heading) {
+                        var rect = heading.getBoundingClientRect();
                         if (rect.top <= 100 && rect.top > maxTop) {
                             maxTop = rect.top;
                             activeHeading = heading;
                         }
                     });
-
                     if (activeHeading && activeHeading.id) {
-                        const link = linkMap.get(activeHeading.id);
+                        var link = linkMap.get(activeHeading.id);
                         if (link) {
-                            tocLinks.forEach(l => l.classList.remove('toc-link-active'));
+                            tocLinks.forEach(function(l) { l.classList.remove('toc-link-active'); });
                             link.classList.add('toc-link-active');
                         }
                     }
@@ -294,16 +296,17 @@
 
                 setInitialActive();
 
-                let scrollTimeout;
-                window.addEventListener('scroll', () => {
+                var scrollTimeout;
+                tocScrollHandler = function() {
                     clearTimeout(scrollTimeout);
                     scrollTimeout = setTimeout(setInitialActive, 100);
-                });
-            }
+                };
+                window.addEventListener('scroll', tocScrollHandler);
+            };
 
             function init() {
-                initHighlight();
-                initTOCActiveState();
+                window.bdInitHighlight();
+                window.bdInitTOCActiveState();
             }
 
             if (document.readyState === 'loading') {
@@ -361,9 +364,12 @@
     <script src="../assets/js/rating.js"></script>
     <!-- Markdown download/open — strips frontmatter and block HTML -->
     <script src="../assets/js/md-strip.js"></script>
+    <!-- Barba.js page transitions (vendored locally) — must load after auth/nav/theme -->
+    <script src="../assets/js/vendor/barba/barba.min.js"></script>
+    <script src="../assets/js/barba-init.js"></script>
 
     <script>
-      /* Tag dismiss */
+      /* Tag dismiss — delegated to document, attached once */
       document.addEventListener('click', function (e) {
         var removeBtn = e.target.closest('.tag-remove');
         if (removeBtn) {
@@ -372,11 +378,8 @@
         }
       });
 
-      /* Table scroll overflow hint */
-      (function initTableScroll() {
-        var wrappers = document.querySelectorAll('.table-scroll');
-        if (!wrappers.length) return;
-
+      /* Table scroll overflow hint — re-callable for Barba transitions */
+      (function() {
         function checkOverflow(wrapper) {
           var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
           var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
@@ -384,18 +387,29 @@
           wrapper.classList.toggle('is-scrolled-end', isAtEnd);
         }
 
-        wrappers.forEach(function(wrapper) {
-          checkOverflow(wrapper);
-          wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+        window.bdInitTableScroll = function initTableScroll() {
+          var wrappers = document.querySelectorAll('.table-scroll');
+          wrappers.forEach(function(wrapper) {
+            if (wrapper.__bdTableScrollBound) return;
+            wrapper.__bdTableScrollBound = true;
+            checkOverflow(wrapper);
+            wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+          });
+        };
+
+        // Window resize handler attached once — re-checks all wrappers
+        window.addEventListener('resize', function() {
+          document.querySelectorAll('.table-scroll').forEach(checkOverflow);
         });
 
-        window.addEventListener('resize', function() {
-          wrappers.forEach(checkOverflow);
-        });
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', window.bdInitTableScroll);
+        } else {
+          window.bdInitTableScroll();
+        }
       })();
     </script>
     <div class="cursor-default"></div>
     <div class="cursor-halo"></div>
-    {{PAGE_SCRIPTS}}
 </body>
 </html>

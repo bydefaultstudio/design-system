@@ -33,13 +33,14 @@ Do not add new top-level folders without updating this file.
 - `src/` → Source files (pages, JS)
 - `themes/` → Client theme overrides (one CSS file per client)
 - `cdn/` → Webflow project code (JS + CSS served via CDN)
+- `studio/` → By Default agency website. Marketing site, not a docs site. Self-contained except it shares `assets/css/design-system.css` + `assets/css/docs-site.css` from the parent for now; lifts to a standalone deploy later. Layer: `app`.
 
 ## assets/
 
 Single source of truth for all assets. No duplication.
 
 - `css/design-system.css` → Core design system framework (tokens, utilities, layout primitives)
-- `css/style.css` → Site layout, component styles, and markdown content rendering
+- `css/docs-site.css` → Docs-site layout, navigation, page chrome, components, auth UI
 - `js/auth.js` → Authentication module (Netlify Identity)
 - `js/auth-config.js` → Auth role hierarchy and settings
 - `js/theme-config.js` → Theme registry (maps clientFolder → CSS path + Google Fonts URL)
@@ -118,10 +119,10 @@ Additional project folders can be added as needed. Project overview docs are gen
 The generated HTML loads CSS in this order:
 
 1. `assets/css/design-system.css` → Brand tokens, framework tokens, utilities, layout primitives
-2. `themes/client-name.css` → Client theme overrides (optional)
-3. `assets/css/style.css` → Site layout, components, and markdown content rendering
+2. `assets/css/docs-site.css` → Docs-site layout, navigation, page chrome, components, auth UI
+3. `themes/client-name.css` → Client theme overrides (optional, must load last)
 
-New site-specific CSS goes in `assets/css/style.css`.
+New docs-site CSS goes in `assets/css/docs-site.css`. New core/foundation CSS goes in `assets/css/design-system.css`. See [CLAUDE.md §17 — Layer Discipline](../CLAUDE.md#17-layer-discipline) for the rules that govern this split.
 
 ## tools/
 

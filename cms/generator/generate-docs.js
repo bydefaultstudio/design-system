@@ -127,16 +127,30 @@ function renderBookCover(opts) {
   const description = opts.subtitle
     ? `<p class="book-cover-description" data-text-wrap="pretty">${opts.subtitle}</p>`
     : '';
+  const flipId = flipIdFromHref(opts.href);
+  const flipAttr = flipId ? ` data-flip-id="${flipId}"` : '';
   return `<a href="${opts.href}" class="book-cover"${accessAttr}>
         <header class="book-cover-header">${getIcon('open-full')}</header>
         <div class="book-cover-content">
-          <h3 class="book-cover-title">${opts.title}</h3>
+          <h3 class="book-cover-title"${flipAttr}>${opts.title}</h3>
           ${description}
         </div>
         <footer class="book-cover-footer">
           <span class="book-cover-author"><em>by</em> ${author}</span>
         </footer>
       </a>`;
+}
+
+/**
+ * Derive a Barba/GSAP Flip identifier from a destination href.
+ * Only the filename slug is needed — the source and destination pages
+ * resolve the element by attribute within their own DOM, and the two
+ * pages are only ever in the DOM together during a single transition.
+ * "color.html" → "color", "../tools/cpm-calculator.html" → "cpm-calculator"
+ */
+function flipIdFromHref(href) {
+  if (!href) return '';
+  return String(href).replace(/[?#].*$/, '').replace(/^.*\//, '').replace(/\.html$/, '');
 }
 
 //------- Section-to-Folder Mapping -------//
@@ -149,6 +163,15 @@ const SECTION_FOLDERS = {
   'Tools': 'tools',
   'Projects': 'projects'
 };
+
+/**
+ * Slugify a section name for use as a Barba namespace.
+ * "Brand Book" → "brand-book", "Design System" → "design-system", undefined → "page".
+ */
+function slugifySection(section) {
+  if (!section) return 'page';
+  return String(section).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'page';
+}
 
 // Special filename overrides for files that don't follow the prefix-strip pattern
 const FILENAME_OVERRIDES = {
@@ -609,6 +632,11 @@ function generateIndexPage(template, filesBySection) {
     .replace('{{PAGE_NAV}}', '')
     .replace('{{FOOTER_TEXT}}', PROJECT_CONFIG.footerText)
     .replace('{{PAGE_ACCESS}}', access)
+    .replace('{{SECTION_SLUG}}', 'home')
+    .replace('{{PAGE_SECTION}}', 'home')
+    .replace('{{PAGE_ORDER}}', '0')
+    .replace('{{PAGE_LEVEL}}', '0')
+    .replace('{{PAGE_SCRIPTS}}', '')
     .replaceAll('{{NAV_BASE}}', '');
 }
 
@@ -733,6 +761,15 @@ function generateSectionIndexPage(section, template, files, filesBySection) {
   const pageContent = `<div class="docs-hero"><h1 class="docs-hero-title">${section}</h1></div>${cards}`;
   const navBase = '../';
 
+  // Section's index in the global sectionOrder — used by the level-based
+  // transition system to resolve L1 → L1 sibling navigation (e.g. clicking
+  // Design System overview while on Brand Book overview slides forward).
+  // Mirrors the same default chain buildPageOrder uses (line ~790).
+  const sectionDefaults = loadDefaults(DOCS_DIR);
+  const globalSectionOrder = parseList(sectionDefaults['section-order'], ['Brand Book', 'Design System', 'Tools', 'Docs']);
+  const sectionIndex = globalSectionOrder.indexOf(section);
+  const sectionOrderValue = sectionIndex === -1 ? 999 : sectionIndex;
+
   return template
     .replaceAll('{{PAGE_TITLE}}', `${section} — Overview`)
     .replaceAll('{{META_DESCRIPTION}}', `Overview of all ${section} pages.`)
@@ -748,6 +785,11 @@ function generateSectionIndexPage(section, template, files, filesBySection) {
     .replace('{{PAGE_NAV}}', '')
     .replace('{{FOOTER_TEXT}}', PROJECT_CONFIG.footerText)
     .replace('{{PAGE_ACCESS}}', deriveDataAccess(loadDefaults(DOCS_DIR)))
+    .replace('{{SECTION_SLUG}}', `${slugifySection(section)}-overview`)
+    .replace('{{PAGE_SECTION}}', slugifySection(section))
+    .replace('{{PAGE_ORDER}}', String(sectionOrderValue))
+    .replace('{{PAGE_LEVEL}}', '1')
+    .replace('{{PAGE_SCRIPTS}}', '')
     .replaceAll('{{NAV_BASE}}', navBase);
 }
 
@@ -807,6 +849,75 @@ function buildPageOrder(filesBySection) {
     }
   }
   return ordered;
+}
+
+/**
+ * Build a per-section sidebar position map for Phase 3 directional transitions.
+ *
+ * Returns an object keyed by `file.htmlPath` whose value is the file's integer
+ * position within its own section's sidebar list. Position 0 is reserved for
+ * the section's "Overview" link, so real files start at position 1.
+ *
+ * The walk mirrors `buildNavSectionsHtml` exactly — section sort order, files
+ * sorted by frontmatter.order, ungrouped files before subsection groups,
+ * subsections in configured order. Using a single function for both the map
+ * and the nav HTML would be cleaner, but the sidebar already has enough
+ * responsibilities; a separate walk is easier to reason about.
+ *
+ * Tool app links: the sidebar renders the app URL (derived from actionUrl),
+ * not file.htmlPath. We key the map by file.htmlPath because that's what the
+ * destination doc page's container looks up. Clicked sidebar links use the
+ * integer written directly into their `data-order` attribute, so the two
+ * paths stay consistent.
+ */
+function buildSidebarOrderMap(filesBySection) {
+  const defaults = loadDefaults(DOCS_DIR);
+  const map = {};
+
+  const sortByOrder = (a, b) => {
+    const orderA = a.frontmatter.order || 999;
+    const orderB = b.frontmatter.order || 999;
+    if (orderA !== orderB) return orderA - orderB;
+    return a.title.localeCompare(b.title);
+  };
+
+  for (const section of Object.keys(filesBySection)) {
+    const files = [...filesBySection[section]];
+    const subsectionOrder = getSubsectionOrder(defaults, section);
+
+    let pos = 1; // 0 is the Overview link
+
+    // Ungrouped files first
+    const ungrouped = files.filter(f => !f.frontmatter.subsection).sort(sortByOrder);
+    for (const file of ungrouped) {
+      map[file.htmlPath] = pos++;
+    }
+
+    // Then subsection groups in configured order
+    const grouped = {};
+    for (const file of files) {
+      const sub = file.frontmatter.subsection;
+      if (sub) {
+        if (!grouped[sub]) grouped[sub] = [];
+        grouped[sub].push(file);
+      }
+    }
+    const subs = Object.keys(grouped).sort((a, b) => {
+      const idxA = subsectionOrder.indexOf(a);
+      const idxB = subsectionOrder.indexOf(b);
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+      if (idxA !== -1) return -1;
+      if (idxB !== -1) return 1;
+      return a.localeCompare(b);
+    });
+    for (const sub of subs) {
+      for (const file of grouped[sub].sort(sortByOrder)) {
+        map[file.htmlPath] = pos++;
+      }
+    }
+  }
+
+  return map;
 }
 
 /**
@@ -949,7 +1060,7 @@ function buildPageScripts(section, frontmatter) {
 /**
  * Generate page HTML
  */
-function generatePage(file, template, pageOrder) {
+function generatePage(file, template, pageOrder, sidebarOrderMap = {}) {
   const { frontmatter, content } = file;
   let htmlContent = markdownToHtml(content);
 
@@ -977,9 +1088,11 @@ function generatePage(file, template, pageOrder) {
       </div>`
     : '';
   if (frontmatter.title) {
+    const pageFlipId = flipIdFromHref(file.htmlName);
+    const pageFlipAttr = pageFlipId ? ` data-flip-id="${pageFlipId}"` : '';
     pageHeader = `<div class="page-header">
       <div class="container-small">
-        <h1>${frontmatter.title}</h1>
+        <h1${pageFlipAttr}>${frontmatter.title}</h1>
         ${frontmatter.subtitle ? `<p class="page-subtitle" data-text-wrap="pretty">${frontmatter.subtitle}</p>` : ''}
         ${actionLinkHtml}
       </div>
@@ -1023,6 +1136,9 @@ function generatePage(file, template, pageOrder) {
               </div>
             </div>
           </div>
+          <a href="../${file.htmlFolder}/index.html" class="sticky-bar-close" aria-label="Close ${frontmatter.title}">
+            ${getIcon('close-large')}
+          </a>
         </div>
       </div>
     </div>`;
@@ -1052,6 +1168,12 @@ function generatePage(file, template, pageOrder) {
     .replace('{{FOOTER_TEXT}}', PROJECT_CONFIG.footerText)
     .replace('{{PAGE_ACCESS}}', access)
     .replace('{{PAGE_SCRIPTS}}', pageScripts)
+    .replace('{{SECTION_SLUG}}', slugifySection(file.section))
+    .replace('{{PAGE_SECTION}}', slugifySection(file.section))
+    // Per-section sidebar position (matches the data-order on the matching
+    // sidebar nav-link). Falls back to 999 for files not in any sidebar.
+    .replace('{{PAGE_ORDER}}', String(sidebarOrderMap[file.htmlPath] || 999))
+    .replace('{{PAGE_LEVEL}}', '2')
     .replaceAll('{{NAV_BASE}}', '../');
 }
 
@@ -1064,9 +1186,9 @@ function generatePage(file, template, pageOrder) {
  *   data-base="../"  → subdirectory pages (../assets/...)
  *   data-sidebar="false" → top nav only, no sidebar
  */
-function generateNavJs(filesBySection) {
+function generateNavJs(filesBySection, sidebarOrderMap) {
   // Build navigation HTML (no active page — active detection is done at runtime)
-  const navSectionsHtml = buildNavSectionsHtml(filesBySection);
+  const navSectionsHtml = buildNavSectionsHtml(filesBySection, sidebarOrderMap);
 
   // Escape backticks and backslashes for embedding in a JS template literal
   const esc = (s) => s.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\$/g, '\\$').replace(/'/g, "\\'");
@@ -1174,32 +1296,44 @@ function generateNavJs(filesBySection) {
   }
 
   // ── Active link detection ──
+  // Exposed as window.refreshNavActive so Barba.js can re-run after each
+  // page transition (the nav itself stays put outside the Barba container).
   if (hasSidebar) {
-    var navLinks = mount.querySelectorAll('.nav-link');
-
     // Normalize: treat /path/ and /path/index.html as equal
     function normPath(p) {
       return p.replace(/\\/index\\.html$/, '/').replace(/\\/$/, '');
     }
-    var currentNorm = normPath(window.location.pathname);
 
-    for (var j = 0; j < navLinks.length; j++) {
-      var link = navLinks[j];
+    function setActiveLink() {
+      var navLinks = mount.querySelectorAll('.nav-link');
+      var currentNorm = normPath(window.location.pathname);
 
-      // Resolve the link href to an absolute path (handles ../ prefixes correctly)
-      var resolvedPath = new URL(link.href, window.location.href).pathname;
-      var resolvedNorm = normPath(resolvedPath);
+      // Clear previous active state (idempotent — safe to call repeatedly)
+      for (var k = 0; k < navLinks.length; k++) {
+        navLinks[k].classList.remove('nav-link-active');
+        navLinks[k].removeAttribute('aria-current');
+      }
 
-      if (currentNorm === resolvedNorm) {
-        link.classList.add('nav-link-active');
-        link.setAttribute('aria-current', 'page');
-        // Open parent details section
-        var parentDetails = link.closest('.nav-section');
-        if (parentDetails) {
-          parentDetails.setAttribute('open', '');
+      for (var j = 0; j < navLinks.length; j++) {
+        var link = navLinks[j];
+        // Resolve the link href to an absolute path (handles ../ prefixes correctly)
+        var resolvedPath = new URL(link.href, window.location.href).pathname;
+        var resolvedNorm = normPath(resolvedPath);
+
+        if (currentNorm === resolvedNorm) {
+          link.classList.add('nav-link-active');
+          link.setAttribute('aria-current', 'page');
+          // Open parent details section
+          var parentDetails = link.closest('.nav-section');
+          if (parentDetails) {
+            parentDetails.setAttribute('open', '');
+          }
         }
       }
     }
+
+    setActiveLink();
+    window.refreshNavActive = setActiveLink;
   }
 
   // ── Body class management ──
@@ -1305,7 +1439,7 @@ function generateNavJs(filesBySection) {
 /**
  * Build nav sections HTML string for embedding in nav.js
  */
-function buildNavSectionsHtml(filesBySection) {
+function buildNavSectionsHtml(filesBySection, sidebarOrderMap = {}) {
   let html = '';
 
   // Section icons — loaded from assets/images/svg-icons/
@@ -1347,8 +1481,10 @@ function buildNavSectionsHtml(filesBySection) {
     const sectionIcon = sectionIconMap[section];
     const sectionFolder = SECTION_FOLDERS[section];
     const sectionIndexHref = sectionFolder ? sectionFolder + '/index.html' : '';
+    // Slug used by Phase 3 directional transitions to detect same/different section
+    const sectionSlug = slugifySection(section);
     const iconHtml = sectionIcon
-      ? `<a href="${sectionIndexHref}" class="nav-section-icon"><div class="icn-svg" data-icon="${sectionIcon.name}">${sectionIcon.icon}</div></a>`
+      ? `<a href="${sectionIndexHref}" class="nav-section-icon" data-section="${sectionSlug}"><div class="icn-svg" data-icon="${sectionIcon.name}">${sectionIcon.icon}</div></a>`
       : '';
 
     html += `<details class="nav-section">
@@ -1362,8 +1498,14 @@ function buildNavSectionsHtml(filesBySection) {
       </summary>
       <ul class="nav-list">`;
 
-    // Overview link (first item in every section)
-    html += `<li><a href="${sectionIndexHref}" class="nav-link" data-access="team"><span>Overview</span></a></li>`;
+    // Overview link (first item in every section). data-order="0" so direction
+    // detection always treats it as the lowest-order page in the section.
+    html += `<li><a href="${sectionIndexHref}" class="nav-link" data-section="${sectionSlug}" data-order="0" data-access="team"><span>Overview</span></a></li>`;
+
+    // Sequential counter mirrors buildSidebarOrderMap — same walk order, so the
+    // data-order on each nav-link matches the data-order on its destination
+    // page's container. Resets per section, starts at 1 (0 is Overview).
+    let navPos = 1;
 
     // Group files by subsection
     const ungrouped = files.filter(f => !f.frontmatter.subsection);
@@ -1383,10 +1525,16 @@ function buildNavSectionsHtml(filesBySection) {
       let linkAccess = deriveDataAccess(file.frontmatter);
       const navActionUrl = file.frontmatter.actionUrl || file.frontmatter.toolUrl;
       if (section === 'Tools' && navActionUrl) {
-        linkHref = navActionUrl.replace(/^\.\.\//, '');
+        // actionUrl is relative to the tool docs page (e.g. "./cpm-calculator.html").
+        // Sidebar links must be section-folder-rooted so nav.js's `base` prepend
+        // resolves correctly from any page in the site.
+        const fileName = navActionUrl.replace(/^(\.\.?\/)+/, '');
+        const sectionFolder = SECTION_FOLDERS[section] || 'tools';
+        linkHref = `${sectionFolder}/${fileName}`;
         linkAccess = file.frontmatter.actionAccess || file.frontmatter.toolAccess || 'client';
       }
-      html += `<li><a href="${linkHref}" class="nav-link" data-access="${linkAccess}"><span>${file.title}</span></a></li>`;
+      html += `<li><a href="${linkHref}" class="nav-link" data-section="${sectionSlug}" data-order="${navPos}" data-access="${linkAccess}"><span>${file.title}</span></a></li>`;
+      navPos++;
     }
 
     // Render subsections in order
@@ -1403,11 +1551,17 @@ function buildNavSectionsHtml(filesBySection) {
       html += `<li class="nav-label">${sub}</li>`;
       for (const file of grouped[sub]) {
         const linkAccess = deriveDataAccess(file.frontmatter);
-        html += `<li><a href="${file.htmlPath}" class="nav-link" data-access="${linkAccess}"><span>${file.title}</span></a></li>`;
+        html += `<li><a href="${file.htmlPath}" class="nav-link" data-section="${sectionSlug}" data-order="${navPos}" data-access="${linkAccess}"><span>${file.title}</span></a></li>`;
+        navPos++;
       }
     }
 
-    // Add Tools documentation links as a subsection of Docs
+    // Add Tools documentation links as a subsection of Docs.
+    // These links carry data-section="tools" (their real section), so navigating
+    // from a Docs page to a Tools doc resolves as a cross-section slide-up.
+    // The data-order here is looked up from sidebarOrderMap — we can't reuse
+    // the local navPos counter because these files belong to the Tools section,
+    // not Docs, and their real position is whatever Tools assigned them.
     if (section === 'Docs' && filesBySection['Tools']) {
       const toolFiles = [...filesBySection['Tools']].sort((a, b) => {
         const orderA = a.frontmatter.order || 999;
@@ -1415,10 +1569,12 @@ function buildNavSectionsHtml(filesBySection) {
         if (orderA !== orderB) return orderA - orderB;
         return a.title.localeCompare(b.title);
       });
+      const toolsSectionSlug = slugifySection('Tools');
       html += `<li class="nav-label">Tools</li>`;
       for (const file of toolFiles) {
         const linkAccess = deriveDataAccess(file.frontmatter);
-        html += `<li><a href="${file.htmlPath}" class="nav-link" data-access="${linkAccess}"><span>${file.title}</span></a></li>`;
+        const toolPos = sidebarOrderMap[file.htmlPath] || 999;
+        html += `<li><a href="${file.htmlPath}" class="nav-link" data-section="${toolsSectionSlug}" data-order="${toolPos}" data-access="${linkAccess}"><span>${file.title}</span></a></li>`;
       }
     }
 
@@ -1543,9 +1699,11 @@ function generateClientDocs(template) {
           </div>`
         : '';
       if (title) {
+        const clientPageFlipId = flipIdFromHref(htmlName);
+        const clientPageFlipAttr = clientPageFlipId ? ` data-flip-id="${clientPageFlipId}"` : '';
         pageHeader = `<div class="page-header">
           <div class="container-small">
-            <h1>${title}</h1>
+            <h1${clientPageFlipAttr}>${title}</h1>
             ${frontmatter.subtitle ? `<p class="page-subtitle" data-text-wrap="pretty">${frontmatter.subtitle}</p>` : ''}
             ${clientActionHtml}
           </div>
@@ -1591,6 +1749,9 @@ function generateClientDocs(template) {
                   </div>
                 </div>
               </div>
+              <a href="${overviewHref}" class="sticky-bar-close" aria-label="Close ${title}">
+                ${getIcon('close-large')}
+              </a>
             </div>
           </div>
         </div>`;
@@ -1622,6 +1783,10 @@ function generateClientDocs(template) {
         .replace('{{PAGE_SCRIPTS}}', buildPageScripts(frontmatter.section || '', frontmatter))
         .replace('{{FOOTER_TEXT}}', buildFooterHtml())
         .replace('{{PAGE_ACCESS}}', deriveDataAccess(frontmatter))
+        .replace('{{SECTION_SLUG}}', `${clientKey}-${slugifySection(frontmatter.section)}`)
+        .replace('{{PAGE_SECTION}}', `${clientKey}-${slugifySection(frontmatter.section)}`)
+        .replace('{{PAGE_ORDER}}', String(parseInt(frontmatter.order, 10) || 999))
+        .replace('{{PAGE_LEVEL}}', '2')
         .replaceAll('{{NAV_BASE}}', navBase);
 
       // Derive output path
@@ -1828,6 +1993,12 @@ function generateClientSectionOverviews(template) {
     function buildOverviewPage(title, cardsHtml, overrideNavBase) {
       const base = overrideNavBase || navBase;
       const content = `<div class="docs-hero"><h1 class="docs-hero-title">${title}</h1></div>${cardsHtml}`;
+      // Per-client section order — used by the level-based directional
+      // transitions for L1 → L1 sibling navigation within a client space.
+      // Docs comes first, then Tools, matching their order in the client
+      // sidebar. New client sections would extend this map.
+      const clientSectionOrder = { 'Docs': 0, 'Tools': 1, 'Brand Book': 2 };
+      const overviewOrder = clientSectionOrder[title] !== undefined ? clientSectionOrder[title] : 999;
       return template
         .replace(/\{\{PAGE_TITLE\}\}/g, `${clientLabel} — ${title}`)
         .replace(/\{\{META_DESCRIPTION\}\}/g, `${title} overview for ${clientLabel}.`)
@@ -1843,7 +2014,12 @@ function generateClientSectionOverviews(template) {
         .replace('{{BRAND_CSS}}', PROJECT_CONFIG.brandCssPath ? `<link rel="stylesheet" href="${base}${PROJECT_CONFIG.brandCssPath}">` : '')
         .replace('{{CLIENT_THEME_CSS}}', `<!-- Client Theme Override (must load last to override base styles) -->\n    <link rel="stylesheet" href="${base === '../../' ? '../' : ''}assets/theme.css">`)
         .replace('{{CLIENT_THEME_ATTR}}', `data-client-theme="${clientKey}"`)
-        .replace('{{GOOGLE_FONTS}}', googleFonts);
+        .replace('{{GOOGLE_FONTS}}', googleFonts)
+        .replace('{{SECTION_SLUG}}', `${clientKey}-${slugifySection(title)}-overview`)
+        .replace('{{PAGE_SECTION}}', `${clientKey}-${slugifySection(title)}`)
+        .replace('{{PAGE_ORDER}}', String(overviewOrder))
+        .replace('{{PAGE_LEVEL}}', '1')
+        .replace('{{PAGE_SCRIPTS}}', '');
     }
 
     // Docs overview — cards for all pages in the Docs section
@@ -2002,7 +2178,7 @@ function generateBrandBook(template) {
     const brandBookPageHeader = `<div class="page-header">
       <div class="container-small">
         <p class="eyebrow">${clientLabel}</p>
-        <h1>${pageTitle}</h1>
+        <h1 data-flip-id="brand-book">${pageTitle}</h1>
         <p class="page-subtitle" data-text-wrap="pretty">${pageSubtitle}</p>
       </div>
     </div>`;
@@ -2152,7 +2328,7 @@ function generateBrandBook(template) {
     const colorColRight = brandColorTokens.slice(half);
 
     // Click the row → copies the var(--token) reference. Hover reveals the
-    // ::after copy icon defined in style.css. Check icon swap on .is-copied.
+    // ::after copy icon defined in docs-site.css. Check icon swap on .is-copied.
     const renderColorRow = (c) => `<button class="color-row copy-btn" type="button" style="background-color: var(${c.token});" data-copy="var(${c.token})" aria-label="Copy var(${c.token})">
       <span class="color-row-name">var(${c.token})</span>
     </button>`;
@@ -2224,9 +2400,10 @@ function generateBrandBook(template) {
     }
     if (fontTokens.length === 0) {
       fontTokens = [
-        { token: '--font-primary',   family: 'Primary' },
-        { token: '--font-secondary', family: 'Secondary' },
-        { token: '--font-tertiary',  family: 'Tertiary' },
+        { token: '--font-primary',    family: 'Primary' },
+        { token: '--font-secondary',  family: 'Secondary' },
+        { token: '--font-tertiary',   family: 'Tertiary' },
+        { token: '--font-quaternary', family: 'Quaternary' },
       ];
     }
 
@@ -2375,7 +2552,13 @@ function generateBrandBook(template) {
       .replace('{{CLIENT_THEME_CSS}}', clientThemeCss)
       .replace('{{CLIENT_THEME_ATTR}}', `data-client-theme="${clientKey}"`)
       .replace('{{GOOGLE_FONTS}}', googleFonts)
-      .replace('{{PAGE_SCRIPTS}}', '');
+      .replace('{{PAGE_SCRIPTS}}', '')
+      .replace('{{SECTION_SLUG}}', `${clientKey}-brand-book`)
+      .replace('{{PAGE_SECTION}}', `${clientKey}-brand-book`)
+      // Brand book is at order 2 in the per-client section ordering
+      // (Docs=0, Tools=1, Brand Book=2) — see buildOverviewPage above.
+      .replace('{{PAGE_ORDER}}', '2')
+      .replace('{{PAGE_LEVEL}}', '1');
 
     // Write to client folder
     const dir = path.join(OUTPUT_DIR, clientKey);
@@ -2508,7 +2691,12 @@ function generateClientIndexPages(template) {
       .replace('{{BRAND_CSS}}', brandCss)
       .replace('{{CLIENT_THEME_CSS}}', clientThemeCss)
       .replace('{{CLIENT_THEME_ATTR}}', `data-client-theme="${clientKey}"`)
-      .replace('{{GOOGLE_FONTS}}', googleFonts);
+      .replace('{{GOOGLE_FONTS}}', googleFonts)
+      .replace('{{SECTION_SLUG}}', `${clientKey}-home`)
+      .replace('{{PAGE_SECTION}}', `${clientKey}-home`)
+      .replace('{{PAGE_ORDER}}', '0')
+      .replace('{{PAGE_LEVEL}}', '0')
+      .replace('{{PAGE_SCRIPTS}}', '');
 
     // Replace design system path placeholder
     html = html.replace('{{DESIGN_SYSTEM_PATH}}', navBase + PROJECT_CONFIG.designSystemPath);
@@ -2664,6 +2852,12 @@ async function generateDocs() {
   // Build ordered page list for prev/next navigation
   const pageOrder = buildPageOrder(filesBySection);
 
+  // Build sidebar position map: htmlPath → integer position within its section.
+  // Used by Phase 3 directional transitions to compare clicked link order
+  // against current page order. Position 0 = section overview ("Overview" link).
+  // Re-uses the exact rendering order produced by buildNavSectionsHtml.
+  const sidebarOrderMap = buildSidebarOrderMap(filesBySection);
+
   // Determine which files to write
   const filesToWrite = isSingleFile
     ? allFiles.filter(f => filter.has(f.filename))
@@ -2678,7 +2872,7 @@ async function generateDocs() {
 
   // Generate HTML for target files
   for (const file of filesToWrite) {
-    const pageContent = generatePage(file, template, pageOrder);
+    const pageContent = generatePage(file, template, pageOrder, sidebarOrderMap);
 
     // Ensure output directory exists
     if (file.htmlFolder) {
@@ -2707,7 +2901,7 @@ async function generateDocs() {
   }
 
   // Always regenerate nav.js (sidebar needs to stay current)
-  const navJs = generateNavJs(filesBySection);
+  const navJs = generateNavJs(filesBySection, sidebarOrderMap);
   const navJsPath = path.join(OUTPUT_DIR, 'assets', 'js', 'nav.js');
   fs.writeFileSync(navJsPath, navJs);
   console.log('📄 Generated: assets/js/nav.js');

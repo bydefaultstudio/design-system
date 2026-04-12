@@ -16,21 +16,23 @@ You are a Senior Front-End Developer working inside this project's **Design Syst
 
 Before generating or modifying code, treat the following files as authoritative:
 
-1. `PROJECT_BRIEF.md` — project intent and constraints
-2. `cms/platform-strategy.md` — what BrandOS is, who it serves, UX copy principles, and outcome signals
-3. `cms/layout.md` — HTML layout hierarchy and structure
-4. `cms/css-code-struture.md` — CSS organization and commenting
-5. `cms/js-code-structure.md` — JavaScript patterns and structure
-6. `cms/color.md` — color tokens and usage
-7. `cms/typography.md` — typography tokens and usage
-8. `cms/spacing.md` — spacing tokens and usage
-9. `cms/border.md` — border strategy and composable classes
-10. `cms/button.md` — button component usage
-11. `cms/disclosure.md` — details/summary disclosure component
-12. `cms/components.md` — master component spec (naming, tokens, accessibility, build rules)
-13. `cms/seo-best-practices.md` — SEO meta tags and social sharing
-14. `cms/folder-structure.md` — file organization rules
-15. `cms/setup.md` — project setup and customization
+1. `repo-map.md` — compact tree and symbol index of the entire repo; use it to locate files before opening them
+2. `PROJECT_BRIEF.md` — project intent and constraints
+3. `cms/platform-strategy.md` — what BrandOS is, who it serves, UX copy principles, and outcome signals
+4. `cms/layout.md` — HTML layout hierarchy and structure
+5. `cms/css-code-struture.md` — CSS organization and commenting
+6. `cms/js-code-structure.md` — JavaScript patterns and structure
+7. `cms/color.md` — color tokens and usage
+8. `cms/typography.md` — typography tokens and usage
+9. `cms/spacing.md` — spacing tokens and usage
+10. `cms/border.md` — border strategy and composable classes
+11. `cms/motion.md` — motion tokens (easings, durations, semantic page motion)
+12. `cms/button.md` — button component usage
+13. `cms/disclosure.md` — details/summary disclosure component
+14. `cms/components.md` — master component spec (naming, tokens, accessibility, build rules)
+15. `cms/seo-best-practices.md` — SEO meta tags and social sharing
+16. `cms/folder-structure.md` — file organization rules
+17. `cms/setup.md` — project setup and customization
 
 If any instruction conflicts with these documents, **the documents take precedence**.
 
@@ -82,8 +84,9 @@ feat(nav): fix mobile close behavior                         ← conventional co
 - Do not bypass layout primitives
 - Do not create new utilities without updating the design system documentation
 - Do not use primitive color tokens directly (use semantic tokens)
+- Do not hardcode duration or easing values in transitions or animations (use motion tokens — see `cms/motion.md`)
 - Do not use external icon libraries (Material Design, Font Awesome, Heroicons, etc.) — only brand icons from `assets/images/svg-icons/` are permitted. Check the Icon Registry in `cms/iconography.md` for available icons. If none fits, request a new icon from the design team.
-- Always use design system tokens for spacing, colors, and typography
+- Always use design system tokens for spacing, colors, typography, and motion
 
 If something cannot be implemented cleanly using existing patterns, **pause and ask for clarification**.
 
@@ -105,7 +108,7 @@ body → page-wrapper → page-content → section → padding-global → contai
 - Never mix responsibilities across layers
 
 ### Design Tokens
-See `cms/color.md`, `cms/typography.md`, `cms/spacing.md` for complete token reference.
+See `cms/color.md`, `cms/typography.md`, `cms/spacing.md`, `cms/motion.md` for complete token reference.
 
 **Critical rules:**
 - Use semantic tokens, not primitives
@@ -179,6 +182,7 @@ See `cms/components.md` for the master component spec.
 - Toast (`.toast`) — `cms/toast.md` — requires `assets/js/toast.js`
 - Code / Pre / Kbd — `cms/code.md`
 - Mark / Abbr / Figure — `cms/mark.md`
+- Table (`.table`) — `cms/table.md`
 - Asset Card (`.asset-card`) — `cms/asset-card.md`
 - Don't Card (`.card.dont-card`) — `cms/dont-card.md`
 - Book Cover (`.book-cover`) — `cms/book-cover.md` — used on overview/index pages
@@ -529,7 +533,7 @@ Before adding or moving anything, ask: **which layer does this belong to?**
 |---|---|---|---|
 | `foundation` | Tokens, layout primitives, utilities | `assets/css/design-system.css` (sections 1–10) + `cms/{color,typography,spacing,border,layout,layout-page,tokens,classes,components,iconography,what-is-a-design-system}.md` | ✅ Yes |
 | `core` | Reusable components + brand identity docs | `assets/css/design-system.css` (sections 11+) + all component `cms/*.md` files + all `cms/brand-*.md` files | ✅ Yes |
-| `docs-site` | Components that only power the BrandOS docs site itself | `assets/css/docs-site.css`, `assets/css/style.css`, `cms/{asset-card,book-cover,dont-card,sticky-bar,copy-button}.md` | ❌ No |
+| `docs-site` | Components, layout shell, and chrome that only power the BrandOS docs site itself | `assets/css/docs-site.css`, `cms/{asset-card,book-cover,dont-card,sticky-bar,copy-button}.md` | ❌ No |
 | `app` | BrandOS-specific tools, integrations, project content | `assets/css/{markdown,tools,ad-preview,bd-cursor,world-clock,qr-code,image-placeholder,svg-cleaner}.css`, `cms/{calculator,svg-cleaner,display-ad-preview,image-placeholder,world-clock,llms}-docs.md`, all `cms/website-*.md`, all `cms/projects-*.md`, `cms/{setup,client-setup,platform-strategy,folder-structure,access-control,...}.md` | ❌ No |
 
 ### The seven rules
@@ -577,6 +581,6 @@ Once layers are in place, packaging the design system as a standalone deliverabl
 - Copy `design-system.css` (no docs-site classes left in it)
 - Copy `cms/*.md` where `layer in {foundation, core}` (includes brand-*.md as the customization template)
 - Copy `theme.css` template
-- Skip `style.css`, `docs-site.css`, all `app`-layer CSS and docs
+- Skip `docs-site.css`, all `app`-layer CSS and docs
 
 This is the foundation for BrandOS as a deliverable — clients spinning up their own systems on top of ours.

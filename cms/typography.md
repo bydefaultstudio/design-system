@@ -270,11 +270,11 @@ The system uses four font stacks, each with a distinct role.
       <p style="margin: 0; font-family: var(--font-secondary); font-size: var(--font-3xl);">Typography is the voice of design</p>
     </div>
     <div class="block gap-m">
-      <p class="demo-eyebrow">Tertiary — IBM Plex Mono</p>
+      <p class="demo-eyebrow">Tertiary — Bugrino</p>
       <p style="margin: 0; font-family: var(--font-tertiary); font-size: var(--font-3xl);">Typography is the voice of design</p>
     </div>
     <div class="block gap-m">
-      <p class="demo-eyebrow">Quaternary — Bugrino</p>
+      <p class="demo-eyebrow">Quaternary — IBM Plex Mono</p>
       <p style="margin: 0; font-family: var(--font-quaternary); font-size: var(--font-3xl);">Typography is the voice of design</p>
     </div>
   </div>
@@ -283,15 +283,15 @@ The system uses four font stacks, each with a distinct role.
 ```css
 body { font-family: var(--font-primary); }
 h1, h2, h3, h4, h5, h6 { font-family: var(--font-secondary); }
-code, pre, kbd { font-family: var(--font-tertiary); }
+code, pre, kbd { font-family: var(--font-quaternary); }
 ```
 
 | Token | Font | Used For |
 | --- | --- | --- |
 | `var(--font-primary)` | Inclusive Sans | Body text, UI, labels |
 | `var(--font-secondary)` | RecifeText | Headings, blockquotes |
-| `var(--font-tertiary)` | IBM Plex Mono | Code, pre, kbd |
-| `var(--font-quaternary)` | Bugrino | TBD |
+| `var(--font-tertiary)` | Bugrino | Brand display, eyebrows, buttons, badges |
+| `var(--font-quaternary)` | IBM Plex Mono | Code, pre, kbd |
 
 ---
 

@@ -89,7 +89,8 @@ cms/
 
 assets/                     # Site assets (at project root)
 ├── css/
-│   ├── style.css           # Site layout and component styles
+│   ├── design-system.css   # Foundation + core: tokens, utilities, components
+│   ├── docs-site.css       # Docs-site shell, components, page chrome, auth
 │   └── markdown.css        # Markdown rendering styles
 ├── fonts/
 ├── icons/

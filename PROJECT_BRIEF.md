@@ -125,7 +125,7 @@ None known at this time
 
 - Modal / Dialog component (native `<dialog>` element with JS open/close)
 - Dropdown menu component
-- Navigation components (top nav, sidebar nav — currently docs-specific in style.css)
+- Navigation components (top nav, sidebar nav — currently docs-specific in docs-site.css)
 - Data table enhancements (sortable, selectable rows)
 - Skeleton loading state
 - Avatar / initials component

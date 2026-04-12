@@ -81,7 +81,7 @@ The `.table` class provides the default minimalistic style:
 | --- | --- |
 | Border collapse | `collapse` |
 | Width | `fit-content` (max 100%) |
-| Font size | `var(--font-s)` |
+| Font size | `var(--text-body)` |
 | Font variant | `tabular-nums` |
 | Header background | Transparent |
 | Header border | `var(--border-s) solid var(--border-secondary)` |

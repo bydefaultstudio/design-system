@@ -131,7 +131,7 @@ The theme file groups tokens by concern. Only uncomment and change what differs 
 
 | Category | Tokens | Purpose |
 |----------|--------|---------|
-| **Typography** | `var(--font-primary)`, `var(--font-secondary)`, `var(--font-tertiary)` | Client fonts (add `@font-face` if using local fonts) |
+| **Typography** | `var(--font-primary)`, `var(--font-secondary)`, `var(--font-tertiary)`, `var(--font-quaternary)` | Client fonts (add `@font-face` if using local fonts) |
 | **Neutral scale** | `var(--neutral-50)` through `var(--neutral-990)` | Grey ramp (uncommented by default with pure greys) |
 | **Text** | `var(--text-primary)`, `var(--text-secondary)`, `var(--text-accent)`, `var(--text-link)`, `var(--text-inverted)` | Core text colours |
 | **Backgrounds** | `var(--background-primary)`, `var(--background-secondary)` | Surface colours |

@@ -1,25 +1,54 @@
 /* =====================================================================
- * DOCS-SITE COMPONENTS
+ * DOCS-SITE STYLES
  * =====================================================================
  *
- * Components and patterns that only exist to power the BrandOS docs
- * site itself. None of these ship with the design system to other
- * products — they live here so design-system.css stays portable.
+ * Everything that only exists to power the BrandOS docs site itself —
+ * the layout shell (top nav, sidebar, TOC, footer), the docs page
+ * chrome (page header, prev/next, feedback widget), the auth UI, and
+ * the reusable docs-only components (sticky bar, copy button, asset
+ * card, book cover, don't card, token copy).
+ *
+ * None of this ships with the design system to other products — it
+ * lives here so design-system.css stays portable.
  *
  * If you find yourself adding something to this file, ask: "would this
  * be useful in a fresh React app or marketing site?" If yes, it
  * probably belongs in design-system.css instead.
  *
- * Loaded after style.css and design-system.css. See CLAUDE.md §17
- * (Layer Discipline) for the rules that govern this split.
+ * Loaded after design-system.css. See CLAUDE.md §17 (Layer Discipline)
+ * for the rules that govern this split.
  *
  * SECTIONS:
+ *
+ * Part A — Docs-site components (reusable patterns)
  *   1. Sticky Bar         — fixed sub-header used by docs nav
  *   2. Copy Button        — affordance for copying tokens / snippets
  *   3. Token Copy         — inline copy chips inside generated token tables
  *   4. Book Cover         — landing-page section "spine" cards
  *   5. Asset Card         — brand-asset showcase pattern
  *   6. Don't Card         — "do/don't" rule cards used in brand docs
+ *   7. Barba transitions  — cross-page slide animation
+ *
+ * Part B — Docs-site shell (singletons + page chrome)
+ *   8.  Docs code overrides  — markdown code rendering tweaks
+ *   9.  Color palette        — brand colour styleguide rows
+ *   10. Back to docs / top   — fixed nav buttons
+ *   11. Docs layout          — content grid, sidebar offsets
+ *   12. Top nav              — fixed header bar
+ *   13. Site sidebar         — fixed left rail (collapsible)
+ *   14. Nav sections         — sidebar disclosure tree
+ *   15. Docs footer
+ *   16. Page navigation      — prev / next links
+ *   17. Page feedback        — bottom-of-page feedback widget
+ *   18. Feedback modal
+ *   19. Docs main content    — page header, scroll offsets
+ *   20. Docs TOC             — sticky right rail
+ *   21. Demo preview         — live demos in docs
+ *   22. Docs utilities       — token tags, demo helpers
+ *   23. Code blocks          — markdown pre/code wrapper
+ *   24. Docs cards           — index/landing layout
+ *   25. Responsive           — media queries for the docs shell
+ *   26. Auth                 — login overlay, role-gated visibility, account
  * ===================================================================== */
 
 
@@ -110,6 +139,30 @@
 
 .sticky-bar .dropdown-trigger {
   padding: 0 var(--space-s);
+}
+
+/* -- Close button inside sticky bar (links back to section overview) -- */
+.sticky-bar-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  padding: 0 var(--space-m);
+  color: var(--text-primary);
+  text-decoration: none;
+  border-left: 1px solid var(--border-faded);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.sticky-bar-close:hover {
+  background: var(--background-faded);
+  color: var(--text-plain);
+}
+
+.sticky-bar-close .icn-svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
 }
 
 /* -- Sticky bar child elements -- */
@@ -526,4 +579,1828 @@ a.book-cover:focus-visible {
 
 .dont-card .card-description {
   font-size: var(--font-s);
+}
+
+/* ==========================================================================
+   Barba.js page transitions — Phase 3 directional slides
+   ========================================================================== */
+
+/*
+ * Grid-stacking trick: the wrapper is a single-cell CSS Grid and both
+ * containers (leaving + entering during a sync:true transition) are assigned
+ * to the same grid-area. When multiple grid items share a grid-area they
+ * stack in the same cell instead of flowing below each other. The cell's
+ * height is max(child heights), not sum — no mid-transition document reflow.
+ *
+ * Both containers stay in normal flow inside the cell, which means every
+ * layout rule they had in the old `.docs-main-area` stylesheet (margin-left,
+ * flex, min-height, background) keeps working unchanged. Responsive
+ * breakpoints, sidebar collapse, mobile overlay — all untouched.
+ *
+ * The JS animates only `transform`, `opacity`, and `z-index` (compositor-
+ * only properties that never trigger reflow). No position/top/left/width
+ * manipulation, no geometry measurements, no snap-back at the end.
+ */
+[data-barba="wrapper"] {
+  display: grid;
+  grid-template-areas: "stack";
+}
+
+[data-barba="wrapper"] > [data-barba="container"] {
+  grid-area: stack;
+  /*
+   * Grid items default to `min-width: auto` (content-based), so a wide
+   * descendant (a table, a long code string) would stretch the container
+   * past the viewport and create page-level horizontal scroll on mobile.
+   * Forcing min-width:0 lets the container shrink to its assigned cell
+   * width, which lets `.table-scroll` activate its own overflow-x as
+   * designed instead of inheriting an already-overflowing parent.
+   */
+  min-width: 0;
+}
+
+/*
+ * The wrapper gets `is-animating` for the duration of every Barba transition
+ * (added in barba.hooks.before, removed in barba.hooks.after). It locks the
+ * viewport so the off-screen container during a horizontal slide can't trigger
+ * a horizontal scrollbar, and it disables interaction so a second click during
+ * the animation can't kick off a second transition mid-flight.
+ */
+[data-barba="wrapper"].is-animating {
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/*
+ * Promote the swapping containers to their own compositor layers during a
+ * transition. Without will-change the browser repaints the entire page on
+ * every frame of the slide. Cleared automatically after the animation by
+ * removing the wrapper class.
+ */
+[data-barba="wrapper"].is-animating > [data-barba="container"] {
+  will-change: transform, opacity;
+}
+
+
+/* =====================================================================
+ * PART B — DOCS-SITE SHELL
+ * =====================================================================
+ *
+ * Layout, navigation, page chrome, and auth UI for the BrandOS docs
+ * site. Singletons (one top nav, one sidebar, one footer) plus the
+ * media queries that adapt the shell to small screens.
+ * ===================================================================== */
+
+
+/* ------ DOCS CODE OVERRIDES ------ */
+
+/* Docs-specific code rendering for markdown content */
+code br {
+  display: none;
+}
+
+del code {
+  text-decoration: inherit;
+}
+
+samp {
+  font-family: var(--font-quaternary);
+  font-size: var(--text-body);
+}
+
+/* -- Code blocks (docs overrides) -- */
+pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  word-wrap: normal;
+  line-height: var(--line-height-2xl);
+  background-color: var(--background-darker);
+  transition: border-color 0.3s ease;
+  min-height: 67px;
+}
+
+pre > code {
+  white-space: pre;
+}
+
+pre code {
+  display: inline;
+  overflow: visible;
+  line-height: var(--line-height-2xl);
+  word-wrap: normal;
+}
+
+/* -- Code inside headings -- */
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+  padding: 0 var(--space-2xs);
+  font-size: inherit;
+}
+
+/* -- Horizontal rules (docs spacing override) -- */
+hr {
+  margin: var(--space-2xl) 0;
+}
+
+/* -- Page layout structure -- */
+.page-wrapper {
+  width: 100%;
+}
+
+.page-content {
+  width: 100%;
+}
+
+
+/* ------ COLOR PALETTE (STYLEGUIDE) ------ */
+
+.color-list {
+  overflow: hidden;
+}
+
+.color-row {
+  display: flex;
+  align-items: center;
+  padding: var(--space-xl) var(--space-xl);
+  font-size: var(--font-m);
+  font-weight: var(--font-weight-medium);
+  cursor: default;
+  position: relative;
+  height: 80px;
+}
+
+.color-row-name {
+  pointer-events: none;
+}
+
+.color-row.is-text-dark .color-row-name,
+.color-row.is-text-dark .color-copy-btn {
+  color: var(--black);
+}
+
+.color-row.is-text-light .color-row-name,
+.color-row.is-text-light .color-copy-btn {
+  color: var(--white);
+}
+
+.color-row-actions {
+  display: none;
+  gap: var(--space-s);
+  margin-left: auto;
+}
+
+.color-row:hover .color-row-actions,
+.color-row:focus-within .color-row-actions {
+  display: flex;
+}
+
+.color-copy-btn {
+  color: inherit;
+  background: none;
+  border: none;
+  font-size: var(--font-xs);
+  font-weight: var(--font-weight-semi-bold);
+  cursor: pointer;
+  padding: var(--space-2xs) var(--space-s);
+
+}
+
+.color-copy-btn:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2.5px;
+}
+
+/* -- Button-flavoured color row (used in the brand book) --
+ * The whole row is the copy target. Hover reveals an ::after copy icon
+ * (CSS mask of the copy SVG); on .is-copied the icon swaps to a check.
+ * Inline background-color always wins over the .copy-btn.is-copied reset. */
+button.color-row {
+  width: 100%;
+  border: none;
+  text-align: left;
+  font-family: var(--font-quaternary);
+  font-size: var(--font-s);
+  cursor: pointer;
+  justify-content: space-between;
+  transition: filter 0.15s;
+}
+
+button.color-row:hover {
+  filter: brightness(0.96);
+}
+
+button.color-row::after {
+  content: "";
+  display: inline-block;
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: currentColor;
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z' fill='black'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z' fill='black'/></svg>");
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+          mask-position: center;
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  opacity: 0.6;
+  transition: opacity 0.15s;
+}
+
+button.color-row:hover::after,
+button.color-row:focus-visible::after {
+  opacity: 1;
+}
+
+button.color-row.is-copied::after {
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z' fill='black'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z' fill='black'/></svg>");
+  opacity: 1;
+}
+
+/* Don't let .copy-btn.is-copied global reset bleed into our coloured row */
+button.color-row.is-copied {
+  color: inherit;
+  border-color: inherit;
+}
+
+
+/* NOTE: .table moved to design-system.css §25 — see CLAUDE.md §17 (Layer Discipline) */
+
+
+/* ------ BACK TO DOCS / BACK TO TOP ------ */
+
+.docs-back-btn-wrapper {
+  position: fixed;
+  top: var(--space-m);
+  right: var(--space-m);
+  z-index: 100;
+}
+
+.back-to-top-wrapper {
+  position: fixed;
+  right: var(--space-m);
+  bottom: var(--space-m);
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.back-to-top-wrapper.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/* ------ 1. DOCS LAYOUT ------ */
+
+
+:root {
+  --top-nav-height: 80px;
+  --sticky-bar-height: 70px;
+  --sidebar-width: 280px;
+  --sidebar-collapsed-width: 64px;
+  --toc-width: 220px;
+  --toc-top-offset: calc(var(--top-nav-height) + var(--sticky-bar-height) + var(--space-xl));
+  --toc-border: color-mix(in srgb, var(--text-primary) 10%, transparent);
+  --toc-border-active: color-mix(in srgb, var(--text-primary) 30%, transparent);
+  --sidebar-transition: 0.3s ease;
+}
+
+
+/* Smooth scroll for same-page anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Simple block wrapper — sidebar is now position: fixed via nav.js */
+.docs-container {
+  min-height: 100vh;
+}
+
+/* Content area offset for fixed header + sidebar */
+.docs-main-area {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  margin-top: var(--top-nav-height);
+  margin-left: var(--sidebar-width);
+  transition: margin-left var(--sidebar-transition);
+  background-color: var(--background-primary);
+}
+
+/* Standalone page wrapper offset — combo class keeps base .page-wrapper untouched */
+.page-wrapper.has-sidebar {
+  width: auto;
+  margin-top: var(--top-nav-height);
+  margin-left: var(--sidebar-width);
+  transition: margin-left var(--sidebar-transition);
+}
+
+/* Collapsed sidebar: shrink content margin */
+body.sidebar-collapsed .docs-main-area,
+body.sidebar-collapsed .page-wrapper.has-sidebar {
+  margin-left: var(--sidebar-collapsed-width);
+}
+
+/* No sidebar: full-width content */
+body.no-sidebar .docs-main-area,
+body.no-sidebar .page-wrapper.has-sidebar {
+  margin-left: 0;
+}
+
+.docs-content-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Default: single column */
+  gap: var(--space-2xl);
+  max-width: 1080px;
+  margin: 0 auto;
+  width: 100%;
+  padding: var(--space-xl) var(--space-xl) 0;
+  flex: 1;
+}
+
+/* When TOC exists, use 2-column layout */
+.docs-content-grid:has(.docs-toc) {
+  grid-template-columns: 1fr var(--toc-width);
+}
+
+
+/* ------ 1B. TOP NAV (Fixed) ------ */
+
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--top-nav-height);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-l);
+  background: var(--background-top-nav);
+  color: var(--text-top-nav);
+  border-bottom: var(--border-s) solid var(--black-alpha-10);
+}
+
+.top-nav-left {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  gap: var(--space-m);
+  min-width: 0;
+}
+
+.top-nav-right {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+}
+
+.top-nav-logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.svg-logo.nav-logo {
+  display: block;
+  height: 50px;
+  width: auto;
+  color: var(--text-plain);
+}
+
+.svg-logo.nav-logo svg {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+
+/* Top-nav links — standalone interactive items in top-nav-right (login, theme toggle) */
+.top-nav-link {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  gap: var(--space-s);
+  padding: 0 var(--space-m);
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: var(--font-primary);
+  font-size: var(--font-s);
+  line-height: 1;
+  text-decoration: none;
+  transition: color 0.2s, background 0.2s;
+}
+
+.top-nav-link:hover {
+  color: var(--text-plain);
+  background: var(--background-faded);
+}
+
+.top-nav-link .icn-svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* -- Top nav dropdown overrides -- */
+/* Dropdown triggers in the top nav have no vertical padding (bar height provides it) */
+.top-nav-right .dropdown-trigger {
+  padding: 0 var(--space-m);
+}
+
+/* Swap icons based on dark mode state */
+[data-theme="dark"] .dark-mode-icon-light { display: none; }
+:root:not([data-theme="dark"]) .dark-mode-icon-dark { display: none; }
+
+/* Hamburger — visible on mobile only, uses top-nav-link pattern */
+.top-nav-hamburger {
+  display: none;
+}
+
+/* Swap hamburger/close icons */
+.hamburger-icon-close { display: none; }
+body.mobile-nav-open .hamburger-icon-open { display: none; }
+body.mobile-nav-open .hamburger-icon-close { display: block; }
+
+/* Auth slot in top nav (compact login/user) */
+.top-nav-auth-container {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+}
+
+.top-nav-auth-container .auth-login-btn {
+  width: auto;
+}
+
+
+/* ------ 1C. SITE SIDEBAR (Fixed) ------ */
+
+.site-sidebar {
+  position: fixed;
+  top: var(--top-nav-height);
+  left: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
+  z-index: 50;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--background-sidebar);
+  color: var(--text-sidebar);
+  border-right: var(--border-s) solid var(--black-alpha-10);
+  padding: var(--space-l) 0;
+  display: flex;
+  flex-direction: column;
+  transition: width var(--sidebar-transition), padding var(--sidebar-transition);
+}
+
+/* Sidebar header: just the toggle button now (logo moved to header) */
+.site-sidebar-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 var(--space-m);
+  margin-bottom: var(--space-s);
+  min-height: 32px;
+}
+
+/* Desktop sidebar toggle button */
+.site-sidebar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-primary);
+  padding: 0;
+  transition: color 0.2s, background 0.2s;
+}
+
+.site-sidebar-toggle:hover {
+  color: var(--text-plain);
+  background: var(--background-faded);
+}
+
+/* Sidebar toggle: swap between open/close icons */
+.sidebar-icon-close { display: none; }
+body.sidebar-collapsed .sidebar-icon-open { display: none; }
+body.sidebar-collapsed .sidebar-icon-close { display: block; }
+
+/* Sidebar nav content wrapper */
+.site-sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  transition: opacity 0.2s ease;
+}
+
+/* Mobile sidebar backdrop */
+.site-sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  top: var(--top-nav-height);
+  z-index: 49;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+body.mobile-nav-open .site-sidebar-backdrop {
+  display: block;
+}
+
+/* --- Collapsed sidebar state (desktop) --- */
+
+body.sidebar-collapsed .site-sidebar {
+  width: var(--sidebar-collapsed-width);
+  padding: var(--space-m) 0;
+  overflow: visible;
+}
+
+body.sidebar-collapsed .site-sidebar-header {
+  justify-content: center;
+}
+
+body.sidebar-collapsed .site-sidebar-content {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  overflow: visible;
+}
+
+/* Collapsed: hide text, lists, toggle chevrons, labels */
+body.sidebar-collapsed .nav-section-toggle span:not(.nav-toggle-icon),
+body.sidebar-collapsed .nav-section-toggle .nav-toggle-icon,
+body.sidebar-collapsed .nav-list,
+body.sidebar-collapsed .nav-label,
+body.sidebar-collapsed .nav-link > span,
+body.sidebar-collapsed .nav-home > span {
+  display: none;
+}
+
+/* Collapsed: center icons in the narrow strip */
+body.sidebar-collapsed .nav-section-toggle,
+body.sidebar-collapsed .nav-link,
+body.sidebar-collapsed .nav-home {
+  justify-content: center;
+  padding: var(--space-l) 0;
+  gap: 0;
+}
+
+/* Collapsed: remove open section background */
+body.sidebar-collapsed .nav-section[open] {
+  background: none;
+}
+
+/* Sidebar tooltips: only visible when collapsed */
+.site-sidebar [data-tooltip]::before {
+  display: none;
+}
+body.sidebar-collapsed .site-sidebar [data-tooltip]:hover::before,
+body.sidebar-collapsed .site-sidebar [data-tooltip]:focus-visible::before {
+  display: block;
+}
+
+
+/* ------ 1D. NAV SECTIONS & LINKS ------ */
+
+.nav-section {
+  /* margin-bottom: var(--space-s); */
+}
+
+/* Desktop: Toggle styling */
+.nav-section-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  padding: var(--space-l);
+  margin-bottom: 0;
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+  font-size: var(--font-m);
+  line-height: 1;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  transition: color 0.2s, background 0.2s;
+}
+
+.nav-section-toggle:hover {
+  color: var(--text-secondary);
+  background: var(--background-faded);
+}
+
+/* Remove default WebKit arrow */
+.nav-section-toggle::-webkit-details-marker {
+  display: none;
+}
+
+/* Override global disclosure chevron — nav uses its own SVG icon */
+.nav-section-toggle::before {
+  display: none;
+}
+
+/* Section icon link (wraps .icn-svg inside summary) */
+.nav-section-icon {
+  display: flex;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Toggle + link shared icon sizing */
+.nav-section-toggle .icn-svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+}
+
+/* Toggle icon styling */
+.nav-toggle-icon {
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.3s ease;
+  margin-left: auto;
+}
+
+.nav-toggle-icon svg {
+  display: block;
+  width: 10px;
+  height: 10px;
+}
+
+/* Rotate icon when open (90deg to point down) */
+.nav-section[open] .nav-toggle-icon {
+  transform: rotate(90deg);
+}
+
+/* Desktop: Show/hide nav-list based on details open state */
+.nav-section:not([open]) .nav-list {
+  display: none;
+}
+
+.nav-section[open] {
+  background: var(--background-faded);
+}
+
+body:not(.sidebar-collapsed) .nav-section[open] .nav-list {
+  display: block;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-list li {
+  margin: 0;
+}
+
+.nav-home {
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  padding: var(--space-l);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-family: var(--font-primary);
+  font-size: var(--font-m);
+    line-height: var(--line-height-l);
+  transition: color 0.2s, background 0.2s;
+}
+
+.nav-link:hover {
+  color: var(--text-plain);
+  background: var(--background-faded);
+}
+
+.nav-link:focus-visible {
+  outline: 2px solid var(--text-link);
+  outline-offset: -2px;
+}
+
+.nav-link .icn-svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+}
+
+.nav-link-active {
+  color: var(--text-link);
+  font-weight: var(--font-weight-semi-bold);
+  background: var(--background-faded);
+}
+
+.nav-list .nav-link {
+  padding: var(--space-l) var(--space-l) var(--space-l) var(--space-4xl);
+}
+
+.nav-list li:last-child .nav-link {
+  padding-bottom: var(--space-xl);
+}
+
+.nav-label {
+  padding: var(--space-s) var(--space-m) var(--space-s) var(--space-xl);
+  margin-top: var(--space-s);
+  font-size: var(--font-2xs);
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--text-faded);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  list-style: none;
+}
+
+.nav-divider {
+  height: 0;
+  border-top: var(--border-s) solid var(--border-faded);
+  margin: var(--space-m) 0;
+}
+
+.nav-client-label {
+  padding: var(--space-s) var(--space-m);
+  font-size: var(--font-2xs);
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--text-faded);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+
+/* ------ 2. DOCS FOOTER ------ */
+
+.docs-footer {
+  background: var(--background-primary);
+  border-top: var(--border-s) solid var(--border-faded);
+  padding: var(--space-2xl) 0;
+  margin-top: auto;
+  width: 100%;
+}
+
+.docs-footer-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.docs-footer-text {
+  color: var(--text-secondary);
+  font-size: var(--font-s);
+  margin: 0;
+}
+
+.back-to-top-btn {
+  --button-primary: var(--background-secondary);
+  --button-text: var(--text-primary);
+}
+
+
+/* ------ 2B. PAGE NAVIGATION (PREV / NEXT) ------ */
+
+.page-nav {
+  border-top: var(--border-s) solid var(--border-faded);
+}
+
+.page-nav-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.page-nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  padding: var(--space-xl) var(--space-2xl);
+  border: none;
+  background: var(--background-primary);
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: background-color 0.15s ease;
+}
+
+.page-nav-link:hover {
+  background-color: var(--background-faded);
+  color: var(--text-primary);
+}
+
+.page-nav-placeholder {
+  visibility: hidden;
+}
+
+.page-nav-next {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.page-nav-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  min-width: 0;
+}
+
+.page-nav-label {
+  font-size: var(--font-xs);
+  font-family: var(--font-tertiary);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-l);
+
+}
+
+.page-nav-section {
+  font-size: var(--font-2xs);
+  color: var(--text-faded);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: var(--font-weight-medium);
+}
+
+.page-nav-title {
+  font-family: var(--font-secondary);
+  line-height: 1.3;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.page-nav-arrow {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  transition: color 0.15s ease;
+}
+
+.page-nav-link:hover .page-nav-arrow {
+  color: var(--text-link);
+}
+
+
+/* ------ 2C. PAGE FEEDBACK ------ */
+
+.page-feedback {
+  border-top: var(--border-s) solid var(--border-faded);
+  padding: var(--section-m) 0;
+  text-align: center;
+}
+
+.page-feedback-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-l);
+}
+
+.page-feedback-prompt {
+  margin: 0;
+}
+
+.page-feedback-description {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Success state — hidden by default, shown when .is-submitted is set */
+.page-feedback-success {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-s);
+}
+
+.page-feedback-success-icon {
+  color: var(--status-success);
+}
+
+.page-feedback-success-icon .icn-svg {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.page-feedback-success-title {
+  margin: 0;
+}
+
+.page-feedback.is-submitted .page-feedback-prompt,
+.page-feedback.is-submitted .page-feedback-description,
+.page-feedback.is-submitted .button-group {
+  display: none;
+}
+
+.page-feedback.is-submitted .page-feedback-success {
+  display: flex;
+}
+
+
+/* ------ 2D. FEEDBACK MODAL ------ */
+
+.feedback-modal {
+  background: var(--background-primary);
+  color: var(--text-primary);
+  padding: var(--space-2xl);
+  width: min(480px, calc(100vw - var(--space-2xl) * 2));
+  max-height: 85vh;
+  border: none;
+}
+
+.feedback-modal::backdrop {
+  background: var(--background-modal);
+  backdrop-filter: blur(2px);
+}
+
+.feedback-modal-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.feedback-modal-title {
+  font-size: var(--font-3xl);
+  margin: 0 0 var(--space-xs) 0;
+}
+
+.feedback-modal-subtitle {
+  font-size: var(--font-s);
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-l) 0;
+}
+
+.feedback-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.feedback-modal-actions {
+  margin-top: var(--space-l);
+  justify-content: flex-end;
+}
+
+.feedback-error {
+  font-size: var(--font-s);
+  color: var(--status-danger);
+  margin-top: var(--space-s);
+}
+
+
+/* ------ 3. DOCS MAIN CONTENT ------ */
+
+.docs-main {
+  width: 100%;
+  padding: var(--space-m) 0 var(--space-5xl) 0;
+  overflow: hidden;
+  min-width: 0; /* allow shrinking inside grid/flex parent */
+}
+
+/* Offset anchor targets — accounts for fixed header + sticky bar */
+h1[id],
+h2[id],
+h3[id],
+section[id] {
+  scroll-margin-top: calc(var(--top-nav-height) + var(--sticky-bar-height) + var(--space-xl));
+}
+
+/* -- Page header (full width, sits between sticky bar and content grid) -- */
+.page-header {
+  width: 100%;
+  padding-top: var(--section-l);
+  padding-bottom: var(--section-l);
+  background: var(--background-faded);
+  border-bottom: var(--border-s) solid var(--border-faded);
+  text-wrap: balance;
+}
+
+.page-header .container-small {
+  text-align: center;
+}
+
+.page-header h1 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: var(--space-m);
+}
+
+.page-header .eyebrow {
+  text-align: center;
+  margin: 0 0 var(--space-s);
+}
+
+.page-subtitle {
+  color: var(--text-secondary);
+  font-size: var(--font-m);
+  margin-top: 0;
+  margin-bottom: var(--space-m);
+  text-align: center;
+}
+
+.page-source-link,
+.page-action-link {
+  display: inline-block;
+}
+
+/* -- Brand book section spacing -- */
+.brand-book-section {
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-3xl);
+  border-top: var(--border-s) solid var(--border-faded);
+}
+
+.brand-book-section:first-of-type {
+  border-top: none;
+  padding-top: var(--space-l);
+}
+
+.brand-book-section > h2 {
+  margin-top: 0;
+}
+
+.page-source-link,
+.page-action-link {
+  display: inline-block;
+}
+
+
+/* ------ 4. DOCS TABLE OF CONTENTS ------ */
+
+.docs-toc {
+  position: sticky;
+  top: var(--toc-top-offset);
+  height: fit-content;
+  max-height: calc(100vh - var(--toc-top-offset));
+  overflow-y: auto;
+  padding: var(--space-l);
+}
+
+.toc-header {
+  display: block;
+  font-size: var(--font-xs);
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--text-faded);
+  margin-bottom: var(--space-m);
+}
+
+/* TOC wrapper and toc styles are handled by markdown.css */
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc-item {
+  margin: 0;
+}
+
+.toc-link {
+  color: var(--text-plain);
+  text-decoration: none;
+  font-size: var(--font-s);
+  font-weight: var(--font-weight-medium);
+  display: block;
+  padding: var(--space-s) 0 var(--space-s) var(--space-l);
+  border-left: var(--border-m) solid var(--toc-border);
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.toc-link:hover {
+  color: var(--text-link);
+}
+
+.toc-link-active {
+  color: var(--text-link);
+  font-weight: var(--font-weight-semi-bold);
+  border-left-color: var(--toc-border-active);
+}
+
+.toc-empty {
+  color: var(--text-faded);
+  font-size: var(--font-s);
+}
+
+
+/* ------ 5. DEMO PREVIEW ------ */
+
+.demo-preview {
+  padding: var(--space-xl);
+  border: var(--border-s) solid var(--border-faded);
+  margin-bottom: 1rem;
+}
+
+.demo-preview.is-joined {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.demo-preview.is-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-xl);
+}
+
+.demo-preview .sticky-bar {
+  top: 0;
+}
+
+.demo-eyebrow {
+  margin: 0;
+  font-size: var(--font-s);
+  color: var(--text-faded);
+}
+
+
+/* ------ DOCS UTILITIES ------ */
+/* Docs-specific display classes — not part of the design system */
+
+/* -- Token labels -- */
+.token-tag {
+  display: inline-block;
+  font-size: var(--font-2xs);
+  font-family: var(--font-quaternary);
+  color: var(--text-plain);
+  background-color: var(--background-faded);
+  padding: var(--2xs) var(--s);
+  align-self: flex-start;
+  margin-bottom: var(--space-m);
+}
+
+.token-block {
+  padding: var(--space-s) 0;
+}
+
+/* -- Demo specific styles -- */
+.type-demo > h1,
+.type-demo > h2,
+.type-demo > h3,
+.type-demo > h4,
+.type-demo > h5,
+.type-demo > h6 {
+  margin-top: var(--space-none);
+  margin-bottom: var(--space-xl);
+}
+
+.type-demo > details {
+  margin-bottom: var(--space-2xl);
+}
+
+.type-demo > details .token-tag {
+  margin-bottom: var(--space-none);
+  padding: var(--space-none) var(--space-2xs);
+}
+
+.button-demo > .button {
+  margin-top: var(--space-none);
+  margin-bottom: var(--space-l);
+}
+
+.button-demo > .token-tag {
+  margin-top: var(--space-none);
+  margin-bottom: var(--space-none);
+}
+
+/* -- Demo state classes -- */
+.demo-hover.button {
+  transform: scale(1.05);
+}
+
+.demo-active.button {
+  transform: scale3d(1.0, 1.0, 1.0);
+}
+
+/* ------ 6. CODE BLOCKS ------ */
+
+.code-block-wrapper {
+  position: relative;
+  margin-bottom: 1rem;
+  display: grid;
+}
+
+.code-block-wrapper pre code {
+  display: block;
+  padding-right: 0;
+  background-color: transparent;
+  font-family: inherit;
+}
+
+.code-block-wrapper .copy-btn {
+  position: absolute;
+  top: var(--space-m);
+  right: var(--space-m);
+  z-index: 10;
+}
+
+
+/* ------ 7. DOCS CARDS (Index Page) ------ */
+
+.docs-hero {
+  text-align: center;
+  margin-bottom: var(--space-6xl);
+}
+
+.docs-hero-title {
+  font-size: var(--font-8xl);
+  margin-bottom: var(--space-l);
+}
+
+.docs-hero-description {
+  font-size: var(--font-xl);
+  color: var(--text-secondary);
+}
+
+.docs-section {
+  margin-bottom: var(--space-3xl);
+}
+
+.docs-section-title {
+  font-size: var(--font-4xl);
+  margin-bottom: var(--space-xl);
+  color: var(--text-plain);
+}
+
+/* ------ 8. RESPONSIVE ------ */
+
+/* ---- Tablet: TOC below content ---- */
+@media (max-width: 1024px) {
+
+  .docs-content-grid {
+    grid-template-columns: 1fr; /* TOC below content on tablet */
+  }
+
+  .docs-toc {
+    position: static;
+    max-height: none;
+  }
+}
+
+/* ---- Mobile: Overlay sidebar ---- */
+@media (max-width: 768px) {
+
+  /* -- Grid: single column on mobile -- */
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cols-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .cols-4 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Top nav: remove side padding, show hamburger */
+  .top-nav {
+    padding: 0;
+  }
+
+  .svg-logo.nav-logo {
+    height: 45px;
+  }
+
+  /* Mobile top-nav right side: icons only — hide text labels, tighten padding */
+  .top-nav-right .top-nav-link-label {
+    display: none;
+  }
+
+  .top-nav-right .top-nav-link,
+  .top-nav-right .dropdown-trigger {
+    padding: 0 var(--space-l);
+    gap: var(--space-xs);
+  }
+
+  .top-nav-hamburger {
+    display: flex;
+    padding: 0 var(--space-l);
+  }
+
+  /* No-sidebar pages: logo is first child, supply the left padding the hamburger would have */
+  .top-nav-left > .top-nav-logo-link:first-child {
+    padding-left: var(--space-l);
+  }
+
+  /* Hide desktop sidebar toggle on mobile */
+  .site-sidebar-toggle {
+    display: none;
+  }
+
+  /* Sidebar: off-screen by default, slides in as overlay */
+  .site-sidebar {
+    width: 75vw;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 101;
+  }
+
+  body.mobile-nav-open .site-sidebar {
+    transform: translateX(0);
+    padding: 0 0 var(--space-l) 0;
+  }
+
+  /* Sidebar header: not needed on mobile (toggle is in header) */
+  .site-sidebar-header {
+    display: none;
+  }
+
+  /* Content: full width on mobile (no sidebar offset) */
+  .docs-main-area,
+  .page-wrapper.has-sidebar {
+    margin-left: 0;
+    transition: none;
+  }
+
+  /* Override collapsed state on mobile — always show full sidebar */
+  body.sidebar-collapsed .docs-main-area,
+  body.sidebar-collapsed .page-wrapper.has-sidebar {
+    margin-left: 0;
+  }
+
+  body.sidebar-collapsed .site-sidebar {
+    width: 75vw;
+    padding: 0;
+  }
+
+  body.sidebar-collapsed .site-sidebar-content {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  body.sidebar-collapsed .nav-section-toggle span:not(.nav-toggle-icon),
+  body.sidebar-collapsed .nav-section-toggle .nav-toggle-icon,
+  body.sidebar-collapsed .nav-list,
+  body.sidebar-collapsed .nav-label,
+  body.sidebar-collapsed .nav-link > span,
+  body.sidebar-collapsed .nav-home > span {
+    display: revert;
+  }
+
+  body.sidebar-collapsed .nav-section-toggle,
+  body.sidebar-collapsed .nav-link,
+  body.sidebar-collapsed .nav-home {
+    justify-content: flex-start;
+    padding: var(--space-l) var(--space-m);
+    gap: var(--space-s);
+  }
+
+  body.sidebar-collapsed .nav-section[open] {
+    background: var(--background-faded);
+  }
+
+  body:not(.sidebar-collapsed) .nav-section[open] .nav-list,
+  body.sidebar-collapsed .nav-section[open] .nav-list {
+    display: block;
+  }
+
+  .docs-content-grid {
+    display: block;
+    padding-left: var(--space-l);
+    padding-right: var(--space-l);
+    padding-top: 0;
+  }
+
+  .docs-toc {
+    position: static;
+    max-height: none;
+    display: none;
+  }
+
+  /* Mobile: Home link separator */
+  .nav-home {
+    margin-bottom: 0;
+    padding-bottom: var(--space-s);
+    border-bottom: var(--border-s) solid var(--border-faded);
+  }
+
+  /* Mobile: Collapsible nav sections */
+  .nav-section {
+    margin-bottom: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    border-bottom: var(--border-s) solid var(--border-faded);
+    transition: none;
+  }
+
+  .nav-section:last-of-type {
+    border-bottom: none;
+  }
+
+  .nav-section:hover {
+    background: none;
+  }
+
+  /* Toggle takes full width */
+  .nav-section-toggle {
+    width: 100%;
+    padding: var(--space-xl) var(--space-l);
+    font-size: var(--font-xl);
+  }
+
+  /* Show/hide nav-list based on details open state */
+  .nav-section:not([open]) .nav-list {
+    display: none;
+  }
+
+  .nav-section[open] .nav-list {
+    display: block;
+    margin-top: 0;
+    padding-bottom: var(--space-s);
+  }
+
+  /* Child links: full-width, no borders */
+  .nav-link {
+    padding: var(--space-xl) var(--space-l);
+    white-space: normal;
+    font-size: var(--font-xl);
+  }
+
+  .nav-list li {
+    margin: 0;
+  }
+
+  /* Page nav: single column */
+  .page-nav-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .page-nav-placeholder {
+    display: none;
+  }
+
+  .page-nav-prev {
+    border-bottom: var(--border-s) solid var(--border-faded);
+  }
+
+  .page-nav-next {
+    flex-direction: row;
+    text-align: left;
+    margin-left: 0;
+  }
+
+  /* Feedback modal: full-width on mobile */
+  .feedback-modal {
+    width: calc(100vw - var(--space-xl) * 2);
+    padding: var(--space-xl);
+  }
+
+  /* Page header: taller hero on mobile */
+  .page-header {
+    min-height: 30vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Auth: stack user info vertically on mobile */
+  .auth-user-info {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .auth-user-details {
+    margin-bottom: var(--space-xs);
+  }
+}
+
+
+/* ------ AUTH ------ */
+
+/* --- Auth Loading State --- */
+
+body.auth-loading .docs-main-area,
+body.auth-loading .page-wrapper.has-sidebar {
+  visibility: hidden;
+}
+
+body.auth-loading .svg-logo.nav-logo {
+  visibility: hidden;
+}
+
+body.auth-ready .docs-main-area,
+body.auth-ready .page-wrapper.has-sidebar {
+  visibility: visible;
+}
+
+body.auth-ready .svg-logo.nav-logo {
+  visibility: visible;
+}
+
+
+.auth-login-btn {
+  width: 100%;
+}
+
+/* --- Logged-in User Info --- */
+
+.auth-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.auth-user-details {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.auth-user-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--background-faded);
+  color: var(--text-inverted);
+  font-size: var(--font-xs);
+  font-weight: var(--font-weight-semi-bold);
+  flex-shrink: 0;
+}
+
+.auth-user-role {
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
+  text-transform: capitalize;
+}
+
+.auth-logout-btn {
+  width: 100%;
+}
+
+/* --- Element-Level Role Gating --- */
+
+[data-auth-role] {
+  display: none;
+}
+
+[data-auth-role="public"] {
+  display: revert;
+}
+
+body.auth-role-client [data-auth-role="client"],
+body.auth-role-team [data-auth-role="team"],
+body.auth-role-team [data-auth-role="client"],
+body.auth-role-admin [data-auth-role="admin"],
+body.auth-role-admin [data-auth-role="team"],
+body.auth-role-admin [data-auth-role="client"] {
+  display: revert;
+}
+
+/* Public-only visitors: hide sidebar, keep header */
+body.auth-role-public:not(.auth-role-client) .site-sidebar {
+  display: none;
+}
+body.auth-role-public:not(.auth-role-client) .page-wrapper.has-sidebar {
+  margin-left: 0;
+}
+
+/* --- Login Overlay --- */
+
+.login-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: var(--background-primary);
+  padding: var(--space-l);
+}
+
+.login-overlay.is-visible {
+  display: flex;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-logo {
+  height: 60px;
+  margin-bottom: var(--space-l);
+  color: var(--text-primary);
+}
+
+.login-logo svg {
+  height: 100%;
+  width: auto;
+}
+
+.login-title {
+  font-size: var(--font-3xl);
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-s);
+  text-align: center;
+}
+
+.login-subtitle {
+  font-size: var(--font-m);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-l);
+  text-align: center;
+}
+
+.login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.login-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+}
+
+.login-form label {
+  color: var(--text-secondary);
+}
+
+.login-submit-btn {
+  width: 100%;
+  margin-top: var(--space-2xs);
+}
+
+.login-error {
+  display: none;
+  font-size: var(--font-s);
+  color: var(--status-error);
+  text-align: center;
+}
+
+.login-success {
+  display: none;
+  font-size: var(--font-s);
+  color: var(--status-success);
+  text-align: center;
+}
+
+.login-forgot-btn {
+  background: none;
+  border: none;
+  padding: var(--space-s) 0;
+  margin-top: var(--space-2xs);
+  /* font-size: var(--font-xs); */
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+  min-height: 44px;
+  transition: color 0.2s;
+}
+
+.login-forgot-btn:hover {
+  color: var(--text-link);
+}
+
+/* --- Password Field (input + show/hide toggle) --- */
+
+.password-field {
+  position: relative;
+}
+
+.password-field input {
+  padding-right: var(--space-4xl);
+}
+
+.password-toggle {
+  position: absolute;
+  right: var(--space-m);
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-faded);
+  padding: var(--space-xs);
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.password-toggle:hover {
+  color: var(--text-primary);
+}
+
+.password-toggle .icn-svg {
+  width: 20px;
+  height: 20px;
+}
+
+.login-reset-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.login-reset-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+}
+
+.login-reset-form label {
+  color: var(--text-secondary);
+}
+
+/* --- Login Page (standalone /auth/login.html) --- */
+
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - var(--top-nav-height));
+  margin-top: var(--top-nav-height);
+  padding: var(--space-l);
+  background: var(--background-primary);
+}
+
+/* --- Set Password Form --- */
+
+.login-set-password-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.login-set-password-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+}
+
+.login-set-password-form label {
+  color: var(--text-secondary);
+}
+
+/* --- Account Page --- */
+
+.account-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  padding-top: var(--space-m);
+  border-top: var(--border-s) solid var(--border-faded);
+}
+
+.account-section .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+}
+
+.account-section label {
+  color: var(--text-secondary);
+}
+
+/* --- Access Denied Page --- */
+
+.access-denied-wrapper {
+  min-height: 60vh;
+  justify-content: center;
+  text-align: center;
+}
+
+.access-denied-wrapper p {
+  color: var(--text-secondary);
+}
+
+.access-denied-icon {
+  width: 2.5rem;
+  height: 2.5rem;
 }
