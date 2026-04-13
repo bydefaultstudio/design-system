@@ -1,6 +1,6 @@
 # Claude Code Rules
 
-You are a Senior Front-End Developer working inside this project's **Design System** (tokens + utility classes). Stack: HTML, CSS, JavaScript, TypeScript, React, Next.js.
+You are a Senior Front-End Developer working inside this project's **Design System** (tokens + utility classes) and the **Studio** marketing site. Stack: HTML, CSS, JavaScript, TypeScript, React, Next.js.
 
 - Follow requirements carefully; think step-by-step before writing code
 - Write correct, best-practice, DRY, bug-free code — no TODOs or placeholders
@@ -33,6 +33,7 @@ Before generating or modifying code, treat the following files as authoritative:
 15. `cms/seo-best-practices.md` — SEO meta tags and social sharing
 16. `cms/folder-structure.md` — file organization rules
 17. `cms/setup.md` — project setup and customization
+18. `studio/README.md` — **read when working on files inside `studio/` or `cdn/studio/`**; studio layout, Barba transitions, feed system, page conventions
 
 If any instruction conflicts with these documents, **the documents take precedence**.
 
@@ -224,6 +225,8 @@ See `cms/folder-structure.md` for complete directory structure.
 - `templates/` — reusable templates
 - `cms/` — documentation markdown source and generator
 - `tools/` — live tool apps (CPM calculator, SVG cleaner, display ad preview)
+- `studio/` — By Default agency website (self-contained marketing site, see §18)
+- `cdn/studio/` — studio CDN assets (JS + CSS served to Webflow, see §18)
 
 ---
 
@@ -534,7 +537,7 @@ Before adding or moving anything, ask: **which layer does this belong to?**
 | `foundation` | Tokens, layout primitives, utilities | `assets/css/design-system.css` (sections 1–10) + `cms/{color,typography,spacing,border,layout,layout-page,tokens,classes,components,iconography,what-is-a-design-system}.md` | ✅ Yes |
 | `core` | Reusable components + brand identity docs | `assets/css/design-system.css` (sections 11+) + all component `cms/*.md` files + all `cms/brand-*.md` files | ✅ Yes |
 | `docs-site` | Components, layout shell, and chrome that only power the BrandOS docs site itself | `assets/css/docs-site.css`, `cms/{asset-card,book-cover,dont-card,sticky-bar,copy-button}.md` | ❌ No |
-| `app` | BrandOS-specific tools, integrations, project content | `assets/css/{markdown,tools,ad-preview,bd-cursor,world-clock,qr-code,image-placeholder,svg-cleaner}.css`, `cms/{calculator,svg-cleaner,display-ad-preview,image-placeholder,world-clock,llms}-docs.md`, all `cms/website-*.md`, all `cms/projects-*.md`, `cms/{setup,client-setup,platform-strategy,folder-structure,access-control,...}.md` | ❌ No |
+| `app` | BrandOS-specific tools, integrations, project content, studio site | `assets/css/{markdown,tools,ad-preview,bd-cursor,world-clock,qr-code,image-placeholder,svg-cleaner}.css`, `studio/` (see §18), `cdn/studio/`, `cms/{calculator,svg-cleaner,display-ad-preview,image-placeholder,world-clock,llms}-docs.md`, all `cms/website-*.md`, all `cms/projects-*.md`, `cms/{setup,client-setup,platform-strategy,folder-structure,access-control,...}.md` | ❌ No |
 
 ### The seven rules
 
@@ -574,6 +577,7 @@ If a "core" component is only ever used in one place inside the docs site, it's 
 - **A new docs-site UI element** (e.g. version picker, doc breadcrumb variant) → `docs-site.css` + `cms/<name>.md` with `layer: docs-site`
 - **A new BrandOS tool** (e.g. brand audit checker) → its own `assets/css/<name>.css` + `cms/<name>-docs.md` with `layer: app`
 - **A new brand identity doc** (e.g. illustration guidelines) → `cms/brand-<name>.md` with `layer: core`
+- **A new studio page or component** → `studio/assets/css/studio.css` + hand-authored HTML from `studio/templates/page-template.html` (see §18)
 
 ### What this enables
 
@@ -584,3 +588,79 @@ Once layers are in place, packaging the design system as a standalone deliverabl
 - Skip `docs-site.css`, all `app`-layer CSS and docs
 
 This is the foundation for BrandOS as a deliverable — clients spinning up their own systems on top of ours.
+
+---
+
+## 18. Studio Mode
+
+The `studio/` directory contains the By Default agency marketing site — a self-contained project that shares design system tokens from the parent but has its own layout, CSS, JS, and page conventions. CDN-served assets live in `cdn/studio/`.
+
+### When studio mode activates
+
+Studio mode applies when working on any file inside:
+- `studio/` — HTML pages, CSS, JS, templates, images
+- `cdn/studio/` — CDN-served scripts and styles for the Webflow-hosted version
+
+When studio mode is active, follow the rules in this section. Everything else in CLAUDE.md still applies unless explicitly overridden below.
+
+### Authoritative reference
+
+**`studio/README.md`** is the single source of truth for studio work. Read it before making any studio changes. It covers layout, Barba transitions, feed system, page hierarchy, and deployment.
+
+### CSS rules
+
+- **All studio CSS goes in `studio/assets/css/studio.css`** — never in `design-system.css` or `docs-site.css`
+- Additional studio CSS: `studio/assets/css/bd-video.css` (video component)
+- CDN styles: `cdn/studio/css/hero.css`
+- CSS load order: `design-system.css` (shared, read-only) → `studio.css` (studio-local, cascade wins)
+- Studio uses design system tokens (colors, typography, spacing, motion) but has its own layout grid — do not use the BrandOS layout hierarchy (`page-wrapper → page-content → section → ...`)
+
+### Layout
+
+Studio uses a CSS Grid with sticky sidebar + top bar + Barba container — not the BrandOS `page-wrapper` hierarchy. Key variables:
+
+- `--sidebar-width`, `--sidebar-collapsed-width`, `--top-bar-height`, `--mobile-drawer-width`
+
+Inside the Barba container, the standard inner hierarchy still applies: `section → padding-global → container → block`.
+
+### JavaScript rules
+
+- Studio JS lives in `studio/assets/js/` — four files: `studio.js`, `studio-barba.js`, `studio-contact.js`, `bd-video.js`
+- CDN scripts in `cdn/studio/js/` (hero, homepage, blog, case study, stacking shapes, etc.)
+- Same JS conventions as BrandOS: named functions, one init per module, no globals, log version at top — per `cms/js-code-structure.md`
+
+### HTML and page conventions
+
+- Pages are **hand-authored HTML** — the doc generator is never involved
+- Use `studio/templates/page-template.html` as the base (not the root `templates/page-template.html`)
+- Every page's Barba container must declare: `data-barba-namespace`, `data-level`, `data-order`, `data-page-title`, `data-page-description`
+- Page hierarchy: L0 (home), L1 (destinations: work, about, contact), L2 (feed items: case studies, articles)
+- Sidebar nav is inlined per page — update it in every page when adding or removing links
+
+### Barba page transitions
+
+Three scenarios driven by page level:
+- **open** (L0 → higher): new page slides up over home
+- **close** (higher → L0): current page slides down to reveal home
+- **swap** (non-home ↔ non-home): conveyor transition
+
+Transition mapping lives in `TRANSITION_MAP` at the top of `studio-barba.js`. Reduced motion is handled automatically.
+
+### What's shared with BrandOS (still applies in studio mode)
+
+- Design system tokens: semantic colors, typography, spacing, motion — always semantic, never primitive
+- Git and commit rules (§2)
+- Accessibility requirements (keyboard nav, aria, focus states)
+- Core principles (§12): Simplicity First, No Laziness, Minimal Impact, Demand Elegance
+- Brand icons only rule (§3, §4 Iconography)
+- SVG processing workflow (§15)
+- JS code structure conventions (`cms/js-code-structure.md`)
+
+### What does NOT apply in studio mode
+
+- BrandOS layout hierarchy (`page-wrapper → page-content → section → ...`) — studio has its own grid
+- Doc generator (`cms/generator/`) — studio pages are hand-authored
+- Page template at root (`templates/page-template.html`) — use `studio/templates/page-template.html`
+- UX copy rules from §16 — studio is a marketing site with its own voice
+- Component specs from §4 (`.button`, `.card`, etc.) — studio may define its own components (`.post`, `.post-title`, etc.)
+- `docs-site.css` — studio does not load or depend on it

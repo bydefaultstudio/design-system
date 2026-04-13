@@ -33,7 +33,16 @@ Do not add new top-level folders without updating this file.
 - `src/` → Source files (pages, JS)
 - `themes/` → Client theme overrides (one CSS file per client)
 - `cdn/` → Webflow project code (JS + CSS served via CDN)
-- `studio/` → By Default agency website. Marketing site, not a docs site. Self-contained except it shares `assets/css/design-system.css` + `assets/css/docs-site.css` from the parent for now; lifts to a standalone deploy later. Layer: `app`.
+- `studio/` → By Default agency website. Self-contained marketing site (not a docs site). Shares `assets/css/design-system.css` from the parent for design tokens; everything else lives inside `studio/`. Layer: `app`. See `studio/README.md` for full details and CLAUDE.md §18 for studio-mode rules.
+  - `index.html` → Home page (master feed, Barba level 0)
+  - `about.html`, `contact.html` → Level 1 destination pages
+  - `work/` → Case study pages (level 2)
+  - `articles/` → Article pages (level 2)
+  - `templates/page-template.html` → Studio page template (use this, not root `templates/`)
+  - `assets/css/studio.css` → Studio layout, grid, transitions, components
+  - `assets/css/bd-video.css` → Video component styles
+  - `assets/js/` → `studio.js`, `studio-barba.js`, `studio-contact.js`, `bd-video.js`
+  - `apps-script/` → Google Apps Script utilities
 
 ## assets/
 
@@ -80,7 +89,7 @@ Register themes in `assets/js/theme-config.js`. See [Setup — Client Theming](s
 
 JavaScript and CSS files served to Webflow projects via CDN (jsdelivr). Each subfolder represents a Webflow site. Global scripts shared across sites live in `assets/js/bd/`.
 
-- `studio/` → By Default agency website (bydefault.studio)
+- `studio/` → By Default agency website CDN assets (bydefault.studio). See CLAUDE.md §18.
   - `js/` → Page-specific scripts (homepage, hero, blog, case study, etc.)
   - `css/` → Page-specific styles (hero section)
 - `fifa-wc26/` → FIFA World Cup 2026 interactive stadium map
@@ -123,6 +132,15 @@ The generated HTML loads CSS in this order:
 3. `themes/client-name.css` → Client theme overrides (optional, must load last)
 
 New docs-site CSS goes in `assets/css/docs-site.css`. New core/foundation CSS goes in `assets/css/design-system.css`. See [CLAUDE.md §17 — Layer Discipline](../CLAUDE.md#17-layer-discipline) for the rules that govern this split.
+
+### Studio CSS Loading Order
+
+Studio pages load CSS differently from docs pages:
+
+1. `../assets/css/design-system.css` → Shared foundation + core tokens (read-only from studio's perspective)
+2. `assets/css/studio.css` → Studio layout grid, components, transitions (loads last, cascade wins)
+
+Studio does **not** load `docs-site.css` or client themes. See [CLAUDE.md §18 — Studio Mode](../CLAUDE.md#18-studio-mode).
 
 ## tools/
 
