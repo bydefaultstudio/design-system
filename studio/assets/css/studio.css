@@ -1,0 +1,1491 @@
+/* ------ STUDIO SITE STYLES ------ */
+/*
+ * Layout system + page-transition styles for the By Default agency site.
+ * Loads after design-system.css so the cascade resolves last here.
+ * Layer: app — does not ship with the design system.
+ *
+ * Anything reusable across products belongs in assets/css/design-system.css,
+ * not here. Keep this file scoped to the agency site.
+ *
+ * Transition timing uses design system motion primitives (--duration-*,
+ * --ease-*) directly. Three speeds by intent:
+ *   Hover / focus feedback:  --duration-2xs (100ms) + --ease-out
+ *   Layout shifts:           --duration-xs  (200ms) + --ease-out
+ *   Surface enter / exit:    --duration-s   (400ms) + --ease-out
+ */
+
+
+/* ------ TOKENS ------ */
+
+:root {
+  --sidebar-width: 280px;
+  --sidebar-collapsed-width: 64px;
+  --top-bar-height: 70px;
+  --mobile-drawer-width: min(85vw, 320px);
+  --post-spacing: var(--space-l);
+  --studio-gap: var(--space-s);
+  --z-top-bar: 40;
+  --z-sidebar: 50;
+  --z-backdrop: 90;
+  --z-drawer: 100;
+  --bd-video-inset: var--(studio-gap);
+  --scroll-offset: 0px;
+  --duration-stagger: 30ms;
+
+}
+
+
+/* ------ LAYOUT GRID ------ */
+
+.layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  grid-template-rows: var(--top-bar-height) 1fr;
+  grid-template-areas:
+    "sidebar topbar"
+    "sidebar main";
+  min-height: 100vh;
+  background: var(--background-primary);
+  transition: grid-template-columns var(--duration-xl) var(--ease-out);
+}
+
+body.is-sidebar-collapsed .layout {
+  grid-template-columns: var(--sidebar-collapsed-width) 1fr;
+}
+
+
+/* ------ SIDEBAR ------ */
+
+.sidebar {
+  grid-area: sidebar;
+  position: sticky;
+  top: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--background-sidebar);
+  z-index: var(--z-sidebar);
+  transition: width var(--duration-xl) var(--ease-out);
+  border-right: var(--border-s) solid var(--border-faded);
+
+}
+
+.sidebar-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--studio-gap);
+  gap: var(--space-l);
+}
+
+.sidebar-logo {
+  display: block;
+  width: 100%;
+  max-width: 120px;
+  color: var(--text-primary);
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.sidebar-logo svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.sidebar-logo .logo-icon {
+  display: none;
+}
+
+.sidebar-intro {
+  font-size: var(--font-s);
+  color: var(--text-secondary);
+  margin: 0;
+  transition: opacity var(--duration-2xs) var(--ease-out), visibility var(--duration-2xs);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--studio-gap);
+  margin-top: var(--space-s);
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  padding: var(--space-s) var(--space-m);
+  font-family: var(--font-tertiary);
+  font-size: var(--font-m);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  text-decoration: none;
+  background-color: var(--background-faded);
+  transition: background-color var(--duration-2xs) var(--ease-out), color var(--duration-2xs) var(--ease-out);
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  background-color: var(--background-faded);
+}
+
+.nav-link.is-active {
+  background: var(--background-darker);
+  font-weight: var(--font-weight-medium);
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding-top: var(--space-m);
+  border-top: var(--border-s) solid var(--border-faded);
+  font-size: var(--font-xs);
+  color: var(--text-faded);
+}
+
+.sidebar-footer p {
+  margin: 0;
+  transition: opacity var(--duration-2xs) var(--ease-out), visibility var(--duration-2xs);
+}
+
+.nav-btn {
+  border-radius: 0;
+  padding: var(--space-xs);
+  color: var(--text-primary);
+  background-color: var(--background-primary);
+  border: var(--border-s) solid transparent;
+
+}
+
+.nav-btn:hover {
+  background-color: var(--background-faded);
+
+}
+
+.nav-btn .svg-icn {
+  width: 1.5rem;
+  height: 1.5rem;
+
+}
+
+
+[data-sidebar-toggle] .icon-sidebar-open {
+  display: none;
+}
+
+body.is-sidebar-collapsed [data-sidebar-toggle] .icon-sidebar-close {
+  display: none;
+}
+
+body.is-sidebar-collapsed [data-sidebar-toggle] .icon-sidebar-open {
+  display: block;
+}
+
+.dark-mode-toggle .dark-mode-icon-dark {
+  display: none;
+}
+
+body.is-dark-mode .dark-mode-toggle .dark-mode-icon-light {
+  display: none;
+}
+
+body.is-dark-mode .dark-mode-toggle .dark-mode-icon-dark {
+  display: block;
+}
+
+.sound-toggle .sound-icon-off {
+  display: none;
+}
+
+body.is-sound-off .sound-toggle .sound-icon-on {
+  display: none;
+}
+
+body.is-sound-off .sound-toggle .sound-icon-off {
+  display: block;
+}
+
+
+/* ------ SIDEBAR — COLLAPSED (DESKTOP) ------ */
+
+body.is-sidebar-collapsed .sidebar {
+  width: var(--sidebar-collapsed-width);
+}
+
+body.is-sidebar-collapsed .sidebar-inner {
+  padding: var(--space-l) var(--space-xs);
+  align-items: center;
+}
+
+body.is-sidebar-collapsed .sidebar-intro,
+body.is-sidebar-collapsed .sidebar-footer p {
+  opacity: 0;
+  visibility: hidden;
+}
+
+body.is-sidebar-collapsed .sidebar-logo {
+  max-width: 40px;
+}
+
+body.is-sidebar-collapsed .sidebar-logo .logo-wordmark {
+  display: none;
+}
+
+body.is-sidebar-collapsed .sidebar-logo .logo-icon {
+  display: block;
+}
+
+body.is-sidebar-collapsed .nav-link {
+  justify-content: center;
+  padding: var(--space-s) 0;
+  position: relative;
+}
+
+/* Hide the link text in collapsed mode but keep it accessible to screen readers */
+body.is-sidebar-collapsed .nav-link {
+  font-size: 0;
+}
+
+body.is-sidebar-collapsed .nav-link::before {
+  content: attr(data-tooltip);
+  font-size: var(--font-s);
+}
+
+body.is-sidebar-collapsed .sidebar-footer {
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* ------ TOP BAR ------ */
+
+.top-bar {
+  grid-area: topbar;
+  position: sticky;
+  top: 0;
+  height: var(--top-bar-height);
+  background: var(--background-top-nav);
+  z-index: var(--z-top-bar);
+  border-bottom: var(--border-s) solid var(--border-faded);
+}
+
+.top-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 var(--space-l);
+}
+
+.top-bar-left,
+.top-bar-center,
+.top-bar-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+}
+
+.top-bar-center {
+  justify-content: center;
+}
+
+.top-bar-right {
+  justify-content: flex-end;
+}
+
+.top-bar-cta {
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 var(--space-m);
+  background: var(--text-primary);
+  color: var(--text-inverted);
+  border: none;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-primary);
+  font-size: var(--font-s);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: opacity var(--duration-2xs) var(--ease-out);
+}
+
+.top-bar-cta:hover {
+  opacity: 0.85;
+}
+
+.hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: transparent;
+  border: var(--border-s) solid var(--border-faded);
+  border-radius: var(--radius-s);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: var(--font-l);
+  line-height: 1;
+}
+
+
+/* ------ MAIN AREA + BARBA CONTAINERS ------ */
+
+.main {
+  grid-area: main;
+  position: relative;
+  min-height: calc(100vh - var(--top-bar-height));
+  background-color: var(--background-primary);
+}
+
+[data-barba="wrapper"] {
+  position: relative;
+  min-height: calc(100vh - var(--top-bar-height));
+}
+
+[data-barba="container"] {
+  position: relative;
+  /* Always at least full main-area height so short pages still feel like a
+     full page sliding in / out. translateY(100%) in the transition animations
+     is "100% of the element's own height" — without this, short content
+     produces tiny slides. min-height carries through to the absolute
+     positioning during animation, so the page slides a full viewport. */
+  min-height: calc(100vh - var(--top-bar-height));
+}
+
+/* During a transition, both containers overlay each other so they can animate
+   independently without affecting layout flow. */
+body.is-animating [data-barba="wrapper"] {
+  pointer-events: none;
+}
+
+body.is-animating [data-barba="container"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: var(--background-primary);
+}
+
+/*
+ * Z-index per scenario. Barba 2.x does NOT add .barba-leave/.barba-enter
+ * classes — we set data-studio-role="leave|enter" ourselves in the
+ * transition's leave() function. Without these explicit z-indexes, two
+ * absolute siblings with equal z fall back to "later in DOM wins", which is
+ * the wrong order for close (home gets appended after the leaving page
+ * and would cover it).
+ */
+
+/* open (home → page): the entering page sits ON TOP of stationary home */
+body.is-animating [data-studio-role="leave"][data-studio-scenario="open"]  { z-index: 1; }
+body.is-animating [data-studio-role="enter"][data-studio-scenario="open"]  { z-index: 2; }
+
+/* close (page → home): the leaving page falls AWAY in front of home */
+body.is-animating [data-studio-role="enter"][data-studio-scenario="close"] { z-index: 1; }
+body.is-animating [data-studio-role="leave"][data-studio-scenario="close"] { z-index: 2; }
+
+/* swap (conveyor): both panels travel together, equal layer */
+body.is-animating [data-studio-scenario="swap"] { z-index: 2; }
+
+
+/* ------ HERO VIDEO (overrides bd-video inset token for studio spacing) ------ */
+
+.hero-video {
+  --bd-video-inset: var(--studio-gap);
+}
+
+
+/* ------ CONTENT FEED (masonry grid) ------ */
+/*
+ * CSS column-based masonry. Cards flow top-to-bottom, left-to-right, filling
+ * columns based on their natural height. Filtering hides cards with display:none
+ * and the columns reflow automatically — no JS redistribution needed.
+ */
+
+.content-feed {
+  column-count: 3;
+  column-gap: var(--studio-gap);
+  padding: 0 var(--studio-gap);
+  width: 100%;
+}
+
+
+/* -- Post item (feed wrapper — masonry, filtering, spacing) -- */
+
+.post-item {
+  break-inside: avoid;
+  margin-bottom: var(--studio-gap);
+}
+
+/* -- Feed transition states -- */
+/* Hide: quick exit. Show: slightly slower entrance. */
+/* Transition style set via data-feed-transition on .content-feed */
+
+/* fade (default) */
+.post-item {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity var(--duration-2xl) var(--ease-out),
+              transform var(--duration-2xl) var(--ease-out);
+}
+
+.post-item.is-hiding {
+  opacity: 0;
+  transition-duration: var(--duration-2xs);
+}
+
+.post-item.is-showing {
+  opacity: 0;
+}
+
+/* scale — shrink to 0, grow back to 1 */
+[data-feed-transition="scale"] .post-item.is-hiding,
+[data-feed-transition="scale-stagger"] .post-item.is-hiding {
+  opacity: 0;
+  transform: scale(0);
+  transition-duration: var(--duration-2xs);
+}
+
+[data-feed-transition="scale"] .post-item.is-showing,
+[data-feed-transition="scale-stagger"] .post-item.is-showing {
+  opacity: 0;
+  transform: scale(0);
+}
+
+@media (max-width: 1024px) {
+  .content-feed { column-count: 2; }
+}
+
+@media (max-width: 768px) {
+  .content-feed { column-count: 1; }
+}
+
+[data-feed-type="article"]{
+  background-color: pink;
+}
+
+
+/* ------ ARTICLE HEADER ------ */
+
+.article-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-l);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* -- Article meta (badge, read time, date) -- */
+
+.article-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-l);
+  font-family: var(--font-tertiary);
+  font-size: var(--font-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-l);
+  color: var(--text-faded);
+}
+
+.article-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.article-title {
+  margin: 0;
+}
+
+/* -- Article author (avatar + name link) -- */
+
+.article-author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.article-author:hover {
+}
+
+.article-author-by {
+  font-style: italic;
+  color: var(--text-faded);
+}
+
+.article-author-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-pill);
+  object-fit: cover;
+}
+
+
+
+/* -- Article hero (media container — image or video) -- */
+
+.article-hero {
+  width: 100%;
+  max-width: 60rem;
+  margin: 0 auto;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.article-hero[data-ratio="16:9"] { aspect-ratio: 16 / 9; }
+.article-hero[data-ratio="4:5"]  { aspect-ratio: 4 / 5; }
+.article-hero[data-ratio="1:1"]  { aspect-ratio: 1 / 1; }
+.article-hero[data-ratio="9:16"] { aspect-ratio: 9 / 16; }
+.article-hero[data-ratio="21:9"] { aspect-ratio: 21 / 9; }
+
+.article-hero-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* -- Article content wrapper (3-column layout) -- */
+
+.article-content-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--space-2xl);
+  width: 100%;
+}
+
+.article-sidebar {
+  flex: 1 1 0%;
+  align-self: stretch;
+}
+
+.toc-block,
+.share-block {
+  position: sticky;
+  top: calc(var(--top-bar-height) + var(--space-8xl));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  max-width: 220px;
+  margin: 0 auto;
+}
+
+.toc-block {
+  opacity: 0;
+  transition: opacity var(--duration-l) var(--ease-out);
+}
+
+.toc-block.is-visible {
+  opacity: 1;
+}
+
+.article-body {
+  flex: 0 1 auto;
+  width: 60%;
+  max-width: 820px;
+}
+
+/* -- Sidebar heading (TOC + share) -- */
+
+.toc-heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-tertiary);
+  font-size: var(--font-m);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--space-m) 0;
+}
+
+/* -- Table of contents -- */
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.toc-link {
+  display: block;
+  color: var(--text-secondary);
+}
+
+.toc-link:hover {
+  color: var(--text-primary);
+}
+
+.toc-link.is-active {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.toc-list li {
+  margin: 0;
+}
+
+.article-sidebar .toc-link {
+  text-decoration: none;
+  color: var(--text-faded);
+}
+
+.article-sidebar .toc-link.is-active {
+  color: var(--text-primary);
+}
+
+/* -- "In this article" (inline TOC, always visible) -- */
+
+.in-this-article {
+  padding-left: var(--space-xl);
+  margin-bottom: var(--space-xl);
+  border-left: var(--border-s) solid var(--border-faded);
+}
+
+/* -- Share block -- */
+
+.share-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+/* -- Responsive: collapse sidebars on tablet -- */
+
+@media (max-width: 991px) {
+  .article-sidebar {
+    display: none;
+  }
+
+  .article-body {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+
+/* ------ NEXT READ ------ */
+
+.next-read {
+  display: block;
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text-inverted);
+  cursor: pointer;
+}
+
+.next-read-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform var(--duration-xl) var(--ease-out);
+}
+
+.next-read:hover .next-read-bg {
+  transform: scale(1.05);
+}
+
+.next-read-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.3) 100%);
+}
+
+.next-read-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: center;
+  height: 100%;
+  min-height: 400px;
+  padding: var(--space-3xl);
+  gap: var(--space-m);
+}
+
+.next-read-label {
+  font-family: var(--font-tertiary);
+  font-size: var(--font-2xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-l);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.next-read-title {
+  margin: 0;
+  max-width: 600px;
+  color: var(--text-inverted);
+}
+
+.next-read-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  font-family: var(--font-tertiary);
+  font-size: var(--font-2xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-l);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+
+/* ------ FEED FILTERS (top bar) ------ */
+
+.feed-filters {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background-color: var(--background-faded);
+  padding: var(--space-s);
+}
+
+.feed-filter.nav-btn  {
+  background-color: transparent;
+}
+
+.feed-filter.nav-btn.is-active  {
+  background-color: var(--text-primary);
+  color: var(--background-primary);
+}
+
+.feed-filter.nav-btn.is-active:hover  {
+  background-color: var(--text-primary);
+  color: var(--background-primary);
+}
+
+.feed-filter.nav-btn:hover  {
+  background-color: var(--background-faded);
+}
+
+
+
+/* Only show filters on home page */
+body:not([data-current-level="0"]) .feed-filters {
+  display: none;
+}
+
+
+/* ------ POSTS ------ */
+
+
+/* -- Base post (shared across all types) -- */
+
+.post {
+  display: flex;
+  flex-direction: column;
+  gap: var(--post-spacing);
+  padding: var(--post-spacing);
+  background-color: var(--background-faded);
+  text-decoration: none;
+  color: var(--text-primary);
+  overflow: hidden;
+  transition: background-color var(--duration-l) var(--ease-out);
+}
+
+.post[data-post-type="featured"] {
+  padding: 0;
+}
+
+.post:hover {
+  background-color: var(--background-darker);
+}
+
+/* Thumbnail container — acts as a mask. The ratio lives on the container,
+   the image inside fills it via object-fit: cover. This means the image
+   can be any aspect ratio and the container crops it. */
+.post-thumbnail {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.post-thumbnail[data-ratio="1:1"]  { aspect-ratio: 1 / 1; }
+.post-thumbnail[data-ratio="4:5"]  { aspect-ratio: 4 / 5; }
+.post-thumbnail[data-ratio="9:16"] { aspect-ratio: 9 / 16; }
+
+.img-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--duration-2xl) var(--ease-out);
+}
+
+.post:hover .img-thumb {
+  transform: scale(1.1);
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+}
+
+.post-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.post-label {
+  font-family: var(--font-tertiary);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-faded);
+}
+
+.post-title {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.post-excerpt {
+  margin: 0;
+  font-size: var(--font-s);
+  color: var(--text-secondary);
+}
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  font-size: var(--font-xs);
+  color: var(--text-faded);
+  margin-top: var(--space-xs);
+}
+
+.post-meta > *:not(:last-child)::after {
+  content: "\00b7";
+  margin-left: var(--space-s);
+}
+
+.post-read-status {
+  font-size: var(--font-xs);
+  flex-shrink: 0;
+  background: none;
+  padding: 0;
+  gap: var(--space-xs);
+}
+
+.post-read-status .svg-icn {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.post-hero {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  margin-bottom: var(--space-l);
+}
+
+
+/* -- Featured post (full-bleed image with text overlay) -- */
+/* Card height is driven by aspect-ratio on the post itself (default 4:5).
+   Override with data-ratio="9:16" on the .post element for taller cards. */
+
+.post[data-post-type="featured"] {
+  position: relative;
+  padding: 0;
+  aspect-ratio: 4 / 5;
+}
+
+.post[data-post-type="featured"][data-ratio="9:16"] {
+  aspect-ratio: 9 / 16;
+}
+
+.post[data-post-type="featured"] .post-thumbnail {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  z-index: 0;
+}
+
+.post[data-post-type="featured"] .post-body {
+  position: relative;
+  z-index: 1;
+  justify-content: flex-end;
+  height: 100%;
+  padding: var(--post-spacing);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
+}
+
+.post[data-post-type="featured"] .post-label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.post[data-post-type="featured"] .post-title {
+  color: var(--text-inverted);
+  font-size: var(--font-xl);
+}
+
+.post[data-post-type="featured"] .post-excerpt {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.post[data-post-type="featured"] .post-meta {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+
+
+
+/* -- Content type accent colours -- */
+/* data-feed-type lives on .post-item (the feed wrapper), not .post */
+
+.post-item[data-feed-type="case-study"] .post-label {
+  color: var(--text-secondary);
+}
+
+.post-item[data-feed-type="article"] .post-label {
+  color: var(--text-secondary);
+}
+
+/* Featured overrides the accent — label is always light on dark */
+.post[data-post-type="featured"] .post-label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+
+/* ------ BACKDROP (mobile drawer scrim) ------ */
+
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--background-modal, rgba(0, 0, 0, 0.5));
+  z-index: var(--z-backdrop);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-s) var(--ease-out);
+}
+
+body.is-mobile-nav-open .sidebar-backdrop {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+/* ------ MOBILE (≤768px) ------ */
+
+@media (max-width: 768px) {
+  .layout,
+  body.is-sidebar-collapsed .layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--top-bar-height) 1fr;
+    grid-template-areas:
+      "topbar"
+      "main";
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--mobile-drawer-width);
+    height: 100vh;
+    z-index: var(--z-drawer);
+    transform: translateX(-100%);
+    transition: transform var(--duration-s) var(--ease-out);
+  }
+
+  body.is-mobile-nav-open .sidebar {
+    transform: translateX(0);
+  }
+
+  /* Override desktop collapsed-state on mobile — drawer always shows full content */
+  body.is-sidebar-collapsed .sidebar {
+    width: var(--mobile-drawer-width);
+  }
+
+  body.is-sidebar-collapsed .sidebar-inner {
+    padding: var(--space-l);
+    align-items: stretch;
+  }
+
+  body.is-sidebar-collapsed .sidebar-intro,
+  body.is-sidebar-collapsed .sidebar-footer p {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  body.is-sidebar-collapsed .nav-link {
+    justify-content: flex-start;
+    padding: var(--space-s) var(--space-m);
+    font-size: var(--font-s);
+  }
+
+  body.is-sidebar-collapsed .nav-link::before {
+    content: none;
+  }
+
+  .hamburger {
+    display: inline-flex;
+  }
+
+  /* Hide the desktop collapse toggle on mobile (drawer is the collapse mechanic) */
+  [data-sidebar-toggle] {
+    display: none;
+  }
+
+  /* Lock body scroll while the drawer is open */
+  body.is-mobile-nav-open {
+    overflow: hidden;
+  }
+
+  /* Hide the top-bar title on mobile to make room for the hamburger + CTA */
+  .top-bar-title {
+    display: none;
+  }
+
+  .top-bar-cta {
+    height: 32px;
+    padding: 0 var(--space-s);
+    font-size: var(--font-xs);
+  }
+
+}
+
+
+/* ------ PAGE CLOSE BUTTON (X) ------ */
+/*
+ * Pinned to the top-right of the main area whenever the current Barba
+ * container is non-home (data-level >= 1). Real <a href="index.html">, so
+ * Barba intercepts the click and runs the close scenario.
+ *
+ * Visibility is driven by body[data-current-level], which studio.js seeds
+ * on init from the initial container and studio-barba.js syncs on every
+ * navigation in its afterEnter hook.
+ */
+
+.close-btn-wrap {
+  display: none;
+  position: fixed;
+  top: calc(var(--top-bar-height) + var(--space-m));
+  right: var(--space-m);
+  z-index: 100;
+  align-items: center;
+  gap: var(--space-s);
+}
+
+body[data-current-level="1"] .close-btn-wrap,
+body[data-current-level="2"] .close-btn-wrap {
+  display: flex;
+}
+
+.close-btn {
+  background-color: var(--background-secondary);
+  padding: var(--space-s);
+  border: var(--border-s) solid transparent;
+  border-radius: 0;
+  color: var(--text-primary);
+  transition: background-color var(--duration-2xs) var(--ease-out);
+}
+
+.close-btn:hover {
+  background: var(--background-faded);
+}
+
+.close-btn-label {
+  font-family: var(--font-tertiary);
+  font-size: var(--font-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-l);
+  color: var(--text-faded);
+}
+
+/* Hide the X for the duration of any Barba navigation. The page slides
+   without the X hovering over it; afterwards body[data-current-level]
+   determines whether it should reappear (level 0 → no, level 1/2 → yes). */
+body.is-animating .close-btn-wrap {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .close-btn-label {
+    display: none;
+  }
+}
+
+
+/* ------ CONTACT FORM ------ */
+
+.contact-block {
+  display: block;
+  max-width: 790px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact-headline {
+  font-weight: var(--font-weight-medium);
+}
+
+.contact-speed-signal {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* -- Form layout -- */
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xl);
+  margin-top: var(--space-2xl);
+  position: relative;
+}
+
+.contact-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.contact-label {
+  font-family: var(--font-primary);
+  font-size: var(--font-m);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  margin-bottom: 0;
+}
+
+/* -- Inline label + input on one line (desktop) -- */
+
+.contact-inline {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+}
+
+.contact-inline input,
+.contact-inline .contact-email-wrap {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .contact-inline {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-s);
+  }
+}
+
+/* -- Chip groups (button-based selectable chips) -- */
+
+.contact-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-m);
+}
+
+.contact-chips .button {
+  flex: 1 1 auto;
+}
+
+.contact-chips .button {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+
+
+.contact-chips .button.is-selected {
+  background-color: var(--button-primary);
+  color: var(--button-text);
+  border-color: var(--button-primary);
+}
+
+.contact-chips .button .svg-icn {
+  display: none;
+}
+
+.contact-chips .button.is-selected .svg-icn {
+  display: inline-flex;
+}
+
+@media (max-width: 768px) {
+  /* Services: single column */
+  .contact-chips[role="group"] {
+    flex-direction: column;
+  }
+
+  /* Budget: two columns */
+  .contact-chips[role="radiogroup"] .button {
+    flex: 1 1 calc(50% - var(--space-m) / 2);
+  }
+}
+
+/* -- Inputs (uses native design system styling, no overrides) -- */
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* -- Email validation indicator -- */
+
+.contact-email-wrap {
+  position: relative;
+}
+
+.contact-email-wrap input {
+  padding-right: var(--space-2xl);
+}
+
+.contact-email-tick {
+  position: absolute;
+  right: var(--space-m);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--status-success);
+  font-size: var(--font-m);
+  pointer-events: none;
+}
+
+/* Error states handled by design system (.is-error, .is-error:focus) */
+
+/* -- Submit area -- */
+
+.contact-actions {
+  display: flex;
+}
+
+.contact-actions .button {
+  width: 100%;
+}
+
+.contact-reassurance {
+  font-size: var(--font-s);
+  color: var(--text-faded);
+  margin: 0;
+}
+
+.contact-error-callout {
+  margin: 0;
+}
+
+/* -- Success state -- */
+
+/* -- Wrapper: form/success state toggle -- */
+
+.contact-wrapper .contact-success {
+  display: none;
+}
+
+.contact-wrapper.is-submitted .contact-form {
+  display: none;
+}
+
+.contact-wrapper.is-submitted .contact-success {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+}
+
+.contact-success-headline {
+  margin: 0;
+}
+
+.contact-success-body,
+.contact-success-social {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.contact-success-social a {
+  color: var(--text-primary);
+}
+
+.contact-success-cta {
+  margin-top: var(--space-s);
+}
+
+/* -- Abandon dialog (anchored top-right) -- */
+
+.contact-abandon-dialog {
+  max-width: 280px;
+  margin: 0;
+  position: fixed;
+  top: calc(var(--top-bar-height) + var(--space-m) + 48px);
+  right: var(--space-m);
+}
+
+.contact-abandon-dialog::backdrop {
+  background: var(--black-alpha-40, rgba(0, 0, 0, 0.4));
+  animation: abandon-dim-in var(--duration-2xs) var(--ease-out);
+}
+
+@keyframes abandon-dim-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.contact-abandon-close {
+  display: inline-flex;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-primary);
+  font-size: var(--font-s);
+  color: var(--text-faded);
+  padding: var(--space-xs) 0;
+  width: 100%;
+  transition: color var(--duration-2xs) var(--ease-out);
+}
+
+.contact-abandon-close:hover {
+  color: var(--text-secondary);
+}
+
+/* -- Mobile bottom sheet -- */
+
+.contact-bottom-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+}
+
+.contact-bottom-sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--black-alpha-40, rgba(0, 0, 0, 0.4));
+}
+
+.contact-bottom-sheet-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 280px;
+  background: var(--background-primary);
+  border-top: 0.5px solid var(--border-faded);
+  border-radius: var(--radius-l) var(--radius-l) 0 0;
+  padding: var(--space-m) var(--space-l) var(--space-xl);
+  transform: translateY(100%);
+  transition: transform 250ms var(--ease-out);
+}
+
+.contact-bottom-sheet.is-visible .contact-bottom-sheet-panel {
+  transform: translateY(0);
+}
+
+.contact-bottom-sheet.is-dismissing .contact-bottom-sheet-panel {
+  transform: translateY(100%);
+  transition-duration: 200ms;
+  transition-timing-function: ease-in;
+}
+
+.contact-bottom-sheet-handle {
+  width: 40px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--border-secondary);
+  margin: 0 auto var(--space-l);
+}
+
+.contact-bottom-sheet-content {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.contact-bottom-sheet-title {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  margin: 0 0 var(--space-xs);
+}
+
+.contact-bottom-sheet-body {
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-l);
+}
+
+.contact-bottom-sheet-actions {
+  display: flex;
+  gap: var(--space-s);
+}
+
+.contact-bottom-sheet-actions .button {
+  flex: 1;
+}
+
+/* -- Mobile: full-width submit -- */
+
+@media (max-width: 768px) {
+  .contact-actions .button {
+    width: 100%;
+  }
+
+  .contact-abandon-dialog {
+    top: var(--space-xl);
+    right: var(--space-m);
+    left: var(--space-m);
+    max-width: none;
+  }
+}
+
+
+/* ------ REDUCED MOTION ------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .layout,
+  .sidebar,
+  .sidebar-intro,
+  .sidebar-footer p,
+  .sidebar-backdrop,
+  .nav-link,
+  [data-sidebar-toggle],
+  .post,
+  .feed-filter,
+  .close-btn,
+  .top-bar-cta,
+  .contact-chips .button,
+  .contact-abandon-dialog::backdrop,
+  .contact-bottom-sheet-panel {
+    transition: none;
+    animation: none;
+  }
+}

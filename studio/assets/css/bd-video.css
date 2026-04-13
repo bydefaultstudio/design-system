@@ -1,0 +1,346 @@
+/* ------ BD VIDEO COMPONENT ------ */
+/*
+ * Reusable video player with custom controls. Used for the hero showreel
+ * on the home page and available for any future video placement.
+ *
+ * Structure:
+ *   .bd-video                 — container (position: relative)
+ *   .bd-video-player          — the <video> element
+ *   .bd-video-center-play     — large centered play/pause button
+ *   .bd-video-unmute-prompt   — large top-center unmute button (autoplay muted only)
+ *   .bd-video-scrubber         — seek bar (absolute, full-width bottom)
+ *   .bd-video-scrubber-fill    — filled portion of the seek bar
+ *   .bd-video-time             — visible time display (e.g. 1:23 / 5:30)
+ *   .bd-video-controls        — button row (absolute, bottom-right)
+ *   .bd-video-btn             — individual control button (pill)
+ *
+ * State:
+ *   .bd-video.is-preview          — silent preview (autoplay muted); play + unmute always visible
+ *   .bd-video.is-controls-hidden — center button + controls bar faded out (auto-hide after 3s)
+ *   .bd-video.is-paused          — video is paused (center button stays visible)
+ *   .bd-video.is-unmuted         — user has unmuted; hides the unmute prompt permanently
+ *
+ * JS: bd-video.js (self-initialising, exits early if no .bd-video-player)
+ */
+ :root {
+    --bd-video-inset: var(--space-s);
+
+ }
+.bd-video {
+  position: relative;
+  width: 100%;
+  padding: var(--bd-video-inset);
+  overflow: hidden;
+}
+
+.bd-video-player {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+
+/* -- Center play/pause button -- */
+
+.bd-video-center-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: var(--radius-pill);
+  color: var(--white);
+  cursor: pointer;
+  z-index: 2;
+  transition: opacity var(--duration-s) var(--ease-out),
+              background-color var(--duration-2xs) var(--ease-out);
+}
+
+.bd-video-center-play:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.bd-video-center-play:focus-visible {
+  outline: 2px solid var(--text-inverted);
+  outline-offset: 2px;
+}
+
+.bd-video-center-play svg {
+  width: 32px;
+  height: 32px;
+}
+
+/* Hide center button when controls are hidden (playing + idle) */
+.bd-video.is-controls-hidden .bd-video-center-play {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Always show center button when paused, regardless of hide state */
+.bd-video.is-paused .bd-video-center-play {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Tooltip on hover */
+.bd-video-center-play[data-tooltip]:hover::after,
+.bd-video-btn[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + var(--space-xs));
+  left: 50%;
+  transform: translateX(-50%);
+  padding: var(--space-xs) var(--space-s);
+  background: rgba(0, 0, 0, 0.8);
+  color: var(--text-inverted);
+  font-family: var(--font-primary);
+  font-size: var(--font-xs);
+  border-radius: var(--radius-s);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+
+/* -- Unmute prompt (shown when video autoplays muted) -- */
+
+.bd-video-unmute-prompt {
+  position: absolute;
+  top: var(--space-xl);
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-s);
+  padding: var(--space-s) var(--space-l);
+  color: var(--white);
+  background: var(--black-alpha-70);
+  border: none;
+  border-radius: 0;
+  color: var(--text-inverted);
+  font-family: var(--font-primary);
+  font-size: var(--font-m);
+  cursor: pointer;
+  z-index: 2;
+  transition: opacity var(--duration-s) var(--ease-out),
+              background-color var(--duration-2xs) var(--ease-out);
+}
+
+.bd-video-unmute-prompt:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.bd-video-unmute-prompt:focus-visible {
+  outline: 2px solid var(--text-inverted);
+  outline-offset: 2px;
+}
+
+.bd-video-unmute-prompt svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Hide permanently once unmuted */
+.bd-video.is-unmuted .bd-video-unmute-prompt {
+  display: none;
+}
+
+
+/* -- Scrubber (seek bar) -- */
+
+.bd-video-scrubber {
+  position: absolute;
+  bottom: var(--bd-video-inset);
+  left: var(--bd-video-inset);
+  right: var(--bd-video-inset);
+  height: var(--space-xs);
+  background: var(--black-alpha-20);
+  cursor: pointer;
+  z-index: 3;
+  transition: height var(--duration-2xs) var(--ease-out);
+}
+
+/* Expanded hit area — 40px tall touch/click zone overlapping and extending above the track */
+.bd-video-scrubber::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  cursor: pointer;
+  /* background-color: var(--white-alpha-20); */
+}
+
+.bd-video:hover .bd-video-scrubber,
+.bd-video-scrubber.is-scrubbing,
+.bd-video-scrubber:focus-visible {
+  height: var(--space-s);
+}
+
+.bd-video-scrubber:focus-visible {
+  outline: 2px solid var(--text-inverted);
+  outline-offset: 2px;
+}
+
+.bd-video-scrubber-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--text-accent);
+  pointer-events: none;
+}
+
+/* Preview state — center button + unmute prompt always visible */
+.bd-video.is-preview .bd-video-center-play,
+.bd-video.is-preview .bd-video-unmute-prompt {
+  opacity: 1;
+  pointer-events: auto;
+
+}
+
+.bd-video.is-preview .bd-video-center-play {
+  background: var(--black-alpha-60);
+   width: 90px;
+  height: 90px;
+
+}
+
+/* -- Scrubber seek tooltip -- */
+
+.bd-video-seek-tooltip {
+  position: absolute;
+  bottom: calc(var(--space-s) + var(--space-l));
+  left: 0;
+  padding: var(--space-xs) var(--space-s);
+  background: rgba(0, 0, 0, 0.8);
+  color: var(--text-inverted);
+  font-family: var(--font-primary);
+  font-size: var(--font-xs);
+  border-radius: var(--radius-s);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 4;
+  transform: translateX(-50%);
+}
+
+.bd-video-seek-tooltip.is-visible {
+  opacity: 1;
+}
+
+
+/* -- Time display -- */
+
+.bd-video-time {
+  font-family: var(--font-primary);
+  font-size: var(--font-xs);
+  color: var(--white);
+  white-space: nowrap;
+  padding: 0 var(--space-xs);
+}
+
+
+/* -- Bottom controls (mute, fullscreen) -- */
+
+.bd-video-controls {
+  position: absolute;
+  padding: 0 var(--space-m);
+  bottom: var(--space-3xl);
+  left: var(--space-l);
+  right: var(--space-xl);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  z-index: 5;
+  transition: opacity var(--duration-2xl) var(--ease-out);
+}
+
+.bd-video-controls-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.bd-video.is-controls-hidden .bd-video-controls {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bd-video-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  color: var(--white);
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background-color var(--duration-2xs) var(--ease-out);
+}
+
+.bd-video-btn:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.bd-video-btn:focus-visible {
+  outline: 2px solid var(--white);
+  outline-offset: 2px;
+}
+
+.bd-video-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 768px) {
+  .bd-video-center-play {
+    width: 64px;
+    height: 64px;
+  }
+
+  .bd-video-center-play svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .bd-video-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .bd-video-scrubber {
+    height: var(--space-s);
+  }
+
+  .bd-video:hover .bd-video-scrubber,
+  .bd-video-scrubber.is-scrubbing,
+  .bd-video-scrubber:focus-visible {
+    height: var(--space-m);
+  }
+
+  .bd-video-time {
+    line-height: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bd-video-controls,
+  .bd-video-center-play,
+  .bd-video-unmute-prompt,
+  .bd-video-scrubber,
+  .bd-video-btn {
+    transition: none;
+  }
+}
