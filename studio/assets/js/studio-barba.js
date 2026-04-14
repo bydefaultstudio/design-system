@@ -36,6 +36,15 @@
 
 console.log("Studio Barba v0.3.0");
 
+// Flag set by click handler on .next-read — consumed once by resolveScenario
+var _nextReadNav = false;
+
+document.addEventListener("click", function detectNextReadClick(e) {
+  if (e.target.closest(".next-read")) {
+    _nextReadNav = true;
+  }
+});
+
 //
 //------- Utility Functions -------//
 //
@@ -62,11 +71,18 @@ function capitalize(str) {
 // Resolve which scenario applies based on the two containers' data-level.
 //
 // Returns a semantic scenario name (not an animation name):
+//   "push"  — next-read click (article → article via next-read card)
 //   "open"  — home → anything
 //   "close" — anything → home
 //   "swap"  — non-home → non-home
 //   "fade"  — fallback
 function resolveScenario(fromEl, toEl) {
+  // Next-read click — consume the flag set by the click handler
+  if (_nextReadNav) {
+    _nextReadNav = false;
+    return "push";
+  }
+
   const fromLevel = readNumberAttr(fromEl, "data-level");
   const toLevel = readNumberAttr(toEl, "data-level");
   const safeFromLevel = Number.isFinite(fromLevel) ? fromLevel : 0;
@@ -112,17 +128,14 @@ function shouldPrevent(payload) {
   if (href.startsWith("mailto:")) return true;
   if (href.startsWith("tel:")) return true;
 
-  // External origin
+  // External origin or same-page (hash-only difference)
   try {
     var url = new URL(href, location.href);
     if (url.origin !== location.origin) return true;
+    // Same page with only a hash difference — let the browser handle it
+    if (url.pathname === location.pathname && url.hash !== "") return true;
   } catch (e) {
     return true;
-  }
-
-  // Contact form abandonment interception
-  if (typeof window.studioContactShouldPrevent === "function") {
-    if (window.studioContactShouldPrevent(payload)) return true;
   }
 
   return false;
@@ -153,6 +166,7 @@ var MOTION = {
   pageClose: readMotion("close"),
   pageSwap: readMotion("swap"),
   pageFade: readMotion("fade"),
+  pagePush: readMotion("swap"), // push reuses swap timing
 };
 
 //
@@ -167,6 +181,7 @@ var TRANSITION_MAP = {
   open:  "slide-up",
   close: "slide-down",
   swap:  "conveyor-up",
+  push:  "push-up",
   fade:  "fade",
 };
 
@@ -278,6 +293,33 @@ var TRANSITIONS = {
     },
   },
 
+  // -- push-up --
+  // Used for next-read navigation. The current page pushes up so the
+  // next-read card at the bottom reaches the top of the viewport. The
+  // new page sits behind at translateY(0) — no enter animation needed.
+  // opts.nextReadTop is measured before the scroll snap in studioLeave.
+  "push-up": {
+    leave: function pushUpLeave(el, motion, opts) {
+      var pushDistance = (opts && opts.nextReadTop) || window.innerHeight;
+      var offset = (opts && opts.scrollOffset) || 0;
+      var startY = offset + "px";
+      var endY = (offset - pushDistance) + "px";
+
+      return animate(
+        el,
+        [
+          { transform: "translateY(" + startY + ")" },
+          { transform: "translateY(" + endY + ")" },
+        ],
+        { duration: motion.duration, easing: motion.easing, fill: "forwards" }
+      );
+    },
+    enter: function pushUpEnter() {
+      // No animation — new page is already in position behind the leaving page
+      return Promise.resolve();
+    },
+  },
+
   // -- fade --
   // Crossfade fallback. Used when the scenario is unknown or when the same
   // page is navigated to.
@@ -306,11 +348,13 @@ var TRANSITIONS = {
 // receives the scenario's motion token, so the timing follows the intent
 // even if you remap which animation a scenario uses.
 
-function runLeave(el, scenario, scrollOffset) {
+function runLeave(el, scenario, scrollOffset, extra) {
   var animationName = TRANSITION_MAP[scenario] || "fade";
   var transition = TRANSITIONS[animationName] || TRANSITIONS["fade"];
   var motion = MOTION["page" + capitalize(scenario)] || MOTION.pageFade;
-  return transition.leave(el, motion, { scrollOffset: scrollOffset });
+  var opts = { scrollOffset: scrollOffset };
+  if (extra) { for (var k in extra) { if (extra.hasOwnProperty(k)) opts[k] = extra[k]; } }
+  return transition.leave(el, motion, opts);
 }
 
 function runEnter(el, scenario) {
@@ -337,6 +381,16 @@ var studioTransition = {
     data.next.container.setAttribute("data-studio-scenario", scenario);
     data.next.container.setAttribute("data-studio-role", "enter");
 
+    // For push scenario, capture next-read card position before scroll snap.
+    // Subtract the top bar height so the card stops at the top of the main
+    // area, not behind the fixed top bar.
+    var nextReadTop = 0;
+    if (scenario === "push") {
+      var nextRead = data.current.container.querySelector(".next-read");
+      var topBarHeight = parseInt(readToken("--top-bar-height"), 10) || 0;
+      if (nextRead) nextReadTop = nextRead.getBoundingClientRect().top - topBarHeight;
+    }
+
     // Scroll compensation: capture the user's scroll position, snap the
     // window to top so absolute-positioned containers render in the visible
     // area, then pass the offset to the animation so the leaving container
@@ -347,7 +401,7 @@ var studioTransition = {
     }
     var scrollOffset = -scrollY;
 
-    return runLeave(data.current.container, scenario, scrollOffset);
+    return runLeave(data.current.container, scenario, scrollOffset, { nextReadTop: nextReadTop });
   },
   enter: function studioEnter(data) {
     var scenario = data.next.container.getAttribute("data-studio-scenario") || "fade";
@@ -395,15 +449,25 @@ function initStudioBarba() {
       window.studioRefreshActiveNav();
     }
     if (typeof window.initBdVideo === "function") {
-      window.initBdVideo();
+      window.initBdVideo(data.next.container);
     }
     document.dispatchEvent(new CustomEvent("studio:after-nav"));
   });
 
   window.barba.hooks.after(function onAfter(data) {
-    // Init next-read after the old container is fully removed
+    // Init features that query the DOM — must run after the old container
+    // is fully removed so querySelector finds the new page's elements.
     if (typeof window.initNextRead === "function") {
       window.initNextRead();
+    }
+    if (typeof window.initToc === "function") {
+      window.initToc();
+    }
+    if (typeof window.initShareLinks === "function") {
+      window.initShareLinks();
+    }
+    if (typeof window.initSidebarPosts === "function") {
+      window.initSidebarPosts();
     }
     document.body.classList.remove("is-animating");
     // Clean up role/scenario attributes + any inline styles set by the

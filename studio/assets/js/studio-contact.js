@@ -16,8 +16,6 @@ console.log("Studio Contact v0.1.0");
   var SUBMIT_LOADING_LABEL = "Sending\u2026";
   var SUBMIT_SENT_LABEL = "Sent";
   var CHECK_SVG = '<div class="svg-icn" data-icon="check"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"></path></svg></div>';
-  var INACTIVITY_TIMEOUT = 45000; // 45 seconds
-  var SESSION_FLAG_KEY = "exit_prompt_shown";
 
   // -- State --
 
@@ -28,15 +26,12 @@ console.log("Studio Contact v0.1.0");
     formEnteredAt: null
   };
 
-  var inactivityTimer = null;
 
   // -- Selectors --
 
   function getWrapper() { return document.querySelector("[data-contact-wrapper]"); }
   function getForm() { return document.querySelector('[data-studio-form="contact"]'); }
   function getSuccessEl() { return document.querySelector(".contact-success"); }
-  function getAbandonDialog() { return document.getElementById("abandon-dialog"); }
-  function getBottomSheet() { return document.querySelector(".contact-bottom-sheet"); }
   function getSubmitBtn() { return document.querySelector("[data-contact-submit]"); }
 
   //
@@ -100,11 +95,8 @@ console.log("Studio Contact v0.1.0");
     if (!formState.touched) {
       formState.touched = true;
       formState.formEnteredAt = Date.now();
-      setBeforeUnload(true);
-      startInactivityTimer();
-      console.log("[studio-contact] form touched — abandonment protection active");
+      console.log("[studio-contact] form touched");
     }
-    resetInactivityTimer();
   }
 
   function initStateTracking(form) {
@@ -319,8 +311,6 @@ console.log("Studio Contact v0.1.0");
 
   function showSuccess(form) {
     formState.submitted = true;
-    setBeforeUnload(false);
-    clearInactivityTimer();
     console.log("[studio-contact] showing success state");
 
     var wrapper = getWrapper();
@@ -344,205 +334,123 @@ console.log("Studio Contact v0.1.0");
     // Switch to success state immediately — the wrapper class hides form, shows success
     wrapper.classList.add("is-submitted");
     console.log("[studio-contact] wrapper switched to success state");
+
+    // Build recommendations based on selected services
+    renderRecommendations(form);
   }
 
   //
-  //------- Abandonment Recovery -------//
+  //------- Post-Submit Recommendations -------//
   //
 
-  // Stored destination when navigation is blocked
-  var pendingDestination = null;
+  // Map service selections to keywords for scoring feed items
+  var SERVICE_KEYWORDS = {
+    "Interactive Advertising": ["advertising", "campaign", "ad", "media", "display"],
+    "Interactive Content": ["content", "editorial", "article", "website", "redesign"],
+    "Interactive Activations": ["activation", "campaign", "experience", "event", "identity"]
+  };
 
-  function shouldBlockNavigation() {
-    return formState.touched
-      && !formState.submitted
-      && !sessionStorage.getItem(SESSION_FLAG_KEY);
-  }
+  function renderRecommendations(form) {
+    var container = document.querySelector("[data-contact-recommendations]");
+    if (!container) return;
 
-  // Called by studio-barba.js via window.studioContactShouldPrevent
-  function checkAbandonOnNav(payload) {
-    var container = document.querySelector('[data-barba-namespace="contact"]');
-    // Only intercept if we're currently on the contact page
-    if (!container || !container.closest('[data-barba="container"]')) return false;
-    // Check if the contact container is the *current* one (not the incoming one)
-    var wrapper = document.querySelector('[data-barba="wrapper"]');
-    if (wrapper && wrapper.firstElementChild !== container.closest('[data-barba="container"]')) return false;
+    var services = getChipValues(form, "group");
+    var selectedServices = services ? services.split(", ") : [];
 
-    if (!shouldBlockNavigation()) return false;
-
-    // Store destination and show dialog
-    pendingDestination = payload.el ? payload.el.getAttribute("href") : null;
-    showAbandonDialog();
-    return true;
-  }
-
-  // Expose for studio-barba.js
-  window.studioContactShouldPrevent = checkAbandonOnNav;
-
-  function showAbandonDialog() {
-    var dialog = getAbandonDialog();
-    if (!dialog) return;
-
-    sessionStorage.setItem(SESSION_FLAG_KEY, "true");
-    console.log("[studio-contact] showing abandon dialog");
-    dialog.showModal();
-  }
-
-  function initAbandonDialog() {
-    var dialog = getAbandonDialog();
-    if (!dialog) return;
-
-    var backBtn = dialog.querySelector("[data-abandon-back]");
-    var closeBtn = dialog.querySelector("[data-abandon-close]");
-
-    if (backBtn) {
-      backBtn.addEventListener("click", function onBack() {
-        dialog.close();
-        // Focus the first empty required field
-        var form = getForm();
-        if (form) {
-          var nameInput = form.querySelector("#contact-name");
-          var emailInput = form.querySelector("#contact-email");
-          if (nameInput && !nameInput.value.trim()) { nameInput.focus(); return; }
-          if (emailInput && !emailInput.value.trim()) { emailInput.focus(); return; }
-          nameInput && nameInput.focus();
-        }
-      });
-    }
-
-    if (closeBtn) {
-      closeBtn.addEventListener("click", function onClose() {
-        dialog.close();
-        formState.touched = false; // prevent re-triggering
-        if (pendingDestination && typeof window.barba !== "undefined") {
-          window.barba.go(pendingDestination);
-        }
-        pendingDestination = null;
-      });
-    }
-
-    // Backdrop click = close (same as "Close" action)
-    dialog.addEventListener("click", function onBackdropClick(e) {
-      if (e.target === dialog) {
-        closeBtn && closeBtn.click();
+    // Collect keywords from selected services
+    var keywords = [];
+    selectedServices.forEach(function (svc) {
+      if (SERVICE_KEYWORDS[svc]) {
+        keywords = keywords.concat(SERVICE_KEYWORDS[svc]);
       }
     });
-  }
 
-  //
-  //------- beforeunload (browser back / tab close) -------//
-  //
-
-  function onBeforeUnload(e) {
-    if (shouldBlockNavigation()) {
-      e.preventDefault();
-      e.returnValue = "";
+    // Find feed items from the home page (Barba caches the L0 container)
+    var feedItems = document.querySelectorAll(".post-item");
+    if (!feedItems.length) {
+      // Try Barba's cached containers
+      var allContainers = document.querySelectorAll('[data-barba="container"]');
+      allContainers.forEach(function (c) {
+        if (!feedItems.length || feedItems.length === 0) {
+          var items = c.querySelectorAll(".post-item");
+          if (items.length) feedItems = items;
+        }
+      });
     }
-  }
 
-  function setBeforeUnload(active) {
-    if (active) {
-      window.addEventListener("beforeunload", onBeforeUnload);
-    } else {
-      window.removeEventListener("beforeunload", onBeforeUnload);
+    if (!feedItems.length) {
+      console.log("[studio-contact] no feed items in DOM — using fallback recommendations");
+      var fallback = [
+        { title: "Why design systems fail (and what to do about it)", excerpt: "Most design systems don\u2019t fail because the tokens are wrong. They fail because nobody uses them.", readTime: "6 min read", href: "articles/article-placeholder-1.html", score: 0 },
+        { title: "Case study placeholder one", excerpt: "A complete brand identity and digital platform for a global fintech company launching across three markets.", readTime: "", href: "work/case-study-placeholder-1.html", score: 0 },
+        { title: "The case for slower websites", excerpt: "", readTime: "4 min read", href: "articles/article-placeholder-2.html", score: 0 }
+      ];
+      renderCards(container, fallback);
+      return;
     }
-  }
 
-  //
-  //------- Mobile Inactivity Nudge -------//
-  //
+    // Score each feed item
+    var scored = [];
+    feedItems.forEach(function (item) {
+      var link = item.querySelector("a.post");
+      if (!link) return;
 
-  function isTouchDevice() {
-    return window.matchMedia("(pointer: coarse)").matches;
-  }
+      var title = (item.querySelector(".post-title") || {}).textContent || "";
+      var excerpt = (item.querySelector(".post-excerpt") || {}).textContent || "";
+      var readTime = (item.querySelector(".post-read-time") || {}).textContent || "";
+      var href = link.getAttribute("href") || "";
+      var titleLower = title.toLowerCase();
+      var excerptLower = excerpt.toLowerCase();
 
-  function startInactivityTimer() {
-    if (!isTouchDevice()) return;
-    clearInactivityTimer();
-    inactivityTimer = setTimeout(showBottomSheet, INACTIVITY_TIMEOUT);
-  }
+      var score = 0;
+      keywords.forEach(function (kw) {
+        if (titleLower.indexOf(kw) !== -1) score += 2;
+        if (excerptLower.indexOf(kw) !== -1) score += 1;
+      });
 
-  function resetInactivityTimer() {
-    if (!isTouchDevice() || !formState.touched || formState.submitted) return;
-    clearInactivityTimer();
-    inactivityTimer = setTimeout(showBottomSheet, INACTIVITY_TIMEOUT);
-  }
-
-  function clearInactivityTimer() {
-    if (inactivityTimer) {
-      clearTimeout(inactivityTimer);
-      inactivityTimer = null;
-    }
-  }
-
-  function showBottomSheet() {
-    if (formState.submitted) return;
-    if (sessionStorage.getItem(SESSION_FLAG_KEY)) return;
-
-    var sheet = getBottomSheet();
-    if (!sheet) return;
-
-    sessionStorage.setItem(SESSION_FLAG_KEY, "true");
-    console.log("[studio-contact] showing inactivity bottom sheet");
-    sheet.hidden = false;
-    sheet.setAttribute("aria-hidden", "false");
-
-    // Trigger slide-in on next frame
-    requestAnimationFrame(function () {
-      sheet.classList.add("is-visible");
+      scored.push({
+        title: title,
+        excerpt: excerpt,
+        readTime: readTime,
+        href: href,
+        score: score
+      });
     });
+
+    // Sort by score descending, then take top 3
+    scored.sort(function (a, b) { return b.score - a.score; });
+    var top = scored.slice(0, 3);
+
+    console.log("[studio-contact] recommendations:", top.map(function (r) { return r.title + " (" + r.score + ")"; }));
+    renderCards(container, top);
   }
 
-  function dismissBottomSheet() {
-    var sheet = getBottomSheet();
-    if (!sheet) return;
+  function renderCards(container, items) {
+    items.forEach(function (rec) {
+      var card = document.createElement("a");
+      card.href = rec.href;
+      card.className = "contact-rec-card";
 
-    sheet.classList.remove("is-visible");
-    sheet.classList.add("is-dismissing");
+      var titleEl = document.createElement("span");
+      titleEl.className = "contact-rec-title";
+      titleEl.textContent = rec.title;
+      card.appendChild(titleEl);
 
-    setTimeout(function hideSheet() {
-      sheet.hidden = true;
-      sheet.setAttribute("aria-hidden", "true");
-      sheet.classList.remove("is-dismissing");
-    }, 200);
+      if (rec.excerpt) {
+        var excerptEl = document.createElement("span");
+        excerptEl.className = "contact-rec-excerpt";
+        excerptEl.textContent = rec.excerpt;
+        card.appendChild(excerptEl);
+      }
 
-    // Focus first empty field
-    var form = getForm();
-    if (form) {
-      var nameInput = form.querySelector("#contact-name");
-      var emailInput = form.querySelector("#contact-email");
-      if (nameInput && !nameInput.value.trim()) { nameInput.focus(); return; }
-      if (emailInput && !emailInput.value.trim()) { emailInput.focus(); return; }
-    }
-  }
+      if (rec.readTime) {
+        var metaEl = document.createElement("span");
+        metaEl.className = "contact-rec-meta";
+        metaEl.innerHTML = '<div class="svg-icn" data-icon="clock"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M15.3 16.7L16.7 15.3L13 11.6V7H11V12.4L15.3 16.7ZM12 22C10.6167 22 9.31667 21.7375 8.1 21.2125C6.88333 20.6875 5.825 19.975 4.925 19.075C4.025 18.175 3.3125 17.1167 2.7875 15.9C2.2625 14.6833 2 13.3833 2 12C2 10.6167 2.2625 9.31667 2.7875 8.1C3.3125 6.88333 4.025 5.825 4.925 4.925C5.825 4.025 6.88333 3.3125 8.1 2.7875C9.31667 2.2625 10.6167 2 12 2C13.3833 2 14.6833 2.2625 15.9 2.7875C17.1167 3.3125 18.175 4.025 19.075 4.925C19.975 5.825 20.6875 6.88333 21.2125 8.1C21.7375 9.31667 22 10.6167 22 12C22 13.3833 21.7375 14.6833 21.2125 15.9C20.6875 17.1167 19.975 18.175 19.075 19.075C18.175 19.975 17.1167 20.6875 15.9 21.2125C14.6833 21.7375 13.3833 22 12 22ZM12 20C14.2167 20 16.1042 19.2208 17.6625 17.6625C19.2208 16.1042 20 14.2167 20 12C20 9.78333 19.2208 7.89583 17.6625 6.3375C16.1042 4.77917 14.2167 4 12 4C9.78333 4 7.89583 4.77917 6.3375 6.3375C4.77917 7.89583 4 9.78333 4 12C4 14.2167 4.77917 16.1042 6.3375 17.6625C7.89583 19.2208 9.78333 20 12 20Z" fill="currentColor"></path></svg></div>' + rec.readTime;
+        card.appendChild(metaEl);
+      }
 
-  function initBottomSheet() {
-    var sheet = getBottomSheet();
-    if (!sheet) return;
-
-    var backdrop = sheet.querySelector(".contact-bottom-sheet-backdrop");
-    var dismissBtn = sheet.querySelector("[data-sheet-dismiss]");
-
-    if (backdrop) backdrop.addEventListener("click", dismissBottomSheet);
-    if (dismissBtn) dismissBtn.addEventListener("click", dismissBottomSheet);
-
-    // Swipe-down to dismiss
-    var panel = sheet.querySelector(".contact-bottom-sheet-panel");
-    if (panel) {
-      var startY = 0;
-      panel.addEventListener("touchstart", function onTouchStart(e) {
-        startY = e.touches[0].clientY;
-      }, { passive: true });
-
-      panel.addEventListener("touchend", function onTouchEnd(e) {
-        var endY = e.changedTouches[0].clientY;
-        if (endY - startY > 40) dismissBottomSheet();
-      }, { passive: true });
-    }
-
-    // Reset inactivity timer on interaction
-    ["touchstart", "scroll", "keydown"].forEach(function bindReset(event) {
-      document.addEventListener(event, resetInactivityTimer, { passive: true });
+      container.appendChild(card);
     });
   }
 
@@ -601,12 +509,6 @@ console.log("Studio Contact v0.1.0");
     initChips();
     console.log("[studio-contact] ✓ chips ready");
 
-    initAbandonDialog();
-    console.log("[studio-contact] ✓ abandon dialog ready");
-
-    initBottomSheet();
-    console.log("[studio-contact] ✓ bottom sheet ready");
-
     initUTM();
     var source = sessionStorage.getItem("contact_source") || "direct";
     console.log("[studio-contact] ✓ UTM ready (source: " + source + ")");
@@ -642,8 +544,6 @@ console.log("Studio Contact v0.1.0");
   //   contact.html#success     — post-submit success state
   //   contact.html#error       — form with validation errors shown
   //   contact.html#network     — form with network error callout
-  //   contact.html#dialog      — abandon dialog open
-  //   contact.html#sheet       — mobile bottom sheet visible
   //   contact.html#selected    — chips with selections pre-filled
   //   contact.html#sending     — submit button in loading state
   //
@@ -652,8 +552,6 @@ console.log("Studio Contact v0.1.0");
     var hash = location.hash.replace("#", "");
     if (!hash) return;
 
-    var dialog = getAbandonDialog();
-    var sheet = getBottomSheet();
     var btn = getSubmitBtn();
 
     switch (hash) {
@@ -661,6 +559,7 @@ console.log("Studio Contact v0.1.0");
       case "success":
         var w = getWrapper();
         if (w) w.classList.add("is-submitted");
+        renderRecommendations(form);
         break;
 
       case "error":
@@ -673,18 +572,6 @@ console.log("Studio Contact v0.1.0");
       case "network":
         var callout = form.querySelector(".contact-error-callout");
         if (callout) callout.hidden = false;
-        break;
-
-      case "dialog":
-        if (dialog) dialog.showModal();
-        break;
-
-      case "sheet":
-        if (sheet) {
-          sheet.hidden = false;
-          sheet.setAttribute("aria-hidden", "false");
-          sheet.classList.add("is-visible");
-        }
         break;
 
       case "selected":

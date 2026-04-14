@@ -79,28 +79,24 @@ function initMobileDrawer() {
 // many directories deep we are from there.
 //
 // Examples:
-//   /studio/index.html               → "index.html"
-//   /studio/work.html                → "index.html"
-//   /studio/work/case-study-1.html   → "../index.html"
-//   /studio/articles/article-1.html  → "../index.html"
-function getHomeRelativePath() {
-  var segments = location.pathname.split("/").filter(Boolean);
-  var studioIdx = segments.indexOf("studio");
-  if (studioIdx === -1) return "index.html";
-  // segments after "studio", minus the filename (last segment)
-  var depth = segments.length - studioIdx - 2;
-  return depth <= 0 ? "index.html" : "../".repeat(depth) + "index.html";
-}
-
-// Compute the relative prefix from the current page back to /studio/
-// e.g. from /studio/articles/article-1.html → "../"
-//      from /studio/index.html → ""
+// Compute how many directory levels deep the current page is from the site root.
+// Works whether deployed at /studio/ (dev) or / (production).
+//   /index.html                      → depth 0 → ""
+//   /articles/article-1.html         → depth 1 → "../"
+//   /studio/index.html               → depth 0 → ""
+//   /studio/articles/article-1.html  → depth 1 → "../"
 function getStudioPrefix() {
   var segments = location.pathname.split("/").filter(Boolean);
+  // If "studio" is in the path, measure depth after it; otherwise from root
   var studioIdx = segments.indexOf("studio");
-  if (studioIdx === -1) return "";
-  var depth = segments.length - studioIdx - 2;
+  var base = studioIdx !== -1 ? studioIdx + 1 : 0;
+  // Subtract 1 for the filename itself (last segment)
+  var depth = segments.length - base - 1;
   return depth <= 0 ? "" : "../".repeat(depth);
+}
+
+function getHomeRelativePath() {
+  return getStudioPrefix() + "index.html";
 }
 
 // Fix all sidebar nav links and the close button after Barba navigations.
@@ -576,10 +572,13 @@ function initToc() {
   // 3. Show/hide sidebar TOC based on in-this-article visibility
   var inThisArticle = document.querySelector(".in-this-article");
   var tocBlock = document.querySelector(".toc-block");
-  if (inThisArticle && tocBlock) {
+  var shareBlock = document.querySelector(".share-block");
+  if (inThisArticle && (tocBlock || shareBlock)) {
     tocVisibilityObserver = new IntersectionObserver(function handleTocVisibility(entries) {
       entries.forEach(function checkVisibility(entry) {
-        tocBlock.classList.toggle("is-visible", !entry.isIntersecting);
+        var visible = !entry.isIntersecting;
+        if (tocBlock) tocBlock.classList.toggle("is-visible", visible);
+        if (shareBlock) shareBlock.classList.toggle("is-visible", visible);
       });
     }, { threshold: 0 });
     tocVisibilityObserver.observe(inThisArticle);
@@ -634,11 +633,13 @@ function initShareLinks() {
     var btn = e.target.closest(".share-copy");
     if (!btn) return;
 
+    var ICON_CHECK = '<div class="svg-icn" data-icon="check"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"></path></svg></div>';
+    var originalHTML = btn.innerHTML;
+
     navigator.clipboard.writeText(window.location.href).then(function onCopy() {
-      var original = btn.textContent;
-      btn.textContent = "Copied";
+      btn.innerHTML = ICON_CHECK + "Copied";
       setTimeout(function revert() {
-        btn.textContent = original;
+        btn.innerHTML = originalHTML;
       }, 2000);
     });
   });
@@ -654,35 +655,103 @@ function initShareLinks() {
 }
 
 //
+//------- Sidebar Posts -------//
+//
+
+var CASE_STUDY_REGISTRY = [
+  {
+    url: "work/case-study-placeholder-1.html",
+    title: "Interactive campaign for a global fintech",
+    excerpt: "A suite of interactive ad formats built for scale across three markets.",
+    thumb: "https://bydefault.design/image/96x64"
+  },
+  {
+    url: "work/case-study-placeholder-2.html",
+    title: "Shoppable experience for a luxury retailer",
+    excerpt: "Tap-to-buy rich media ads that turned browsing into purchasing.",
+    thumb: "https://bydefault.design/image/96x64"
+  },
+  {
+    url: "work/case-study-placeholder-3.html",
+    title: "Publisher format suite for a media network",
+    excerpt: "Custom ad formats designed for editorial environments.",
+    thumb: "https://bydefault.design/image/96x64"
+  }
+];
+
+function initSidebarPosts() {
+  var container = document.querySelector(".sidebar-posts");
+  if (!container) return;
+
+  // Clear existing (Barba re-navigation)
+  container.innerHTML = "";
+
+  var prefix = getStudioPrefix();
+
+  CASE_STUDY_REGISTRY.forEach(function buildPost(entry) {
+    var link = document.createElement("a");
+    link.className = "sidebar-post";
+    link.href = prefix + entry.url;
+    link.innerHTML =
+      '<img src="' + entry.thumb + '" alt="" class="sidebar-post-thumb" loading="lazy">' +
+      '<span class="sidebar-post-text">' +
+        '<span class="sidebar-post-title">' + entry.title + '</span>' +
+        '<span class="sidebar-post-excerpt">' + entry.excerpt + '</span>' +
+      '</span>';
+    container.appendChild(link);
+  });
+}
+
+window.initSidebarPosts = initSidebarPosts;
+
+//
 //------- Next Read -------//
 //
 
 // Article registry — ordered by date (newest first).
-// Each entry: { url, title, image, readTime, date }
 // URLs are relative to /studio/ (the prefix is applied at runtime).
 var ARTICLE_REGISTRY = [
   {
     url: "articles/article-placeholder-1.html",
+    id: "article-placeholder-1",
     title: "Why design systems fail (and what to do about it)",
-    image: "https://bydefault.design/image/1920x1080",
+    badge: "Article",
     readTime: "6 min read",
-    date: "Mar 28, 2026"
+    date: "Mar 28, 2026",
+    authorName: "Full Name",
+    authorAvatar: "https://bydefault.design/image/64x64?text=BD",
+    authorUrl: "../about.html",
+    headerSpacing: "top-medium bottom-medium"
   },
   {
     url: "articles/article-placeholder-2.html",
+    id: "article-placeholder-2",
     title: "The case for slower websites",
-    image: "https://bydefault.design/image/1920x1080",
+    badge: "Article",
     readTime: "5 min read",
-    date: "Mar 5, 2026"
+    date: "Mar 5, 2026",
+    authorName: "Full Name",
+    authorAvatar: "https://bydefault.design/image/64x64?text=BD",
+    authorUrl: "../about.html",
+    headerSpacing: "top-large bottom-large"
   },
   {
     url: "articles/article-placeholder-3.html",
+    id: "article-placeholder-3",
     title: "Naming things: the hardest problem in design systems",
-    image: "https://bydefault.design/image/1920x1080",
+    badge: "Article",
     readTime: "7 min read",
-    date: "Jan 18, 2026"
+    date: "Jan 18, 2026",
+    authorName: "Full Name",
+    authorAvatar: "https://bydefault.design/image/64x64?text=BD",
+    authorUrl: "../about.html",
+    headerSpacing: "top-large bottom-large"
   }
 ];
+
+var ICON_CLOCK = '<div class="svg-icn" data-icon="clock"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M15.3 16.7L16.7 15.3L13 11.6V7H11V12.4L15.3 16.7ZM12 22C10.6167 22 9.31667 21.7375 8.1 21.2125C6.88333 20.6875 5.825 19.975 4.925 19.075C4.025 18.175 3.3125 17.1167 2.7875 15.9C2.2625 14.6833 2 13.3833 2 12C2 10.6167 2.2625 9.31667 2.7875 8.1C3.3125 6.88333 4.025 5.825 4.925 4.925C5.825 4.025 6.88333 3.3125 8.1 2.7875C9.31667 2.2625 10.6167 2 12 2C13.3833 2 14.6833 2.2625 15.9 2.7875C17.1167 3.3125 18.175 4.025 19.075 4.925C19.975 5.825 20.6875 6.88333 21.2125 8.1C21.7375 9.31667 22 10.6167 22 12C22 13.3833 21.7375 14.6833 21.2125 15.9C20.6875 17.1167 19.975 18.175 19.075 19.075C18.175 19.975 17.1167 20.6875 15.9 21.2125C14.6833 21.7375 13.3833 22 12 22ZM12 20C14.2167 20 16.1042 19.2208 17.6625 17.6625C19.2208 16.1042 20 14.2167 20 12C20 9.78333 19.2208 7.89583 17.6625 6.3375C16.1042 4.77917 14.2167 4 12 4C9.78333 4 7.89583 4.77917 6.3375 6.3375C4.77917 7.89583 4 9.78333 4 12C4 14.2167 4.77917 16.1042 6.3375 17.6625C7.89583 19.2208 9.78333 20 12 20Z" fill="currentColor"></path></svg></div>';
+
+var ICON_CALENDAR = '<div class="svg-icn" data-icon="calendar"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11.0184 14V12H13.0184V14H11.0184ZM7.01843 14V12H9.01843V14H7.01843ZM15.0184 14V12H17.0184V14H15.0184ZM11.0184 18V16H13.0184V18H11.0184ZM7.01843 18V16H9.01843V18H7.01843ZM15.0184 18V16H17.0184V18H15.0184ZM3.01843 22V4H5.01843C5.57072 4 6.01843 3.55228 6.01843 3V2H8.01843V3C8.01843 3.55228 8.46615 4 9.01843 4H15.0184C15.5707 4 16.0184 3.55228 16.0184 3V2H18.0184V3C18.0184 3.55228 18.4661 4 19.0184 4H21.0184V22H3.01843ZM5.01843 19C5.01843 19.5523 5.46615 20 6.01843 20H18.0184C18.5707 20 19.0184 19.5523 19.0184 19V11C19.0184 10.4477 18.5707 10 18.0184 10H6.01843C5.46615 10 5.01843 10.4477 5.01843 11V19ZM5.01843 7C5.01843 7.55228 5.46615 8 6.01843 8H18.0184C18.5707 8 19.0184 7.55228 19.0184 7C19.0184 6.44772 18.5707 6 18.0184 6H6.01843C5.46615 6 5.01843 6.44772 5.01843 7Z" fill="currentColor"></path></svg></div>';
 
 function initNextRead() {
   var article = document.querySelector("article.article");
@@ -708,23 +777,30 @@ function initNextRead() {
   var next = ARTICLE_REGISTRY[nextIndex];
   var prefix = getStudioPrefix();
 
-  // Build the next-read card
-  var card = document.createElement("a");
-  card.className = "next-read";
-  card.href = prefix + next.url;
-  card.innerHTML =
-    '<div class="next-read-bg" style="background-image: url(' + next.image + ')"></div>' +
-    '<div class="next-read-overlay"></div>' +
-    '<div class="next-read-content">' +
-      '<span class="next-read-label">Next read</span>' +
-      '<h2 class="next-read-title">' + next.title + '</h2>' +
-      '<div class="next-read-meta">' +
-        '<span>' + next.readTime + '</span>' +
-        '<span>' + next.date + '</span>' +
+  // Build the next-read section — identical structure to the article header
+  // so the push-up transition is seamless. Uses <section> with data-article,
+  // same classes, same heading level. The <a> overlay handles the click.
+  var section = document.createElement("section");
+  section.className = "next-read";
+  section.setAttribute("data-article", next.id);
+  section.innerHTML =
+    '<a class="next-read-link" href="' + prefix + next.url + '" aria-label="Read: ' + next.title + '"></a>' +
+    '<div class="padding-global ' + next.headerSpacing + '">' +
+      '<div class="next-read-label">Next read</div>' +
+      '<div class="article-header">' +
+        '<div class="article-meta">' +
+          '<span class="article-meta-item">' + ICON_CLOCK + next.readTime + '</span>' +
+          '<span class="article-meta-item">' + ICON_CALENDAR + next.date + '</span>' +
+        '</div>' +
+        '<h1 class="article-title">' + next.title + '</h1>' +
+        '<a class="article-author">' +
+          '<img src="' + next.authorAvatar + '" alt="" class="article-author-avatar" loading="lazy">' +
+          '<span class="article-author-by">by</span> ' + next.authorName +
+        '</a>' +
       '</div>' +
     '</div>';
 
-  article.appendChild(card);
+  article.appendChild(section);
 }
 
 window.initNextRead = initNextRead;
@@ -745,9 +821,9 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
   initFeedFilters();
   initToc();
   initShareLinks();
+  initSidebarPosts();
   initNextRead();
 
   // Re-init after Barba navigations
   document.addEventListener("studio:after-nav", markReadPosts);
-  document.addEventListener("studio:after-nav", initToc);
 });
