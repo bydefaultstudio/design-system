@@ -2,7 +2,7 @@
  * Build the studio-content.json manifest from canonicalised entries.
  * Shape matches the runtime consumers in studio.js:
  *   - initFeed() reads articles + caseStudies (sorted by date desc)
- *   - initSidebarPosts() reads caseStudies
+ *   - initSidebarSlot() reads caseStudies
  *   - initNextRead() reads articles by url
  */
 

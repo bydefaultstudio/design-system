@@ -466,8 +466,8 @@ function initStudioBarba() {
     if (typeof window.initShareLinks === "function") {
       window.initShareLinks();
     }
-    if (typeof window.initSidebarPosts === "function") {
-      window.initSidebarPosts();
+    if (typeof window.initSidebarSlot === "function") {
+      window.initSidebarSlot();
     }
     document.body.classList.remove("is-animating");
     // Clean up role/scenario attributes + any inline styles set by the

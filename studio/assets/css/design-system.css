@@ -585,9 +585,9 @@
   --section-xl: var(--space-14xl);
 
   /* -- Border width tokens -- */
-  --border-s: 1.5px;
-  --border-m: 2px;
-  --border-l: 4px;
+  --border-s: 0.0625rem;
+  --border-m: 0.125rem;
+  --border-l: 0.25rem;
 
   /* -- Border composition variables -- */
   --border-width: var(--border-s);
@@ -1161,6 +1161,12 @@ button {
   height: 1.5rem;
   display: flex;
   aspect-ratio: 1 / 1;
+  transition: color var(--duration-m) var(--ease-out);
+}
+
+.svg-icn svg,
+.svg-icn path {
+  transition: fill var(--duration-m) var(--ease-out);
 }
 
 .svg-icn.is-preview {
@@ -1169,9 +1175,16 @@ button {
 }
 
 .svg-logo {
-  width: 100%;
-  max-width: 300px;
-  aspect-ratio: 210 / 101;
+
+}
+
+[class*="svg-logo"] {
+  transition: color var(--duration-m) var(--ease-out);
+}
+
+[class*="svg-logo"] svg,
+[class*="svg-logo"] path {
+  transition: fill var(--duration-m) var(--ease-out);
 }
 
 .button-group {
@@ -1326,7 +1339,9 @@ a {
   -webkit-text-decoration-color: var(--text-link);
   text-decoration-color: var(--text-link);
   text-decoration-thickness: 0.09em;
-  transition: all 0.3s;
+  transition: color var(--duration-m) var(--ease-out),
+              text-decoration-color var(--duration-m) var(--ease-out),
+              text-underline-offset var(--duration-m) var(--ease-out);
 }
 
 a:not(.button):hover {

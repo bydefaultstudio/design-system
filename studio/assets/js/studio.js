@@ -662,7 +662,7 @@ var SERVICES_REGISTRY = [
   {
     url: "contact.html",
     title: "Interactive Ads",
-    excerpt: "Ad formats that turn audiences into participants — higher engagement, completion, and CPM on premium inventory.",
+    excerpt: "Ad formats that turn audiences into active participants with digital advertising formats",
     thumb: "https://bydefault.design/image/96x64"
   },
   {
@@ -679,13 +679,13 @@ var SERVICES_REGISTRY = [
   }
 ];
 
-function initSidebarPosts() {
-  var container = document.querySelector(".sidebar-posts");
+function initSidebarSlot() {
+  var container = document.querySelector(".sidebar-slot");
   if (!container) return;
 
   // Remove previously-rendered service links without wiping the section title
-  // that's nested inside .sidebar-posts.
-  container.querySelectorAll(".sidebar-post").forEach(function remove(el) {
+  // that's nested inside .sidebar-slot.
+  container.querySelectorAll(".sidebar-slot-link").forEach(function remove(el) {
     el.remove();
   });
 
@@ -693,19 +693,19 @@ function initSidebarPosts() {
 
   SERVICES_REGISTRY.forEach(function buildPost(entry) {
     var link = document.createElement("a");
-    link.className = "sidebar-post";
+    link.className = "sidebar-slot-link";
     link.href = prefix + entry.url;
     link.innerHTML =
-      '<img src="' + entry.thumb + '" alt="" class="sidebar-post-thumb" loading="lazy">' +
-      '<span class="sidebar-post-text">' +
-        '<span class="sidebar-post-title">' + entry.title + '</span>' +
-        '<span class="sidebar-post-excerpt">' + entry.excerpt + '</span>' +
+      '<img src="' + entry.thumb + '" alt="" class="sidebar-slot-link-thumb" loading="lazy">' +
+      '<span class="sidebar-slot-link-text">' +
+        '<span class="sidebar-slot-link-title">' + entry.title + '</span>' +
+        '<span class="sidebar-slot-link-excerpt">' + entry.excerpt + '</span>' +
       '</span>';
     container.appendChild(link);
   });
 }
 
-window.initSidebarPosts = initSidebarPosts;
+window.initSidebarSlot = initSidebarSlot;
 
 //
 //------- Next Read -------//
@@ -915,7 +915,7 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
   initFeedFilters();
   initToc();
   initShareLinks();
-  initSidebarPosts();
+  initSidebarSlot();
   initFeed();
   initNextRead();
 

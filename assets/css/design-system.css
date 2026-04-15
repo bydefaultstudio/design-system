@@ -269,7 +269,7 @@
 
   /* -- Black & White Alpha Tokens -- */
   --black: #000000;
-    --black-alpha-3: #00000008;
+  --black-alpha-3: #00000008;
   --black-alpha-5: #0000000d;
   --black-alpha-10: #0000001a;
   --black-alpha-15: #00000026;
@@ -478,7 +478,7 @@
   --text-top-nav: var(--text-primary);
 
   /* -- Background -- */
-  --background-primary: #1a1a1a;
+  --background-primary: var(--neutral-800);
   --background-secondary: #222222;
   --background-plain: #2a2a2a;
   --background-faded: rgba(255, 255, 255, 0.06);
@@ -785,6 +785,7 @@
   --duration-m: 600ms;
   --duration-l: 800ms;
   --duration-xl: 1200ms;
+  --duration-2xl: 1500ms;
 
   /* -- Page-level semantic motion -- */
   --motion-page-open-duration: var(--duration-xl);
@@ -1264,6 +1265,13 @@ button {
   border: var(--border-s) solid var(--button-faded);
 }
 
+.is-link {
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+}
+
 .is-small {
   font-size: var(--button-font-size-small);
   padding: var(--space-m) var(--space-xl);
@@ -1283,7 +1291,6 @@ button {
 
 .is-icon {
   padding: var(--space-l);
-  border-radius: 50%;
 }
 
 .svg-icn {
@@ -1294,6 +1301,12 @@ button {
   height: 1.5rem;
   display: flex;
   aspect-ratio: 1 / 1;
+  transition: color var(--duration-m) var(--ease-out);
+}
+
+.svg-icn svg,
+.svg-icn path {
+  transition: fill var(--duration-m) var(--ease-out);
 }
 
 .svg-icn.is-preview {
@@ -1305,6 +1318,15 @@ button {
   width: 100%;
   max-width: 300px;
   aspect-ratio: 210 / 101;
+}
+
+[class*="svg-logo"] {
+  transition: color var(--duration-m) var(--ease-out);
+}
+
+[class*="svg-logo"] svg,
+[class*="svg-logo"] path {
+  transition: fill var(--duration-m) var(--ease-out);
 }
 
 .button-group {
@@ -1459,7 +1481,9 @@ a {
   -webkit-text-decoration-color: var(--text-link);
   text-decoration-color: var(--text-link);
   text-decoration-thickness: 0.09em;
-  transition: all 0.3s;
+  transition: color var(--duration-m) var(--ease-out),
+              text-decoration-color var(--duration-m) var(--ease-out),
+              text-underline-offset var(--duration-m) var(--ease-out);
 }
 
 a:not(.button):hover {
@@ -3077,7 +3101,6 @@ hr {
   gap: var(--space-xs);
   align-items: center;
 }
-
 
 /* ------ 29. DIALOG ------ */
 
