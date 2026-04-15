@@ -379,13 +379,8 @@ console.log("Studio Contact v0.1.0");
     }
 
     if (!feedItems.length) {
-      console.log("[studio-contact] no feed items in DOM — using fallback recommendations");
-      var fallback = [
-        { title: "Why design systems fail (and what to do about it)", excerpt: "Most design systems don\u2019t fail because the tokens are wrong. They fail because nobody uses them.", readTime: "6 min read", href: "articles/article-placeholder-1.html", score: 0 },
-        { title: "Case study placeholder one", excerpt: "A complete brand identity and digital platform for a global fintech company launching across three markets.", readTime: "", href: "work/case-study-placeholder-1.html", score: 0 },
-        { title: "The case for slower websites", excerpt: "", readTime: "4 min read", href: "articles/article-placeholder-2.html", score: 0 }
-      ];
-      renderCards(container, fallback);
+      console.log("[studio-contact] no feed items in DOM — pulling fallback from manifest");
+      renderManifestFallback(container);
       return;
     }
 
@@ -425,11 +420,69 @@ console.log("Studio Contact v0.1.0");
     renderCards(container, top);
   }
 
+  function renderManifestFallback(container) {
+    var loader = window.loadStudioContent;
+    if (typeof loader !== "function") {
+      renderEvergreenFallback(container);
+      return;
+    }
+    loader().then(function (data) {
+      var articles = (data && data.articles) || [];
+      var cases = (data && data.caseStudies) || [];
+      if (!articles.length && !cases.length) {
+        renderEvergreenFallback(container);
+        return;
+      }
+      var prefix = (typeof window.getStudioPrefix === "function") ? window.getStudioPrefix() : "";
+      var picks = [];
+      var topArticle = articles[0];
+      if (topArticle) {
+        picks.push({
+          eyebrow: "Read our latest article",
+          title: topArticle.title,
+          excerpt: topArticle.synopsis || "",
+          readTime: topArticle.readTime || "",
+          href: prefix + topArticle.url
+        });
+      }
+      var topCase = cases[0];
+      if (topCase) {
+        picks.push({
+          eyebrow: "Explore our latest project",
+          title: topCase.title,
+          excerpt: topCase.synopsis || "",
+          readTime: "",
+          href: prefix + topCase.url
+        });
+      }
+      renderCards(container, picks);
+    }).catch(function () {
+      renderEvergreenFallback(container);
+    });
+  }
+
+  function renderEvergreenFallback(container) {
+    renderCards(container, [{
+      eyebrow: "More from By Default",
+      title: "See our latest writing",
+      excerpt: "",
+      readTime: "",
+      href: "/index.html#articles"
+    }]);
+  }
+
   function renderCards(container, items) {
     items.forEach(function (rec) {
       var card = document.createElement("a");
       card.href = rec.href;
       card.className = "contact-rec-card";
+
+      if (rec.eyebrow) {
+        var eyebrowEl = document.createElement("span");
+        eyebrowEl.className = "contact-rec-eyebrow";
+        eyebrowEl.textContent = rec.eyebrow;
+        card.appendChild(eyebrowEl);
+      }
 
       var titleEl = document.createElement("span");
       titleEl.className = "contact-rec-title";

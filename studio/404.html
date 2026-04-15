@@ -44,16 +44,15 @@
   <!-- Design System (shared from parent project — see README for deploy lift) -->
   <link rel="stylesheet" href="assets/css/design-system.css" />
 
-  <!-- Google Fonts (required by design system) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Zalando+Sans:wdth,wght@75..125,300..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Self-hosted fonts -->
+  <link rel="preload" href="assets/fonts/zalando-sans/ZalandoSans-VariableFont_wdth,wght.ttf" as="font" type="font/ttf" crossorigin>
 
   <!-- Studio styles -->
   <link rel="stylesheet" href="assets/css/studio.css" />
   <link rel="stylesheet" href="assets/css/bd-video.css" />
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
 
   <div class="layout">
 
@@ -103,7 +102,7 @@
     </header>
 
     <!-- Main (Barba container) -->
-    <main class="main" id="main">
+    <main class="main" id="main" tabindex="-1">
       <div data-barba="wrapper">
         <div data-barba="container"
              data-barba-namespace="error-404"

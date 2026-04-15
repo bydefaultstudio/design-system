@@ -15,6 +15,53 @@
  */
 
 
+/* ------ FONTS (self-hosted) ------ */
+
+@font-face {
+  font-family: "Zalando Sans";
+  src: url("../fonts/zalando-sans/ZalandoSans-VariableFont_wdth,wght.ttf") format("truetype-variations");
+  font-weight: 300 900;
+  font-stretch: 75% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Zalando Sans";
+  src: url("../fonts/zalando-sans/ZalandoSans-Italic-VariableFont_wdth,wght.ttf") format("truetype-variations");
+  font-weight: 300 900;
+  font-stretch: 75% 125%;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../fonts/ibm-plex-mono/IBMPlexMono-Regular.ttf") format("truetype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../fonts/ibm-plex-mono/IBMPlexMono-Medium.ttf") format("truetype");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../fonts/ibm-plex-mono/IBMPlexMono-SemiBold.ttf") format("truetype");
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+
+
+/* ------ FOCUS INDICATOR ------ */
+
+/* Keyboard focus indicator — applies to all interactive elements that
+   don't define their own focus-visible style. :where() keeps specificity
+   at 0 so component-specific focus styles still win. */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+
 /* ------ TOKENS ------ */
 
 :root {
@@ -170,6 +217,7 @@ body.is-sidebar-collapsed .layout {
 
 .sidebar-intro {
   font-size: var(--font-s);
+  font-weight: inherit;
   color: var(--text-secondary);
   text-align: center;
   margin: 0;
@@ -1532,6 +1580,15 @@ body.is-animating .close-btn-wrap {
 
 .contact-rec-card:hover {
   background-color: var(--background-darker);
+}
+
+.contact-rec-eyebrow {
+  font-family: var(--font-tertiary);
+  font-size: var(--font-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-l);
+  color: var(--text-faded);
 }
 
 .contact-rec-title {
