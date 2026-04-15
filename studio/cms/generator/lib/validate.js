@@ -43,6 +43,10 @@ function validate(data, sourcePath) {
     errors.push(`${sourcePath}: \`date\` "${data.date}" is not a valid ISO date`);
   }
 
+  if (data.featured !== undefined && typeof data.featured !== "boolean") {
+    errors.push(`${sourcePath}: \`featured\` must be a boolean (true or false)`);
+  }
+
   return { valid: errors.length === 0, errors };
 }
 

@@ -8,6 +8,7 @@ author:
   avatar: "https://bydefault.design/image/64x64?text=BD"
 categories: ["Systems", "Naming"]
 read-time: "7 min read"
+featured: true
 ---
 
 There are only two hard things in computer science: cache invalidation and naming things. Design systems inherit the naming problem and make it worse, because the names need to make sense to designers, developers, and stakeholders — three groups with different mental models.

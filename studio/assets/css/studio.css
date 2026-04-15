@@ -918,15 +918,21 @@ article.article {
   opacity: 1;
 }
 
-/* Next-read variant — shares .article-title base with the page title section */
-.article-title.is-next-read {
+/* Sibling gap between the current article and the next-read preview card */
+.article + .article {
+  margin-top: var(--studio-gap);
+}
+
+/* Next-read wrapper — shares .article base (bg + radius) with the current
+   article card. Relative positioning + cursor live on the wrapper so the
+   full-coverage link overlay works across the whole card. */
+.article.is-next-read {
   position: relative;
   cursor: pointer;
-  border-top: var(--border-s) solid var(--border-faded);
 }
 
 /* Full-coverage clickable overlay */
-.article-title.is-next-read .next-read-link {
+.article.is-next-read .next-read-link {
   position: absolute;
   inset: 0;
   z-index: 1;
@@ -1075,6 +1081,11 @@ article.article {
   aspect-ratio: 9 / 16;
 }
 
+.post[data-post-type="featured"] .post-header {
+  padding: var(--studio-gap) var(--studio-gap) var(--space-5xl) var(--studio-gap);
+    background: linear-gradient(to bottom, var(--black-alpha-30) 0%, transparent 100%);
+
+}
 .post[data-post-type="featured"] .post-thumbnail {
   position: absolute;
   inset: 0;
@@ -1090,7 +1101,7 @@ article.article {
   justify-content: flex-end;
   height: 100%;
   padding: var(--post-spacing);
-  background: linear-gradient(to top, var(--black-alpha-70) 0%, transparent 100%);
+  background: linear-gradient(to top, var(--black-alpha-70) 0%, transparent 70%);
 }
 
 .post[data-post-type="featured"] .post-label {

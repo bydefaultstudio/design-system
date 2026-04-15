@@ -784,7 +784,7 @@ function initNextRead() {
     if (!articles.length) return;
 
     // Remove any existing next-read (Barba re-navigation)
-    var existing = article.querySelector(".is-next-read");
+    var existing = article.parentNode.querySelector(".article.is-next-read");
     if (existing) existing.remove();
 
     // Match the current page to a manifest entry by slug (filename without .html)
@@ -798,30 +798,33 @@ function initNextRead() {
     var next = articles[(currentIndex + 1) % articles.length];
     var author = next.author || {};
 
-    // Mirror the article header markup so the push-up transition is seamless.
-    var section = document.createElement("section");
-    section.className = "article-title is-next-read";
-    section.setAttribute("data-article", next.slug);
-    section.innerHTML =
+    // Mirror the article structure so the next-read reads as its own article
+    // card, gapped from the current one via CSS (.article + .article).
+    var wrapper = document.createElement("article");
+    wrapper.className = "article is-next-read";
+    wrapper.setAttribute("data-article", next.slug);
+    wrapper.innerHTML =
       '<a class="next-read-link" href="' + getStudioPrefix() + next.url + '" aria-label="Read: ' + attrEscape(next.title) + '"></a>' +
-      '<div class="padding-global top-medium bottom-medium">' +
-        '<div class="next-read-label">Next read</div>' +
-        '<div class="article-header">' +
-          '<div class="article-meta">' +
-            (next.readTime ? '<span class="article-meta-item">' + ICON_CLOCK + attrEscape(next.readTime) + '</span>' : '') +
-            '<span class="article-meta-item">' + ICON_CALENDAR + formatStudioDate(next.date) + '</span>' +
+      '<section class="article-title is-next-read">' +
+        '<div class="padding-global top-medium bottom-medium">' +
+          '<div class="next-read-label">Next read</div>' +
+          '<div class="article-header">' +
+            '<div class="article-meta">' +
+              (next.readTime ? '<span class="article-meta-item">' + ICON_CLOCK + attrEscape(next.readTime) + '</span>' : '') +
+              '<span class="article-meta-item">' + ICON_CALENDAR + formatStudioDate(next.date) + '</span>' +
+            '</div>' +
+            '<h1 class="article-title">' + next.title + '</h1>' +
+            (author.name
+              ? '<a class="article-author">' +
+                  (author.avatar ? '<img src="' + attrEscape(author.avatar) + '" alt="" class="article-author-avatar" loading="lazy">' : '') +
+                  '<span class="article-author-by">by</span> ' + author.name +
+                '</a>'
+              : '') +
           '</div>' +
-          '<h1 class="article-title">' + next.title + '</h1>' +
-          (author.name
-            ? '<a class="article-author">' +
-                (author.avatar ? '<img src="' + attrEscape(author.avatar) + '" alt="" class="article-author-avatar" loading="lazy">' : '') +
-                '<span class="article-author-by">by</span> ' + author.name +
-              '</a>'
-            : '') +
         '</div>' +
-      '</div>';
+      '</section>';
 
-    article.appendChild(section);
+    article.parentNode.appendChild(wrapper);
   });
 }
 
@@ -915,7 +918,7 @@ function buildThumbnailBlock(entry) {
 function renderFeedItem(entry) {
   var isArticle = entry.type === "article";
   var label = isArticle ? "Article" : "Case study";
-  var postType = entry.feedVariant || "standard";
+  var postType = entry.featured ? "featured" : (entry.feedVariant || "standard");
   var excerpt = entry.synopsis ? '<p class="post-excerpt">' + entry.synopsis + '</p>' : "";
 
   var metaParts = ['<span class="post-date">' + formatStudioDate(entry.date) + '</span>'];

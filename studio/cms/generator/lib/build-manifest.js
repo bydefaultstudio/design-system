@@ -35,7 +35,8 @@ function toManifestRecord(entry) {
     hero: entry.hero || null,
     categories: entry.categories || [],
     author: entry.author || null,
-    feedVariant: entry.feedVariant || "standard"
+    feedVariant: entry.feedVariant || "standard",
+    featured: Boolean(entry.featured)
   };
   if (entry.type === "article") {
     record.readTime = entry.readTime;
