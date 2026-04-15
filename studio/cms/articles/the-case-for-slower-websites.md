@@ -8,6 +8,9 @@ author:
   avatar: "https://bydefault.design/image/64x64?text=BD"
 categories: ["Performance", "Interaction design"]
 read-time: "5 min read"
+hero: "https://images.unsplash.com/photo-1656645123173-f98a07459f49?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+thumbnail: "https://images.unsplash.com/photo-1656645123173-f98a07459f49?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+thumbnail-ratio: "4:5"
 ---
 
 We've spent a decade optimising for speed. Every framework, every build tool, every performance budget is oriented around making things faster. But what if some of our most important interfaces should actually be slower?

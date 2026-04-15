@@ -886,11 +886,18 @@ function buildThumbnailBlock(entry) {
 
   var hasVideo = !!entry.thumbnailVideo;
   var src = hasVideo ? entry.thumbnailVideo : (entry.thumbnail || entry.hero);
-  if (!src) return { html: "", postRatioAttr: "" };
+  // Fallback: auto-generate a 4:5 placeholder with the title burned in
+  // (bydefault.design/image already serves author avatars). Writers can
+  // override by setting `thumbnail` + `thumbnail-ratio` in frontmatter.
+  var usedPlaceholder = false;
+  if (!src) {
+    src = "https://bydefault.design/image/400x500?text=" + encodeURIComponent(entry.title || "");
+    usedPlaceholder = true;
+  }
 
   var alt = attrEscape(entry.thumbnailAlt || entry.title || "");
-  var ratio = entry.thumbnailRatio || "";
-  var isFeatured = entry.feedVariant === "featured";
+  var ratio = entry.thumbnailRatio || (usedPlaceholder ? "4:5" : "");
+  var isFeatured = Boolean(entry.featured) || entry.feedVariant === "featured";
   var mediaStyle = entry.thumbnailFocus
     ? ' style="object-position: ' + attrEscape(entry.thumbnailFocus) + ';"'
     : "";

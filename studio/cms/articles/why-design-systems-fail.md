@@ -8,6 +8,9 @@ author:
   avatar: "https://bydefault.design/image/64x64?text=BD"
 categories: ["Systems", "Design ops"]
 read-time: "6 min read"
+hero: "https://images.unsplash.com/photo-1773332611573-5e5bfa8e5de5?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+thumbnail: "https://images.unsplash.com/photo-1773332611573-5e5bfa8e5de5?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+thumbnail-ratio: "4:5"
 ---
 
 Most design systems don't fail because the tokens are wrong or the components are ugly. They fail because nobody uses them. The system ships, the team celebrates, and six months later every project has drifted back to one-off solutions. Here's why — and what actually works.
