@@ -40,7 +40,7 @@ console.log("Studio Barba v0.3.0");
 var _nextReadNav = false;
 
 document.addEventListener("click", function detectNextReadClick(e) {
-  if (e.target.closest(".next-read")) {
+  if (e.target.closest(".is-next-read")) {
     _nextReadNav = true;
   }
 });
@@ -386,9 +386,14 @@ var studioTransition = {
     // area, not behind the fixed top bar.
     var nextReadTop = 0;
     if (scenario === "push") {
-      var nextRead = data.current.container.querySelector(".next-read");
+      var nextRead = data.current.container.querySelector(".article-title.is-next-read");
       var topBarHeight = parseInt(readToken("--top-bar-height"), 10) || 0;
       if (nextRead) nextReadTop = nextRead.getBoundingClientRect().top - topBarHeight;
+
+      // Tag both sections so CSS can react declaratively during the morph.
+      var enteringTitle = data.next.container.querySelector(".article-title");
+      if (nextRead) nextRead.classList.add("is-morphing");
+      if (enteringTitle) enteringTitle.classList.add("is-morphing");
     }
 
     // Scroll compensation: capture the user's scroll position, snap the
@@ -479,6 +484,8 @@ function initStudioBarba() {
       data.next.container.style.transform = "";
       data.next.container.style.transformOrigin = "";
       data.next.container.style.opacity = "";
+      var survivingTitle = data.next.container.querySelector(".article-title.is-morphing");
+      if (survivingTitle) survivingTitle.classList.remove("is-morphing");
     }
     window.scrollTo(0, 0);
   });

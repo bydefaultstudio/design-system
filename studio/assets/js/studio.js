@@ -22,7 +22,8 @@ function getCurrentPagePath() {
 //------- Main Functions -------//
 //
 
-// Sidebar collapse (desktop) — persisted in localStorage
+// Sidebar collapse (desktop) — persisted in localStorage. aria-expanded on
+// the toggle carries the state for assistive tech (label stays semantic).
 function initSidebarCollapse() {
   var STORAGE_KEY = "studio-sidebar-collapsed";
   var toggle = document.querySelector("[data-sidebar-toggle]");
@@ -33,26 +34,81 @@ function initSidebarCollapse() {
 
   if (!toggle) return;
 
+  function syncAria() {
+    var collapsed = document.body.classList.contains("is-sidebar-collapsed");
+    // When collapsed, the sidebar contents are "not expanded" → false.
+    toggle.setAttribute("aria-expanded", String(!collapsed));
+  }
+  syncAria();
+
   toggle.addEventListener("click", function handleSidebarToggle() {
     var collapsed = document.body.classList.toggle("is-sidebar-collapsed");
     localStorage.setItem(STORAGE_KEY, String(collapsed));
+    syncAria();
   });
 }
 
-// Mobile drawer — slide-in sidebar with backdrop, Escape to close, body scroll lock
+// Mobile drawer — slide-in sidebar with backdrop, Escape to close, body scroll
+// lock. Proper modal pattern: aria-expanded on hamburger, inert on .main while
+// open, focus trap inside the drawer, focus restored to hamburger on close.
 function initMobileDrawer() {
   var hamburger = document.querySelector("[data-sidebar-hamburger]");
+  var sidebar = document.querySelector(".sidebar");
+  var main = document.querySelector(".main");
   var backdrop = document.querySelector("[data-sidebar-backdrop]");
+  var previouslyFocused = null;
+
+  function getFocusable(container) {
+    return container.querySelectorAll(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"]), input, select, textarea'
+    );
+  }
+
+  function trapFocus(e) {
+    if (e.key !== "Tab") return;
+    if (!document.body.classList.contains("is-mobile-nav-open")) return;
+    if (!sidebar) return;
+    var focusable = getFocusable(sidebar);
+    if (!focusable.length) return;
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
 
   function openDrawer() {
+    if (document.body.classList.contains("is-mobile-nav-open")) return;
+    previouslyFocused = document.activeElement;
     document.body.classList.add("is-mobile-nav-open");
+    if (hamburger) hamburger.setAttribute("aria-expanded", "true");
+    if (main) main.setAttribute("inert", "");
+    // Move focus into the drawer so keyboard / AT users land inside it.
+    if (sidebar) {
+      var focusable = getFocusable(sidebar);
+      if (focusable.length) focusable[0].focus();
+    }
   }
 
   function closeDrawer() {
+    if (!document.body.classList.contains("is-mobile-nav-open")) return;
     document.body.classList.remove("is-mobile-nav-open");
+    if (hamburger) hamburger.setAttribute("aria-expanded", "false");
+    if (main) main.removeAttribute("inert");
+    if (previouslyFocused && typeof previouslyFocused.focus === "function") {
+      previouslyFocused.focus();
+    } else if (hamburger) {
+      hamburger.focus();
+    }
+    previouslyFocused = null;
   }
 
   if (hamburger) {
+    hamburger.setAttribute("aria-expanded", "false");
     hamburger.addEventListener("click", function handleHamburgerClick() {
       if (document.body.classList.contains("is-mobile-nav-open")) {
         closeDrawer();
@@ -66,8 +122,9 @@ function initMobileDrawer() {
     backdrop.addEventListener("click", closeDrawer);
   }
 
-  document.addEventListener("keydown", function handleEscape(e) {
+  document.addEventListener("keydown", function handleKeydown(e) {
     if (e.key === "Escape") closeDrawer();
+    else trapFocus(e);
   });
 
   // Close drawer after a Barba navigation finishes
@@ -727,7 +784,7 @@ function initNextRead() {
     if (!articles.length) return;
 
     // Remove any existing next-read (Barba re-navigation)
-    var existing = article.querySelector(".next-read");
+    var existing = article.querySelector(".is-next-read");
     if (existing) existing.remove();
 
     // Match the current page to a manifest entry by slug (filename without .html)
@@ -743,7 +800,7 @@ function initNextRead() {
 
     // Mirror the article header markup so the push-up transition is seamless.
     var section = document.createElement("section");
-    section.className = "next-read";
+    section.className = "article-title is-next-read";
     section.setAttribute("data-article", next.slug);
     section.innerHTML =
       '<a class="next-read-link" href="' + getStudioPrefix() + next.url + '" aria-label="Read: ' + attrEscape(next.title) + '"></a>' +

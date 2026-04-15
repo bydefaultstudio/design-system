@@ -63,6 +63,8 @@ body.is-sidebar-collapsed .layout {
   flex-direction: column;
   background: var(--background-sidebar);
   z-index: var(--z-sidebar);
+  box-sizing: border-box;
+  padding: var(--studio-gap) 0 var(--studio-gap) var(--studio-gap);
   transition: width var(--duration-xl) var(--ease-out);
 }
 
@@ -72,7 +74,6 @@ body.is-sidebar-collapsed .layout {
   flex: 1 1 0%;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: var(--studio-gap) 0 var(--studio-gap) var(--studio-gap);
   gap: 0;
 }
 
@@ -250,6 +251,12 @@ body.is-sidebar-collapsed .layout {
 
 }
 
+/* Footer buttons stretch to fill the footer's cross-axis so both row (expanded)
+   and column (collapsed) flex directions produce an even, centred group. */
+.sidebar-footer .nav-btn {
+  width: 100%;
+}
+
 .nav-btn .svg-icn {
   width: 1.5rem;
   height: 1.5rem;
@@ -399,12 +406,31 @@ body.is-sound-off .sound-toggle .sound-icon-off {
 
 /* ------ SIDEBAR — COLLAPSED (DESKTOP) ------ */
 
+/* Mini mark — hidden by default (expanded desktop + mobile drawer both show
+   the full wordmark in .intro-block). Revealed only inside the collapsed rail. */
+.sidebar-logo-mini {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  text-decoration: none;
+  padding: var(--space-s) 0;
+}
+
+.svg-logo-by-default-mini {
+  width: 32px;
+  aspect-ratio: 1 / 1;
+}
+
 body.is-sidebar-collapsed .sidebar {
   width: var(--sidebar-collapsed-width);
 }
 
+body.is-sidebar-collapsed .sidebar-logo-mini {
+  display: flex;
+}
+
 body.is-sidebar-collapsed .sidebar-inner {
-  padding: var(--space-l) var(--studio-gap);
   align-items: center;
 }
 
@@ -424,6 +450,9 @@ body.is-sidebar-collapsed .sidebar-slot {
 body.is-sidebar-collapsed .sidebar-footer {
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: var(--space-l);
+
 }
 
 
@@ -434,11 +463,29 @@ body.is-sidebar-collapsed .sidebar-footer {
 .mobile-bar {
   display: none;
   align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
   height: var(--mobile-bar-height);
   padding: 0 var(--space-m);
   background: var(--background-sidebar);
   z-index: var(--z-mobile-bar);
   border-bottom: var(--border-s) solid var(--border-faded);
+}
+
+/* Mobile bar logo — wordmark on the left, tap target sized to the bar. */
+.mobile-bar-logo {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: var(--space-xs) 0;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.mobile-bar-logo .svg-logo-by-default-centered {
+  width: auto;
+  height: 100%;
+  aspect-ratio: 1050 / 505;
 }
 
 .hamburger {
@@ -465,6 +512,7 @@ body.is-sidebar-collapsed .sidebar-footer {
   position: relative;
   min-height: calc(100vh - var(--mobile-bar-height));
   background-color: var(--background-primary);
+  padding: var(--studio-gap);
 }
 
 [data-barba="wrapper"] {
@@ -526,13 +574,12 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
 
 .hero-section {
   --bd-video-inset: var(--studio-gap);
-  padding: var(--studio-gap);
 }
 
 .hero-section .bd-video-player {
   overflow: hidden;
   border-radius: var(--radius-m);
-  border: var(--border-s) solid var(--bg-faded-5);
+  border: var(--border-s) solid var(--bg-faded-10);
 }
 
 /* Decorative autoplay videos (article bodies, section backgrounds). No JS —
@@ -556,7 +603,7 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
 .content-feed {
   column-count: 3;
   column-gap: var(--studio-gap);
-  padding: 0 var(--studio-gap);
+  padding-top: var(--studio-gap);
   width: 100%;
 }
 
@@ -636,6 +683,11 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
 
 /* ------ ARTICLE HEADER ------ */
 
+article.article {
+    background-color: var(--bg-faded-3);
+    border-radius: var(--radius-m);
+}
+
 .article-header {
   display: flex;
   flex-direction: column;
@@ -653,15 +705,22 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
   align-items: center;
   justify-content: center;
   gap: var(--space-l);
-  font-family: var(--font-tertiary);
-  font-size: var(--font-xs);
-  color: var(--text-faded);
+
 }
 
 .article-meta-item {
   display: inline-flex;
   align-items: center;
   gap: var(--space-xs);
+  line-height: var(--line-height-s);
+  font-family: var(--font-tertiary);
+  font-size: var(--font-xs);
+  color: var(--text-faded);
+}
+
+.article-meta-item .svg-icn {
+    width: 1rem;
+    height: 1rem;
 }
 
 .article-title {
@@ -677,6 +736,7 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
   gap: var(--space-s);
   color: var(--text-primary);
   text-decoration: none;
+  font-size: var(--font-s);
 }
 
 .article-author:hover {
@@ -688,8 +748,8 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
 }
 
 .article-author-avatar {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--radius-pill);
   object-fit: cover;
 }
@@ -704,6 +764,7 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
   margin: 0 auto;
   aspect-ratio: 16 / 9;
   overflow: hidden;
+  border-radius: var(--radius-m);
 }
 
 .article-hero[data-ratio="16:9"] { aspect-ratio: 16 / 9; }
@@ -762,17 +823,6 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
   max-width: 820px;
 }
 
-/* -- Sidebar heading (TOC + share) -- */
-
-.toc-heading {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  font-family: var(--font-tertiary);
-  font-size: var(--font-m);
-  font-weight: var(--font-weight-bold);
-  margin: 0 0 var(--space-m) 0;
-}
 
 /* -- Table of contents -- */
 
@@ -864,19 +914,19 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
   pointer-events: none;
 }
 
-.next-read .next-read-label {
+.article-title.is-next-read .next-read-label {
   opacity: 1;
 }
 
-/* Next-read section — identical structure to article header */
-.next-read {
+/* Next-read variant — shares .article-title base with the page title section */
+.article-title.is-next-read {
   position: relative;
   cursor: pointer;
   border-top: var(--border-s) solid var(--border-faded);
 }
 
 /* Full-coverage clickable overlay */
-.next-read-link {
+.article-title.is-next-read .next-read-link {
   position: absolute;
   inset: 0;
   z-index: 1;
@@ -1153,6 +1203,12 @@ body.is-mobile-nav-open .sidebar-backdrop {
     visibility: visible;
   }
 
+  /* Mini mark is only for the collapsed desktop rail — drawer shows the full
+     wordmark inside .intro-block, so keep the mini hidden on mobile. */
+  body.is-sidebar-collapsed .sidebar-logo-mini {
+    display: none;
+  }
+
   /* Hide the desktop collapse toggle on mobile (drawer is the collapse mechanic) */
   [data-sidebar-toggle] {
     display: none;
@@ -1179,8 +1235,8 @@ body.is-mobile-nav-open .sidebar-backdrop {
 .close-btn-wrap {
   display: none;
   position: fixed;
-  top: calc(var(--mobile-bar-height) + var(--space-m));
-  right: var(--space-m);
+  top: calc(var(--studio-gap) + var(--studio-gap));
+  right: calc(var(--studio-gap) + var(--studio-gap));
   z-index: 100;
   align-items: center;
   gap: var(--space-s);
@@ -1195,7 +1251,6 @@ body[data-current-level="2"] .close-btn-wrap {
   background-color: var(--background-secondary);
   padding: var(--space-s);
   border: var(--border-s) solid transparent;
-  border-radius: 0;
   color: var(--text-primary);
   transition: background-color var(--duration-2xs) var(--ease-out);
 }

@@ -12,9 +12,9 @@
 
 :root {
   /* -- Typography -- */
-  --font-primary: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-secondary: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-tertiary: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-primary: "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-secondary: "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-tertiary: "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-quaternary: "IBM Plex Mono", monospace;
 
   /* -- Palette -- */
@@ -1073,6 +1073,7 @@ button {
   display: inline-flex;
   align-items: center;
   gap: var(--space-s);
+  border-radius: var(--radius-m);
 }
 
 /* -- Button component -- */
@@ -1080,7 +1081,7 @@ button {
   font-family: var(--font-tertiary);
   font-size: var(--button-font-size);
   line-height: var(--line-height-m);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-medium);
   letter-spacing: 0;
   text-transform: none;
   text-align: center;
@@ -1091,6 +1092,7 @@ button {
   padding: var(--space-m) var(--space-xl);
   background-color: var(--button-primary);
   color: var(--button-text);
+  border-radius: var(--radius-s);
   border: var(--border-s) solid var(--button-primary);
   cursor: pointer;
   transition: all .15s ease-in-out;
@@ -1624,6 +1626,7 @@ select {
   line-height: var(--line-height-l);
   color: var(--input-text);
   background-color: var(--input-background);
+  border-radius: var(--radius-s);
   border: var(--border-s) solid var(--input-border);
   padding: var(--space-m) var(--space-l);
   min-height: 44px;
