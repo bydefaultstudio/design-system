@@ -8,6 +8,11 @@
  * Reusable video component for the By Default site. Targets every element with
  * .bd-video-player and initialises each independently with its own config.
  *
+ * Scope: this is the FULL player with controls. For other video treatments see:
+ *   - Decorative autoplay loops (article bodies, section backgrounds)
+ *     → plain <video class="bg-video" autoplay muted loop playsinline>,
+ *       emitted by the {{bg-video}} markdown shortcode. No JS.
+ *
  * Configuration via data attributes on .bd-video container:
  *   data-bd-scrubber       — enable scrubber + time display
  *   data-bd-mute           — enable mute/unmute button
@@ -22,6 +27,27 @@
  *   - Reduced motion: video does not autoplay, poster shows
  *   - Global keyboard shortcuts (Space/K, M, F, arrows)
  *   - ARIA labels update dynamically with state
+ *
+ * Sustainability roadmap (priority-ordered, NOT built yet):
+ *   1. [CRITICAL] Captions / subtitles — <track kind="subtitles"> + data-bd-captions
+ *                  CC toggle. WCAG 1.2.2 Level A.
+ *   2. Loading state class (.is-loading on `waiting`, removed on `canplay`) —
+ *                  avoids the "is it frozen?" problem on slow connections.
+ *   3. Error state class (.is-error on `error`) — prevents silent broken state
+ *                  when a source fails (e.g. expired URLs).
+ *   4. Public custom events — bd-video:play / pause / ended / error bubbling
+ *                  on the .bd-video root. Enables analytics + coordination.
+ *   5. Visibility-based pause (data-bd-pause-offscreen) — IntersectionObserver.
+ *                  Saves CPU/battery on long pages with multiple videos.
+ *   6. Lazy preload upgrade — preload="none" default, upgrade to "metadata" on
+ *                  near-viewport, "auto" on first play(). Bandwidth win.
+ *   7. Volume slider (data-bd-volume) — finer control than just mute/unmute.
+ *   8. Playback rate menu (data-bd-rate) — 0.5×/1×/1.5×/2× for long-form.
+ *   9. Download prevention — controlsList="nodownload" + context-menu off.
+ *                  Deters casual scraping of client work.
+ *   10. Transcript toggle — sibling <details>, WCAG 1.2.3 alternative.
+ *   11. Cross-video exclusivity (data-bd-exclusive) — pause others on play.
+ *   12. <source> format fallback — already works, document AV1/WebM/MP4 chain.
  */
 
 console.log("BD Video v0.4.0");

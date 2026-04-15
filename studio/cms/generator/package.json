@@ -1,0 +1,20 @@
+{
+  "name": "studio-content-generator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Markdown-driven generator for studio L2 pages (articles + case studies)",
+  "main": "generate-studio.js",
+  "type": "commonjs",
+  "scripts": {
+    "gen": "node generate-studio.js",
+    "watch": "node watch-studio.js",
+    "serve": "python3 -m http.server 8080 -d ../../..",
+    "serve:studio": "python3 -m http.server 8000 -d ../..",
+    "dev": "npm run gen && (npm run serve & npm run watch)",
+    "dev:studio": "npm run gen && (npm run serve:studio & npm run watch)"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "marked": "^16.4.1"
+  }
+}

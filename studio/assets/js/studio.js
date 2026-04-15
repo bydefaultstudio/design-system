@@ -658,23 +658,23 @@ function initShareLinks() {
 //------- Sidebar Posts -------//
 //
 
-var CASE_STUDY_REGISTRY = [
+var SERVICES_REGISTRY = [
   {
-    url: "work/case-study-placeholder-1.html",
-    title: "Interactive campaign for a global fintech",
-    excerpt: "A suite of interactive ad formats built for scale across three markets.",
+    url: "contact.html",
+    title: "Interactive Ads",
+    excerpt: "Ad formats that turn audiences into participants — higher engagement, completion, and CPM on premium inventory.",
     thumb: "https://bydefault.design/image/96x64"
   },
   {
-    url: "work/case-study-placeholder-2.html",
-    title: "Shoppable experience for a luxury retailer",
-    excerpt: "Tap-to-buy rich media ads that turned browsing into purchasing.",
+    url: "contact.html",
+    title: "Interactive Content",
+    excerpt: "Editorial and branded content people do, not just see. Memory sticks. Trust compounds.",
     thumb: "https://bydefault.design/image/96x64"
   },
   {
-    url: "work/case-study-placeholder-3.html",
-    title: "Publisher format suite for a media network",
-    excerpt: "Custom ad formats designed for editorial environments.",
+    url: "contact.html",
+    title: "Interactive Activations",
+    excerpt: "Campaign moments designed for participation — built to make the digital experience feel like the brand.",
     thumb: "https://bydefault.design/image/96x64"
   }
 ];
@@ -683,12 +683,15 @@ function initSidebarPosts() {
   var container = document.querySelector(".sidebar-posts");
   if (!container) return;
 
-  // Clear existing (Barba re-navigation)
-  container.innerHTML = "";
+  // Remove previously-rendered service links without wiping the section title
+  // that's nested inside .sidebar-posts.
+  container.querySelectorAll(".sidebar-post").forEach(function remove(el) {
+    el.remove();
+  });
 
   var prefix = getStudioPrefix();
 
-  CASE_STUDY_REGISTRY.forEach(function buildPost(entry) {
+  SERVICES_REGISTRY.forEach(function buildPost(entry) {
     var link = document.createElement("a");
     link.className = "sidebar-post";
     link.href = prefix + entry.url;
@@ -708,46 +711,7 @@ window.initSidebarPosts = initSidebarPosts;
 //------- Next Read -------//
 //
 
-// Article registry — ordered by date (newest first).
-// URLs are relative to /studio/ (the prefix is applied at runtime).
-var ARTICLE_REGISTRY = [
-  {
-    url: "articles/article-placeholder-1.html",
-    id: "article-placeholder-1",
-    title: "Why design systems fail (and what to do about it)",
-    badge: "Article",
-    readTime: "6 min read",
-    date: "Mar 28, 2026",
-    authorName: "Full Name",
-    authorAvatar: "https://bydefault.design/image/64x64?text=BD",
-    authorUrl: "../about.html",
-    headerSpacing: "top-medium bottom-medium"
-  },
-  {
-    url: "articles/article-placeholder-2.html",
-    id: "article-placeholder-2",
-    title: "The case for slower websites",
-    badge: "Article",
-    readTime: "5 min read",
-    date: "Mar 5, 2026",
-    authorName: "Full Name",
-    authorAvatar: "https://bydefault.design/image/64x64?text=BD",
-    authorUrl: "../about.html",
-    headerSpacing: "top-large bottom-large"
-  },
-  {
-    url: "articles/article-placeholder-3.html",
-    id: "article-placeholder-3",
-    title: "Naming things: the hardest problem in design systems",
-    badge: "Article",
-    readTime: "7 min read",
-    date: "Jan 18, 2026",
-    authorName: "Full Name",
-    authorAvatar: "https://bydefault.design/image/64x64?text=BD",
-    authorUrl: "../about.html",
-    headerSpacing: "top-large bottom-large"
-  }
-];
+// Article list comes from the manifest at runtime — see loadStudioContent().
 
 var ICON_CLOCK = '<div class="svg-icn" data-icon="clock"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M15.3 16.7L16.7 15.3L13 11.6V7H11V12.4L15.3 16.7ZM12 22C10.6167 22 9.31667 21.7375 8.1 21.2125C6.88333 20.6875 5.825 19.975 4.925 19.075C4.025 18.175 3.3125 17.1167 2.7875 15.9C2.2625 14.6833 2 13.3833 2 12C2 10.6167 2.2625 9.31667 2.7875 8.1C3.3125 6.88333 4.025 5.825 4.925 4.925C5.825 4.025 6.88333 3.3125 8.1 2.7875C9.31667 2.2625 10.6167 2 12 2C13.3833 2 14.6833 2.2625 15.9 2.7875C17.1167 3.3125 18.175 4.025 19.075 4.925C19.975 5.825 20.6875 6.88333 21.2125 8.1C21.7375 9.31667 22 10.6167 22 12C22 13.3833 21.7375 14.6833 21.2125 15.9C20.6875 17.1167 19.975 18.175 19.075 19.075C18.175 19.975 17.1167 20.6875 15.9 21.2125C14.6833 21.7375 13.3833 22 12 22ZM12 20C14.2167 20 16.1042 19.2208 17.6625 17.6625C19.2208 16.1042 20 14.2167 20 12C20 9.78333 19.2208 7.89583 17.6625 6.3375C16.1042 4.77917 14.2167 4 12 4C9.78333 4 7.89583 4.77917 6.3375 6.3375C4.77917 7.89583 4 9.78333 4 12C4 14.2167 4.77917 16.1042 6.3375 17.6625C7.89583 19.2208 9.78333 20 12 20Z" fill="currentColor"></path></svg></div>';
 
@@ -756,54 +720,184 @@ var ICON_CALENDAR = '<div class="svg-icn" data-icon="calendar"><svg aria-hidden=
 function initNextRead() {
   var article = document.querySelector("article.article");
   if (!article) return;
+  loadStudioContent().then(function (data) {
+    var articles = (data.articles || []).slice().sort(function (a, b) {
+      return b.date.localeCompare(a.date);
+    });
+    if (!articles.length) return;
 
-  // Remove any existing next-read (Barba re-navigation)
-  var existing = article.querySelector(".next-read");
-  if (existing) existing.remove();
+    // Remove any existing next-read (Barba re-navigation)
+    var existing = article.querySelector(".next-read");
+    if (existing) existing.remove();
 
-  // Find the current article in the registry by matching the URL
-  var currentPath = location.pathname;
-  var currentIndex = -1;
-  ARTICLE_REGISTRY.forEach(function findCurrent(entry, i) {
-    if (currentPath.indexOf(entry.url.replace(/^.*\//, "")) !== -1) {
-      currentIndex = i;
-    }
-  });
+    // Match the current page to a manifest entry by slug (filename without .html)
+    var currentSlug = location.pathname.replace(/^.*\//, "").replace(/\.html$/, "");
+    var currentIndex = -1;
+    articles.forEach(function findCurrent(entry, i) {
+      if (entry.slug === currentSlug) currentIndex = i;
+    });
+    if (currentIndex === -1) return;
 
-  if (currentIndex === -1) return;
+    var next = articles[(currentIndex + 1) % articles.length];
+    var author = next.author || {};
 
-  // Next article wraps around to the first
-  var nextIndex = (currentIndex + 1) % ARTICLE_REGISTRY.length;
-  var next = ARTICLE_REGISTRY[nextIndex];
-  var prefix = getStudioPrefix();
-
-  // Build the next-read section — identical structure to the article header
-  // so the push-up transition is seamless. Uses <section> with data-article,
-  // same classes, same heading level. The <a> overlay handles the click.
-  var section = document.createElement("section");
-  section.className = "next-read";
-  section.setAttribute("data-article", next.id);
-  section.innerHTML =
-    '<a class="next-read-link" href="' + prefix + next.url + '" aria-label="Read: ' + next.title + '"></a>' +
-    '<div class="padding-global ' + next.headerSpacing + '">' +
-      '<div class="next-read-label">Next read</div>' +
-      '<div class="article-header">' +
-        '<div class="article-meta">' +
-          '<span class="article-meta-item">' + ICON_CLOCK + next.readTime + '</span>' +
-          '<span class="article-meta-item">' + ICON_CALENDAR + next.date + '</span>' +
+    // Mirror the article header markup so the push-up transition is seamless.
+    var section = document.createElement("section");
+    section.className = "next-read";
+    section.setAttribute("data-article", next.slug);
+    section.innerHTML =
+      '<a class="next-read-link" href="' + getStudioPrefix() + next.url + '" aria-label="Read: ' + attrEscape(next.title) + '"></a>' +
+      '<div class="padding-global top-medium bottom-medium">' +
+        '<div class="next-read-label">Next read</div>' +
+        '<div class="article-header">' +
+          '<div class="article-meta">' +
+            (next.readTime ? '<span class="article-meta-item">' + ICON_CLOCK + attrEscape(next.readTime) + '</span>' : '') +
+            '<span class="article-meta-item">' + ICON_CALENDAR + formatStudioDate(next.date) + '</span>' +
+          '</div>' +
+          '<h1 class="article-title">' + next.title + '</h1>' +
+          (author.name
+            ? '<a class="article-author">' +
+                (author.avatar ? '<img src="' + attrEscape(author.avatar) + '" alt="" class="article-author-avatar" loading="lazy">' : '') +
+                '<span class="article-author-by">by</span> ' + author.name +
+              '</a>'
+            : '') +
         '</div>' +
-        '<h1 class="article-title">' + next.title + '</h1>' +
-        '<a class="article-author">' +
-          '<img src="' + next.authorAvatar + '" alt="" class="article-author-avatar" loading="lazy">' +
-          '<span class="article-author-by">by</span> ' + next.authorName +
-        '</a>' +
-      '</div>' +
-    '</div>';
+      '</div>';
 
-  article.appendChild(section);
+    article.appendChild(section);
+  });
 }
 
 window.initNextRead = initNextRead;
+
+//
+//------- Studio Content (manifest from CMS) -------//
+//
+// Generated by studio/cms/generator/ → studio/assets/data/studio-content.json.
+// Fetched once and cached for the homepage feed and the next-read card.
+
+var STUDIO_CONTENT = null;
+var STUDIO_CONTENT_PROMISE = null;
+
+function loadStudioContent() {
+  if (STUDIO_CONTENT) return Promise.resolve(STUDIO_CONTENT);
+  if (STUDIO_CONTENT_PROMISE) return STUDIO_CONTENT_PROMISE;
+  var url = getStudioPrefix() + "assets/data/studio-content.json";
+  STUDIO_CONTENT_PROMISE = fetch(url)
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      STUDIO_CONTENT = data;
+      return data;
+    })
+    .catch(function (err) {
+      console.warn("studio-content.json not available:", err);
+      STUDIO_CONTENT = { articles: [], caseStudies: [] };
+      return STUDIO_CONTENT;
+    });
+  return STUDIO_CONTENT_PROMISE;
+}
+
+window.loadStudioContent = loadStudioContent;
+
+function attrEscape(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+}
+
+function formatStudioDate(iso) {
+  if (!iso) return "";
+  var d = new Date(iso);
+  if (isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
+
+//
+//------- Feed (homepage) -------//
+//
+// Renders [data-feed] from the manifest. Silently no-ops when no [data-feed]
+// is present (i.e. on any page that isn't home).
+//
+// Ratio rules: featured variants put data-ratio on .post (CSS drives card
+// shape); other variants put data-ratio on .post-thumbnail. Media: when an
+// entry has thumbnailVideo it renders <video class="vdo-thumb"> for the
+// thumb-hover.js hover-to-play behaviour; otherwise <img class="img-thumb">.
+
+function buildThumbnailBlock(entry) {
+  if (entry.feedVariant === "text") return { html: "", postRatioAttr: "" };
+
+  var hasVideo = !!entry.thumbnailVideo;
+  var src = hasVideo ? entry.thumbnailVideo : (entry.thumbnail || entry.hero);
+  if (!src) return { html: "", postRatioAttr: "" };
+
+  var alt = attrEscape(entry.thumbnailAlt || entry.title || "");
+  var ratio = entry.thumbnailRatio || "";
+  var isFeatured = entry.feedVariant === "featured";
+  var mediaStyle = entry.thumbnailFocus
+    ? ' style="object-position: ' + attrEscape(entry.thumbnailFocus) + ';"'
+    : "";
+  var thumbRatioAttr = !isFeatured && ratio ? ' data-ratio="' + attrEscape(ratio) + '"' : "";
+  var postRatioAttr = isFeatured && ratio ? ' data-ratio="' + attrEscape(ratio) + '"' : "";
+
+  var mediaHtml;
+  if (hasVideo) {
+    var poster = entry.thumbnailVideoPoster || entry.thumbnail || entry.hero || "";
+    var posterAttr = poster ? ' poster="' + attrEscape(poster) + '"' : "";
+    mediaHtml =
+      '<video class="vdo-thumb" src="' + attrEscape(src) + '"' + posterAttr +
+      ' muted playsinline preload="metadata" aria-hidden="true"' + mediaStyle + "></video>";
+  } else {
+    mediaHtml =
+      '<img class="img-thumb" src="' + attrEscape(src) + '" alt="' + alt + '" loading="lazy"' + mediaStyle + ">";
+  }
+
+  return {
+    html: '<div class="post-thumbnail"' + thumbRatioAttr + ">" + mediaHtml + "</div>",
+    postRatioAttr: postRatioAttr
+  };
+}
+
+function renderFeedItem(entry) {
+  var isArticle = entry.type === "article";
+  var label = isArticle ? "Article" : "Case study";
+  var postType = entry.feedVariant || "standard";
+  var excerpt = entry.synopsis ? '<p class="post-excerpt">' + entry.synopsis + '</p>' : "";
+
+  var metaParts = ['<span class="post-date">' + formatStudioDate(entry.date) + '</span>'];
+  if (isArticle && entry.readTime) metaParts.push('<span class="post-read-time">' + entry.readTime + '</span>');
+  if (!isArticle && entry.client) metaParts.push('<span class="post-client">' + entry.client + '</span>');
+
+  var thumb = buildThumbnailBlock(entry);
+
+  var wrap = document.createElement("div");
+  wrap.className = "post-item";
+  wrap.setAttribute("data-feed-type", entry.type);
+  wrap.setAttribute("data-feed-date", entry.date);
+  wrap.innerHTML =
+    '<a href="' + getStudioPrefix() + entry.url + '" class="post" data-post-type="' + postType + '"' + thumb.postRatioAttr + ">" +
+      '<div class="post-header"><span class="post-label">' + label + '</span></div>' +
+      '<div class="post-body">' +
+        '<h3 class="post-title">' + entry.title + '</h3>' +
+        excerpt +
+        '<div class="post-meta">' + metaParts.join("") + '</div>' +
+      '</div>' +
+      thumb.html +
+    '</a>';
+  return wrap;
+}
+
+function initFeed() {
+  var feed = document.querySelector("[data-feed]");
+  if (!feed) return;
+  loadStudioContent().then(function (data) {
+    var all = [].concat(data.articles || [], data.caseStudies || []);
+    all.sort(function (a, b) { return b.date.localeCompare(a.date); });
+    feed.innerHTML = "";
+    all.forEach(function (entry) { feed.appendChild(renderFeedItem(entry)); });
+    if (typeof markReadPosts === "function") markReadPosts();
+    if (typeof window.initThumbHover === "function") window.initThumbHover(feed);
+  });
+}
+
+window.initFeed = initFeed;
 
 //
 //------- Initialize -------//
@@ -822,8 +916,13 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
   initToc();
   initShareLinks();
   initSidebarPosts();
+  initFeed();
   initNextRead();
 
   // Re-init after Barba navigations
-  document.addEventListener("studio:after-nav", markReadPosts);
+  document.addEventListener("studio:after-nav", function onAfterNav() {
+    markReadPosts();
+    initFeed();
+    initNextRead();
+  });
 });

@@ -20,16 +20,16 @@
 :root {
   --sidebar-width: 400px;
   --sidebar-collapsed-width: 64px;
-  --top-bar-height: 70px;
+  --mobile-bar-height: 56px;
   --mobile-drawer-width: min(85vw, 320px);
   --post-spacing: var(--space-l);
-  --studio-gap: var(--space-s);
-  --z-top-bar: 40;
+  --studio-gap: var(--space-m);
+  --z-mobile-bar: 40;
   --z-sidebar: 50;
   --z-backdrop: 90;
   --z-drawer: 100;
   --bd-video-inset: var(--studio-gap);
-  --scroll-offset: 0px;
+  --scroll-offset: var(--studio-gap);
   --duration-stagger: 30ms;
 
 }
@@ -40,10 +40,7 @@
 .layout {
   display: grid;
   grid-template-columns: var(--sidebar-width) 1fr;
-  grid-template-rows: var(--top-bar-height) 1fr;
-  grid-template-areas:
-    "sidebar topbar"
-    "sidebar main";
+  grid-template-areas: "sidebar main";
   min-height: 100vh;
   background: var(--background-primary);
   transition: grid-template-columns var(--duration-xl) var(--ease-out);
@@ -67,7 +64,6 @@ body.is-sidebar-collapsed .layout {
   background: var(--background-sidebar);
   z-index: var(--z-sidebar);
   transition: width var(--duration-xl) var(--ease-out);
-  border-right: var(--border-s) solid var(--border-faded);
 }
 
 .sidebar-inner {
@@ -76,69 +72,141 @@ body.is-sidebar-collapsed .layout {
   flex: 1 1 0%;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: var(--studio-gap);
+  padding: var(--studio-gap) 0 var(--studio-gap) var(--studio-gap);
   gap: var(--studio-gap);
 }
 
-.sidebar-logo {
-  display: block;
-  width: 100%;
-  max-width: 120px;
+/* -- Nav row (top of sidebar — text-only horizontal nav) -- */
+
+.nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding: var(--space-s) var(--space-m);
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-m);
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-tertiary);
+  font-size: var(--font-m);
+  font-weight: var(--font-weight-medium);
   color: var(--text-primary);
   text-decoration: none;
+  transition: color var(--duration-2xs) var(--ease-out);
+  white-space: nowrap;
 }
 
-.sidebar-logo svg {
+.nav-link:hover,
+.nav-link.is-active {
+  color: var(--text-accent);
+}
+
+/* -- Intro block (logo + intro line, centered) -- */
+
+.intro-block {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-s);
+  padding: var(--space-6xl) var(--studio-gap);
+  text-decoration: none;
+  color: var(--text-primary);
+  border-radius: var(--radius-m);
+  transition: background-color var(--duration-2xs) var(--ease-out);
+}
+
+.intro-block:hover {
+  background-color: var(--background-faded);
+}
+
+.intro-block::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--border-s);
+  background: var(--border-faded);
+  transition: background-color var(--duration-2xs) var(--ease-out);
+}
+
+.intro-block:hover::after {
+  background-color: transparent;
+}
+
+.svg-logo-by-default-centered {
+  width: 240px;
+  aspect-ratio: 1050 / 505;
+}
+
+.svg-logo-by-default-centered svg {
   display: block;
   width: 100%;
-  height: auto;
-}
-
-.sidebar-logo .logo-icon {
-  display: none;
+  height: 100%;
 }
 
 .sidebar-intro {
   font-size: var(--font-s);
   color: var(--text-secondary);
+  text-align: center;
   margin: 0;
   transition: opacity var(--duration-2xs) var(--ease-out), visibility var(--duration-2xs);
 }
 
-.nav {
+/* -- Sidebar about (intro paragraph + read-more) -- */
+
+.sidebar-about {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--studio-gap);
-  margin-top: var(--space-s);
-}
-
-.nav-link {
-  display: flex;
-  align-items: center;
-  gap: var(--space-s);
-  padding: var(--space-s) var(--space-m);
-  font-family: var(--font-tertiary);
-  font-size: var(--font-m);
-  font-weight: var(--font-weight-bold);
-  color: var(--text-primary);
+  gap: var(--space-xs);
+  padding: var(--space-3xl) var(--studio-gap);
   text-decoration: none;
+  color: var(--text-primary);
+  border-radius: var(--radius-m);
+  transition: background-color var(--duration-2xs) var(--ease-out);
+}
+
+.sidebar-about:hover {
   background-color: var(--background-faded);
-  transition: background-color var(--duration-2xs) var(--ease-out), color var(--duration-2xs) var(--ease-out);
-  white-space: nowrap;
 }
 
-.nav-link:hover {
-  background-color: var(--background-faded);
+.sidebar-about::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--border-s);
+  background: var(--border-faded);
+  transition: background-color var(--duration-2xs) var(--ease-out);
 }
 
-.nav-link.is-active {
-  background: var(--background-darker);
+.sidebar-about:hover::after {
+  background-color: transparent;
 }
 
-.sidebar-header {
-  display: flex;
-  align-items: center;
-  gap: var(--space-s);
+.sidebar-about-copy {
+  font-size: var(--font-s);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.sidebar-read-more {
+  font-size: var(--font-s);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-accent);
+  align-self: flex-start;
 }
 
 .sidebar-footer {
@@ -230,7 +298,8 @@ body.is-sound-off .sound-toggle .sound-icon-off {
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-l);
   color: var(--text-faded);
-  padding: var(--space-s) var(--space-m);
+  padding: 0;
+  margin: 0;
 }
 
 /* -- Sidebar posts (case study mini-cards) -- */
@@ -238,33 +307,58 @@ body.is-sound-off .sound-toggle .sound-icon-off {
 .sidebar-posts {
   display: flex;
   flex-direction: column;
-  gap: var(--studio-gap);
 }
 
 .sidebar-post {
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-s);
-  padding: var(--space-s);
-  background-color: var(--background-faded);
+  padding: var(--studio-gap);
   text-decoration: none;
+  border-radius: var(--radius-m);
   color: var(--text-primary);
   transition: background-color var(--duration-2xs) var(--ease-out);
+}
+
+.sidebar-post::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--border-s);
+  background: var(--border-faded);
+  transition: background-color var(--duration-2xs) var(--ease-out), opacity var(--duration-2xs) var(--ease-out);
 }
 
 .sidebar-post:hover {
   background-color: var(--background-faded);
 }
 
+/* Also hide the divider on the previous sibling — so hovering any post clears
+   the lines on both sides of it. Uses :has() to look forward for a hovered
+   next sibling (CSS has no previous-sibling combinator). */
+.sidebar-post:hover::after,
+.sidebar-post:has(+ .sidebar-post:hover)::after {
+  background-color: transparent;
+}
+
+.sidebar-post:last-child::after {
+  background-color: var(--background-faded);
+}
+
+
 .sidebar-post.is-active {
   background-color: var(--background-darker);
 }
 
 .sidebar-post-thumb {
-  height: 100%;
+  height: 80px;
   object-fit: cover;
   flex-shrink: 0;
   aspect-ratio: 1/1;
+  border-radius: var(--radius-s);
 }
 
 .sidebar-post-text {
@@ -304,35 +398,11 @@ body.is-sidebar-collapsed .sidebar-footer p {
   visibility: hidden;
 }
 
-body.is-sidebar-collapsed .sidebar-logo {
-  /* max-width: 40px; */
-}
-
-body.is-sidebar-collapsed .sidebar-logo .logo-wordmark {
+body.is-sidebar-collapsed .nav-row,
+body.is-sidebar-collapsed .intro-block,
+body.is-sidebar-collapsed .sidebar-about,
+body.is-sidebar-collapsed .sidebar-posts {
   display: none;
-}
-
-body.is-sidebar-collapsed .sidebar-logo .logo-icon {
-  display: block;
-}
-
-body.is-sidebar-collapsed .nav {
-  width: 100%;
-}
-
-body.is-sidebar-collapsed .nav-link {
-  justify-content: center;
-  padding: var(--space-s) 0;
-  position: relative;
-}
-
-body.is-sidebar-collapsed .nav-label {
-  display: none;
-}
-
-body.is-sidebar-collapsed .nav-link::before {
-  content: attr(data-tooltip);
-  font-size: var(--font-s);
 }
 
 body.is-sidebar-collapsed .sidebar-footer {
@@ -340,72 +410,23 @@ body.is-sidebar-collapsed .sidebar-footer {
   align-items: center;
 }
 
-body.is-sidebar-collapsed .sidebar-post,
-body.is-sidebar-collapsed .sidebar-section-title,
-body.is-sidebar-collapsed .sidebar-posts {
+
+/* ------ MOBILE BAR (mobile only — hamburger trigger for sidebar drawer) ------ */
+/* Hidden on desktop; the sidebar grid handles desktop layout. The narrow-viewport
+   media query at the bottom of this file flips display + the grid template. */
+
+.mobile-bar {
   display: none;
-}
-
-
-/* ------ TOP BAR ------ */
-
-.top-bar {
-  grid-area: topbar;
-  position: sticky;
-  top: 0;
-  height: var(--top-bar-height);
-  background: var(--background-top-nav);
-  z-index: var(--z-top-bar);
+  align-items: center;
+  height: var(--mobile-bar-height);
+  padding: 0 var(--space-m);
+  background: var(--background-sidebar);
+  z-index: var(--z-mobile-bar);
   border-bottom: var(--border-s) solid var(--border-faded);
 }
 
-.top-bar-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-  padding: 0 var(--space-l);
-}
-
-.top-bar-left,
-.top-bar-center,
-.top-bar-right {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: var(--space-s);
-}
-
-.top-bar-center {
-  justify-content: center;
-}
-
-.top-bar-right {
-  justify-content: flex-end;
-}
-
-.top-bar-cta {
-  display: inline-flex;
-  align-items: center;
-  height: 36px;
-  padding: 0 var(--space-m);
-  background: var(--text-primary);
-  color: var(--text-inverted);
-  border: none;
-  border-radius: var(--radius-pill);
-  font-family: var(--font-primary);
-  font-size: var(--font-s);
-  font-weight: var(--font-weight-medium);
-  cursor: pointer;
-  transition: opacity var(--duration-2xs) var(--ease-out);
-}
-
-.top-bar-cta:hover {
-  opacity: 0.85;
-}
-
 .hamburger {
-  display: none;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 40px;
@@ -426,13 +447,13 @@ body.is-sidebar-collapsed .sidebar-posts {
 .main {
   grid-area: main;
   position: relative;
-  min-height: calc(100vh - var(--top-bar-height));
+  min-height: calc(100vh - var(--mobile-bar-height));
   background-color: var(--background-primary);
 }
 
 [data-barba="wrapper"] {
   position: relative;
-  min-height: calc(100vh - var(--top-bar-height));
+  min-height: calc(100vh - var(--mobile-bar-height));
 }
 
 [data-barba="container"] {
@@ -442,7 +463,7 @@ body.is-sidebar-collapsed .sidebar-posts {
      is "100% of the element's own height" — without this, short content
      produces tiny slides. min-height carries through to the absolute
      positioning during animation, so the page slides a full viewport. */
-  min-height: calc(100vh - var(--top-bar-height));
+  min-height: calc(100vh - var(--mobile-bar-height));
 }
 
 /* During a transition, both containers overlay each other so they can animate
@@ -485,10 +506,27 @@ body.is-animating [data-studio-role="leave"][data-studio-scenario="push"] { z-in
 body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-index: 1; }
 
 
-/* ------ HERO VIDEO (overrides bd-video inset token for studio spacing) ------ */
+/* ------ HERO SECTION (wraps a .bd-video player; studio-specific padding + chrome) ------ */
 
-.hero-video {
+.hero-section {
   --bd-video-inset: var(--studio-gap);
+  padding: var(--studio-gap);
+}
+
+.hero-section .bd-video-player {
+  overflow: hidden;
+  border-radius: var(--radius-m);
+  border: var(--border-s) solid var(--bg-faded-5);
+}
+
+/* Decorative autoplay videos (article bodies, section backgrounds). No JS —
+   pure HTML attributes (autoplay, muted, loop, playsinline). Distinct from
+   the full .bd-video player. Emitted by the {{bg-video}} markdown shortcode
+   in studio/cms/generator/lib/render-markdown.js. */
+.bg-video {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 
@@ -601,9 +639,6 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
   gap: var(--space-l);
   font-family: var(--font-tertiary);
   font-size: var(--font-xs);
-  font-weight: var(--font-weight-bold);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-l);
   color: var(--text-faded);
 }
 
@@ -686,7 +721,7 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
 .toc-block,
 .share-block {
   position: sticky;
-  top: calc(var(--top-bar-height) + var(--space-8xl));
+  top: calc(var(--mobile-bar-height) + var(--space-8xl));
   display: flex;
   flex-direction: column;
   gap: var(--space-m);
@@ -833,42 +868,6 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
 
 
 
-/* ------ FEED FILTERS (top bar) ------ */
-
-.feed-filters {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  background-color: var(--background-faded);
-  padding: var(--space-s);
-}
-
-.feed-filter.nav-btn  {
-  background-color: transparent;
-}
-
-.feed-filter.nav-btn.is-active  {
-  background-color: var(--text-primary);
-  color: var(--background-primary);
-}
-
-.feed-filter.nav-btn.is-active:hover  {
-  background-color: var(--text-primary);
-  color: var(--background-primary);
-}
-
-.feed-filter.nav-btn:hover  {
-  background-color: var(--background-faded);
-}
-
-
-
-/* Only show filters on home page */
-body:not([data-current-level="0"]) .feed-filters {
-  display: none;
-}
-
-
 /* ------ POSTS ------ */
 
 
@@ -879,10 +878,11 @@ body:not([data-current-level="0"]) .feed-filters {
   flex-direction: column;
   gap: var(--post-spacing);
   padding: var(--post-spacing);
-  background-color: var(--background-faded);
+  background-color: var(--bg-faded-3);
   text-decoration: none;
   color: var(--text-primary);
   overflow: hidden;
+  border-radius: var(--radius-m);
   transition: background-color var(--duration-l) var(--ease-out);
 }
 
@@ -891,7 +891,7 @@ body:not([data-current-level="0"]) .feed-filters {
 }
 
 .post:hover {
-  background-color: var(--background-darker);
+  background-color: var(--bg-faded-10);
 }
 
 /* Thumbnail container — acts as a mask. The ratio lives on the container,
@@ -901,13 +901,15 @@ body:not([data-current-level="0"]) .feed-filters {
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
+  border-radius: var(--radius-s);
 }
 
 .post-thumbnail[data-ratio="1:1"]  { aspect-ratio: 1 / 1; }
 .post-thumbnail[data-ratio="4:5"]  { aspect-ratio: 4 / 5; }
 .post-thumbnail[data-ratio="9:16"] { aspect-ratio: 9 / 16; }
 
-.img-thumb {
+.img-thumb,
+.vdo-thumb {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -915,8 +917,15 @@ body:not([data-current-level="0"]) .feed-filters {
   transition: transform var(--duration-2xl) var(--ease-out);
 }
 
-.post:hover .img-thumb {
-  transform: scale(1.1);
+.post:hover .img-thumb,
+.post:hover .vdo-thumb {
+  transform: scale(1.05);
+}
+
+/* Video thumbnail — hover-to-play, bound by thumb-hover.js. Playback + zoom
+   both fire on hover. Touch + narrow viewports see the poster only. */
+.vdo-thumb {
+  background: var(--background-faded);
 }
 
 .post-header {
@@ -933,11 +942,8 @@ body:not([data-current-level="0"]) .feed-filters {
 }
 
 .post-label {
-  font-family: var(--font-tertiary);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-medium);
   font-size: var(--font-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-m);
   color: var(--text-faded);
 }
 
@@ -949,7 +955,7 @@ body:not([data-current-level="0"]) .feed-filters {
 .post-excerpt {
   margin: 0;
   font-size: var(--font-s);
-  color: var(--text-secondary);
+  color: var(--text-faded);
 }
 
 .post-meta {
@@ -965,9 +971,10 @@ body:not([data-current-level="0"]) .feed-filters {
   content: "\00b7";
   margin-left: var(--space-s);
 }
-
 .post-read-status {
   font-size: var(--font-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-faded);
   flex-shrink: 0;
   background: none;
   padding: 0;
@@ -1044,11 +1051,11 @@ body:not([data-current-level="0"]) .feed-filters {
 /* data-feed-type lives on .post-item (the feed wrapper), not .post */
 
 .post-item[data-feed-type="case-study"] .post-label {
-  color: var(--text-secondary);
+  color: var(--text-faded);
 }
 
 .post-item[data-feed-type="article"] .post-label {
-  color: var(--text-secondary);
+  color: var(--text-faded);
 }
 
 /* Featured overrides the accent — label is always light on dark */
@@ -1081,10 +1088,17 @@ body.is-mobile-nav-open .sidebar-backdrop {
   .layout,
   body.is-sidebar-collapsed .layout {
     grid-template-columns: 1fr;
-    grid-template-rows: var(--top-bar-height) 1fr;
+    grid-template-rows: var(--mobile-bar-height) 1fr;
     grid-template-areas:
-      "topbar"
+      "mobilebar"
       "main";
+  }
+
+  .mobile-bar {
+    display: flex;
+    grid-area: mobilebar;
+    position: sticky;
+    top: 0;
   }
 
   .sidebar {
@@ -1109,28 +1123,18 @@ body.is-mobile-nav-open .sidebar-backdrop {
   }
 
   body.is-sidebar-collapsed .sidebar-inner {
-    padding: var(--space-l);
     align-items: stretch;
   }
 
   body.is-sidebar-collapsed .sidebar-intro,
-  body.is-sidebar-collapsed .sidebar-footer p {
+  body.is-sidebar-collapsed .sidebar-footer p,
+  body.is-sidebar-collapsed .nav-row,
+  body.is-sidebar-collapsed .intro-block,
+  body.is-sidebar-collapsed .sidebar-about,
+  body.is-sidebar-collapsed .sidebar-posts {
+    display: revert;
     opacity: 1;
     visibility: visible;
-  }
-
-  body.is-sidebar-collapsed .nav-link {
-    justify-content: flex-start;
-    padding: var(--space-s) var(--space-m);
-    font-size: var(--font-s);
-  }
-
-  body.is-sidebar-collapsed .nav-link::before {
-    content: none;
-  }
-
-  .hamburger {
-    display: inline-flex;
   }
 
   /* Hide the desktop collapse toggle on mobile (drawer is the collapse mechanic) */
@@ -1142,18 +1146,6 @@ body.is-mobile-nav-open .sidebar-backdrop {
   body.is-mobile-nav-open {
     overflow: hidden;
   }
-
-  /* Hide the top-bar title on mobile to make room for the hamburger + CTA */
-  .top-bar-title {
-    display: none;
-  }
-
-  .top-bar-cta {
-    height: 32px;
-    padding: 0 var(--space-s);
-    font-size: var(--font-xs);
-  }
-
 }
 
 
@@ -1171,7 +1163,7 @@ body.is-mobile-nav-open .sidebar-backdrop {
 .close-btn-wrap {
   display: none;
   position: fixed;
-  top: calc(var(--top-bar-height) + var(--space-m));
+  top: calc(var(--mobile-bar-height) + var(--space-m));
   right: var(--space-m);
   z-index: 100;
   align-items: center;
@@ -1494,9 +1486,7 @@ body.is-animating .close-btn-wrap {
   .nav-link,
   [data-sidebar-toggle],
   .post,
-  .feed-filter,
   .close-btn,
-  .top-bar-cta,
   .contact-chips .button {
     transition: none;
     animation: none;

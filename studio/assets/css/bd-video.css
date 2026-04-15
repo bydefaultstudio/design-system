@@ -30,7 +30,8 @@
 .bd-video {
   position: relative;
   width: 100%;
-  padding: var(--bd-video-inset);
+  /* padding moved to consumer wrapper (e.g. .hero-section) so the player itself
+     can carry rounded corners + border without padding visually leaking. */
   overflow: hidden;
 }
 
@@ -39,6 +40,7 @@
   display: block;
   object-fit: cover;
   cursor: pointer;
+  overflow: hidden;
 }
 
 
