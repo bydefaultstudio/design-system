@@ -864,3 +864,15 @@ function handleResize() {
 function addResizeListener() {
   window.addEventListener("resize", debounce(handleResize));
 }
+
+// Expose a re-init hook for Barba.js page transitions. Barba treats this file
+// as a load-once library (top-level `let` bindings can't be re-declared), so on
+// every transition we call this function instead of re-executing the file.
+// textAnimations() already kills its own previous ScrollTrigger instances per
+// element (line ~150), and SplitText instances are tracked in splitTextInstances
+// and reverted on re-run. Safe to call repeatedly.
+window.bdAnimationsReinit = function bdAnimationsReinit() {
+  if (typeof textAnimations === "function") {
+    textAnimations();
+  }
+};

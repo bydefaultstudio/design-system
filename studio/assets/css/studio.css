@@ -33,9 +33,9 @@
   --duration-stagger: 30ms;
 
   /* Display-intent weights — tuned for the variable Zalando Sans build. */
-  --font-weight-title: 620;        /* <h1> article titles, hero type */
-  --font-weight-headline: 820;     /* <h2>/<h3> confident without shouting */
-  --font-weight-label: 300;        /* meta rows, post labels, small caps */
+  /* --font-weight-title: 620;     
+  --font-weight-headline: 820;   
+  --font-weight-label: 300;      */
 
 }
 
@@ -1043,9 +1043,15 @@ article.article {
   display: flex;
   align-items: center;
   gap: var(--space-s);
+  margin-top: var(--space-xs);
+}
+
+.post-meta-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
   font-size: var(--font-xs);
   color: var(--text-faded);
-  margin-top: var(--space-xs);
 }
 
 .post-meta > *:not(:last-child)::after {
@@ -1598,6 +1604,8 @@ body.is-animating .close-btn-wrap {
   justify-content: center;
   min-height: calc(100vh - var(--mobile-bar-height) - (var(--studio-gap) * 2));
   padding: var(--space-3xl) var(--studio-gap);
+  background-color: var(--black-alpha-3);
+  border-radius: var(--radius-m);
 }
 
 .error-page__inner {

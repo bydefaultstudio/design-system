@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Styleguide — By Default</title>
+  <meta name="description" content="Internal styleguide. Every typographic and component primitive in use across the studio site." />
+
+  <link rel="canonical" href="https://bydefault.studio/styleguide.html" />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <meta name="theme-color" content="#3485cd" />
+
+  <link rel="icon" href="assets/icons/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="assets/css/design-system.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zalando+Sans:wdth,wght@75..125,300..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/studio.css" />
+  <link rel="stylesheet" href="assets/css/bd-video.css" />
+
+  <!-- Styleguide-only display helpers (per CLAUDE.md §8: inline styles permitted in styleguide demos) -->
+  <style>
+    .sg-section { padding-block: var(--space-2xl); border-bottom: var(--border-s) solid var(--border-secondary); }
+    .sg-section:last-child { border-bottom: 0; }
+    .sg-section > h2 { margin-top: 0; }
+    .sg-eyebrow { display: block; font-family: var(--font-tertiary); font-size: var(--font-2xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-faded); margin-bottom: var(--space-xs); }
+    .sg-note { color: var(--text-secondary); font-size: var(--font-s); margin-top: 0; }
+    .sg-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-m); margin-block: var(--space-m); }
+    .sg-stack { display: flex; flex-direction: column; gap: var(--space-m); margin-block: var(--space-m); }
+    .sg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--space-m); margin-block: var(--space-m); }
+    .sg-token-row { display: grid; grid-template-columns: 1fr auto; gap: var(--space-m); padding: var(--space-s) 0; border-bottom: var(--border-s) solid var(--border-secondary); font-family: var(--font-tertiary); font-size: var(--font-s); }
+    .sg-token-row:last-child { border-bottom: 0; }
+    .sg-token-row code { color: var(--text-faded); }
+    .sg-swatch { width: 100%; aspect-ratio: 4 / 1; border-radius: var(--radius-s); border: var(--border-s) solid var(--border-secondary); }
+    .sg-spacer { background: var(--text-faded); height: 1rem; border-radius: var(--radius-xs); }
+    .sg-toc { padding: var(--space-l); background: var(--background-faded); border-radius: var(--radius-m); margin-bottom: var(--space-2xl); }
+    .sg-toc ul { list-style: none; padding: 0; margin: var(--space-s) 0 0; display: flex; flex-wrap: wrap; gap: var(--space-s) var(--space-l); }
+    .sg-toc li { margin: 0; }
+  </style>
+</head>
+<body>
+
+  <div class="layout">
+
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <aside id="studio-sidebar" class="sidebar" aria-label="Primary navigation">
+      <div class="sidebar-inner">
+        <a href="/index.html" class="sidebar-logo-mini" aria-label="By Default — Home">
+          <div class="svg-logo svg-logo-by-default-mini"><svg viewBox="0 0 40 40" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M1.8648 40L1.78869 39.9239V33.7206C1.78869 33.1117 1.44617 32.7691 0.837258 32.7691H0.0761143L0 32.693V30.1333L0.0761143 30.0571H1.71257L1.78869 29.981L1.79022 26.7618L1.86633 26.6857H7.02307L7.09919 26.7618L7.09766 28.8493L7.02154 28.9254H5.97497C5.328 28.9254 5.02354 29.2579 5.02354 29.9049V29.981L5.09966 30.0571H7.02154L7.09766 30.1333V32.693L7.02154 32.7691H5.97497C5.36606 32.7691 5.02354 33.1117 5.02354 33.7206V39.9239L4.94743 40H1.8648Z" fill="currentColor"/><path d="M12.0985 40C8.6924 40 7.03692 37.8969 7.03692 35.0426C7.03692 32.1883 8.6924 30.0571 12.0985 30.0571H16.9698L17.0459 30.1333V39.9239L16.9698 40H12.0985ZM12.0985 36.8032C13.0119 36.8032 13.8111 36.1562 13.8111 35.0145C13.8111 33.8728 13.0119 33.2258 12.0985 33.2258C11.1851 33.2258 10.3859 33.8728 10.3859 35.0145C10.3859 36.1562 11.1851 36.8032 12.0985 36.8032Z" fill="currentColor"/><path d="M27.5709 30.0571L27.647 30.1333V39.9239L27.5709 40H18.5513L18.4752 39.9239V30.1333L18.5513 30.0571H21.6339L21.7101 30.1333V35.6615C21.7101 36.5178 22.1858 36.9935 23.0421 36.9935H23.0801C23.9364 36.9935 24.4121 36.5178 24.4121 35.6615V30.1333L24.4882 30.0571H27.5709Z" fill="currentColor"/><path d="M29.1513 40L29.0752 39.9239V26.7618L29.1513 26.6857H32.2339L32.31 26.7618V36.0421C32.31 36.651 32.6526 36.9935 33.2615 36.9935H33.3186L33.3947 37.0696V39.9239L33.3186 40H29.1513Z" fill="currentColor"/><path d="M34.8199 40L34.7437 39.9239V33.7487C34.7437 33.1398 34.4012 32.7973 33.7923 32.7973H33.0312L32.9551 32.7211V30.1333L33.0312 30.0571H34.6676L34.7437 29.981V27.327L34.8199 27.2509H37.9025L37.9786 27.327V29.981L38.0547 30.0571H39.9239L40 30.1333V32.7211L39.9239 32.7973H38.8773C38.2684 32.7973 37.9786 33.1398 37.9786 33.7487V36.2704C37.9786 36.8793 38.2684 37.1457 38.8773 37.1457H39.9239L40 37.2218V39.9239L39.9239 40H34.8199Z" fill="currentColor"/><path d="M13.0222 28.9143C9.61609 28.9143 7.9606 26.7641 7.9606 23.9098C7.9606 21.0555 9.61609 18.9714 13.0222 18.9714H14.4487L14.5248 18.8953V15.5047L14.6009 15.4286H17.6836L17.7597 15.5047V28.8382L17.6836 28.9143H13.0222ZM13.0222 25.7175C13.9356 25.7175 14.7348 25.0705 14.7348 23.9288C14.7348 22.7871 13.9356 22.1401 13.0222 22.1401C12.1088 22.1401 11.3096 22.7871 11.3096 23.9288C11.3096 25.0705 12.1088 25.7175 13.0222 25.7175Z" fill="currentColor"/><path d="M23.3997 29.1997C20.4312 29.1997 18.5664 27.0114 18.5664 23.9288C18.5664 20.8462 20.317 18.6579 23.2855 18.6579C25.8734 18.6579 27.8524 20.2373 27.8524 23.4911V24.8612L27.7762 24.9373H22.6956C22.277 24.9373 22.0106 25.1657 22.0106 25.5843C22.0106 26.1361 22.4673 26.5738 23.3236 26.5738C23.9705 26.5738 24.3511 26.3264 24.4272 25.9649L24.5033 25.8887H27.586L27.6621 25.9649C27.4528 27.9629 25.6641 29.1997 23.3997 29.1997ZM23.9134 23.0725C24.3321 23.0725 24.5604 22.8061 24.5604 22.3875C24.5604 21.7786 24.0466 21.3219 23.3045 21.3219C22.5624 21.3219 22.0486 21.7786 22.0486 22.3875C22.0486 22.8061 22.277 23.0725 22.6956 23.0725H23.9134Z" fill="currentColor"/><path d="M8.87611 13.4857L8.8 13.4096V0.0761144L8.87611 0H11.9576L12.0337 0.0761144V3.46674L12.1098 3.54286H13.556C16.9621 3.54286 18.6176 5.65503 18.6176 8.50931C18.6176 11.3636 16.9621 13.4857 13.556 13.4857H8.87611ZM13.556 10.2889C14.4694 10.2889 15.2686 9.64194 15.2686 8.50023C15.2686 7.35851 14.4694 6.71154 13.556 6.71154C12.6426 6.71154 11.8434 7.35851 11.8434 8.50023C11.8434 9.64194 12.6426 10.2889 13.556 10.2889Z" fill="currentColor"/><path d="M18.848 17.6571L18.7719 17.581V15.5047L18.848 15.4286H21.2075C21.9116 15.4286 22.197 15.1031 22.3112 14.5894L22.3683 14.361C22.5015 13.7902 22.178 13.4857 21.6071 13.4857H21.0553L20.9792 13.4096L18.201 3.61897L18.2771 3.54286H21.55L22.825 9.19434C22.9201 9.59394 23.1294 9.80326 23.4719 9.80326C23.8144 9.80326 24.0238 9.59394 24.1189 9.19434L25.3938 3.54286H28.6667L28.7428 3.61897L24.7483 17.581L24.6722 17.6571H18.848Z" fill="currentColor"/></svg></div>
+        </a>
+        <div class="nav-wrapper">
+          <nav class="nav" aria-label="Primary">
+            <a href="/index.html#work" class="nav-link"><span class="nav-label">Work</span></a>
+            <a href="/index.html#articles" class="nav-link"><span class="nav-label">Articles</span></a>
+            <a href="/contact.html" class="nav-link"><span class="nav-label">Contact</span></a>
+          </nav>
+          <button type="button" class="button is-icon nav-btn nav-menu-btn" aria-label="Open menu"><div class="svg-icn" data-icon="menu"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 18V16H21V18H3ZM3 13V11H21V13H3ZM3 8V6H21V8H3Z" fill="currentColor"></path></svg></div></button>
+        </div>
+        <a href="/index.html" class="intro-block" aria-label="By Default — Home">
+          <div class="svg-logo svg-logo-by-default-centered"><svg viewBox="0 0 1050 505" width="100%" height="100%" fill="none" aria-hidden="true"><path d="M88.578 500C28.971 500 0 462.371 0 412.421C0 362.471 28.971 326 88.578 326H113.542L114.874 324.668V268.332L116.206 267H170.152L171.484 268.332V498.668L170.152 500H88.578ZM88.578 444.056C104.562 444.056 118.548 432.734 118.548 412.754C118.548 392.774 104.562 381.452 88.578 381.452C72.594 381.452 58.608 392.774 58.608 412.754C58.608 432.734 72.594 444.056 88.578 444.056Z" fill="currentColor"/></svg></div>
+          <p class="sidebar-intro">Interactive advertising agency.</p>
+        </a>
+        <a href="/about.html" class="sidebar-about">
+          <h2 class="sidebar-section-title">About</h2>
+          <p class="sidebar-about-copy">We’re By Default — an interactive advertising agency building ads, content, and activations that turn audiences into participants.</p>
+          <span class="sidebar-read-more">Read more →</span>
+        </a>
+        <div class="sidebar-slot"><div class="sidebar-section-title">What we do</div></div>
+      </div>
+      <footer class="sidebar-footer">
+        <button type="button" class="button is-icon nav-btn dark-mode-toggle" aria-label="Toggle dark mode"><div class="svg-icn dark-mode-icon-light" data-icon="sun"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 5V1H13V5H11ZM17.65 7.75L16.275 6.375L19.075 3.5L20.475 4.925L17.65 7.75ZM19 13V11H23V13H19ZM11 23V19H13V23H11ZM6.35 7.7L3.5 4.925L4.925 3.525L7.75 6.35L6.35 7.7ZM19.05 20.5L16.275 17.625L17.625 16.275L20.475 19.025L19.05 20.5ZM1 13V11H5V13H1ZM4.925 20.5L3.525 19.075L6.325 16.275L7.05 16.95L7.775 17.65L4.925 20.5ZM12 18C10.3333 18 8.91667 17.4167 7.75 16.25C6.58333 15.0833 6 13.6667 6 12C6 10.3333 6.58333 8.91667 7.75 7.75C8.91667 6.58333 10.3333 6 12 6C13.6667 6 15.0833 6.58333 16.25 7.75C17.4167 8.91667 18 10.3333 18 12C18 13.6667 17.4167 15.0833 16.25 16.25C15.0833 17.4167 13.6667 18 12 18ZM12 16C13.1 16 14.0417 15.6083 14.825 14.825C15.6083 14.0417 16 13.1 16 12C16 10.9 15.6083 9.95833 14.825 9.175C14.0417 8.39167 13.1 8 12 8C10.9 8 9.95833 8.39167 9.175 9.175C8.39167 9.95833 8 10.9 8 12C8 13.1 8.39167 14.0417 9.175 14.825C9.95833 15.6083 10.9 16 12 16Z" fill="currentColor"></path></svg></div><div class="svg-icn dark-mode-icon-dark" data-icon="moon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M15.1625 17.6625C16.7208 16.1042 17.5 14.2167 17.5 12C17.5 9.78333 16.7208 7.89583 15.1625 6.3375C13.9817 5.15672 12.1597 4.35602 10.402 4.10029C9.60391 3.98418 9.20482 4.89906 9.63374 5.58204C10.0596 6.26022 10.4192 6.97871 10.7125 7.7375C11.2375 9.09583 11.5 10.5167 11.5 12C11.5 13.4833 11.2375 14.9042 10.7125 16.2625C10.4462 16.9516 10.1252 17.6074 9.74945 18.23C9.31198 18.955 9.78479 19.9392 10.6206 19.8035C12.371 19.5193 14.0025 18.8225 15.1625 17.6625ZM9.5 22C8.61667 22 7.75417 21.8875 6.9125 21.6625C6.07083 21.4375 5.26667 21.1 4.5 20.65C6.05 19.75 7.27083 18.5333 8.1625 17C9.05417 15.4667 9.5 13.8 9.5 12C9.5 10.2 9.05417 8.53333 8.1625 7C7.27083 5.46667 6.05 4.25 4.5 3.35C5.26667 2.9 6.07083 2.5625 6.9125 2.3375C7.75417 2.1125 8.61667 2 9.5 2C10.8833 2 12.1833 2.2625 13.4 2.7875C14.6167 3.3125 15.675 4.025 16.575 4.925C17.475 5.825 18.1875 6.88333 18.7125 8.1C19.2375 9.31667 19.5 10.6167 19.5 12C19.5 13.3833 19.2375 14.6833 18.7125 15.9C18.1875 17.1167 17.475 18.175 16.575 19.075C15.675 19.975 14.6167 20.6875 13.4 21.2125C12.1833 21.7375 10.8833 22 9.5 22Z" fill="currentColor"></path></svg></div></button>
+        <button type="button" class="button is-icon nav-btn sound-toggle" aria-label="Toggle sound"><div class="svg-icn sound-icon-on" data-icon="sound-on"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M14 2.98535C17.7763 4.24145 20.5 7.80184 20.5 12C20.5 16.1981 17.7761 19.7575 14 21.0137V18.873C16.6483 17.7155 18.5 15.0751 18.5 12C18.5 8.92479 16.6485 6.28347 14 5.12598V2.98535Z" fill="currentColor"></path><path d="M14 7.39062C15.5048 8.37203 16.5 10.0694 16.5 12C16.5 13.9304 15.5046 15.627 14 16.6084V7.39062Z" fill="currentColor"></path><path d="M12 20L6.66699 16H3V8H6.66699L12 4V20ZM7.33301 10H6C5.44772 10 5 10.4477 5 11V13C5 13.5523 5.44772 14 6 14H7.33301L9.20002 15.4001C9.52965 15.6473 10 15.4121 10 15.0001V8.99924C10 8.58718 9.52954 8.352 9.19993 8.5993L7.33301 10Z" fill="currentColor"></path></svg></div><div class="svg-icn sound-icon-off" data-icon="sound-off"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M21.7031 21.2969L20.293 22.707L16.9707 19.3848C16.0951 20.0931 15.0921 20.6504 14 21.0137V18.873C14.5538 18.631 15.0714 18.3222 15.5459 17.96L12 14.4141V20L6.66699 16H3V8H5.58594L1.29297 3.70703L2.70312 2.29688L21.7031 21.2969ZM6 10C5.44772 10 5 10.4477 5 11V13C5 13.5523 5.44772 14 6 14H7.33301L9.2002 15.4004C9.52981 15.6473 10 15.4119 10 15V12.4141L7.58594 10H6Z" fill="currentColor"></path><path d="M14 2.98535C17.7763 4.24145 20.5 7.80184 20.5 12C20.5 13.5314 20.1356 14.9766 19.4912 16.2568L17.9795 14.7451C18.315 13.8952 18.5 12.9695 18.5 12C18.5 8.92479 16.6485 6.28347 14 5.12598V2.98535Z" fill="currentColor"></path><path d="M14 7.39062C15.5048 8.37203 16.5 10.0694 16.5 12C16.5 12.3925 16.4564 12.7747 16.3779 13.1436L14 10.7656V7.39062Z" fill="currentColor"></path><path d="M12 8.76562L9.27637 6.04199L12 4V8.76562Z" fill="currentColor"></path></svg></div></button>
+        <button type="button" class="button is-icon nav-btn" data-sidebar-toggle aria-label="Collapse sidebar"><div class="svg-icn icon-sidebar-close" data-icon="sidebar-close"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M5.6 12L9.6 8L11 9.4L9.81421 10.5858C9.03316 11.3668 9.03316 12.6332 9.81421 13.4142L11 14.6L9.6 16L5.6 12Z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M22 22H2V2H22V22ZM4 18C4 19.1046 4.89543 20 6 20H12C13.1046 20 14 19.1046 14 18V6C14 4.89543 13.1046 4 12 4H6C4.89543 4 4 4.89543 4 6V18ZM16 18C16 19.1046 16.8954 20 18 20C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4C16.8954 4 16 4.89543 16 6V18Z" fill="currentColor"></path></svg></div><div class="svg-icn icon-sidebar-open" data-icon="sidebar-open"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M12.4 12L8.4 16L7 14.6L8.18579 13.4142C8.96684 12.6332 8.96684 11.3668 8.18579 10.5858L7 9.4L8.4 8L12.4 12Z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M22 22H2V2H22V22ZM4 18C4 19.1046 4.89543 20 6 20H12C13.1046 20 14 19.1046 14 18V6C14 4.89543 13.1046 4 12 4H6C4.89543 4 4 4.89543 4 6V18ZM16 18C16 19.1046 16.8954 20 18 20C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4C16.8954 4 16 4.89543 16 6V18Z" fill="currentColor"></path></svg></div></button>
+      </footer>
+    </aside>
+
+    <header class="mobile-bar">
+      <a href="/index.html" class="mobile-bar-logo" aria-label="By Default — Home">
+        <div class="svg-logo svg-logo-by-default-centered"><svg viewBox="0 0 1050 505" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M88.578 500C28.971 500 0 462.371 0 412.421C0 362.471 28.971 326 88.578 326H113.542L114.874 324.668V268.332L116.206 267H170.152L171.484 268.332V498.668L170.152 500H88.578ZM88.578 444.056C104.562 444.056 118.548 432.734 118.548 412.754C118.548 392.774 104.562 381.452 88.578 381.452C72.594 381.452 58.608 392.774 58.608 412.754C58.608 432.734 72.594 444.056 88.578 444.056Z" fill="currentColor"/></svg></div>
+      </a>
+      <button type="button" class="hamburger" data-sidebar-hamburger
+              aria-label="Open navigation"
+              aria-expanded="false"
+              aria-controls="studio-sidebar">☰</button>
+    </header>
+
+    <main class="main" id="main">
+      <div data-barba="wrapper">
+        <div data-barba="container"
+             data-barba-namespace="styleguide"
+             data-level="1"
+             data-order="9"
+             data-page-title="Styleguide — By Default"
+             data-page-description="Internal styleguide. Every typographic and component primitive in use across the studio site.">
+          <article class="article">
+
+            <section class="article-title">
+              <div class="padding-global top-medium bottom-small">
+                <div class="article-header">
+                  <div class="article-meta">
+                    <span class="article-meta-item">Internal reference</span>
+                    <span class="article-meta-item">Not indexed</span>
+                  </div>
+                  <h1 class="article-title">Styleguide</h1>
+                </div>
+              </div>
+            </section>
+
+            <section class="top-small bottom-medium">
+              <div class="padding-global">
+                <div class="article-content-wrapper">
+                  <div class="article-body">
+
+                    <div class="sg-toc" aria-label="Sections">
+                      <span class="sg-eyebrow">On this page</span>
+                      <ul>
+                        <li><a href="#typography">Typography</a></li>
+                        <li><a href="#paragraphs">Paragraphs</a></li>
+                        <li><a href="#links">Links</a></li>
+                        <li><a href="#lists">Lists</a></li>
+                        <li><a href="#blockquote">Blockquote</a></li>
+                        <li><a href="#inline">Inline text</a></li>
+                        <li><a href="#buttons">Buttons</a></li>
+                        <li><a href="#forms">Forms</a></li>
+                        <li><a href="#post">Post card</a></li>
+                        <li><a href="#callouts">Callouts</a></li>
+                        <li><a href="#tokens">Tokens</a></li>
+                      </ul>
+                    </div>
+
+                    <!-- ============ TYPOGRAPHY ============ -->
+                    <section class="sg-section" id="typography">
+                      <span class="sg-eyebrow">Typography</span>
+                      <h2>Headings</h2>
+                      <p class="sg-note">Base styles inherited from <code>design-system.css</code>. <code>.article-title</code> overrides h1 size on long-form pages.</p>
+
+                      <h1>H1 — The hardest problem</h1>
+                      <h2>H2 — Naming things in design systems</h2>
+                      <h3>H3 — A token is a decision, not a value</h3>
+                      <h4>H4 — Why semantic naming wins</h4>
+                      <h5>H5 — When primitives leak into product code</h5>
+                      <h6>H6 — Footnote-scale heading</h6>
+
+                      <hr style="margin-block: var(--space-l); border: 0; border-top: var(--border-s) solid var(--border-secondary);">
+
+                      <h2 class="article-title">Article title (.article-title)</h2>
+                      <p class="sg-note">Larger size used inside <code>.article-header</code>.</p>
+                    </section>
+
+                    <!-- ============ PARAGRAPHS ============ -->
+                    <section class="sg-section" id="paragraphs">
+                      <span class="sg-eyebrow">Body</span>
+                      <h2>Paragraphs</h2>
+                      <p>This is a default paragraph. Body type sets the rhythm of every long-form page on the site — articles, case studies, this styleguide. Sentences should breathe at this size and line-height without feeling cramped or flabby.</p>
+                      <p>Two paragraphs in a row should sit with comfortable air between them. The space comes from the element’s own margin, never from a wrapper. If you find yourself adding gap on the parent to fix paragraph spacing, fix the paragraph instead.</p>
+
+                      <p class="sidebar-intro">.sidebar-intro — used under the centered logotype.</p>
+                      <p class="sidebar-about-copy">.sidebar-about-copy — short blurb used in the sidebar About block. Lighter weight, smaller size.</p>
+                      <p class="post-excerpt">.post-excerpt — feed card secondary line. Faded color so the title carries the eye.</p>
+                    </section>
+
+                    <!-- ============ LINKS ============ -->
+                    <section class="sg-section" id="links">
+                      <span class="sg-eyebrow">Links</span>
+                      <h2>Links</h2>
+                      <p>Inline body links use the system underline treatment — <a href="#">a default anchor</a> sits inline with text and inherits underline color and offset from <code>design-system.css</code>. Hover state shifts the color toward <code>--text-secondary</code>.</p>
+                      <p>External links auto-append a marker: <a href="https://example.com" target="_blank" rel="noopener">an external link</a>.</p>
+                      <p>Visited links inherit the same color scale — no purple. Focus state shows a visible ring via <code>:focus-visible</code>.</p>
+                    </section>
+
+                    <!-- ============ LISTS ============ -->
+                    <section class="sg-section" id="lists">
+                      <span class="sg-eyebrow">Lists</span>
+                      <h2>Unordered list</h2>
+                      <ul>
+                        <li>First item — kept short, scannable.</li>
+                        <li>Second item — can run a little longer when the point requires it.</li>
+                        <li>Third item with a nested list:
+                          <ul>
+                            <li>Nested first</li>
+                            <li>Nested second</li>
+                          </ul>
+                        </li>
+                        <li>Fourth item — back at the top level.</li>
+                      </ul>
+
+                      <h2>Ordered list</h2>
+                      <ol>
+                        <li>Start here.</li>
+                        <li>Then this.</li>
+                        <li>Then this.</li>
+                      </ol>
+                    </section>
+
+                    <!-- ============ BLOCKQUOTE ============ -->
+                    <section class="sg-section" id="blockquote">
+                      <span class="sg-eyebrow">Quote</span>
+                      <h2>Blockquote</h2>
+                      <blockquote>
+                        <p>A token called <code>--blue-500</code> is a value. One called <code>--text-primary</code> is a decision. The difference is everything.</p>
+                        <p>— Internal note, By Default systems team</p>
+                      </blockquote>
+                    </section>
+
+                    <!-- ============ INLINE TEXT ============ -->
+                    <section class="sg-section" id="inline">
+                      <span class="sg-eyebrow">Inline</span>
+                      <h2>Inline text elements</h2>
+                      <p>Use <strong>strong</strong> for emphasis that should survive copy-paste, and <em>em</em> for tonal stress. Use <code>code</code> for inline identifiers and <kbd>Cmd</kbd>+<kbd>K</kbd> for keys. Use <mark>mark</mark> sparingly to highlight.</p>
+                      <p>Smaller helper text uses <small>small</small>. Strikethrough lives in <s>s</s> when something has been retracted.</p>
+                    </section>
+
+                    <!-- ============ BUTTONS ============ -->
+                    <section class="sg-section" id="buttons">
+                      <span class="sg-eyebrow">Components</span>
+                      <h2>Buttons</h2>
+                      <p class="sg-note">Base class is <code>.button</code>. Modifiers are legacy <code>.is-*</code> classes (per CLAUDE.md §4).</p>
+
+                      <div class="sg-row">
+                        <button type="button" class="button">Primary</button>
+                        <button type="button" class="button is-outline">Outline</button>
+                        <button type="button" class="button is-faded">Faded</button>
+                        <button type="button" class="button is-outline is-faded">Outline faded</button>
+                        <button type="button" class="button is-link">Link button</button>
+                      </div>
+
+                      <h3>Sizes</h3>
+                      <div class="sg-row">
+                        <button type="button" class="button">Default</button>
+                        <button type="button" class="button is-small">Small</button>
+                        <button type="button" class="button is-xsmall">Extra small</button>
+                      </div>
+
+                      <h3>States</h3>
+                      <div class="sg-row">
+                        <button type="button" class="button">Default</button>
+                        <button type="button" class="button" disabled>Disabled</button>
+                        <button type="button" class="button is-disabled" aria-disabled="true">Is-disabled</button>
+                      </div>
+
+                      <h3>Icon button</h3>
+                      <div class="sg-row">
+                        <button type="button" class="button is-icon nav-btn" aria-label="Toggle dark mode"><div class="svg-icn" data-icon="sun"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 5V1H13V5H11ZM17.65 7.75L16.275 6.375L19.075 3.5L20.475 4.925L17.65 7.75ZM19 13V11H23V13H19ZM11 23V19H13V23H11ZM6.35 7.7L3.5 4.925L4.925 3.525L7.75 6.35L6.35 7.7ZM19.05 20.5L16.275 17.625L17.625 16.275L20.475 19.025L19.05 20.5ZM1 13V11H5V13H1ZM4.925 20.5L3.525 19.075L6.325 16.275L7.05 16.95L7.775 17.65L4.925 20.5ZM12 18C10.3333 18 8.91667 17.4167 7.75 16.25C6.58333 15.0833 6 13.6667 6 12C6 10.3333 6.58333 8.91667 7.75 7.75C8.91667 6.58333 10.3333 6 12 6C13.6667 6 15.0833 6.58333 16.25 7.75C17.4167 8.91667 18 10.3333 18 12C18 13.6667 17.4167 15.0833 16.25 16.25C15.0833 17.4167 13.6667 18 12 18ZM12 16C13.1 16 14.0417 15.6083 14.825 14.825C15.6083 14.0417 16 13.1 16 12C16 10.9 15.6083 9.95833 14.825 9.175C14.0417 8.39167 13.1 8 12 8C10.9 8 9.95833 8.39167 9.175 9.175C8.39167 9.95833 8 10.9 8 12C8 13.1 8.39167 14.0417 9.175 14.825C9.95833 15.6083 10.9 16 12 16Z" fill="currentColor"></path></svg></div></button>
+                        <button type="button" class="button is-icon nav-btn" aria-label="Open menu"><div class="svg-icn" data-icon="menu"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 18V16H21V18H3ZM3 13V11H21V13H3ZM3 8V6H21V8H3Z" fill="currentColor"></path></svg></div></button>
+                      </div>
+
+                      <h3>Chip buttons (contact form)</h3>
+                      <div class="contact-chips" role="group" aria-label="Service interest">
+                        <button type="button" class="button is-outline is-faded" aria-pressed="false"><div class="svg-icn" data-icon="check"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"></path></svg></div>Interactive Advertising</button>
+                        <button type="button" class="button is-outline is-faded" aria-pressed="true"><div class="svg-icn" data-icon="check"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"></path></svg></div>Interactive Content (selected)</button>
+                        <button type="button" class="button is-outline is-faded" aria-pressed="false"><div class="svg-icn" data-icon="check"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"></path></svg></div>Interactive Activations</button>
+                      </div>
+                    </section>
+
+                    <!-- ============ FORMS ============ -->
+                    <section class="sg-section" id="forms">
+                      <span class="sg-eyebrow">Components</span>
+                      <h2>Form fields</h2>
+                      <p class="sg-note">Inline label/input pattern from the contact form (<code>.contact-field</code>, <code>.contact-inline</code>, <code>.contact-label</code>).</p>
+
+                      <form class="contact-form" onsubmit="event.preventDefault();">
+                        <div class="contact-field">
+                          <div class="contact-inline">
+                            <label for="sg-name" class="contact-label">Hey, my name is</label>
+                            <input type="text" id="sg-name" name="name" placeholder="your name">
+                          </div>
+                        </div>
+
+                        <div class="contact-field">
+                          <div class="contact-inline">
+                            <label for="sg-email" class="contact-label">and you can reach me at</label>
+                            <input type="email" id="sg-email" name="email" placeholder="your email address">
+                          </div>
+                        </div>
+
+                        <div class="contact-field">
+                          <label for="sg-message" class="contact-label">Anything else? <span class="text-faded">(optional)</span></label>
+                          <textarea id="sg-message" name="message" rows="4" placeholder="A few sentences works."></textarea>
+                        </div>
+
+                        <div class="contact-field">
+                          <span class="contact-label">Standalone label, no input</span>
+                          <span class="form-error" role="alert" style="display:inline;">Example error message</span>
+                        </div>
+
+                        <div class="contact-actions">
+                          <button type="submit" class="button">Send message</button>
+                        </div>
+                      </form>
+                    </section>
+
+                    <!-- ============ POST CARD ============ -->
+                    <section class="sg-section" id="post">
+                      <span class="sg-eyebrow">Components</span>
+                      <h2>Post card</h2>
+                      <p class="sg-note">Used in the homepage feed (<code>.content-feed</code>) and the work / articles lists. Default and featured variants below.</p>
+
+                      <div class="sg-grid">
+                        <a href="#" class="post">
+                          <div class="post-thumbnail">
+                            <div class="img-thumb" style="background: var(--background-faded); display:flex; align-items:center; justify-content:center; color: var(--text-faded); font-family: var(--font-tertiary);">Thumbnail</div>
+                          </div>
+                          <div class="post-body">
+                            <span class="post-label">Article</span>
+                            <h3 class="post-title">A title that sets up the read</h3>
+                            <p class="post-excerpt">A one-line excerpt that says enough to earn the click without giving the piece away.</p>
+                          </div>
+                        </a>
+
+                        <a href="#" class="post">
+                          <div class="post-thumbnail" data-ratio="4:5">
+                            <div class="img-thumb" style="background: var(--background-faded); display:flex; align-items:center; justify-content:center; color: var(--text-faded); font-family: var(--font-tertiary);">4:5 thumb</div>
+                          </div>
+                          <div class="post-body">
+                            <span class="post-label">Case study</span>
+                            <h3 class="post-title">Another card, different ratio</h3>
+                            <p class="post-excerpt">Same component, different aspect ratio — set on <code>.post-thumbnail[data-ratio]</code>.</p>
+                          </div>
+                        </a>
+                      </div>
+                    </section>
+
+                    <!-- ============ CALLOUTS ============ -->
+                    <section class="sg-section" id="callouts">
+                      <span class="sg-eyebrow">Components</span>
+                      <h2>Callout</h2>
+                      <p class="sg-note">From the contact form error state — <code>.callout</code> + variant.</p>
+
+                      <div class="callout callout-warning">
+                        <p class="callout-description">A short, specific, forward-pointing message. Errors are a trust moment — never blame the user.</p>
+                      </div>
+                    </section>
+
+                    <!-- ============ TOKENS ============ -->
+                    <section class="sg-section" id="tokens">
+                      <span class="sg-eyebrow">Foundations</span>
+                      <h2>Color (semantic)</h2>
+                      <div class="sg-stack">
+                        <div><div class="sg-swatch" style="background: var(--background-primary);"></div><div class="sg-token-row"><span>Background primary</span><code>--background-primary</code></div></div>
+                        <div><div class="sg-swatch" style="background: var(--background-secondary);"></div><div class="sg-token-row"><span>Background secondary</span><code>--background-secondary</code></div></div>
+                        <div><div class="sg-swatch" style="background: var(--background-faded);"></div><div class="sg-token-row"><span>Background faded</span><code>--background-faded</code></div></div>
+                        <div><div class="sg-swatch" style="background: var(--text-primary);"></div><div class="sg-token-row"><span>Text primary</span><code>--text-primary</code></div></div>
+                        <div><div class="sg-swatch" style="background: var(--text-secondary);"></div><div class="sg-token-row"><span>Text secondary</span><code>--text-secondary</code></div></div>
+                        <div><div class="sg-swatch" style="background: var(--text-faded);"></div><div class="sg-token-row"><span>Text faded</span><code>--text-faded</code></div></div>
+                        <div><div class="sg-swatch" style="background: var(--border-secondary);"></div><div class="sg-token-row"><span>Border secondary</span><code>--border-secondary</code></div></div>
+                      </div>
+
+                      <h2>Type scale</h2>
+                      <div class="sg-stack">
+                        <div style="font-size: var(--font-10xl); line-height: 1;">10xl 72px</div>
+                        <div style="font-size: var(--font-9xl); line-height: 1;">9xl 64px</div>
+                        <div style="font-size: var(--font-8xl); line-height: 1.05;">8xl 56px</div>
+                        <div style="font-size: var(--font-7xl); line-height: 1.05;">7xl 48px</div>
+                        <div style="font-size: var(--font-6xl);">6xl 40px</div>
+                        <div style="font-size: var(--font-5xl);">5xl 36px</div>
+                        <div style="font-size: var(--font-4xl);">4xl 32px</div>
+                        <div style="font-size: var(--font-3xl);">3xl 28px</div>
+                        <div style="font-size: var(--font-2xl);">2xl 24px</div>
+                        <div style="font-size: var(--font-xl);">xl 22px</div>
+                        <div style="font-size: var(--font-l);">l 20px</div>
+                        <div style="font-size: var(--font-m);">m 18px (default body)</div>
+                        <div style="font-size: var(--font-s);">s 16px</div>
+                        <div style="font-size: var(--font-xs);">xs 14px</div>
+                        <div style="font-size: var(--font-2xs);">2xs 12px</div>
+                      </div>
+
+                      <h2>Spacing</h2>
+                      <div class="sg-stack">
+                        <div><div class="sg-spacer" style="width: var(--space-xs);"></div><div class="sg-token-row"><span>xs</span><code>--space-xs</code></div></div>
+                        <div><div class="sg-spacer" style="width: var(--space-s);"></div><div class="sg-token-row"><span>s</span><code>--space-s</code></div></div>
+                        <div><div class="sg-spacer" style="width: var(--space-m);"></div><div class="sg-token-row"><span>m</span><code>--space-m</code></div></div>
+                        <div><div class="sg-spacer" style="width: var(--space-l);"></div><div class="sg-token-row"><span>l</span><code>--space-l</code></div></div>
+                        <div><div class="sg-spacer" style="width: var(--space-xl);"></div><div class="sg-token-row"><span>xl</span><code>--space-xl</code></div></div>
+                        <div><div class="sg-spacer" style="width: var(--space-2xl);"></div><div class="sg-token-row"><span>2xl</span><code>--space-2xl</code></div></div>
+                        <div><div class="sg-spacer" style="width: var(--space-3xl);"></div><div class="sg-token-row"><span>3xl</span><code>--space-3xl</code></div></div>
+                      </div>
+
+                      <h2>Radius</h2>
+                      <div class="sg-row">
+                        <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-xs); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">xs</div>
+                        <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-s); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">s</div>
+                        <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-m); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">m</div>
+                        <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-l); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">l</div>
+                        <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-xl); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">xl</div>
+                        <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-pill); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">pill</div>
+                      </div>
+                    </section>
+
+                  </div>
+                </div>
+              </div>
+            </section>
+
+          </article>
+        </div>
+      </div>
+    </main>
+
+    <div class="sidebar-backdrop" data-sidebar-backdrop aria-hidden="true"></div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@barba/core@2.10.3/dist/barba.umd.min.js" defer></script>
+  <script src="assets/js/studio.js" defer></script>
+  <script src="assets/js/studio-barba.js" defer></script>
+  <script src="assets/js/studio-contact.js" defer></script>
+  <script src="assets/js/thumb-hover.js" defer></script>
+  <script src="assets/js/bd-video.js" defer></script>
+
+</body>
+</html>

@@ -928,9 +928,9 @@ function renderFeedItem(entry) {
   var postType = entry.featured ? "featured" : (entry.feedVariant || "standard");
   var excerpt = entry.synopsis ? '<p class="post-excerpt">' + entry.synopsis + '</p>' : "";
 
-  var metaParts = ['<span class="post-date">' + formatStudioDate(entry.date) + '</span>'];
-  if (isArticle && entry.readTime) metaParts.push('<span class="post-read-time">' + entry.readTime + '</span>');
-  if (!isArticle && entry.client) metaParts.push('<span class="post-client">' + entry.client + '</span>');
+  var metaParts = ['<span class="post-meta-item post-date">' + formatStudioDate(entry.date) + '</span>'];
+  if (isArticle && entry.readTime) metaParts.push('<span class="post-meta-item post-read-time">' + entry.readTime + '</span>');
+  if (!isArticle && entry.client) metaParts.push('<span class="post-meta-item post-client">' + entry.client + '</span>');
 
   var thumb = buildThumbnailBlock(entry);
 
@@ -944,7 +944,7 @@ function renderFeedItem(entry) {
       '<div class="post-body">' +
         '<h3 class="post-title">' + entry.title + '</h3>' +
         excerpt +
-        '<div class="post-meta">' + metaParts.join("") + '</div>' +
+        '<div class="post-meta bottom-meta">' + metaParts.join("") + '</div>' +
       '</div>' +
       thumb.html +
     '</a>';

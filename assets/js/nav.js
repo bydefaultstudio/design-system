@@ -141,7 +141,10 @@
   }
 
   // ── Inject into page ──
-  mount.innerHTML = headerHtml + sidebarHtml;
+  // The mount (#site-nav) already contains <main class="docs-main-area"> from
+  // the template. Use insertAdjacentHTML to prepend the header + sidebar
+  // BEFORE the existing <main>, preserving it in place as a grid sibling.
+  mount.insertAdjacentHTML('afterbegin', headerHtml + sidebarHtml);
 
   // Fix relative paths in sidebar nav links
   if (base && hasSidebar) {
@@ -223,12 +226,19 @@
     }
   }
 
-  // ── Section icon links: stop propagation to prevent details toggle ──
+  // ── Section icon links: prevent details toggle without blocking Barba ──
+  // These <a> tags live inside <summary>. stopPropagation would prevent
+  // the click from reaching Barba's document-level listener. Instead we
+  // intercept on the <summary> itself and preventDefault when the click
+  // originated from an icon link, which stops the toggle but lets the
+  // event keep bubbling so Barba can handle the navigation.
   if (hasSidebar) {
-    var iconLinks = mount.querySelectorAll('.nav-section-icon');
-    for (var s = 0; s < iconLinks.length; s++) {
-      iconLinks[s].addEventListener('click', function(e) {
-        e.stopPropagation();
+    var summaries = mount.querySelectorAll('.nav-section-toggle');
+    for (var s = 0; s < summaries.length; s++) {
+      summaries[s].addEventListener('click', function(e) {
+        if (e.target.closest && e.target.closest('.nav-section-icon')) {
+          e.preventDefault();
+        }
       });
     }
   }

@@ -617,9 +617,9 @@ When studio mode is active, follow the rules in this section. Everything else in
 
 ### Layout
 
-Studio uses a CSS Grid with sticky sidebar + top bar + Barba container — not the BrandOS `page-wrapper` hierarchy. Key variables:
+Studio uses a CSS Grid with sticky sidebar + Barba container on desktop, plus a slim mobile-only bar above main on mobile (hamburger trigger for the drawer). Not the BrandOS `page-wrapper` hierarchy. Key variables:
 
-- `--sidebar-width`, `--sidebar-collapsed-width`, `--top-bar-height`, `--mobile-drawer-width`
+- `--sidebar-width`, `--sidebar-collapsed-width`, `--mobile-bar-height`, `--mobile-drawer-width`
 
 Inside the Barba container, the standard inner hierarchy still applies: `section → padding-global → container → block`.
 
@@ -631,11 +631,11 @@ Inside the Barba container, the standard inner hierarchy still applies: `section
 
 ### HTML and page conventions
 
-- Pages are **hand-authored HTML** — the doc generator is never involved
-- Use `studio/templates/page-template.html` as the base (not the root `templates/page-template.html`)
-- Every page's Barba container must declare: `data-barba-namespace`, `data-level`, `data-order`, `data-page-title`, `data-page-description`
+- **L0 + L1 pages (home, about, contact) are hand-authored HTML** based on `studio/templates/page-template.html`.
+- **L2 pages (articles + case studies) are generated from markdown** by `studio/cms/generator/` — see `studio/cms/README.md`. Sources live in `studio/cms/articles/*.md` and `studio/cms/work/*.md`; outputs are written to `studio/articles/*.html` and `studio/work/*.html`, plus a single manifest at `studio/assets/data/studio-content.json` that drives the homepage feed, sidebar work list, and next-read card.
+- Every page's Barba container must declare: `data-barba-namespace`, `data-level`, `data-order`, `data-page-title`, `data-page-description`. For L2 pages, the generator fills these from front-matter.
 - Page hierarchy: L0 (home), L1 (destinations: work, about, contact), L2 (feed items: case studies, articles)
-- Sidebar nav is inlined per page — update it in every page when adding or removing links
+- Sidebar nav is inlined per L0/L1 page — update it in every page when adding or removing links. L2 pages share a templated sidebar from `studio/cms/generator/templates/layout.html`, so one edit rebuilds all of them.
 
 ### Barba page transitions
 
@@ -659,8 +659,8 @@ Transition mapping lives in `TRANSITION_MAP` at the top of `studio-barba.js`. Re
 ### What does NOT apply in studio mode
 
 - BrandOS layout hierarchy (`page-wrapper → page-content → section → ...`) — studio has its own grid
-- Doc generator (`cms/generator/`) — studio pages are hand-authored
-- Page template at root (`templates/page-template.html`) — use `studio/templates/page-template.html`
+- Doc generator (`cms/generator/`) — studio has its own L2 generator at `studio/cms/generator/`; the docs-site one is never involved
+- Page template at root (`templates/page-template.html`) — use `studio/templates/page-template.html` for L0/L1, or the generator for L2
 - UX copy rules from §16 — studio is a marketing site with its own voice
 - Component specs from §4 (`.button`, `.card`, etc.) — studio may define its own components (`.post`, `.post-title`, etc.)
 - `docs-site.css` — studio does not load or depend on it

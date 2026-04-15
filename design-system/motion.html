@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motion - By Default Brand OS</title>
+    <meta name="description" content="Complete reference for motion tokens including easing primitives, duration primitives, and semantic page-level motion. Same t-shirt scale as spacing and type.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Motion - By Default Brand OS">
+    <meta property="og:description" content="Complete reference for motion tokens including easing primitives, duration primitives, and semantic page-level motion. Same t-shirt scale as spacing and type.">
+    <meta property="og:image" content="../assets/images/og/og-default.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Design System Framework (path set in cms/docs.config.js) -->
+    <link rel="stylesheet" href="../assets/css/design-system.css" id="design-system-css"
+          onerror="document.getElementById('ds-missing-banner').style.display='flex'">
+    
+
+    <!-- Google Fonts (configured in cms/docs.config.js) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Markdown CSS -->
+
+    <!-- Docs-site styles (layout, nav, page chrome, components, auth) -->
+    <link rel="stylesheet" href="../assets/css/docs-site.css">
+
+    
+
+    <!-- Early theme loader: apply cached client theme before first paint -->
+    <script>
+    (function(){try{var V='20260407',VK='bdd-client-theme-version';if(localStorage.getItem(VK)!==V){localStorage.removeItem('bdd-client-theme');localStorage.setItem(VK,V)}if(document.documentElement.getAttribute('data-client-theme'))return;var c=localStorage.getItem('bdd-client-theme');if(!c)return;var p=c.split('|'),k=p[0],css=p[1],fonts=p[2];if(!k||!css)return;var b='../';var l=document.createElement('link');l.id='client-theme-css';l.rel='stylesheet';l.href=b+css;document.head.appendChild(l);document.documentElement.setAttribute('data-client-theme',k);if(fonts){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://fonts.googleapis.com';pc.id='client-theme-fonts-preconnect';document.head.appendChild(pc);var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';pc2.id='client-theme-fonts-preconnect2';document.head.appendChild(pc2);var fl=document.createElement('link');fl.id='client-theme-fonts';fl.rel='stylesheet';fl.href=fonts;document.head.appendChild(fl)}}catch(e){}})();
+    </script>
+
+    <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
+    <script>
+      window._gotrueReady = (function() {
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0') {
+          return Promise.resolve(null);
+        }
+        return import('https://cdn.jsdelivr.net/npm/gotrue-js@0.9.29/+esm')
+          .then(function(m) { var G = m.default && m.default.default ? m.default.default : m.default; window.GoTrue = G; return G; })
+          .catch(function(e) { console.error('[Auth] GoTrue load failed:', e); return null; });
+      })();
+    </script>
+</head>
+<body class="auth-loading" data-access="team">
+
+    <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
+    <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
+        <span>⚠️</span>
+        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">cms/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
+        <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
+    </div>
+
+    <!-- Layout grid: nav.js injects header + sidebar before <main> via insertAdjacentHTML -->
+    <div class="docs-layout" id="site-nav" data-base="../">
+    <main class="docs-main-area">
+    <div data-barba="wrapper">
+    <div data-barba="container" data-barba-namespace="design-system" data-section="design-system" data-order="9" data-level="2">
+        <!-- Page Header (full width, outside grid) -->
+        <div class="page-header">
+      <div class="container-small">
+        <h1 data-flip-id="motion">Motion</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">The motion tokens that govern every transition, animation, and micro-interaction</p>
+        
+      </div>
+    </div>
+
+        <!-- Page sub-header bar (full width, sticky — breadcrumb + filename + actions) -->
+        <div class="sticky-bar sticky-bar-page">
+      <div class="sticky-bar-container">
+        <div class="sticky-bar-content">
+          <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
+            <a href="../design-system/index.html">Design System</a>
+            <span class="breadcrumb-separator">/</span>
+            <span>Motion</span>
+          </nav>
+        </div>
+        <div class="sticky-bar-actions">
+          <div class="dropdown">
+            <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Markdown source options">
+              <div class="svg-icn" data-icon="more-horizontal" data-file="more-horizontal.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
+            </button>
+            <div class="dropdown-menu is-right">
+              <button type="button" class="dropdown-item js-copy-url" aria-label="Copy page link to clipboard">
+                <div class="svg-icn" data-icon="link" data-file="link.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M14.8284 16.2426L8.46446 22.6066L1.39339 15.5355L7.75735 9.17158L9.17156 10.5858L5.63603 14.1213C4.85498 14.9024 4.85498 16.1687 5.63603 16.9498L7.05024 18.364C7.83129 19.145 9.09762 19.145 9.87867 18.364L13.4142 14.8284L14.8284 16.2426ZM9.17156 16.2426L7.75735 14.8284L14.8284 7.75736L16.2426 9.17158L9.17156 16.2426ZM16.2426 14.8284L14.8284 13.4142L18.3639 9.87868C19.145 9.09763 19.145 7.8313 18.3639 7.05026L16.9497 5.63604C16.1687 4.85499 14.9024 4.85499 14.1213 5.63604L10.5858 9.17158L9.17156 7.75736L15.5355 1.3934L22.6066 8.46447L16.2426 14.8284Z" fill="currentColor"/></svg></div>
+                <span>Copy link</span>
+              </button>
+              <div data-auth-role="team">
+                <div class="dropdown-divider"></div>
+                <a href="../cms/motion.md" class="dropdown-item js-md-download" download>
+                  <div class="svg-icn" data-icon="download" data-file="download.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
+                  <span>Download .md file</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="../cms/motion.md" class="dropdown-item js-md-open" target="_blank" rel="noopener noreferrer">
+                  <div class="svg-icn" data-icon="open-full" data-file="open-full.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div>
+                  <span>Open .md in new tab</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <a href="../design-system/index.html" class="sticky-bar-close" aria-label="Close Motion">
+            <div class="svg-icn" data-icon="close-large" data-file="close-large.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M5.4 20L4 18.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L4 5.4L5.4 4L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L18.6 4L20 5.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L20 18.6L18.6 20L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L5.4 20Z" fill="currentColor"/></svg></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+        <!-- Main Content + TOC grid -->
+        <div class="docs-content-grid padding-global">
+            <!-- Main Content -->
+            <main class="docs-main">
+                <article>
+                    <p>Motion tokens define <strong>timing and rhythm</strong>, not intent. They are reused for page transitions, component animations, and micro-interactions depending on context.</p>
+<p>The system is built in two layers, the same model as color and spacing: <strong>primitives</strong> (raw easings and durations, named on the same t-shirt scale as <code>--space-*</code> and <code>--font-*</code>) → <strong>semantic tokens</strong> (named by intent, e.g. <code>--motion-page-open</code>). Always use semantic tokens in components — never hardcode <code>cubic-bezier()</code> or millisecond values inline.</p>
+<p>The philosophy: durations follow the same t-shirt scale as spacing and type. Easings use the standard CSS keyword names (<code>in</code>, <code>out</code>, <code>in-out</code>) with refined cubic-bezier values. Zero new vocabulary to memorise — if you already know how <code>--space-m</code> works, you already know how <code>--duration-m</code> works.</p>
+<hr>
+<h2 id="easing-primitives">Easing Primitives</h2>
+<p>Three primitives, named after the standard CSS easing keywords. The cubic-bezier values are our refined replacements for the browser defaults.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--ease-in)" aria-label="Copy var(--ease-in)"><code>var(--ease-in)</code></button></td>
+<td><code>cubic-bezier(0.4, 0, 1, 1)</code></td>
+<td>Exits. Fast start, slow end. The element accelerates away.</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--ease-out)" aria-label="Copy var(--ease-out)"><code>var(--ease-out)</code></button></td>
+<td><code>cubic-bezier(0.16, 1, 0.3, 1)</code></td>
+<td>Entrances. Slow start, slow end with a long graceful tail. The element settles into place.</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--ease-in-out)" aria-label="Copy var(--ease-in-out)"><code>var(--ease-in-out)</code></button></td>
+<td><code>cubic-bezier(0.65, 0, 0.35, 1)</code></td>
+<td>Swaps and continuous motion. Symmetric. Reads as a single sweep.</td>
+</tr>
+</tbody></table></div>
+<div class="demo-preview is-joined">
+  <style>
+    .motion-easing-demo { display: flex; flex-direction: column; gap: var(--space-m); }
+    .motion-easing-row { display: flex; align-items: center; gap: var(--space-m); }
+    .motion-easing-label { font-family: var(--font-quaternary); font-size: var(--font-xs); width: 90px; flex-shrink: 0; }
+    .motion-easing-track { flex: 1; height: 4px; background: var(--background-darker); border-radius: var(--radius-pill); position: relative; }
+    .motion-easing-dot { position: absolute; top: 50%; left: 0; width: 16px; height: 16px; margin-top: -8px; margin-left: -8px; background: var(--text-primary); border-radius: 50%; animation: motion-easing-travel 1600ms infinite; }
+    .motion-easing-dot.is-ease-in { animation-timing-function: var(--ease-in); }
+    .motion-easing-dot.is-ease-out { animation-timing-function: var(--ease-out); }
+    .motion-easing-dot.is-ease-in-out { animation-timing-function: var(--ease-in-out); }
+    @keyframes motion-easing-travel { 0% { left: 0; } 50% { left: 100%; } 50.01% { left: 0; opacity: 0; } 50.5% { opacity: 1; } 100% { left: 100%; } }
+  </style>
+  <div class="motion-easing-demo">
+    <div class="motion-easing-row">
+      <p class="motion-easing-label">ease-in</p>
+      <div class="motion-easing-track"><div class="motion-easing-dot is-ease-in"></div></div>
+    </div>
+    <div class="motion-easing-row">
+      <p class="motion-easing-label">ease-out</p>
+      <div class="motion-easing-track"><div class="motion-easing-dot is-ease-out"></div></div>
+    </div>
+    <div class="motion-easing-row">
+      <p class="motion-easing-label">ease-in-out</p>
+      <div class="motion-easing-track"><div class="motion-easing-dot is-ease-in-out"></div></div>
+    </div>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-qpsilmell" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-qpsilmell" class="language-css">transition-timing-function: var(--ease-out);
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="duration-primitives">Duration Primitives</h2>
+<p>Six durations on the same t-shirt scale as <code>--space-*</code>, <code>--font-*</code>, and <code>--radius-*</code>. Extendable in either direction (<code>2xs</code>, <code>2xl</code>, etc.) when a new use case demands it.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--duration-2xs)" aria-label="Copy var(--duration-2xs)"><code>var(--duration-2xs)</code></button></td>
+<td><code>100ms</code></td>
+<td>Hovers, presses, tooltips appearing</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--duration-xs)" aria-label="Copy var(--duration-xs)"><code>var(--duration-xs)</code></button></td>
+<td><code>200ms</code></td>
+<td>Small UI feedback (toasts, focus rings, button state)</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--duration-s)" aria-label="Copy var(--duration-s)"><code>var(--duration-s)</code></button></td>
+<td><code>400ms</code></td>
+<td>Element-level transitions (dropdowns, expanding rows, fade swaps)</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--duration-m)" aria-label="Copy var(--duration-m)"><code>var(--duration-m)</code></button></td>
+<td><code>600ms</code></td>
+<td>Surface-level transitions (drawers, modals, page swaps)</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--duration-l)" aria-label="Copy var(--duration-l)"><code>var(--duration-l)</code></button></td>
+<td><code>800ms</code></td>
+<td>Page-level openings (full-area entrances)</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--duration-xl)" aria-label="Copy var(--duration-xl)"><code>var(--duration-xl)</code></button></td>
+<td><code>1200ms</code></td>
+<td>Hero motion, deliberate reveals, intro animations</td>
+</tr>
+</tbody></table></div>
+<div class="demo-preview is-joined">
+  <style>
+    .motion-duration-demo { display: flex; flex-direction: column; gap: var(--space-m); }
+    .motion-duration-row { display: flex; align-items: center; gap: var(--space-m); }
+    .motion-duration-label { font-family: var(--font-quaternary); font-size: var(--font-xs); width: 110px; flex-shrink: 0; }
+    .motion-duration-track { flex: 1; height: 4px; background: var(--background-darker); border-radius: var(--radius-pill); position: relative; overflow: hidden; }
+    .motion-duration-bar { position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: var(--text-primary); transform-origin: 0 50%; animation-name: motion-duration-fill; animation-timing-function: var(--ease-in-out); animation-iteration-count: infinite; }
+    .motion-duration-bar.is-2xs { animation-duration: 2000ms; --d: var(--duration-2xs); }
+    .motion-duration-bar.is-xs  { animation-duration: 2000ms; --d: var(--duration-xs); }
+    .motion-duration-bar.is-s   { animation-duration: 2000ms; --d: var(--duration-s); }
+    .motion-duration-bar.is-m   { animation-duration: 2000ms; --d: var(--duration-m); }
+    .motion-duration-bar.is-l   { animation-duration: 2000ms; --d: var(--duration-l); }
+    .motion-duration-bar.is-xl  { animation-duration: 2400ms; }
+    @keyframes motion-duration-fill { 0%, 100% { transform: scaleX(0); } 50%, 90% { transform: scaleX(1); } }
+  </style>
+  <div class="motion-duration-demo">
+    <div class="motion-duration-row">
+      <p class="motion-duration-label">2xs · 100ms</p>
+      <div class="motion-duration-track"><div class="motion-duration-bar is-2xs" style="animation-duration: 100ms; animation-direction: alternate;"></div></div>
+    </div>
+    <div class="motion-duration-row">
+      <p class="motion-duration-label">xs · 200ms</p>
+      <div class="motion-duration-track"><div class="motion-duration-bar is-xs" style="animation-duration: 200ms; animation-direction: alternate;"></div></div>
+    </div>
+    <div class="motion-duration-row">
+      <p class="motion-duration-label">s · 400ms</p>
+      <div class="motion-duration-track"><div class="motion-duration-bar is-s" style="animation-duration: 400ms; animation-direction: alternate;"></div></div>
+    </div>
+    <div class="motion-duration-row">
+      <p class="motion-duration-label">m · 600ms</p>
+      <div class="motion-duration-track"><div class="motion-duration-bar is-m" style="animation-duration: 600ms; animation-direction: alternate;"></div></div>
+    </div>
+    <div class="motion-duration-row">
+      <p class="motion-duration-label">l · 800ms</p>
+      <div class="motion-duration-track"><div class="motion-duration-bar is-l" style="animation-duration: 800ms; animation-direction: alternate;"></div></div>
+    </div>
+    <div class="motion-duration-row">
+      <p class="motion-duration-label">xl · 1200ms</p>
+      <div class="motion-duration-track"><div class="motion-duration-bar is-xl" style="animation-duration: 1200ms; animation-direction: alternate;"></div></div>
+    </div>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-urq6ilk19" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-urq6ilk19" class="language-css">transition-duration: var(--duration-m);
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="semantic-motion-tokens">Semantic Motion Tokens</h2>
+<p>Named by intent. These compose primitives. Components and product code only ever read the semantic layer — never the primitives directly.</p>
+<p>In v1 only <strong>page-level</strong> semantic tokens exist, because that&#39;s the first consumer (studio&#39;s Barba page transitions). Element-, surface-, and feedback-level tokens will be added when a real component needs them.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Semantic token</th>
+<th>Composes</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--motion-page-open)" aria-label="Copy var(--motion-page-open)"><code>--motion-page-open</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--duration-l)" aria-label="Copy var(--duration-l)"><code>--duration-l</code></button> + <button type="button" class="token-copy is-token" data-copy="var(--ease-out)" aria-label="Copy var(--ease-out)"><code>--ease-out</code></button></td>
+<td>A page rising into view (slide-up). 800ms with a long graceful tail.</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--motion-page-close)" aria-label="Copy var(--motion-page-close)"><code>--motion-page-close</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--duration-m)" aria-label="Copy var(--duration-m)"><code>--duration-m</code></button> + <button type="button" class="token-copy is-token" data-copy="var(--ease-in-out)" aria-label="Copy var(--ease-in-out)"><code>--ease-in-out</code></button></td>
+<td>A page falling away (slide-down). 600ms — slightly faster than open, because the user has already decided to leave.</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--motion-page-swap)" aria-label="Copy var(--motion-page-swap)"><code>--motion-page-swap</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--duration-m)" aria-label="Copy var(--duration-m)"><code>--duration-m</code></button> + <button type="button" class="token-copy is-token" data-copy="var(--ease-in-out)" aria-label="Copy var(--ease-in-out)"><code>--ease-in-out</code></button></td>
+<td>Sibling-page navigation (the conveyor). Single continuous sweep.</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--motion-page-fade)" aria-label="Copy var(--motion-page-fade)"><code>--motion-page-fade</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--duration-s)" aria-label="Copy var(--duration-s)"><code>--duration-s</code></button> + <button type="button" class="token-copy is-token" data-copy="var(--ease-in-out)" aria-label="Copy var(--ease-in-out)"><code>--ease-in-out</code></button></td>
+<td>Crossfade fallback when no direction is known.</td>
+</tr>
+</tbody></table></div>
+<p>Each semantic token is stored as <strong>two CSS variables</strong> — one for duration, one for easing — so consumers can plug them into either CSS shorthand (<code>transition</code>) or JS animation APIs (<code>element.animate(keyframes, { duration, easing })</code>) without parsing.</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-zqp9j0ier" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-zqp9j0ier" class="language-css">/* The four page tokens, as declared in design-system.css */
+--motion-page-open-duration:  var(--duration-l);
+--motion-page-open-easing:    var(--ease-out);
+
+--motion-page-close-duration: var(--duration-m);
+--motion-page-close-easing:   var(--ease-in-out);
+
+--motion-page-swap-duration:  var(--duration-m);
+--motion-page-swap-easing:    var(--ease-in-out);
+
+--motion-page-fade-duration:  var(--duration-s);
+--motion-page-fade-easing:    var(--ease-in-out);
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="naming-convention">Naming Convention</h2>
+<p>When a new consumer needs a new semantic motion token, follow this pattern:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-p1mdn6iog" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-p1mdn6iog">--motion-{scope}-{event}-{property}
+</code></pre>
+      </div>
+    
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Slot</th>
+<th>Allowed values</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>scope</code></td>
+<td><code>page</code> · <code>surface</code> · <code>element</code> · <code>feedback</code></td>
+</tr>
+<tr>
+<td><code>event</code></td>
+<td><code>open</code> · <code>close</code> · <code>swap</code> · <code>enter</code> · <code>exit</code> · <code>fade</code> · <code>hover</code> · <code>press</code></td>
+</tr>
+<tr>
+<td><code>property</code></td>
+<td><code>duration</code> · <code>easing</code></td>
+</tr>
+</tbody></table></div>
+<p><strong>Examples</strong> (not yet defined — to be added when first needed):</p>
+<ul>
+<li><code>--motion-surface-open-duration</code> — drawers, modals, the contact overlay</li>
+<li><code>--motion-element-hover-duration</code> — buttons, links, hover states</li>
+<li><code>--motion-feedback-toast-duration</code> — toast notifications appearing</li>
+</ul>
+<p>The semantic name should describe <strong>what kind of motion event this is</strong>, not which component triggers it. A token called <code>--motion-button-hover</code> would be wrong — many things hover, not just buttons. <code>--motion-element-hover</code> is right.</p>
+<hr>
+<h2 id="usage-in-css">Usage in CSS</h2>
+<p>Reference the duration and easing variables separately, the same way <code>transition-duration</code> and <code>transition-timing-function</code> already split in standard CSS:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-2gex3zjsk" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-2gex3zjsk" class="language-css">.button {
+  transition-property: background, color, border-color;
+  transition-duration: var(--duration-2xs);
+  transition-timing-function: var(--ease-out);
+}
+
+.dialog {
+  transition-property: opacity, transform;
+  transition-duration: var(--motion-page-fade-duration);
+  transition-timing-function: var(--motion-page-fade-easing);
+}
+</code></pre>
+      </div>
+    
+<p>For component code, prefer the <strong>semantic</strong> token (<code>--motion-*</code>) when one exists. Fall back to the <strong>primitives</strong> (<code>--duration-*</code>, <code>--ease-*</code>) for genuinely new motion events that don&#39;t have a semantic name yet — but consider whether a new semantic token should be added first.</p>
+<hr>
+<h2 id="usage-in-javascript">Usage in JavaScript</h2>
+<p>Read the tokens once at module load via <code>getComputedStyle</code>, then use them with the Web Animations API:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-8pt384x0x" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-8pt384x0x" class="language-js">function readToken(name) {
+  return getComputedStyle(document.documentElement)
+    .getPropertyValue(name).trim();
+}
+
+const MOTION = {
+  pageOpen: {
+    duration: parseInt(readToken(&quot;--motion-page-open-duration&quot;), 10),
+    easing:   readToken(&quot;--motion-page-open-easing&quot;),
+  },
+};
+
+element.animate(
+  [{ opacity: 0 }, { opacity: 1 }],
+  { duration: MOTION.pageOpen.duration, easing: MOTION.pageOpen.easing }
+);
+</code></pre>
+      </div>
+    
+<p>This is the pattern used by <code>studio/assets/js/studio-barba.js</code> for page transitions.</p>
+<hr>
+<h2 id="reduced-motion">Reduced Motion</h2>
+<p>The system does <strong>not</strong> define a separate set of tokens for <code>prefers-reduced-motion</code> users. Instead, individual consumers should check the user preference at animation time and either skip the animation or use <code>--duration-2xs</code> (effectively instant):</p>
+
+      <div class="code-block-wrapper">
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-dp7l014mb" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-dp7l014mb" class="language-js">const reducedMotion = window.matchMedia(&quot;(prefers-reduced-motion: reduce)&quot;).matches;
+const duration = reducedMotion ? 0 : MOTION.pageOpen.duration;
+</code></pre>
+      </div>
+    
+<p>This keeps the token surface small. If a future component needs more nuanced reduced-motion behaviour, add a <code>--motion-{event}-reduced-duration</code> variant alongside it.</p>
+
+                </article>
+            </main>
+
+            <!-- Table of Contents -->
+            <aside class="docs-toc">
+      <span class="toc-header">On this page</span>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#easing-primitives" class="toc-link">Easing Primitives</a></li><li class="toc-item toc-level-2"><a href="#duration-primitives" class="toc-link">Duration Primitives</a></li><li class="toc-item toc-level-2"><a href="#semantic-motion-tokens" class="toc-link">Semantic Motion Tokens</a></li><li class="toc-item toc-level-2"><a href="#naming-convention" class="toc-link">Naming Convention</a></li><li class="toc-item toc-level-2"><a href="#usage-in-css" class="toc-link">Usage in CSS</a></li><li class="toc-item toc-level-2"><a href="#usage-in-javascript" class="toc-link">Usage in JavaScript</a></li><li class="toc-item toc-level-2"><a href="#reduced-motion" class="toc-link">Reduced Motion</a></li></ul></nav></div>
+    </aside>
+        </div>
+
+        <!-- Page Navigation (Previous / Next) -->
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="iconography.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="svg-icn page-nav-arrow" data-icon="chevron-left-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <h3 class="page-nav-title">Icon</h3>
+      </span>
+    </a><a href="layout-page.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <h3 class="page-nav-title">Layout</h3>
+      </span>
+      <div class="svg-icn page-nav-arrow" data-icon="chevron-right-large"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+    </a></div></nav>
+
+        <!-- Page Feedback -->
+        <section class="page-feedback" aria-label="Page feedback">
+            <div class="page-feedback-inner padding-global">
+                <h3 class="page-feedback-prompt">Was this page helpful?</h3>
+                <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
+                <div class="button-group">
+                    <button class="button" data-feedback="yes" type="button"><div class="svg-icn" data-icon="thumbs-up" data-file="thumbs-up.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 3L14.5 8H23V12.5L19.5 21H2V8H7L14 1L16 3ZM9.29289 8.53426C9.10536 8.72179 9 8.97615 9 9.24136V17C9 18.1046 9.89543 19 11 19H16.8208C17.6312 19 18.3616 18.5109 18.6701 17.7615L21 12.1035V11C21 10.4477 20.5523 10 20 10H13.1555C12.4856 10 12.0052 9.35431 12.1976 8.71271L13.2907 5.06833C13.3504 4.86932 13.1046 4.72254 12.9577 4.86945L9.29289 8.53426ZM5 10C4.44772 10 4 10.4477 4 11V18C4 18.5523 4.44772 19 5 19H6C6.55228 19 7 18.5523 7 18V11C7 10.4477 6.55228 10 6 10H5Z" fill="currentColor"/></svg></div> Yes</button>
+                    <button class="button is-faded" data-feedback="no" type="button"><div class="svg-icn" data-icon="thumbs-down" data-file="thumbs-down.svg"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21L9.5 16H1L1 11.5L4.5 3L22 3L22 16L17 16L10 23L8 21ZM14.7071 15.4657C14.8946 15.2782 15 15.0239 15 14.7586L15 7C15 5.89543 14.1046 5 13 5L7.17921 5C6.36877 5 5.63845 5.48908 5.32986 6.23847L3 11.8965L3 13C3 13.5523 3.44772 14 4 14L10.8445 14C11.5144 14 11.9948 14.6457 11.8024 15.2873L10.7093 18.9317C10.6496 19.1307 10.8954 19.2775 11.0423 19.1305L14.7071 15.4657ZM19 14C19.5523 14 20 13.5523 20 13V6C20 5.44772 19.5523 5 19 5H18C17.4477 5 17 5.44772 17 6V13C17 13.5523 17.4477 14 18 14H19Z" fill="currentColor"/></svg></div> No</button>
+                </div>
+                <div class="page-feedback-success" aria-live="polite">
+                    <div class="page-feedback-success-icon"><div class="svg-icn" data-icon="status-check" data-file="status-check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_14441_253)"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.0004 0.000396729C18.6276 0.000611138 24.0004 5.37311 24.0004 12.0004C24.0002 18.6275 18.6275 24.0002 12.0004 24.0004C5.37311 24.0004 0.000611143 18.6276 0.000396729 12.0004C0.000396729 5.37298 5.37298 0.000396729 12.0004 0.000396729ZM11.9643 13.7357C11.1833 14.5167 9.9172 14.5166 9.13614 13.7357L6.27481 10.8754L4.85001 12.3002L10.5502 18.0004L20.1498 8.39981L18.725 6.97501L11.9643 13.7357Z" fill="currentColor"/></g><defs><clipPath id="clip0_14441_253"><rect width="24" height="24" fill="white"/></clipPath></defs></svg></div></div>
+                    <h3 class="page-feedback-success-title">Thanks for your feedback</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Modal -->
+        <dialog class="feedback-modal" aria-label="Send feedback">
+            <div class="feedback-modal-content">
+                <h3 class="feedback-modal-title">Send feedback</h3>
+                <p class="feedback-modal-subtitle"></p>
+                <form class="feedback-form">
+                    <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
+                    <div class="button-group feedback-modal-actions">
+                        <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>
+                        <button type="submit" class="button is-small">Send feedback</button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
+
+        <!-- Footer -->
+        <footer class="docs-footer">
+            <div class="docs-footer-inner padding-global">
+                <p class="docs-footer-text">© 2026 By Default</p>
+            </div>
+        </footer>
+
+        <!-- Per-page scripts (inside Barba container so they re-execute on transition) -->
+        
+    </div>
+    </div><!-- /data-barba="wrapper" -->
+    </main>
+    </div><!-- /.docs-layout #site-nav -->
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- Initialize Highlight.js and TOC (re-callable for Barba transitions) -->
+    <script>
+        (function() {
+            'use strict';
+
+            // Track TOC observer + scroll listener so we can clean up before re-init
+            var tocObserver = null;
+            var tocScrollHandler = null;
+
+            window.bdInitHighlight = function initHighlight() {
+                if (!window.hljs) return;
+                document.querySelectorAll('pre code').forEach(function(block) {
+                    hljs.highlightElement(block);
+                });
+            };
+
+            window.bdInitTOCActiveState = function initTOCActiveState() {
+                // Tear down any prior observer + scroll listener (Barba re-init)
+                if (tocObserver) { tocObserver.disconnect(); tocObserver = null; }
+                if (tocScrollHandler) {
+                    window.removeEventListener('scroll', tocScrollHandler);
+                    tocScrollHandler = null;
+                }
+
+                var tocLinks = document.querySelectorAll('.toc-link');
+                var headings = document.querySelectorAll('h1[id], h2[id]');
+                if (tocLinks.length === 0 || headings.length === 0) return;
+
+                var linkMap = new Map();
+                tocLinks.forEach(function(link) {
+                    var href = link.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        linkMap.set(href.substring(1), link);
+                    }
+                });
+
+                var observerOptions = { rootMargin: '-20% 0px -70% 0px', threshold: 0 };
+
+                tocObserver = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        var id = entry.target.id;
+                        var link = linkMap.get(id);
+                        if (entry.isIntersecting) {
+                            tocLinks.forEach(function(l) { l.classList.remove('toc-link-active'); });
+                            if (link) link.classList.add('toc-link-active');
+                        }
+                    });
+                }, observerOptions);
+
+                headings.forEach(function(heading) {
+                    if (heading.id) tocObserver.observe(heading);
+                });
+
+                function setInitialActive() {
+                    var activeHeading = null;
+                    var maxTop = -Infinity;
+                    headings.forEach(function(heading) {
+                        var rect = heading.getBoundingClientRect();
+                        if (rect.top <= 100 && rect.top > maxTop) {
+                            maxTop = rect.top;
+                            activeHeading = heading;
+                        }
+                    });
+                    if (activeHeading && activeHeading.id) {
+                        var link = linkMap.get(activeHeading.id);
+                        if (link) {
+                            tocLinks.forEach(function(l) { l.classList.remove('toc-link-active'); });
+                            link.classList.add('toc-link-active');
+                        }
+                    }
+                }
+
+                setInitialActive();
+
+                var scrollTimeout;
+                tocScrollHandler = function() {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(setInitialActive, 100);
+                };
+                window.addEventListener('scroll', tocScrollHandler);
+            };
+
+            function init() {
+                window.bdInitHighlight();
+                window.bdInitTOCActiveState();
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+
+    <!-- Back to Top -->
+    <div class="back-to-top-wrapper">
+      <button class="button is-icon back-to-top-btn" aria-label="Back to top" type="button">
+        <div class="svg-icn" data-icon="arrow-top" data-file="arrow-top.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M4 4V2H20V4H4Z" fill="currentColor"/><path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/></svg></div>
+      </button>
+    </div>
+    <script>
+      (function() {
+        var btn = document.querySelector('.back-to-top-wrapper');
+        if (!btn) return;
+        window.addEventListener('scroll', function() {
+          btn.classList.toggle('is-visible', window.scrollY > 300);
+        });
+        btn.querySelector('button').addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+
+    <!-- Dropdown -->
+    <script src="../assets/js/dropdown.js"></script>
+
+    <!-- Site Navigation -->
+    <script src="../assets/js/nav.js"></script>
+    <!-- Auth -->
+    <script src="../assets/js/auth-config.js"></script>
+    <!-- Theme -->
+    <script src="../assets/js/theme-config.js"></script>
+    <script src="../assets/js/theme-loader.js"></script>
+    <!-- Auth (must load after theme scripts) -->
+    <script src="../assets/js/auth.js"></script>
+    <!-- Feedback -->
+    <script src="../assets/js/feedback.js"></script>
+    <!-- Copy to clipboard -->
+    <script src="../assets/js/copy-button.js"></script>
+    <!-- Number input stepper -->
+    <script src="../assets/js/number-input.js"></script>
+    <!-- Tabs -->
+    <script src="../assets/js/tabs.js"></script>
+    <!-- Toast notifications -->
+    <script src="../assets/js/toast.js"></script>
+    <!-- Dialog -->
+    <script src="../assets/js/dialog.js"></script>
+    <!-- Rating -->
+    <script src="../assets/js/rating.js"></script>
+    <!-- Markdown download/open — strips frontmatter and block HTML -->
+    <script src="../assets/js/md-strip.js"></script>
+    <!-- Barba.js page transitions (vendored locally) — must load after auth/nav/theme -->
+    <script src="../assets/js/vendor/barba/barba.min.js"></script>
+    <script src="../assets/js/barba-init.js"></script>
+
+    <script>
+      /* Tag dismiss — delegated to document, attached once */
+      document.addEventListener('click', function (e) {
+        var removeBtn = e.target.closest('.tag-remove');
+        if (removeBtn) {
+          var tag = removeBtn.closest('.tag');
+          if (tag) tag.remove();
+        }
+      });
+
+      /* Table scroll overflow hint — re-callable for Barba transitions */
+      (function() {
+        function checkOverflow(wrapper) {
+          var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
+          var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
+          wrapper.classList.toggle('is-overflowing', isOverflowing);
+          wrapper.classList.toggle('is-scrolled-end', isAtEnd);
+        }
+
+        window.bdInitTableScroll = function initTableScroll() {
+          var wrappers = document.querySelectorAll('.table-scroll');
+          wrappers.forEach(function(wrapper) {
+            if (wrapper.__bdTableScrollBound) return;
+            wrapper.__bdTableScrollBound = true;
+            checkOverflow(wrapper);
+            wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+          });
+        };
+
+        // Window resize handler attached once — re-checks all wrappers
+        window.addEventListener('resize', function() {
+          document.querySelectorAll('.table-scroll').forEach(checkOverflow);
+        });
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', window.bdInitTableScroll);
+        } else {
+          window.bdInitTableScroll();
+        }
+      })();
+    </script>
+    <div class="cursor-default"></div>
+    <div class="cursor-halo"></div>
+</body>
+</html>

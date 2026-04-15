@@ -8,7 +8,13 @@
 
 console.log("Script - Cursor v3.0");
 
-document.addEventListener("DOMContentLoaded", () => {
+function initBdCursor() {
+  // Idempotency guard — Barba transitions may re-load this script when navigating
+  // from a non-website page to a website page, but the cursor itself lives outside
+  // the swapped container and only needs to set up its listeners once.
+  if (window.__bdCursorInited) return;
+  window.__bdCursorInited = true;
+
   const cursor = document.querySelector(".cursor-default");
   const cursorHalo = document.querySelector(".cursor-halo");
 
@@ -138,4 +144,12 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("mouseup", () => {
     cursorHalo.classList.remove("cursor-pressed");
   });
-});
+}
+
+// Run immediately if DOM is already ready (Barba transitions or late script load),
+// otherwise wait for DOMContentLoaded.
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initBdCursor);
+} else {
+  initBdCursor();
+}

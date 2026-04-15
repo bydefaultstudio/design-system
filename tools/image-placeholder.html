@@ -35,11 +35,24 @@
   <meta name="theme-color" content="#3485cd" />
 
   <!-- Design System Framework -->
-  <link rel="stylesheet" href="../assets/css/design-system.css" />
-  <!-- Site styles -->
-  <link rel="stylesheet" href="../assets/css/docs-site.css" />
-  <link rel="stylesheet" href="../assets/css/tools.css" />
-  <link rel="stylesheet" href="../assets/css/image-placeholder.css" />
+  <link rel="stylesheet" href="../assets/css/design-system.css" id="design-system-css"
+        onerror="document.getElementById('ds-missing-banner').style.display='flex'">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Docs-site styles -->
+  <link rel="stylesheet" href="../assets/css/docs-site.css">
+  <!-- Tool-specific styles (last) -->
+  <link rel="stylesheet" href="../assets/css/tools.css">
+  <link rel="stylesheet" href="../assets/css/image-placeholder.css">
+
+  <!-- Early theme loader -->
+  <script>
+  (function(){try{var V='20260407',VK='bdd-client-theme-version';if(localStorage.getItem(VK)!==V){localStorage.removeItem('bdd-client-theme');localStorage.setItem(VK,V)}if(document.documentElement.getAttribute('data-client-theme'))return;var c=localStorage.getItem('bdd-client-theme');if(!c)return;var p=c.split('|'),k=p[0],css=p[1],fonts=p[2];if(!k||!css)return;var b='../';var l=document.createElement('link');l.id='client-theme-css';l.rel='stylesheet';l.href=b+css;document.head.appendChild(l);document.documentElement.setAttribute('data-client-theme',k);if(fonts){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://fonts.googleapis.com';pc.id='client-theme-fonts-preconnect';document.head.appendChild(pc);var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';pc2.id='client-theme-fonts-preconnect2';document.head.appendChild(pc2);var fl=document.createElement('link');fl.id='client-theme-fonts';fl.rel='stylesheet';fl.href=fonts;document.head.appendChild(fl)}}catch(e){}})();
+  </script>
 
   <!-- GoTrue JS (skipped on localhost) -->
   <script>
@@ -52,20 +65,21 @@
         .catch(function(e) { console.error('[Auth] GoTrue load failed:', e); return null; });
     })();
   </script>
-
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
 <body class="auth-loading" data-access="public">
 
-  <!-- Site Navigation -->
-  <div id="site-nav" data-base="../"></div>
+    <!-- Design system missing banner -->
+    <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
+        <span>&#9888;&#65039;</span>
+        <span>Design system CSS not found.</span>
+        <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
+    </div>
 
-  <div class="page-wrapper has-sidebar">
-    <div class="page-content">
+    <div class="docs-layout" id="site-nav" data-base="../">
+    <main class="docs-main-area">
+    <div data-barba="wrapper">
+    <div data-barba="container" data-barba-namespace="image-placeholder" data-section="tools" data-order="3" data-level="2">
 
       <!-- Page sub-header bar -->
       <div class="sticky-bar sticky-bar-page">
@@ -232,42 +246,51 @@
       </div>
     </footer>
 
-  </div>
+    </div><!-- /data-barba="container" -->
+    </div><!-- /data-barba="wrapper" -->
+    </main>
+    </div><!-- /.docs-layout -->
 
-  <!-- Back to Top -->
-  <div class="back-to-top-wrapper">
-    <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
-      <div class="svg-icn"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M4 4V2H20V4H4Z" fill="currentColor"/>
-        <path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/>
-      </svg></div>
-    </button>
-  </div>
-  <script>
-    (function() {
-      var btn = document.querySelector('.back-to-top-wrapper');
-      if (!btn) return;
-      window.addEventListener('scroll', function() { btn.classList.toggle('is-visible', window.scrollY > 300); });
-      btn.querySelector('button').addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
-    })();
-  </script>
+    <!-- Back to Top -->
+    <div class="back-to-top-wrapper">
+      <button class="button is-faded is-icon back-to-top-btn" aria-label="Back to top" type="button">
+        <div class="svg-icn"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 4V2H20V4H4Z" fill="currentColor"/>
+          <path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/>
+        </svg></div>
+      </button>
+    </div>
+    <script>
+      (function() {
+        var btn = document.querySelector('.back-to-top-wrapper');
+        if (!btn) return;
+        window.addEventListener('scroll', function() { btn.classList.toggle('is-visible', window.scrollY > 300); });
+        btn.querySelector('button').addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+      })();
+    </script>
 
-  <!-- Image Tool -->
-  <script src="../assets/js/image-placeholder.js"></script>
-  <!-- Component JS -->
-  <script src="../assets/js/dropdown.js"></script>
-  <!-- Site Navigation -->
-  <script src="../assets/js/nav.js"></script>
-  <!-- Auth -->
-  <script src="../assets/js/auth-config.js"></script>
-  <script src="../assets/js/theme-config.js"></script>
-  <script src="../assets/js/theme-loader.js"></script>
-  <script src="../assets/js/auth.js"></script>
-  <!-- Feedback -->
-  <script src="../assets/js/feedback.js"></script>
-  <!-- Copy to clipboard -->
-  <script src="../assets/js/copy-button.js"></script>
-
+    <!-- Image Tool -->
+    <script src="../assets/js/image-placeholder.js"></script>
+    <!-- Dropdown -->
+    <script src="../assets/js/dropdown.js"></script>
+    <!-- Site Navigation -->
+    <script src="../assets/js/nav.js"></script>
+    <!-- Auth -->
+    <script src="../assets/js/auth-config.js"></script>
+    <script src="../assets/js/theme-config.js"></script>
+    <script src="../assets/js/theme-loader.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <!-- Feedback -->
+    <script src="../assets/js/feedback.js"></script>
+    <!-- Copy to clipboard -->
+    <script src="../assets/js/copy-button.js"></script>
+    <!-- Toast notifications -->
+    <script src="../assets/js/toast.js"></script>
+    <!-- Dialog -->
+    <script src="../assets/js/dialog.js"></script>
+    <!-- Barba.js page transitions -->
+    <script src="../assets/js/vendor/barba/barba.min.js"></script>
+    <script src="../assets/js/barba-init.js"></script>
 </body>
 
 </html>

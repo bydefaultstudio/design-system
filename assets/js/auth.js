@@ -1465,6 +1465,39 @@
     filterNavLinks(role, user);
   };
 
+  // Exposed so barba-init.js can verify page-level access after each
+  // transition. Unlike bdRefreshAccessFilter (which only hides nav links),
+  // this checks the destination page's data-access value and redirects to
+  // access-denied if the current user shouldn't be there.
+  window.bdCheckPageAccess = function (accessValue) {
+    if (!accessValue || accessValue === 'public') return;
+
+    var role = null;
+    var user = null;
+    if (gotrueAuth) {
+      user = gotrueAuth.currentUser();
+      if (user) {
+        var metadata = user.app_metadata || {};
+        role = getEffectiveRole(metadata.roles || []);
+        // Respect admin role-switching
+        if (role === 'admin') {
+          var switchedRole = getActiveRole();
+          if (switchedRole) {
+            user = buildRoleUser(user, switchedRole);
+            role = switchedRole;
+          }
+        }
+      }
+    }
+    if (!role) role = sessionStorage.getItem('active-role') || DEFAULT_ROLE;
+
+    if (!hasAccessForValue(role, accessValue, user)) {
+      window.__bdRoleSwitchPending = true;
+      var reason = accessValue.indexOf('client:') !== -1 && hasAccess(role, 'client') ? 'org' : 'role';
+      redirectAccessDenied(reason, getCurrentPagePath());
+    }
+  };
+
   //------- Boot -------//
 
   if (document.readyState === 'loading') {

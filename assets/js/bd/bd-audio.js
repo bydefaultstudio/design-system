@@ -365,13 +365,19 @@ class AudioSystem {
 //------- Initialize -------//
 //
 
-// Initialize audio system when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    window.bdAudio = new AudioSystem();
-  });
-} else {
+// Initialize audio system when DOM is ready.
+// Idempotency guard: if Barba re-loads this script when navigating between
+// website pages, AudioSystem attaches global click/mouseenter listeners to
+// `document` — re-running it would duplicate listeners and play sounds twice.
+function initBdAudio() {
+  if (window.bdAudio) return;
   window.bdAudio = new AudioSystem();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initBdAudio);
+} else {
+  initBdAudio();
 }
 
 // Export for module usage

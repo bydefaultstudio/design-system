@@ -61,7 +61,7 @@
   background: var(--background-primary);
 }
 
-/* -- Page sub-header variant: sits below the fixed top nav -- */
+/* -- Page sub-header variant: sticks below the top nav -- */
 .sticky-bar-page {
   top: var(--top-nav-height);
 }
@@ -582,64 +582,74 @@ a.book-cover:focus-visible {
 }
 
 /* ==========================================================================
-   Barba.js page transitions — Phase 3 directional slides
+   Barba.js page transitions — absolute-positioning + WAAPI
    ========================================================================== */
 
 /*
- * Grid-stacking trick: the wrapper is a single-cell CSS Grid and both
- * containers (leaving + entering during a sync:true transition) are assigned
- * to the same grid-area. When multiple grid items share a grid-area they
- * stack in the same cell instead of flowing below each other. The cell's
- * height is max(child heights), not sum — no mid-transition document reflow.
+ * Positioning model (mirrors studio/assets/css/studio.css):
  *
- * Both containers stay in normal flow inside the cell, which means every
- * layout rule they had in the old `.docs-main-area` stylesheet (margin-left,
- * flex, min-height, background) keeps working unchanged. Responsive
- * breakpoints, sidebar collapse, mobile overlay — all untouched.
+ * During normal display, both wrapper and container are position: relative
+ * and participate in the regular document flow.
  *
- * The JS animates only `transform`, `opacity`, and `z-index` (compositor-
- * only properties that never trigger reflow). No position/top/left/width
- * manipulation, no geometry measurements, no snap-back at the end.
+ * During a transition (body.is-animating), both Barba containers switch to
+ * position: absolute so they overlay each other at the same origin. The JS
+ * snaps window.scrollTo(0,0) in leave() and applies a negative translateY
+ * offset on the leaving container so it visually stays put. Enter animations
+ * use natural positions (translateY(0) at rest).
+ *
+ * Z-index layering is controlled by data-bd-role (leave|enter) and
+ * data-bd-scenario (open|close|swap|fade) attributes set by barba-init.js
+ * on both containers before the animation starts.
  */
+
+/* Barba wrapper: relative anchor for absolute children during animation.
+   min-height prevents the grid row from collapsing when both containers
+   switch to position:absolute during a transition — without it the sidebar
+   jumps and the slide animation has no containing block height. */
 [data-barba="wrapper"] {
-  display: grid;
-  grid-template-areas: "stack";
+  position: relative;
+  min-height: calc(100vh - var(--top-nav-height));
 }
 
-[data-barba="wrapper"] > [data-barba="container"] {
-  grid-area: stack;
-  /*
-   * Grid items default to `min-width: auto` (content-based), so a wide
-   * descendant (a table, a long code string) would stretch the container
-   * past the viewport and create page-level horizontal scroll on mobile.
-   * Forcing min-width:0 lets the container shrink to its assigned cell
-   * width, which lets `.table-scroll` activate its own overflow-x as
-   * designed instead of inheriting an already-overflowing parent.
-   */
-  min-width: 0;
+/* Containers need min-height so translateY(100%) produces a full-viewport
+   slide even on short pages (100% is the element's own height). */
+[data-barba="container"] {
+  position: relative;
+  min-height: calc(100vh - var(--top-nav-height));
+  background: var(--background-primary);
 }
 
-/*
- * The wrapper gets `is-animating` for the duration of every Barba transition
- * (added in barba.hooks.before, removed in barba.hooks.after). It locks the
- * viewport so the off-screen container during a horizontal slide can't trigger
- * a horizontal scrollbar, and it disables interaction so a second click during
- * the animation can't kick off a second transition mid-flight.
- */
-[data-barba="wrapper"].is-animating {
-  overflow: hidden;
+/* Lock interaction + clip overflow during animation */
+body.is-animating [data-barba="wrapper"] {
   pointer-events: none;
+  overflow: hidden;
 }
 
-/*
- * Promote the swapping containers to their own compositor layers during a
- * transition. Without will-change the browser repaints the entire page on
- * every frame of the slide. Cleared automatically after the animation by
- * removing the wrapper class.
- */
-[data-barba="wrapper"].is-animating > [data-barba="container"] {
-  will-change: transform, opacity;
+/* Pull both containers out of flow so they overlay at the same origin */
+body.is-animating [data-barba="container"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: var(--background-primary);
 }
+
+/* -- Z-index per scenario -- */
+
+/* open: entering page covers leaving */
+body.is-animating [data-bd-role="leave"][data-bd-scenario="open"]  { z-index: 1; }
+body.is-animating [data-bd-role="enter"][data-bd-scenario="open"]  { z-index: 2; }
+
+/* close: leaving page falls away in front */
+body.is-animating [data-bd-role="leave"][data-bd-scenario="close"] { z-index: 2; }
+body.is-animating [data-bd-role="enter"][data-bd-scenario="close"] { z-index: 1; }
+
+/* swap: both elevated */
+body.is-animating [data-bd-scenario="swap"] { z-index: 2; }
+
+/* fade: equal layer */
+body.is-animating [data-bd-scenario="fade"] { z-index: 1; }
 
 
 /* =====================================================================
@@ -880,41 +890,43 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Simple block wrapper — sidebar is now position: fixed via nav.js */
-.docs-container {
+/* -- Layout grid (mirrors studio/assets/css/studio.css) --
+ * Sidebar, top-nav, and main content are siblings in a CSS Grid.
+ * The Barba wrapper lives inside the main grid cell, so absolute-
+ * positioned containers during animation are constrained to that
+ * cell — the sidebar is a separate grid track, completely unaffected.
+ */
+.docs-layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  grid-template-rows: var(--top-nav-height) 1fr;
+  grid-template-areas:
+    "sidebar topbar"
+    "sidebar main";
   min-height: 100vh;
+  background: var(--background-primary);
+  transition: grid-template-columns var(--sidebar-transition);
 }
 
-/* Content area offset for fixed header + sidebar */
+body.sidebar-collapsed .docs-layout {
+  grid-template-columns: var(--sidebar-collapsed-width) 1fr;
+}
+
+body.no-sidebar .docs-layout {
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "topbar"
+    "main";
+}
+
+/* Main content area — now a grid cell, no margin offsets needed */
 .docs-main-area {
+  grid-area: main;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: calc(100vh - var(--top-nav-height));
   position: relative;
-  margin-top: var(--top-nav-height);
-  margin-left: var(--sidebar-width);
-  transition: margin-left var(--sidebar-transition);
   background-color: var(--background-primary);
-}
-
-/* Standalone page wrapper offset — combo class keeps base .page-wrapper untouched */
-.page-wrapper.has-sidebar {
-  width: auto;
-  margin-top: var(--top-nav-height);
-  margin-left: var(--sidebar-width);
-  transition: margin-left var(--sidebar-transition);
-}
-
-/* Collapsed sidebar: shrink content margin */
-body.sidebar-collapsed .docs-main-area,
-body.sidebar-collapsed .page-wrapper.has-sidebar {
-  margin-left: var(--sidebar-collapsed-width);
-}
-
-/* No sidebar: full-width content */
-body.no-sidebar .docs-main-area,
-body.no-sidebar .page-wrapper.has-sidebar {
-  margin-left: 0;
 }
 
 .docs-content-grid {
@@ -934,13 +946,12 @@ body.no-sidebar .page-wrapper.has-sidebar {
 }
 
 
-/* ------ 1B. TOP NAV (Fixed) ------ */
+/* ------ 1B. TOP NAV (Sticky in grid) ------ */
 
 .top-nav {
-  position: fixed;
+  grid-area: topbar;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
   height: var(--top-nav-height);
   z-index: 100;
   display: flex;
@@ -1047,14 +1058,13 @@ body.mobile-nav-open .hamburger-icon-close { display: block; }
 }
 
 
-/* ------ 1C. SITE SIDEBAR (Fixed) ------ */
+/* ------ 1C. SITE SIDEBAR (Sticky in grid) ------ */
 
 .site-sidebar {
-  position: fixed;
-  top: var(--top-nav-height);
-  left: 0;
-  bottom: 0;
-  width: var(--sidebar-width);
+  grid-area: sidebar;
+  position: sticky;
+  top: 0;
+  height: 100vh;
   z-index: 50;
   overflow-y: auto;
   overflow-x: hidden;
@@ -1571,10 +1581,9 @@ body:not(.sidebar-collapsed) .nav-section[open] .nav-list {
   width: 100%;
   padding: var(--space-m) 0 var(--space-5xl) 0;
   overflow: hidden;
-  min-width: 0; /* allow shrinking inside grid/flex parent */
 }
 
-/* Offset anchor targets — accounts for fixed header + sticky bar */
+/* Offset anchor targets — accounts for sticky top nav + sticky bar */
 h1[id],
 h2[id],
 h3[id],
@@ -1906,8 +1915,23 @@ section[id] {
     display: none;
   }
 
-  /* Sidebar: off-screen by default, slides in as overlay */
+  /* Grid: single column on mobile (sidebar becomes overlay) */
+  .docs-layout,
+  body.sidebar-collapsed .docs-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--top-nav-height) 1fr;
+    grid-template-areas:
+      "topbar"
+      "main";
+  }
+
+  /* Sidebar: override sticky grid cell to fixed overlay */
   .site-sidebar {
+    position: fixed;
+    top: var(--top-nav-height);
+    left: 0;
+    bottom: 0;
+    height: auto;
     width: 75vw;
     transform: translateX(-100%);
     transition: transform 0.3s ease;
@@ -1924,20 +1948,8 @@ section[id] {
     display: none;
   }
 
-  /* Content: full width on mobile (no sidebar offset) */
-  .docs-main-area,
-  .page-wrapper.has-sidebar {
-    margin-left: 0;
-    transition: none;
-  }
-
-  /* Override collapsed state on mobile — always show full sidebar */
-  body.sidebar-collapsed .docs-main-area,
-  body.sidebar-collapsed .page-wrapper.has-sidebar {
-    margin-left: 0;
-  }
-
   body.sidebar-collapsed .site-sidebar {
+    position: fixed;
     width: 75vw;
     padding: 0;
   }
