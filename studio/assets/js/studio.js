@@ -972,6 +972,73 @@ window.initFeed = initFeed;
 //------- Initialize -------//
 //
 
+// Services page — two-level accordion + audience-tab CTA. Only binds when
+// the services markup is on the page; safe to call on every nav.
+function initServices() {
+  var services = document.querySelectorAll(".service-row");
+  if (services.length) {
+    services.forEach(function bindService(row) {
+      var trigger = row.querySelector(".service-trigger");
+      if (!trigger || trigger.dataset.serviceBound) return;
+      trigger.dataset.serviceBound = "true";
+      trigger.addEventListener("click", function toggleService() {
+        var wasOpen = row.classList.contains("is-open");
+        // Single-open: close all services + reset their nested format rows.
+        services.forEach(function closeOther(other) {
+          other.classList.remove("is-open");
+          var otherTrigger = other.querySelector(".service-trigger");
+          if (otherTrigger) otherTrigger.setAttribute("aria-expanded", "false");
+          other.querySelectorAll(".format-row.is-open").forEach(function closeFormat(fr) {
+            fr.classList.remove("is-open");
+            var ft = fr.querySelector(".format-trigger");
+            if (ft) ft.setAttribute("aria-expanded", "false");
+          });
+        });
+        if (!wasOpen) {
+          row.classList.add("is-open");
+          trigger.setAttribute("aria-expanded", "true");
+        }
+      });
+    });
+  }
+
+  var formats = document.querySelectorAll(".format-trigger");
+  formats.forEach(function bindFormat(trigger) {
+    if (trigger.dataset.formatBound) return;
+    trigger.dataset.formatBound = "true";
+    trigger.addEventListener("click", function toggleFormat() {
+      var row = trigger.closest(".format-row");
+      if (!row) return;
+      var opening = !row.classList.contains("is-open");
+      row.classList.toggle("is-open", opening);
+      trigger.setAttribute("aria-expanded", String(opening));
+    });
+  });
+
+  var tabs = document.querySelectorAll(".cta-tab");
+  var panels = document.querySelectorAll(".cta-panel");
+  tabs.forEach(function bindTab(tab) {
+    if (tab.dataset.tabBound) return;
+    tab.dataset.tabBound = "true";
+    tab.addEventListener("click", function switchTab() {
+      var targetId = tab.getAttribute("aria-controls");
+      tabs.forEach(function syncTab(t) {
+        var active = t === tab;
+        t.classList.toggle("is-active", active);
+        t.setAttribute("aria-selected", String(active));
+      });
+      panels.forEach(function syncPanel(p) {
+        var active = p.id === targetId;
+        p.classList.toggle("is-active", active);
+        if (active) p.removeAttribute("hidden");
+        else p.setAttribute("hidden", "");
+      });
+    });
+  });
+}
+
+window.initServices = initServices;
+
 document.addEventListener("DOMContentLoaded", function initStudio() {
   initSidebarCollapse();
   initMobileDrawer();
@@ -987,11 +1054,13 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
   initSidebarSlot();
   initFeed();
   initNextRead();
+  initServices();
 
   // Re-init after Barba navigations
   document.addEventListener("studio:after-nav", function onAfterNav() {
     markReadPosts();
     initFeed();
     initNextRead();
+    initServices();
   });
 });
