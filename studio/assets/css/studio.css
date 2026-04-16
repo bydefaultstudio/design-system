@@ -1073,6 +1073,7 @@ article.article {
 
 .post-title {
   margin: 0;
+  font-family: var(--font-secondary);
   color: var(--text-primary);
   font-weight: var(--font-weight-title);
   letter-spacing: var(--letter-spacing-xs);
@@ -1778,6 +1779,17 @@ body.is-animating .close-btn-wrap {
   height: 1px;
   background: var(--border-faded);
   width: 100%;
+}
+
+/* Page-wide wrapper — child of the Barba container, contains every
+   services section (header, accordion, capability, process, cta).
+   Gives the whole page a paintable card surface. Mirrors the .article
+   card pattern so pages feel like siblings. overflow:hidden so the
+   dark CTA section clips cleanly at the card's rounded bottom edge. */
+.services-card {
+  background: var(--bg-faded-3);
+  border-radius: var(--radius-m);
+  overflow: hidden;
 }
 
 /* -- Section 2: services accordion -- */
