@@ -7,8 +7,9 @@ client: "Comcast NBCUniversal LIFT Labs"
 year: 2026
 services: ["Brand Identity", "Brand Strategy", "Creative Direction"]
 categories: ["Tech & Innovation"]
-hero: "https://cdn.prod.website-files.com/68e2be176459e98837a31ee6/6938c5402776d16075f96764_lift-labs.avif"
-thumbnail: "https://cdn.prod.website-files.com/68e2be176459e98837a31ee6/68f74071565f18b4b95bcd97_Liftlabs-thumbnail-static-16x9.jpg"
+hero: "https://images.unsplash.com/photo-1775628038477-8093ca346d00?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+thumbnail: "https://images.unsplash.com/photo-1775628038477-8093ca346d00?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+thumbnail-ratio: "4:5"
 order: 5
 ---
 

@@ -58,7 +58,7 @@
 :where(a, button, [tabindex]):focus-visible {
   outline: 2px solid var(--text-primary);
   outline-offset: 2px;
-  border-radius: var(--radius-xs);
+  /* border-radius: var(--radius-xs); */
 }
 
 
@@ -80,11 +80,88 @@
   --duration-stagger: 30ms;
   --sidebar-logo-width: 240px;
 
-  /* Display-intent weights — tuned for the variable Zalando Sans build. */
-  /* --font-weight-title: 620;     
-  --font-weight-headline: 820;   
-  --font-weight-label: 300;      */
+  /* Type roles — semantic tokens composing the primitives into four
+     role-based building blocks (title, headline, label, body). Each role
+     covers four dimensions: size, weight, leading (line-height), and
+     tracking (letter-spacing). */
 
+  /* Headline — the biggest thing on a page; one per page (h1). */
+  --headline-size:     clamp(2rem, 1rem + 5vw, 4.5rem);
+  --headline-weight:   400;
+  --headline-leading:  var(--line-height-s);
+  --headline-tracking: -0.02em;
+
+  /* Title — section heads and recurring labels within a page (h2). */
+  --title-size:     clamp(1.5rem, 0.8rem + 2vw, 2.5rem);
+  --title-weight:   700;
+  --title-leading:  var(--line-height-m);
+  --title-tracking: -0.01em;
+
+  /* Label — meta rows, eyebrows, captions */
+  --label-size:     var(--font-xs);
+  --label-weight:   500;
+  --label-leading:  var(--line-height-s);
+  --label-tracking: var(--letter-spacing-m);
+
+  /* Body — running text */
+  --body-size:     var(--text-body);
+  --body-weight:   var(--font-weight-regular);
+  --body-leading:  var(--line-height-xl);
+  --body-tracking: 0;
+}
+
+
+/* ------ BASE TYPOGRAPHY ------ */
+
+h1 {
+  font-size: var(--headline-size);
+  font-weight: var(--headline-weight);
+  line-height: var(--headline-leading);
+  letter-spacing: var(--headline-tracking);
+}
+
+h2 {
+  font-size: var(--title-size);
+  font-weight: var(--title-weight);
+  line-height: var(--title-leading);
+  letter-spacing: var(--title-tracking);
+}
+
+p {
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-leading);
+  letter-spacing: var(--body-tracking);
+}
+
+.text-title {
+  font-size: var(--title-size);
+  font-weight: var(--title-weight);
+  line-height: var(--title-leading);
+  letter-spacing: var(--title-tracking);
+}
+
+.text-headline {
+  font-size: var(--headline-size);
+  font-weight: var(--headline-weight);
+  line-height: var(--headline-leading);
+  letter-spacing: var(--headline-tracking);
+}
+
+.text-label {
+  font-family: var(--font-secondary);
+  font-size: var(--label-size);
+  font-weight: var(--label-weight);
+  line-height: var(--label-leading);
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+}
+
+.text-body {
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-leading);
+  letter-spacing: var(--body-tracking);
 }
 
 
@@ -138,7 +215,7 @@ body.is-sidebar-collapsed .layout {
   justify-content: space-between;
   gap: var(--space-s);
   padding: var(--studio-gap);
-  border-radius: var(--radius-m);
+  /* border-radius: var(--radius-m); */
 }
 
 .nav-wrapper:hover {
@@ -180,7 +257,7 @@ body.is-sidebar-collapsed .layout {
   padding: var(--space-6xl) var(--studio-gap);
   text-decoration: none;
   color: var(--text-primary);
-  border-radius: var(--radius-m);
+  gap: var(--space-m);
   background-color: transparent;
   transition: background-color var(--duration-m) var(--ease-out);
 }
@@ -217,7 +294,8 @@ body.is-sidebar-collapsed .layout {
 }
 
 .sidebar-intro {
-  font-size: var(--font-s);
+  font-family: var(--font-primary);
+  font-size: var(--font-m);
   font-weight: inherit;
   color: var(--text-secondary);
   text-align: center;
@@ -232,10 +310,10 @@ body.is-sidebar-collapsed .layout {
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
-  padding: var(--space-3xl) var(--studio-gap);
+  padding: calc(var(--studio-gap) * 2);
   text-decoration: none;
   color: var(--text-primary);
-  border-radius: var(--radius-m);
+  /* border-radius: var(--radius-m); */
   background-color: transparent;
   transition: background-color var(--duration-m) var(--ease-out);
 }
@@ -296,7 +374,7 @@ body.is-sidebar-collapsed .layout {
   color: var(--text-primary);
   background-color: transparent;
   border: var(--border-s) solid transparent;
-  border-radius: var(--radius-xs);
+  /* border-radius: var(--radius-xs); */
 
 }
 
@@ -392,7 +470,7 @@ body.is-sound-off .sound-toggle .sound-icon-off {
   gap: var(--studio-gap);
   padding: var(--studio-gap);
   text-decoration: none;
-  border-radius: var(--radius-m);
+  /* border-radius: var(--radius-m); */
   color: var(--text-primary);
   background-color: var(--background-sidebar);
   transition: background-color var(--duration-m) var(--ease-out);
@@ -435,7 +513,7 @@ body.is-sound-off .sound-toggle .sound-icon-off {
   object-fit: cover;
   flex-shrink: 0;
   aspect-ratio: 1/1;
-  border-radius: var(--radius-s);
+  /* border-radius: var(--radius-s); */
 }
 
 .sidebar-slot-link-text {
@@ -551,7 +629,7 @@ body.is-sidebar-collapsed .sidebar-footer {
   padding: 0;
   background: transparent;
   border: var(--border-s) solid var(--border-faded);
-  border-radius: var(--radius-s);
+  /* border-radius: var(--radius-s); */
   color: var(--text-primary);
   cursor: pointer;
   font-size: var(--font-l);
@@ -632,7 +710,7 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
 
 .hero-section .bd-video-player {
   overflow: hidden;
-  border-radius: var(--radius-m);
+  /* border-radius: var(--radius-m); */
   border: var(--border-s) solid var(--bg-faded-10);
 }
 
@@ -739,7 +817,7 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
 
 article.article {
     background-color: var(--bg-faded-3);
-    border-radius: var(--radius-m);
+    /* border-radius: var(--radius-m); */
 }
 
 .article-header {
@@ -765,10 +843,13 @@ article.article {
 .article-meta-item {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-xs);
-  line-height: var(--line-height-s);
-  font-family: var(--font-tertiary);
-  font-size: var(--font-xs);
+  gap: var(--space-s);
+  font-family: var(--font-secondary);
+  font-size: var(--label-size);
+  font-weight: var(--label-weight);
+  line-height: var(--label-leading);
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
   color: var(--text-faded);
 }
 
@@ -779,7 +860,8 @@ article.article {
 
 .article-title {
   margin: 0;
-  font-size: var(--font-7xl);
+  font-size: var(--font-8xl);
+  font-weight: var(--headline-weight);
 }
 
 
@@ -820,7 +902,7 @@ article.article {
   margin: 0 auto;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  border-radius: var(--radius-m);
+  /* border-radius: var(--radius-m); */
 }
 
 .article-hero[data-ratio="16:9"] { aspect-ratio: 16 / 9; }
@@ -966,7 +1048,7 @@ article.article {
   pointer-events: none;
 }
 
-.article-title.is-next-read .next-read-label {
+.article-lead.is-next-read .next-read-label {
   opacity: 1;
 }
 
@@ -1006,7 +1088,7 @@ article.article {
   text-decoration: none;
   color: var(--text-primary);
   overflow: hidden;
-  border-radius: var(--radius-m);
+  /* border-radius: var(--radius-m); */
   transition: background-color var(--duration-l) var(--ease-out);
 }
 
@@ -1015,7 +1097,7 @@ article.article {
 }
 
 .post:hover {
-  background-color: var(--bg-faded-10);
+  background-color: var(--bg-faded-7);
 }
 
 /* Thumbnail container — acts as a mask. The ratio lives on the container,
@@ -1025,7 +1107,7 @@ article.article {
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  border-radius: var(--radius-s);
+  /* border-radius: var(--radius-s); */
 }
 
 .post-thumbnail[data-ratio="1:1"]  { aspect-ratio: 1 / 1; }
@@ -1062,21 +1144,25 @@ article.article {
 .post-body {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: var(--space-s);
 }
 
 .post-label {
-  font-weight: var(--font-weight-medium);
-  font-size: var(--font-xs);
+  font-family: var(--font-secondary);
+  font-size: var(--label-size);
+  font-weight: var(--label-weight);
+  line-height: var(--label-leading);
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
   color: var(--text-faded);
 }
 
 .post-title {
   margin: 0;
   font-family: var(--font-secondary);
+  font-weight: var(--title-weight);
   color: var(--text-primary);
-  font-weight: var(--font-weight-title);
-  letter-spacing: var(--letter-spacing-xs);
+  font-size: var(--font-4xl);
 }
 
 .post-excerpt {
@@ -1096,8 +1182,15 @@ article.article {
   display: flex;
   align-items: center;
   gap: var(--space-xs);
+  font-family: var(--font-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-m);
   font-size: var(--font-xs);
   color: var(--text-faded);
+}
+
+.bottom-meta {
+  display: none;
 }
 
 .post-meta > *:not(:last-child)::after {
@@ -1105,6 +1198,9 @@ article.article {
   margin-left: var(--space-s);
 }
 .post-read-status {
+  font-family: var(--font-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-m);
   font-size: var(--font-xs);
   font-weight: var(--font-weight-medium);
   color: var(--text-faded);
@@ -1170,8 +1266,8 @@ article.article {
 }
 
 .post[data-post-type="featured"] .post-title {
-  color: var(--text-inverted);
-  font-size: var(--font-xl);
+  color: var(--white);
+  /* font-size: var(--font-xl); */
 }
 
 .post[data-post-type="featured"] .post-excerpt {
@@ -1639,7 +1735,7 @@ body.is-animating .close-btn-wrap {
   font-family: var(--font-tertiary);
   font-size: var(--font-s);
   text-decoration: none;
-  border-radius: var(--radius-s);
+  /* border-radius: var(--radius-s); */
   transform: translateY(-150%);
   transition: transform var(--duration-m) var(--ease-in-out);
 }

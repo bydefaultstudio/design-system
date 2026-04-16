@@ -386,13 +386,13 @@ var studioTransition = {
     // area, not behind the fixed top bar.
     var nextReadTop = 0;
     if (scenario === "push") {
-      var nextRead = data.current.container.querySelector(".article-title.is-next-read");
+      var nextRead = data.current.container.querySelector(".article-lead.is-next-read");
       var mobileBar = document.querySelector(".mobile-bar");
       var topBarHeight = mobileBar ? mobileBar.offsetHeight : 0;
       if (nextRead) nextReadTop = nextRead.getBoundingClientRect().top - topBarHeight;
 
       // Tag both sections so CSS can react declaratively during the morph.
-      var enteringTitle = data.next.container.querySelector(".article-title");
+      var enteringTitle = data.next.container.querySelector(".article-lead");
       if (nextRead) nextRead.classList.add("is-morphing");
       if (enteringTitle) enteringTitle.classList.add("is-morphing");
     }
@@ -485,7 +485,7 @@ function initStudioBarba() {
       data.next.container.style.transform = "";
       data.next.container.style.transformOrigin = "";
       data.next.container.style.opacity = "";
-      var survivingTitle = data.next.container.querySelector(".article-title.is-morphing");
+      var survivingTitle = data.next.container.querySelector(".article-lead.is-morphing");
       if (survivingTitle) survivingTitle.classList.remove("is-morphing");
     }
     window.scrollTo(0, 0);

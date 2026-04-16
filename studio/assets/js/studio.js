@@ -806,7 +806,7 @@ function initNextRead() {
     wrapper.setAttribute("data-article", next.slug);
     wrapper.innerHTML =
       '<a class="next-read-link" href="' + getStudioPrefix() + next.url + '" aria-label="Read: ' + attrEscape(next.title) + '"></a>' +
-      '<section class="article-title is-next-read">' +
+      '<section class="article-lead is-next-read">' +
         '<div class="padding-global top-medium bottom-medium">' +
           '<div class="next-read-label">Next read</div>' +
           '<div class="article-header">' +
