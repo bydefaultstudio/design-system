@@ -491,10 +491,14 @@ function initStudioBarba() {
     window.scrollTo(0, 0);
   });
 
+  // Hover-prefetch plugin (optional; skipped if CDN script didn't load).
+  if (typeof window.barbaPrefetch !== "undefined") {
+    window.barba.use(window.barbaPrefetch);
+  }
+
   window.barba.init({
     transitions: [studioTransition],
     prevent: shouldPrevent,
-    prefetchIgnore: true,
     debug: false,
   });
 }
