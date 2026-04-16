@@ -18,6 +18,13 @@ function getCurrentPagePath() {
   return path && path.length > 0 ? path : "index.html";
 }
 
+// Live height of the pinned top chrome. 0 on desktop (mobile-bar hidden),
+// 56 on mobile. Used by scroll-offset math in filters, TOC spy, push-up.
+function getMobileBarHeight() {
+  var bar = document.querySelector(".mobile-bar");
+  return bar ? bar.offsetHeight : 0;
+}
+
 //
 //------- Main Functions -------//
 //
@@ -150,10 +157,6 @@ function getStudioPrefix() {
   // Subtract 1 for the filename itself (last segment)
   var depth = segments.length - base - 1;
   return depth <= 0 ? "" : "../".repeat(depth);
-}
-
-function getHomeRelativePath() {
-  return getStudioPrefix() + "index.html";
 }
 
 // Fix all sidebar nav links and the close button after Barba navigations.
@@ -321,9 +324,8 @@ function initFeedFilters() {
     // Already active — just scroll to feed top
     if (btn.classList.contains("is-active")) {
       var styles = getComputedStyle(document.documentElement);
-      var topBarHeight = parseInt(styles.getPropertyValue("--top-bar-height"), 10) || 64;
       var scrollOffset = parseInt(styles.getPropertyValue("--scroll-offset"), 10) || 0;
-      var feedTop = feed.getBoundingClientRect().top + window.scrollY - topBarHeight - scrollOffset;
+      var feedTop = feed.getBoundingClientRect().top + window.scrollY - getMobileBarHeight() - scrollOffset;
       window.scrollTo({ top: Math.max(0, feedTop), behavior: "smooth" });
       return;
     }
@@ -399,9 +401,8 @@ function initFeedFilters() {
 
       // Scroll after DOM has updated
       var styles = getComputedStyle(document.documentElement);
-      var topBarHeight = parseInt(styles.getPropertyValue("--top-bar-height"), 10) || 64;
       var scrollOffset = parseInt(styles.getPropertyValue("--scroll-offset"), 10) || 0;
-      var feedTop = feed.getBoundingClientRect().top + window.scrollY - topBarHeight - scrollOffset;
+      var feedTop = feed.getBoundingClientRect().top + window.scrollY - getMobileBarHeight() - scrollOffset;
       window.scrollTo({ top: Math.max(0, feedTop), behavior: "smooth" });
     }, hideDuration);
   });
@@ -642,7 +643,7 @@ function initToc() {
   }
 
   // 4. Scroll spy — highlight active TOC link
-  var topBarHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--top-bar-height"), 10) || 70;
+  var topBarHeight = getMobileBarHeight();
   var tocLinks = document.querySelectorAll(".toc-link");
 
   tocObserver = new IntersectionObserver(function handleIntersect(entries) {

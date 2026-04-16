@@ -387,7 +387,8 @@ var studioTransition = {
     var nextReadTop = 0;
     if (scenario === "push") {
       var nextRead = data.current.container.querySelector(".article-title.is-next-read");
-      var topBarHeight = parseInt(readToken("--top-bar-height"), 10) || 0;
+      var mobileBar = document.querySelector(".mobile-bar");
+      var topBarHeight = mobileBar ? mobileBar.offsetHeight : 0;
       if (nextRead) nextReadTop = nextRead.getBoundingClientRect().top - topBarHeight;
 
       // Tag both sections so CSS can react declaratively during the morph.

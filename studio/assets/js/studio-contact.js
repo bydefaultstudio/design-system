@@ -9,6 +9,11 @@ console.log("Studio Contact v0.1.0");
 
 (function studioContact() {
 
+  // Flip to true when debugging; ships as false so the form is quiet in prod.
+  // console.warn / console.error are left unconditional — real problems.
+  var DEBUG = false;
+  var log = DEBUG ? console.log.bind(console) : function noop() {};
+
   // -- Configuration --
 
   var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxXTR61Qbsk5F4Mx1L0bT27xxO6SSTxYmj2lM9KRFUwDvUs9nfgAFIO76Eiut5r8StG/exec";
@@ -95,7 +100,7 @@ console.log("Studio Contact v0.1.0");
     if (!formState.touched) {
       formState.touched = true;
       formState.formEnteredAt = Date.now();
-      console.log("[studio-contact] form touched");
+      log("[studio-contact] form touched");
     }
   }
 
@@ -280,11 +285,11 @@ console.log("Studio Contact v0.1.0");
     if (errorCallout) errorCallout.hidden = true;
 
     var payload = buildPayload(form);
-    console.log("[studio-contact] submitting form:", payload);
+    log("[studio-contact] submitting form:", payload);
 
     // If no backend URL yet, log and show success (development mode)
     if (!APPS_SCRIPT_URL) {
-      console.log("[studio-contact] no backend URL — skipping fetch, showing success");
+      log("[studio-contact] no backend URL — skipping fetch, showing success");
       showSuccess(form);
       return;
     }
@@ -295,7 +300,7 @@ console.log("Studio Contact v0.1.0");
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     }).then(function onSuccess() {
-      console.log("[studio-contact] form submitted successfully");
+      log("[studio-contact] form submitted successfully");
       showSuccess(form);
     }).catch(function onError(err) {
       console.error("[studio-contact] submission failed:", err);
@@ -311,7 +316,7 @@ console.log("Studio Contact v0.1.0");
 
   function showSuccess(form) {
     formState.submitted = true;
-    console.log("[studio-contact] showing success state");
+    log("[studio-contact] showing success state");
 
     var wrapper = getWrapper();
     var successEl = getSuccessEl();
@@ -333,7 +338,7 @@ console.log("Studio Contact v0.1.0");
 
     // Switch to success state immediately — the wrapper class hides form, shows success
     wrapper.classList.add("is-submitted");
-    console.log("[studio-contact] wrapper switched to success state");
+    log("[studio-contact] wrapper switched to success state");
 
     // Build recommendations based on selected services
     renderRecommendations(form);
@@ -379,7 +384,7 @@ console.log("Studio Contact v0.1.0");
     }
 
     if (!feedItems.length) {
-      console.log("[studio-contact] no feed items in DOM — pulling fallback from manifest");
+      log("[studio-contact] no feed items in DOM — pulling fallback from manifest");
       renderManifestFallback(container);
       return;
     }
@@ -416,7 +421,7 @@ console.log("Studio Contact v0.1.0");
     scored.sort(function (a, b) { return b.score - a.score; });
     var top = scored.slice(0, 3);
 
-    console.log("[studio-contact] recommendations:", top.map(function (r) { return r.title + " (" + r.score + ")"; }));
+    log("[studio-contact] recommendations:", top.map(function (r) { return r.title + " (" + r.score + ")"; }));
     renderCards(container, top);
   }
 
@@ -538,18 +543,18 @@ console.log("Studio Contact v0.1.0");
   function init() {
     var form = getForm();
     if (!form) {
-      console.log("[studio-contact] no contact form found on this page");
+      log("[studio-contact] no contact form found on this page");
       return;
     }
 
     // Don't re-init if already submitted this session
     var wrapper = getWrapper();
     if (wrapper && wrapper.classList.contains("is-submitted")) {
-      console.log("[studio-contact] form already submitted — skipping init");
+      log("[studio-contact] form already submitted — skipping init");
       return;
     }
 
-    console.log("[studio-contact] initialising contact form");
+    log("[studio-contact] initialising contact form");
 
     // Reset state for fresh form
     formState = {
@@ -560,30 +565,30 @@ console.log("Studio Contact v0.1.0");
     };
 
     initChips();
-    console.log("[studio-contact] ✓ chips ready");
+    log("[studio-contact] ✓ chips ready");
 
     initUTM();
     var source = sessionStorage.getItem("contact_source") || "direct";
-    console.log("[studio-contact] ✓ UTM ready (source: " + source + ")");
+    log("[studio-contact] ✓ UTM ready (source: " + source + ")");
 
     // Guard against duplicate listeners on the same form element
     if (form.dataset.contactBound) {
-      console.log("[studio-contact] form already bound — skipping listener setup");
+      log("[studio-contact] form already bound — skipping listener setup");
       return;
     }
     form.dataset.contactBound = "true";
 
     initStateTracking(form);
-    console.log("[studio-contact] ✓ state tracking ready");
+    log("[studio-contact] ✓ state tracking ready");
 
     initBlurValidation(form);
-    console.log("[studio-contact] ✓ validation ready");
+    log("[studio-contact] ✓ validation ready");
 
     form.addEventListener("submit", handleSubmit);
-    console.log("[studio-contact] ✓ submit handler ready");
+    log("[studio-contact] ✓ submit handler ready");
 
-    console.log("[studio-contact] ✓ backend: " + (APPS_SCRIPT_URL ? APPS_SCRIPT_URL.substring(0, 50) + "..." : "none (dev mode)"));
-    console.log("[studio-contact] ✓ form fully initialised");
+    log("[studio-contact] ✓ backend: " + (APPS_SCRIPT_URL ? APPS_SCRIPT_URL.substring(0, 50) + "..." : "none (dev mode)"));
+    log("[studio-contact] ✓ form fully initialised");
 
     // Hash-based preview states for styling
     applyHashState(form);
