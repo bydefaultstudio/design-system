@@ -101,7 +101,7 @@ function buildCategoriesBlock(categories) {
   const chips = categories
     .map((c) => `<span class="badge">${escapeHtml(c)}</span>`)
     .join(" ");
-  return `\n                    <span class="article-meta-item article-meta-categories">${chips}</span>`;
+  return `\n                    <span class="article-meta-item article-meta-categories label">${chips}</span>`;
 }
 
 function buildCaseStudyCategoriesBlock(categories) {
@@ -120,7 +120,7 @@ function buildServicesBlock(services) {
 
 function optionalMeta(label, value) {
   if (!value) return "";
-  return `\n                    <span class="post-meta-item"><span class="post-meta-label">${label}:</span> ${escapeHtml(
+  return `\n                    <span class="post-meta-item label"><span class="post-meta-label label">${label}:</span> ${escapeHtml(
     value
   )}</span>`;
 }

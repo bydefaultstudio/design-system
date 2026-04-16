@@ -467,7 +467,7 @@ function markReadPosts() {
     var existing = header.querySelector(".post-read-status");
     if (isRead && !existing) {
       var badge = document.createElement("div");
-      badge.className = "post-read-status badge";
+      badge.className = "post-read-status badge label";
       badge.innerHTML = '<div class="svg-icn" data-icon="check">' + ICON_CHECK + '</div>Read';
       header.appendChild(badge);
     } else if (!isRead && existing) {
@@ -718,19 +718,19 @@ function initShareLinks() {
 
 var SERVICES_REGISTRY = [
   {
-    url: "contact.html",
+    url: "services.html",
     title: "Interactive Ads",
     excerpt: "Ad formats that turn audiences into active participants with digital advertising formats",
     thumb: "https://bydefault.design/image/96x64"
   },
   {
-    url: "contact.html",
+    url: "services.html",
     title: "Interactive Content",
     excerpt: "Editorial and branded content people do, not just see. Memory sticks. Trust compounds.",
     thumb: "https://bydefault.design/image/96x64"
   },
   {
-    url: "contact.html",
+    url: "services.html",
     title: "Interactive Activations",
     excerpt: "Campaign moments designed for participation — built to make the digital experience feel like the brand.",
     thumb: "https://bydefault.design/image/96x64"
@@ -808,13 +808,13 @@ function initNextRead() {
       '<a class="next-read-link" href="' + getStudioPrefix() + next.url + '" aria-label="Read: ' + attrEscape(next.title) + '"></a>' +
       '<section class="article-lead is-next-read">' +
         '<div class="padding-global top-medium bottom-medium">' +
-          '<div class="next-read-label">Next read</div>' +
+          '<div class="next-read-label label is-eyebrow is-serif">Next read</div>' +
           '<div class="article-header">' +
             '<div class="article-meta">' +
-              (next.readTime ? '<span class="article-meta-item">' + ICON_CLOCK + attrEscape(next.readTime) + '</span>' : '') +
-              '<span class="article-meta-item">' + ICON_CALENDAR + formatStudioDate(next.date) + '</span>' +
+              (next.readTime ? '<span class="article-meta-item label">' + ICON_CLOCK + attrEscape(next.readTime) + '</span>' : '') +
+              '<span class="article-meta-item label">' + ICON_CALENDAR + formatStudioDate(next.date) + '</span>' +
             '</div>' +
-            '<h1 class="article-title">' + next.title + '</h1>' +
+            '<h1 class="article-headline">' + next.title + '</h1>' +
             (author.name
               ? '<a class="article-author">' +
                   (author.avatar ? '<img src="' + attrEscape(author.avatar) + '" alt="" class="article-author-avatar" loading="lazy">' : '') +
@@ -930,9 +930,9 @@ function renderFeedItem(entry) {
   var postType = entry.featured ? "featured" : (entry.feedVariant || "standard");
   var excerpt = entry.synopsis ? '<p class="post-excerpt">' + entry.synopsis + '</p>' : "";
 
-  var metaParts = ['<span class="post-meta-item post-date">' + formatStudioDate(entry.date) + '</span>'];
-  if (isArticle && entry.readTime) metaParts.push('<span class="post-meta-item post-read-time">' + entry.readTime + '</span>');
-  if (!isArticle && entry.client) metaParts.push('<span class="post-meta-item post-client">' + entry.client + '</span>');
+  var metaParts = ['<span class="post-meta-item post-date label">' + formatStudioDate(entry.date) + '</span>'];
+  if (isArticle && entry.readTime) metaParts.push('<span class="post-meta-item post-read-time label">' + entry.readTime + '</span>');
+  if (!isArticle && entry.client) metaParts.push('<span class="post-meta-item post-client label">' + entry.client + '</span>');
 
   var thumb = buildThumbnailBlock(entry);
 
@@ -942,7 +942,7 @@ function renderFeedItem(entry) {
   wrap.setAttribute("data-feed-date", entry.date);
   wrap.innerHTML =
     '<a href="' + getStudioPrefix() + entry.url + '" class="post" data-post-type="' + postType + '"' + thumb.postRatioAttr + ">" +
-      '<div class="post-header"><span class="post-label">' + label + '</span></div>' +
+      '<div class="post-header"><span class="post-label label">' + label + '</span></div>' +
       '<div class="post-body">' +
         '<h3 class="post-title">' + entry.title + '</h3>' +
         excerpt +
