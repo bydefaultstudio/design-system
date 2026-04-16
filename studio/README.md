@@ -103,11 +103,10 @@ Current pages:
 | Page | `data-level` | `data-order` |
 |---|---|---|
 | `index.html` | `0` | `0` |
-| `work.html` | `1` | `0` |
 | `about.html` | `1` | `1` |
 | `contact.html` | `1` | `2` |
-| `work/case-study-placeholder-1.html` | `2` | `0` |
-| `articles/article-placeholder-1.html` | `2` | `0` |
+| `work/mastercards-interactive-map.html` | `2` | `0` |
+| `articles/naming-things.html` | `2` | `0` |
 
 ### Scenarios and transitions
 
