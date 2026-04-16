@@ -26,10 +26,6 @@
 
   <!-- Styleguide-only display helpers (per CLAUDE.md §8: inline styles permitted in styleguide demos) -->
   <style>
-    .sg-section { padding-block: var(--space-2xl); border-bottom: var(--border-s) solid var(--border-secondary); }
-    .sg-section:last-child { border-bottom: 0; }
-    .sg-section > h2 { margin-top: 0; }
-    .sg-eyebrow { display: block; font-family: var(--font-tertiary); font-size: var(--font-2xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-faded); margin-bottom: var(--space-xs); }
     .sg-note { color: var(--text-secondary); font-size: var(--font-s); margin-top: 0; }
     .sg-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-m); margin-block: var(--space-m); }
     .sg-stack { display: flex; flex-direction: column; gap: var(--space-m); margin-block: var(--space-m); }
@@ -39,9 +35,6 @@
     .sg-token-row code { color: var(--text-faded); }
     .sg-swatch { width: 100%; aspect-ratio: 4 / 1; border-radius: var(--radius-s); border: var(--border-s) solid var(--border-secondary); }
     .sg-spacer { background: var(--text-faded); height: 1rem; border-radius: var(--radius-xs); }
-    .sg-toc { padding: var(--space-l); background: var(--background-faded); border-radius: var(--radius-m); margin-bottom: var(--space-2xl); }
-    .sg-toc ul { list-style: none; padding: 0; margin: var(--space-s) 0 0; display: flex; flex-wrap: wrap; gap: var(--space-s) var(--space-l); }
-    .sg-toc li { margin: 0; }
   </style>
 </head>
 <body>
@@ -116,197 +109,171 @@
               </div>
             </section>
 
-            <section class="top-small bottom-medium">
+            <!-- ============ HEADINGS ============ -->
+            <section class="top-large bottom-large border-bottom border-faded" id="headings">
               <div class="padding-global">
-                <div class="article-content-wrapper">
-                  <div class="article-body">
+                <div class="container-medium">
+                  <h2>Headings</h2>
+                  <p class="sg-note">Base heading styles inherit from <code>design-system.css</code>. Role tokens <code>--headline-*</code> and <code>--title-*</code> set size, weight, leading, and tracking.</p>
 
-                    <div class="sg-toc" aria-label="Sections">
-                      <span class="sg-eyebrow">On this page</span>
-                      <ul>
-                        <li><a href="#headings">Headings</a></li>
-                        <li><a href="#labels">Labels</a></li>
-                        <li><a href="#body">Body text</a></li>
-                        <li><a href="#post-headlines">Post headlines</a></li>
-                        <li><a href="#lists">Lists</a></li>
-                        <li><a href="#blockquote">Blockquote</a></li>
-                        <li><a href="#inline">Inline text</a></li>
-                        <li><a href="#buttons">Buttons</a></li>
-                        <li><a href="#forms">Forms</a></li>
-                        <li><a href="#post">Post card</a></li>
-                        <li><a href="#callouts">Callouts</a></li>
-                        <li><a href="#tokens">Tokens</a></li>
-                      </ul>
-                    </div>
+                  <table class="sg-table">
+                  <thead><tr><th>Token</th><th>Example</th></tr></thead>
+                  <tbody>
+                  <tr>
+                  <td><code>&lt;h1&gt;</code><br><code>--headline-*</code></td>
+                  <td><h1>Your Primary Headline, Big, Bold, and Unmissable</h1></td>
+                          </tr>
+                  <tr>
+                  <td><code>&lt;h1&gt;</code><br><code>.article-headline</code></td>
+                  <td><h1 class="article-headline">Compelling Statement That Captures Attention Instantly</h1></td>
+                          </tr>
+                  <tr>
+                  <td><code>&lt;h2&gt;</code><br><code>--title-*</code></td>
+                  <td><h2>Supporting Headline to Guide Your Content</h2></td>
+                          </tr>
+                  <tr>
+                  <td><code>&lt;h3&gt;</code></td>
+                  <td><h3>Type with Purpose, Design with Intent</h3></td>
+                          </tr>
+                  <tr>
+                  <td><code>&lt;h3&gt;</code><br><code>.post-title</code></td>
+                  <td><h3 class="post-title">Descriptive Title That Summarizes Key Concepts</h3></td>
+                  </tr>
+                  <tr>
+                  <td><code>&lt;h4&gt;</code></td>
+                  <td><h4>Smaller Subheading for Detailed Content Organisation</h4></td>
+                          </tr>
+                  <tr>
+                  <td><code>&lt;h5&gt;</code></td>
+                  <td><h5>Clear Navigation Heading for Important Information</h5></td>
+                          </tr>
+                  <tr>
+                  <td><code>&lt;h6&gt;</code></td>
+                  <td><h6>Strategic Headline for Critical Content Sections</h6></td>
+                          </tr>
 
-                    <!-- ============ HEADINGS ============ -->
-                    <section class="sg-section" id="headings">
-                      <span class="sg-eyebrow">Typography</span>
-                      <h2>Headings</h2>
-                      <p class="sg-note">Base heading styles inherit from <code>design-system.css</code>. Role tokens <code>--headline-*</code> and <code>--title-*</code> set size, weight, leading, and tracking.</p>
+                        </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
 
-                      <table class="sg-table">
-                        <thead><tr><th>Token</th><th>Example</th></tr></thead>
-                        <tbody>
-                          <tr>
-                            <td><code>&lt;h1&gt;</code><br><code>--headline-*</code></td>
-                            <td><h1>Your Primary Headline, Big, Bold, and Unmissable</h1></td>
+            <!-- ============ LABELS ============ -->
+            <section class="top-large bottom-large border-bottom border-faded" id="labels">
+              <div class="padding-global">
+                <div class="container-medium">
+                  <h2>Labels</h2>
+                  <p class="sg-note">Base class <code>.label</code> applies <code>--label-*</code> tokens. Modifiers: <code>.is-eyebrow</code> (smaller + bolder + wider), <code>.is-mono</code>, <code>.is-serif</code>.</p>
+
+                  <table class="sg-table">
+                  <thead><tr><th>Token</th><th>Example</th></tr></thead>
+                  <tbody>
+                  <tr>
+                  <td><code>.label</code></td>
+                  <td><span class="label">Use this style to tag and organise content</span></td>
                           </tr>
-                          <tr>
-                            <td><code>&lt;h1&gt;</code><br><code>.article-headline</code></td>
-                            <td><h1 class="article-headline">Compelling Statement That Captures Attention Instantly</h1></td>
+                  <tr>
+                  <td><code>.label</code><br><code>.is-eyebrow</code></td>
+                  <td><span class="label is-eyebrow">Use this style to tag and organise content</span></td>
                           </tr>
-                          <tr>
-                            <td><code>&lt;h2&gt;</code><br><code>--title-*</code></td>
-                            <td><h2>Supporting Headline to Guide Your Content</h2></td>
+                  <tr>
+                  <td><code>.label</code><br><code>.is-eyebrow .is-serif</code></td>
+                  <td><span class="label is-eyebrow is-serif">Use this style to tag and organise content</span></td>
                           </tr>
-                          <tr>
-                            <td><code>&lt;h3&gt;</code></td>
-                            <td><h3>Type with Purpose, Design with Intent</h3></td>
+                  <tr>
+                  <td><code>.label</code><br><code>.is-eyebrow .is-mono</code></td>
+                  <td><span class="label is-eyebrow is-mono">Use this style to tag and organise content</span></td>
                           </tr>
-                          <tr>
-                            <td><code>&lt;h4&gt;</code></td>
-                            <td><h4>Smaller Subheading for Detailed Content Organisation</h4></td>
+                  <tr>
+                  <td><code>.article-meta-item</code><br><code>.label</code></td>
+                  <td><span class="article-meta-item label">7 min read</span></td>
                           </tr>
-                          <tr>
-                            <td><code>&lt;h5&gt;</code></td>
-                            <td><h5>Clear Navigation Heading for Important Information</h5></td>
-                          </tr>
-                          <tr>
-                            <td><code>&lt;h6&gt;</code></td>
-                            <td><h6>Strategic Headline for Critical Content Sections</h6></td>
-                          </tr>
-                          <tr>
-                            <td><code>&lt;h3&gt;</code><br><code>.post-title</code></td>
-                            <td><h3 class="post-title">Descriptive Title That Summarizes Key Concepts</h3></td>
+                  <tr>
+                  <td><code>.post-label</code><br><code>.label</code></td>
+                  <td><span class="post-label label">Featured</span></td>
                           </tr>
                         </tbody>
-                      </table>
-                    </section>
-
-                    <!-- ============ LABELS ============ -->
-                    <section class="sg-section" id="labels">
-                      <span class="sg-eyebrow">Typography</span>
-                      <h2>Labels</h2>
-                      <p class="sg-note">Base class <code>.label</code> applies <code>--label-*</code> tokens. Modifiers: <code>.is-eyebrow</code> (smaller + bolder + wider), <code>.is-mono</code>, <code>.is-serif</code>.</p>
-
-                      <table class="sg-table">
-                        <thead><tr><th>Token</th><th>Example</th></tr></thead>
-                        <tbody>
-                          <tr>
-                            <td><code>.label</code></td>
-                            <td><span class="label">Use this style to tag and organise content</span></td>
-                          </tr>
-                          <tr>
-                            <td><code>.label</code><br><code>.is-eyebrow</code></td>
-                            <td><span class="label is-eyebrow">Use this style to tag and organise content</span></td>
-                          </tr>
-                          <tr>
-                            <td><code>.label</code><br><code>.is-eyebrow .is-serif</code></td>
-                            <td><span class="label is-eyebrow is-serif">Use this style to tag and organise content</span></td>
-                          </tr>
-                          <tr>
-                            <td><code>.label</code><br><code>.is-eyebrow .is-mono</code></td>
-                            <td><span class="label is-eyebrow is-mono">Use this style to tag and organise content</span></td>
-                          </tr>
-                          <tr>
-                            <td><code>.article-meta-item</code><br><code>.label</code></td>
-                            <td><span class="article-meta-item label">7 min read</span></td>
-                          </tr>
-                          <tr>
-                            <td><code>.post-label</code><br><code>.label</code></td>
-                            <td><span class="post-label label">Featured</span></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </section>
+                  </table>
+                </div>
+              </div>
+            </section>
 
                     <!-- ============ BODY TEXT ============ -->
-                    <section class="sg-section" id="body">
-                      <span class="sg-eyebrow">Typography</span>
-                      <h2>Body text</h2>
-                      <p class="sg-note">Default paragraph uses <code>--body-*</code> tokens. Inline formatting: <code>&lt;strong&gt;</code>, <code>&lt;em&gt;</code>, <code>&lt;u&gt;</code>, <code>&lt;s&gt;</code>, <code>&lt;a&gt;</code>.</p>
+            <section class="top-large bottom-large border-bottom border-faded" id="body">
+              <div class="padding-global">
+                <div class="container-medium">
+                  <h2>Body text</h2>
+                  <p class="sg-note">Default paragraph uses <code>--body-*</code> tokens. Inline formatting: <code>&lt;strong&gt;</code>, <code>&lt;em&gt;</code>, <code>&lt;u&gt;</code>, <code>&lt;s&gt;</code>, <code>&lt;a&gt;</code>.</p>
 
-                      <table class="sg-table">
-                        <thead><tr><th>Token</th><th>Example</th></tr></thead>
-                        <tbody>
-                          <tr>
-                            <td><code>&lt;p&gt;</code><br><code>--body-*</code></td>
-                            <td><p>This paragraph demonstrates how body text will look across your layout. <strong>Bold text</strong> adds emphasis, while <em>italics</em> offer a subtle highlight. You can also <u>underline</u> text or use <s>strikethrough</s> to show edits. This is an entire paragraph to test readability and text flow.</p></td>
+                  <table class="sg-table">
+                  <thead><tr><th>Token</th><th>Example</th></tr></thead>
+                  <tbody>
+                  <tr>
+                  <td><code>&lt;p&gt;</code><br><code>--body-*</code></td>
+                  <td><p>This paragraph demonstrates how body text will look across your layout. <strong>Bold text</strong> adds emphasis, while <em>italics</em> offer a subtle highlight. You can also <u>underline</u> text or use <s>strikethrough</s> to show edits. This is an entire paragraph to test readability and text flow.</p></td>
                           </tr>
-                          <tr>
-                            <td><code>&lt;p&gt;</code><br>with <code>&lt;a&gt;</code></td>
-                            <td><p>This example paragraph demonstrates how hyperlinks appear within body text. When designing your layout, consider how <a href="#">linked text</a> stands out from regular content.</p></td>
+                  <tr>
+                  <td><code>.text-size-xlarge</code></td>
+                  <td><p class="text-size-xlarge">Lead paragraph text for hero sections and article introductions.</p></td>
+                  </tr>
+                  <tr>
+                  <td><code>.text-size-large</code></td>
+                  <td><p class="text-size-large">Introductory text that sits between headings and body.</p></td>
+                  </tr>
+                  <tr>
+                  <td><code>.text-size-small</code></td>
+                  <td><p class="text-size-small">Smaller supporting text for secondary information.</p></td>
+                  </tr>
+                  <tr>
+                  <td><code>.text-size-xsmall</code></td>
+                  <td><p class="text-size-xsmall">Captions, metadata, and fine print.</p></td>
+                  </tr>
+                  <tr>
+                  <td><code>&lt;a&gt;</code><br>inline link</td>
+                  <td><p>Read the full <a href="#">brand guidelines</a> before starting.</p></td>
+                  </tr>
+                  <tr>
+                  <td><code>&lt;a&gt;</code><br>external link</td>
+                  <td><p>Typography is powered by <a href="https://fonts.google.com" target="_blank" rel="noopener noreferrer">Google Fonts</a> for web delivery.</p></td>
+                  </tr>
+
+                  <tr>
+                  <td><code>.sidebar-intro</code></td>
+                  <td><p class="sidebar-intro">Interactive Advertising Agency</p></td>
                           </tr>
-                          <tr>
-                            <td><code>&lt;p&gt;</code><br>long-form</td>
-                            <td>
-                              <p>Longer paragraphs help test how body text behaves over multiple lines and paragraphs in a real layout. Use them to observe spacing, line height, and visual fatigue. <strong>Bold calls attention</strong>, <em>italics guide the tone</em>, and clearly formatted links or buttons can suggest interactivity. Clear, consistent styling ensures your message is readable and engaging at any length.</p>
-                              <p>This extended paragraph serves to demonstrate how substantial blocks of body text will behave across your layout, giving you a realistic sense of how readers will experience longer-form content on your site or application. <strong>Strategic use of bold text</strong> helps break up visual monotony and draws attention to critical information, while <em>italicized phrases can introduce subtle emphasis</em> or highlight specific terms that deserve special consideration.</p>
-                            </td>
+                  <tr>
+                  <td><code>.post-excerpt</code></td>
+                  <td><p class="post-excerpt">Bold insights, fresh thinking, and a reason to scroll. This placeholder text shows how a post excerpt will look in your feed layout.</p></td>
                           </tr>
-                          <tr>
-                            <td><code>.sidebar-intro</code></td>
-                            <td><p class="sidebar-intro">Interactive Advertising Agency</p></td>
+                  <tr>
+                  <td><code>&lt;small&gt;</code></td>
+                  <td><p><small>Additional fees may apply depending on your location and selected options. Delivery times are approximate and may vary based on availability. Terms and conditions apply. &copy; 2026 By Default. All Rights Reserved.</small></p></td>
                           </tr>
-                          <tr>
-                            <td><code>.post-excerpt</code></td>
-                            <td><p class="post-excerpt">Bold insights, fresh thinking, and a reason to scroll. This placeholder text shows how a post excerpt will look in your feed layout.</p></td>
-                          </tr>
-                          <tr>
-                            <td><code>&lt;small&gt;</code></td>
-                            <td><p><small>Additional fees may apply depending on your location and selected options. Delivery times are approximate and may vary based on availability. Terms and conditions apply. &copy; 2026 By Default. All Rights Reserved.</small></p></td>
-                          </tr>
-                          <tr>
-                            <td><code>&lt;blockquote&gt;</code></td>
-                            <td>
+                  <tr>
+                  <td><code>&lt;blockquote&gt;</code></td>
+                  <td>
                               <blockquote><p>Words matter, but how those words are presented matters just as much. Typography transforms content from mundane to magical, from ordinary to extraordinary.</p></blockquote>
                             </td>
                           </tr>
                         </tbody>
-                      </table>
-                    </section>
+                  </table>
+                </div>
+              </div>
+            </section>
 
-                    <!-- ============ POST HEADLINES ============ -->
-                    <section class="sg-section" id="post-headlines">
-                      <span class="sg-eyebrow">Typography</span>
-                      <h2>Post headlines &amp; excerpts</h2>
-                      <p class="sg-note">Used in the homepage feed, article pages, and case study pages. <code>.post-title</code> for card headings, <code>.article-headline</code> for page-level headlines.</p>
-
-                      <table class="sg-table">
-                        <thead><tr><th>Token</th><th>Example</th></tr></thead>
-                        <tbody>
-                          <tr>
-                            <td><code>.post-title</code><br>short</td>
-                            <td><h3 class="post-title">Short and Scroll-Stopping</h3></td>
-                          </tr>
-                          <tr>
-                            <td><code>.post-title</code><br>medium</td>
-                            <td><h3 class="post-title">Write a Strong Headline That Draws the Reader Into the Post</h3></td>
-                          </tr>
-                          <tr>
-                            <td><code>.post-excerpt</code></td>
-                            <td><p class="post-excerpt">This is a short preview of the article content, crafted to grab attention and spark curiosity. Think of it as your teaser text, just enough to tempt the reader to click.</p></td>
-                          </tr>
-                          <tr>
-                            <td><code>.post-excerpt</code></td>
-                            <td><p class="post-excerpt">From the headline to this line, it’s all about making an impression. Use this space to showcase the voice of your content and brand.</p></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </section>
 
                     <!-- ============ LISTS ============ -->
-                    <section class="sg-section" id="lists">
-                      <span class="sg-eyebrow">Typography</span>
-                      <h2>Lists</h2>
+            <section class="top-large bottom-large border-bottom border-faded" id="lists">
+              <div class="padding-global">
+                <div class="container-medium">
+                  <h2>Lists</h2>
 
-                      <table class="sg-table">
-                        <thead><tr><th>Token</th><th>Example</th></tr></thead>
-                        <tbody>
-                          <tr>
-                            <td><code>&lt;ul&gt;</code></td>
-                            <td>
+                  <table class="sg-table">
+                  <thead><tr><th>Token</th><th>Example</th></tr></thead>
+                  <tbody>
+                  <tr>
+                  <td><code>&lt;ul&gt;</code></td>
+                  <td>
                               <ul>
                                 <li>Unordered lists help organize related items without hierarchy</li>
                                 <li>Perfect for showing features, benefits, or options</li>
@@ -315,9 +282,9 @@
                               </ul>
                             </td>
                           </tr>
-                          <tr>
-                            <td><code>&lt;ol&gt;</code></td>
-                            <td>
+                  <tr>
+                  <td><code>&lt;ol&gt;</code></td>
+                  <td>
                               <ol>
                                 <li>Use headings to create a visual hierarchy.</li>
                                 <li>Structure content with clear lists.</li>
@@ -326,251 +293,273 @@
                               </ol>
                             </td>
                           </tr>
-                          <tr>
-                            <td><code>&lt;a&gt;</code><br>inline link</td>
-                            <td><p>For further information, check out <a href="#">this link</a>, which will take you to another page.</p></td>
-                          </tr>
+
                         </tbody>
-                      </table>
-                    </section>
+                  </table>
+                </div>
+              </div>
+            </section>
 
                     <!-- ============ BLOCKQUOTE ============ -->
-                    <section class="sg-section" id="blockquote">
-                      <span class="sg-eyebrow">Typography</span>
-                      <h2>Blockquote</h2>
+            <section class="top-large bottom-large border-bottom border-faded" id="blockquote">
+              <div class="padding-global">
+                <div class="container-medium">
+                  <h2>Blockquote</h2>
 
-                      <table class="sg-table">
-                        <thead><tr><th>Token</th><th>Example</th></tr></thead>
-                        <tbody>
-                          <tr>
-                            <td><code>&lt;blockquote&gt;</code></td>
-                            <td><blockquote><p>Typography is more than style; it’s about communication. The right type makes content readable, relatable, and engaging, drawing readers into the heart of the message.</p></blockquote></td>
+                  <table class="sg-table">
+                  <thead><tr><th>Token</th><th>Example</th></tr></thead>
+                  <tbody>
+                  <tr>
+                  <td><code>&lt;blockquote&gt;</code></td>
+                  <td><blockquote><p>Typography is more than style; it’s about communication. The right type makes content readable, relatable, and engaging, drawing readers into the heart of the message.</p></blockquote></td>
                           </tr>
-                          <tr>
-                            <td><code>&lt;blockquote&gt;</code></td>
-                            <td><blockquote><p>Quotes deserve their spotlight. Use a blockquote to emphasise key messages or insights.</p></blockquote></td>
+                  <tr>
+                  <td><code>&lt;blockquote&gt;</code></td>
+                  <td><blockquote><p>Quotes deserve their spotlight. Use a blockquote to emphasise key messages or insights.</p></blockquote></td>
                           </tr>
                         </tbody>
-                      </table>
-                    </section>
+                  </table>
+                </div>
+              </div>
+            </section>
 
                     <!-- ============ INLINE TEXT ============ -->
-                    <section class="sg-section" id="inline">
-                      <span class="sg-eyebrow">Typography</span>
-                      <h2>Inline text elements</h2>
+            <section class="top-large bottom-large border-bottom border-faded" id="inline">
+              <div class="padding-global">
+                <div class="container-medium">
+                  <h2>Inline text elements</h2>
 
-                      <table class="sg-table">
-                        <thead><tr><th>Token</th><th>Example</th></tr></thead>
-                        <tbody>
-                          <tr>
-                            <td><code>&lt;strong&gt;</code></td>
-                            <td><p><strong>Your visual cover statement goes here</strong></p></td>
+                  <table class="sg-table">
+                  <thead><tr><th>Token</th><th>Example</th></tr></thead>
+                  <tbody>
+                  <tr>
+                  <td><code>&lt;strong&gt;</code></td>
+                  <td><p><strong>Your visual cover statement goes here</strong></p></td>
                           </tr>
-                          <tr>
-                            <td><code>&lt;em&gt;</code></td>
-                            <td><p><em>Your visual cover statement goes here now</em></p></td>
+                  <tr>
+                  <td><code>&lt;em&gt;</code></td>
+                  <td><p><em>Your visual cover statement goes here now</em></p></td>
                           </tr>
-                          <tr>
-                            <td><code>&lt;code&gt;</code></td>
-                            <td><p>Use <code>--text-primary</code> for main content and <code>--text-secondary</code> for supporting text.</p></td>
+                  <tr>
+                  <td><code>&lt;code&gt;</code></td>
+                  <td><p>Use <code>--text-primary</code> for main content and <code>--text-secondary</code> for supporting text.</p></td>
                           </tr>
-                          <tr>
-                            <td><code>&lt;kbd&gt;</code></td>
-                            <td><p>Press <kbd>Cmd</kbd>+<kbd>K</kbd> to open the command palette.</p></td>
+                  <tr>
+                  <td><code>&lt;kbd&gt;</code></td>
+                  <td><p>Press <kbd>Cmd</kbd>+<kbd>K</kbd> to open the command palette.</p></td>
                           </tr>
-                          <tr>
-                            <td><code>&lt;mark&gt;</code></td>
-                            <td><p>Use <mark>mark</mark> sparingly to highlight key terms in running text.</p></td>
+                  <tr>
+                  <td><code>&lt;mark&gt;</code></td>
+                  <td><p>Use <mark>mark</mark> sparingly to highlight key terms in running text.</p></td>
                           </tr>
-                          <tr>
-                            <td><code>&lt;small&gt;</code></td>
-                            <td><p><small>Your visual cover statement with smaller text</small></p></td>
+                  <tr>
+                  <td><code>&lt;small&gt;</code></td>
+                  <td><p><small>Your visual cover statement with smaller text</small></p></td>
                           </tr>
-                          <tr>
-                            <td><code>&lt;s&gt;</code></td>
-                            <td><p><s>Product specifications may vary.</s> Updated specifications confirmed.</p></td>
+                  <tr>
+                  <td><code>&lt;s&gt;</code></td>
+                  <td><p><s>Product specifications may vary.</s> Updated specifications confirmed.</p></td>
                           </tr>
                         </tbody>
-                      </table>
-                    </section>
+                  </table>
+                </div>
+              </div>
+            </section>
 
                     <!-- ============ BUTTONS ============ -->
-                    <section class="sg-section" id="buttons">
-                      <span class="sg-eyebrow">Components</span>
-                      <h2>Buttons</h2>
-                      <p class="sg-note">Base class is <code>.button</code>. Modifiers are legacy <code>.is-*</code> classes (per CLAUDE.md §4).</p>
+            <section class="top-large bottom-large border-bottom border-faded" id="buttons">
+              <div class="padding-global">
+                <div class="container-medium">
+                  <h2>Buttons</h2>
+                  <p class="sg-note">Base class is <code>.button</code>. Modifiers are legacy <code>.is-*</code> classes (per CLAUDE.md §4).</p>
 
-                      <div class="sg-row">
-                        <button type="button" class="button">Primary</button>
-                        <button type="button" class="button is-outline">Outline</button>
-                        <button type="button" class="button is-faded">Faded</button>
-                        <button type="button" class="button is-outline is-faded">Outline faded</button>
-                        <button type="button" class="button is-link">Link button</button>
+                  <div class="sg-row">
+                  <button type="button" class="button">Primary</button>
+                  <button type="button" class="button is-outline">Outline</button>
+                  <button type="button" class="button is-faded">Faded</button>
+                  <button type="button" class="button is-outline is-faded">Outline faded</button>
+                  <button type="button" class="button is-link">Link button</button>
                       </div>
 
-                      <h3>Sizes</h3>
-                      <div class="sg-row">
-                        <button type="button" class="button">Default</button>
-                        <button type="button" class="button is-small">Small</button>
-                        <button type="button" class="button is-xsmall">Extra small</button>
+                  <h3>Sizes</h3>
+                  <div class="sg-row">
+                  <button type="button" class="button">Default</button>
+                  <button type="button" class="button is-small">Small</button>
+                  <button type="button" class="button is-xsmall">Extra small</button>
                       </div>
 
-                      <h3>States</h3>
-                      <div class="sg-row">
-                        <button type="button" class="button">Default</button>
-                        <button type="button" class="button" disabled>Disabled</button>
-                        <button type="button" class="button is-disabled" aria-disabled="true">Is-disabled</button>
+                  <h3>States</h3>
+                  <div class="sg-row">
+                  <button type="button" class="button">Default</button>
+                  <button type="button" class="button" disabled>Disabled</button>
+                  <button type="button" class="button is-disabled" aria-disabled="true">Is-disabled</button>
                       </div>
 
-                      <h3>Icon button</h3>
-                      <div class="sg-row">
-                        <button type="button" class="button is-icon nav-btn" aria-label="Toggle dark mode"><div class="svg-icn" data-icon="sun"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 5V1H13V5H11ZM17.65 7.75L16.275 6.375L19.075 3.5L20.475 4.925L17.65 7.75ZM19 13V11H23V13H19ZM11 23V19H13V23H11ZM6.35 7.7L3.5 4.925L4.925 3.525L7.75 6.35L6.35 7.7ZM19.05 20.5L16.275 17.625L17.625 16.275L20.475 19.025L19.05 20.5ZM1 13V11H5V13H1ZM4.925 20.5L3.525 19.075L6.325 16.275L7.05 16.95L7.775 17.65L4.925 20.5ZM12 18C10.3333 18 8.91667 17.4167 7.75 16.25C6.58333 15.0833 6 13.6667 6 12C6 10.3333 6.58333 8.91667 7.75 7.75C8.91667 6.58333 10.3333 6 12 6C13.6667 6 15.0833 6.58333 16.25 7.75C17.4167 8.91667 18 10.3333 18 12C18 13.6667 17.4167 15.0833 16.25 16.25C15.0833 17.4167 13.6667 18 12 18ZM12 16C13.1 16 14.0417 15.6083 14.825 14.825C15.6083 14.0417 16 13.1 16 12C16 10.9 15.6083 9.95833 14.825 9.175C14.0417 8.39167 13.1 8 12 8C10.9 8 9.95833 8.39167 9.175 9.175C8.39167 9.95833 8 10.9 8 12C8 13.1 8.39167 14.0417 9.175 14.825C9.95833 15.6083 10.9 16 12 16Z" fill="currentColor"></path></svg></div></button>
-                        <button type="button" class="button is-icon nav-btn" aria-label="Open menu"><div class="svg-icn" data-icon="menu"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 18V16H21V18H3ZM3 13V11H21V13H3ZM3 8V6H21V8H3Z" fill="currentColor"></path></svg></div></button>
+                  <h3>Icon button</h3>
+                  <div class="sg-row">
+                  <button type="button" class="button is-icon nav-btn" aria-label="Toggle dark mode"><div class="svg-icn" data-icon="sun"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 5V1H13V5H11ZM17.65 7.75L16.275 6.375L19.075 3.5L20.475 4.925L17.65 7.75ZM19 13V11H23V13H19ZM11 23V19H13V23H11ZM6.35 7.7L3.5 4.925L4.925 3.525L7.75 6.35L6.35 7.7ZM19.05 20.5L16.275 17.625L17.625 16.275L20.475 19.025L19.05 20.5ZM1 13V11H5V13H1ZM4.925 20.5L3.525 19.075L6.325 16.275L7.05 16.95L7.775 17.65L4.925 20.5ZM12 18C10.3333 18 8.91667 17.4167 7.75 16.25C6.58333 15.0833 6 13.6667 6 12C6 10.3333 6.58333 8.91667 7.75 7.75C8.91667 6.58333 10.3333 6 12 6C13.6667 6 15.0833 6.58333 16.25 7.75C17.4167 8.91667 18 10.3333 18 12C18 13.6667 17.4167 15.0833 16.25 16.25C15.0833 17.4167 13.6667 18 12 18ZM12 16C13.1 16 14.0417 15.6083 14.825 14.825C15.6083 14.0417 16 13.1 16 12C16 10.9 15.6083 9.95833 14.825 9.175C14.0417 8.39167 13.1 8 12 8C10.9 8 9.95833 8.39167 9.175 9.175C8.39167 9.95833 8 10.9 8 12C8 13.1 8.39167 14.0417 9.175 14.825C9.95833 15.6083 10.9 16 12 16Z" fill="currentColor"></path></svg></div></button>
+                  <button type="button" class="button is-icon nav-btn" aria-label="Open menu"><div class="svg-icn" data-icon="menu"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 18V16H21V18H3ZM3 13V11H21V13H3ZM3 8V6H21V8H3Z" fill="currentColor"></path></svg></div></button>
                       </div>
 
-                      <h3>Chip buttons (contact form)</h3>
-                      <div class="contact-chips" role="group" aria-label="Service interest">
-                        <button type="button" class="button is-outline is-faded" aria-pressed="false"><div class="svg-icn" data-icon="check"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"></path></svg></div>Interactive Advertising</button>
-                        <button type="button" class="button is-outline is-faded" aria-pressed="true"><div class="svg-icn" data-icon="check"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"></path></svg></div>Interactive Content (selected)</button>
-                        <button type="button" class="button is-outline is-faded" aria-pressed="false"><div class="svg-icn" data-icon="check"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"></path></svg></div>Interactive Activations</button>
+                  <h3>Chip buttons (contact form)</h3>
+                  <div class="contact-chips" role="group" aria-label="Service interest">
+                  <button type="button" class="button is-outline is-faded" aria-pressed="false" onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') === 'true' ? 'false' : 'true')"><div class="svg-icn" data-icon="check"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"></path></svg></div>Interactive Advertising</button>
+                  <button type="button" class="button is-outline is-faded" aria-pressed="true" onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') === 'true' ? 'false' : 'true')"><div class="svg-icn" data-icon="check"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"></path></svg></div>Interactive Content (selected)</button>
+                  <button type="button" class="button is-outline is-faded" aria-pressed="false" onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') === 'true' ? 'false' : 'true')"><div class="svg-icn" data-icon="check"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"></path></svg></div>Interactive Activations</button>
                       </div>
-                    </section>
+                </div>
+              </div>
+            </section>
 
-                    <!-- ============ FORMS ============ -->
-                    <section class="sg-section" id="forms">
-                      <span class="sg-eyebrow">Components</span>
-                      <h2>Form fields</h2>
-                      <p class="sg-note">Inline label/input pattern from the contact form (<code>.contact-field</code>, <code>.contact-inline</code>, <code>.contact-label</code>).</p>
+            <!-- ============ FORMS ============ -->
+            <section class="top-large bottom-large border-bottom border-faded" id="forms">
+              <div class="padding-global">
+                <div class="container-medium">
+                  <h2>Form fields</h2>
+                  <p class="sg-note">Inline label/input pattern from the contact form (<code>.contact-field</code>, <code>.contact-inline</code>, <code>.contact-label</code>).</p>
 
-                      <form class="contact-form" onsubmit="event.preventDefault();">
-                        <div class="contact-field">
-                          <div class="contact-inline">
-                            <label for="sg-name" class="contact-label">Hey, my name is</label>
-                            <input type="text" id="sg-name" name="name" placeholder="your name">
+                  <form class="contact-form" onsubmit="event.preventDefault();">
+                  <div class="contact-field">
+                  <div class="contact-inline">
+                  <label for="sg-name" class="contact-label">Hey, my name is</label>
+                  <input type="text" id="sg-name" name="name" placeholder="your name">
                           </div>
                         </div>
 
-                        <div class="contact-field">
-                          <div class="contact-inline">
-                            <label for="sg-email" class="contact-label">and you can reach me at</label>
-                            <input type="email" id="sg-email" name="email" placeholder="your email address">
+                  <div class="contact-field">
+                  <div class="contact-inline">
+                  <label for="sg-email" class="contact-label">and you can reach me at</label>
+                  <input type="email" id="sg-email" name="email" placeholder="your email address">
                           </div>
                         </div>
 
-                        <div class="contact-field">
-                          <label for="sg-message" class="contact-label">Anything else? <span class="text-faded">(optional)</span></label>
-                          <textarea id="sg-message" name="message" rows="4" placeholder="A few sentences works."></textarea>
+                  <div class="contact-field">
+                  <label for="sg-message" class="contact-label">Anything else? <span class="text-faded">(optional)</span></label>
+                  <textarea id="sg-message" name="message" rows="4" placeholder="A few sentences works."></textarea>
                         </div>
 
-                        <div class="contact-field">
-                          <span class="contact-label">Standalone label, no input</span>
-                          <span class="form-error" role="alert" style="display:inline;">Example error message</span>
+                  <div class="contact-field">
+                  <span class="contact-label">Standalone label, no input</span>
+                  <span class="form-error" role="alert" style="display:inline;">Example error message</span>
                         </div>
 
-                        <div class="contact-actions">
-                          <button type="submit" class="button">Send message</button>
+                  <div class="contact-actions">
+                  <button type="submit" class="button">Send message</button>
                         </div>
                       </form>
-                    </section>
+                </div>
+              </div>
+            </section>
 
-                    <!-- ============ POST CARD ============ -->
-                    <section class="sg-section" id="post">
-                      <span class="sg-eyebrow">Components</span>
-                      <h2>Post card</h2>
-                      <p class="sg-note">Used in the homepage feed (<code>.content-feed</code>) and the work / articles lists. Default and featured variants below.</p>
+            <!-- ============ POST CARD ============ -->
+            <section class="top-large bottom-large border-bottom border-faded" id="post">
+              <div class="padding-global">
+                <div class="container-medium">
+                  <h2>Post card</h2>
+                  <p class="sg-note">Used in the homepage feed (<code>.content-feed</code>) and the work / articles lists. Default and featured variants below.</p>
 
-                      <div class="sg-grid">
-                        <a href="#" class="post">
-                          <div class="post-thumbnail">
-                            <div class="img-thumb" style="background: var(--background-faded); display:flex; align-items:center; justify-content:center; color: var(--text-faded); font-family: var(--font-tertiary);">Thumbnail</div>
+                  <div class="sg-grid">
+                  <a href="#" class="post">
+                  <div class="post-thumbnail">
+                  <div class="img-thumb" style="background: var(--background-faded); display:flex; align-items:center; justify-content:center; color: var(--text-faded); font-family: var(--font-tertiary);">Thumbnail</div>
                           </div>
-                          <div class="post-body">
-                            <span class="post-label label">Article</span>
+                  <div class="post-body">
+                  <span class="post-label label">Article</span>
                             <h3 class="post-title">A title that sets up the read</h3>
                             <p class="post-excerpt">A one-line excerpt that says enough to earn the click without giving the piece away.</p>
                           </div>
                         </a>
 
-                        <a href="#" class="post">
-                          <div class="post-thumbnail" data-ratio="4:5">
-                            <div class="img-thumb" style="background: var(--background-faded); display:flex; align-items:center; justify-content:center; color: var(--text-faded); font-family: var(--font-tertiary);">4:5 thumb</div>
+                  <a href="#" class="post">
+                  <div class="post-thumbnail" data-ratio="4:5">
+                  <div class="img-thumb" style="background: var(--background-faded); display:flex; align-items:center; justify-content:center; color: var(--text-faded); font-family: var(--font-tertiary);">4:5 thumb</div>
                           </div>
-                          <div class="post-body">
-                            <span class="post-label label">Case study</span>
+                  <div class="post-body">
+                  <span class="post-label label">Case study</span>
                             <h3 class="post-title">Another card, different ratio</h3>
                             <p class="post-excerpt">Same component, different aspect ratio — set on <code>.post-thumbnail[data-ratio]</code>.</p>
                           </div>
                         </a>
                       </div>
-                    </section>
+                </div>
+              </div>
+            </section>
 
-                    <!-- ============ CALLOUTS ============ -->
-                    <section class="sg-section" id="callouts">
-                      <span class="sg-eyebrow">Components</span>
-                      <h2>Callout</h2>
-                      <p class="sg-note">From the contact form error state — <code>.callout</code> + variant.</p>
+            <!-- ============ CALLOUTS ============ -->
+            <section class="top-large bottom-large border-bottom border-faded" id="callouts">
+              <div class="padding-global">
+                <div class="container-medium">
+                  <h2>Callout</h2>
+                  <p class="sg-note">From the contact form error state — <code>.callout</code> + variant.</p>
 
-                      <div class="callout callout-warning">
+                  <div class="callout callout-warning">
                         <p class="callout-description">A short, specific, forward-pointing message. Errors are a trust moment — never blame the user.</p>
                       </div>
-                    </section>
+                </div>
+              </div>
+            </section>
 
-                    <!-- ============ TOKENS ============ -->
-                    <section class="sg-section" id="tokens">
-                      <span class="sg-eyebrow">Foundations</span>
-                      <h2>Color (semantic)</h2>
-                      <div class="sg-stack">
-                        <div><div class="sg-swatch" style="background: var(--background-primary);"></div><div class="sg-token-row"><span>Background primary</span><code>--background-primary</code></div></div>
-                        <div><div class="sg-swatch" style="background: var(--background-secondary);"></div><div class="sg-token-row"><span>Background secondary</span><code>--background-secondary</code></div></div>
-                        <div><div class="sg-swatch" style="background: var(--background-faded);"></div><div class="sg-token-row"><span>Background faded</span><code>--background-faded</code></div></div>
-                        <div><div class="sg-swatch" style="background: var(--text-primary);"></div><div class="sg-token-row"><span>Text primary</span><code>--text-primary</code></div></div>
-                        <div><div class="sg-swatch" style="background: var(--text-secondary);"></div><div class="sg-token-row"><span>Text secondary</span><code>--text-secondary</code></div></div>
-                        <div><div class="sg-swatch" style="background: var(--text-faded);"></div><div class="sg-token-row"><span>Text faded</span><code>--text-faded</code></div></div>
-                        <div><div class="sg-swatch" style="background: var(--border-secondary);"></div><div class="sg-token-row"><span>Border secondary</span><code>--border-secondary</code></div></div>
+            <!-- ============ TOKENS ============ -->
+            <section class="top-large bottom-large border-bottom border-faded" id="tokens">
+              <div class="padding-global">
+                <div class="container-medium">
+                  <h2>Color (semantic)</h2>
+                  <div class="sg-stack">
+                  <div><div class="sg-swatch" style="background: var(--background-primary);"></div><div class="sg-token-row"><span>Background primary</span><code>--background-primary</code></div></div>
+                  <div><div class="sg-swatch" style="background: var(--background-secondary);"></div><div class="sg-token-row"><span>Background secondary</span><code>--background-secondary</code></div></div>
+                  <div><div class="sg-swatch" style="background: var(--background-faded);"></div><div class="sg-token-row"><span>Background faded</span><code>--background-faded</code></div></div>
+                  <div><div class="sg-swatch" style="background: var(--text-primary);"></div><div class="sg-token-row"><span>Text primary</span><code>--text-primary</code></div></div>
+                  <div><div class="sg-swatch" style="background: var(--text-secondary);"></div><div class="sg-token-row"><span>Text secondary</span><code>--text-secondary</code></div></div>
+                  <div><div class="sg-swatch" style="background: var(--text-faded);"></div><div class="sg-token-row"><span>Text faded</span><code>--text-faded</code></div></div>
+                  <div><div class="sg-swatch" style="background: var(--border-secondary);"></div><div class="sg-token-row"><span>Border secondary</span><code>--border-secondary</code></div></div>
                       </div>
 
-                      <h2>Type scale</h2>
-                      <div class="sg-stack">
-                        <div style="font-size: var(--font-10xl); line-height: 1;">10xl 72px</div>
-                        <div style="font-size: var(--font-9xl); line-height: 1;">9xl 64px</div>
-                        <div style="font-size: var(--font-8xl); line-height: 1.05;">8xl 56px</div>
-                        <div style="font-size: var(--font-7xl); line-height: 1.05;">7xl 48px</div>
-                        <div style="font-size: var(--font-6xl);">6xl 40px</div>
-                        <div style="font-size: var(--font-5xl);">5xl 36px</div>
-                        <div style="font-size: var(--font-4xl);">4xl 32px</div>
-                        <div style="font-size: var(--font-3xl);">3xl 28px</div>
-                        <div style="font-size: var(--font-2xl);">2xl 24px</div>
-                        <div style="font-size: var(--font-xl);">xl 22px</div>
-                        <div style="font-size: var(--font-l);">l 20px</div>
-                        <div style="font-size: var(--font-m);">m 18px (default body)</div>
-                        <div style="font-size: var(--font-s);">s 16px</div>
-                        <div style="font-size: var(--font-xs);">xs 14px</div>
-                        <div style="font-size: var(--font-2xs);">2xs 12px</div>
+                  <h2>Type scale</h2>
+                  <div class="sg-stack">
+                  <div style="font-size: var(--font-10xl); line-height: 1;">10xl 72px</div>
+                  <div style="font-size: var(--font-9xl); line-height: 1;">9xl 64px</div>
+                  <div style="font-size: var(--font-8xl); line-height: 1.05;">8xl 56px</div>
+                  <div style="font-size: var(--font-7xl); line-height: 1.05;">7xl 48px</div>
+                  <div style="font-size: var(--font-6xl);">6xl 40px</div>
+                  <div style="font-size: var(--font-5xl);">5xl 36px</div>
+                  <div style="font-size: var(--font-4xl);">4xl 32px</div>
+                  <div style="font-size: var(--font-3xl);">3xl 28px</div>
+                  <div style="font-size: var(--font-2xl);">2xl 24px</div>
+                  <div style="font-size: var(--font-xl);">xl 22px</div>
+                  <div style="font-size: var(--font-l);">l 20px</div>
+                  <div style="font-size: var(--font-m);">m 18px (default body)</div>
+                  <div style="font-size: var(--font-s);">s 16px</div>
+                  <div style="font-size: var(--font-xs);">xs 14px</div>
+                  <div style="font-size: var(--font-2xs);">2xs 12px</div>
                       </div>
 
-                      <h2>Spacing</h2>
-                      <div class="sg-stack">
-                        <div><div class="sg-spacer" style="width: var(--space-xs);"></div><div class="sg-token-row"><span>xs</span><code>--space-xs</code></div></div>
-                        <div><div class="sg-spacer" style="width: var(--space-s);"></div><div class="sg-token-row"><span>s</span><code>--space-s</code></div></div>
-                        <div><div class="sg-spacer" style="width: var(--space-m);"></div><div class="sg-token-row"><span>m</span><code>--space-m</code></div></div>
-                        <div><div class="sg-spacer" style="width: var(--space-l);"></div><div class="sg-token-row"><span>l</span><code>--space-l</code></div></div>
-                        <div><div class="sg-spacer" style="width: var(--space-xl);"></div><div class="sg-token-row"><span>xl</span><code>--space-xl</code></div></div>
-                        <div><div class="sg-spacer" style="width: var(--space-2xl);"></div><div class="sg-token-row"><span>2xl</span><code>--space-2xl</code></div></div>
-                        <div><div class="sg-spacer" style="width: var(--space-3xl);"></div><div class="sg-token-row"><span>3xl</span><code>--space-3xl</code></div></div>
+                  <h2>Spacing</h2>
+                  <div class="sg-stack">
+                  <div><div class="sg-spacer" style="width: var(--space-xs);"></div><div class="sg-token-row"><span>xs</span><code>--space-xs</code></div></div>
+                  <div><div class="sg-spacer" style="width: var(--space-s);"></div><div class="sg-token-row"><span>s</span><code>--space-s</code></div></div>
+                  <div><div class="sg-spacer" style="width: var(--space-m);"></div><div class="sg-token-row"><span>m</span><code>--space-m</code></div></div>
+                  <div><div class="sg-spacer" style="width: var(--space-l);"></div><div class="sg-token-row"><span>l</span><code>--space-l</code></div></div>
+                  <div><div class="sg-spacer" style="width: var(--space-xl);"></div><div class="sg-token-row"><span>xl</span><code>--space-xl</code></div></div>
+                  <div><div class="sg-spacer" style="width: var(--space-2xl);"></div><div class="sg-token-row"><span>2xl</span><code>--space-2xl</code></div></div>
+                  <div><div class="sg-spacer" style="width: var(--space-3xl);"></div><div class="sg-token-row"><span>3xl</span><code>--space-3xl</code></div></div>
+                  <div><div class="sg-spacer" style="width: var(--space-4xl);"></div><div class="sg-token-row"><span>4xl</span><code>--space-4xl</code></div></div>
+                  <div><div class="sg-spacer" style="width: var(--space-5xl);"></div><div class="sg-token-row"><span>5xl</span><code>--space-5xl</code></div></div>
+                  <div><div class="sg-spacer" style="width: var(--space-6xl);"></div><div class="sg-token-row"><span>6xl</span><code>--space-6xl</code></div></div>
+                  <div><div class="sg-spacer" style="width: var(--space-7xl);"></div><div class="sg-token-row"><span>7xl</span><code>--space-7xl</code></div></div>
+                  <div><div class="sg-spacer" style="width: var(--space-8xl);"></div><div class="sg-token-row"><span>8xl</span><code>--space-8xl</code></div></div>
+                  <div><div class="sg-spacer" style="width: var(--space-9xl);"></div><div class="sg-token-row"><span>9xl</span><code>--space-9xl</code></div></div>
+                  <div><div class="sg-spacer" style="width: var(--space-10xl);"></div><div class="sg-token-row"><span>10xl</span><code>--space-10xl</code></div></div>
                       </div>
 
-                      <h2>Radius</h2>
-                      <div class="sg-row">
-                        <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-xs); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">xs</div>
-                        <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-s); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">s</div>
-                        <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-m); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">m</div>
-                        <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-l); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">l</div>
-                        <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-xl); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">xl</div>
-                        <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-pill); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">pill</div>
+                  <h2>Radius</h2>
+                  <div class="sg-row">
+                  <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-xs); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">xs</div>
+                  <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-s); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">s</div>
+                  <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-m); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">m</div>
+                  <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-l); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">l</div>
+                  <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-xl); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">xl</div>
+                  <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-pill); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">pill</div>
                       </div>
-                    </section>
-
-                  </div>
                 </div>
               </div>
             </section>

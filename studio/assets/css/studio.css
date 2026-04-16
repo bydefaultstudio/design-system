@@ -220,7 +220,7 @@ body.is-sidebar-collapsed .layout {
   background: var(--background-sidebar);
   z-index: var(--z-sidebar);
   box-sizing: border-box;
-  padding: var(--studio-gap) 0 var(--studio-gap) var(--studio-gap);
+  padding: var(--studio-gap);
   transition: width var(--duration-xl) var(--ease-out);
 }
 
@@ -669,7 +669,6 @@ body.is-sidebar-collapsed .sidebar-footer {
   position: relative;
   min-height: calc(100vh - var(--mobile-bar-height));
   background-color: var(--background-primary);
-  padding: var(--studio-gap);
 }
 
 [data-barba="wrapper"] {
@@ -731,6 +730,7 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
 
 .hero-section {
   --bd-video-inset: var(--studio-gap);
+  padding: var(--studio-gap) var(--studio-gap) 0 0;
 }
 
 .hero-section .bd-video-player {
@@ -760,7 +760,7 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
 .content-feed {
   column-count: 3;
   column-gap: var(--studio-gap);
-  padding-top: var(--studio-gap);
+  padding: var(--studio-gap) var(--studio-gap) var(--studio-gap) 0;
   width: 100%;
 }
 
@@ -1047,23 +1047,17 @@ article.article {
 
 /* ------ NEXT READ ------ */
 
-/* Label — present in both the article header and next-read section.
-   Hidden by default on the article header, visible on the next-read card. */
-.next-read-label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+/* Next-read block — sits between the current article and the next-read
+   card as a standalone sibling. Only created by JS. */
+.next-read {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: var(--space-l) 0;
-  color: var(--text-faded);
-  text-align: center;
-  transition: opacity var(--duration-s) var(--ease-out);
-  opacity: 0;
-  pointer-events: none;
 }
 
-.article-lead.is-next-read .next-read-label {
-  opacity: 1;
+.next-read-label {
+  color: var(--text-faded);
 }
 
 /* Sibling gap between the current article and the next-read preview card */
@@ -1837,9 +1831,7 @@ body.is-animating .close-btn-wrap {
 /* -- Section 1: page header -- */
 
 .services-headline {
-  font-size: var(--font-5xl);
-  letter-spacing: -0.01em;
-  line-height: var(--line-height-m);
+
 }
 
 .services-bridge {

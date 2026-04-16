@@ -808,11 +808,10 @@ function initNextRead() {
       '<a class="next-read-link" href="' + getStudioPrefix() + next.url + '" aria-label="Read: ' + attrEscape(next.title) + '"></a>' +
       '<section class="article-lead is-next-read">' +
         '<div class="padding-global top-medium bottom-medium">' +
-          '<div class="next-read-label label is-eyebrow is-serif">Next read</div>' +
           '<div class="article-header">' +
             '<div class="article-meta">' +
-              (next.readTime ? '<span class="article-meta-item label">' + ICON_CLOCK + attrEscape(next.readTime) + '</span>' : '') +
-              '<span class="article-meta-item label">' + ICON_CALENDAR + formatStudioDate(next.date) + '</span>' +
+              (next.readTime ? '<span class="article-meta-item label">' + attrEscape(next.readTime) + '</span>' : '') +
+              '<span class="article-meta-item label">' + formatStudioDate(next.date) + '</span>' +
             '</div>' +
             '<h1 class="article-headline">' + next.title + '</h1>' +
             (author.name
@@ -824,6 +823,12 @@ function initNextRead() {
           '</div>' +
         '</div>' +
       '</section>';
+
+    // Insert "Next read" block as a sibling between the two articles
+    var nextRead = document.createElement("div");
+    nextRead.className = "next-read";
+    nextRead.innerHTML = '<div class="next-read-label label">Next read</div>';
+    article.parentNode.appendChild(nextRead);
 
     article.parentNode.appendChild(wrapper);
   });
