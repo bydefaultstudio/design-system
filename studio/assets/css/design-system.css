@@ -2,6 +2,24 @@
    DESIGN SYSTEM FRAMEWORK
    ───────────────────────────── */
 
+/*
+ * STUDIO FORK NOTICE
+ *
+ * This is a deliberate fork of the root design-system.css at
+ * ../../assets/css/design-system.css. Studio deploys from its own
+ * Netlify site with publish=studio/, so the root file isn't reachable
+ * from this domain — we maintain a local copy.
+ *
+ * What's intentionally different from the root copy:
+ *   - Font stack: Zalando Sans (self-hosted, loaded via @font-face in
+ *     studio.css) instead of the BrandOS fonts
+ *   - No local @font-face declarations here — studio.css owns them
+ *
+ * When the root file adds new tokens or rules, merge them in manually
+ * (git diff ../../assets/css/design-system.css studio/assets/css/design-system.css).
+ * Don't overwrite this file wholesale — you'll lose the font stack.
+ */
+
 
 /* ------ 1. BRAND TOKENS ------ */
 

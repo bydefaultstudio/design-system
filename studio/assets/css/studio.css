@@ -78,6 +78,7 @@
   --bd-video-inset: var(--studio-gap);
   --scroll-offset: var(--studio-gap);
   --duration-stagger: 30ms;
+  --sidebar-logo-width: 240px;
 
   /* Display-intent weights — tuned for the variable Zalando Sans build. */
   /* --font-weight-title: 620;     
@@ -205,7 +206,7 @@ body.is-sidebar-collapsed .layout {
 }
 
 .svg-logo-by-default-centered {
-  width: 240px;
+  width: var(--sidebar-logo-width);
   aspect-ratio: 1050 / 505;
 }
 
@@ -859,10 +860,6 @@ article.article {
   gap: var(--space-m);
   max-width: 220px;
   margin: 0 auto;
-}
-
-.toc-block,
-.share-block {
   opacity: 0;
   transition: opacity var(--duration-l) var(--ease-out);
 }
@@ -1573,7 +1570,6 @@ body.is-animating .close-btn-wrap {
   gap: var(--space-2xs);
   padding: var(--space-l);
   background-color: var(--background-faded);
-  /* border: var(--border-s) solid var(--border-faded); */
   text-decoration: none;
   transition: border-color var(--duration-2xs) var(--ease-out);
 }
