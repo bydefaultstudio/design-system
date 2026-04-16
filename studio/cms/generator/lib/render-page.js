@@ -72,7 +72,7 @@ function buildJsonLd(entry, config, author) {
         name: config.siteName,
         logo: {
           "@type": "ImageObject",
-          url: `${config.siteUrl.replace(/\/$/, "")}/assets/icons/favicon.svg`
+          url: `${config.siteUrl.replace(/\/$/, "")}/assets/images/favicon/favicon.svg`
         }
       },
       mainEntityOfPage: resolveCanonical(entry, config),
