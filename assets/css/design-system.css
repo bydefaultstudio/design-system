@@ -2418,7 +2418,7 @@ details .disclosure-content {
    No font sizes, padding values, borders, or colors.
    Context-specific styling lives in the consuming page's CSS. */
 
-.accordion-trigger {
+.accordion-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2460,20 +2460,34 @@ details .disclosure-content {
   transform: translate(-50%, -50%) rotate(90deg);
 }
 
-.accordion-panel {
+.accordion-content {
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows var(--duration-m) var(--ease-out);
 }
 
-.accordion-item.is-open .accordion-panel {
+.accordion-item.is-open .accordion-content {
   grid-template-rows: 1fr;
 }
 
-.accordion-panel > * {
+.accordion-header:focus:not(:focus-visible) {
+  outline: solid 1px transparent;
+}
+
+.accordion-header:focus-visible {
+  outline: 2px solid var(--status-info);
+  outline-offset: -2px;
+  box-shadow: none;
+}
+
+.accordion-inner {
   overflow: hidden;
   min-height: 0;
 }
+
+/* .accordion-body — consumer content and padding live here.
+   Padding on .accordion-inner would bleed through the
+   0fr grid state; .accordion-body gets clipped instead. */
 
 
 /* ------ 19. TABS ------ */

@@ -138,7 +138,18 @@
 <li><code>src/</code> → Source files (pages, JS)</li>
 <li><code>themes/</code> → Client theme overrides (one CSS file per client)</li>
 <li><code>cdn/</code> → Webflow project code (JS + CSS served via CDN)</li>
-<li><code>studio/</code> → By Default agency website. Marketing site, not a docs site. Self-contained except it shares <code>assets/css/design-system.css</code> + <code>assets/css/docs-site.css</code> from the parent for now; lifts to a standalone deploy later. Layer: <code>app</code>.</li>
+<li><code>studio/</code> → By Default agency website. Self-contained marketing site (not a docs site). Shares <code>assets/css/design-system.css</code> from the parent for design tokens; everything else lives inside <code>studio/</code>. Layer: <code>app</code>. See <code>studio/README.md</code> for full details and CLAUDE.md §18 for studio-mode rules.<ul>
+<li><code>index.html</code> → Home page (master feed, Barba level 0)</li>
+<li><code>about.html</code>, <code>contact.html</code> → Level 1 destination pages</li>
+<li><code>work/</code> → Case study pages (level 2)</li>
+<li><code>articles/</code> → Article pages (level 2)</li>
+<li><code>templates/page-template.html</code> → Studio page template (use this, not root <code>templates/</code>)</li>
+<li><code>assets/css/studio.css</code> → Studio layout, grid, transitions, components</li>
+<li><code>assets/css/bd-video.css</code> → Video component styles</li>
+<li><code>assets/js/</code> → <code>studio.js</code>, <code>studio-barba.js</code>, <code>studio-contact.js</code>, <code>bd-video.js</code></li>
+<li><code>apps-script/</code> → Google Apps Script utilities</li>
+</ul>
+</li>
 </ul>
 <h2 id="assets">assets/</h2>
 <p>Single source of truth for all assets. No duplication.</p>
@@ -180,7 +191,7 @@
 <h2 id="cdn">cdn/</h2>
 <p>JavaScript and CSS files served to Webflow projects via CDN (jsdelivr). Each subfolder represents a Webflow site. Global scripts shared across sites live in <code>assets/js/bd/</code>.</p>
 <ul>
-<li><code>studio/</code> → By Default agency website (bydefault.studio)<ul>
+<li><code>studio/</code> → By Default agency website CDN assets (bydefault.studio). See CLAUDE.md §18.<ul>
 <li><code>js/</code> → Page-specific scripts (homepage, hero, blog, case study, etc.)</li>
 <li><code>css/</code> → Page-specific styles (hero section)</li>
 </ul>
@@ -230,6 +241,13 @@
 <li><code>themes/client-name.css</code> → Client theme overrides (optional, must load last)</li>
 </ol>
 <p>New docs-site CSS goes in <code>assets/css/docs-site.css</code>. New core/foundation CSS goes in <code>assets/css/design-system.css</code>. See <a href="../CLAUDE.md#17-layer-discipline">CLAUDE.md §17 — Layer Discipline</a> for the rules that govern this split.</p>
+<h3 id="studio-css-loading-order">Studio CSS Loading Order</h3>
+<p>Studio pages load CSS differently from docs pages:</p>
+<ol>
+<li><code>../assets/css/design-system.css</code> → Shared foundation + core tokens (read-only from studio&#39;s perspective)</li>
+<li><code>assets/css/studio.css</code> → Studio layout grid, components, transitions (loads last, cascade wins)</li>
+</ol>
+<p>Studio does <strong>not</strong> load <code>docs-site.css</code> or client themes. See <a href="../CLAUDE.md#18-studio-mode">CLAUDE.md §18 — Studio Mode</a>.</p>
 <h2 id="tools">tools/</h2>
 <p>Live tool apps. Each tool is a standalone HTML page.</p>
 <ul>
@@ -451,6 +469,8 @@
     <script src="../assets/js/copy-button.js"></script>
     <!-- Number input stepper -->
     <script src="../assets/js/number-input.js"></script>
+    <!-- Accordion -->
+    <script src="../assets/js/accordion.js"></script>
     <!-- Tabs -->
     <script src="../assets/js/tabs.js"></script>
     <!-- Toast notifications -->

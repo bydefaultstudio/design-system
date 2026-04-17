@@ -104,6 +104,7 @@ Every interactive component must include:
 
 | Component | CSS class | Needs JS | Docs page |
 |-----------|-----------|----------|-----------|
+| Accordion | `.accordion`, `.accordion-item`, `.accordion-header` | Yes (`accordion.js`) | `accordion.md` |
 | Button | `.button` | No | `button.md` |
 | Form elements | `.form-group`, `.form-check`, `.form-toggle`, `.segmented-control` | No | `form.md` |
 | Callout | `.callout` | No | `callout.md` |

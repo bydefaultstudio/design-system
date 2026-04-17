@@ -6,12 +6,14 @@
  * Usage:
  *   <div class="accordion" data-accordion="single|multi">
  *     <div class="accordion-item">
- *       <button class="accordion-trigger" aria-expanded="false" aria-controls="panel-id">
+ *       <button class="accordion-header" aria-expanded="false" aria-controls="panel-id">
  *         <span class="accordion-title">Heading</span>
  *         <span class="accordion-icon" aria-hidden="true"></span>
  *       </button>
- *       <div class="accordion-panel" id="panel-id" role="region">
- *         <div class="accordion-panel-inner">Content</div>
+ *       <div class="accordion-content" id="panel-id" role="region">
+ *         <div class="accordion-inner">
+ *           <div class="accordion-body">Content</div>
+ *         </div>
  *       </div>
  *     </div>
  *   </div>
@@ -20,7 +22,14 @@
  *   data-accordion="single" — opening one item closes siblings
  *   data-accordion="multi"  — each item toggles independently (default)
  *
- * @version 1.0.0
+ * Keyboard:
+ *   ArrowDown — focus next header (wraps)
+ *   ArrowUp   — focus previous header (wraps)
+ *   Home      — focus first header
+ *   End       — focus last header
+ *   Enter/Space — toggle panel (native button behaviour)
+ *
+ * @version 1.1.0
  */
 (function () {
   function initAccordion() {
@@ -28,8 +37,12 @@
       var mode = accordion.getAttribute("data-accordion") || "multi";
       var items = Array.from(accordion.querySelectorAll(":scope > .accordion-item"));
 
+      var headers = items
+        .map(function (i) { return i.querySelector(".accordion-header"); })
+        .filter(Boolean);
+
       items.forEach(function (item) {
-        var trigger = item.querySelector(".accordion-trigger");
+        var trigger = item.querySelector(".accordion-header");
         if (!trigger || trigger.dataset.accordionBound) return;
         trigger.dataset.accordionBound = "true";
 
@@ -39,7 +52,7 @@
           if (mode === "single") {
             items.forEach(function (other) {
               other.classList.remove("is-open");
-              var t = other.querySelector(".accordion-trigger");
+              var t = other.querySelector(".accordion-header");
               if (t) t.setAttribute("aria-expanded", "false");
             });
           }
@@ -52,8 +65,36 @@
             trigger.setAttribute("aria-expanded", "false");
           }
         });
+
+        trigger.addEventListener("keydown", function (e) {
+          var idx = headers.indexOf(trigger);
+          var next;
+
+          switch (e.key) {
+            case "ArrowDown":
+              e.preventDefault();
+              next = headers[(idx + 1) % headers.length];
+              break;
+            case "ArrowUp":
+              e.preventDefault();
+              next = headers[(idx - 1 + headers.length) % headers.length];
+              break;
+            case "Home":
+              e.preventDefault();
+              next = headers[0];
+              break;
+            case "End":
+              e.preventDefault();
+              next = headers[headers.length - 1];
+              break;
+          }
+
+          if (next) next.focus();
+        });
       });
     });
+
+    console.log("[accordion] v1.1.0 — init");
   }
 
   // Expose globally for Barba re-init
