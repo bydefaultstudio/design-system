@@ -120,54 +120,53 @@
             <main class="docs-main">
                 <article>
                     <p>Accordions group related content into collapsible sections. They support two modes: <strong>single</strong> (opening one panel closes the others) and <strong>multi</strong> (each panel toggles independently). The component requires JavaScript (<code>assets/js/accordion.js</code>).</p>
-<p>The accordion is <strong>structural only</strong> — it provides open/close mechanics, icon animation, and keyboard navigation but no visual styling (borders, padding, colours). Consuming pages add their own styles to match their context.</p>
 <hr>
 <h2 id="basic-usage">Basic usage</h2>
 <p>Include the script on any page that uses accordions:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-9rh8bfftu" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-9rh8bfftu" class="language-html">&lt;script src=&quot;/assets/js/accordion.js&quot;&gt;&lt;/script&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-6c3edwpmo" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-6c3edwpmo" class="language-html">&lt;script src=&quot;/assets/js/accordion.js&quot;&gt;&lt;/script&gt;
 </code></pre>
       </div>
     
 <p>The script auto-initialises all <button type="button" class="token-copy is-class" data-copy=".accordion" aria-label="Copy .accordion"><code>.accordion</code></button> containers on DOMContentLoaded. No manual setup needed.</p>
 <div class="demo-preview">
-  <div class="accordion" data-accordion="multi" style="border-top: var(--border-s) solid var(--border-faded);">
-    <div class="accordion-item" style="border-bottom: var(--border-s) solid var(--border-faded);">
-      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="demo-panel-1" style="padding: var(--space-m) 0; color: var(--text-primary);">
+  <div class="accordion" data-accordion="multi">
+    <div class="accordion-item">
+      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="demo-panel-1">
         <span class="accordion-title">Brand tokens</span>
-        <span class="accordion-icon" aria-hidden="true"></span>
+        <div class="svg-icn" data-icon="add" data-file="add.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>
       </button>
       <div class="accordion-content" id="demo-panel-1" role="region">
         <div class="accordion-inner">
-          <div class="accordion-body" style="padding-bottom: var(--space-l);">
+          <div class="accordion-body">
             <p class="text-secondary">Colour, typography, and spacing primitives that define the visual identity.</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="accordion-item" style="border-bottom: var(--border-s) solid var(--border-faded);">
-      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="demo-panel-2" style="padding: var(--space-m) 0; color: var(--text-primary);">
+    <div class="accordion-item">
+      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="demo-panel-2">
         <span class="accordion-title">Semantic tokens</span>
-        <span class="accordion-icon" aria-hidden="true"></span>
+        <div class="svg-icn" data-icon="add" data-file="add.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>
       </button>
       <div class="accordion-content" id="demo-panel-2" role="region">
         <div class="accordion-inner">
-          <div class="accordion-body" style="padding-bottom: var(--space-l);">
+          <div class="accordion-body">
             <p class="text-secondary">Purpose-driven aliases that map brand primitives to interface roles.</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="accordion-item" style="border-bottom: var(--border-s) solid var(--border-faded);">
-      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="demo-panel-3" style="padding: var(--space-m) 0; color: var(--text-primary);">
+    <div class="accordion-item">
+      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="demo-panel-3">
         <span class="accordion-title">Layout primitives</span>
-        <span class="accordion-icon" aria-hidden="true"></span>
+        <div class="svg-icn" data-icon="add" data-file="add.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>
       </button>
       <div class="accordion-content" id="demo-panel-3" role="region">
         <div class="accordion-inner">
-          <div class="accordion-body" style="padding-bottom: var(--space-l);">
+          <div class="accordion-body">
             <p class="text-secondary">Structural building blocks for page composition — sections, containers, blocks.</p>
           </div>
         </div>
@@ -178,13 +177,13 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-9uw8g2li4" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-9uw8g2li4" class="language-html">&lt;div class=&quot;accordion&quot; data-accordion=&quot;multi&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-192q5pod8" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-192q5pod8" class="language-html">&lt;div class=&quot;accordion&quot; data-accordion=&quot;multi&quot;&gt;
   &lt;div class=&quot;accordion-item&quot;&gt;
     &lt;button type=&quot;button&quot; class=&quot;accordion-header&quot;
             aria-expanded=&quot;false&quot; aria-controls=&quot;panel-1&quot;&gt;
       &lt;span class=&quot;accordion-title&quot;&gt;Heading text&lt;/span&gt;
-      &lt;span class=&quot;accordion-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+      &lt;div class=&quot;svg-icn&quot; data-icon=&quot;add&quot; aria-hidden=&quot;true&quot;&gt;&lt;!-- SVG --&gt;&lt;/div&gt;
     &lt;/button&gt;
     &lt;div class=&quot;accordion-content&quot; id=&quot;panel-1&quot; role=&quot;region&quot;&gt;
       &lt;div class=&quot;accordion-inner&quot;&gt;
@@ -204,8 +203,8 @@
 <p>The three-element panel structure exists because of how the CSS grid animation works:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-7fundaqsy" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-7fundaqsy">.accordion-content  → grid container (grid-template-rows: 0fr → 1fr)
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-xtlqkme5e" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-xtlqkme5e">.accordion-content  → grid container (grid-template-rows: 0fr → 1fr)
   .accordion-inner  → overflow clipper (overflow: hidden, min-height: 0)
     .accordion-body → consumer content and padding live here
 </code></pre>
@@ -219,49 +218,49 @@
 <p>Each panel toggles independently. Set <code>data-accordion=&quot;multi&quot;</code> or omit the attribute entirely.</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-6quk92h26" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-6quk92h26" class="language-html">&lt;div class=&quot;accordion&quot; data-accordion=&quot;multi&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-d8t7wd5z1" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-d8t7wd5z1" class="language-html">&lt;div class=&quot;accordion&quot; data-accordion=&quot;multi&quot;&gt;
 </code></pre>
       </div>
     
 <h3 id="single-open">Single-open</h3>
 <p>Opening one panel closes all siblings. Set <code>data-accordion=&quot;single&quot;</code>.</p>
 <div class="demo-preview">
-  <div class="accordion" data-accordion="single" style="border-top: var(--border-s) solid var(--border-faded);">
-    <div class="accordion-item" style="border-bottom: var(--border-s) solid var(--border-faded);">
-      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="single-panel-1" style="padding: var(--space-m) 0; color: var(--text-primary);">
+  <div class="accordion" data-accordion="single">
+    <div class="accordion-item">
+      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="single-panel-1">
         <span class="accordion-title">First section</span>
-        <span class="accordion-icon" aria-hidden="true"></span>
+        <div class="svg-icn" data-icon="add" data-file="add.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>
       </button>
       <div class="accordion-content" id="single-panel-1" role="region">
         <div class="accordion-inner">
-          <div class="accordion-body" style="padding-bottom: var(--space-l);">
+          <div class="accordion-body">
             <p class="text-secondary">Opening this panel closes the others.</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="accordion-item" style="border-bottom: var(--border-s) solid var(--border-faded);">
-      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="single-panel-2" style="padding: var(--space-m) 0; color: var(--text-primary);">
+    <div class="accordion-item">
+      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="single-panel-2">
         <span class="accordion-title">Second section</span>
-        <span class="accordion-icon" aria-hidden="true"></span>
+        <div class="svg-icn" data-icon="add" data-file="add.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>
       </button>
       <div class="accordion-content" id="single-panel-2" role="region">
         <div class="accordion-inner">
-          <div class="accordion-body" style="padding-bottom: var(--space-l);">
+          <div class="accordion-body">
             <p class="text-secondary">Only one panel can be open at a time.</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="accordion-item" style="border-bottom: var(--border-s) solid var(--border-faded);">
-      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="single-panel-3" style="padding: var(--space-m) 0; color: var(--text-primary);">
+    <div class="accordion-item">
+      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="single-panel-3">
         <span class="accordion-title">Third section</span>
-        <span class="accordion-icon" aria-hidden="true"></span>
+        <div class="svg-icn" data-icon="add" data-file="add.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>
       </button>
       <div class="accordion-content" id="single-panel-3" role="region">
         <div class="accordion-inner">
-          <div class="accordion-body" style="padding-bottom: var(--space-l);">
+          <div class="accordion-body">
             <p class="text-secondary">Mutual exclusion keeps the interface focused.</p>
           </div>
         </div>
@@ -272,8 +271,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-d6qyeq7bx" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-d6qyeq7bx" class="language-html">&lt;div class=&quot;accordion&quot; data-accordion=&quot;single&quot;&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-dghxzrks1" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-dghxzrks1" class="language-html">&lt;div class=&quot;accordion&quot; data-accordion=&quot;single&quot;&gt;
   &lt;!-- Items behave as mutual-exclusion group --&gt;
 &lt;/div&gt;
 </code></pre>
@@ -287,8 +286,8 @@
 <p>For single-page apps or Barba transitions, call <code>initAccordion()</code> after new content is injected:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-lpasfgpde" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-lpasfgpde" class="language-js">if (typeof window.initAccordion === &quot;function&quot;) {
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-pshtjteqz" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-pshtjteqz" class="language-js">if (typeof window.initAccordion === &quot;function&quot;) {
   window.initAccordion();
 }
 </code></pre>
@@ -301,38 +300,38 @@
 <h2 id="nested-accordions">Nested accordions</h2>
 <p>Combine single-open and multi-open modes across nesting levels. The outer accordion controls top-level navigation while inner accordions allow independent exploration within each section.</p>
 <div class="demo-preview">
-  <div class="accordion" data-accordion="single" style="border-top: var(--border-s) solid var(--border-faded);">
-    <div class="accordion-item" style="border-bottom: var(--border-s) solid var(--border-faded);">
-      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="nested-outer-1" style="padding: var(--space-m) 0; color: var(--text-primary);">
+  <div class="accordion" data-accordion="single">
+    <div class="accordion-item">
+      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="nested-outer-1">
         <span class="accordion-title">Design</span>
-        <span class="accordion-icon" aria-hidden="true"></span>
+        <div class="svg-icn" data-icon="add" data-file="add.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>
       </button>
       <div class="accordion-content" id="nested-outer-1" role="region">
         <div class="accordion-inner">
-          <div class="accordion-body" style="padding-bottom: var(--space-l); padding-left: var(--space-l);">
+          <div class="accordion-body">
             <div class="accordion" data-accordion="multi">
-              <div class="accordion-item" style="border-bottom: var(--border-s) solid var(--border-faded);">
-                <button type="button" class="accordion-header" aria-expanded="false" aria-controls="nested-inner-1" style="padding: var(--space-s) 0; color: var(--text-secondary); font-size: var(--font-size-s);">
+              <div class="accordion-item">
+                <button type="button" class="accordion-header" aria-expanded="false" aria-controls="nested-inner-1">
                   <span class="accordion-title">Brand identity</span>
-                  <span class="accordion-icon" aria-hidden="true" style="width: 18px; height: 18px;"></span>
+                  <div class="svg-icn" data-icon="add" data-file="add.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>
                 </button>
                 <div class="accordion-content" id="nested-inner-1" role="region">
                   <div class="accordion-inner">
-                    <div class="accordion-body" style="padding-bottom: var(--space-m);">
-                      <p class="text-secondary" style="font-size: var(--font-size-s);">Logo, colour palette, typography selection.</p>
+                    <div class="accordion-body">
+                      <p class="text-secondary">Logo, colour palette, typography selection.</p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="accordion-item" style="border-bottom: var(--border-s) solid var(--border-faded);">
-                <button type="button" class="accordion-header" aria-expanded="false" aria-controls="nested-inner-2" style="padding: var(--space-s) 0; color: var(--text-secondary); font-size: var(--font-size-s);">
+              <div class="accordion-item">
+                <button type="button" class="accordion-header" aria-expanded="false" aria-controls="nested-inner-2">
                   <span class="accordion-title">Design system</span>
-                  <span class="accordion-icon" aria-hidden="true" style="width: 18px; height: 18px;"></span>
+                  <div class="svg-icn" data-icon="add" data-file="add.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>
                 </button>
                 <div class="accordion-content" id="nested-inner-2" role="region">
                   <div class="accordion-inner">
-                    <div class="accordion-body" style="padding-bottom: var(--space-m);">
-                      <p class="text-secondary" style="font-size: var(--font-size-s);">Tokens, components, layout primitives.</p>
+                    <div class="accordion-body">
+                      <p class="text-secondary">Tokens, components, layout primitives.</p>
                     </div>
                   </div>
                 </div>
@@ -342,14 +341,14 @@
         </div>
       </div>
     </div>
-    <div class="accordion-item" style="border-bottom: var(--border-s) solid var(--border-faded);">
-      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="nested-outer-2" style="padding: var(--space-m) 0; color: var(--text-primary);">
+    <div class="accordion-item">
+      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="nested-outer-2">
         <span class="accordion-title">Development</span>
-        <span class="accordion-icon" aria-hidden="true"></span>
+        <div class="svg-icn" data-icon="add" data-file="add.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>
       </button>
       <div class="accordion-content" id="nested-outer-2" role="region">
         <div class="accordion-inner">
-          <div class="accordion-body" style="padding-bottom: var(--space-l);">
+          <div class="accordion-body">
             <p class="text-secondary">Front-end implementation, CMS integration, deployment.</p>
           </div>
         </div>
@@ -360,13 +359,13 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-pxo62nsy1" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-pxo62nsy1" class="language-html">&lt;!-- Outer: single-open --&gt;
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-2eoz48r2h" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-2eoz48r2h" class="language-html">&lt;!-- Outer: single-open --&gt;
 &lt;div class=&quot;accordion&quot; data-accordion=&quot;single&quot;&gt;
   &lt;div class=&quot;accordion-item&quot;&gt;
     &lt;button type=&quot;button&quot; class=&quot;accordion-header&quot; aria-expanded=&quot;false&quot;&gt;
       &lt;span class=&quot;accordion-title&quot;&gt;Design&lt;/span&gt;
-      &lt;span class=&quot;accordion-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+      &lt;div class=&quot;svg-icn&quot; data-icon=&quot;add&quot; aria-hidden=&quot;true&quot;&gt;&lt;!-- SVG --&gt;&lt;/div&gt;
     &lt;/button&gt;
     &lt;div class=&quot;accordion-content&quot;&gt;
       &lt;div class=&quot;accordion-inner&quot;&gt;
@@ -378,7 +377,7 @@
               &lt;button type=&quot;button&quot; class=&quot;accordion-header&quot; aria-expanded=&quot;false&quot;
                       aria-controls=&quot;inner-panel-1&quot;&gt;
                 &lt;span class=&quot;accordion-title&quot;&gt;Brand identity&lt;/span&gt;
-                &lt;span class=&quot;accordion-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+                &lt;div class=&quot;svg-icn&quot; data-icon=&quot;add&quot; aria-hidden=&quot;true&quot;&gt;&lt;!-- SVG --&gt;&lt;/div&gt;
               &lt;/button&gt;
               &lt;div class=&quot;accordion-content&quot; id=&quot;inner-panel-1&quot; role=&quot;region&quot;&gt;
                 &lt;div class=&quot;accordion-inner&quot;&gt;
@@ -438,49 +437,60 @@
 <li><code>aria-expanded</code> on headers is updated dynamically by the script (<code>&quot;false&quot;</code> when closed, <code>&quot;true&quot;</code> when open)</li>
 <li><code>aria-controls</code> on the header links to the <code>id</code> on the corresponding <button type="button" class="token-copy is-class" data-copy=".accordion-content" aria-label="Copy .accordion-content"><code>.accordion-content</code></button></li>
 <li><button type="button" class="token-copy is-class" data-copy=".accordion-content" aria-label="Copy .accordion-content"><code>.accordion-content</code></button> uses <code>role=&quot;region&quot;</code> as a landmark for assistive technology</li>
-<li><button type="button" class="token-copy is-class" data-copy=".accordion-icon" aria-label="Copy .accordion-icon"><code>.accordion-icon</code></button> has <code>aria-hidden=&quot;true&quot;</code> — it&#39;s decorative, not informational</li>
+<li>The icon <button type="button" class="token-copy is-class" data-copy=".svg-icn" aria-label="Copy .svg-icn"><code>.svg-icn</code></button> has <code>aria-hidden=&quot;true&quot;</code> — it&#39;s decorative, not informational</li>
 <li>Focus-visible ring appears on keyboard navigation, suppressed on mouse click</li>
 </ul>
 <hr>
-<h2 id="styling-guide">Styling guide</h2>
-<p>The accordion CSS in <code>design-system.css</code> is deliberately structural — it handles the flex layout of headers, the grid-based expand/collapse animation, and the icon rotation. It does <strong>not</strong> set:</p>
-<ul>
-<li>Borders between items</li>
-<li>Padding on headers or content</li>
-<li>Text colour, font size, or weight</li>
-<li>Background colour</li>
-<li>Hover states</li>
-</ul>
-<p>Consuming pages add these styles to match their context. Apply padding to <button type="button" class="token-copy is-class" data-copy=".accordion-body" aria-label="Copy .accordion-body"><code>.accordion-body</code></button>, never to <button type="button" class="token-copy is-class" data-copy=".accordion-inner" aria-label="Copy .accordion-inner"><code>.accordion-inner</code></button>.</p>
-<p><strong>Example — bordered accordion with padding:</strong></p>
+<h2 id="default-styles">Default styles</h2>
+<p>The design system provides sensible defaults so accordions work visually out of the box:</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Element</th>
+<th>Default style</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><button type="button" class="token-copy is-class" data-copy=".accordion" aria-label="Copy .accordion"><code>.accordion</code></button></td>
+<td><code>border-top</code> using <button type="button" class="token-copy is-token" data-copy="var(--border-faded)" aria-label="Copy var(--border-faded)"><code>--border-faded</code></button></td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-class" data-copy=".accordion-item" aria-label="Copy .accordion-item"><code>.accordion-item</code></button></td>
+<td><code>border-bottom</code> using <button type="button" class="token-copy is-token" data-copy="var(--border-faded)" aria-label="Copy var(--border-faded)"><code>--border-faded</code></button></td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-class" data-copy=".accordion-header" aria-label="Copy .accordion-header"><code>.accordion-header</code></button></td>
+<td><code>padding: var(--space-m) 0</code>, <code>color: var(--text-primary)</code></td>
+</tr>
+<tr>
+<td><code>.accordion-header .svg-icn</code></td>
+<td>24x24, rotates 45deg when open (turns <code>+</code> into <code>x</code>)</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-class" data-copy=".accordion-body" aria-label="Copy .accordion-body"><code>.accordion-body</code></button></td>
+<td><code>padding-bottom: var(--space-l)</code></td>
+</tr>
+</tbody></table></div>
+<p>All values use semantic tokens, so they flip automatically in dark mode.</p>
+<h3 id="icon">Icon</h3>
+<p>The accordion uses a <button type="button" class="token-copy is-class" data-copy=".svg-icn" aria-label="Copy .svg-icn"><code>.svg-icn</code></button> wrapper with an inline SVG. The default icon is <code>add</code> (a plus sign) which rotates 45 degrees to form an <code>x</code> when the panel opens. To use a different icon, swap the SVG inside the wrapper — no CSS changes needed.</p>
+<h3 id="overriding-defaults">Overriding defaults</h3>
+<p>Use a wrapper class to adjust styles for a specific context:</p>
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-0fktspkxw" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-0fktspkxw" class="language-css">.faq-accordion .accordion-item {
-  border-bottom: var(--border-s) solid var(--border-faded);
+        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-w7x2c6lrl" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-w7x2c6lrl" class="language-css">.compact-accordion .accordion-header {
+  padding: var(--space-s) 0;
 }
 
-.faq-accordion .accordion-header {
-  padding: var(--space-m) 0;
-  color: var(--text-primary);
+.compact-accordion .accordion-body {
+  padding-bottom: var(--space-m);
 }
 
-.faq-accordion .accordion-header:hover {
-  color: var(--text-secondary);
+.borderless-accordion,
+.borderless-accordion .accordion-item {
+  border: none;
 }
-
-.faq-accordion .accordion-body {
-  padding-bottom: var(--space-l);
-}
-</code></pre>
-      </div>
-    
-
-      <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-4ge7zdnk2" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn" data-icon="copy" data-file="copy.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn" data-icon="check" data-file="check.svg"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-4ge7zdnk2" class="language-html">&lt;div class=&quot;faq-accordion accordion&quot; data-accordion=&quot;single&quot;&gt;
-  &lt;!-- Items inherit the visual styles from .faq-accordion --&gt;
-&lt;/div&gt;
 </code></pre>
       </div>
     
@@ -495,23 +505,23 @@
 </thead>
 <tbody><tr>
 <td><button type="button" class="token-copy is-class" data-copy=".accordion" aria-label="Copy .accordion"><code>.accordion</code></button></td>
-<td>Container. Requires <code>data-accordion=&quot;single|multi&quot;</code></td>
+<td>Container — border-top, requires <code>data-accordion=&quot;single|multi&quot;</code></td>
 </tr>
 <tr>
 <td><button type="button" class="token-copy is-class" data-copy=".accordion-item" aria-label="Copy .accordion-item"><code>.accordion-item</code></button></td>
-<td>Individual panel wrapper (direct child of <button type="button" class="token-copy is-class" data-copy=".accordion" aria-label="Copy .accordion"><code>.accordion</code></button>)</td>
+<td>Individual panel wrapper — border-bottom (direct child of <button type="button" class="token-copy is-class" data-copy=".accordion" aria-label="Copy .accordion"><code>.accordion</code></button>)</td>
 </tr>
 <tr>
 <td><button type="button" class="token-copy is-class" data-copy=".accordion-header" aria-label="Copy .accordion-header"><code>.accordion-header</code></button></td>
-<td><code>&lt;button&gt;</code> trigger — flex layout with gap between title and icon</td>
+<td><code>&lt;button&gt;</code> trigger — flex layout, padding, colour</td>
 </tr>
 <tr>
 <td><button type="button" class="token-copy is-class" data-copy=".accordion-title" aria-label="Copy .accordion-title"><code>.accordion-title</code></button></td>
 <td>Optional <code>&lt;span&gt;</code> for heading text inside the header</td>
 </tr>
 <tr>
-<td><button type="button" class="token-copy is-class" data-copy=".accordion-icon" aria-label="Copy .accordion-icon"><code>.accordion-icon</code></button></td>
-<td>Plus/minus icon — rotates the vertical bar 90 degrees when open</td>
+<td><code>.accordion-header .svg-icn</code></td>
+<td>Icon — 24x24, rotates 45deg on open. Swap the SVG for a different icon</td>
 </tr>
 <tr>
 <td><button type="button" class="token-copy is-class" data-copy=".accordion-content" aria-label="Copy .accordion-content"><code>.accordion-content</code></button></td>
@@ -523,7 +533,7 @@
 </tr>
 <tr>
 <td><button type="button" class="token-copy is-class" data-copy=".accordion-body" aria-label="Copy .accordion-body"><code>.accordion-body</code></button></td>
-<td>Content wrapper — consumer padding and content live here</td>
+<td>Content wrapper — padding-bottom, consumer content lives here</td>
 </tr>
 <tr>
 <td><button type="button" class="token-copy is-class" data-copy=".is-open" aria-label="Copy .is-open"><code>.is-open</code></button></td>
@@ -559,7 +569,7 @@
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#structure" class="toc-link">Structure</a></li><li class="toc-item toc-level-2"><a href="#modes" class="toc-link">Modes</a></li><li class="toc-item toc-level-2"><a href="#javascript" class="toc-link">JavaScript</a></li><li class="toc-item toc-level-2"><a href="#nested-accordions" class="toc-link">Nested accordions</a></li><li class="toc-item toc-level-2"><a href="#keyboard-interactions" class="toc-link">Keyboard interactions</a></li><li class="toc-item toc-level-2"><a href="#accessibility-notes" class="toc-link">Accessibility notes</a></li><li class="toc-item toc-level-2"><a href="#styling-guide" class="toc-link">Styling guide</a></li><li class="toc-item toc-level-2"><a href="#css-class-reference" class="toc-link">CSS class reference</a></li><li class="toc-item toc-level-2"><a href="#accordion-vs-disclosure" class="toc-link">Accordion vs disclosure</a></li><li class="toc-item toc-level-2"><a href="#do-don39t" class="toc-link">Do / Don&#39;t</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#structure" class="toc-link">Structure</a></li><li class="toc-item toc-level-2"><a href="#modes" class="toc-link">Modes</a></li><li class="toc-item toc-level-2"><a href="#javascript" class="toc-link">JavaScript</a></li><li class="toc-item toc-level-2"><a href="#nested-accordions" class="toc-link">Nested accordions</a></li><li class="toc-item toc-level-2"><a href="#keyboard-interactions" class="toc-link">Keyboard interactions</a></li><li class="toc-item toc-level-2"><a href="#accessibility-notes" class="toc-link">Accessibility notes</a></li><li class="toc-item toc-level-2"><a href="#default-styles" class="toc-link">Default styles</a></li><li class="toc-item toc-level-2"><a href="#css-class-reference" class="toc-link">CSS class reference</a></li><li class="toc-item toc-level-2"><a href="#accordion-vs-disclosure" class="toc-link">Accordion vs disclosure</a></li><li class="toc-item toc-level-2"><a href="#do-don39t" class="toc-link">Do / Don&#39;t</a></li></ul></nav></div>
     </aside>
         </div>
 

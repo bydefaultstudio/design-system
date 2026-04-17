@@ -2414,9 +2414,13 @@ details .disclosure-content {
 
 /* ------ 14. ACCORDION ------ */
 
-/* Structural accordion — open/close mechanics only.
-   No font sizes, padding values, borders, or colors.
-   Context-specific styling lives in the consuming page's CSS. */
+.accordion {
+  border-top: var(--border-s) solid var(--border-faded);
+}
+
+.accordion-item {
+  border-bottom: var(--border-s) solid var(--border-faded);
+}
 
 .accordion-header {
   display: flex;
@@ -2425,39 +2429,19 @@ details .disclosure-content {
   width: 100%;
   text-align: left;
   gap: var(--space-m);
+  padding: var(--space-m) 0;
+  color: var(--text-primary);
 }
 
-.accordion-icon {
-  position: relative;
+.accordion-header .svg-icn {
   width: 24px;
   height: 24px;
   flex-shrink: 0;
+  transition: transform var(--duration-m) var(--ease-out);
 }
 
-.accordion-icon::before,
-.accordion-icon::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  background: currentColor;
-}
-
-.accordion-icon::before {
-  width: 14px;
-  height: var(--border-s);
-  transform: translate(-50%, -50%);
-}
-
-.accordion-icon::after {
-  width: var(--border-s);
-  height: 14px;
-  transform: translate(-50%, -50%);
-  transition: transform var(--duration-4xl) var(--ease-out);
-}
-
-.accordion-item.is-open .accordion-icon::after {
-  transform: translate(-50%, -50%) rotate(90deg);
+.accordion-item.is-open > .accordion-header .svg-icn {
+  transform: rotate(45deg);
 }
 
 .accordion-content {
@@ -2466,7 +2450,7 @@ details .disclosure-content {
   transition: grid-template-rows var(--duration-m) var(--ease-out);
 }
 
-.accordion-item.is-open .accordion-content {
+.accordion-item.is-open > .accordion-content {
   grid-template-rows: 1fr;
 }
 
@@ -2485,9 +2469,9 @@ details .disclosure-content {
   min-height: 0;
 }
 
-/* .accordion-body — consumer content and padding live here.
-   Padding on .accordion-inner would bleed through the
-   0fr grid state; .accordion-body gets clipped instead. */
+.accordion-body {
+  padding-bottom: var(--space-l);
+}
 
 
 /* ------ 19. TABS ------ */

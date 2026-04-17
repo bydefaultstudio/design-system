@@ -14,8 +14,6 @@ client: "internal"
 
 Accordions group related content into collapsible sections. They support two modes: **single** (opening one panel closes the others) and **multi** (each panel toggles independently). The component requires JavaScript (`assets/js/accordion.js`).
 
-The accordion is **structural only** — it provides open/close mechanics, icon animation, and keyboard navigation but no visual styling (borders, padding, colours). Consuming pages add their own styles to match their context.
-
 ---
 
 ## Basic usage
@@ -29,41 +27,41 @@ Include the script on any page that uses accordions:
 The script auto-initialises all `.accordion` containers on DOMContentLoaded. No manual setup needed.
 
 <div class="demo-preview">
-  <div class="accordion" data-accordion="multi" style="border-top: var(--border-s) solid var(--border-faded);">
-    <div class="accordion-item" style="border-bottom: var(--border-s) solid var(--border-faded);">
-      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="demo-panel-1" style="padding: var(--space-m) 0; color: var(--text-primary);">
+  <div class="accordion" data-accordion="multi">
+    <div class="accordion-item">
+      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="demo-panel-1">
         <span class="accordion-title">Brand tokens</span>
-        <span class="accordion-icon" aria-hidden="true"></span>
+        {{icon:add}}
       </button>
       <div class="accordion-content" id="demo-panel-1" role="region">
         <div class="accordion-inner">
-          <div class="accordion-body" style="padding-bottom: var(--space-l);">
+          <div class="accordion-body">
             <p class="text-secondary">Colour, typography, and spacing primitives that define the visual identity.</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="accordion-item" style="border-bottom: var(--border-s) solid var(--border-faded);">
-      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="demo-panel-2" style="padding: var(--space-m) 0; color: var(--text-primary);">
+    <div class="accordion-item">
+      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="demo-panel-2">
         <span class="accordion-title">Semantic tokens</span>
-        <span class="accordion-icon" aria-hidden="true"></span>
+        {{icon:add}}
       </button>
       <div class="accordion-content" id="demo-panel-2" role="region">
         <div class="accordion-inner">
-          <div class="accordion-body" style="padding-bottom: var(--space-l);">
+          <div class="accordion-body">
             <p class="text-secondary">Purpose-driven aliases that map brand primitives to interface roles.</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="accordion-item" style="border-bottom: var(--border-s) solid var(--border-faded);">
-      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="demo-panel-3" style="padding: var(--space-m) 0; color: var(--text-primary);">
+    <div class="accordion-item">
+      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="demo-panel-3">
         <span class="accordion-title">Layout primitives</span>
-        <span class="accordion-icon" aria-hidden="true"></span>
+        {{icon:add}}
       </button>
       <div class="accordion-content" id="demo-panel-3" role="region">
         <div class="accordion-inner">
-          <div class="accordion-body" style="padding-bottom: var(--space-l);">
+          <div class="accordion-body">
             <p class="text-secondary">Structural building blocks for page composition — sections, containers, blocks.</p>
           </div>
         </div>
@@ -78,7 +76,7 @@ The script auto-initialises all `.accordion` containers on DOMContentLoaded. No 
     <button type="button" class="accordion-header"
             aria-expanded="false" aria-controls="panel-1">
       <span class="accordion-title">Heading text</span>
-      <span class="accordion-icon" aria-hidden="true"></span>
+      <div class="svg-icn" data-icon="add" aria-hidden="true"><!-- SVG --></div>
     </button>
     <div class="accordion-content" id="panel-1" role="region">
       <div class="accordion-inner">
@@ -125,41 +123,41 @@ Each panel toggles independently. Set `data-accordion="multi"` or omit the attri
 Opening one panel closes all siblings. Set `data-accordion="single"`.
 
 <div class="demo-preview">
-  <div class="accordion" data-accordion="single" style="border-top: var(--border-s) solid var(--border-faded);">
-    <div class="accordion-item" style="border-bottom: var(--border-s) solid var(--border-faded);">
-      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="single-panel-1" style="padding: var(--space-m) 0; color: var(--text-primary);">
+  <div class="accordion" data-accordion="single">
+    <div class="accordion-item">
+      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="single-panel-1">
         <span class="accordion-title">First section</span>
-        <span class="accordion-icon" aria-hidden="true"></span>
+        {{icon:add}}
       </button>
       <div class="accordion-content" id="single-panel-1" role="region">
         <div class="accordion-inner">
-          <div class="accordion-body" style="padding-bottom: var(--space-l);">
+          <div class="accordion-body">
             <p class="text-secondary">Opening this panel closes the others.</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="accordion-item" style="border-bottom: var(--border-s) solid var(--border-faded);">
-      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="single-panel-2" style="padding: var(--space-m) 0; color: var(--text-primary);">
+    <div class="accordion-item">
+      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="single-panel-2">
         <span class="accordion-title">Second section</span>
-        <span class="accordion-icon" aria-hidden="true"></span>
+        {{icon:add}}
       </button>
       <div class="accordion-content" id="single-panel-2" role="region">
         <div class="accordion-inner">
-          <div class="accordion-body" style="padding-bottom: var(--space-l);">
+          <div class="accordion-body">
             <p class="text-secondary">Only one panel can be open at a time.</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="accordion-item" style="border-bottom: var(--border-s) solid var(--border-faded);">
-      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="single-panel-3" style="padding: var(--space-m) 0; color: var(--text-primary);">
+    <div class="accordion-item">
+      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="single-panel-3">
         <span class="accordion-title">Third section</span>
-        <span class="accordion-icon" aria-hidden="true"></span>
+        {{icon:add}}
       </button>
       <div class="accordion-content" id="single-panel-3" role="region">
         <div class="accordion-inner">
-          <div class="accordion-body" style="padding-bottom: var(--space-l);">
+          <div class="accordion-body">
             <p class="text-secondary">Mutual exclusion keeps the interface focused.</p>
           </div>
         </div>
@@ -205,38 +203,38 @@ The component uses `:scope > .accordion-item` to select only direct-child items.
 Combine single-open and multi-open modes across nesting levels. The outer accordion controls top-level navigation while inner accordions allow independent exploration within each section.
 
 <div class="demo-preview">
-  <div class="accordion" data-accordion="single" style="border-top: var(--border-s) solid var(--border-faded);">
-    <div class="accordion-item" style="border-bottom: var(--border-s) solid var(--border-faded);">
-      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="nested-outer-1" style="padding: var(--space-m) 0; color: var(--text-primary);">
+  <div class="accordion" data-accordion="single">
+    <div class="accordion-item">
+      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="nested-outer-1">
         <span class="accordion-title">Design</span>
-        <span class="accordion-icon" aria-hidden="true"></span>
+        {{icon:add}}
       </button>
       <div class="accordion-content" id="nested-outer-1" role="region">
         <div class="accordion-inner">
-          <div class="accordion-body" style="padding-bottom: var(--space-l); padding-left: var(--space-l);">
+          <div class="accordion-body">
             <div class="accordion" data-accordion="multi">
-              <div class="accordion-item" style="border-bottom: var(--border-s) solid var(--border-faded);">
-                <button type="button" class="accordion-header" aria-expanded="false" aria-controls="nested-inner-1" style="padding: var(--space-s) 0; color: var(--text-secondary); font-size: var(--font-size-s);">
+              <div class="accordion-item">
+                <button type="button" class="accordion-header" aria-expanded="false" aria-controls="nested-inner-1">
                   <span class="accordion-title">Brand identity</span>
-                  <span class="accordion-icon" aria-hidden="true" style="width: 18px; height: 18px;"></span>
+                  {{icon:add}}
                 </button>
                 <div class="accordion-content" id="nested-inner-1" role="region">
                   <div class="accordion-inner">
-                    <div class="accordion-body" style="padding-bottom: var(--space-m);">
-                      <p class="text-secondary" style="font-size: var(--font-size-s);">Logo, colour palette, typography selection.</p>
+                    <div class="accordion-body">
+                      <p class="text-secondary">Logo, colour palette, typography selection.</p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="accordion-item" style="border-bottom: var(--border-s) solid var(--border-faded);">
-                <button type="button" class="accordion-header" aria-expanded="false" aria-controls="nested-inner-2" style="padding: var(--space-s) 0; color: var(--text-secondary); font-size: var(--font-size-s);">
+              <div class="accordion-item">
+                <button type="button" class="accordion-header" aria-expanded="false" aria-controls="nested-inner-2">
                   <span class="accordion-title">Design system</span>
-                  <span class="accordion-icon" aria-hidden="true" style="width: 18px; height: 18px;"></span>
+                  {{icon:add}}
                 </button>
                 <div class="accordion-content" id="nested-inner-2" role="region">
                   <div class="accordion-inner">
-                    <div class="accordion-body" style="padding-bottom: var(--space-m);">
-                      <p class="text-secondary" style="font-size: var(--font-size-s);">Tokens, components, layout primitives.</p>
+                    <div class="accordion-body">
+                      <p class="text-secondary">Tokens, components, layout primitives.</p>
                     </div>
                   </div>
                 </div>
@@ -246,14 +244,14 @@ Combine single-open and multi-open modes across nesting levels. The outer accord
         </div>
       </div>
     </div>
-    <div class="accordion-item" style="border-bottom: var(--border-s) solid var(--border-faded);">
-      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="nested-outer-2" style="padding: var(--space-m) 0; color: var(--text-primary);">
+    <div class="accordion-item">
+      <button type="button" class="accordion-header" aria-expanded="false" aria-controls="nested-outer-2">
         <span class="accordion-title">Development</span>
-        <span class="accordion-icon" aria-hidden="true"></span>
+        {{icon:add}}
       </button>
       <div class="accordion-content" id="nested-outer-2" role="region">
         <div class="accordion-inner">
-          <div class="accordion-body" style="padding-bottom: var(--space-l);">
+          <div class="accordion-body">
             <p class="text-secondary">Front-end implementation, CMS integration, deployment.</p>
           </div>
         </div>
@@ -268,7 +266,7 @@ Combine single-open and multi-open modes across nesting levels. The outer accord
   <div class="accordion-item">
     <button type="button" class="accordion-header" aria-expanded="false">
       <span class="accordion-title">Design</span>
-      <span class="accordion-icon" aria-hidden="true"></span>
+      <div class="svg-icn" data-icon="add" aria-hidden="true"><!-- SVG --></div>
     </button>
     <div class="accordion-content">
       <div class="accordion-inner">
@@ -280,7 +278,7 @@ Combine single-open and multi-open modes across nesting levels. The outer accord
               <button type="button" class="accordion-header" aria-expanded="false"
                       aria-controls="inner-panel-1">
                 <span class="accordion-title">Brand identity</span>
-                <span class="accordion-icon" aria-hidden="true"></span>
+                <div class="svg-icn" data-icon="add" aria-hidden="true"><!-- SVG --></div>
               </button>
               <div class="accordion-content" id="inner-panel-1" role="region">
                 <div class="accordion-inner">
@@ -320,48 +318,46 @@ Arrow key navigation is scoped to each accordion level — nested accordions nav
 - `aria-expanded` on headers is updated dynamically by the script (`"false"` when closed, `"true"` when open)
 - `aria-controls` on the header links to the `id` on the corresponding `.accordion-content`
 - `.accordion-content` uses `role="region"` as a landmark for assistive technology
-- `.accordion-icon` has `aria-hidden="true"` — it's decorative, not informational
+- The icon `.svg-icn` has `aria-hidden="true"` — it's decorative, not informational
 - Focus-visible ring appears on keyboard navigation, suppressed on mouse click
 
 ---
 
-## Styling guide
+## Default styles
 
-The accordion CSS in `design-system.css` is deliberately structural — it handles the flex layout of headers, the grid-based expand/collapse animation, and the icon rotation. It does **not** set:
+The design system provides sensible defaults so accordions work visually out of the box:
 
-- Borders between items
-- Padding on headers or content
-- Text colour, font size, or weight
-- Background colour
-- Hover states
+| Element | Default style |
+|---------|--------------|
+| `.accordion` | `border-top` using `--border-faded` |
+| `.accordion-item` | `border-bottom` using `--border-faded` |
+| `.accordion-header` | `padding: var(--space-m) 0`, `color: var(--text-primary)` |
+| `.accordion-header .svg-icn` | 24x24, rotates 45deg when open (turns `+` into `x`) |
+| `.accordion-body` | `padding-bottom: var(--space-l)` |
 
-Consuming pages add these styles to match their context. Apply padding to `.accordion-body`, never to `.accordion-inner`.
+All values use semantic tokens, so they flip automatically in dark mode.
 
-**Example — bordered accordion with padding:**
+### Icon
+
+The accordion uses a `.svg-icn` wrapper with an inline SVG. The default icon is `add` (a plus sign) which rotates 45 degrees to form an `x` when the panel opens. To use a different icon, swap the SVG inside the wrapper — no CSS changes needed.
+
+### Overriding defaults
+
+Use a wrapper class to adjust styles for a specific context:
 
 ```css
-.faq-accordion .accordion-item {
-  border-bottom: var(--border-s) solid var(--border-faded);
+.compact-accordion .accordion-header {
+  padding: var(--space-s) 0;
 }
 
-.faq-accordion .accordion-header {
-  padding: var(--space-m) 0;
-  color: var(--text-primary);
+.compact-accordion .accordion-body {
+  padding-bottom: var(--space-m);
 }
 
-.faq-accordion .accordion-header:hover {
-  color: var(--text-secondary);
+.borderless-accordion,
+.borderless-accordion .accordion-item {
+  border: none;
 }
-
-.faq-accordion .accordion-body {
-  padding-bottom: var(--space-l);
-}
-```
-
-```html
-<div class="faq-accordion accordion" data-accordion="single">
-  <!-- Items inherit the visual styles from .faq-accordion -->
-</div>
 ```
 
 ---
@@ -370,14 +366,14 @@ Consuming pages add these styles to match their context. Apply padding to `.acco
 
 | Class | Purpose |
 |-------|---------|
-| `.accordion` | Container. Requires `data-accordion="single\|multi"` |
-| `.accordion-item` | Individual panel wrapper (direct child of `.accordion`) |
-| `.accordion-header` | `<button>` trigger — flex layout with gap between title and icon |
+| `.accordion` | Container — border-top, requires `data-accordion="single\|multi"` |
+| `.accordion-item` | Individual panel wrapper — border-bottom (direct child of `.accordion`) |
+| `.accordion-header` | `<button>` trigger — flex layout, padding, colour |
 | `.accordion-title` | Optional `<span>` for heading text inside the header |
-| `.accordion-icon` | Plus/minus icon — rotates the vertical bar 90 degrees when open |
+| `.accordion-header .svg-icn` | Icon — 24x24, rotates 45deg on open. Swap the SVG for a different icon |
 | `.accordion-content` | Grid container — animates `grid-template-rows: 0fr → 1fr` |
 | `.accordion-inner` | Overflow clipper — `overflow: hidden`, `min-height: 0`. Never apply padding here |
-| `.accordion-body` | Content wrapper — consumer padding and content live here |
+| `.accordion-body` | Content wrapper — padding-bottom, consumer content lives here |
 | `.is-open` | State class added to `.accordion-item` when the panel is expanded |
 
 ---

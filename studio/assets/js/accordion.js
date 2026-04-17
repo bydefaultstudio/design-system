@@ -8,7 +8,7 @@
  *     <div class="accordion-item">
  *       <button class="accordion-header" aria-expanded="false" aria-controls="panel-id">
  *         <span class="accordion-title">Heading</span>
- *         <span class="accordion-icon" aria-hidden="true"></span>
+ *         <div class="svg-icn" data-icon="add" aria-hidden="true">…</div>
  *       </button>
  *       <div class="accordion-content" id="panel-id" role="region">
  *         <div class="accordion-inner">
