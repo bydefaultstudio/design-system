@@ -945,8 +945,8 @@ function generatePageNav(file, pageOrder) {
     return '../' + target.htmlPath;
   }
 
-  const arrowLeft = `<div class="svg-icn page-nav-arrow" data-icon="chevron-left-large">${getRawIcon('chevron-left-large')}</div>`;
-  const arrowRight = `<div class="svg-icn page-nav-arrow" data-icon="chevron-right-large">${getRawIcon('chevron-right-large')}</div>`;
+  const arrowLeft = `<div class="svg-icn page-nav-arrow">${getRawIcon('chevron-left-large')}</div>`;
+  const arrowRight = `<div class="svg-icn page-nav-arrow">${getRawIcon('chevron-right-large')}</div>`;
 
   let html = '<nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global">';
 
@@ -1250,7 +1250,7 @@ function generateNavJs(filesBySection, sidebarOrderMap) {
 
   var headerRight = '<div class="top-nav-right">'
     + '<a href="' + base + 'support.html" class="top-nav-link top-nav-contact-link" aria-label="Contact">'
-    + '<div class="svg-icn" data-icon="mail">' + ICON_MAIL + '</div>'
+    + '<div class="svg-icn">' + ICON_MAIL + '</div>'
     + '<span class="top-nav-link-label">Contact</span>'
     + '</a>'
     + '<div class="top-nav-auth-container"></div>'
@@ -1274,7 +1274,7 @@ function generateNavJs(filesBySection, sidebarOrderMap) {
       + '</div>'
       + '<div class="site-sidebar-content">'
       + '<a href="' + base + 'index.html" class="nav-link nav-home" data-access="team">'
-      + '<div class="svg-icn" data-icon="home">' + ICON_HOME + '</div>'
+      + '<div class="svg-icn">' + ICON_HOME + '</div>'
       + '<span>Home</span>'
       + '</a>'
       + \`${esc(navSectionsHtml)}\`
@@ -1497,7 +1497,7 @@ function buildNavSectionsHtml(filesBySection, sidebarOrderMap = {}) {
     // Slug used by Phase 3 directional transitions to detect same/different section
     const sectionSlug = slugifySection(section);
     const iconHtml = sectionIcon
-      ? `<a href="${sectionIndexHref}" class="nav-section-icon" data-section="${sectionSlug}"><div class="svg-icn" data-icon="${sectionIcon.name}">${sectionIcon.icon}</div></a>`
+      ? `<a href="${sectionIndexHref}" class="nav-section-icon" data-section="${sectionSlug}"><div class="svg-icn">${sectionIcon.icon}</div></a>`
       : '';
 
     html += `<details class="nav-section">

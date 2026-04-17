@@ -154,11 +154,12 @@
     var tables = document.querySelectorAll('table');
 
     tables.forEach(function (table) {
-      // Detect: first <td> in first body row must contain .svg-icn[data-icon]
+      // Detect: first <td> in first body row must contain .svg-icn with a
+      // data-icon attribute (on the svg element inside the wrapper)
       var firstRow = table.querySelector('tbody tr');
       if (!firstRow) return;
       var firstCell = firstRow.querySelector('td:first-child');
-      if (!firstCell || !firstCell.querySelector('.svg-icn[data-icon]')) return;
+      if (!firstCell || !firstCell.querySelector('.svg-icn svg[data-icon]')) return;
 
       // Skip tables already processed
       if (table.classList.contains('icon-table')) return;
@@ -174,11 +175,12 @@
 
       var rows = table.querySelectorAll('tbody tr');
       rows.forEach(function (row) {
-        var iconEl = row.querySelector('.svg-icn[data-icon]');
-        if (!iconEl) return;
+        var iconSvg = row.querySelector('.svg-icn svg[data-icon]');
+        if (!iconSvg) return;
 
-        var iconName = iconEl.getAttribute('data-icon');
-        var fileName = iconEl.getAttribute('data-file') || '';
+        var iconName = iconSvg.getAttribute('data-icon');
+        var fileName = iconName + '.svg';
+        var iconEl = iconSvg.closest('.svg-icn');
         var iconHTML = iconEl.outerHTML;
 
         // Copy button

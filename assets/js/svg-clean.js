@@ -244,6 +244,16 @@ function processSVG(svgCode, options = {}) {
     const heightMatch = processedCode.match(/<svg[^>]*?\s+height="([^"]*?)"/i);
     if (widthMatch) originalWidth = widthMatch[1];
     if (heightMatch) originalHeight = heightMatch[1];
+
+    // Fall back to viewBox dimensions when width/height attributes are missing
+    if (!originalWidth || !originalHeight) {
+      const vbMatch = processedCode.match(/<svg[^>]*?\s+viewBox="([^"]*?)"/i);
+      if (vbMatch) {
+        const parts = vbMatch[1].split(/[\s,]+/);
+        if (!originalWidth && parts.length >= 3) originalWidth = parts[2];
+        if (!originalHeight && parts.length >= 4) originalHeight = parts[3];
+      }
+    }
   }
 
   // Tidy root <svg> attributes based on flags
@@ -260,6 +270,20 @@ function processSVG(svgCode, options = {}) {
           .replace(/\s+width="[^"]*"/gi, '')
           .replace(/\s+height="[^"]*"/gi, '');
         newAttributes += ' width="100%" height="100%"';
+      } else {
+        // Set explicit width/height from viewBox when missing
+        const vbMatch = newAttributes.match(/viewBox="([^"]*?)"/i);
+        if (vbMatch) {
+          const parts = vbMatch[1].split(/[\s,]+/);
+          if (parts.length >= 4) {
+            if (!/\s+width="/i.test(newAttributes)) {
+              newAttributes += ` width="${parts[2]}"`;
+            }
+            if (!/\s+height="/i.test(newAttributes)) {
+              newAttributes += ` height="${parts[3]}"`;
+            }
+          }
+        }
       }
 
       // Re-add xmlns for standalone SVG files

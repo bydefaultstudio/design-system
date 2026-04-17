@@ -341,6 +341,16 @@
         var hm = code.match(/<svg[^>]*?\s+height="([^"]*?)"/i);
         if (wm) origW = wm[1];
         if (hm) origH = hm[1];
+
+        // Fall back to viewBox dimensions when width/height attributes are missing
+        if (!origW || !origH) {
+          var vbm = code.match(/<svg[^>]*?\s+viewBox="([^"]*?)"/i);
+          if (vbm) {
+            var vbParts = vbm[1].split(/[\s,]+/);
+            if (!origW && vbParts.length >= 3) origW = vbParts[2];
+            if (!origH && vbParts.length >= 4) origH = vbParts[3];
+          }
+        }
       }
 
       code = code.replace(/<svg([^>]*?)\s+xmlns(?::xlink)?="[^"]*"([^>]*?)>/g, '<svg$1$2>');
@@ -352,6 +362,16 @@
         if (applySize) {
           a = a.replace(/\s+width="[^"]*"/gi, '').replace(/\s+height="[^"]*"/gi, '');
           a += ' width="100%" height="100%"';
+        } else {
+          // Set explicit width/height from viewBox when missing
+          var vbm = a.match(/viewBox="([^"]*?)"/i);
+          if (vbm) {
+            var parts = vbm[1].split(/[\s,]+/);
+            if (parts.length >= 4) {
+              if (!/\s+width="/i.test(a)) a += ' width="' + parts[2] + '"';
+              if (!/\s+height="/i.test(a)) a += ' height="' + parts[3] + '"';
+            }
+          }
         }
         if (options.standalone || options.css) a += ' xmlns="http://www.w3.org/2000/svg"';
         return '<svg' + a + '>';
