@@ -1865,82 +1865,38 @@ body.is-animating .close-btn-wrap {
   overflow: hidden;
 }
 
-/* -- Section 2: services accordion -- */
+/* -- Section 2: services accordion (decorative overrides) -- */
 
 .services-list {
   border-top: var(--border-s) solid var(--border-primary);
 }
 
-.service-row {
+.services-list > .accordion-item {
   border-bottom: var(--border-s) solid var(--border-primary);
 }
 
-.service-trigger {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
+.services-list > .accordion-item > .accordion-trigger {
   padding: var(--space-xl) 0;
-  background: transparent;
-  border: 0;
-  text-align: left;
-  cursor: pointer;
-  color: var(--text-primary);
   transition: opacity var(--duration-s) var(--ease-out);
 }
 
-.service-trigger:hover { opacity: 0.7; }
+.services-list > .accordion-item > .accordion-trigger:hover { opacity: 0.7; }
 
-.service-name {
+.services-list > .accordion-item > .accordion-trigger > .accordion-title {
   font-size: var(--font-3xl);
   line-height: var(--line-height-s);
   letter-spacing: -0.01em;
 }
 
-.service-icon {
-  position: relative;
+.services-list > .accordion-item > .accordion-trigger > .accordion-icon {
   width: 32px;
   height: 32px;
-  flex-shrink: 0;
 }
 
-.service-icon::before,
-.service-icon::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  background: var(--text-primary);
-}
+.services-list > .accordion-item > .accordion-trigger > .accordion-icon::before { width: 18px; }
+.services-list > .accordion-item > .accordion-trigger > .accordion-icon::after { height: 18px; }
 
-.service-icon::before {
-  width: 18px;
-  height: var(--border-s);
-  transform: translate(-50%, -50%);
-}
-
-.service-icon::after {
-  width: var(--border-s);
-  height: 18px;
-  transform: translate(-50%, -50%);
-  transition: transform var(--duration-s) var(--ease-out);
-}
-
-.service-row.is-open .service-icon::after {
-  transform: translate(-50%, -50%) rotate(90deg);
-}
-
-.service-panel {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height var(--duration-m) var(--ease-out);
-}
-
-.service-row.is-open .service-panel {
-  max-height: 3000px;
-}
-
-.service-panel-inner {
+.services-list .accordion-panel-inner {
   padding: 0 0 var(--space-2xl);
   display: flex;
   flex-direction: column;
@@ -1976,7 +1932,7 @@ body.is-animating .close-btn-wrap {
   margin: 0;
 }
 
-/* -- Nested formats accordion (inside each service panel) -- */
+/* -- Nested formats accordion -- */
 
 .formats-section {
   border-top: var(--border-s) solid var(--border-faded);
@@ -1989,70 +1945,27 @@ body.is-animating .close-btn-wrap {
   margin: 0;
 }
 
-.format-row {
+.formats-section .accordion-item {
   border-top: var(--border-s) solid var(--border-faded);
 }
 
-.format-row:first-of-type { border-top: none; }
+.formats-section .accordion-item:first-child { border-top: none; }
 
-.format-trigger {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
+.formats-section .accordion-trigger {
   padding: var(--space-m) 0;
-  background: transparent;
-  border: 0;
-  text-align: left;
-  cursor: pointer;
-  color: var(--text-primary);
   font-size: var(--font-s);
   font-weight: var(--font-weight-medium);
-  gap: var(--space-m);
 }
 
-.format-trigger-icon {
-  position: relative;
+.formats-section .accordion-icon {
   width: 20px;
   height: 20px;
-  flex-shrink: 0;
 }
 
-.format-trigger-icon::before,
-.format-trigger-icon::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  background: var(--text-primary);
-}
+.formats-section .accordion-icon::before { width: 12px; }
+.formats-section .accordion-icon::after { height: 12px; }
 
-.format-trigger-icon::before {
-  width: 12px;
-  height: var(--border-s);
-  transform: translate(-50%, -50%);
-}
-
-.format-trigger-icon::after {
-  width: var(--border-s);
-  height: 12px;
-  transform: translate(-50%, -50%);
-  transition: transform var(--duration-s) var(--ease-out);
-}
-
-.format-row.is-open .format-trigger-icon::after {
-  transform: translate(-50%, -50%) rotate(90deg);
-}
-
-.format-panel {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height var(--duration-m) var(--ease-out);
-}
-
-.format-row.is-open .format-panel { max-height: 500px; }
-
-.format-panel-inner {
+.formats-section .accordion-panel-inner {
   padding: 0 0 var(--space-l);
   font-size: var(--font-s);
   color: var(--text-secondary);

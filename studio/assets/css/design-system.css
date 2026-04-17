@@ -2272,6 +2272,65 @@ details .disclosure-content {
 }
 
 
+/* ------ 14. ACCORDION ------ */
+
+/* Structural accordion — open/close mechanics only.
+   No font sizes, padding values, borders, or colors.
+   Context-specific styling lives in the consuming page's CSS. */
+
+.accordion-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+  gap: var(--space-m);
+}
+
+.accordion-icon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.accordion-icon::before,
+.accordion-icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: currentColor;
+}
+
+.accordion-icon::before {
+  width: 14px;
+  height: var(--border-s);
+  transform: translate(-50%, -50%);
+}
+
+.accordion-icon::after {
+  width: var(--border-s);
+  height: 14px;
+  transform: translate(-50%, -50%);
+  transition: transform var(--duration-s) var(--ease-out);
+}
+
+.accordion-item.is-open .accordion-icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.accordion-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--duration-m) var(--ease-out);
+}
+
+.accordion-item.is-open .accordion-panel {
+  max-height: 3000px;
+}
+
+
 /* ------ 19. TABS ------ */
 
 .tabs {

@@ -980,45 +980,10 @@ window.initFeed = initFeed;
 // Services page — two-level accordion + audience-tab CTA. Only binds when
 // the services markup is on the page; safe to call on every nav.
 function initServices() {
-  var services = document.querySelectorAll(".service-row");
-  if (services.length) {
-    services.forEach(function bindService(row) {
-      var trigger = row.querySelector(".service-trigger");
-      if (!trigger || trigger.dataset.serviceBound) return;
-      trigger.dataset.serviceBound = "true";
-      trigger.addEventListener("click", function toggleService() {
-        var wasOpen = row.classList.contains("is-open");
-        // Single-open: close all services + reset their nested format rows.
-        services.forEach(function closeOther(other) {
-          other.classList.remove("is-open");
-          var otherTrigger = other.querySelector(".service-trigger");
-          if (otherTrigger) otherTrigger.setAttribute("aria-expanded", "false");
-          other.querySelectorAll(".format-row.is-open").forEach(function closeFormat(fr) {
-            fr.classList.remove("is-open");
-            var ft = fr.querySelector(".format-trigger");
-            if (ft) ft.setAttribute("aria-expanded", "false");
-          });
-        });
-        if (!wasOpen) {
-          row.classList.add("is-open");
-          trigger.setAttribute("aria-expanded", "true");
-        }
-      });
-    });
-  }
-
-  var formats = document.querySelectorAll(".format-trigger");
-  formats.forEach(function bindFormat(trigger) {
-    if (trigger.dataset.formatBound) return;
-    trigger.dataset.formatBound = "true";
-    trigger.addEventListener("click", function toggleFormat() {
-      var row = trigger.closest(".format-row");
-      if (!row) return;
-      var opening = !row.classList.contains("is-open");
-      row.classList.toggle("is-open", opening);
-      trigger.setAttribute("aria-expanded", String(opening));
-    });
-  });
+  // Accordion open/close is handled by the shared initAccordion()
+  // from assets/js/accordion.js. This function only handles the
+  // tab switcher which is services-page-specific.
+  if (typeof window.initAccordion === "function") window.initAccordion();
 
   var tabs = document.querySelectorAll(".cta-tab");
   var panels = document.querySelectorAll(".cta-panel");
