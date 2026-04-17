@@ -302,6 +302,7 @@ Before considering code complete:
 - [ ] No inline styles (except styleguide)
 - [ ] Responsive behavior considered
 - [ ] SEO meta tags included (for HTML pages)
+- [ ] Post-code review sub-agent run on changed files (see §14)
 
 ---
 
@@ -392,6 +393,15 @@ Never mark a task complete without proving it works:
 - Diff the behaviour before and after your changes when relevant
 - Check that docs are updated if you changed any patterns
 - Run the doc generator if any `cms/*.md` files changed
+
+### Post-Code Review (Mandatory)
+After every task that produces or modifies code, spawn a **sub-agent** to review the changes before reporting done. The review must focus on:
+- **Edge cases** — missing null/undefined checks, empty arrays, unexpected input, race conditions
+- **Error handling** — uncaught exceptions, silent failures, missing fallbacks at system boundaries
+- **Browser/environment quirks** — CSS cross-browser issues, JS compatibility, responsive breakpoints
+- **Logical bugs** — off-by-one errors, incorrect conditionals, state that can get out of sync
+
+The sub-agent should read the actual changed files (not a summary) and report any issues found. Fix reported issues before marking the task complete. Skip only for trivial non-logic changes (typo fixes, comment updates, whitespace).
 
 ### Autonomous Bug Fixing
 When given a bug report — just fix it:
