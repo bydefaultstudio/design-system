@@ -70,6 +70,9 @@ function buildIconMap() {
       svg = svg.replace(/<svg/, '<svg aria-hidden="true"');
     }
 
+    // Add data-icon on the <svg> element for CSS targeting
+    svg = svg.replace(/<svg/, `<svg data-icon="${key}"`);
+
     map[key] = { svg: svg, file: file };
   }
 
@@ -88,7 +91,7 @@ function getIcon(name) {
     console.warn(`⚠️  Unknown icon: "${name}"`);
     return `<!-- unknown icon: ${name} -->`;
   }
-  return `<div class="svg-icn" data-icon="${name}" data-file="${entry.file}">${entry.svg}</div>`;
+  return `<div class="svg-icn">${entry.svg}</div>`;
 }
 
 /**

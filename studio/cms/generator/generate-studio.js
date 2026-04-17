@@ -28,7 +28,7 @@ const STUDIO_ROOT = path.resolve(__dirname, "..", "..");            // studio/
 const REPO_ROOT = path.resolve(STUDIO_ROOT, "..");                   // repo root
 const CMS_DIR = path.join(STUDIO_ROOT, "cms");                       // studio/cms
 const CONFIG_PATH = path.join(CMS_DIR, "_config.json");
-const ICONS_DIR = path.join(STUDIO_ROOT, "assets", "images", "svg-icons");
+const ICONS_DIR = path.join(REPO_ROOT, "assets", "images", "svg-icons");
 const MANIFEST_PATH = path.join(STUDIO_ROOT, "assets", "data", "studio-content.json");
 
 // ---- Helpers ----

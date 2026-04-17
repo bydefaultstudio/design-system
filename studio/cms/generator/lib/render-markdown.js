@@ -18,7 +18,7 @@ const fs = require("fs");
 const path = require("path");
 
 // ---- Icon registry ----
-// Loaded lazily from studio/assets/images/svg-icons/.
+// Loaded lazily from the canonical assets/images/svg-icons/ directory.
 let ICON_CACHE = null;
 function loadIcons(iconsDir) {
   if (ICON_CACHE) return ICON_CACHE;
@@ -27,8 +27,20 @@ function loadIcons(iconsDir) {
   fs.readdirSync(iconsDir)
     .filter((f) => f.endsWith(".svg"))
     .forEach((f) => {
-      const name = path.basename(f, ".svg");
-      ICON_CACHE[name] = fs.readFileSync(path.join(iconsDir, f), "utf8").trim();
+      const name = path.basename(f, ".svg").toLowerCase().replace(/\s+/g, "-");
+      let svg = fs.readFileSync(path.join(iconsDir, f), "utf8")
+        .replace(/\n\s*/g, "")
+        .trim();
+      // Normalise: replace fixed width/height with 100%
+      svg = svg.replace(/(<svg[^>]*)\s+width=["']\d+["']/i, '$1 width="100%"');
+      svg = svg.replace(/(<svg[^>]*)\s+height=["']\d+["']/i, '$1 height="100%"');
+      // Add aria-hidden if not present
+      if (!svg.includes("aria-hidden")) {
+        svg = svg.replace(/<svg/, '<svg aria-hidden="true"');
+      }
+      // Add data-icon on the <svg> element
+      svg = svg.replace(/<svg/, `<svg data-icon="${name}"`);
+      ICON_CACHE[name] = svg;
     });
   return ICON_CACHE;
 }
@@ -39,7 +51,7 @@ function renderIcon(name, icons) {
     console.warn(`  ⚠ unknown icon: "${name}"`);
     return `<!-- icon:${name} (not found) -->`;
   }
-  return `<div class="svg-icn" data-icon="${name}">${svg}</div>`;
+  return `<div class="svg-icn">${svg}</div>`;
 }
 
 // ---- Shortcode handlers ----
