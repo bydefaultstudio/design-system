@@ -2,23 +2,161 @@
    DESIGN SYSTEM FRAMEWORK
    ───────────────────────────── */
 
-/*
- * STUDIO FORK NOTICE
- *
- * This is a deliberate fork of the root design-system.css at
- * ../../assets/css/design-system.css. Studio deploys from its own
- * Netlify site with publish=studio/, so the root file isn't reachable
- * from this domain — we maintain a local copy.
- *
- * What's intentionally different from the root copy:
- *   - Font stack: Zalando Sans (self-hosted, loaded via @font-face in
- *     studio.css) instead of the BrandOS fonts
- *   - No local @font-face declarations here — studio.css owns them
- *
- * When the root file adds new tokens or rules, merge them in manually
- * (git diff ../../assets/css/design-system.css studio/assets/css/design-system.css).
- * Don't overwrite this file wholesale — you'll lose the font stack.
- */
+
+/* -- @font-face: Local fonts -- */
+@font-face {
+  font-family: "RecifeText";
+  src: url("../fonts/recife-text/RecifeText-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Bugrino — Upright */
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-Fine.woff2") format("woff2");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-Thin.woff2") format("woff2");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-Heavy.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-Black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Bugrino — Italic */
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-FineItalic.woff2") format("woff2");
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-ThinItalic.woff2") format("woff2");
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-LightItalic.woff2") format("woff2");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-MediumItalic.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-SemiBoldItalic.woff2") format("woff2");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-BoldItalic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-HeavyItalic.woff2") format("woff2");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-BlackItalic.woff2") format("woff2");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
 
 
 /* ------ 1. BRAND TOKENS ------ */
@@ -30,9 +168,9 @@
 
 :root {
   /* -- Typography -- */
-  --font-primary: "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-secondary: "trust-3a", "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-tertiary: "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-primary: "Inclusive Sans", sans-serif;
+  --font-secondary: "RecifeText", Georgia, serif;
+  --font-tertiary: "Bugrino", sans-serif;
   --font-quaternary: "IBM Plex Mono", monospace;
 
   /* -- Palette -- */
@@ -90,7 +228,7 @@
   /* -- Line height tokens -- */
   --line-height-xs: 0.7;
   --line-height-s: 1;
-  --line-height-m: 1.2;
+  --line-height-m: 1.3;
   --line-height-l: 1.4;
   --line-height-xl: 1.6;
   --line-height-2xl: 1.8;
@@ -349,7 +487,7 @@
   --text-top-nav: var(--text-primary);
 
   /* -- Background -- */
-  --background-primary: var(--neutral-900);
+  --background-primary: var(--neutral-800);
   --background-secondary: #222222;
   --background-plain: #2a2a2a;
   --background-faded: rgba(255, 255, 255, 0.06);
@@ -357,8 +495,8 @@
   --background-modal: var(--black-alpha-50);
   --background-sidebar: var(--background-primary);
   --background-top-nav: var(--background-primary);
-  --bg-faded-3: var(--black-alpha-3);
-  --bg-faded-5: var(--black-alpha-5);
+  --bg-faded-3: var(--white-alpha-3);
+  --bg-faded-5: var(--white-alpha-5);
   --bg-faded-7: var(--white-alpha-7);
   --bg-faded-10: var(--white-alpha-10);
   --bg-faded-15: var(--white-alpha-15);
@@ -450,7 +588,7 @@
     --text-sidebar: var(--text-primary);
     --text-top-nav: var(--text-primary);
 
-  --background-primary: var(--neutral-900);
+    --background-primary: #1a1a1a;
     --background-secondary: #222222;
     --background-plain: #2a2a2a;
     --background-faded: rgba(255, 255, 255, 0.06);
@@ -609,9 +747,9 @@
   --section-xl: var(--space-14xl);
 
   /* -- Border width tokens -- */
-  --border-s: 0.0625rem;
-  --border-m: 0.125rem;
-  --border-l: 0.25rem;
+  --border-s: 1.5px;
+  --border-m: 2px;
+  --border-l: 4px;
 
   /* -- Border composition variables -- */
   --border-width: var(--border-s);
@@ -667,6 +805,7 @@
   --duration-l: 800ms;
   --duration-xl: 1200ms;
   --duration-2xl: 1500ms;
+  --duration-3xl: 1800ms;
   --duration-4xl: 2000ms;
   --duration-5xl: 2500ms;
   --duration-6xl: 3000ms;
@@ -1097,7 +1236,6 @@ button {
   display: inline-flex;
   align-items: center;
   gap: var(--space-s);
-  border-radius: var(--radius-m);
 }
 
 /* -- Button component -- */
@@ -1105,7 +1243,7 @@ button {
   font-family: var(--font-tertiary);
   font-size: var(--button-font-size);
   line-height: var(--line-height-m);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-bold);
   letter-spacing: 0;
   text-transform: none;
   text-align: center;
@@ -1116,7 +1254,6 @@ button {
   padding: var(--space-m) var(--space-xl);
   background-color: var(--button-primary);
   color: var(--button-text);
-  border-radius: var(--radius-s);
   border: var(--border-s) solid var(--button-primary);
   cursor: pointer;
   transition: all .15s ease-in-out;
@@ -1201,7 +1338,9 @@ button {
 }
 
 .svg-logo {
-
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 210 / 101;
 }
 
 [class*="svg-logo"] {
@@ -1650,7 +1789,6 @@ select {
   line-height: var(--line-height-l);
   color: var(--input-text);
   background-color: var(--input-background);
-  border-radius: var(--radius-s);
   border: var(--border-s) solid var(--input-border);
   padding: var(--space-m) var(--space-l);
   min-height: 44px;
@@ -2152,6 +2290,8 @@ details .disclosure-content {
   font-family: var(--font-tertiary);
   font-size: var(--font-2xs);
   font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-l);
   padding: var(--space-2xs) var(--space-s);
   border-radius: 0;
   background: var(--background-darker);
@@ -2313,7 +2453,7 @@ details .disclosure-content {
   width: var(--border-s);
   height: 14px;
   transform: translate(-50%, -50%);
-  transition: transform var(--duration-s) var(--ease-out);
+  transition: transform var(--duration-4xl) var(--ease-out);
 }
 
 .accordion-item.is-open .accordion-icon::after {
@@ -2321,13 +2461,18 @@ details .disclosure-content {
 }
 
 .accordion-panel {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height var(--duration-m) var(--ease-out);
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--duration-m) var(--ease-out);
 }
 
 .accordion-item.is-open .accordion-panel {
-  max-height: 3000px;
+  grid-template-rows: 1fr;
+}
+
+.accordion-panel-inner {
+  overflow: hidden;
+  min-height: 0;
 }
 
 
