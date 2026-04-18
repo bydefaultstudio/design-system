@@ -336,13 +336,13 @@
   --text-top-nav: var(--text-primary);
 
     /* -- Text with Opacity -- */
-  --text-alpha-5: color-mix(in srgb, var(----text-primary), var(--alpha-5));
-  --text-alpha-10: color-mix(in srgb, var(----text-primary), var(--alpha-10));
-  --text-alpha-15: color-mix(in srgb, var(----text-primary), var(--alpha-15));
-  --text-alpha-20: color-mix(in srgb, var(----text-primary), var(--alpha-20));
-  --text-alpha-30: color-mix(in srgb, var(----text-primary), var(--alpha-30));
-  --text-alpha-40: color-mix(in srgb, var(----text-primary), var(--alpha-40));
-  --text-alpha-50: color-mix(in srgb, var(----text-primary), var(--alpha-50));
+  --text-alpha-5: color-mix(in srgb, var(--text-primary), var(--alpha-5));
+  --text-alpha-10: color-mix(in srgb, var(--text-primary), var(--alpha-10));
+  --text-alpha-15: color-mix(in srgb, var(--text-primary), var(--alpha-15));
+  --text-alpha-20: color-mix(in srgb, var(--text-primary), var(--alpha-20));
+  --text-alpha-30: color-mix(in srgb, var(--text-primary), var(--alpha-30));
+  --text-alpha-40: color-mix(in srgb, var(--text-primary), var(--alpha-40));
+  --text-alpha-50: color-mix(in srgb, var(--text-primary), var(--alpha-50));
 
 
 
@@ -399,38 +399,21 @@
   --checkbox-selected: var(--text-primary);
   --checkbox-border: var(--border-faded);
   --checkbox-checkmark: var(--off-white);
-  --toggle-track: var(--black-alpha-3);
-  --toggle-knob: var(--neutral-500);
-  --toggle-selected: var(--text-accent);
-  --toggle-knob-selected: var(--off-white);
+  /* -- Toggle color tokens removed — uses values directly on component -- */
 
   /* -- Selection -- */
   --selection-text: var(--background-primary);
   --selection-background: var(--text-primary);
 
-  /* -- Card tokens -- */
-  --card-background: var(--background-primary);
-  --card-border: var(--border-faded);
-  --card-border-hover: var(--border-primary);
-  --card-padding: var(--space-xl);
-  --card-radius: var(--radius-m);
+  /* -- Card tokens removed — uses semantic tokens directly -- */
 
-  /* -- Tooltip tokens -- */
-  --tooltip-background: var(--warm-black);
-  --tooltip-text: var(--off-white);
+  /* -- Tooltip tokens removed — uses values directly on component -- */
 
-  /* -- Toast tokens -- */
-  --toast-background: var(--warm-black);
-  --toast-text: var(--off-white);
+  /* -- Toast tokens removed — uses values directly on component -- */
 
-  /* -- Tab tokens -- */
-  --tab-active-color: var(--text-primary);
-  --tab-inactive-color: var(--text-faded);
-  --tab-indicator-color: var(--text-primary);
+  /* -- Tab tokens removed — uses semantic tokens directly -- */
 
-  /* -- Progress tokens -- */
-  --progress-track: var(--background-darker);
-  --progress-fill: var(--text-primary);
+  /* -- Progress tokens removed — uses semantic tokens directly -- */
 
   /* -- Divider tokens -- */
   --divider-color: var(--border-faded);
@@ -440,30 +423,19 @@
   --dropdown-border: var(--border-faded);
   --dropdown-item-hover: var(--background-faded);
 
-  /* -- Tag tokens -- */
-  --tag-background: var(--background-darker);
-  --tag-border: var(--border-faded);
+  /* -- Tag tokens removed — uses semantic tokens directly -- */
 
   /* -- Dialog tokens -- */
-  --dialog-background: var(--background-primary);
   --dialog-max-width: 560px;
-  --dialog-shadow: 0 8px 32px var(--black-alpha-20);
-  --dialog-backdrop: var(--background-modal);
+  /* -- Dialog color tokens removed — uses values directly on component -- */
 
-  /* -- Slider tokens -- */
-  --slider-track-background: var(--background-darker);
-  --slider-fill: var(--text-primary);
-  --slider-thumb-background: var(--text-primary);
-  --slider-thumb-border: var(--background-primary);
+  /* -- Slider tokens removed — uses semantic tokens directly -- */
 
   /* -- Rating tokens -- */
-  --rating-color: var(--yellow);
-  --rating-color-empty: var(--background-faded);
   --rating-size: 1.5rem;
+  /* -- Rating color tokens removed — uses values directly on component -- */
 
-  /* -- Mark tokens -- */
-  --mark-background: var(--yellow-light);
-  --mark-text: var(--warm-black);
+  /* -- Mark tokens removed — uses values directly on component -- */
 
 }
 
@@ -529,35 +501,10 @@
   --checkbox-selected: #e8e6e3;
   --checkbox-border: #555;
   --checkbox-checkmark: #1a1a1a;
-  --toggle-track: #444;
-  --toggle-knob: #888;
-  --toggle-selected: #e8e6e3;
-  --toggle-knob-selected: #1a1a1a;
-
-  /* -- Card -- */
-  --card-background: var(--background-secondary);
-  --card-border: var(--border-faded);
-  --card-border-hover: var(--border-primary);
-
-
-  /* -- Tooltip / Toast -- */
-  --tooltip-background: var(--neutral-100);
-  --tooltip-text: var(--warm-black);
-  --toast-background: var(--neutral-100);
-  --toast-text: var(--warm-black);
+  /* -- Toggle/Card/Tooltip/Toast/Dialog/Mark color tokens removed — dark mode handled on components -- */
 
   /* -- Dropdown -- */
   --dropdown-background: var(--background-plain);
-
-  /* -- Dialog -- */
-  --dialog-background: var(--background-secondary);
-  --dialog-shadow: 0 8px 40px var(--black-alpha-60);
-
-  /* -- Rating -- */
-
-  /* -- Mark -- */
-  --mark-background: color-mix(in srgb, var(--yellow), var(--alpha-60));
-  --mark-text: var(--off-white);
 
   color-scheme: dark;
 }
@@ -618,33 +565,10 @@
     --checkbox-selected: #e8e6e3;
     --checkbox-border: #555;
     --checkbox-checkmark: #1a1a1a;
-    --toggle-track: #444;
-    --toggle-knob: #888;
-    --toggle-selected: #e8e6e3;
-    --toggle-knob-selected: #1a1a1a;
-
-    /* -- Card -- */
-    --card-background: var(--background-secondary);
-    --card-border: var(--border-faded);
-
-    /* -- Tooltip / Toast -- */
-    --tooltip-background: var(--neutral-100);
-    --tooltip-text: var(--warm-black);
-    --toast-background: var(--neutral-100);
-    --toast-text: var(--warm-black);
+    /* -- Toggle/Card/Tooltip/Toast/Dialog/Mark color tokens removed — dark mode handled on components -- */
 
     /* -- Dropdown -- */
     --dropdown-background: var(--background-plain);
-
-    /* -- Dialog -- */
-    --dialog-background: var(--background-secondary);
-    --dialog-shadow: 0 8px 40px var(--black-alpha-60);
-
-    /* -- Rating -- */
-
-    /* -- Mark -- */
-    --mark-background: color-mix(in srgb, var(--yellow), var(--alpha-60));
-    --mark-text: var(--off-white);
 
     color-scheme: dark;
   }
@@ -1794,13 +1718,13 @@ a:not([href]) {
 }
 
 /* -- Callout icon layout -- */
-.callout--icon {
+.callout[data-icon] {
   display: grid;
   grid-template-columns: auto 1fr;
   column-gap: var(--space-m);
 }
 
-.callout--icon > .svg-icn {
+.callout[data-icon] > .svg-icn {
   grid-column: 1;
   grid-row: 1;
   width: 1.25rem;
@@ -1808,7 +1732,7 @@ a:not([href]) {
   align-self: center;
 }
 
-.callout--icon > :not(.svg-icn) {
+.callout[data-icon] > :not(.svg-icn) {
   grid-column: 2;
 }
 
@@ -1818,49 +1742,49 @@ a:not([href]) {
   font-size: var(--font-s);
 }
 
-/* -- Callout variants -- */
-.callout-note {
+/* -- Callout type variants -- */
+.callout[data-type="note"] {
   background-color: var(--status-info-bg);
 }
 
-.callout-note .callout-title,
-.callout-note > .svg-icn {
+.callout[data-type="note"] .callout-title,
+.callout[data-type="note"] > .svg-icn {
   color: var(--status-info);
 }
 
-.callout-tip {
+.callout[data-type="tip"] {
   background-color: var(--status-success-bg);
 }
 
-.callout-tip .callout-title,
-.callout-tip > .svg-icn {
+.callout[data-type="tip"] .callout-title,
+.callout[data-type="tip"] > .svg-icn {
   color: var(--status-success);
 }
 
-.callout-warning {
+.callout[data-type="warning"] {
   background-color: var(--status-warning-bg);
 }
 
-.callout-warning .callout-title,
-.callout-warning > .svg-icn {
+.callout[data-type="warning"] .callout-title,
+.callout[data-type="warning"] > .svg-icn {
   color: var(--status-warning);
 }
 
-.callout-caution {
+.callout[data-type="caution"] {
   background-color: var(--status-danger-bg);
 }
 
-.callout-caution .callout-title,
-.callout-caution > .svg-icn {
+.callout[data-type="caution"] .callout-title,
+.callout[data-type="caution"] > .svg-icn {
   color: var(--status-danger);
 }
 
-.callout-important {
+.callout[data-type="important"] {
   background-color: var(--status-accent-bg);
 }
 
-.callout-important .callout-title,
-.callout-important > .svg-icn {
+.callout[data-type="important"] .callout-title,
+.callout[data-type="important"] > .svg-icn {
   color: var(--status-accent);
 }
 
@@ -2186,7 +2110,7 @@ input[type="radio"]:disabled:checked {
 .form-toggle input[type="checkbox"] {
   width: var(--toggle-width);
   height: var(--toggle-height);
-  background-color: var(--toggle-track);
+  background-color: var(--black-alpha-3);
   border: var(--border-s) solid var(--border-faded);
   border-radius: var(--radius-pill);
   position: relative;
@@ -2202,18 +2126,18 @@ input[type="radio"]:disabled:checked {
   width: var(--toggle-knob-size);
   height: var(--toggle-knob-size);
   border-radius: 50%;
-  background-color: var(--toggle-knob);
+  background-color: var(--neutral-500);
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .form-toggle input[type="checkbox"]:checked {
-  background-color: var(--toggle-selected);
+  background-color: var(--text-accent);
   background-image: none;
 }
 
 .form-toggle input[type="checkbox"]:checked::after {
   transform: translateY(-50%) translateX(calc(var(--toggle-width) - var(--toggle-knob-size) - var(--toggle-knob-offset) * 2 - var(--border-s) * 2));
-  background-color: var(--toggle-knob-selected);
+  background-color: var(--off-white);
 }
 
 .form-toggle input[type="checkbox"]:focus-visible {
@@ -2228,6 +2152,41 @@ input[type="radio"]:disabled:checked {
 
 .form-toggle input[type="checkbox"]:disabled + label {
   cursor: not-allowed;
+}
+
+/* -- Toggle dark mode -- */
+[data-theme="dark"] .form-toggle input[type="checkbox"] {
+  background-color: #444;
+}
+
+[data-theme="dark"] .form-toggle input[type="checkbox"]::after {
+  background-color: #888;
+}
+
+[data-theme="dark"] .form-toggle input[type="checkbox"]:checked {
+  background-color: #e8e6e3;
+}
+
+[data-theme="dark"] .form-toggle input[type="checkbox"]:checked::after {
+  background-color: #1a1a1a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .form-toggle input[type="checkbox"] {
+    background-color: #444;
+  }
+
+  :root:not([data-theme]) .form-toggle input[type="checkbox"]::after {
+    background-color: #888;
+  }
+
+  :root:not([data-theme]) .form-toggle input[type="checkbox"]:checked {
+    background-color: #e8e6e3;
+  }
+
+  :root:not([data-theme]) .form-toggle input[type="checkbox"]:checked::after {
+    background-color: #1a1a1a;
+  }
 }
 
 /* -- Form group (label + input pair) -- */
@@ -2401,27 +2360,32 @@ details .disclosure-content {
   line-height: var(--line-height-m);
 }
 
-.badge--success {
+.badge[data-color="success"],
+.badge[data-color="green"] {
   background: var(--status-success-bg);
   color: var(--status-success);
 }
 
-.badge--warning {
+.badge[data-color="warning"],
+.badge[data-color="yellow"] {
   background: var(--status-warning-bg);
   color: var(--status-warning);
 }
 
-.badge--danger {
+.badge[data-color="danger"],
+.badge[data-color="red"] {
   background: var(--status-danger-bg);
   color: var(--status-danger);
 }
 
-.badge--info {
+.badge[data-color="info"],
+.badge[data-color="blue"] {
   background: var(--status-info-bg);
   color: var(--status-info);
 }
 
-.badge--accent {
+.badge[data-color="accent"],
+.badge[data-color="purple"] {
   background: var(--status-accent-bg);
   color: var(--status-accent);
 }
@@ -2430,9 +2394,9 @@ details .disclosure-content {
 /* ------ 17. CARD ------ */
 
 .card {
-  background: var(--card-background);
-  border: var(--border-s) solid var(--card-border);
-  padding: var(--card-padding);
+  background: var(--background-primary);
+  border: var(--border-s) solid var(--border-faded);
+  padding: var(--space-xl);
   transition: border 0.3s, background-color 0.3s, box-shadow 0.15s;
 }
 
@@ -2451,7 +2415,7 @@ details .disclosure-content {
 .card--interactive:hover {
   background: var(--background-faded);
   box-shadow: 0 4px 12px var(--black-alpha-10);
-  /* border-color: var(--card-border-hover); */
+  /* border-color: var(--border-primary); */
 }
 
 .card--interactive:focus-visible {
@@ -2474,7 +2438,18 @@ details .disclosure-content {
 }
 
 .card-image {
-  border-radius: var(--card-radius) var(--card-radius) 0 0;
+  border-radius: var(--radius-m) var(--radius-m) 0 0;
+}
+
+/* -- Card dark mode -- */
+[data-theme="dark"] .card {
+  background: var(--background-secondary);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .card {
+    background: var(--background-secondary);
+  }
 }
 
 /* NOTE: .book-cover moved to docs-site.css — see CLAUDE.md §17 (Layer Discipline) */
@@ -2588,7 +2563,7 @@ details .disclosure-content {
   background: none;
   border: none;
   padding: var(--space-m) var(--space-l);
-  color: var(--tab-inactive-color);
+  color: var(--text-faded);
   font-weight: var(--font-weight-medium);
   font-size: var(--font-s);
   cursor: pointer;
@@ -2600,7 +2575,7 @@ details .disclosure-content {
 }
 
 .tab.is-active {
-  color: var(--tab-active-color);
+  color: var(--text-primary);
 }
 
 .tab.is-active::after {
@@ -2610,7 +2585,7 @@ details .disclosure-content {
   left: 0;
   right: 0;
   height: 2px;
-  background: var(--tab-indicator-color);
+  background: var(--text-primary);
 }
 
 .tab:focus-visible {
@@ -2645,18 +2620,18 @@ progress.progress-bar {
 }
 
 progress.progress-bar::-webkit-progress-bar {
-  background: var(--progress-track);
+  background: var(--background-darker);
   border-radius: 0;
 }
 
 progress.progress-bar::-webkit-progress-value {
-  background: var(--progress-fill);
+  background: var(--text-primary);
   border-radius: 0;
   transition: width 0.3s ease-in-out;
 }
 
 progress.progress-bar::-moz-progress-bar {
-  background: var(--progress-fill);
+  background: var(--text-primary);
   border-radius: 0;
 }
 
@@ -2679,8 +2654,8 @@ progress.progress-bar--danger::-moz-progress-bar { background: var(--status-dang
 .progress-tooltip {
   position: absolute;
   bottom: calc(100% + var(--space-xs));
-  background: var(--tooltip-background);
-  color: var(--tooltip-text);
+  background: var(--warm-black);
+  color: var(--off-white);
   font-size: var(--font-xs);
   border-radius: var(--radius-s);
   padding: var(--space-xs) var(--space-s);
@@ -2710,8 +2685,8 @@ progress.progress-bar--danger::-moz-progress-bar { background: var(--status-dang
   bottom: calc(100% + var(--space-xs));
   left: 50%;
   transform: translateX(-50%);
-  background: var(--tooltip-background);
-  color: var(--tooltip-text);
+  background: var(--warm-black);
+  color: var(--off-white);
   font-size: var(--font-xs);
   border-radius: var(--radius-s);
   padding: var(--space-xs) var(--space-s);
@@ -2755,6 +2730,21 @@ a[data-tooltip],
   cursor: pointer;
 }
 
+/* -- Tooltip dark mode -- */
+[data-theme="dark"] [data-tooltip]::before,
+[data-theme="dark"] .progress-tooltip {
+  background: var(--neutral-100);
+  color: var(--warm-black);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) [data-tooltip]::before,
+  :root:not([data-theme]) .progress-tooltip {
+    background: var(--neutral-100);
+    color: var(--warm-black);
+  }
+}
+
 
 /* ------ 22. TOAST ------ */
 
@@ -2771,8 +2761,8 @@ a[data-tooltip],
 
 .toast {
   pointer-events: all;
-  background: var(--toast-background);
-  color: var(--toast-text);
+  background: var(--warm-black);
+  color: var(--off-white);
   padding: var(--space-m) var(--space-l);
   border: var(--border-s) solid var(--border-faded);
   display: flex;
@@ -2802,6 +2792,19 @@ a[data-tooltip],
 
 .toast-close:hover {
   opacity: 1;
+}
+
+/* -- Toast dark mode -- */
+[data-theme="dark"] .toast {
+  background: var(--neutral-100);
+  color: var(--warm-black);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .toast {
+    background: var(--neutral-100);
+    color: var(--warm-black);
+  }
 }
 
 
@@ -2855,9 +2858,22 @@ kbd {
 
 /* -- Highlighted text -- */
 mark {
-  background: var(--mark-background);
-  color: var(--mark-text);
+  background: var(--yellow-light);
+  color: var(--warm-black);
   padding: 0 var(--space-2xs);
+}
+
+/* -- Mark dark mode -- */
+[data-theme="dark"] mark {
+  background: color-mix(in srgb, var(--yellow), var(--alpha-60));
+  color: var(--off-white);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) mark {
+    background: color-mix(in srgb, var(--yellow), var(--alpha-60));
+    color: var(--off-white);
+  }
 }
 
 /* -- Figure / Figcaption -- */
@@ -3220,32 +3236,36 @@ hr {
   font-weight: var(--font-weight-medium);
   padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-s);
   border-radius: var(--radius-s);
-  background: var(--tag-background);
-  border: var(--border-s) solid var(--tag-border);
+  background: var(--background-darker);
+  border: var(--border-s) solid var(--border-faded);
   color: var(--text-primary);
   white-space: nowrap;
   line-height: var(--line-height-xs);
 }
 
-.tag--success {
+.tag[data-color="success"],
+.tag[data-color="green"] {
   background: var(--status-success-bg);
   border-color: var(--green-light);
   color: var(--status-success);
 }
 
-.tag--warning {
+.tag[data-color="warning"],
+.tag[data-color="yellow"] {
   background: var(--status-warning-bg);
   border-color: var(--yellow-light);
   color: var(--status-warning);
 }
 
-.tag--danger {
+.tag[data-color="danger"],
+.tag[data-color="red"] {
   background: var(--status-danger-bg);
   border-color: var(--red-light);
   color: var(--status-danger);
 }
 
-.tag--info {
+.tag[data-color="info"],
+.tag[data-color="blue"] {
   background: var(--status-info-bg);
   border-color: var(--blue-light);
   color: var(--status-info);
@@ -3291,10 +3311,10 @@ hr {
 /* ------ 29. DIALOG ------ */
 
 .dialog {
-  background: var(--dialog-background);
+  background: var(--background-primary);
   border: none;
   border-radius: 0;
-  box-shadow: var(--dialog-shadow);
+  box-shadow: 0 8px 32px var(--black-alpha-20);
   padding: var(--space-2xl);
   max-width: var(--dialog-max-width);
   width: min(var(--dialog-max-width), calc(100vw - var(--space-2xl) * 2));
@@ -3303,7 +3323,7 @@ hr {
 }
 
 .dialog::backdrop {
-  background: var(--dialog-backdrop);
+  background: var(--background-modal);
   backdrop-filter: blur(2px);
 }
 
@@ -3365,6 +3385,19 @@ hr {
   flex-wrap: wrap;
 }
 
+/* -- Dialog dark mode -- */
+[data-theme="dark"] .dialog {
+  background: var(--background-secondary);
+  box-shadow: 0 8px 40px var(--black-alpha-60);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .dialog {
+    background: var(--background-secondary);
+    box-shadow: 0 8px 40px var(--black-alpha-60);
+  }
+}
+
 
 /* ------ 30. SLIDER ------ */
 
@@ -3373,7 +3406,7 @@ input[type="range"] {
   appearance: none;
   width: 100%;
   height: 4px;
-  background: var(--slider-track-background);
+  background: var(--background-darker);
   border-radius: var(--radius-pill);
   outline: none;
   cursor: pointer;
@@ -3388,8 +3421,8 @@ input[type="range"]::-webkit-slider-thumb {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: var(--slider-thumb-background);
-  border: 2px solid var(--slider-thumb-border);
+  background: var(--text-primary);
+  border: 2px solid var(--background-primary);
   cursor: pointer;
   box-shadow: 0 1px 4px var(--black-alpha-20);
   transition: transform 0.1s ease, box-shadow 0.1s ease;
@@ -3399,8 +3432,8 @@ input[type="range"]::-moz-range-thumb {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: var(--slider-thumb-background);
-  border: 2px solid var(--slider-thumb-border);
+  background: var(--text-primary);
+  border: 2px solid var(--background-primary);
   cursor: pointer;
   box-shadow: 0 1px 4px var(--black-alpha-20);
 }
@@ -3457,7 +3490,7 @@ input[type="range"]:disabled::-webkit-slider-thumb {
   width: var(--rating-size);
   height: var(--rating-size);
   cursor: pointer;
-  color: var(--rating-color-empty);
+  color: var(--background-faded);
   transition: color 0.1s ease, transform 0.1s ease;
   flex-shrink: 0;
 }
@@ -3469,7 +3502,7 @@ input[type="range"]:disabled::-webkit-slider-thumb {
 
 .rating-star.is-filled,
 .rating-star.is-hovered {
-  color: var(--rating-color);
+  color: var(--yellow);
 }
 
 

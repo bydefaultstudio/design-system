@@ -16,14 +16,16 @@ Cards are surface containers that group related content with a border and backgr
 
 ---
 
-## Tokens
+## Styling
 
-| Token | Default (Light) | Default (Dark) | Purpose |
-|-------|-----------------|----------------|---------|
-| `var(--card-background)` | `var(--background-primary)` | `var(--background-secondary)` | Surface colour |
-| `var(--card-border)` | `var(--border-faded)` | `var(--border-faded)` | Border colour |
-| `var(--card-radius)` | `var(--radius-m)` | — | Corner radius |
-| `var(--card-padding)` | `var(--space-xl)` | — | Internal padding |
+Card uses system tokens directly — no component-level token indirection.
+
+| Property | Value |
+|---|---|
+| Background | `var(--background-primary)` (dark: `var(--background-secondary)`) |
+| Border | `var(--border-s) solid var(--border-faded)` |
+| Radius | `var(--radius-m)` |
+| Padding | `var(--space-xl)` |
 
 ---
 
@@ -90,7 +92,7 @@ Combine `.card--flush` with `.card--interactive` to create a clickable card with
 <div class="demo-preview">
   <a class="card card--flush card--interactive" href="#" style="max-width: 320px;">
     <img class="img img-16x9 card-image" src="../assets/images/og/og-default.jpg" alt="Example image">
-    <div style="padding: var(--card-padding);">
+    <div style="padding: var(--space-xl);">
       <h3 class="card-title">Card with image</h3>
       <p class="card-description">Supporting text below the image.</p>
     </div>
@@ -100,7 +102,7 @@ Combine `.card--flush` with `.card--interactive` to create a clickable card with
 ```html
 <a class="card card--flush card--interactive" href="#">
   <img class="img img-16x9 card-image" src="image.jpg" alt="Description">
-  <div style="padding: var(--card-padding);">
+  <div style="padding: var(--space-xl);">
     <h3 class="card-title">Card with image</h3>
     <p class="card-description">Supporting text below the image.</p>
   </div>

@@ -23,8 +23,6 @@ Dropdowns show a contextual menu when a trigger is clicked. They are the univers
 | `var(--dropdown-background)` | `var(--background-primary)` | Menu background |
 | `var(--dropdown-border)` | `var(--border-faded)` | Menu and divider border |
 | `var(--dropdown-item-hover)` | `var(--background-faded)` | Item hover background |
-| `var(--dropdown-item-padding-y)` | `var(--space-l)` | Item vertical padding |
-| `var(--dropdown-item-padding-x)` | `var(--space-m)` | Item horizontal padding |
 
 ---
 
@@ -95,7 +93,7 @@ For page content where the trigger should look like a standard button.
 
 <div class="demo-preview">
   <div class="dropdown">
-    <button class="dropdown-trigger button is-outline" type="button" aria-haspopup="true" aria-expanded="false">
+    <button class="dropdown-trigger button" data-variant="outline" type="button" aria-haspopup="true" aria-expanded="false">
       Options
       <div class="svg-icn dropdown-chevron" data-icon="chevron-down"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/></svg></div>
     </button>
@@ -108,7 +106,7 @@ For page content where the trigger should look like a standard button.
 </div>
 
 ```html
-<button class="dropdown-trigger button is-outline" type="button" ...>
+<button class="dropdown-trigger button" data-variant="outline" type="button" ...>
   Options
   <div class="svg-icn dropdown-chevron"><!-- chevron svg --></div>
 </button>
@@ -203,7 +201,7 @@ Use `.dropdown-item-end` to push trailing content to the right edge. Ideal for k
 
 <div class="demo-preview">
   <div class="dropdown">
-    <button class="dropdown-trigger button is-outline" type="button" aria-haspopup="true" aria-expanded="false">
+    <button class="dropdown-trigger button" data-variant="outline" type="button" aria-haspopup="true" aria-expanded="false">
       Edit
       <div class="svg-icn dropdown-chevron" data-icon="chevron-down"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/></svg></div>
     </button>
@@ -246,7 +244,7 @@ Use `.dropdown-desc` for supporting text below the label.
 
 <div class="demo-preview">
   <div class="dropdown">
-    <button class="dropdown-trigger button is-outline" type="button" aria-haspopup="true" aria-expanded="false">
+    <button class="dropdown-trigger button" data-variant="outline" type="button" aria-haspopup="true" aria-expanded="false">
       New
       <div class="svg-icn dropdown-chevron" data-icon="chevron-down"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z" fill="currentColor"/></svg></div>
     </button>
@@ -353,7 +351,7 @@ Use `.dropdown-label` to create non-interactive section headers that group items
 
 <div class="demo-preview">
   <div class="dropdown">
-    <button class="dropdown-trigger button is-outline" type="button" aria-haspopup="true" aria-expanded="false">File</button>
+    <button class="dropdown-trigger button" data-variant="outline" type="button" aria-haspopup="true" aria-expanded="false">File</button>
     <div class="dropdown-menu">
       <button class="dropdown-item" role="menuitem" type="button">Save</button>
       <button class="dropdown-item is-disabled" role="menuitem" type="button" disabled aria-disabled="true">Save as...</button>

@@ -33,17 +33,17 @@ Inline code gets a subtle background, small padding, and rounded corners. It use
 ## Code blocks
 
 <div class="demo-preview">
-  <pre><code>.button {
-  background: var(--button-primary);
-  color: var(--button-text);
+  <pre><code>.card {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
   border-radius: var(--radius-m);
 }</code></pre>
 </div>
 
 ```html
-<pre><code>.button {
-  background: var(--button-primary);
-  color: var(--button-text);
+<pre><code>.card {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
 }</code></pre>
 ```
 

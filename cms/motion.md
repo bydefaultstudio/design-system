@@ -76,6 +76,11 @@ Six durations on the same t-shirt scale as `--space-*`, `--font-*`, and `--radiu
 | `var(--duration-m)` | `600ms` | Surface-level transitions (drawers, modals, page swaps) |
 | `var(--duration-l)` | `800ms` | Page-level openings (full-area entrances) |
 | `var(--duration-xl)` | `1200ms` | Hero motion, deliberate reveals, intro animations |
+| `var(--duration-2xl)` | `1500ms` | Extended reveals, complex staggered sequences |
+| `var(--duration-3xl)` | `1800ms` | Long-form entrance animations |
+| `var(--duration-4xl)` | `2000ms` | Full-page orchestrated transitions |
+| `var(--duration-5xl)` | `2500ms` | Cinematic sequences |
+| `var(--duration-6xl)` | `3000ms` | Slow ambient motion, background loops |
 
 <div class="demo-preview is-joined">
   <style>

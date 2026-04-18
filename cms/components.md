@@ -42,12 +42,12 @@ The `layer` field is **required** — the doc generator validates it on every bu
 ## Naming convention
 
 - **Base class:** `.component-name` (e.g. `.badge`, `.card`, `.toast`)
-- **Modifiers:** `.component-name--modifier` (e.g. `.badge--success`, `.card--flush`)
+- **Variation:** `data-*` attributes (e.g. `data-color="success"`, `data-variant="outline"`, `data-type="note"`)
 - **State classes:** `.is-state` (e.g. `.is-active`, `.is-open`, `.is-disabled`, `.is-hidden`, `.is-loading`) — shared across components
 - **Utility overrides:** use `!important` only on utility classes (e.g. `.gap-m`)
 - **JS hooks:** use `data-*` attributes, never CSS class names
 
-**CUBE pattern (button):** The button component uses `data-*` attributes for variation (`data-variant`, `data-size`, `data-color`, `data-icon-only`, `data-full-width`) and `.is-*` classes for transient state only (`.is-disabled`, `.is-loading`, `.is-active`). Role classes (`.close-btn`, `.nav-btn`) compose with the base via token overrides. See `cms/button.md` for the full pattern. New components should adopt the same `data-*` attribute pattern for variation.
+**CUBE pattern:** Components use `data-*` attributes for variation and `.is-*` classes for transient state only. This applies to button (`data-variant`, `data-size`, `data-color`, `data-icon-only`, `data-full-width`), badge (`data-color`), tag (`data-color`), and callout (`data-type`, `data-icon`). Role classes (`.close-btn`, `.nav-btn`) compose with the base via token overrides. See individual component docs for details.
 
 ---
 
@@ -60,12 +60,12 @@ Component tokens follow this pattern:
 --component-property: var(--semantic-token);
 ```
 
-Example:
+Example (button component):
 ```css
---card-background: var(--background-primary);
---card-border: var(--border-faded);
---card-radius: var(--radius-m);
---card-padding: var(--space-xl);
+--button-color: var(--text-primary);
+--button-bg: var(--button-color);
+--button-border: var(--button-color);
+--button-text-color: var(--text-inverted);
 ```
 
 ---

@@ -105,7 +105,7 @@ Add a `.copy-btn` inside `.disclosure-content` with a `data-copy` attribute cont
         <dt>Line height</dt>
         <dd>var(--line-height-s) <span class="token-tag">1</span></dd>
       </dl>
-      <button class="button is-small copy-btn"
+      <button class="button copy-btn" data-size="small"
         data-copy="font-size: var(--font-7xl);&#10;line-height: var(--line-height-s);"
         aria-label="Copy CSS for Heading 1">
         Copy CSS
@@ -124,7 +124,7 @@ Add a `.copy-btn` inside `.disclosure-content` with a `data-copy` attribute cont
       <dt>Line height</dt>
       <dd>var(--line-height-s) <span class="token-tag">1</span></dd>
     </dl>
-    <button class="button is-small copy-btn"
+    <button class="button copy-btn" data-size="small"
       data-copy="font-size: var(--font-7xl);&#10;line-height: var(--line-height-s);"
       aria-label="Copy CSS for Heading 1">
       Copy CSS

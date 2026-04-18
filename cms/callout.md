@@ -12,22 +12,28 @@ access: "team"
 client: "internal"
 ---
 
+# Callout
+
 Callouts are used to **highlight important information** within content. They draw attention to notes, tips, warnings, and other contextual messages.
 
----
-
-## Core Principles
-
-- Callouts use a **base + variant** pattern (like buttons and borders)
-- The base `.callout` class provides structure and neutral styling
-- Variant classes add semantic color via left border and background tint
-- All colors are controlled by semantic tokens that can be customized per project
+The `.callout` class is required. Type variants use `data-type`, and the icon layout uses the `data-icon` boolean attribute.
 
 ---
 
-## Status Color Tokens
+## Anatomy
 
-Callout variants are powered by status color tokens defined in `:root`. Each status has a foreground and background token:
+| Axis | Mechanism | Example |
+|---|---|---|
+| Type (semantic) | `data-type` | `data-type="note"` |
+| Icon layout | `data-icon` (boolean) | `data-icon` |
+
+No component-level tokens — callout references status tokens directly.
+
+---
+
+## Status colour tokens
+
+Callout types are powered by status colour tokens defined in `:root`:
 
 | Token | Default | Purpose |
 |---|---|---|
@@ -46,9 +52,9 @@ Callouts, badges, and other components reference these tokens directly — no in
 
 ---
 
-## Base Callout
+## Base callout
 
-The `.callout` class provides the structural foundation:
+The `.callout` class provides the structural foundation with neutral styling.
 
 <div class="demo-preview is-joined">
   <div class="callout">
@@ -62,42 +68,108 @@ The `.callout` class provides the structural foundation:
 </div>
 ```
 
-**Structural properties:**
-- Left border using `var(--border-l)` width (4px)
-- Padding using spacing tokens
-- Neutral background (`var(--background-faded)`)
-- First/last child margin normalization
-
 ---
 
-## Callout Title
+## Types
 
-Use `.callout-title` inside any callout for a styled heading:
+Use `data-type` to set the semantic variant. Each type applies a coloured background and accent colour to the title and icon.
+
+| `data-type` | Use for |
+|---|---|
+| `note` | Useful information users should know |
+| `tip` | Helpful advice on doing things better |
+| `warning` | Urgent information to avoid problems |
+| `caution` | Risks or negative outcomes |
+| `important` | Key information users need |
+
+### Note
 
 <div class="demo-preview is-joined">
-  <div class="callout callout-note">
+  <div class="callout" data-type="note">
     <div class="callout-title">Note</div>
-    <p class="callout-description">Content here.</p>
+    <p class="callout-description">Useful information that users should know.</p>
   </div>
 </div>
 
 ```html
-<div class="callout callout-note">
+<div class="callout" data-type="note">
   <div class="callout-title">Note</div>
-  <p class="callout-description">Content here.</p>
+  <p class="callout-description">Useful information that users should know.</p>
 </div>
 ```
 
-The title inherits the variant's accent color automatically.
+### Tip
+
+<div class="demo-preview is-joined">
+  <div class="callout" data-type="tip">
+    <div class="callout-title">Tip</div>
+    <p class="callout-description">Helpful advice for doing things better.</p>
+  </div>
+</div>
+
+```html
+<div class="callout" data-type="tip">
+  <div class="callout-title">Tip</div>
+  <p class="callout-description">Helpful advice for doing things better.</p>
+</div>
+```
+
+### Warning
+
+<div class="demo-preview is-joined">
+  <div class="callout" data-type="warning">
+    <div class="callout-title">Warning</div>
+    <p class="callout-description">Urgent information to avoid problems.</p>
+  </div>
+</div>
+
+```html
+<div class="callout" data-type="warning">
+  <div class="callout-title">Warning</div>
+  <p class="callout-description">Urgent information to avoid problems.</p>
+</div>
+```
+
+### Caution
+
+<div class="demo-preview is-joined">
+  <div class="callout" data-type="caution">
+    <div class="callout-title">Caution</div>
+    <p class="callout-description">Risks or negative outcomes of certain actions.</p>
+  </div>
+</div>
+
+```html
+<div class="callout" data-type="caution">
+  <div class="callout-title">Caution</div>
+  <p class="callout-description">Risks or negative outcomes of certain actions.</p>
+</div>
+```
+
+### Important
+
+<div class="demo-preview is-joined">
+  <div class="callout" data-type="important">
+    <div class="callout-title">Important</div>
+    <p class="callout-description">Key information users need to know.</p>
+  </div>
+</div>
+
+```html
+<div class="callout" data-type="important">
+  <div class="callout-title">Important</div>
+  <p class="callout-description">Key information users need to know.</p>
+</div>
+```
 
 ---
 
-## Callout with Icon
+## Callout with icon
 
-Icons are **optional**. Add `.callout--icon` to the `.callout` element to enable the icon layout. No wrapper div needed — the icon, title, and description are all direct children with their own classes.
+Add the `data-icon` boolean attribute to enable a two-column grid layout with the icon pinned alongside the title.
 
 <div class="demo-preview is-joined">
-  <div class="callout callout-note callout--icon">
+  <div class="callout" data-type="note" data-icon>
     {{icon:info}}
     <div class="callout-title">Note</div>
     <p class="callout-description">This callout has an icon for extra visual context.</p>
@@ -105,241 +177,79 @@ Icons are **optional**. Add `.callout--icon` to the `.callout` element to enable
 </div>
 
 ```html
-<div class="callout callout-note callout--icon">
+<div class="callout" data-type="note" data-icon>
   <div class="svg-icn" data-icon="info"><!-- info SVG --></div>
   <div class="callout-title">Note</div>
   <p class="callout-description">This callout has an icon for extra visual context.</p>
 </div>
 ```
 
-**How it works:**
-- `.callout--icon` switches the callout to a two-column CSS grid
-- The `.svg-icn` is pinned to row 1, column 1 — vertically centered with the title via `align-self: center`
+How it works:
+
+- `data-icon` switches the callout to a two-column CSS grid
+- The `.svg-icn` is pinned to row 1, column 1 — vertically centered with the title
 - `.callout-title` and `.callout-description` auto-flow into column 2
-- The icon stays aligned with the title regardless of title font size (`font-s`, `h2`, `h3`, etc.)
-- To remove the icon, drop `.callout--icon` and the `.svg-icn`
 
-| Class | Role |
-|---|---|
-| `.callout--icon` | Enables two-column grid layout |
-| `.svg-icn` | Icon (direct child, pinned to row 1, vertically centered with title) |
-| `.callout-title` | Title text (row 1, column 2) |
-| `.callout-description` | Description content (below title, column 2) |
+### Recommended icons
 
----
-
-## Recommended Icons
-
-Each variant has a suggested icon for visual consistency. These are recommendations — any brand icon can be used.
-
-| Variant | Icon | Shorthand |
+| Type | Icon | Shorthand |
 |---|---|---|
-| `.callout-note` | {{icon:info}} Info circle | `{{icon:info}}` |
-| `.callout-tip` | {{icon:bolt}} Lightning bolt | `{{icon:bolt}}` |
-| `.callout-warning` | {{icon:warning}} Warning triangle | `{{icon:warning}}` |
-| `.callout-caution` | {{icon:close-circled}} Close circle | `{{icon:close-circled}}` |
-| `.callout-important` | {{icon:exclamation}} Exclamation circle | `{{icon:exclamation}}` |
+| `note` | {{icon:info}} Info circle | `{{icon:info}}` |
+| `tip` | {{icon:bolt}} Lightning bolt | `{{icon:bolt}}` |
+| `warning` | {{icon:warning}} Warning triangle | `{{icon:warning}}` |
+| `caution` | {{icon:close-circled}} Close circle | `{{icon:close-circled}}` |
+| `important` | {{icon:exclamation}} Exclamation circle | `{{icon:exclamation}}` |
 
----
-
-## Variants
-
-### Note (`.callout-note`)
-
-For useful information users should know, even when skimming.
+### All types with icons
 
 <div class="demo-preview is-joined">
-  <div class="callout callout-note">
-    <div class="callout-title">Note</div>
-    <p class="callout-description">Useful information that users should know.</p>
-  </div>
-</div>
-
-```html
-<div class="callout callout-note">
-  <div class="callout-title">Note</div>
-  <p class="callout-description">Useful information that users should know.</p>
-</div>
-```
-
-With icon:
-
-<div class="demo-preview is-joined">
-  <div class="callout callout-note callout--icon">
+  <div class="callout" data-type="note" data-icon>
     {{icon:info}}
     <div class="callout-title">Note</div>
     <p class="callout-description">Useful information that users should know.</p>
   </div>
 </div>
 
-```html
-<div class="callout callout-note callout--icon">
-  <div class="svg-icn" data-icon="info"><!-- info SVG --></div>
-  <div class="callout-title">Note</div>
-  <p class="callout-description">Useful information that users should know.</p>
-</div>
-```
-
-### Tip (`.callout-tip`)
-
-For helpful advice on doing things better or more easily.
-
 <div class="demo-preview is-joined">
-  <div class="callout callout-tip">
-    <div class="callout-title">Tip</div>
-    <p class="callout-description">Helpful advice for doing things better.</p>
-  </div>
-</div>
-
-```html
-<div class="callout callout-tip">
-  <div class="callout-title">Tip</div>
-  <p class="callout-description">Helpful advice for doing things better.</p>
-</div>
-```
-
-With icon:
-
-<div class="demo-preview is-joined">
-  <div class="callout callout-tip callout--icon">
+  <div class="callout" data-type="tip" data-icon>
     {{icon:bolt}}
     <div class="callout-title">Tip</div>
     <p class="callout-description">Helpful advice for doing things better.</p>
   </div>
 </div>
 
-```html
-<div class="callout callout-tip callout--icon">
-  <div class="svg-icn" data-icon="bolt"><!-- bolt SVG --></div>
-  <div class="callout-title">Tip</div>
-  <p class="callout-description">Helpful advice for doing things better.</p>
-</div>
-```
-
-### Warning (`.callout-warning`)
-
-For urgent information that needs immediate attention.
-
 <div class="demo-preview is-joined">
-  <div class="callout callout-warning">
-    <div class="callout-title">Warning</div>
-    <p class="callout-description">Urgent information to avoid problems.</p>
-  </div>
-</div>
-
-```html
-<div class="callout callout-warning">
-  <div class="callout-title">Warning</div>
-  <p class="callout-description">Urgent information to avoid problems.</p>
-</div>
-```
-
-With icon:
-
-<div class="demo-preview is-joined">
-  <div class="callout callout-warning callout--icon">
+  <div class="callout" data-type="warning" data-icon>
     {{icon:warning}}
     <div class="callout-title">Warning</div>
     <p class="callout-description">Urgent information to avoid problems.</p>
   </div>
 </div>
 
-```html
-<div class="callout callout-warning callout--icon">
-  <div class="svg-icn" data-icon="warning"><!-- warning SVG --></div>
-  <div class="callout-title">Warning</div>
-  <p class="callout-description">Urgent information to avoid problems.</p>
-</div>
-```
-
-### Caution (`.callout-caution`)
-
-For advising about risks or negative outcomes.
-
 <div class="demo-preview is-joined">
-  <div class="callout callout-caution">
-    <div class="callout-title">Caution</div>
-    <p class="callout-description">Risks or negative outcomes of certain actions.</p>
-  </div>
-</div>
-
-```html
-<div class="callout callout-caution">
-  <div class="callout-title">Caution</div>
-  <p class="callout-description">Risks or negative outcomes of certain actions.</p>
-</div>
-```
-
-With icon:
-
-<div class="demo-preview is-joined">
-  <div class="callout callout-caution callout--icon">
+  <div class="callout" data-type="caution" data-icon>
     {{icon:close-circled}}
     <div class="callout-title">Caution</div>
     <p class="callout-description">Risks or negative outcomes of certain actions.</p>
   </div>
 </div>
 
-```html
-<div class="callout callout-caution callout--icon">
-  <div class="svg-icn" data-icon="close-circled"><!-- close-circled SVG --></div>
-  <div class="callout-title">Caution</div>
-  <p class="callout-description">Risks or negative outcomes of certain actions.</p>
-</div>
-```
-
-### Important (`.callout-important`)
-
-For key information users need to achieve their goal.
-
 <div class="demo-preview is-joined">
-  <div class="callout callout-important">
-    <div class="callout-title">Important</div>
-    <p class="callout-description">Key information users need to know.</p>
-  </div>
-</div>
-
-```html
-<div class="callout callout-important">
-  <div class="callout-title">Important</div>
-  <p class="callout-description">Key information users need to know.</p>
-</div>
-```
-
-With icon:
-
-<div class="demo-preview is-joined">
-  <div class="callout callout-important callout--icon">
+  <div class="callout" data-type="important" data-icon>
     {{icon:exclamation}}
     <div class="callout-title">Important</div>
     <p class="callout-description">Key information users need to know.</p>
   </div>
 </div>
 
-```html
-<div class="callout callout-important callout--icon">
-  <div class="svg-icn" data-icon="exclamation"><!-- exclamation SVG --></div>
-  <div class="callout-title">Important</div>
-  <p class="callout-description">Key information users need to know.</p>
-</div>
-```
-
 ---
 
-## Rules
+## Usage rules
 
 | Do | Don't |
 |---|---|
-| Use semantic variants for meaning | Use color to decorate without purpose |
+| Use `data-type` for semantic meaning | Use colour to decorate without purpose |
 | Keep callout content concise | Put entire sections inside callouts |
 | Use `.callout-title` for labeling | Use headings (h1–h6) inside callouts |
-| Use recommended icons for visual consistency | Add icons to every callout — use them when they add clarity |
-| Customize `--status-*` tokens per project | Hardcode colors on individual callouts |
-
----
-
-## Relationship to Alerts
-
-The site also includes an `.alert` component (`.alert-note`, `.alert-tip`, `.alert-important`, `.alert-warning`, `.alert-caution`) for inline callout boxes — typically used in documentation content. These share the same colour tokens as the design system callouts.
-
-The design system callouts (`.callout`) are the **structured, project-wide** equivalent with icon support and richer layout. For simple inline messages, use `.alert`. For prominent UI callouts, use `.callout`.
+| Use recommended icons for visual consistency | Add icons to every callout — use only when they add clarity |
+| Customise `--status-*` tokens per project | Hardcode colours on individual callouts |

@@ -121,39 +121,30 @@
                 <article>
                     <p>Cards are surface containers that group related content with a border and background. They support padding modifiers and an interactive (clickable) variant.</p>
 <hr>
-<h2 id="tokens">Tokens</h2>
+<h2 id="styling">Styling</h2>
+<p>Card uses system tokens directly — no component-level token indirection.</p>
 <div class="table-scroll"><table class="table">
 <thead>
 <tr>
-<th>Token</th>
-<th>Default (Light)</th>
-<th>Default (Dark)</th>
-<th>Purpose</th>
+<th>Property</th>
+<th>Value</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--card-background)" aria-label="Copy var(--card-background)"><code>var(--card-background)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--background-primary)" aria-label="Copy var(--background-primary)"><code>var(--background-primary)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--background-secondary)" aria-label="Copy var(--background-secondary)"><code>var(--background-secondary)</code></button></td>
-<td>Surface colour</td>
+<td>Background</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-primary)" aria-label="Copy var(--background-primary)"><code>var(--background-primary)</code></button> (dark: <button type="button" class="token-copy is-token" data-copy="var(--background-secondary)" aria-label="Copy var(--background-secondary)"><code>var(--background-secondary)</code></button>)</td>
 </tr>
 <tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--card-border)" aria-label="Copy var(--card-border)"><code>var(--card-border)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--border-faded)" aria-label="Copy var(--border-faded)"><code>var(--border-faded)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--border-faded)" aria-label="Copy var(--border-faded)"><code>var(--border-faded)</code></button></td>
-<td>Border colour</td>
+<td>Border</td>
+<td><code>var(--border-s) solid var(--border-faded)</code></td>
 </tr>
 <tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--card-radius)" aria-label="Copy var(--card-radius)"><code>var(--card-radius)</code></button></td>
+<td>Radius</td>
 <td><button type="button" class="token-copy is-token" data-copy="var(--radius-m)" aria-label="Copy var(--radius-m)"><code>var(--radius-m)</code></button></td>
-<td>—</td>
-<td>Corner radius</td>
 </tr>
 <tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--card-padding)" aria-label="Copy var(--card-padding)"><code>var(--card-padding)</code></button></td>
+<td>Padding</td>
 <td><button type="button" class="token-copy is-token" data-copy="var(--space-xl)" aria-label="Copy var(--space-xl)"><code>var(--space-xl)</code></button></td>
-<td>—</td>
-<td>Internal padding</td>
 </tr>
 </tbody></table></div>
 <hr>
@@ -166,8 +157,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-meudmqiea" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-meudmqiea" class="language-html">&lt;div class=&quot;card&quot;&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-ij42oym38" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-ij42oym38" class="language-html">&lt;div class=&quot;card&quot;&gt;
   &lt;p&gt;Card content goes here.&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
@@ -186,8 +177,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-7srjcoevn" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-7srjcoevn" class="language-html">&lt;div class=&quot;card card--flush&quot;&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-nrx4cg1r3" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-nrx4cg1r3" class="language-html">&lt;div class=&quot;card card--flush&quot;&gt;
   &lt;!-- Content manages its own padding --&gt;
 &lt;/div&gt;
 </code></pre>
@@ -206,8 +197,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-xn324s9cs" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-xn324s9cs" class="language-html">&lt;a class=&quot;card card--interactive&quot; href=&quot;#&quot;&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-1vp2l1rv4" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-1vp2l1rv4" class="language-html">&lt;a class=&quot;card card--interactive&quot; href=&quot;#&quot;&gt;
   &lt;h3 class=&quot;card-title&quot;&gt;Clickable card&lt;/h3&gt;
   &lt;p class=&quot;card-description&quot;&gt;This entire card is a link.&lt;/p&gt;
 &lt;/a&gt;
@@ -219,7 +210,7 @@
 <div class="demo-preview">
   <a class="card card--flush card--interactive" href="#" style="max-width: 320px;">
     <img class="img img-16x9 card-image" src="../assets/images/og/og-default.jpg" alt="Example image">
-    <div style="padding: var(--card-padding);">
+    <div style="padding: var(--space-xl);">
       <h3 class="card-title">Card with image</h3>
       <p class="card-description">Supporting text below the image.</p>
     </div>
@@ -228,10 +219,10 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-wpsxv8g4u" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-wpsxv8g4u" class="language-html">&lt;a class=&quot;card card--flush card--interactive&quot; href=&quot;#&quot;&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-uldm7phto" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-uldm7phto" class="language-html">&lt;a class=&quot;card card--flush card--interactive&quot; href=&quot;#&quot;&gt;
   &lt;img class=&quot;img img-16x9 card-image&quot; src=&quot;image.jpg&quot; alt=&quot;Description&quot;&gt;
-  &lt;div style=&quot;padding: var(--card-padding);&quot;&gt;
+  &lt;div style=&quot;padding: var(--space-xl);&quot;&gt;
     &lt;h3 class=&quot;card-title&quot;&gt;Card with image&lt;/h3&gt;
     &lt;p class=&quot;card-description&quot;&gt;Supporting text below the image.&lt;/p&gt;
   &lt;/div&gt;
@@ -265,7 +256,7 @@
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#tokens" class="toc-link">Tokens</a></li><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#flush-card" class="toc-link">Flush card</a></li><li class="toc-item toc-level-2"><a href="#interactive-card" class="toc-link">Interactive card</a></li><li class="toc-item toc-level-2"><a href="#accessibility-notes" class="toc-link">Accessibility notes</a></li><li class="toc-item toc-level-2"><a href="#do-don39t" class="toc-link">Do / Don&#39;t</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#styling" class="toc-link">Styling</a></li><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#flush-card" class="toc-link">Flush card</a></li><li class="toc-item toc-level-2"><a href="#interactive-card" class="toc-link">Interactive card</a></li><li class="toc-item toc-level-2"><a href="#accessibility-notes" class="toc-link">Accessibility notes</a></li><li class="toc-item toc-level-2"><a href="#do-don39t" class="toc-link">Do / Don&#39;t</a></li></ul></nav></div>
     </aside>
         </div>
 

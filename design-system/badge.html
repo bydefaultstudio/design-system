@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Badge - By Default Brand OS</title>
-    <meta name="description" content="How to use badge and pill components for status labels, version tags, and category indicators.">
+    <meta name="description" content="How to use badge components for status labels, version tags, and category indicators.">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
@@ -12,7 +12,7 @@
 
     <!-- Open Graph -->
     <meta property="og:title" content="Badge - By Default Brand OS">
-    <meta property="og:description" content="How to use badge and pill components for status labels, version tags, and category indicators.">
+    <meta property="og:description" content="How to use badge components for status labels, version tags, and category indicators.">
     <meta property="og:image" content="../assets/images/og/og-default.jpg">
     <meta property="og:type" content="website">
 
@@ -119,39 +119,26 @@
             <!-- Main Content -->
             <main class="docs-main">
                 <article>
-                    <p>Badges are small inline labels used to indicate status, category, or metadata. They use the brand display font (<button type="button" class="token-copy is-token" data-copy="var(--font-tertiary)" aria-label="Copy var(--font-tertiary)"><code>var(--font-tertiary)</code></button>) and pill shape by default.</p>
+                    <h1 id="badge">Badge</h1>
+<p>Badges are small inline labels used to indicate status, category, or metadata. They use the brand display font (<button type="button" class="token-copy is-token" data-copy="var(--font-tertiary)" aria-label="Copy var(--font-tertiary)"><code>var(--font-tertiary)</code></button>) with uppercase styling.</p>
+<p>The <button type="button" class="token-copy is-class" data-copy=".badge" aria-label="Copy .badge"><code>.badge</code></button> class is required. Colour variants use the <code>data-color</code> attribute — the same API as button.</p>
 <hr>
-<h2 id="tokens">Tokens</h2>
+<h2 id="anatomy">Anatomy</h2>
+<p>The badge uses <code>data-color</code> for semantic colour variants. No component-level tokens — badge references system tokens directly.</p>
 <div class="table-scroll"><table class="table">
 <thead>
 <tr>
-<th>Token</th>
-<th>Default</th>
-<th>Purpose</th>
+<th>Axis</th>
+<th>Mechanism</th>
+<th>Example</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--badge-font-size)" aria-label="Copy var(--badge-font-size)"><code>var(--badge-font-size)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--font-2xs)" aria-label="Copy var(--font-2xs)"><code>var(--font-2xs)</code></button></td>
-<td>Font size</td>
-</tr>
-<tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--badge-padding-y)" aria-label="Copy var(--badge-padding-y)"><code>var(--badge-padding-y)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--space-2xs)" aria-label="Copy var(--space-2xs)"><code>var(--space-2xs)</code></button></td>
-<td>Vertical padding</td>
-</tr>
-<tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--badge-padding-x)" aria-label="Copy var(--badge-padding-x)"><code>var(--badge-padding-x)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--space-s)" aria-label="Copy var(--space-s)"><code>var(--space-s)</code></button></td>
-<td>Horizontal padding</td>
-</tr>
-<tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--badge-radius)" aria-label="Copy var(--badge-radius)"><code>var(--badge-radius)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--radius-pill)" aria-label="Copy var(--radius-pill)"><code>var(--radius-pill)</code></button></td>
-<td>Border radius (pill)</td>
+<td>Colour</td>
+<td><code>data-color</code></td>
+<td><code>data-color=&quot;success&quot;</code></td>
 </tr>
 </tbody></table></div>
-<p>Status variants reuse the global <code>--status-*</code> tokens.</p>
 <hr>
 <h2 id="basic-usage">Basic usage</h2>
 <div class="demo-preview">
@@ -160,50 +147,120 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-cgfyfo17w" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-cgfyfo17w" class="language-html">&lt;span class=&quot;badge&quot;&gt;Default&lt;/span&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-3zeukzbqr" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-3zeukzbqr" class="language-html">&lt;span class=&quot;badge&quot;&gt;Default&lt;/span&gt;
 </code></pre>
       </div>
     
 <hr>
-<h2 id="variants">Variants</h2>
+<h2 id="colour">Colour</h2>
+<p><code>data-color</code> applies a semantic colour. The badge background uses the status background token and text uses the status foreground.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Semantic</th>
+<th>Brand alias</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>data-color=&quot;danger&quot;</code></td>
+<td><code>data-color=&quot;red&quot;</code></td>
+<td>Errors, critical status</td>
+</tr>
+<tr>
+<td><code>data-color=&quot;success&quot;</code></td>
+<td><code>data-color=&quot;green&quot;</code></td>
+<td>Live, published, positive</td>
+</tr>
+<tr>
+<td><code>data-color=&quot;warning&quot;</code></td>
+<td><code>data-color=&quot;yellow&quot;</code></td>
+<td>Draft, pending, attention</td>
+</tr>
+<tr>
+<td><code>data-color=&quot;info&quot;</code></td>
+<td><code>data-color=&quot;blue&quot;</code></td>
+<td>Informational, neutral</td>
+</tr>
+<tr>
+<td><code>data-color=&quot;accent&quot;</code></td>
+<td><code>data-color=&quot;purple&quot;</code></td>
+<td>Emphasis, special</td>
+</tr>
+</tbody></table></div>
 <div class="demo-preview" style="display: flex; gap: var(--space-m); flex-wrap: wrap;">
   <span class="badge">Default</span>
-  <span class="badge badge--success">Success</span>
-  <span class="badge badge--warning">Warning</span>
-  <span class="badge badge--danger">Danger</span>
-  <span class="badge badge--info">Info</span>
-  <span class="badge badge--accent">Accent</span>
+  <span class="badge" data-color="success">Success</span>
+  <span class="badge" data-color="warning">Warning</span>
+  <span class="badge" data-color="danger">Danger</span>
+  <span class="badge" data-color="info">Info</span>
+  <span class="badge" data-color="accent">Accent</span>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-kgjoqzdku" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-kgjoqzdku" class="language-html">&lt;span class=&quot;badge&quot;&gt;Default&lt;/span&gt;
-&lt;span class=&quot;badge badge--success&quot;&gt;Success&lt;/span&gt;
-&lt;span class=&quot;badge badge--warning&quot;&gt;Warning&lt;/span&gt;
-&lt;span class=&quot;badge badge--danger&quot;&gt;Danger&lt;/span&gt;
-&lt;span class=&quot;badge badge--info&quot;&gt;Info&lt;/span&gt;
-&lt;span class=&quot;badge badge--accent&quot;&gt;Accent&lt;/span&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-2tt82m342" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-2tt82m342" class="language-html">&lt;span class=&quot;badge&quot;&gt;Default&lt;/span&gt;
+&lt;span class=&quot;badge&quot; data-color=&quot;success&quot;&gt;Success&lt;/span&gt;
+&lt;span class=&quot;badge&quot; data-color=&quot;warning&quot;&gt;Warning&lt;/span&gt;
+&lt;span class=&quot;badge&quot; data-color=&quot;danger&quot;&gt;Danger&lt;/span&gt;
+&lt;span class=&quot;badge&quot; data-color=&quot;info&quot;&gt;Info&lt;/span&gt;
+&lt;span class=&quot;badge&quot; data-color=&quot;accent&quot;&gt;Accent&lt;/span&gt;
 </code></pre>
       </div>
     
-<p>Each variant uses <code>color-mix()</code> to create a transparent tinted background from the corresponding <code>--status-*</code> token.</p>
 <hr>
-<h2 id="accessibility-notes">Accessibility notes</h2>
+<h2 id="styling">Styling</h2>
+<p>Badge uses system tokens directly — no component-level token indirection.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Font family</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-tertiary)" aria-label="Copy var(--font-tertiary)"><code>var(--font-tertiary)</code></button></td>
+</tr>
+<tr>
+<td>Font size</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-2xs)" aria-label="Copy var(--font-2xs)"><code>var(--font-2xs)</code></button></td>
+</tr>
+<tr>
+<td>Padding</td>
+<td><code>var(--space-2xs) var(--space-s)</code></td>
+</tr>
+<tr>
+<td>Border radius</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td>Background</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-darker)" aria-label="Copy var(--background-darker)"><code>var(--background-darker)</code></button></td>
+</tr>
+<tr>
+<td>Text colour</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button></td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>Badges are presentational — they do not require ARIA roles</li>
 <li>Ensure the badge text provides sufficient context (avoid colour-only meaning)</li>
 <li>If a badge conveys critical status, pair it with descriptive text nearby</li>
 </ul>
 <hr>
-<h2 id="do-don39t">Do / Don&#39;t</h2>
-<p><strong>Do:</strong></p>
+<h2 id="usage-rules">Usage rules</h2>
+<p><strong>Do</strong></p>
 <ul>
 <li>Use badges for metadata: status, version, category</li>
 <li>Keep badge text short (1-2 words)</li>
+<li>Use <code>data-color</code> for meaning — not decoration</li>
 </ul>
-<p><strong>Don&#39;t:</strong></p>
+<p><strong>Don&#39;t</strong></p>
 <ul>
 <li>Don&#39;t use badges as buttons — they are not interactive</li>
 <li>Don&#39;t rely on colour alone to convey meaning</li>
@@ -215,7 +272,7 @@
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#tokens" class="toc-link">Tokens</a></li><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#variants" class="toc-link">Variants</a></li><li class="toc-item toc-level-2"><a href="#accessibility-notes" class="toc-link">Accessibility notes</a></li><li class="toc-item toc-level-2"><a href="#do-don39t" class="toc-link">Do / Don&#39;t</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-1"><a href="#badge" class="toc-link">Badge</a></li><li class="toc-item toc-level-2"><a href="#anatomy" class="toc-link">Anatomy</a></li><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#colour" class="toc-link">Colour</a></li><li class="toc-item toc-level-2"><a href="#styling" class="toc-link">Styling</a></li><li class="toc-item toc-level-2"><a href="#accessibility" class="toc-link">Accessibility</a></li><li class="toc-item toc-level-2"><a href="#usage-rules" class="toc-link">Usage rules</a></li></ul></nav></div>
     </aside>
         </div>
 

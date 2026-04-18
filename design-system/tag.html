@@ -119,48 +119,26 @@
             <!-- Main Content -->
             <main class="docs-main">
                 <article>
-                    <p>Tags are small interactive labels used for categorisation, filtering, and metadata display. They support status variants and can be dismissible with a remove button.</p>
+                    <h1 id="tag">Tag</h1>
+<p>Tags are small interactive labels used for categorisation, filtering, and metadata display. They support colour variants via <code>data-color</code> and can be dismissible with a remove button.</p>
+<p>The <button type="button" class="token-copy is-class" data-copy=".tag" aria-label="Copy .tag"><code>.tag</code></button> class is required. Colour variants use the <code>data-color</code> attribute — the same API as button and badge.</p>
 <hr>
-<h2 id="tokens">Tokens</h2>
+<h2 id="anatomy">Anatomy</h2>
 <div class="table-scroll"><table class="table">
 <thead>
 <tr>
-<th>Token</th>
-<th>Default</th>
-<th>Purpose</th>
+<th>Axis</th>
+<th>Mechanism</th>
+<th>Example</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--tag-font-size)" aria-label="Copy var(--tag-font-size)"><code>var(--tag-font-size)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--font-xs)" aria-label="Copy var(--font-xs)"><code>var(--font-xs)</code></button></td>
-<td>Font size</td>
-</tr>
-<tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--tag-padding-y)" aria-label="Copy var(--tag-padding-y)"><code>var(--tag-padding-y)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--space-2xs)" aria-label="Copy var(--space-2xs)"><code>var(--space-2xs)</code></button></td>
-<td>Vertical padding</td>
-</tr>
-<tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--tag-padding-x)" aria-label="Copy var(--tag-padding-x)"><code>var(--tag-padding-x)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--space-s)" aria-label="Copy var(--space-s)"><code>var(--space-s)</code></button></td>
-<td>Horizontal padding</td>
-</tr>
-<tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--tag-radius)" aria-label="Copy var(--tag-radius)"><code>var(--tag-radius)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--radius-s)" aria-label="Copy var(--radius-s)"><code>var(--radius-s)</code></button></td>
-<td>Corner radius</td>
-</tr>
-<tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--tag-background)" aria-label="Copy var(--tag-background)"><code>var(--tag-background)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--background-darker)" aria-label="Copy var(--background-darker)"><code>var(--background-darker)</code></button></td>
-<td>Default background</td>
-</tr>
-<tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--tag-border)" aria-label="Copy var(--tag-border)"><code>var(--tag-border)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--border-faded)" aria-label="Copy var(--border-faded)"><code>var(--border-faded)</code></button></td>
-<td>Border colour</td>
+<td>Colour</td>
+<td><code>data-color</code></td>
+<td><code>data-color=&quot;success&quot;</code></td>
 </tr>
 </tbody></table></div>
+<p>No component-level tokens — tag references system tokens directly (<button type="button" class="token-copy is-token" data-copy="var(--background-darker)" aria-label="Copy var(--background-darker)"><code>var(--background-darker)</code></button>, <button type="button" class="token-copy is-token" data-copy="var(--border-faded)" aria-label="Copy var(--border-faded)"><code>var(--border-faded)</code></button>, <button type="button" class="token-copy is-token" data-copy="var(--radius-s)" aria-label="Copy var(--radius-s)"><code>var(--radius-s)</code></button>).</p>
 <hr>
 <h2 id="basic-usage">Basic usage</h2>
 <div class="demo-preview">
@@ -169,30 +147,31 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-2wdc30o9g" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-2wdc30o9g" class="language-html">&lt;span class=&quot;tag&quot;&gt;Default tag&lt;/span&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-292p62gur" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-292p62gur" class="language-html">&lt;span class=&quot;tag&quot;&gt;Default tag&lt;/span&gt;
 </code></pre>
       </div>
     
 <hr>
-<h2 id="variants">Variants</h2>
+<h2 id="colour">Colour</h2>
+<p><code>data-color</code> applies a semantic colour to background, border, and text.</p>
 <div class="demo-preview">
   <div class="tag-group">
     <span class="tag">Default</span>
-    <span class="tag tag--success">Success</span>
-    <span class="tag tag--warning">Warning</span>
-    <span class="tag tag--danger">Danger</span>
-    <span class="tag tag--info">Info</span>
+    <span class="tag" data-color="success">Success</span>
+    <span class="tag" data-color="warning">Warning</span>
+    <span class="tag" data-color="danger">Danger</span>
+    <span class="tag" data-color="info">Info</span>
   </div>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-nrntvupv6" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-nrntvupv6" class="language-html">&lt;span class=&quot;tag tag--success&quot;&gt;Success&lt;/span&gt;
-&lt;span class=&quot;tag tag--warning&quot;&gt;Warning&lt;/span&gt;
-&lt;span class=&quot;tag tag--danger&quot;&gt;Danger&lt;/span&gt;
-&lt;span class=&quot;tag tag--info&quot;&gt;Info&lt;/span&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-adel3zw1w" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-adel3zw1w" class="language-html">&lt;span class=&quot;tag&quot; data-color=&quot;success&quot;&gt;Success&lt;/span&gt;
+&lt;span class=&quot;tag&quot; data-color=&quot;warning&quot;&gt;Warning&lt;/span&gt;
+&lt;span class=&quot;tag&quot; data-color=&quot;danger&quot;&gt;Danger&lt;/span&gt;
+&lt;span class=&quot;tag&quot; data-color=&quot;info&quot;&gt;Info&lt;/span&gt;
 </code></pre>
       </div>
     
@@ -202,15 +181,15 @@
 <div class="demo-preview">
   <div class="tag-group">
     <span class="tag">Design <button class="tag-remove" aria-label="Remove Design tag" type="button"><div class="svg-icn"><svg data-icon="close" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/></svg></div></button></span>
-    <span class="tag tag--info">Active <button class="tag-remove" aria-label="Remove Active tag" type="button"><div class="svg-icn"><svg data-icon="close" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/></svg></div></button></span>
-    <span class="tag tag--success">Published <button class="tag-remove" aria-label="Remove Published tag" type="button"><div class="svg-icn"><svg data-icon="close" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/></svg></div></button></span>
+    <span class="tag" data-color="info">Active <button class="tag-remove" aria-label="Remove Active tag" type="button"><div class="svg-icn"><svg data-icon="close" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/></svg></div></button></span>
+    <span class="tag" data-color="success">Published <button class="tag-remove" aria-label="Remove Published tag" type="button"><div class="svg-icn"><svg data-icon="close" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/></svg></div></button></span>
   </div>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-i94ksdynm" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-i94ksdynm" class="language-html">&lt;span class=&quot;tag&quot;&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-uzbtt81op" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-uzbtt81op" class="language-html">&lt;span class=&quot;tag&quot;&gt;
   Design
   &lt;button class=&quot;tag-remove&quot; aria-label=&quot;Remove Design tag&quot; type=&quot;button&quot;&gt;{{icon:close}}&lt;/button&gt;
 &lt;/span&gt;
@@ -232,8 +211,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-si9oi4adx" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-si9oi4adx" class="language-html">&lt;div class=&quot;tag-group&quot;&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-fwzxjnwm8" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-fwzxjnwm8" class="language-html">&lt;div class=&quot;tag-group&quot;&gt;
   &lt;span class=&quot;tag&quot;&gt;HTML&lt;/span&gt;
   &lt;span class=&quot;tag&quot;&gt;CSS&lt;/span&gt;
   &lt;span class=&quot;tag&quot;&gt;JavaScript&lt;/span&gt;
@@ -259,8 +238,8 @@
 <p>Tag dismiss uses a simple inline event listener — no separate JS file needed:</p>
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-r4dmpjhkh" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-r4dmpjhkh" class="language-js">document.addEventListener(&#39;click&#39;, function (e) {
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-0w5nc6lfz" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-0w5nc6lfz" class="language-js">document.addEventListener(&#39;click&#39;, function (e) {
   var removeBtn = e.target.closest(&#39;.tag-remove&#39;);
   if (removeBtn) {
     var tag = removeBtn.closest(&#39;.tag&#39;);
@@ -271,21 +250,21 @@
       </div>
     
 <hr>
-<h2 id="accessibility-notes">Accessibility notes</h2>
+<h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>The remove button must have <code>aria-label</code> describing what is being removed</li>
 <li>Tags are presentational — they don&#39;t require ARIA roles</li>
 <li>When used as filters, consider announcing removal to screen readers via a live region</li>
 </ul>
 <hr>
-<h2 id="do-don39t">Do / Don&#39;t</h2>
-<p><strong>Do:</strong></p>
+<h2 id="usage-rules">Usage rules</h2>
+<p><strong>Do</strong></p>
 <ul>
 <li>Use tags for categorisation and filter indicators</li>
-<li>Use status variants to indicate state (success, warning, danger)</li>
+<li>Use <code>data-color</code> to indicate state (success, warning, danger)</li>
 <li>Include <code>aria-label</code> on every remove button</li>
 </ul>
-<p><strong>Don&#39;t:</strong></p>
+<p><strong>Don&#39;t</strong></p>
 <ul>
 <li>Don&#39;t use tags as buttons — they are labels, not actions</li>
 <li>Don&#39;t use tags for navigation</li>
@@ -297,7 +276,7 @@
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#tokens" class="toc-link">Tokens</a></li><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#variants" class="toc-link">Variants</a></li><li class="toc-item toc-level-2"><a href="#dismissible-tag" class="toc-link">Dismissible tag</a></li><li class="toc-item toc-level-2"><a href="#tag-group" class="toc-link">Tag group</a></li><li class="toc-item toc-level-2"><a href="#in-context-active-filters" class="toc-link">In context — active filters</a></li><li class="toc-item toc-level-2"><a href="#javascript" class="toc-link">JavaScript</a></li><li class="toc-item toc-level-2"><a href="#accessibility-notes" class="toc-link">Accessibility notes</a></li><li class="toc-item toc-level-2"><a href="#do-don39t" class="toc-link">Do / Don&#39;t</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-1"><a href="#tag" class="toc-link">Tag</a></li><li class="toc-item toc-level-2"><a href="#anatomy" class="toc-link">Anatomy</a></li><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#colour" class="toc-link">Colour</a></li><li class="toc-item toc-level-2"><a href="#dismissible-tag" class="toc-link">Dismissible tag</a></li><li class="toc-item toc-level-2"><a href="#tag-group" class="toc-link">Tag group</a></li><li class="toc-item toc-level-2"><a href="#in-context-active-filters" class="toc-link">In context — active filters</a></li><li class="toc-item toc-level-2"><a href="#javascript" class="toc-link">JavaScript</a></li><li class="toc-item toc-level-2"><a href="#accessibility" class="toc-link">Accessibility</a></li><li class="toc-item toc-level-2"><a href="#usage-rules" class="toc-link">Usage rules</a></li></ul></nav></div>
     </aside>
         </div>
 

@@ -259,6 +259,32 @@ For cases where multiple children should stretch together, use `.align-stretch` 
 
 ---
 
+## Hover
+
+All buttons transition on hover. The CSS property used is `background-color` (not the `background` shorthand).
+
+**Filled buttons** (primary and all `data-color` variants): reduce to `opacity: 0.9`.
+
+**Unfilled variants** (outline, faded, outline-faded, transparent, text): gain a subtle accent fill at 10% alpha of the button's identity colour.
+
+```css
+/* Filled hover */
+.button:hover { opacity: 0.9; }
+
+/* Unfilled hover */
+.button[data-variant="outline"]:hover,
+.button[data-variant="faded"]:hover,
+.button[data-variant="outline-faded"]:hover,
+.button[data-variant="transparent"]:hover,
+.button[data-variant="text"]:hover {
+  background-color: color-mix(in srgb, var(--button-color), var(--alpha-10));
+}
+```
+
+The **text** variant also adds an underline on hover.
+
+---
+
 ## States
 
 States are transient — runtime-toggled, not permanent properties. They use `.is-*` classes shared across components.

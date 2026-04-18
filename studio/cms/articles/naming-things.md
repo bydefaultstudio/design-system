@@ -38,7 +38,7 @@ Components have a different naming challenge. They need names that are specific 
 
 The best component names describe what the thing is, not what it does or where it goes. `.card` is a card. `.badge` is a badge. `.callout` is a callout. You can put a card in a sidebar, a feed, or a modal — the name still works because it describes the object, not its context.
 
-Modifiers handle the variants: `.card--compact`, `.badge--warning`, `.callout--tip`. The base name is the noun; the modifier is the adjective. This is BEM without the ceremony.
+Modifiers handle the variants: `.card--compact`, `data-color="warning"`, `data-type="tip"`. The base name is the noun; the modifier is the adjective. This is BEM without the ceremony.
 
 ## The documentation test
 

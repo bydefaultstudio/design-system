@@ -95,18 +95,18 @@ Use lowercase kebab-case for icon names (e.g. `arrow-right`, `chevron-down`, `ex
 
 ## Icon in Buttons
 
-For icon-only buttons, use `.is-icon` on the button and `.svg-icn` as the SVG wrapper.
+For icon-only buttons, add the `data-icon-only` attribute and `.svg-icn` as the SVG wrapper. Always include `aria-label`.
 
 <div class="demo-preview is-joined">
   <div class="block row gap-m align-center">
-  <button class="button is-icon" aria-label="Close">
+  <button class="button" data-icon-only aria-label="Close">
     <div class="svg-icn" data-icon="close">
       <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
         <path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/>
       </svg>
     </div>
   </button>
-  <button class="button is-icon" aria-label="Search">
+  <button class="button" data-icon-only aria-label="Search">
     <div class="svg-icn" data-icon="search">
       <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
         <path d="M18.6 20L15.5658 16.9658C14.8452 16.2452 13.7005 16.2131 12.7513 16.584C12.6932 16.6067 12.6344 16.6287 12.575 16.65C11.925 16.8833 11.2333 17 10.5 17C8.68333 17 7.14583 16.3708 5.8875 15.1125C4.62917 13.8542 4 12.3167 4 10.5C4 8.68333 4.62917 7.14583 5.8875 5.8875C7.14583 4.62917 8.68333 4 10.5 4C12.3167 4 13.8542 4.62917 15.1125 5.8875C16.3708 7.14583 17 8.68333 17 10.5C17 11.2333 16.8833 11.925 16.65 12.575C16.6287 12.6344 16.6067 12.6932 16.584 12.7513C16.2131 13.7005 16.2452 14.8452 16.9658 15.5658L20 18.6L18.6 20ZM10.5 15C11.75 15 12.8125 14.5625 13.6875 13.6875C14.5625 12.8125 15 11.75 15 10.5C15 9.25 14.5625 8.1875 13.6875 7.3125C12.8125 6.4375 11.75 6 10.5 6C9.25 6 8.1875 6.4375 7.3125 7.3125C6.4375 8.1875 6 9.25 6 10.5C6 11.75 6.4375 12.8125 7.3125 13.6875C8.1875 14.5625 9.25 15 10.5 15Z" fill="currentColor"/>
@@ -117,7 +117,7 @@ For icon-only buttons, use `.is-icon` on the button and `.svg-icn` as the SVG wr
 </div>
 
 ```html
-<button class="button is-icon" aria-label="Close">
+<button class="button" data-icon-only aria-label="Close">
   <div class="svg-icn">
     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
       <path d="M18 6L6 18M6 6l12 12" fill="currentColor"/>

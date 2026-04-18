@@ -12,20 +12,21 @@ access: "team"
 client: "internal"
 ---
 
-Tags are small interactive labels used for categorisation, filtering, and metadata display. They support status variants and can be dismissible with a remove button.
+# Tag
+
+Tags are small interactive labels used for categorisation, filtering, and metadata display. They support colour variants via `data-color` and can be dismissible with a remove button.
+
+The `.tag` class is required. Colour variants use the `data-color` attribute — the same API as button and badge.
 
 ---
 
-## Tokens
+## Anatomy
 
-| Token | Default | Purpose |
-|-------|---------|---------|
-| `var(--tag-font-size)` | `var(--font-xs)` | Font size |
-| `var(--tag-padding-y)` | `var(--space-2xs)` | Vertical padding |
-| `var(--tag-padding-x)` | `var(--space-s)` | Horizontal padding |
-| `var(--tag-radius)` | `var(--radius-s)` | Corner radius |
-| `var(--tag-background)` | `var(--background-darker)` | Default background |
-| `var(--tag-border)` | `var(--border-faded)` | Border colour |
+| Axis | Mechanism | Example |
+|---|---|---|
+| Colour | `data-color` | `data-color="success"` |
+
+No component-level tokens — tag references system tokens directly (`var(--background-darker)`, `var(--border-faded)`, `var(--radius-s)`).
 
 ---
 
@@ -41,23 +42,25 @@ Tags are small interactive labels used for categorisation, filtering, and metada
 
 ---
 
-## Variants
+## Colour
+
+`data-color` applies a semantic colour to background, border, and text.
 
 <div class="demo-preview">
   <div class="tag-group">
     <span class="tag">Default</span>
-    <span class="tag tag--success">Success</span>
-    <span class="tag tag--warning">Warning</span>
-    <span class="tag tag--danger">Danger</span>
-    <span class="tag tag--info">Info</span>
+    <span class="tag" data-color="success">Success</span>
+    <span class="tag" data-color="warning">Warning</span>
+    <span class="tag" data-color="danger">Danger</span>
+    <span class="tag" data-color="info">Info</span>
   </div>
 </div>
 
 ```html
-<span class="tag tag--success">Success</span>
-<span class="tag tag--warning">Warning</span>
-<span class="tag tag--danger">Danger</span>
-<span class="tag tag--info">Info</span>
+<span class="tag" data-color="success">Success</span>
+<span class="tag" data-color="warning">Warning</span>
+<span class="tag" data-color="danger">Danger</span>
+<span class="tag" data-color="info">Info</span>
 ```
 
 ---
@@ -69,8 +72,8 @@ Add a `.tag-remove` button inside the tag. Clicking it removes the tag from the 
 <div class="demo-preview">
   <div class="tag-group">
     <span class="tag">Design <button class="tag-remove" aria-label="Remove Design tag" type="button">{{icon:close}}</button></span>
-    <span class="tag tag--info">Active <button class="tag-remove" aria-label="Remove Active tag" type="button">{{icon:close}}</button></span>
-    <span class="tag tag--success">Published <button class="tag-remove" aria-label="Remove Published tag" type="button">{{icon:close}}</button></span>
+    <span class="tag" data-color="info">Active <button class="tag-remove" aria-label="Remove Active tag" type="button">{{icon:close}}</button></span>
+    <span class="tag" data-color="success">Published <button class="tag-remove" aria-label="Remove Published tag" type="button">{{icon:close}}</button></span>
   </div>
 </div>
 
@@ -138,7 +141,7 @@ document.addEventListener('click', function (e) {
 
 ---
 
-## Accessibility notes
+## Accessibility
 
 - The remove button must have `aria-label` describing what is being removed
 - Tags are presentational — they don't require ARIA roles
@@ -146,13 +149,15 @@ document.addEventListener('click', function (e) {
 
 ---
 
-## Do / Don't
+## Usage rules
 
-**Do:**
+**Do**
+
 - Use tags for categorisation and filter indicators
-- Use status variants to indicate state (success, warning, danger)
+- Use `data-color` to indicate state (success, warning, danger)
 - Include `aria-label` on every remove button
 
-**Don't:**
+**Don't**
+
 - Don't use tags as buttons — they are labels, not actions
 - Don't use tags for navigation

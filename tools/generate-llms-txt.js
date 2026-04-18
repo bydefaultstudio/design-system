@@ -42,11 +42,16 @@ function stripEmptyDemoWrappers(md) {
   return md.replace(/<div\s+class="demo-[^"]*"[^>]*>[\s\S]*?<\/div>\s*/gi, '');
 }
 
+function stripColorLists(md) {
+  return md.replace(/<div\s+class="color-list[^"]*"[^>]*>[\s\S]*?<\/div>\s*/gi, '');
+}
+
 function cleanMarkdown(md) {
   let cleaned = stripFrontmatter(md);
   cleaned = stripDemoPreviews(cleaned);
   cleaned = stripEmptyDemoWrappers(cleaned);
-  cleaned = cleaned.replace(/(?<!`[^`]*)style="[^"]*"(?![^`]*`)/gi, '');
+  cleaned = stripColorLists(cleaned);
+  cleaned = cleaned.replace(/style="[^"]*"/gi, '');
   cleaned = cleaned.replace(/\n{3,}/g, '\n\n');
   return cleaned.trim();
 }

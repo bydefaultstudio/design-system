@@ -119,18 +119,34 @@
             <!-- Main Content -->
             <main class="docs-main">
                 <article>
-                    <p>Callouts are used to <strong>highlight important information</strong> within content. They draw attention to notes, tips, warnings, and other contextual messages.</p>
+                    <h1 id="callout">Callout</h1>
+<p>Callouts are used to <strong>highlight important information</strong> within content. They draw attention to notes, tips, warnings, and other contextual messages.</p>
+<p>The <button type="button" class="token-copy is-class" data-copy=".callout" aria-label="Copy .callout"><code>.callout</code></button> class is required. Type variants use <code>data-type</code>, and the icon layout uses the <code>data-icon</code> boolean attribute.</p>
 <hr>
-<h2 id="core-principles">Core Principles</h2>
-<ul>
-<li>Callouts use a <strong>base + variant</strong> pattern (like buttons and borders)</li>
-<li>The base <button type="button" class="token-copy is-class" data-copy=".callout" aria-label="Copy .callout"><code>.callout</code></button> class provides structure and neutral styling</li>
-<li>Variant classes add semantic color via left border and background tint</li>
-<li>All colors are controlled by semantic tokens that can be customized per project</li>
-</ul>
+<h2 id="anatomy">Anatomy</h2>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Axis</th>
+<th>Mechanism</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Type (semantic)</td>
+<td><code>data-type</code></td>
+<td><code>data-type=&quot;note&quot;</code></td>
+</tr>
+<tr>
+<td>Icon layout</td>
+<td><code>data-icon</code> (boolean)</td>
+<td><code>data-icon</code></td>
+</tr>
+</tbody></table></div>
+<p>No component-level tokens — callout references status tokens directly.</p>
 <hr>
-<h2 id="status-color-tokens">Status Color Tokens</h2>
-<p>Callout variants are powered by status color tokens defined in <code>:root</code>. Each status has a foreground and background token:</p>
+<h2 id="status-colour-tokens">Status colour tokens</h2>
+<p>Callout types are powered by status colour tokens defined in <code>:root</code>:</p>
 <div class="table-scroll"><table class="table">
 <thead>
 <tr>
@@ -192,8 +208,8 @@
 </tbody></table></div>
 <p>Callouts, badges, and other components reference these tokens directly — no intermediate <code>--callout-*</code> layer needed.</p>
 <hr>
-<h2 id="base-callout">Base Callout</h2>
-<p>The <button type="button" class="token-copy is-class" data-copy=".callout" aria-label="Copy .callout"><code>.callout</code></button> class provides the structural foundation:</p>
+<h2 id="base-callout">Base callout</h2>
+<p>The <button type="button" class="token-copy is-class" data-copy=".callout" aria-label="Copy .callout"><code>.callout</code></button> class provides the structural foundation with neutral styling.</p>
 <div class="demo-preview is-joined">
   <div class="callout">
     <p class="callout-description">General-purpose highlighted content.</p>
@@ -202,46 +218,139 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-926ev1r9t" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-926ev1r9t" class="language-html">&lt;div class=&quot;callout&quot;&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-oa45wr1x8" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-oa45wr1x8" class="language-html">&lt;div class=&quot;callout&quot;&gt;
   &lt;p class=&quot;callout-description&quot;&gt;General-purpose highlighted content.&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
       </div>
     
-<p><strong>Structural properties:</strong></p>
-<ul>
-<li>Left border using <button type="button" class="token-copy is-token" data-copy="var(--border-l)" aria-label="Copy var(--border-l)"><code>var(--border-l)</code></button> width (4px)</li>
-<li>Padding using spacing tokens</li>
-<li>Neutral background (<button type="button" class="token-copy is-token" data-copy="var(--background-faded)" aria-label="Copy var(--background-faded)"><code>var(--background-faded)</code></button>)</li>
-<li>First/last child margin normalization</li>
-</ul>
 <hr>
-<h2 id="callout-title">Callout Title</h2>
-<p>Use <button type="button" class="token-copy is-class" data-copy=".callout-title" aria-label="Copy .callout-title"><code>.callout-title</code></button> inside any callout for a styled heading:</p>
+<h2 id="types">Types</h2>
+<p>Use <code>data-type</code> to set the semantic variant. Each type applies a coloured background and accent colour to the title and icon.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th><code>data-type</code></th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>note</code></td>
+<td>Useful information users should know</td>
+</tr>
+<tr>
+<td><code>tip</code></td>
+<td>Helpful advice on doing things better</td>
+</tr>
+<tr>
+<td><code>warning</code></td>
+<td>Urgent information to avoid problems</td>
+</tr>
+<tr>
+<td><code>caution</code></td>
+<td>Risks or negative outcomes</td>
+</tr>
+<tr>
+<td><code>important</code></td>
+<td>Key information users need</td>
+</tr>
+</tbody></table></div>
+<h3 id="note">Note</h3>
 <div class="demo-preview is-joined">
-  <div class="callout callout-note">
+  <div class="callout" data-type="note">
     <div class="callout-title">Note</div>
-    <p class="callout-description">Content here.</p>
+    <p class="callout-description">Useful information that users should know.</p>
   </div>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-dcr936os6" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-dcr936os6" class="language-html">&lt;div class=&quot;callout callout-note&quot;&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-yhbps3ci5" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-yhbps3ci5" class="language-html">&lt;div class=&quot;callout&quot; data-type=&quot;note&quot;&gt;
   &lt;div class=&quot;callout-title&quot;&gt;Note&lt;/div&gt;
-  &lt;p class=&quot;callout-description&quot;&gt;Content here.&lt;/p&gt;
+  &lt;p class=&quot;callout-description&quot;&gt;Useful information that users should know.&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
       </div>
     
-<p>The title inherits the variant&#39;s accent color automatically.</p>
-<hr>
-<h2 id="callout-with-icon">Callout with Icon</h2>
-<p>Icons are <strong>optional</strong>. Add <button type="button" class="token-copy is-class" data-copy=".callout--icon" aria-label="Copy .callout--icon"><code>.callout--icon</code></button> to the <button type="button" class="token-copy is-class" data-copy=".callout" aria-label="Copy .callout"><code>.callout</code></button> element to enable the icon layout. No wrapper div needed — the icon, title, and description are all direct children with their own classes.</p>
+<h3 id="tip">Tip</h3>
 <div class="demo-preview is-joined">
-  <div class="callout callout-note callout--icon">
+  <div class="callout" data-type="tip">
+    <div class="callout-title">Tip</div>
+    <p class="callout-description">Helpful advice for doing things better.</p>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-7nnn80rqr" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-7nnn80rqr" class="language-html">&lt;div class=&quot;callout&quot; data-type=&quot;tip&quot;&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Tip&lt;/div&gt;
+  &lt;p class=&quot;callout-description&quot;&gt;Helpful advice for doing things better.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="warning">Warning</h3>
+<div class="demo-preview is-joined">
+  <div class="callout" data-type="warning">
+    <div class="callout-title">Warning</div>
+    <p class="callout-description">Urgent information to avoid problems.</p>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-1qwib4fsu" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-1qwib4fsu" class="language-html">&lt;div class=&quot;callout&quot; data-type=&quot;warning&quot;&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Warning&lt;/div&gt;
+  &lt;p class=&quot;callout-description&quot;&gt;Urgent information to avoid problems.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="caution">Caution</h3>
+<div class="demo-preview is-joined">
+  <div class="callout" data-type="caution">
+    <div class="callout-title">Caution</div>
+    <p class="callout-description">Risks or negative outcomes of certain actions.</p>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-vh7qfjn7s" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-vh7qfjn7s" class="language-html">&lt;div class=&quot;callout&quot; data-type=&quot;caution&quot;&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Caution&lt;/div&gt;
+  &lt;p class=&quot;callout-description&quot;&gt;Risks or negative outcomes of certain actions.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<h3 id="important">Important</h3>
+<div class="demo-preview is-joined">
+  <div class="callout" data-type="important">
+    <div class="callout-title">Important</div>
+    <p class="callout-description">Key information users need to know.</p>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-g17en72nn" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-g17en72nn" class="language-html">&lt;div class=&quot;callout&quot; data-type=&quot;important&quot;&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;Important&lt;/div&gt;
+  &lt;p class=&quot;callout-description&quot;&gt;Key information users need to know.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="callout-with-icon">Callout with icon</h2>
+<p>Add the <code>data-icon</code> boolean attribute to enable a two-column grid layout with the icon pinned alongside the title.</p>
+<div class="demo-preview is-joined">
+  <div class="callout" data-type="note" data-icon>
     <div class="svg-icn"><svg data-icon="info" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_10237_468)"><path d="M13 18H11V10H13V18Z" fill="currentColor"/><path d="M12 6C12.35 6 12.646 6.12064 12.8877 6.3623C13.1294 6.60397 13.25 6.9 13.25 7.25C13.25 7.6 13.1294 7.89603 12.8877 8.1377C12.646 8.37936 12.35 8.5 12 8.5C11.65 8.5 11.354 8.37936 11.1123 8.1377C10.8706 7.89603 10.75 7.6 10.75 7.25C10.75 6.9 10.8706 6.60397 11.1123 6.3623C11.354 6.12064 11.65 6 12 6Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/></g><defs><clipPath id="clip0_10237_468"><rect width="24" height="24" fill="white"/></clipPath></defs></svg></div>
     <div class="callout-title">Note</div>
     <p class="callout-description">This callout has an icon for extra visual context.</p>
@@ -250,8 +359,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-0cci2jy8y" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-0cci2jy8y" class="language-html">&lt;div class=&quot;callout callout-note callout--icon&quot;&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-7rrigkc63" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-7rrigkc63" class="language-html">&lt;div class=&quot;callout&quot; data-type=&quot;note&quot; data-icon&gt;
   &lt;div class=&quot;svg-icn&quot; data-icon=&quot;info&quot;&gt;&lt;!-- info SVG --&gt;&lt;/div&gt;
   &lt;div class=&quot;callout-title&quot;&gt;Note&lt;/div&gt;
   &lt;p class=&quot;callout-description&quot;&gt;This callout has an icon for extra visual context.&lt;/p&gt;
@@ -259,274 +368,90 @@
 </code></pre>
       </div>
     
-<p><strong>How it works:</strong></p>
+<p>How it works:</p>
 <ul>
-<li><button type="button" class="token-copy is-class" data-copy=".callout--icon" aria-label="Copy .callout--icon"><code>.callout--icon</code></button> switches the callout to a two-column CSS grid</li>
-<li>The <button type="button" class="token-copy is-class" data-copy=".svg-icn" aria-label="Copy .svg-icn"><code>.svg-icn</code></button> is pinned to row 1, column 1 — vertically centered with the title via <code>align-self: center</code></li>
+<li><code>data-icon</code> switches the callout to a two-column CSS grid</li>
+<li>The <button type="button" class="token-copy is-class" data-copy=".svg-icn" aria-label="Copy .svg-icn"><code>.svg-icn</code></button> is pinned to row 1, column 1 — vertically centered with the title</li>
 <li><button type="button" class="token-copy is-class" data-copy=".callout-title" aria-label="Copy .callout-title"><code>.callout-title</code></button> and <button type="button" class="token-copy is-class" data-copy=".callout-description" aria-label="Copy .callout-description"><code>.callout-description</code></button> auto-flow into column 2</li>
-<li>The icon stays aligned with the title regardless of title font size (<code>font-s</code>, <code>h2</code>, <code>h3</code>, etc.)</li>
-<li>To remove the icon, drop <button type="button" class="token-copy is-class" data-copy=".callout--icon" aria-label="Copy .callout--icon"><code>.callout--icon</code></button> and the <button type="button" class="token-copy is-class" data-copy=".svg-icn" aria-label="Copy .svg-icn"><code>.svg-icn</code></button></li>
 </ul>
+<h3 id="recommended-icons">Recommended icons</h3>
 <div class="table-scroll"><table class="table">
 <thead>
 <tr>
-<th>Class</th>
-<th>Role</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><button type="button" class="token-copy is-class" data-copy=".callout--icon" aria-label="Copy .callout--icon"><code>.callout--icon</code></button></td>
-<td>Enables two-column grid layout</td>
-</tr>
-<tr>
-<td><button type="button" class="token-copy is-class" data-copy=".svg-icn" aria-label="Copy .svg-icn"><code>.svg-icn</code></button></td>
-<td>Icon (direct child, pinned to row 1, vertically centered with title)</td>
-</tr>
-<tr>
-<td><button type="button" class="token-copy is-class" data-copy=".callout-title" aria-label="Copy .callout-title"><code>.callout-title</code></button></td>
-<td>Title text (row 1, column 2)</td>
-</tr>
-<tr>
-<td><button type="button" class="token-copy is-class" data-copy=".callout-description" aria-label="Copy .callout-description"><code>.callout-description</code></button></td>
-<td>Description content (below title, column 2)</td>
-</tr>
-</tbody></table></div>
-<hr>
-<h2 id="recommended-icons">Recommended Icons</h2>
-<p>Each variant has a suggested icon for visual consistency. These are recommendations — any brand icon can be used.</p>
-<div class="table-scroll"><table class="table">
-<thead>
-<tr>
-<th>Variant</th>
+<th>Type</th>
 <th>Icon</th>
 <th>Shorthand</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><button type="button" class="token-copy is-class" data-copy=".callout-note" aria-label="Copy .callout-note"><code>.callout-note</code></button></td>
+<td><code>note</code></td>
 <td><div class="svg-icn"><svg data-icon="info" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_10237_468)"><path d="M13 18H11V10H13V18Z" fill="currentColor"/><path d="M12 6C12.35 6 12.646 6.12064 12.8877 6.3623C13.1294 6.60397 13.25 6.9 13.25 7.25C13.25 7.6 13.1294 7.89603 12.8877 8.1377C12.646 8.37936 12.35 8.5 12 8.5C11.65 8.5 11.354 8.37936 11.1123 8.1377C10.8706 7.89603 10.75 7.6 10.75 7.25C10.75 6.9 10.8706 6.60397 11.1123 6.3623C11.354 6.12064 11.65 6 12 6Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/></g><defs><clipPath id="clip0_10237_468"><rect width="24" height="24" fill="white"/></clipPath></defs></svg></div> Info circle</td>
 <td><code>{{icon:info}}</code></td>
 </tr>
 <tr>
-<td><button type="button" class="token-copy is-class" data-copy=".callout-tip" aria-label="Copy .callout-tip"><code>.callout-tip</code></button></td>
+<td><code>tip</code></td>
 <td><div class="svg-icn"><svg data-icon="bolt" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M10.9013 18.1151L16.0763 11.9151H12.0763L12.8013 6.2401L8.17632 12.9151H11.6513L10.9013 18.1151ZM8.35132 21.9151L9.35132 14.9151H4.35132L13.3513 1.9151H15.3513L14.3513 9.9151H20.3513L10.3513 21.9151H8.35132Z" fill="currentColor"/></svg></div> Lightning bolt</td>
 <td><code>{{icon:bolt}}</code></td>
 </tr>
 <tr>
-<td><button type="button" class="token-copy is-class" data-copy=".callout-warning" aria-label="Copy .callout-warning"><code>.callout-warning</code></button></td>
+<td><code>warning</code></td>
 <td><div class="svg-icn"><svg data-icon="warning" aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M13 16V18H11V16H13Z" fill="currentColor"/><path d="M13 14H11V10H13V14Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M23 21H1L12 2L23 21ZM12.8652 7.49512C12.4801 6.82991 11.5199 6.82991 11.1348 7.49512L5.34375 17.499C4.95794 18.1656 5.43888 18.9998 6.20898 19H17.791C18.5611 18.9998 19.0421 18.1656 18.6562 17.499L12.8652 7.49512Z" fill="currentColor"/></svg></div> Warning triangle</td>
 <td><code>{{icon:warning}}</code></td>
 </tr>
 <tr>
-<td><button type="button" class="token-copy is-class" data-copy=".callout-caution" aria-label="Copy .callout-caution"><code>.callout-caution</code></button></td>
+<td><code>caution</code></td>
 <td><div class="svg-icn"><svg data-icon="close-circled" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M18 7.40039L14.8145 10.5859C14.0334 11.367 14.0334 12.633 14.8145 13.4141L18 16.5996L16.5996 18L13.4141 14.8145C12.633 14.0334 11.367 14.0334 10.5859 14.8145L7.40039 18L6 16.5996L9.18555 13.4141C9.9666 12.633 9.9666 11.367 9.18555 10.5859L6 7.40039L7.40039 6L10.5859 9.18555C11.367 9.9666 12.633 9.9666 13.4141 9.18555L16.5996 6L18 7.40039Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/></svg></div> Close circle</td>
 <td><code>{{icon:close-circled}}</code></td>
 </tr>
 <tr>
-<td><button type="button" class="token-copy is-class" data-copy=".callout-important" aria-label="Copy .callout-important"><code>.callout-important</code></button></td>
+<td><code>important</code></td>
 <td><div class="svg-icn"><svg data-icon="exclamation" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M13 7V14H11V7H13Z" fill="currentColor"/><path d="M12 18C12.35 18 12.6458 17.8792 12.8875 17.6375C13.1292 17.3958 13.25 17.1 13.25 16.75C13.25 16.4 13.1292 16.1042 12.8875 15.8625C12.6458 15.6208 12.35 15.5 12 15.5C11.65 15.5 11.3542 15.6208 11.1125 15.8625C10.8708 16.1042 10.75 16.4 10.75 16.75C10.75 17.1 10.8708 17.3958 11.1125 17.6375C11.3542 17.8792 11.65 18 12 18Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/></svg></div> Exclamation circle</td>
 <td><code>{{icon:exclamation}}</code></td>
 </tr>
 </tbody></table></div>
-<hr>
-<h2 id="variants">Variants</h2>
-<h3>Note (<button type="button" class="token-copy is-class" data-copy=".callout-note" aria-label="Copy .callout-note"><code>.callout-note</code></button>)</h3>
-<p>For useful information users should know, even when skimming.</p>
+<h3 id="all-types-with-icons">All types with icons</h3>
 <div class="demo-preview is-joined">
-  <div class="callout callout-note">
-    <div class="callout-title">Note</div>
-    <p class="callout-description">Useful information that users should know.</p>
-  </div>
-</div>
-
-
-      <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-pr8gcl3s9" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-pr8gcl3s9" class="language-html">&lt;div class=&quot;callout callout-note&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Note&lt;/div&gt;
-  &lt;p class=&quot;callout-description&quot;&gt;Useful information that users should know.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<p>With icon:</p>
-<div class="demo-preview is-joined">
-  <div class="callout callout-note callout--icon">
+  <div class="callout" data-type="note" data-icon>
     <div class="svg-icn"><svg data-icon="info" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_10237_468)"><path d="M13 18H11V10H13V18Z" fill="currentColor"/><path d="M12 6C12.35 6 12.646 6.12064 12.8877 6.3623C13.1294 6.60397 13.25 6.9 13.25 7.25C13.25 7.6 13.1294 7.89603 12.8877 8.1377C12.646 8.37936 12.35 8.5 12 8.5C11.65 8.5 11.354 8.37936 11.1123 8.1377C10.8706 7.89603 10.75 7.6 10.75 7.25C10.75 6.9 10.8706 6.60397 11.1123 6.3623C11.354 6.12064 11.65 6 12 6Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/></g><defs><clipPath id="clip0_10237_468"><rect width="24" height="24" fill="white"/></clipPath></defs></svg></div>
     <div class="callout-title">Note</div>
     <p class="callout-description">Useful information that users should know.</p>
   </div>
 </div>
 
-
-      <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-y5zrded5d" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-y5zrded5d" class="language-html">&lt;div class=&quot;callout callout-note callout--icon&quot;&gt;
-  &lt;div class=&quot;svg-icn&quot; data-icon=&quot;info&quot;&gt;&lt;!-- info SVG --&gt;&lt;/div&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Note&lt;/div&gt;
-  &lt;p class=&quot;callout-description&quot;&gt;Useful information that users should know.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3>Tip (<button type="button" class="token-copy is-class" data-copy=".callout-tip" aria-label="Copy .callout-tip"><code>.callout-tip</code></button>)</h3>
-<p>For helpful advice on doing things better or more easily.</p>
 <div class="demo-preview is-joined">
-  <div class="callout callout-tip">
-    <div class="callout-title">Tip</div>
-    <p class="callout-description">Helpful advice for doing things better.</p>
-  </div>
-</div>
-
-
-      <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-zufrtdyem" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-zufrtdyem" class="language-html">&lt;div class=&quot;callout callout-tip&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Tip&lt;/div&gt;
-  &lt;p class=&quot;callout-description&quot;&gt;Helpful advice for doing things better.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<p>With icon:</p>
-<div class="demo-preview is-joined">
-  <div class="callout callout-tip callout--icon">
+  <div class="callout" data-type="tip" data-icon>
     <div class="svg-icn"><svg data-icon="bolt" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M10.9013 18.1151L16.0763 11.9151H12.0763L12.8013 6.2401L8.17632 12.9151H11.6513L10.9013 18.1151ZM8.35132 21.9151L9.35132 14.9151H4.35132L13.3513 1.9151H15.3513L14.3513 9.9151H20.3513L10.3513 21.9151H8.35132Z" fill="currentColor"/></svg></div>
     <div class="callout-title">Tip</div>
     <p class="callout-description">Helpful advice for doing things better.</p>
   </div>
 </div>
 
-
-      <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-aa67583h1" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-aa67583h1" class="language-html">&lt;div class=&quot;callout callout-tip callout--icon&quot;&gt;
-  &lt;div class=&quot;svg-icn&quot; data-icon=&quot;bolt&quot;&gt;&lt;!-- bolt SVG --&gt;&lt;/div&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Tip&lt;/div&gt;
-  &lt;p class=&quot;callout-description&quot;&gt;Helpful advice for doing things better.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3>Warning (<button type="button" class="token-copy is-class" data-copy=".callout-warning" aria-label="Copy .callout-warning"><code>.callout-warning</code></button>)</h3>
-<p>For urgent information that needs immediate attention.</p>
 <div class="demo-preview is-joined">
-  <div class="callout callout-warning">
-    <div class="callout-title">Warning</div>
-    <p class="callout-description">Urgent information to avoid problems.</p>
-  </div>
-</div>
-
-
-      <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-f9l0wwm2b" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-f9l0wwm2b" class="language-html">&lt;div class=&quot;callout callout-warning&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Warning&lt;/div&gt;
-  &lt;p class=&quot;callout-description&quot;&gt;Urgent information to avoid problems.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<p>With icon:</p>
-<div class="demo-preview is-joined">
-  <div class="callout callout-warning callout--icon">
+  <div class="callout" data-type="warning" data-icon>
     <div class="svg-icn"><svg data-icon="warning" aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M13 16V18H11V16H13Z" fill="currentColor"/><path d="M13 14H11V10H13V14Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M23 21H1L12 2L23 21ZM12.8652 7.49512C12.4801 6.82991 11.5199 6.82991 11.1348 7.49512L5.34375 17.499C4.95794 18.1656 5.43888 18.9998 6.20898 19H17.791C18.5611 18.9998 19.0421 18.1656 18.6562 17.499L12.8652 7.49512Z" fill="currentColor"/></svg></div>
     <div class="callout-title">Warning</div>
     <p class="callout-description">Urgent information to avoid problems.</p>
   </div>
 </div>
 
-
-      <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-qeu06md47" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-qeu06md47" class="language-html">&lt;div class=&quot;callout callout-warning callout--icon&quot;&gt;
-  &lt;div class=&quot;svg-icn&quot; data-icon=&quot;warning&quot;&gt;&lt;!-- warning SVG --&gt;&lt;/div&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Warning&lt;/div&gt;
-  &lt;p class=&quot;callout-description&quot;&gt;Urgent information to avoid problems.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3>Caution (<button type="button" class="token-copy is-class" data-copy=".callout-caution" aria-label="Copy .callout-caution"><code>.callout-caution</code></button>)</h3>
-<p>For advising about risks or negative outcomes.</p>
 <div class="demo-preview is-joined">
-  <div class="callout callout-caution">
-    <div class="callout-title">Caution</div>
-    <p class="callout-description">Risks or negative outcomes of certain actions.</p>
-  </div>
-</div>
-
-
-      <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-vqo3ijo1d" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-vqo3ijo1d" class="language-html">&lt;div class=&quot;callout callout-caution&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Caution&lt;/div&gt;
-  &lt;p class=&quot;callout-description&quot;&gt;Risks or negative outcomes of certain actions.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<p>With icon:</p>
-<div class="demo-preview is-joined">
-  <div class="callout callout-caution callout--icon">
+  <div class="callout" data-type="caution" data-icon>
     <div class="svg-icn"><svg data-icon="close-circled" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M18 7.40039L14.8145 10.5859C14.0334 11.367 14.0334 12.633 14.8145 13.4141L18 16.5996L16.5996 18L13.4141 14.8145C12.633 14.0334 11.367 14.0334 10.5859 14.8145L7.40039 18L6 16.5996L9.18555 13.4141C9.9666 12.633 9.9666 11.367 9.18555 10.5859L6 7.40039L7.40039 6L10.5859 9.18555C11.367 9.9666 12.633 9.9666 13.4141 9.18555L16.5996 6L18 7.40039Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/></svg></div>
     <div class="callout-title">Caution</div>
     <p class="callout-description">Risks or negative outcomes of certain actions.</p>
   </div>
 </div>
 
-
-      <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-p3ffjr1e3" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-p3ffjr1e3" class="language-html">&lt;div class=&quot;callout callout-caution callout--icon&quot;&gt;
-  &lt;div class=&quot;svg-icn&quot; data-icon=&quot;close-circled&quot;&gt;&lt;!-- close-circled SVG --&gt;&lt;/div&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Caution&lt;/div&gt;
-  &lt;p class=&quot;callout-description&quot;&gt;Risks or negative outcomes of certain actions.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<h3>Important (<button type="button" class="token-copy is-class" data-copy=".callout-important" aria-label="Copy .callout-important"><code>.callout-important</code></button>)</h3>
-<p>For key information users need to achieve their goal.</p>
 <div class="demo-preview is-joined">
-  <div class="callout callout-important">
-    <div class="callout-title">Important</div>
-    <p class="callout-description">Key information users need to know.</p>
-  </div>
-</div>
-
-
-      <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-t3ok5dxyu" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-t3ok5dxyu" class="language-html">&lt;div class=&quot;callout callout-important&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Important&lt;/div&gt;
-  &lt;p class=&quot;callout-description&quot;&gt;Key information users need to know.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<p>With icon:</p>
-<div class="demo-preview is-joined">
-  <div class="callout callout-important callout--icon">
+  <div class="callout" data-type="important" data-icon>
     <div class="svg-icn"><svg data-icon="exclamation" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M13 7V14H11V7H13Z" fill="currentColor"/><path d="M12 18C12.35 18 12.6458 17.8792 12.8875 17.6375C13.1292 17.3958 13.25 17.1 13.25 16.75C13.25 16.4 13.1292 16.1042 12.8875 15.8625C12.6458 15.6208 12.35 15.5 12 15.5C11.65 15.5 11.3542 15.6208 11.1125 15.8625C10.8708 16.1042 10.75 16.4 10.75 16.75C10.75 17.1 10.8708 17.3958 11.1125 17.6375C11.3542 17.8792 11.65 18 12 18Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/></svg></div>
     <div class="callout-title">Important</div>
     <p class="callout-description">Key information users need to know.</p>
   </div>
 </div>
 
-
-      <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-empebe39j" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-empebe39j" class="language-html">&lt;div class=&quot;callout callout-important callout--icon&quot;&gt;
-  &lt;div class=&quot;svg-icn&quot; data-icon=&quot;exclamation&quot;&gt;&lt;!-- exclamation SVG --&gt;&lt;/div&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;Important&lt;/div&gt;
-  &lt;p class=&quot;callout-description&quot;&gt;Key information users need to know.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
 <hr>
-<h2 id="rules">Rules</h2>
+<h2 id="usage-rules">Usage rules</h2>
 <div class="table-scroll"><table class="table">
 <thead>
 <tr>
@@ -535,8 +460,8 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>Use semantic variants for meaning</td>
-<td>Use color to decorate without purpose</td>
+<td>Use <code>data-type</code> for semantic meaning</td>
+<td>Use colour to decorate without purpose</td>
 </tr>
 <tr>
 <td>Keep callout content concise</td>
@@ -548,17 +473,13 @@
 </tr>
 <tr>
 <td>Use recommended icons for visual consistency</td>
-<td>Add icons to every callout — use them when they add clarity</td>
+<td>Add icons to every callout — use only when they add clarity</td>
 </tr>
 <tr>
-<td>Customize <code>--status-*</code> tokens per project</td>
-<td>Hardcode colors on individual callouts</td>
+<td>Customise <code>--status-*</code> tokens per project</td>
+<td>Hardcode colours on individual callouts</td>
 </tr>
 </tbody></table></div>
-<hr>
-<h2 id="relationship-to-alerts">Relationship to Alerts</h2>
-<p>The site also includes an <button type="button" class="token-copy is-class" data-copy=".alert" aria-label="Copy .alert"><code>.alert</code></button> component (<button type="button" class="token-copy is-class" data-copy=".alert-note" aria-label="Copy .alert-note"><code>.alert-note</code></button>, <button type="button" class="token-copy is-class" data-copy=".alert-tip" aria-label="Copy .alert-tip"><code>.alert-tip</code></button>, <button type="button" class="token-copy is-class" data-copy=".alert-important" aria-label="Copy .alert-important"><code>.alert-important</code></button>, <button type="button" class="token-copy is-class" data-copy=".alert-warning" aria-label="Copy .alert-warning"><code>.alert-warning</code></button>, <button type="button" class="token-copy is-class" data-copy=".alert-caution" aria-label="Copy .alert-caution"><code>.alert-caution</code></button>) for inline callout boxes — typically used in documentation content. These share the same colour tokens as the design system callouts.</p>
-<p>The design system callouts (<button type="button" class="token-copy is-class" data-copy=".callout" aria-label="Copy .callout"><code>.callout</code></button>) are the <strong>structured, project-wide</strong> equivalent with icon support and richer layout. For simple inline messages, use <button type="button" class="token-copy is-class" data-copy=".alert" aria-label="Copy .alert"><code>.alert</code></button>. For prominent UI callouts, use <button type="button" class="token-copy is-class" data-copy=".callout" aria-label="Copy .callout"><code>.callout</code></button>.</p>
 
                 </article>
             </main>
@@ -566,7 +487,7 @@
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#core-principles" class="toc-link">Core Principles</a></li><li class="toc-item toc-level-2"><a href="#status-color-tokens" class="toc-link">Status Color Tokens</a></li><li class="toc-item toc-level-2"><a href="#base-callout" class="toc-link">Base Callout</a></li><li class="toc-item toc-level-2"><a href="#callout-title" class="toc-link">Callout Title</a></li><li class="toc-item toc-level-2"><a href="#callout-with-icon" class="toc-link">Callout with Icon</a></li><li class="toc-item toc-level-2"><a href="#recommended-icons" class="toc-link">Recommended Icons</a></li><li class="toc-item toc-level-2"><a href="#variants" class="toc-link">Variants</a></li><li class="toc-item toc-level-2"><a href="#rules" class="toc-link">Rules</a></li><li class="toc-item toc-level-2"><a href="#relationship-to-alerts" class="toc-link">Relationship to Alerts</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-1"><a href="#callout" class="toc-link">Callout</a></li><li class="toc-item toc-level-2"><a href="#anatomy" class="toc-link">Anatomy</a></li><li class="toc-item toc-level-2"><a href="#status-colour-tokens" class="toc-link">Status colour tokens</a></li><li class="toc-item toc-level-2"><a href="#base-callout" class="toc-link">Base callout</a></li><li class="toc-item toc-level-2"><a href="#types" class="toc-link">Types</a></li><li class="toc-item toc-level-2"><a href="#callout-with-icon" class="toc-link">Callout with icon</a></li><li class="toc-item toc-level-2"><a href="#usage-rules" class="toc-link">Usage rules</a></li></ul></nav></div>
     </aside>
         </div>
 

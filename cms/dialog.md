@@ -42,7 +42,7 @@ Dialogs are modal windows built on the native `<dialog>` element. They trap focu
       <p>This is the dialog body content. It can contain any HTML — text, forms, images, or other components.</p>
     </div>
     <div class="dialog-footer">
-      <button class="button is-faded" type="button" data-dialog-close>Cancel</button>
+      <button class="button" data-variant="faded" type="button" data-dialog-close>Cancel</button>
       <button class="button" type="button" data-dialog-close>Confirm</button>
     </div>
   </dialog>
@@ -60,7 +60,7 @@ Dialogs are modal windows built on the native `<dialog>` element. They trap focu
     <p>Dialog content here.</p>
   </div>
   <div class="dialog-footer">
-    <button class="button is-faded" type="button" data-dialog-close>Cancel</button>
+    <button class="button" data-variant="faded" type="button" data-dialog-close>Cancel</button>
     <button class="button" type="button" data-dialog-close>Confirm</button>
   </div>
 </dialog>
@@ -73,7 +73,7 @@ Dialogs are modal windows built on the native `<dialog>` element. They trap focu
 A destructive action pattern with a danger-styled confirm button.
 
 <div class="demo-preview">
-  <button class="button is-outline" type="button" data-dialog-open="demo-dialog-confirm">Delete project</button>
+  <button class="button" data-variant="outline" type="button" data-dialog-open="demo-dialog-confirm">Delete project</button>
   <dialog id="demo-dialog-confirm" class="dialog">
     <div class="dialog-header">
       <h3 class="dialog-title">Delete project?</h3>
@@ -85,8 +85,8 @@ A destructive action pattern with a danger-styled confirm button.
       <p>This action cannot be undone. All files, settings, and history for this project will be permanently deleted.</p>
     </div>
     <div class="dialog-footer">
-      <button class="button is-faded" type="button" data-dialog-close>Cancel</button>
-      <button class="button" type="button" data-dialog-close style="background: var(--status-danger); border-color: var(--status-danger);">Delete</button>
+      <button class="button" data-variant="faded" type="button" data-dialog-close>Cancel</button>
+      <button class="button" type="button" data-dialog-close data-color="danger">Delete</button>
     </div>
   </dialog>
 </div>

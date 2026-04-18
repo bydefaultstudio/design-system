@@ -67,8 +67,11 @@ function parseAttrs(str) {
 
 const BLOCK_SHORTCODES = {
   callout(inner, attrs) {
-    const type = attrs.type || "insight";
-    return `<aside class="callout callout--${type}">\n${inner}\n</aside>`;
+    const raw = attrs.type || "insight";
+    // Map old shortcode type names to the canonical data-type values
+    const TYPE_MAP = { insight: "note", quote: "tip" };
+    const mapped = TYPE_MAP[raw] || raw;
+    return `<aside class="callout" data-type="${mapped}">\n${inner}\n</aside>`;
   },
   gallery(inner) {
     // Inner is markdown-rendered <p><img><img></p> — unwrap and rewrap.

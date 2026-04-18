@@ -40,6 +40,10 @@ The space scale provides a visual reference for the spacing tokens used througho
 | `var(--space-8xl)` | 5rem | 80px |
 | `var(--space-9xl)` | 5.5rem | 88px |
 | `var(--space-10xl)` | 6rem | 96px |
+| `var(--space-11xl)` | 6.5rem | 104px |
+| `var(--space-12xl)` | 7rem | 112px |
+| `var(--space-13xl)` | 7.5rem | 120px |
+| `var(--space-14xl)` | 10rem | 160px |
 
 <div class="demo-preview is-joined">
   <div class="block gap-l">

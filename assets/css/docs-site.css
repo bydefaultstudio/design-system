@@ -372,8 +372,8 @@
   display: flex;
   flex-direction: column;
   min-height: 250px;
-  background: var(--card-background);
-  border: var(--border-s) solid var(--card-border);
+  background: var(--background-primary);
+  border: var(--border-s) solid var(--border-faded);
   color: inherit;
   text-align: center;
   text-decoration: none;
@@ -450,6 +450,17 @@ a.book-cover:hover {
 a.book-cover:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus), var(--alpha-75));
+}
+
+/* -- Book cover dark mode -- */
+[data-theme="dark"] .book-cover {
+  background: var(--background-secondary);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .book-cover {
+    background: var(--background-secondary);
+  }
 }
 
 

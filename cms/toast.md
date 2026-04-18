@@ -22,7 +22,6 @@ Toasts are temporary notifications that appear in the bottom-right corner and di
 |-------|-----------------|----------------|---------|
 | `var(--toast-background)` | `var(--warm-black)` | `var(--neutral-100)` | Toast background |
 | `var(--toast-text)` | `var(--off-white)` | `var(--warm-black)` | Toast text colour |
-| `var(--toast-radius)` | `var(--radius-m)` | — | Corner radius |
 
 Status variants use the global `--status-*` tokens for the left border accent.
 

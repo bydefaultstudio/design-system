@@ -180,12 +180,7 @@ Solid colour blocks for hero sections, callouts, ad units, and any marketing sur
 
 ### Button
 
-<div class="color-list border border-faded">
-  <div class="color-row is-text-light" style="background-color: var(--button-primary);" data-token="--button-primary"><span class="color-row-name">button-primary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
-  <div class="color-row" style="background-color: var(--button-text);" data-token="--button-text"><span class="color-row-name">button-text</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
-  <div class="color-row is-text-light" style="background-color: var(--button-secondary);" data-token="--button-secondary"><span class="color-row-name">button-secondary</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
-  <div class="color-row is-text-dark" style="background-color: var(--button-faded);" data-token="--button-faded"><span class="color-row-name">button-faded</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
-</div>
+Button colours are now component-scoped tokens on `.button` — not root-level variables. See [Button documentation](button.md) for the full token reference (`--button-color`, `--button-bg`, `--button-text-color`, etc.) and the `data-color` attribute for semantic colour variants.
 
 ### Status
 

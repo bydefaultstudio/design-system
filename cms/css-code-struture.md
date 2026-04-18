@@ -61,10 +61,11 @@ h2 {
   border: var(--border-s) solid var(--border-primary);
 }
 .button:hover {
-  background: var(--background-secondary);
+  opacity: 0.9;
 }
-.button.is-outline {
-  background: transparent;
+.button[data-variant="outline"] {
+  --button-bg: transparent;
+  --button-text-color: var(--button-color);
 }
 /* All button-related styles together */
 ```
