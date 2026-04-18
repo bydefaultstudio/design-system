@@ -785,6 +785,8 @@ function initNextRead() {
     if (!articles.length) return;
 
     // Remove any existing next-read (Barba re-navigation)
+    var existingLabel = article.parentNode.querySelector(".next-read");
+    if (existingLabel) existingLabel.remove();
     var existing = article.parentNode.querySelector(".article.is-next-read");
     if (existing) existing.remove();
 
@@ -1030,7 +1032,6 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
   document.addEventListener("studio:after-nav", function onAfterNav() {
     markReadPosts();
     initFeed();
-    initNextRead();
     initServices();
   });
 });

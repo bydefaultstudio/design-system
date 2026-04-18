@@ -48,6 +48,21 @@
   src: url("../fonts/ibm-plex-mono/IBMPlexMono-SemiBold.ttf") format("truetype");
   font-weight: 600; font-style: normal; font-display: swap;
 }
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-Regular.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-Medium.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Bugrino";
+  src: url("../fonts/bugrino/Bugrino-Bold.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
 
 
 /* ------ FOCUS INDICATOR ------ */
@@ -69,7 +84,7 @@
      These cascade over design-system.css values. */
   --font-primary: "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-secondary: "trust-3a", "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-tertiary: "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-tertiary: "Bugrino", sans-serif;
   --line-height-m: 1.2;
   --border-s: 0.0625rem;
   --border-m: 0.125rem;
@@ -97,13 +112,13 @@
      tracking (letter-spacing). */
 
   /* Headline — the biggest thing on a page; one per page (h1). */
-  --headline-size:     clamp(2rem, 1rem + 5vw, 4.5rem);
+  --headline-size:     clamp(var(--font-4xl), 1rem + 5vw, var(--font-8xl));
   --headline-weight:   500;
   --headline-leading:  var(--line-height-s);
   --headline-tracking: -0.02em;
 
   /* Title — section heads and recurring labels within a page (h2). */
-  --title-size:     clamp(1.5rem, 0.8rem + 2vw, 2.5rem);
+  --title-size:     clamp(var(--font-2xl), 0.8rem + 2vw, var(--font-6xl));
   --title-weight:   500;
   --title-leading:  var(--line-height-m);
   --title-tracking: -0.01em;
@@ -910,7 +925,7 @@ article.article {
 
 .article-headline {
   margin: 0;
-  font-size: var(--font-8xl);
+  font-size: var(--headline-size);
   font-weight: var(--headline-weight);
 }
 
@@ -1895,7 +1910,6 @@ body.is-animating .close-btn-wrap {
    dark CTA section clips cleanly at the card's rounded bottom edge. */
 .services-card {
   background: var(--bg-faded-3);
-  border-radius: var(--radius-m);
   overflow: hidden;
 }
 
@@ -2154,52 +2168,155 @@ body.is-animating .close-btn-wrap {
 
 /* ------ STYLEGUIDE ------ */
 
-.sg-table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
+/* -- Styleguide table — combo class on .table .table-full -- */
+
+.table-styleguide th,
+.table-styleguide td {
+  padding-top: var(--space-l);
+  padding-bottom: var(--space-l);
+  padding-left: 0;
 }
 
-.sg-table thead {
-  border-bottom: var(--border-m) solid var(--text-primary);
+.table-styleguide th {
+  padding-top: var(--space-s);
+  padding-bottom: var(--space-s);
 }
 
-.sg-table th {
-  font-family: var(--font-secondary);
-  font-size: var(--label-size);
-  font-weight: var(--label-weight);
-  letter-spacing: var(--label-tracking);
-  text-transform: uppercase;
-  color: var(--text-faded);
-  text-align: left;
-  padding: var(--space-s) 0;
-}
-
-.sg-table td {
-  text-align: left;
-  vertical-align: top;
-  padding: var(--space-l) 0;
-  border-bottom: var(--border-s) solid var(--border-faded);
-}
-
-.sg-table th:first-child,
-.sg-table td:first-child {
+.table-styleguide th:first-child,
+.table-styleguide td:first-child {
   width: 180px;
   padding-right: var(--space-l);
   vertical-align: top;
 }
 
-.sg-table td:first-child code {
+.table-styleguide td:first-child code {
   font-size: var(--font-2xs);
   color: var(--text-secondary);
 }
 
-.sg-table td:last-child > *:first-child {
+.table-styleguide td:last-child > *:first-child {
   margin-top: 0;
 }
 
-.sg-table td:last-child > *:last-child {
+.table-styleguide td:last-child > *:last-child {
   margin-bottom: 0;
+}
+
+/* -- Token copy — inline copy button for code chips in styleguide tables -- */
+
+.token-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.token-copy code {
+  transition: color var(--duration-2xs) var(--ease-out), background var(--duration-2xs) var(--ease-out);
+}
+
+.token-copy:hover code {
+  color: var(--text-primary);
+  background: color-mix(in srgb, var(--text-primary), var(--alpha-15));
+}
+
+.token-copy.is-copied code {
+  color: var(--status-success);
+}
+
+.token-copy::after {
+  content: "";
+  display: inline-block;
+  width: 0.85em;
+  height: 0.85em;
+  flex-shrink: 0;
+  background-color: currentColor;
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z'/%3E%3C/svg%3E");
+  mask-size: contain;
+  -webkit-mask-size: contain;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  opacity: 0.4;
+  transition: opacity var(--duration-2xs) var(--ease-out);
+  pointer-events: none;
+}
+
+.token-copy:hover::after {
+  opacity: 0.8;
+}
+
+.token-copy.is-copied::after {
+  opacity: 1;
+  color: var(--status-success);
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z'/%3E%3C/svg%3E");
+}
+
+/* -- Color row — swatch with hex/CSS copy buttons -- */
+
+.color-row {
+  display: flex;
+  align-items: center;
+  padding: var(--space-xl);
+  font-size: var(--font-m);
+  font-weight: var(--font-weight-medium);
+  cursor: default;
+  position: relative;
+  height: 80px;
+}
+
+.color-row-name {
+  pointer-events: none;
+}
+
+.color-row.is-text-dark .color-row-name,
+.color-row.is-text-dark .color-copy-btn {
+  color: var(--black);
+}
+
+.color-row.is-text-light .color-row-name,
+.color-row.is-text-light .color-copy-btn {
+  color: var(--white);
+}
+
+.color-row-actions {
+  display: none;
+  gap: var(--space-s);
+  margin-left: auto;
+}
+
+.color-row:hover .color-row-actions,
+.color-row:focus-within .color-row-actions {
+  display: flex;
+}
+
+.color-copy-btn {
+  color: inherit;
+  background: none;
+  border: none;
+  font-size: var(--font-xs);
+  font-weight: var(--font-weight-semi-bold);
+  cursor: pointer;
+  padding: var(--space-2xs) var(--space-s);
+}
+
+/* State swap: default visible, copied hidden — toggles on .is-copied */
+.color-copy-btn .copy-btn-default { display: inline-flex; align-items: center; gap: var(--space-s); }
+.color-copy-btn .copy-btn-copied  { display: none; }
+.color-copy-btn.is-copied .copy-btn-default { display: none; }
+.color-copy-btn.is-copied .copy-btn-copied  { display: inline-flex; align-items: center; gap: var(--space-s); }
+
+.color-copy-btn:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2.5px;
 }
 
 .sg-eyebrow {
@@ -2224,6 +2341,7 @@ body.is-animating .close-btn-wrap {
 .sg-note {
   color: var(--text-secondary);
   font-size: var(--font-s);
+  margin-top: 0;
   margin-bottom: var(--space-l);
 }
 
@@ -2272,7 +2390,6 @@ body.is-animating .close-btn-wrap {
 .sg-spacer {
   height: 24px;
   background: var(--text-faded);
-  border-radius: var(--radius-xs);
 }
 
 .sg-token-row {
@@ -2287,12 +2404,38 @@ body.is-animating .close-btn-wrap {
   color: var(--text-secondary);
 }
 
+.sg-tooltip-demo {
+  border-bottom: var(--border-s) dashed var(--text-faded);
+  cursor: help;
+}
+
+.sg-radius-demo {
+  width: 80px;
+  height: 80px;
+  background: var(--background-faded);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-xs);
+}
+
+.sg-thumb-placeholder {
+  background: var(--background-faded);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-faded);
+  font-family: var(--font-tertiary);
+}
+
+/* Constrain demo-only components (e.g. post cards in styleguide) */
+.sg-demo {
+  max-width: 320px;
+}
+
 @media (max-width: 768px) {
-  .sg-table {
-    table-layout: auto;
-  }
-  .sg-table th:first-child,
-  .sg-table td:first-child {
+  .table-styleguide th:first-child,
+  .table-styleguide td:first-child {
     width: 120px;
   }
 }

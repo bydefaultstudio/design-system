@@ -24,18 +24,6 @@
   <link rel="stylesheet" href="assets/css/studio.css" />
   <link rel="stylesheet" href="assets/css/bd-video.css" />
 
-  <!-- Styleguide-only display helpers (per CLAUDE.md §8: inline styles permitted in styleguide demos) -->
-  <style>
-    .sg-note { color: var(--text-secondary); font-size: var(--font-s); margin-top: 0; }
-    .sg-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-m); margin-block: var(--space-m); }
-    .sg-stack { display: flex; flex-direction: column; gap: var(--space-m); margin-block: var(--space-m); }
-    .sg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--space-m); margin-block: var(--space-m); }
-    .sg-token-row { display: grid; grid-template-columns: 1fr auto; gap: var(--space-m); padding: var(--space-s) 0; border-bottom: var(--border-s) solid var(--border-secondary); font-family: var(--font-tertiary); font-size: var(--font-s); }
-    .sg-token-row:last-child { border-bottom: 0; }
-    .sg-token-row code { color: var(--text-faded); }
-    .sg-swatch { width: 100%; aspect-ratio: 4 / 1; border-radius: var(--radius-s); border: var(--border-s) solid var(--border-secondary); }
-    .sg-spacer { background: var(--text-faded); height: 1rem; border-radius: var(--radius-xs); }
-  </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -116,39 +104,39 @@
                   <h2>Headings</h2>
                   <p class="sg-note">Base heading styles inherit from <code>design-system.css</code>. Role tokens <code>--headline-*</code> and <code>--title-*</code> set size, weight, leading, and tracking.</p>
 
-                  <table class="sg-table">
+                  <table class="table table-full table-styleguide">
                   <thead><tr><th>Token</th><th>Example</th></tr></thead>
                   <tbody>
                   <tr>
-                  <td><code>&lt;h1&gt;</code><br><code>--headline-*</code></td>
+                  <td><button class="token-copy" data-copy="&lt;h1&gt;"><code>&lt;h1&gt;</code></button><br><button class="token-copy" data-copy="--headline-*"><code>--headline-*</code></button></td>
                   <td><h1>Your Primary Headline, Big, Bold, and Unmissable</h1></td>
                           </tr>
                   <tr>
-                  <td><code>&lt;h1&gt;</code><br><code>.article-headline</code></td>
+                  <td><button class="token-copy" data-copy="&lt;h1&gt;"><code>&lt;h1&gt;</code></button><br><button class="token-copy" data-copy=".article-headline"><code>.article-headline</code></button></td>
                   <td><h1 class="article-headline">Compelling Statement That Captures Attention Instantly</h1></td>
                           </tr>
                   <tr>
-                  <td><code>&lt;h2&gt;</code><br><code>--title-*</code></td>
+                  <td><button class="token-copy" data-copy="&lt;h2&gt;"><code>&lt;h2&gt;</code></button><br><button class="token-copy" data-copy="--title-*"><code>--title-*</code></button></td>
                   <td><h2>Supporting Headline to Guide Your Content</h2></td>
                           </tr>
                   <tr>
-                  <td><code>&lt;h3&gt;</code></td>
+                  <td><button class="token-copy" data-copy="&lt;h3&gt;"><code>&lt;h3&gt;</code></button></td>
                   <td><h3>Type with Purpose, Design with Intent</h3></td>
                           </tr>
                   <tr>
-                  <td><code>&lt;h3&gt;</code><br><code>.post-title</code></td>
+                  <td><button class="token-copy" data-copy="&lt;h3&gt;"><code>&lt;h3&gt;</code></button><br><button class="token-copy" data-copy=".post-title"><code>.post-title</code></button></td>
                   <td><h3 class="post-title">Descriptive Title That Summarizes Key Concepts</h3></td>
                   </tr>
                   <tr>
-                  <td><code>&lt;h4&gt;</code></td>
+                  <td><button class="token-copy" data-copy="&lt;h4&gt;"><code>&lt;h4&gt;</code></button></td>
                   <td><h4>Smaller Subheading for Detailed Content Organisation</h4></td>
                           </tr>
                   <tr>
-                  <td><code>&lt;h5&gt;</code></td>
+                  <td><button class="token-copy" data-copy="&lt;h5&gt;"><code>&lt;h5&gt;</code></button></td>
                   <td><h5>Clear Navigation Heading for Important Information</h5></td>
                           </tr>
                   <tr>
-                  <td><code>&lt;h6&gt;</code></td>
+                  <td><button class="token-copy" data-copy="&lt;h6&gt;"><code>&lt;h6&gt;</code></button></td>
                   <td><h6>Strategic Headline for Critical Content Sections</h6></td>
                           </tr>
 
@@ -165,31 +153,31 @@
                   <h2>Labels</h2>
                   <p class="sg-note">Base class <code>.label</code> applies <code>--label-*</code> tokens. Modifiers: <code>.is-eyebrow</code> (smaller + bolder + wider), <code>.is-mono</code>, <code>.is-serif</code>.</p>
 
-                  <table class="sg-table">
+                  <table class="table table-full table-styleguide">
                   <thead><tr><th>Token</th><th>Example</th></tr></thead>
                   <tbody>
                   <tr>
-                  <td><code>.label</code></td>
+                  <td><button class="token-copy" data-copy=".label"><code>.label</code></button></td>
                   <td><span class="label">Use this style to tag and organise content</span></td>
                           </tr>
                   <tr>
-                  <td><code>.label</code><br><code>.is-eyebrow</code></td>
+                  <td><button class="token-copy" data-copy=".label"><code>.label</code></button><br><button class="token-copy" data-copy=".is-eyebrow"><code>.is-eyebrow</code></button></td>
                   <td><span class="label is-eyebrow">Use this style to tag and organise content</span></td>
                           </tr>
                   <tr>
-                  <td><code>.label</code><br><code>.is-eyebrow .is-serif</code></td>
+                  <td><button class="token-copy" data-copy=".label"><code>.label</code></button><br><button class="token-copy" data-copy=".is-eyebrow .is-serif"><code>.is-eyebrow .is-serif</code></button></td>
                   <td><span class="label is-eyebrow is-serif">Use this style to tag and organise content</span></td>
                           </tr>
                   <tr>
-                  <td><code>.label</code><br><code>.is-eyebrow .is-mono</code></td>
+                  <td><button class="token-copy" data-copy=".label"><code>.label</code></button><br><button class="token-copy" data-copy=".is-eyebrow .is-mono"><code>.is-eyebrow .is-mono</code></button></td>
                   <td><span class="label is-eyebrow is-mono">Use this style to tag and organise content</span></td>
                           </tr>
                   <tr>
-                  <td><code>.article-meta-item</code><br><code>.label</code></td>
+                  <td><button class="token-copy" data-copy=".article-meta-item"><code>.article-meta-item</code></button><br><button class="token-copy" data-copy=".label"><code>.label</code></button></td>
                   <td><span class="article-meta-item label">7 min read</span></td>
                           </tr>
                   <tr>
-                  <td><code>.post-label</code><br><code>.label</code></td>
+                  <td><button class="token-copy" data-copy=".post-label"><code>.post-label</code></button><br><button class="token-copy" data-copy=".label"><code>.label</code></button></td>
                   <td><span class="post-label label">Featured</span></td>
                           </tr>
                         </tbody>
@@ -205,52 +193,52 @@
                   <h2>Body text</h2>
                   <p class="sg-note">Default paragraph uses <code>--body-*</code> tokens. Inline formatting: <code>&lt;strong&gt;</code>, <code>&lt;em&gt;</code>, <code>&lt;u&gt;</code>, <code>&lt;s&gt;</code>, <code>&lt;a&gt;</code>.</p>
 
-                  <table class="sg-table">
+                  <table class="table table-full table-styleguide">
                   <thead><tr><th>Token</th><th>Example</th></tr></thead>
                   <tbody>
                   <tr>
-                  <td><code>&lt;p&gt;</code><br><code>--body-*</code></td>
+                  <td><button class="token-copy" data-copy="&lt;p&gt;"><code>&lt;p&gt;</code></button><br><button class="token-copy" data-copy="--body-*"><code>--body-*</code></button></td>
                   <td><p>This paragraph demonstrates how body text will look across your layout. <strong>Bold text</strong> adds emphasis, while <em>italics</em> offer a subtle highlight. You can also <u>underline</u> text or use <s>strikethrough</s> to show edits. This is an entire paragraph to test readability and text flow.</p></td>
                           </tr>
                   <tr>
-                  <td><code>.text-size-xlarge</code></td>
+                  <td><button class="token-copy" data-copy=".text-size-xlarge"><code>.text-size-xlarge</code></button></td>
                   <td><p class="text-size-xlarge">Lead paragraph text for hero sections and article introductions.</p></td>
                   </tr>
                   <tr>
-                  <td><code>.text-size-large</code></td>
+                  <td><button class="token-copy" data-copy=".text-size-large"><code>.text-size-large</code></button></td>
                   <td><p class="text-size-large">Introductory text that sits between headings and body.</p></td>
                   </tr>
                   <tr>
-                  <td><code>.text-size-small</code></td>
+                  <td><button class="token-copy" data-copy=".text-size-small"><code>.text-size-small</code></button></td>
                   <td><p class="text-size-small">Smaller supporting text for secondary information.</p></td>
                   </tr>
                   <tr>
-                  <td><code>.text-size-xsmall</code></td>
+                  <td><button class="token-copy" data-copy=".text-size-xsmall"><code>.text-size-xsmall</code></button></td>
                   <td><p class="text-size-xsmall">Captions, metadata, and fine print.</p></td>
                   </tr>
                   <tr>
-                  <td><code>&lt;a&gt;</code><br>inline link</td>
+                  <td><button class="token-copy" data-copy="&lt;a&gt;"><code>&lt;a&gt;</code></button><br>inline link</td>
                   <td><p>Read the full <a href="#">brand guidelines</a> before starting.</p></td>
                   </tr>
                   <tr>
-                  <td><code>&lt;a&gt;</code><br>external link</td>
+                  <td><button class="token-copy" data-copy="&lt;a&gt;"><code>&lt;a&gt;</code></button><br>external link</td>
                   <td><p>Typography is powered by <a href="https://fonts.google.com" target="_blank" rel="noopener noreferrer">Google Fonts</a> for web delivery.</p></td>
                   </tr>
 
                   <tr>
-                  <td><code>.sidebar-intro</code></td>
+                  <td><button class="token-copy" data-copy=".sidebar-intro"><code>.sidebar-intro</code></button></td>
                   <td><p class="sidebar-intro">Interactive Advertising Agency</p></td>
                           </tr>
                   <tr>
-                  <td><code>.post-excerpt</code></td>
+                  <td><button class="token-copy" data-copy=".post-excerpt"><code>.post-excerpt</code></button></td>
                   <td><p class="post-excerpt">Bold insights, fresh thinking, and a reason to scroll. This placeholder text shows how a post excerpt will look in your feed layout.</p></td>
                           </tr>
                   <tr>
-                  <td><code>&lt;small&gt;</code></td>
+                  <td><button class="token-copy" data-copy="&lt;small&gt;"><code>&lt;small&gt;</code></button></td>
                   <td><p><small>Additional fees may apply depending on your location and selected options. Delivery times are approximate and may vary based on availability. Terms and conditions apply. &copy; 2026 By Default. All Rights Reserved.</small></p></td>
                           </tr>
                   <tr>
-                  <td><code>&lt;blockquote&gt;</code></td>
+                  <td><button class="token-copy" data-copy="&lt;blockquote&gt;"><code>&lt;blockquote&gt;</code></button></td>
                   <td>
                               <blockquote><p>Words matter, but how those words are presented matters just as much. Typography transforms content from mundane to magical, from ordinary to extraordinary.</p></blockquote>
                             </td>
@@ -268,11 +256,11 @@
                 <div class="container-medium">
                   <h2>Lists</h2>
 
-                  <table class="sg-table">
+                  <table class="table table-full table-styleguide">
                   <thead><tr><th>Token</th><th>Example</th></tr></thead>
                   <tbody>
                   <tr>
-                  <td><code>&lt;ul&gt;</code></td>
+                  <td><button class="token-copy" data-copy="&lt;ul&gt;"><code>&lt;ul&gt;</code></button></td>
                   <td>
                               <ul>
                                 <li>Unordered lists help organize related items without hierarchy</li>
@@ -283,7 +271,7 @@
                             </td>
                           </tr>
                   <tr>
-                  <td><code>&lt;ol&gt;</code></td>
+                  <td><button class="token-copy" data-copy="&lt;ol&gt;"><code>&lt;ol&gt;</code></button></td>
                   <td>
                               <ol>
                                 <li>Use headings to create a visual hierarchy.</li>
@@ -306,15 +294,15 @@
                 <div class="container-medium">
                   <h2>Blockquote</h2>
 
-                  <table class="sg-table">
+                  <table class="table table-full table-styleguide">
                   <thead><tr><th>Token</th><th>Example</th></tr></thead>
                   <tbody>
                   <tr>
-                  <td><code>&lt;blockquote&gt;</code></td>
+                  <td><button class="token-copy" data-copy="&lt;blockquote&gt;"><code>&lt;blockquote&gt;</code></button></td>
                   <td><blockquote><p>Typography is more than style; it’s about communication. The right type makes content readable, relatable, and engaging, drawing readers into the heart of the message.</p></blockquote></td>
                           </tr>
                   <tr>
-                  <td><code>&lt;blockquote&gt;</code></td>
+                  <td><button class="token-copy" data-copy="&lt;blockquote&gt;"><code>&lt;blockquote&gt;</code></button></td>
                   <td><blockquote><p>Quotes deserve their spotlight. Use a blockquote to emphasise key messages or insights.</p></blockquote></td>
                           </tr>
                         </tbody>
@@ -329,35 +317,35 @@
                 <div class="container-medium">
                   <h2>Inline text elements</h2>
 
-                  <table class="sg-table">
+                  <table class="table table-full table-styleguide">
                   <thead><tr><th>Token</th><th>Example</th></tr></thead>
                   <tbody>
                   <tr>
-                  <td><code>&lt;strong&gt;</code></td>
+                  <td><button class="token-copy" data-copy="&lt;strong&gt;"><code>&lt;strong&gt;</code></button></td>
                   <td><p><strong>Your visual cover statement goes here</strong></p></td>
                           </tr>
                   <tr>
-                  <td><code>&lt;em&gt;</code></td>
+                  <td><button class="token-copy" data-copy="&lt;em&gt;"><code>&lt;em&gt;</code></button></td>
                   <td><p><em>Your visual cover statement goes here now</em></p></td>
                           </tr>
                   <tr>
-                  <td><code>&lt;code&gt;</code></td>
+                  <td><button class="token-copy" data-copy="&lt;code&gt;"><code>&lt;code&gt;</code></button></td>
                   <td><p>Use <code>--text-primary</code> for main content and <code>--text-secondary</code> for supporting text.</p></td>
                           </tr>
                   <tr>
-                  <td><code>&lt;kbd&gt;</code></td>
+                  <td><button class="token-copy" data-copy="&lt;kbd&gt;"><code>&lt;kbd&gt;</code></button></td>
                   <td><p>Press <kbd>Cmd</kbd>+<kbd>K</kbd> to open the command palette.</p></td>
                           </tr>
                   <tr>
-                  <td><code>&lt;mark&gt;</code></td>
+                  <td><button class="token-copy" data-copy="&lt;mark&gt;"><code>&lt;mark&gt;</code></button></td>
                   <td><p>Use <mark>mark</mark> sparingly to highlight key terms in running text.</p></td>
                           </tr>
                   <tr>
-                  <td><code>&lt;small&gt;</code></td>
+                  <td><button class="token-copy" data-copy="&lt;small&gt;"><code>&lt;small&gt;</code></button></td>
                   <td><p><small>Your visual cover statement with smaller text</small></p></td>
                           </tr>
                   <tr>
-                  <td><code>&lt;s&gt;</code></td>
+                  <td><button class="token-copy" data-copy="&lt;s&gt;"><code>&lt;s&gt;</code></button></td>
                   <td><p><s>Product specifications may vary.</s> Updated specifications confirmed.</p></td>
                           </tr>
                         </tbody>
@@ -373,40 +361,55 @@
                   <h2>Buttons</h2>
                   <p class="sg-note">Base class is <code>.button</code>. Modifiers are legacy <code>.is-*</code> classes (per CLAUDE.md §4).</p>
 
-                  <div class="sg-row">
-                  <button type="button" class="button">Primary</button>
-                  <button type="button" class="button is-outline">Outline</button>
-                  <button type="button" class="button is-faded">Faded</button>
-                  <button type="button" class="button is-outline is-faded">Outline faded</button>
-                  <button type="button" class="button is-link">Link button</button>
-                      </div>
-
-                  <h3>Sizes</h3>
-                  <div class="sg-row">
-                  <button type="button" class="button">Default</button>
-                  <button type="button" class="button is-small">Small</button>
-                  <button type="button" class="button is-xsmall">Extra small</button>
-                      </div>
-
-                  <h3>States</h3>
-                  <div class="sg-row">
-                  <button type="button" class="button">Default</button>
-                  <button type="button" class="button" disabled>Disabled</button>
-                  <button type="button" class="button is-disabled" aria-disabled="true">Is-disabled</button>
-                      </div>
-
-                  <h3>Icon button</h3>
-                  <div class="sg-row">
-                  <button type="button" class="button is-icon nav-btn" aria-label="Toggle dark mode"><div class="svg-icn"><svg data-icon="sun" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 5V1H13V5H11ZM17.65 7.75L16.275 6.375L19.075 3.5L20.475 4.925L17.65 7.75ZM19 13V11H23V13H19ZM11 23V19H13V23H11ZM6.35 7.7L3.5 4.925L4.925 3.525L7.75 6.35L6.35 7.7ZM19.05 20.5L16.275 17.625L17.625 16.275L20.475 19.025L19.05 20.5ZM1 13V11H5V13H1ZM4.925 20.5L3.525 19.075L6.325 16.275L7.05 16.95L7.775 17.65L4.925 20.5ZM12 18C10.3333 18 8.91667 17.4167 7.75 16.25C6.58333 15.0833 6 13.6667 6 12C6 10.3333 6.58333 8.91667 7.75 7.75C8.91667 6.58333 10.3333 6 12 6C13.6667 6 15.0833 6.58333 16.25 7.75C17.4167 8.91667 18 10.3333 18 12C18 13.6667 17.4167 15.0833 16.25 16.25C15.0833 17.4167 13.6667 18 12 18ZM12 16C13.1 16 14.0417 15.6083 14.825 14.825C15.6083 14.0417 16 13.1 16 12C16 10.9 15.6083 9.95833 14.825 9.175C14.0417 8.39167 13.1 8 12 8C10.9 8 9.95833 8.39167 9.175 9.175C8.39167 9.95833 8 10.9 8 12C8 13.1 8.39167 14.0417 9.175 14.825C9.95833 15.6083 10.9 16 12 16Z" fill="currentColor"></path></svg></div></button>
-                  <button type="button" class="button is-icon nav-btn" aria-label="Open menu"><div class="svg-icn"><svg data-icon="menu" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 18V16H21V18H3ZM3 13V11H21V13H3ZM3 8V6H21V8H3Z" fill="currentColor"></path></svg></div></button>
-                      </div>
-
-                  <h3>Chip buttons (contact form)</h3>
-                  <div class="contact-chips" role="group" aria-label="Service interest">
-                  <button type="button" class="button is-outline is-faded" aria-pressed="false" onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') === 'true' ? 'false' : 'true')"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"></path></svg></div>Interactive Advertising</button>
-                  <button type="button" class="button is-outline is-faded" aria-pressed="true" onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') === 'true' ? 'false' : 'true')"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"></path></svg></div>Interactive Content (selected)</button>
-                  <button type="button" class="button is-outline is-faded" aria-pressed="false" onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') === 'true' ? 'false' : 'true')"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"></path></svg></div>Interactive Activations</button>
-                      </div>
+                  <table class="table table-full table-styleguide">
+                  <thead><tr><th>Token</th><th>Example</th></tr></thead>
+                  <tbody>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".button"><code>.button</code></button></td>
+                  <td><button type="button" class="button">Primary</button></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".button"><code>.button</code></button><br><button class="token-copy" data-copy=".is-outline"><code>.is-outline</code></button></td>
+                  <td><button type="button" class="button is-outline">Outline</button></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".button"><code>.button</code></button><br><button class="token-copy" data-copy=".is-faded"><code>.is-faded</code></button></td>
+                  <td><button type="button" class="button is-faded">Faded</button></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".button"><code>.button</code></button><br><button class="token-copy" data-copy=".is-outline .is-faded"><code>.is-outline .is-faded</code></button></td>
+                  <td><button type="button" class="button is-outline is-faded">Outline faded</button></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".button"><code>.button</code></button><br><button class="token-copy" data-copy=".is-link"><code>.is-link</code></button></td>
+                  <td><button type="button" class="button is-link">Link button</button></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".button"><code>.button</code></button><br><button class="token-copy" data-copy=".is-small"><code>.is-small</code></button></td>
+                  <td><button type="button" class="button is-small">Small</button></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".button"><code>.button</code></button><br><button class="token-copy" data-copy=".is-xsmall"><code>.is-xsmall</code></button></td>
+                  <td><button type="button" class="button is-xsmall">Extra small</button></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".button"><code>.button</code></button><br><code>disabled</code></td>
+                  <td><button type="button" class="button" disabled>Disabled</button></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".button"><code>.button</code></button><br><button class="token-copy" data-copy=".is-disabled"><code>.is-disabled</code></button></td>
+                  <td><button type="button" class="button is-disabled" aria-disabled="true">Is-disabled</button></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".button"><code>.button</code></button><br><button class="token-copy" data-copy=".is-icon"><code>.is-icon</code></button></td>
+                  <td><button type="button" class="button is-icon nav-btn" aria-label="Toggle dark mode"><div class="svg-icn"><svg data-icon="sun" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 5V1H13V5H11ZM17.65 7.75L16.275 6.375L19.075 3.5L20.475 4.925L17.65 7.75ZM19 13V11H23V13H19ZM11 23V19H13V23H11ZM6.35 7.7L3.5 4.925L4.925 3.525L7.75 6.35L6.35 7.7ZM19.05 20.5L16.275 17.625L17.625 16.275L20.475 19.025L19.05 20.5ZM1 13V11H5V13H1ZM4.925 20.5L3.525 19.075L6.325 16.275L7.05 16.95L7.775 17.65L4.925 20.5ZM12 18C10.3333 18 8.91667 17.4167 7.75 16.25C6.58333 15.0833 6 13.6667 6 12C6 10.3333 6.58333 8.91667 7.75 7.75C8.91667 6.58333 10.3333 6 12 6C13.6667 6 15.0833 6.58333 16.25 7.75C17.4167 8.91667 18 10.3333 18 12C18 13.6667 17.4167 15.0833 16.25 16.25C15.0833 17.4167 13.6667 18 12 18ZM12 16C13.1 16 14.0417 15.6083 14.825 14.825C15.6083 14.0417 16 13.1 16 12C16 10.9 15.6083 9.95833 14.825 9.175C14.0417 8.39167 13.1 8 12 8C10.9 8 9.95833 8.39167 9.175 9.175C8.39167 9.95833 8 10.9 8 12C8 13.1 8.39167 14.0417 9.175 14.825C9.95833 15.6083 10.9 16 12 16Z" fill="currentColor"></path></svg></div></button></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".contact-chips"><code>.contact-chips</code></button><br><button class="token-copy" data-copy="aria-pressed"><code>aria-pressed</code></button></td>
+                  <td><div class="contact-chips" role="group" aria-label="Service interest"><button type="button" class="button is-outline is-faded" aria-pressed="false" onclick="this.classList.toggle('is-selected'); this.setAttribute('aria-pressed', this.classList.contains('is-selected'))"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"></path></svg></div>Chip</button><button type="button" class="button is-outline is-faded is-selected" aria-pressed="true" onclick="this.classList.toggle('is-selected'); this.setAttribute('aria-pressed', this.classList.contains('is-selected'))"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"></path></svg></div>Selected</button></div></td>
+                  </tr>
+                  </tbody>
+                  </table>
                 </div>
               </div>
             </section>
@@ -416,37 +419,49 @@
               <div class="padding-global">
                 <div class="container-medium">
                   <h2>Form fields</h2>
-                  <p class="sg-note">Inline label/input pattern from the contact form (<code>.contact-field</code>, <code>.contact-inline</code>, <code>.contact-label</code>).</p>
+                  <p class="sg-note">Standard form elements and the studio contact form patterns.</p>
 
-                  <form class="contact-form" onsubmit="event.preventDefault();">
-                  <div class="contact-field">
-                  <div class="contact-inline">
-                  <label for="sg-name" class="contact-label">Hey, my name is</label>
-                  <input type="text" id="sg-name" name="name" placeholder="your name">
-                          </div>
-                        </div>
-
-                  <div class="contact-field">
-                  <div class="contact-inline">
-                  <label for="sg-email" class="contact-label">and you can reach me at</label>
-                  <input type="email" id="sg-email" name="email" placeholder="your email address">
-                          </div>
-                        </div>
-
-                  <div class="contact-field">
-                  <label for="sg-message" class="contact-label">Anything else? <span class="text-faded">(optional)</span></label>
-                  <textarea id="sg-message" name="message" rows="4" placeholder="A few sentences works."></textarea>
-                        </div>
-
-                  <div class="contact-field">
-                  <span class="contact-label">Standalone label, no input</span>
-                  <span class="form-error" role="alert" style="display:inline;">Example error message</span>
-                        </div>
-
-                  <div class="contact-actions">
-                  <button type="submit" class="button">Send message</button>
-                        </div>
-                      </form>
+                  <table class="table table-full table-styleguide">
+                  <thead><tr><th>Token</th><th>Example</th></tr></thead>
+                  <tbody>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".form-group"><code>.form-group</code></button><br><button class="token-copy" data-copy="&lt;label&gt;"><code>&lt;label&gt;</code></button><br><button class="token-copy" data-copy="&lt;input&gt;"><code>&lt;input&gt;</code></button></td>
+                  <td><div class="form-group"><label for="sg-demo-name">Name</label><input type="text" id="sg-demo-name" placeholder="Enter your name"></div></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".form-group"><code>.form-group</code></button><br><button class="token-copy" data-copy="&lt;textarea&gt;"><code>&lt;textarea&gt;</code></button></td>
+                  <td><div class="form-group"><label for="sg-demo-message">Message</label><textarea id="sg-demo-message" rows="3" placeholder="Enter your message..."></textarea></div></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy="&lt;select&gt;"><code>&lt;select&gt;</code></button></td>
+                  <td><div class="form-group"><label for="sg-demo-select">Country</label><select id="sg-demo-select"><option value="" disabled selected>Choose...</option><option>United Kingdom</option><option>United States</option><option>Netherlands</option></select></div></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".form-check"><code>.form-check</code></button><br><button class="token-copy" data-copy="&lt;input type=&quot;checkbox&quot;&gt;"><code>type="checkbox"</code></button></td>
+                  <td><div class="form-check"><input type="checkbox" id="sg-demo-check" checked><label for="sg-demo-check">Accept terms and conditions</label></div></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".form-check"><code>.form-check</code></button><br><button class="token-copy" data-copy="&lt;input type=&quot;radio&quot;&gt;"><code>type="radio"</code></button></td>
+                  <td><div class="radio-group"><div class="form-check"><input type="radio" name="sg-demo-radio" id="sg-radio-a" checked><label for="sg-radio-a">Option A</label></div><div class="form-check"><input type="radio" name="sg-demo-radio" id="sg-radio-b"><label for="sg-radio-b">Option B</label></div></div></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".form-toggle"><code>.form-toggle</code></button><br><button class="token-copy" data-copy="role=&quot;switch&quot;"><code>role="switch"</code></button></td>
+                  <td><div class="form-toggle"><input type="checkbox" id="sg-demo-toggle" role="switch" checked><label for="sg-demo-toggle">Enable notifications</label></div></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".contact-inline"><code>.contact-inline</code></button></td>
+                  <td><div class="contact-inline"><span class="contact-label">Hey, my name is</span><input type="text" placeholder="your name"></div></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy="disabled"><code>disabled</code></button></td>
+                  <td><input type="text" value="Cannot edit" disabled></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".form-error"><code>.form-error</code></button></td>
+                  <td><span class="form-error" role="alert">Example error message</span></td>
+                  </tr>
+                  </tbody>
+                  </table>
                 </div>
               </div>
             </section>
@@ -456,31 +471,21 @@
               <div class="padding-global">
                 <div class="container-medium">
                   <h2>Post card</h2>
-                  <p class="sg-note">Used in the homepage feed (<code>.content-feed</code>) and the work / articles lists. Default and featured variants below.</p>
+                  <p class="sg-note">Used in the homepage feed (<code>.content-feed</code>) and the work / articles lists.</p>
 
-                  <div class="sg-grid">
-                  <a href="#" class="post">
-                  <div class="post-thumbnail">
-                  <div class="img-thumb" style="background: var(--background-faded); display:flex; align-items:center; justify-content:center; color: var(--text-faded); font-family: var(--font-tertiary);">Thumbnail</div>
-                          </div>
-                  <div class="post-body">
-                  <span class="post-label label">Article</span>
-                            <h3 class="post-title">A title that sets up the read</h3>
-                            <p class="post-excerpt">A one-line excerpt that says enough to earn the click without giving the piece away.</p>
-                          </div>
-                        </a>
-
-                  <a href="#" class="post">
-                  <div class="post-thumbnail" data-ratio="4:5">
-                  <div class="img-thumb" style="background: var(--background-faded); display:flex; align-items:center; justify-content:center; color: var(--text-faded); font-family: var(--font-tertiary);">4:5 thumb</div>
-                          </div>
-                  <div class="post-body">
-                  <span class="post-label label">Case study</span>
-                            <h3 class="post-title">Another card, different ratio</h3>
-                            <p class="post-excerpt">Same component, different aspect ratio — set on <code>.post-thumbnail[data-ratio]</code>.</p>
-                          </div>
-                        </a>
-                      </div>
+                  <table class="table table-full table-styleguide">
+                  <thead><tr><th>Token</th><th>Example</th></tr></thead>
+                  <tbody>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".post"><code>.post</code></button></td>
+                  <td><div class="sg-demo"><a href="#" class="post" onclick="event.preventDefault()"><div class="post-thumbnail"><div class="img-thumb sg-thumb-placeholder">Thumbnail</div></div><div class="post-body"><span class="post-label label">Article</span><h3 class="post-title">A title that sets up the read</h3><p class="post-excerpt">A one-line excerpt that says enough to earn the click.</p></div></a></div></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".post"><code>.post</code></button><br><button class="token-copy" data-copy="data-ratio"><code>data-ratio="4:5"</code></button></td>
+                  <td><div class="sg-demo"><a href="#" class="post" onclick="event.preventDefault()"><div class="post-thumbnail" data-ratio="4:5"><div class="img-thumb sg-thumb-placeholder">4:5 thumb</div></div><div class="post-body"><span class="post-label label">Case study</span><h3 class="post-title">Another card, different ratio</h3><p class="post-excerpt">Same component, different aspect ratio.</p></div></a></div></td>
+                  </tr>
+                  </tbody>
+                  </table>
                 </div>
               </div>
             </section>
@@ -490,76 +495,387 @@
               <div class="padding-global">
                 <div class="container-medium">
                   <h2>Callout</h2>
-                  <p class="sg-note">From the contact form error state — <code>.callout</code> + variant.</p>
+                  <p class="sg-note">Semantic callout blocks. Base class <code>.callout</code> + variant. Add <code>.callout--icon</code> for icon layout.</p>
 
-                  <div class="callout callout-warning">
-                        <p class="callout-description">A short, specific, forward-pointing message. Errors are a trust moment — never blame the user.</p>
-                      </div>
+                  <table class="table table-full table-styleguide">
+                  <thead><tr><th>Token</th><th>Example</th></tr></thead>
+                  <tbody>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".callout"><code>.callout</code></button><br><button class="token-copy" data-copy=".callout-note"><code>.callout-note</code></button></td>
+                  <td><div class="callout callout-note"><div class="callout-title">Note</div><p class="callout-description">Additional context that helps the reader understand the topic better.</p></div></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".callout"><code>.callout</code></button><br><button class="token-copy" data-copy=".callout-tip"><code>.callout-tip</code></button></td>
+                  <td><div class="callout callout-tip"><div class="callout-title">Tip</div><p class="callout-description">A helpful suggestion to improve your workflow.</p></div></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".callout"><code>.callout</code></button><br><button class="token-copy" data-copy=".callout-warning"><code>.callout-warning</code></button></td>
+                  <td><div class="callout callout-warning"><div class="callout-title">Warning</div><p class="callout-description">Something to be careful about before proceeding.</p></div></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".callout"><code>.callout</code></button><br><button class="token-copy" data-copy=".callout-caution"><code>.callout-caution</code></button></td>
+                  <td><div class="callout callout-caution"><div class="callout-title">Caution</div><p class="callout-description">This action cannot be undone. Proceed with care.</p></div></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".callout"><code>.callout</code></button><br><button class="token-copy" data-copy=".callout-important"><code>.callout-important</code></button></td>
+                  <td><div class="callout callout-important"><div class="callout-title">Important</div><p class="callout-description">Critical information required before moving forward.</p></div></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".callout--icon"><code>.callout--icon</code></button><br><button class="token-copy" data-copy=".callout-note"><code>.callout-note</code></button></td>
+                  <td><div class="callout callout-note callout--icon"><div class="svg-icn"><svg data-icon="info" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_sg_info)"><path d="M13 18H11V10H13V18Z" fill="currentColor"/><path d="M12 6C12.35 6 12.646 6.12064 12.8877 6.3623C13.1294 6.60397 13.25 6.9 13.25 7.25C13.25 7.6 13.1294 7.89603 12.8877 8.1377C12.646 8.37936 12.35 8.5 12 8.5C11.65 8.5 11.354 8.37936 11.1123 8.1377C10.8706 7.89603 10.75 7.6 10.75 7.25C10.75 6.9 10.8706 6.60397 11.1123 6.3623C11.354 6.12064 11.65 6 12 6Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="currentColor"/></g><defs><clipPath id="clip0_sg_info"><rect width="24" height="24" fill="white"/></clipPath></defs></svg></div><div class="callout-title">Note with icon</div><p class="callout-description">Add <code>.callout--icon</code> to enable the grid layout with an icon alongside the title and description.</p></div></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".callout--icon"><code>.callout--icon</code></button><br><button class="token-copy" data-copy=".callout-tip"><code>.callout-tip</code></button></td>
+                  <td><div class="callout callout-tip callout--icon"><div class="svg-icn"><svg data-icon="bolt" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M10.9013 18.1151L16.0763 11.9151H12.0763L12.8013 6.2401L8.17632 12.9151H11.6513L10.9013 18.1151ZM8.35132 21.9151L9.35132 14.9151H4.35132L13.3513 1.9151H15.3513L14.3513 9.9151H20.3513L10.3513 21.9151H8.35132Z" fill="currentColor"/></svg></div><div class="callout-title">Tip with icon</div><p class="callout-description">A helpful suggestion with visual emphasis from the bolt icon.</p></div></td>
+                  </tr>
+                  </tbody>
+                  </table>
                 </div>
               </div>
             </section>
 
-            <!-- ============ TOKENS ============ -->
-            <section class="top-large bottom-large border-bottom border-faded" id="tokens">
+            <!-- ============ BADGE ============ -->
+            <section class="top-large bottom-large border-bottom border-faded" id="badge">
+              <div class="padding-global">
+                <div class="container-medium">
+                  <h2>Badge</h2>
+                  <p class="sg-note">Inline status indicators. Base class <code>.badge</code> + semantic variant.</p>
+
+                  <table class="table table-full table-styleguide">
+                  <thead><tr><th>Token</th><th>Example</th></tr></thead>
+                  <tbody>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".badge"><code>.badge</code></button></td>
+                  <td><span class="badge">Default</span></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".badge"><code>.badge</code></button><br><button class="token-copy" data-copy=".badge--success"><code>.badge--success</code></button></td>
+                  <td><span class="badge badge--success">Success</span></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".badge"><code>.badge</code></button><br><button class="token-copy" data-copy=".badge--warning"><code>.badge--warning</code></button></td>
+                  <td><span class="badge badge--warning">Warning</span></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".badge"><code>.badge</code></button><br><button class="token-copy" data-copy=".badge--danger"><code>.badge--danger</code></button></td>
+                  <td><span class="badge badge--danger">Danger</span></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".badge"><code>.badge</code></button><br><button class="token-copy" data-copy=".badge--info"><code>.badge--info</code></button></td>
+                  <td><span class="badge badge--info">Info</span></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".badge"><code>.badge</code></button><br><button class="token-copy" data-copy=".badge--accent"><code>.badge--accent</code></button></td>
+                  <td><span class="badge badge--accent">Accent</span></td>
+                  </tr>
+                  </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============ TAG ============ -->
+            <section class="top-large bottom-large border-bottom border-faded" id="tag">
+              <div class="padding-global">
+                <div class="container-medium">
+                  <h2>Tag</h2>
+                  <p class="sg-note">Removable labels for categorisation. Base class <code>.tag</code> + optional variant.</p>
+
+                  <table class="table table-full table-styleguide">
+                  <thead><tr><th>Token</th><th>Example</th></tr></thead>
+                  <tbody>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".tag"><code>.tag</code></button></td>
+                  <td><span class="tag">Default</span></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".tag"><code>.tag</code></button><br><button class="token-copy" data-copy=".tag--success"><code>.tag--success</code></button></td>
+                  <td><span class="tag tag--success">Success</span></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".tag"><code>.tag</code></button><br><button class="token-copy" data-copy=".tag--warning"><code>.tag--warning</code></button></td>
+                  <td><span class="tag tag--warning">Warning</span></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".tag"><code>.tag</code></button><br><button class="token-copy" data-copy=".tag--danger"><code>.tag--danger</code></button></td>
+                  <td><span class="tag tag--danger">Danger</span></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".tag"><code>.tag</code></button><br><button class="token-copy" data-copy=".tag--info"><code>.tag--info</code></button></td>
+                  <td><span class="tag tag--info">Info</span></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".tag-group"><code>.tag-group</code></button></td>
+                  <td><div class="tag-group"><span class="tag">Design</span><span class="tag">Branding</span><span class="tag">Strategy</span></div></td>
+                  </tr>
+                  </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============ TOOLTIP ============ -->
+            <section class="top-large bottom-large border-bottom border-faded" id="tooltip">
+              <div class="padding-global">
+                <div class="container-medium">
+                  <h2>Tooltip</h2>
+                  <p class="sg-note">CSS-only tooltips via <code>data-tooltip</code>. Position with <code>data-tooltip-position</code>.</p>
+
+                  <table class="table table-full table-styleguide">
+                  <thead><tr><th>Token</th><th>Example</th></tr></thead>
+                  <tbody>
+                  <tr>
+                  <td><button class="token-copy" data-copy="data-tooltip"><code>data-tooltip</code></button></td>
+                  <td><span data-tooltip="Default tooltip (top)" class="sg-tooltip-demo">Hover me (top)</span></td>
+                  </tr>
+                  <tr>
+                  <td><button class="token-copy" data-copy="data-tooltip-position"><code>data-tooltip-position</code></button><br><code>"bottom"</code></td>
+                  <td><span data-tooltip="Bottom tooltip" data-tooltip-position="bottom" class="sg-tooltip-demo">Hover me (bottom)</span></td>
+                  </tr>
+                  <tr>
+                  <td><code>"left"</code></td>
+                  <td><span data-tooltip="Left tooltip" data-tooltip-position="left" class="sg-tooltip-demo">Hover me (left)</span></td>
+                  </tr>
+                  <tr>
+                  <td><code>"right"</code></td>
+                  <td><span data-tooltip="Right tooltip" data-tooltip-position="right" class="sg-tooltip-demo">Hover me (right)</span></td>
+                  </tr>
+                  </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============ TABS ============ -->
+            <section class="top-large bottom-large border-bottom border-faded" id="tabs">
+              <div class="padding-global">
+                <div class="container-medium">
+                  <h2>Tabs</h2>
+                  <p class="sg-note">Tabbed interface. Requires <code>tabs.js</code>.</p>
+
+                  <table class="table table-full table-styleguide">
+                  <thead><tr><th>Token</th><th>Example</th></tr></thead>
+                  <tbody>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".tabs"><code>.tabs</code></button><br><button class="token-copy" data-copy=".tab"><code>.tab</code></button><br><button class="token-copy" data-copy=".tab-panel"><code>.tab-panel</code></button></td>
+                  <td>
+                  <div class="tabs" role="tablist" aria-label="Demo tabs">
+                    <button class="tab is-active" role="tab" aria-selected="true" aria-controls="sg-panel-1" id="sg-tab-1">Overview</button>
+                    <button class="tab" role="tab" aria-selected="false" aria-controls="sg-panel-2" id="sg-tab-2">Details</button>
+                    <button class="tab" role="tab" aria-selected="false" aria-controls="sg-panel-3" id="sg-tab-3">Usage</button>
+                  </div>
+                  <div class="tab-panel" id="sg-panel-1" role="tabpanel" aria-labelledby="sg-tab-1"><p>Overview panel content.</p></div>
+                  <div class="tab-panel is-hidden" id="sg-panel-2" role="tabpanel" aria-labelledby="sg-tab-2"><p>Details panel content.</p></div>
+                  <div class="tab-panel is-hidden" id="sg-panel-3" role="tabpanel" aria-labelledby="sg-tab-3"><p>Usage panel content.</p></div>
+                  </td>
+                  </tr>
+                  </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============ DIALOG ============ -->
+            <section class="top-large bottom-large border-bottom border-faded" id="dialog">
+              <div class="padding-global">
+                <div class="container-medium">
+                  <h2>Dialog</h2>
+                  <p class="sg-note">Modal dialog using native <code>&lt;dialog&gt;</code>. Requires <code>dialog.js</code>.</p>
+
+                  <table class="table table-full table-styleguide">
+                  <thead><tr><th>Token</th><th>Example</th></tr></thead>
+                  <tbody>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".dialog"><code>.dialog</code></button><br><button class="token-copy" data-copy="data-dialog-open"><code>data-dialog-open</code></button></td>
+                  <td>
+                  <button class="button" type="button" data-dialog-open="sg-demo-dialog">Open dialog</button>
+                  </td>
+                  </tr>
+                  </tbody>
+                  </table>
+
+                  <dialog id="sg-demo-dialog" class="dialog">
+                    <div class="dialog-header">
+                      <h3 class="dialog-title">Dialog title</h3>
+                      <button class="dialog-close" type="button" aria-label="Close"><div class="svg-icn" data-icon="close"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/></svg></div></button>
+                    </div>
+                    <div class="dialog-body"><p>This is a demo dialog. It supports backdrop click, Escape to close, and focus trapping.</p></div>
+                    <div class="dialog-footer">
+                      <button class="button is-faded" type="button" data-dialog-close>Cancel</button>
+                      <button class="button" type="button" data-dialog-close>Confirm</button>
+                    </div>
+                  </dialog>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============ TOAST ============ -->
+            <section class="top-large bottom-large border-bottom border-faded" id="toast">
+              <div class="padding-global">
+                <div class="container-medium">
+                  <h2>Toast</h2>
+                  <p class="sg-note">Notification toasts via <code>showToast(message, type, duration)</code>. Requires <code>toast.js</code>.</p>
+
+                  <table class="table table-full table-styleguide">
+                  <thead><tr><th>Token</th><th>Example</th></tr></thead>
+                  <tbody>
+                  <tr>
+                  <td><button class="token-copy" data-copy="showToast"><code>showToast()</code></button><br><code>'success'</code></td>
+                  <td><button class="button is-small" type="button" onclick="showToast('Changes saved successfully.', 'success')">Success toast</button></td>
+                  </tr>
+                  <tr>
+                  <td><code>'warning'</code></td>
+                  <td><button class="button is-small" type="button" onclick="showToast('Please review before continuing.', 'warning')">Warning toast</button></td>
+                  </tr>
+                  <tr>
+                  <td><code>'danger'</code></td>
+                  <td><button class="button is-small" type="button" onclick="showToast('Something went wrong.', 'danger')">Danger toast</button></td>
+                  </tr>
+                  <tr>
+                  <td><code>'info'</code></td>
+                  <td><button class="button is-small" type="button" onclick="showToast('New version available.', 'info')">Info toast</button></td>
+                  </tr>
+                  </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============ DROP CAP ============ -->
+            <section class="top-large bottom-large border-bottom border-faded" id="drop-cap">
+              <div class="padding-global">
+                <div class="container-medium">
+                  <h2>Drop cap</h2>
+                  <p class="sg-note">Apply <code>.drop-cap</code> to a paragraph for a large initial letter. Works best with 3+ lines of text.</p>
+
+                  <table class="table table-full table-styleguide">
+                  <thead><tr><th>Token</th><th>Example</th></tr></thead>
+                  <tbody>
+                  <tr>
+                  <td><button class="token-copy" data-copy=".drop-cap"><code>.drop-cap</code></button></td>
+                  <td><p class="drop-cap">Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed. The arrangement of type involves selecting typefaces, point sizes, line lengths, line spacing, and letter spacing, as well as adjusting the space between pairs of letters.</p></td>
+                  </tr>
+                  </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============ COLOR ============ -->
+            <section class="top-large bottom-large border-bottom border-faded" id="color">
               <div class="padding-global">
                 <div class="container-medium">
                   <h2>Color (semantic)</h2>
-                  <div class="sg-stack">
-                  <div><div class="sg-swatch" style="background: var(--background-primary);"></div><div class="sg-token-row"><span>Background primary</span><code>--background-primary</code></div></div>
-                  <div><div class="sg-swatch" style="background: var(--background-secondary);"></div><div class="sg-token-row"><span>Background secondary</span><code>--background-secondary</code></div></div>
-                  <div><div class="sg-swatch" style="background: var(--background-faded);"></div><div class="sg-token-row"><span>Background faded</span><code>--background-faded</code></div></div>
-                  <div><div class="sg-swatch" style="background: var(--text-primary);"></div><div class="sg-token-row"><span>Text primary</span><code>--text-primary</code></div></div>
-                  <div><div class="sg-swatch" style="background: var(--text-secondary);"></div><div class="sg-token-row"><span>Text secondary</span><code>--text-secondary</code></div></div>
-                  <div><div class="sg-swatch" style="background: var(--text-faded);"></div><div class="sg-token-row"><span>Text faded</span><code>--text-faded</code></div></div>
-                  <div><div class="sg-swatch" style="background: var(--border-secondary);"></div><div class="sg-token-row"><span>Border secondary</span><code>--border-secondary</code></div></div>
-                      </div>
+                  <p class="sg-note">Hover a swatch to copy its CSS variable or hex value.</p>
 
+                  <div class="color-row is-text-dark" style="background-color: var(--background-primary);" data-token="--background-primary">
+                    <span class="color-row-name">Background primary</span>
+                    <span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span>
+                  </div>
+                  <div class="color-row is-text-dark" style="background-color: var(--background-secondary);" data-token="--background-secondary">
+                    <span class="color-row-name">Background secondary</span>
+                    <span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span>
+                  </div>
+                  <div class="color-row is-text-dark" style="background-color: var(--background-faded);" data-token="--background-faded">
+                    <span class="color-row-name">Background faded</span>
+                    <span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span>
+                  </div>
+                  <div class="color-row is-text-light" style="background-color: var(--text-primary);" data-token="--text-primary">
+                    <span class="color-row-name">Text primary</span>
+                    <span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span>
+                  </div>
+                  <div class="color-row is-text-light" style="background-color: var(--text-secondary);" data-token="--text-secondary">
+                    <span class="color-row-name">Text secondary</span>
+                    <span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span>
+                  </div>
+                  <div class="color-row is-text-light" style="background-color: var(--text-faded);" data-token="--text-faded">
+                    <span class="color-row-name">Text faded</span>
+                    <span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span>
+                  </div>
+                  <div class="color-row is-text-dark" style="background-color: var(--border-secondary);" data-token="--border-secondary">
+                    <span class="color-row-name">Border secondary</span>
+                    <span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============ TYPE SCALE ============ -->
+            <section class="top-large bottom-large border-bottom border-faded" id="type-scale">
+              <div class="padding-global">
+                <div class="container-medium">
                   <h2>Type scale</h2>
-                  <div class="sg-stack">
-                  <div style="font-size: var(--font-10xl); line-height: 1;">10xl 72px</div>
-                  <div style="font-size: var(--font-9xl); line-height: 1;">9xl 64px</div>
-                  <div style="font-size: var(--font-8xl); line-height: 1.05;">8xl 56px</div>
-                  <div style="font-size: var(--font-7xl); line-height: 1.05;">7xl 48px</div>
-                  <div style="font-size: var(--font-6xl);">6xl 40px</div>
-                  <div style="font-size: var(--font-5xl);">5xl 36px</div>
-                  <div style="font-size: var(--font-4xl);">4xl 32px</div>
-                  <div style="font-size: var(--font-3xl);">3xl 28px</div>
-                  <div style="font-size: var(--font-2xl);">2xl 24px</div>
-                  <div style="font-size: var(--font-xl);">xl 22px</div>
-                  <div style="font-size: var(--font-l);">l 20px</div>
-                  <div style="font-size: var(--font-m);">m 18px (default body)</div>
-                  <div style="font-size: var(--font-s);">s 16px</div>
-                  <div style="font-size: var(--font-xs);">xs 14px</div>
-                  <div style="font-size: var(--font-2xs);">2xs 12px</div>
-                      </div>
 
+                  <table class="table table-full table-styleguide">
+                  <thead><tr><th>Token</th><th>Example</th></tr></thead>
+                  <tbody>
+                  <tr><td><button class="token-copy" data-copy="--font-10xl"><code>--font-10xl</code></button></td><td><span style="font-size: var(--font-10xl); line-height: 1;">72px</span></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--font-9xl"><code>--font-9xl</code></button></td><td><span style="font-size: var(--font-9xl); line-height: 1;">64px</span></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--font-8xl"><code>--font-8xl</code></button></td><td><span style="font-size: var(--font-8xl); line-height: 1.05;">56px</span></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--font-7xl"><code>--font-7xl</code></button></td><td><span style="font-size: var(--font-7xl); line-height: 1.05;">48px</span></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--font-6xl"><code>--font-6xl</code></button></td><td><span style="font-size: var(--font-6xl);">40px</span></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--font-5xl"><code>--font-5xl</code></button></td><td><span style="font-size: var(--font-5xl);">36px</span></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--font-4xl"><code>--font-4xl</code></button></td><td><span style="font-size: var(--font-4xl);">32px</span></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--font-3xl"><code>--font-3xl</code></button></td><td><span style="font-size: var(--font-3xl);">28px</span></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--font-2xl"><code>--font-2xl</code></button></td><td><span style="font-size: var(--font-2xl);">24px</span></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--font-xl"><code>--font-xl</code></button></td><td><span style="font-size: var(--font-xl);">22px</span></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--font-l"><code>--font-l</code></button></td><td><span style="font-size: var(--font-l);">20px</span></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--font-m"><code>--font-m</code></button></td><td><span style="font-size: var(--font-m);">18px (default body)</span></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--font-s"><code>--font-s</code></button></td><td><span style="font-size: var(--font-s);">16px</span></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--font-xs"><code>--font-xs</code></button></td><td><span style="font-size: var(--font-xs);">14px</span></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--font-2xs"><code>--font-2xs</code></button></td><td><span style="font-size: var(--font-2xs);">12px</span></td></tr>
+                  </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============ SPACING ============ -->
+            <section class="top-large bottom-large border-bottom border-faded" id="spacing">
+              <div class="padding-global">
+                <div class="container-medium">
                   <h2>Spacing</h2>
-                  <div class="sg-stack">
-                  <div><div class="sg-spacer" style="width: var(--space-xs);"></div><div class="sg-token-row"><span>xs</span><code>--space-xs</code></div></div>
-                  <div><div class="sg-spacer" style="width: var(--space-s);"></div><div class="sg-token-row"><span>s</span><code>--space-s</code></div></div>
-                  <div><div class="sg-spacer" style="width: var(--space-m);"></div><div class="sg-token-row"><span>m</span><code>--space-m</code></div></div>
-                  <div><div class="sg-spacer" style="width: var(--space-l);"></div><div class="sg-token-row"><span>l</span><code>--space-l</code></div></div>
-                  <div><div class="sg-spacer" style="width: var(--space-xl);"></div><div class="sg-token-row"><span>xl</span><code>--space-xl</code></div></div>
-                  <div><div class="sg-spacer" style="width: var(--space-2xl);"></div><div class="sg-token-row"><span>2xl</span><code>--space-2xl</code></div></div>
-                  <div><div class="sg-spacer" style="width: var(--space-3xl);"></div><div class="sg-token-row"><span>3xl</span><code>--space-3xl</code></div></div>
-                  <div><div class="sg-spacer" style="width: var(--space-4xl);"></div><div class="sg-token-row"><span>4xl</span><code>--space-4xl</code></div></div>
-                  <div><div class="sg-spacer" style="width: var(--space-5xl);"></div><div class="sg-token-row"><span>5xl</span><code>--space-5xl</code></div></div>
-                  <div><div class="sg-spacer" style="width: var(--space-6xl);"></div><div class="sg-token-row"><span>6xl</span><code>--space-6xl</code></div></div>
-                  <div><div class="sg-spacer" style="width: var(--space-7xl);"></div><div class="sg-token-row"><span>7xl</span><code>--space-7xl</code></div></div>
-                  <div><div class="sg-spacer" style="width: var(--space-8xl);"></div><div class="sg-token-row"><span>8xl</span><code>--space-8xl</code></div></div>
-                  <div><div class="sg-spacer" style="width: var(--space-9xl);"></div><div class="sg-token-row"><span>9xl</span><code>--space-9xl</code></div></div>
-                  <div><div class="sg-spacer" style="width: var(--space-10xl);"></div><div class="sg-token-row"><span>10xl</span><code>--space-10xl</code></div></div>
-                      </div>
 
+                  <table class="table table-full table-styleguide">
+                  <thead><tr><th>Token</th><th>Example</th></tr></thead>
+                  <tbody>
+                  <tr><td><button class="token-copy" data-copy="--space-xs"><code>--space-xs</code></button></td><td><div class="sg-spacer" style="width: var(--space-xs);"></div></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--space-s"><code>--space-s</code></button></td><td><div class="sg-spacer" style="width: var(--space-s);"></div></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--space-m"><code>--space-m</code></button></td><td><div class="sg-spacer" style="width: var(--space-m);"></div></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--space-l"><code>--space-l</code></button></td><td><div class="sg-spacer" style="width: var(--space-l);"></div></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--space-xl"><code>--space-xl</code></button></td><td><div class="sg-spacer" style="width: var(--space-xl);"></div></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--space-2xl"><code>--space-2xl</code></button></td><td><div class="sg-spacer" style="width: var(--space-2xl);"></div></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--space-3xl"><code>--space-3xl</code></button></td><td><div class="sg-spacer" style="width: var(--space-3xl);"></div></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--space-4xl"><code>--space-4xl</code></button></td><td><div class="sg-spacer" style="width: var(--space-4xl);"></div></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--space-5xl"><code>--space-5xl</code></button></td><td><div class="sg-spacer" style="width: var(--space-5xl);"></div></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--space-6xl"><code>--space-6xl</code></button></td><td><div class="sg-spacer" style="width: var(--space-6xl);"></div></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--space-7xl"><code>--space-7xl</code></button></td><td><div class="sg-spacer" style="width: var(--space-7xl);"></div></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--space-8xl"><code>--space-8xl</code></button></td><td><div class="sg-spacer" style="width: var(--space-8xl);"></div></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--space-9xl"><code>--space-9xl</code></button></td><td><div class="sg-spacer" style="width: var(--space-9xl);"></div></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--space-10xl"><code>--space-10xl</code></button></td><td><div class="sg-spacer" style="width: var(--space-10xl);"></div></td></tr>
+                  </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============ RADIUS ============ -->
+            <section class="top-large bottom-large border-bottom border-faded" id="radius">
+              <div class="padding-global">
+                <div class="container-medium">
                   <h2>Radius</h2>
-                  <div class="sg-row">
-                  <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-xs); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">xs</div>
-                  <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-s); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">s</div>
-                  <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-m); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">m</div>
-                  <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-l); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">l</div>
-                  <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-xl); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">xl</div>
-                  <div style="width:80px; height:80px; background: var(--background-faded); border-radius: var(--radius-pill); display:flex; align-items:center; justify-content:center; font-size: var(--font-xs);">pill</div>
-                      </div>
+
+                  <table class="table table-full table-styleguide">
+                  <thead><tr><th>Token</th><th>Example</th></tr></thead>
+                  <tbody>
+                  <tr><td><button class="token-copy" data-copy="--radius-xs"><code>--radius-xs</code></button></td><td><div class="sg-radius-demo" style="border-radius: var(--radius-xs);">4px</div></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--radius-s"><code>--radius-s</code></button></td><td><div class="sg-radius-demo" style="border-radius: var(--radius-s);">6px</div></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--radius-m"><code>--radius-m</code></button></td><td><div class="sg-radius-demo" style="border-radius: var(--radius-m);">10px</div></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--radius-l"><code>--radius-l</code></button></td><td><div class="sg-radius-demo" style="border-radius: var(--radius-l);">16px</div></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--radius-xl"><code>--radius-xl</code></button></td><td><div class="sg-radius-demo" style="border-radius: var(--radius-xl);">24px</div></td></tr>
+                  <tr><td><button class="token-copy" data-copy="--radius-pill"><code>--radius-pill</code></button></td><td><div class="sg-radius-demo" style="border-radius: var(--radius-pill);">999px</div></td></tr>
+                  </tbody>
+                  </table>
                 </div>
               </div>
             </section>
@@ -576,6 +892,10 @@
   <script src="https://cdn.jsdelivr.net/npm/@barba/core@2.10.3/dist/barba.umd.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/@barba/prefetch@2.2.0/dist/barba-prefetch.umd.min.js" defer></script>
   <script src="../assets/js/accordion.js" defer></script>
+  <script src="assets/js/copy-button.js" defer></script>
+  <script src="assets/js/tabs.js" defer></script>
+  <script src="assets/js/toast.js" defer></script>
+  <script src="assets/js/dialog.js" defer></script>
   <script src="assets/js/studio.js" defer></script>
   <script src="assets/js/studio-barba.js" defer></script>
   <script src="assets/js/studio-contact.js" defer></script>

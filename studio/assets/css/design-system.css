@@ -172,6 +172,7 @@
   --font-secondary: "RecifeText", Georgia, serif;
   --font-tertiary: "Bugrino", sans-serif;
   --font-quaternary: "IBM Plex Mono", monospace;
+  --button-font-family: var(--font-secondary);
 
   /* -- Palette -- */
   --off-white: var(--neutral-50); 
@@ -1225,7 +1226,7 @@ section {
 
 /* -- Button reset (bare element) -- */
 button {
-  font-family: var(--font-primary);
+  font-family: var(--button-font-family);
   font-size: inherit;
   line-height: inherit;
   cursor: pointer;
@@ -1240,7 +1241,7 @@ button {
 
 /* -- Button component -- */
 .button {
-  font-family: var(--font-tertiary);
+  font-family: var(--button-font-family);
   font-size: var(--button-font-size);
   line-height: var(--line-height-m);
   font-weight: var(--font-weight-bold);
@@ -2709,7 +2710,7 @@ a[data-tooltip],
 /* -- Inline code -- */
 code {
   font-family: var(--font-quaternary);
-  font-size: calc(var(--text-body) - 2px);
+  font-size: calc(var(--text-body) - .2em);
   background: color-mix(in srgb, var(--text-primary), var(--alpha-5));
   padding: var(--space-2xs) var(--space-xs);
   border-radius: var(--radius-xs);
@@ -2739,7 +2740,7 @@ pre code {
 /* -- Keyboard shortcut -- */
 kbd {
   display: inline-block;
-  padding: var(--space-2xs) var(--space-xs);
+  padding: var(--space-xs) var(--space-s);
   font-family: var(--font-quaternary);
   font-size: var(--font-2xs);
   line-height: var(--line-height-m);
@@ -2840,7 +2841,7 @@ abbr[title] {
   border-collapse: collapse;
   width: fit-content;
   max-width: 100%;
-  font-variant: tabular-nums;
+  /* font-variant: tabular-nums; */
   font-size: var(--text-body);
   margin-bottom: var(--space-2xl);
 }
