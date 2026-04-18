@@ -12,18 +12,22 @@ access: "team"
 client: "internal"
 ---
 
+# Toast
+
 Toasts are temporary notifications that appear in the bottom-right corner and dismiss automatically. They require JavaScript (`assets/js/toast.js`).
+
+Toast uses `data-type` for semantic message types — the same attribute and vocabulary as callout. Both are feedback components where the type describes what the message means, not just what colour to show.
 
 ---
 
-## Tokens
+## Styling
 
-| Token | Default (Light) | Default (Dark) | Purpose |
-|-------|-----------------|----------------|---------|
-| `var(--toast-background)` | `var(--warm-black)` | `var(--neutral-100)` | Toast background |
-| `var(--toast-text)` | `var(--off-white)` | `var(--warm-black)` | Toast text colour |
+Toast uses system tokens directly for default appearance. Status variants use `--status-*` tokens.
 
-Status variants use the global `--status-*` tokens for the left border accent.
+| Property | Value (Light) | Value (Dark) |
+|---|---|---|
+| Background | `var(--warm-black)` | `var(--neutral-100)` |
+| Text colour | `var(--off-white)` | `var(--warm-black)` |
 
 ---
 
@@ -61,23 +65,25 @@ showToast(message, type, duration);
 
 ---
 
-## Variants
+## Types
+
+Use the second argument to set the message type. The JS sets `data-type` on the toast element, which drives the CSS colour.
 
 <div class="demo-preview">
   <div class="block gap-s">
-    <div class="toast toast--success" role="alert" style="position: static; max-width: 100%;">
+    <div class="toast" data-type="success" role="alert" style="position: static; max-width: 100%;">
       <span class="toast-message">Changes saved successfully.</span>
       <button class="toast-close" aria-label="Dismiss">{{icon:close}}</button>
     </div>
-    <div class="toast toast--warning" role="alert" style="position: static; max-width: 100%;">
+    <div class="toast" data-type="warning" role="alert" style="position: static; max-width: 100%;">
       <span class="toast-message">Your session will expire in 5 minutes.</span>
       <button class="toast-close" aria-label="Dismiss">{{icon:close}}</button>
     </div>
-    <div class="toast toast--danger" role="alert" style="position: static; max-width: 100%;">
+    <div class="toast" data-type="danger" role="alert" style="position: static; max-width: 100%;">
       <span class="toast-message">Failed to upload file. Please try again.</span>
       <button class="toast-close" aria-label="Dismiss">{{icon:close}}</button>
     </div>
-    <div class="toast toast--info" role="alert" style="position: static; max-width: 100%;">
+    <div class="toast" data-type="info" role="alert" style="position: static; max-width: 100%;">
       <span class="toast-message">New comment on your project.</span>
       <button class="toast-close" aria-label="Dismiss">{{icon:close}}</button>
     </div>
@@ -108,7 +114,7 @@ The JS creates this markup automatically:
 
 ```html
 <div class="toast-container" aria-live="polite" aria-atomic="false">
-  <div class="toast toast--success" role="alert">
+  <div class="toast" data-type="success" role="alert">
     <span class="toast-message">Changes saved.</span>
     <button class="toast-close" aria-label="Dismiss">
       <div class="svg-icn" data-icon="close">...</div>
@@ -121,7 +127,7 @@ The container is injected once at the end of `<body>`. Individual toasts are app
 
 ---
 
-## Accessibility notes
+## Accessibility
 
 - The container uses `aria-live="polite"` so screen readers announce new toasts
 - Each toast has `role="alert"`
@@ -130,12 +136,14 @@ The container is injected once at the end of `<body>`. Individual toasts are app
 
 ---
 
-## Do / Don't
+## Usage rules
 
-**Do:**
+**Do**
+
 - Use toasts for transient, non-blocking feedback (save confirmations, status updates)
 - Keep messages short and actionable
 
-**Don't:**
+**Don't**
+
 - Don't use toasts for critical errors that require user action — use a modal or inline alert
 - Don't stack more than 3 toasts simultaneously

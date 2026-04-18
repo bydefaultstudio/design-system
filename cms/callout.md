@@ -14,9 +14,9 @@ client: "internal"
 
 # Callout
 
-Callouts are used to **highlight important information** within content. They draw attention to notes, tips, warnings, and other contextual messages.
+Callouts are used to **highlight important information** within content. They draw attention to informational notes, success tips, warnings, and other contextual messages.
 
-The `.callout` class is required. Type variants use `data-type`, and the icon layout uses the `data-icon` boolean attribute.
+The `.callout` class is required. Type variants use `data-type` with the shared status vocabulary (`info`, `success`, `warning`, `danger`, `accent`). The icon layout uses the `data-icon` boolean attribute.
 
 ---
 
@@ -24,10 +24,12 @@ The `.callout` class is required. Type variants use `data-type`, and the icon la
 
 | Axis | Mechanism | Example |
 |---|---|---|
-| Type (semantic) | `data-type` | `data-type="note"` |
+| Type (semantic) | `data-type` | `data-type="info"` |
 | Icon layout | `data-icon` (boolean) | `data-icon` |
 
 No component-level tokens — callout references status tokens directly.
+
+Callout uses `data-type` (not `data-color`) because the type describes **what the content means**, not just what colour to apply. Display components like badge, tag, and button use `data-color` for visual colour. Feedback components like callout and toast use `data-type` for semantic meaning.
 
 ---
 
@@ -37,18 +39,18 @@ Callout types are powered by status colour tokens defined in `:root`:
 
 | Token | Default | Purpose |
 |---|---|---|
-| `var(--status-info)` | `var(--blue)` | Informational, notes |
+| `var(--status-info)` | `var(--blue)` | Informational content |
 | `var(--status-info-bg)` | `var(--blue-lighter)` | Info background |
 | `var(--status-success)` | `var(--green)` | Tips, positive feedback |
 | `var(--status-success-bg)` | `var(--green-lighter)` | Success background |
 | `var(--status-warning)` | `var(--yellow-darker)` | Warnings, attention needed |
 | `var(--status-warning-bg)` | `var(--yellow-lighter)` | Warning background |
-| `var(--status-danger)` | `var(--red)` | Caution, destructive actions |
+| `var(--status-danger)` | `var(--red)` | Risks, destructive actions |
 | `var(--status-danger-bg)` | `var(--red-lighter)` | Danger background |
-| `var(--status-accent)` | `var(--purple)` | Important, emphasis |
+| `var(--status-accent)` | `var(--purple)` | Emphasis, special importance |
 | `var(--status-accent-bg)` | `var(--purple-lighter)` | Accent background |
 
-Callouts, badges, and other components reference these tokens directly — no intermediate `--callout-*` layer needed.
+Callouts, badges, toasts, and other components reference these tokens directly — no intermediate `--callout-*` layer needed.
 
 ---
 
@@ -72,43 +74,43 @@ The `.callout` class provides the structural foundation with neutral styling.
 
 ## Types
 
-Use `data-type` to set the semantic variant. Each type applies a coloured background and accent colour to the title and icon.
+Use `data-type` to set the semantic variant. Each type applies a coloured background and accent colour to the title and icon. The type names are shared with toast — one vocabulary across all feedback components.
 
 | `data-type` | Use for |
 |---|---|
-| `note` | Useful information users should know |
-| `tip` | Helpful advice on doing things better |
+| `info` | Useful information users should know |
+| `success` | Helpful advice, positive outcomes |
 | `warning` | Urgent information to avoid problems |
-| `caution` | Risks or negative outcomes |
-| `important` | Key information users need |
+| `danger` | Risks or negative outcomes |
+| `accent` | Key information, emphasis |
 
-### Note
+### Info
 
 <div class="demo-preview is-joined">
-  <div class="callout" data-type="note">
+  <div class="callout" data-type="info">
     <div class="callout-title">Note</div>
     <p class="callout-description">Useful information that users should know.</p>
   </div>
 </div>
 
 ```html
-<div class="callout" data-type="note">
+<div class="callout" data-type="info">
   <div class="callout-title">Note</div>
   <p class="callout-description">Useful information that users should know.</p>
 </div>
 ```
 
-### Tip
+### Success
 
 <div class="demo-preview is-joined">
-  <div class="callout" data-type="tip">
+  <div class="callout" data-type="success">
     <div class="callout-title">Tip</div>
     <p class="callout-description">Helpful advice for doing things better.</p>
   </div>
 </div>
 
 ```html
-<div class="callout" data-type="tip">
+<div class="callout" data-type="success">
   <div class="callout-title">Tip</div>
   <p class="callout-description">Helpful advice for doing things better.</p>
 </div>
@@ -130,33 +132,33 @@ Use `data-type` to set the semantic variant. Each type applies a coloured backgr
 </div>
 ```
 
-### Caution
+### Danger
 
 <div class="demo-preview is-joined">
-  <div class="callout" data-type="caution">
+  <div class="callout" data-type="danger">
     <div class="callout-title">Caution</div>
     <p class="callout-description">Risks or negative outcomes of certain actions.</p>
   </div>
 </div>
 
 ```html
-<div class="callout" data-type="caution">
+<div class="callout" data-type="danger">
   <div class="callout-title">Caution</div>
   <p class="callout-description">Risks or negative outcomes of certain actions.</p>
 </div>
 ```
 
-### Important
+### Accent
 
 <div class="demo-preview is-joined">
-  <div class="callout" data-type="important">
+  <div class="callout" data-type="accent">
     <div class="callout-title">Important</div>
     <p class="callout-description">Key information users need to know.</p>
   </div>
 </div>
 
 ```html
-<div class="callout" data-type="important">
+<div class="callout" data-type="accent">
   <div class="callout-title">Important</div>
   <p class="callout-description">Key information users need to know.</p>
 </div>
@@ -169,7 +171,7 @@ Use `data-type` to set the semantic variant. Each type applies a coloured backgr
 Add the `data-icon` boolean attribute to enable a two-column grid layout with the icon pinned alongside the title.
 
 <div class="demo-preview is-joined">
-  <div class="callout" data-type="note" data-icon>
+  <div class="callout" data-type="info" data-icon>
     {{icon:info}}
     <div class="callout-title">Note</div>
     <p class="callout-description">This callout has an icon for extra visual context.</p>
@@ -177,7 +179,7 @@ Add the `data-icon` boolean attribute to enable a two-column grid layout with th
 </div>
 
 ```html
-<div class="callout" data-type="note" data-icon>
+<div class="callout" data-type="info" data-icon>
   <div class="svg-icn" data-icon="info"><!-- info SVG --></div>
   <div class="callout-title">Note</div>
   <p class="callout-description">This callout has an icon for extra visual context.</p>
@@ -194,16 +196,16 @@ How it works:
 
 | Type | Icon | Shorthand |
 |---|---|---|
-| `note` | {{icon:info}} Info circle | `{{icon:info}}` |
-| `tip` | {{icon:bolt}} Lightning bolt | `{{icon:bolt}}` |
+| `info` | {{icon:info}} Info circle | `{{icon:info}}` |
+| `success` | {{icon:bolt}} Lightning bolt | `{{icon:bolt}}` |
 | `warning` | {{icon:warning}} Warning triangle | `{{icon:warning}}` |
-| `caution` | {{icon:close-circled}} Close circle | `{{icon:close-circled}}` |
-| `important` | {{icon:exclamation}} Exclamation circle | `{{icon:exclamation}}` |
+| `danger` | {{icon:close-circled}} Close circle | `{{icon:close-circled}}` |
+| `accent` | {{icon:exclamation}} Exclamation circle | `{{icon:exclamation}}` |
 
 ### All types with icons
 
 <div class="demo-preview is-joined">
-  <div class="callout" data-type="note" data-icon>
+  <div class="callout" data-type="info" data-icon>
     {{icon:info}}
     <div class="callout-title">Note</div>
     <p class="callout-description">Useful information that users should know.</p>
@@ -211,7 +213,7 @@ How it works:
 </div>
 
 <div class="demo-preview is-joined">
-  <div class="callout" data-type="tip" data-icon>
+  <div class="callout" data-type="success" data-icon>
     {{icon:bolt}}
     <div class="callout-title">Tip</div>
     <p class="callout-description">Helpful advice for doing things better.</p>
@@ -227,7 +229,7 @@ How it works:
 </div>
 
 <div class="demo-preview is-joined">
-  <div class="callout" data-type="caution" data-icon>
+  <div class="callout" data-type="danger" data-icon>
     {{icon:close-circled}}
     <div class="callout-title">Caution</div>
     <p class="callout-description">Risks or negative outcomes of certain actions.</p>
@@ -235,7 +237,7 @@ How it works:
 </div>
 
 <div class="demo-preview is-joined">
-  <div class="callout" data-type="important" data-icon>
+  <div class="callout" data-type="accent" data-icon>
     {{icon:exclamation}}
     <div class="callout-title">Important</div>
     <p class="callout-description">Key information users need to know.</p>

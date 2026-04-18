@@ -42,12 +42,24 @@ The `layer` field is **required** — the doc generator validates it on every bu
 ## Naming convention
 
 - **Base class:** `.component-name` (e.g. `.badge`, `.card`, `.toast`)
-- **Variation:** `data-*` attributes (e.g. `data-color="success"`, `data-variant="outline"`, `data-type="note"`)
+- **Variation:** `data-*` attributes (e.g. `data-color="success"`, `data-variant="outline"`, `data-type="info"`)
 - **State classes:** `.is-state` (e.g. `.is-active`, `.is-open`, `.is-disabled`, `.is-hidden`, `.is-loading`) — shared across components
 - **Utility overrides:** use `!important` only on utility classes (e.g. `.gap-m`)
 - **JS hooks:** use `data-*` attributes, never CSS class names
 
-**CUBE pattern:** Components use `data-*` attributes for variation and `.is-*` classes for transient state only. This applies to button (`data-variant`, `data-size`, `data-color`, `data-icon-only`, `data-full-width`), badge (`data-color`), tag (`data-color`), and callout (`data-type`, `data-icon`). Role classes (`.close-btn`, `.nav-btn`) compose with the base via token overrides. See individual component docs for details.
+**CUBE pattern:** Components use `data-*` attributes for variation and `.is-*` classes for transient state only. Role classes (`.close-btn`, `.nav-btn`) compose with the base via token overrides. See individual component docs for details.
+
+### Three axes of variation
+
+All variation across components follows three axes. Each resolves to the same `--status-*` token layer underneath.
+
+| Axis | Attribute | What it means | Values | Components |
+|---|---|---|---|---|
+| **Colour** | `data-color` | Visual colour — no inherent message meaning | `success`/`green`, `warning`/`yellow`, `danger`/`red`, `info`/`blue`, `accent`/`purple` | button, badge, tag |
+| **Type** | `data-type` | Semantic message meaning — the content IS this type | `success`, `warning`, `danger`, `info`, `accent` | callout, toast |
+| **Variant** | `data-variant` | Visual shape/hierarchy | `outline`, `faded`, `outline-faded`, `transparent`, `text` | button |
+
+**The distinction:** Display components (badge, tag, button) use `data-color` — the colour is visual emphasis. Feedback components (callout, toast) use `data-type` — the type describes what the message means. Both use the same value names (`success`, `warning`, `danger`, `info`, `accent`) and resolve to the same `--status-*` tokens. Rebranding is a token change, not an attribute change.
 
 ---
 

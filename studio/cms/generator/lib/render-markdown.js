@@ -69,7 +69,7 @@ const BLOCK_SHORTCODES = {
   callout(inner, attrs) {
     const raw = attrs.type || "insight";
     // Map old shortcode type names to the canonical data-type values
-    const TYPE_MAP = { insight: "note", quote: "tip" };
+    const TYPE_MAP = { insight: "info", quote: "success" };
     const mapped = TYPE_MAP[raw] || raw;
     return `<aside class="callout" data-type="${mapped}">\n${inner}\n</aside>`;
   },

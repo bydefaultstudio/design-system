@@ -2377,12 +2377,24 @@ The `layer` field is **required** — the doc generator validates it on every bu
 ## Naming convention
 
 - **Base class:** `.component-name` (e.g. `.badge`, `.card`, `.toast`)
-- **Variation:** `data-*` attributes (e.g. `data-color="success"`, `data-variant="outline"`, `data-type="note"`)
+- **Variation:** `data-*` attributes (e.g. `data-color="success"`, `data-variant="outline"`, `data-type="info"`)
 - **State classes:** `.is-state` (e.g. `.is-active`, `.is-open`, `.is-disabled`, `.is-hidden`, `.is-loading`) — shared across components
 - **Utility overrides:** use `!important` only on utility classes (e.g. `.gap-m`)
 - **JS hooks:** use `data-*` attributes, never CSS class names
 
-**CUBE pattern:** Components use `data-*` attributes for variation and `.is-*` classes for transient state only. This applies to button (`data-variant`, `data-size`, `data-color`, `data-icon-only`, `data-full-width`), badge (`data-color`), tag (`data-color`), and callout (`data-type`, `data-icon`). Role classes (`.close-btn`, `.nav-btn`) compose with the base via token overrides. See individual component docs for details.
+**CUBE pattern:** Components use `data-*` attributes for variation and `.is-*` classes for transient state only. Role classes (`.close-btn`, `.nav-btn`) compose with the base via token overrides. See individual component docs for details.
+
+### Three axes of variation
+
+All variation across components follows three axes. Each resolves to the same `--status-*` token layer underneath.
+
+| Axis | Attribute | What it means | Values | Components |
+|---|---|---|---|---|
+| **Colour** | `data-color` | Visual colour — no inherent message meaning | `success`/`green`, `warning`/`yellow`, `danger`/`red`, `info`/`blue`, `accent`/`purple` | button, badge, tag |
+| **Type** | `data-type` | Semantic message meaning — the content IS this type | `success`, `warning`, `danger`, `info`, `accent` | callout, toast |
+| **Variant** | `data-variant` | Visual shape/hierarchy | `outline`, `faded`, `outline-faded`, `transparent`, `text` | button |
+
+**The distinction:** Display components (badge, tag, button) use `data-color` — the colour is visual emphasis. Feedback components (callout, toast) use `data-type` — the type describes what the message means. Both use the same value names (`success`, `warning`, `danger`, `info`, `accent`) and resolve to the same `--status-*` tokens. Rebranding is a token change, not an attribute change.
 
 ---
 
@@ -2917,9 +2929,9 @@ Combine `.card--flush` with `.card--interactive` to create a clickable card with
 
 # Callout
 
-Callouts are used to **highlight important information** within content. They draw attention to notes, tips, warnings, and other contextual messages.
+Callouts are used to **highlight important information** within content. They draw attention to informational notes, success tips, warnings, and other contextual messages.
 
-The `.callout` class is required. Type variants use `data-type`, and the icon layout uses the `data-icon` boolean attribute.
+The `.callout` class is required. Type variants use `data-type` with the shared status vocabulary (`info`, `success`, `warning`, `danger`, `accent`). The icon layout uses the `data-icon` boolean attribute.
 
 ---
 
@@ -2927,10 +2939,12 @@ The `.callout` class is required. Type variants use `data-type`, and the icon la
 
 | Axis | Mechanism | Example |
 |---|---|---|
-| Type (semantic) | `data-type` | `data-type="note"` |
+| Type (semantic) | `data-type` | `data-type="info"` |
 | Icon layout | `data-icon` (boolean) | `data-icon` |
 
 No component-level tokens — callout references status tokens directly.
+
+Callout uses `data-type` (not `data-color`) because the type describes **what the content means**, not just what colour to apply. Display components like badge, tag, and button use `data-color` for visual colour. Feedback components like callout and toast use `data-type` for semantic meaning.
 
 ---
 
@@ -2940,18 +2954,18 @@ Callout types are powered by status colour tokens defined in `:root`:
 
 | Token | Default | Purpose |
 |---|---|---|
-| `var(--status-info)` | `var(--blue)` | Informational, notes |
+| `var(--status-info)` | `var(--blue)` | Informational content |
 | `var(--status-info-bg)` | `var(--blue-lighter)` | Info background |
 | `var(--status-success)` | `var(--green)` | Tips, positive feedback |
 | `var(--status-success-bg)` | `var(--green-lighter)` | Success background |
 | `var(--status-warning)` | `var(--yellow-darker)` | Warnings, attention needed |
 | `var(--status-warning-bg)` | `var(--yellow-lighter)` | Warning background |
-| `var(--status-danger)` | `var(--red)` | Caution, destructive actions |
+| `var(--status-danger)` | `var(--red)` | Risks, destructive actions |
 | `var(--status-danger-bg)` | `var(--red-lighter)` | Danger background |
-| `var(--status-accent)` | `var(--purple)` | Important, emphasis |
+| `var(--status-accent)` | `var(--purple)` | Emphasis, special importance |
 | `var(--status-accent-bg)` | `var(--purple-lighter)` | Accent background |
 
-Callouts, badges, and other components reference these tokens directly — no intermediate `--callout-*` layer needed.
+Callouts, badges, toasts, and other components reference these tokens directly — no intermediate `--callout-*` layer needed.
 
 ---
 
@@ -2969,37 +2983,37 @@ The `.callout` class provides the structural foundation with neutral styling.
 
 ## Types
 
-Use `data-type` to set the semantic variant. Each type applies a coloured background and accent colour to the title and icon.
+Use `data-type` to set the semantic variant. Each type applies a coloured background and accent colour to the title and icon. The type names are shared with toast — one vocabulary across all feedback components.
 
 | `data-type` | Use for |
 |---|---|
-| `note` | Useful information users should know |
-| `tip` | Helpful advice on doing things better |
+| `info` | Useful information users should know |
+| `success` | Helpful advice, positive outcomes |
 | `warning` | Urgent information to avoid problems |
-| `caution` | Risks or negative outcomes |
-| `important` | Key information users need |
+| `danger` | Risks or negative outcomes |
+| `accent` | Key information, emphasis |
 
-### Note
+### Info
 
 <p class="callout-description">Useful information that users should know.</p>
   </div>
 </div>
 
 ```html
-<div class="callout" data-type="note">
+<div class="callout" data-type="info">
   <div class="callout-title">Note</div>
   <p class="callout-description">Useful information that users should know.</p>
 </div>
 ```
 
-### Tip
+### Success
 
 <p class="callout-description">Helpful advice for doing things better.</p>
   </div>
 </div>
 
 ```html
-<div class="callout" data-type="tip">
+<div class="callout" data-type="success">
   <div class="callout-title">Tip</div>
   <p class="callout-description">Helpful advice for doing things better.</p>
 </div>
@@ -3018,27 +3032,27 @@ Use `data-type` to set the semantic variant. Each type applies a coloured backgr
 </div>
 ```
 
-### Caution
+### Danger
 
 <p class="callout-description">Risks or negative outcomes of certain actions.</p>
   </div>
 </div>
 
 ```html
-<div class="callout" data-type="caution">
+<div class="callout" data-type="danger">
   <div class="callout-title">Caution</div>
   <p class="callout-description">Risks or negative outcomes of certain actions.</p>
 </div>
 ```
 
-### Important
+### Accent
 
 <p class="callout-description">Key information users need to know.</p>
   </div>
 </div>
 
 ```html
-<div class="callout" data-type="important">
+<div class="callout" data-type="accent">
   <div class="callout-title">Important</div>
   <p class="callout-description">Key information users need to know.</p>
 </div>
@@ -3055,7 +3069,7 @@ Add the `data-icon` boolean attribute to enable a two-column grid layout with th
 </div>
 
 ```html
-<div class="callout" data-type="note" data-icon>
+<div class="callout" data-type="info" data-icon>
   <div class="svg-icn" data-icon="info"><!-- info SVG --></div>
   <div class="callout-title">Note</div>
   <p class="callout-description">This callout has an icon for extra visual context.</p>
@@ -3072,11 +3086,11 @@ How it works:
 
 | Type | Icon | Shorthand |
 |---|---|---|
-| `note` | {{icon:info}} Info circle | `{{icon:info}}` |
-| `tip` | {{icon:bolt}} Lightning bolt | `{{icon:bolt}}` |
+| `info` | {{icon:info}} Info circle | `{{icon:info}}` |
+| `success` | {{icon:bolt}} Lightning bolt | `{{icon:bolt}}` |
 | `warning` | {{icon:warning}} Warning triangle | `{{icon:warning}}` |
-| `caution` | {{icon:close-circled}} Close circle | `{{icon:close-circled}}` |
-| `important` | {{icon:exclamation}} Exclamation circle | `{{icon:exclamation}}` |
+| `danger` | {{icon:close-circled}} Close circle | `{{icon:close-circled}}` |
+| `accent` | {{icon:exclamation}} Exclamation circle | `{{icon:exclamation}}` |
 
 ### All types with icons
 
@@ -3692,18 +3706,22 @@ No manual initialisation is required.
 
 ### Toast
 
+# Toast
+
 Toasts are temporary notifications that appear in the bottom-right corner and dismiss automatically. They require JavaScript (`assets/js/toast.js`).
+
+Toast uses `data-type` for semantic message types — the same attribute and vocabulary as callout. Both are feedback components where the type describes what the message means, not just what colour to show.
 
 ---
 
-## Tokens
+## Styling
 
-| Token | Default (Light) | Default (Dark) | Purpose |
-|-------|-----------------|----------------|---------|
-| `var(--toast-background)` | `var(--warm-black)` | `var(--neutral-100)` | Toast background |
-| `var(--toast-text)` | `var(--off-white)` | `var(--warm-black)` | Toast text colour |
+Toast uses system tokens directly for default appearance. Status variants use `--status-*` tokens.
 
-Status variants use the global `--status-*` tokens for the left border accent.
+| Property | Value (Light) | Value (Dark) |
+|---|---|---|
+| Background | `var(--warm-black)` | `var(--neutral-100)` |
+| Text colour | `var(--off-white)` | `var(--warm-black)` |
 
 ---
 
@@ -3737,17 +3755,19 @@ showToast(message, type, duration);
 
 ---
 
-## Variants
+## Types
 
-<div class="toast toast--warning" role="alert" >
+Use the second argument to set the message type. The JS sets `data-type` on the toast element, which drives the CSS colour.
+
+<div class="toast" data-type="warning" role="alert" >
       <span class="toast-message">Your session will expire in 5 minutes.</span>
       <button class="toast-close" aria-label="Dismiss">{{icon:close}}</button>
     </div>
-    <div class="toast toast--danger" role="alert" >
+    <div class="toast" data-type="danger" role="alert" >
       <span class="toast-message">Failed to upload file. Please try again.</span>
       <button class="toast-close" aria-label="Dismiss">{{icon:close}}</button>
     </div>
-    <div class="toast toast--info" role="alert" >
+    <div class="toast" data-type="info" role="alert" >
       <span class="toast-message">New comment on your project.</span>
       <button class="toast-close" aria-label="Dismiss">{{icon:close}}</button>
     </div>
@@ -3771,7 +3791,7 @@ The JS creates this markup automatically:
 
 ```html
 <div class="toast-container" aria-live="polite" aria-atomic="false">
-  <div class="toast toast--success" role="alert">
+  <div class="toast" data-type="success" role="alert">
     <span class="toast-message">Changes saved.</span>
     <button class="toast-close" aria-label="Dismiss">
       <div class="svg-icn" data-icon="close">...</div>
@@ -3784,7 +3804,7 @@ The container is injected once at the end of `<body>`. Individual toasts are app
 
 ---
 
-## Accessibility notes
+## Accessibility
 
 - The container uses `aria-live="polite"` so screen readers announce new toasts
 - Each toast has `role="alert"`
@@ -3793,13 +3813,15 @@ The container is injected once at the end of `<body>`. Individual toasts are app
 
 ---
 
-## Do / Don't
+## Usage rules
 
-**Do:**
+**Do**
+
 - Use toasts for transient, non-blocking feedback (save confirmations, status updates)
 - Keep messages short and actionable
 
-**Don't:**
+**Don't**
+
 - Don't use toasts for critical errors that require user action — use a modal or inline alert
 - Don't stack more than 3 toasts simultaneously
 

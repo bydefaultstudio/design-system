@@ -139,7 +139,7 @@ Markdown body supports a small set of shortcodes. Unknown shortcodes emit a buil
 | Shortcode | Syntax | Renders |
 |---|---|---|
 | `icon` | `{{icon:name}}` | `.svg-icn` wrapper with inlined SVG from `studio/assets/images/svg-icons/<name>.svg`. |
-| `callout` | `{{callout type="insight"}}body markdown{{/callout}}` | `<aside class="callout" data-type="note">`. Types: `insight` (maps to `note`), `quote` (maps to `tip`), `warning`, `caution`, `important`. |
+| `callout` | `{{callout type="insight"}}body markdown{{/callout}}` | `<aside class="callout" data-type="info">`. Types: `insight` (maps to `info`), `quote` (maps to `success`), `warning`, `danger`, `accent`. |
 | `figure` | `{{figure src="path" caption="..." alt="..."}}` | `<figure><img><figcaption>`. |
 | `video` | `{{video src="path" poster="path"}}` | `<section class="bd-video">` with `.bd-video-player` — autoplay/mute/scrubber work via [bd-video.js](../assets/js/bd-video.js). |
 | `gallery` | `{{gallery}}![alt](a.jpg)![alt](b.jpg){{/gallery}}` | `<div class="gallery">` wrapping the N figures. |

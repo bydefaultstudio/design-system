@@ -132,8 +132,8 @@
 <p>Every <code>cms/*.md</code> doc declares its layer in frontmatter:</p>
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-v6zcv34i6" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-v6zcv34i6" class="language-yaml">---
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-ibtm9w2kp" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-ibtm9w2kp" class="language-yaml">---
 title: &quot;Button&quot;
 section: &quot;Design System&quot;
 layer: &quot;core&quot;
@@ -146,28 +146,63 @@ layer: &quot;core&quot;
 <h2 id="naming-convention">Naming convention</h2>
 <ul>
 <li><strong>Base class:</strong> <button type="button" class="token-copy is-class" data-copy=".component-name" aria-label="Copy .component-name"><code>.component-name</code></button> (e.g. <button type="button" class="token-copy is-class" data-copy=".badge" aria-label="Copy .badge"><code>.badge</code></button>, <button type="button" class="token-copy is-class" data-copy=".card" aria-label="Copy .card"><code>.card</code></button>, <button type="button" class="token-copy is-class" data-copy=".toast" aria-label="Copy .toast"><code>.toast</code></button>)</li>
-<li><strong>Variation:</strong> <code>data-*</code> attributes (e.g. <code>data-color=&quot;success&quot;</code>, <code>data-variant=&quot;outline&quot;</code>, <code>data-type=&quot;note&quot;</code>)</li>
+<li><strong>Variation:</strong> <code>data-*</code> attributes (e.g. <code>data-color=&quot;success&quot;</code>, <code>data-variant=&quot;outline&quot;</code>, <code>data-type=&quot;info&quot;</code>)</li>
 <li><strong>State classes:</strong> <button type="button" class="token-copy is-class" data-copy=".is-state" aria-label="Copy .is-state"><code>.is-state</code></button> (e.g. <button type="button" class="token-copy is-class" data-copy=".is-active" aria-label="Copy .is-active"><code>.is-active</code></button>, <button type="button" class="token-copy is-class" data-copy=".is-open" aria-label="Copy .is-open"><code>.is-open</code></button>, <button type="button" class="token-copy is-class" data-copy=".is-disabled" aria-label="Copy .is-disabled"><code>.is-disabled</code></button>, <button type="button" class="token-copy is-class" data-copy=".is-hidden" aria-label="Copy .is-hidden"><code>.is-hidden</code></button>, <button type="button" class="token-copy is-class" data-copy=".is-loading" aria-label="Copy .is-loading"><code>.is-loading</code></button>) — shared across components</li>
 <li><strong>Utility overrides:</strong> use <code>!important</code> only on utility classes (e.g. <button type="button" class="token-copy is-class" data-copy=".gap-m" aria-label="Copy .gap-m"><code>.gap-m</code></button>)</li>
 <li><strong>JS hooks:</strong> use <code>data-*</code> attributes, never CSS class names</li>
 </ul>
-<p><strong>CUBE pattern:</strong> Components use <code>data-*</code> attributes for variation and <code>.is-*</code> classes for transient state only. This applies to button (<code>data-variant</code>, <code>data-size</code>, <code>data-color</code>, <code>data-icon-only</code>, <code>data-full-width</code>), badge (<code>data-color</code>), tag (<code>data-color</code>), and callout (<code>data-type</code>, <code>data-icon</code>). Role classes (<button type="button" class="token-copy is-class" data-copy=".close-btn" aria-label="Copy .close-btn"><code>.close-btn</code></button>, <button type="button" class="token-copy is-class" data-copy=".nav-btn" aria-label="Copy .nav-btn"><code>.nav-btn</code></button>) compose with the base via token overrides. See individual component docs for details.</p>
+<p><strong>CUBE pattern:</strong> Components use <code>data-*</code> attributes for variation and <code>.is-*</code> classes for transient state only. Role classes (<button type="button" class="token-copy is-class" data-copy=".close-btn" aria-label="Copy .close-btn"><code>.close-btn</code></button>, <button type="button" class="token-copy is-class" data-copy=".nav-btn" aria-label="Copy .nav-btn"><code>.nav-btn</code></button>) compose with the base via token overrides. See individual component docs for details.</p>
+<h3 id="three-axes-of-variation">Three axes of variation</h3>
+<p>All variation across components follows three axes. Each resolves to the same <code>--status-*</code> token layer underneath.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Axis</th>
+<th>Attribute</th>
+<th>What it means</th>
+<th>Values</th>
+<th>Components</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Colour</strong></td>
+<td><code>data-color</code></td>
+<td>Visual colour — no inherent message meaning</td>
+<td><code>success</code>/<code>green</code>, <code>warning</code>/<code>yellow</code>, <code>danger</code>/<code>red</code>, <code>info</code>/<code>blue</code>, <code>accent</code>/<code>purple</code></td>
+<td>button, badge, tag</td>
+</tr>
+<tr>
+<td><strong>Type</strong></td>
+<td><code>data-type</code></td>
+<td>Semantic message meaning — the content IS this type</td>
+<td><code>success</code>, <code>warning</code>, <code>danger</code>, <code>info</code>, <code>accent</code></td>
+<td>callout, toast</td>
+</tr>
+<tr>
+<td><strong>Variant</strong></td>
+<td><code>data-variant</code></td>
+<td>Visual shape/hierarchy</td>
+<td><code>outline</code>, <code>faded</code>, <code>outline-faded</code>, <code>transparent</code>, <code>text</code></td>
+<td>button</td>
+</tr>
+</tbody></table></div>
+<p><strong>The distinction:</strong> Display components (badge, tag, button) use <code>data-color</code> — the colour is visual emphasis. Feedback components (callout, toast) use <code>data-type</code> — the type describes what the message means. Both use the same value names (<code>success</code>, <code>warning</code>, <code>danger</code>, <code>info</code>, <code>accent</code>) and resolve to the same <code>--status-*</code> tokens. Rebranding is a token change, not an attribute change.</p>
 <hr>
 <h2 id="token-rule">Token rule</h2>
 <p>Every visual value in component CSS must reference a CSS custom property defined in <code>:root</code>. Never hardcode hex values, pixel values (except structural ones like <code>border-radius: 50%</code>), or raw font values.</p>
 <p>Component tokens follow this pattern:</p>
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-3pupgb4q9" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-3pupgb4q9" class="language-css">--component-property: var(--semantic-token);
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-e6pj8fhfr" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-e6pj8fhfr" class="language-css">--component-property: var(--semantic-token);
 </code></pre>
       </div>
     
 <p>Example (button component):</p>
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-febw0hu8m" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-febw0hu8m" class="language-css">--button-color: var(--text-primary);
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-5pnuzfjpo" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-5pnuzfjpo" class="language-css">--button-color: var(--text-primary);
 --button-bg: var(--button-color);
 --button-border: var(--button-color);
 --button-text-color: var(--text-inverted);
@@ -203,8 +238,8 @@ layer: &quot;core&quot;
 <p>Section headings in <code>design-system.css</code> follow the format:</p>
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-b5ka7y20n" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-b5ka7y20n" class="language-css">/* ------ 16. BADGE ------ */
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-mxbayzqxc" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-mxbayzqxc" class="language-css">/* ------ 16. BADGE ------ */
 </code></pre>
       </div>
     
@@ -353,8 +388,8 @@ layer: &quot;core&quot;
 <li><p><strong>Define tokens</strong> in <code>:root</code> (in <code>design-system.css</code>, after existing component tokens):</p>
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-g2de32jtt" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-g2de32jtt" class="language-css">/* -- Component tokens -- */
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-gms8gi118" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-gms8gi118" class="language-css">/* -- Component tokens -- */
 --component-property: var(--semantic-token);
 </code></pre>
       </div>
@@ -365,8 +400,8 @@ layer: &quot;core&quot;
 <li><p><strong>Write CSS</strong> in <code>design-system.css</code> under a new numbered section:</p>
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-d3bnmf1bx" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-d3bnmf1bx" class="language-css">/* ------ N. COMPONENT NAME ------ */
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-5p97trloq" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-5p97trloq" class="language-css">/* ------ N. COMPONENT NAME ------ */
 </code></pre>
       </div>
     
@@ -380,8 +415,8 @@ layer: &quot;core&quot;
 <li><p><strong>Regenerate docs:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-xwmjzxixv" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-xwmjzxixv" class="language-bash">cd cms/generator &amp;&amp; npm run docgen
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-5z4gjkts1" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-5z4gjkts1" class="language-bash">cd cms/generator &amp;&amp; npm run docgen
 </code></pre>
       </div>
     

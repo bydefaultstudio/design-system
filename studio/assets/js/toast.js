@@ -24,7 +24,8 @@
 
     var container = getContainer();
     var toast = document.createElement('div');
-    toast.className = 'toast' + (type !== 'default' ? ' toast--' + type : '');
+    toast.className = 'toast';
+    if (type !== 'default') toast.setAttribute('data-type', type);
     toast.setAttribute('role', 'alert');
     toast.innerHTML =
       '<span class="toast-message">' + escapeHTML(message) + '</span>' +

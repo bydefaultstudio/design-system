@@ -1743,21 +1743,21 @@ a:not([href]) {
 }
 
 /* -- Callout type variants -- */
-.callout[data-type="note"] {
+.callout[data-type="info"] {
   background-color: var(--status-info-bg);
 }
 
-.callout[data-type="note"] .callout-title,
-.callout[data-type="note"] > .svg-icn {
+.callout[data-type="info"] .callout-title,
+.callout[data-type="info"] > .svg-icn {
   color: var(--status-info);
 }
 
-.callout[data-type="tip"] {
+.callout[data-type="success"] {
   background-color: var(--status-success-bg);
 }
 
-.callout[data-type="tip"] .callout-title,
-.callout[data-type="tip"] > .svg-icn {
+.callout[data-type="success"] .callout-title,
+.callout[data-type="success"] > .svg-icn {
   color: var(--status-success);
 }
 
@@ -1770,21 +1770,21 @@ a:not([href]) {
   color: var(--status-warning);
 }
 
-.callout[data-type="caution"] {
+.callout[data-type="danger"] {
   background-color: var(--status-danger-bg);
 }
 
-.callout[data-type="caution"] .callout-title,
-.callout[data-type="caution"] > .svg-icn {
+.callout[data-type="danger"] .callout-title,
+.callout[data-type="danger"] > .svg-icn {
   color: var(--status-danger);
 }
 
-.callout[data-type="important"] {
+.callout[data-type="accent"] {
   background-color: var(--status-accent-bg);
 }
 
-.callout[data-type="important"] .callout-title,
-.callout[data-type="important"] > .svg-icn {
+.callout[data-type="accent"] .callout-title,
+.callout[data-type="accent"] > .svg-icn {
   color: var(--status-accent);
 }
 
@@ -2773,10 +2773,20 @@ a[data-tooltip],
   transition: opacity 0.3s ease-in-out;
 }
 
-.toast--success { background: var(--status-success-bg); color: var(--status-success);}
-.toast--warning { background: var(--status-warning-bg); color: var(--status-warning);}
-.toast--danger { background: var(--status-danger-bg); color: var(--status-danger);}
-.toast--info { background: var(--status-info-bg); color: var(--status-info);}
+.toast[data-type="success"],
+.toast[data-type="green"] { background: var(--status-success-bg); color: var(--status-success); }
+
+.toast[data-type="warning"],
+.toast[data-type="yellow"] { background: var(--status-warning-bg); color: var(--status-warning); }
+
+.toast[data-type="danger"],
+.toast[data-type="red"] { background: var(--status-danger-bg); color: var(--status-danger); }
+
+.toast[data-type="info"],
+.toast[data-type="blue"] { background: var(--status-info-bg); color: var(--status-info); }
+
+.toast[data-type="accent"],
+.toast[data-type="purple"] { background: var(--status-accent-bg); color: var(--status-accent); }
 
 .toast-message {
   flex: 1;
