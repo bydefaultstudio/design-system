@@ -329,11 +329,11 @@ Role classes override tokens, never duplicate the base. The base's structure is 
 ```css
 /* ------ CLOSE BUTTON ------ */
 .close-btn {
-  --button-accent: var(--text-faded);
-  --button-color: var(--background-primary);
+  --button-color: var(--text-faded);
+  --button-text-color: var(--background-primary);
 }
 .close-btn:hover {
-  --button-accent: var(--status-danger);
+  --button-color: var(--status-danger);
 }
 ```
 
@@ -351,11 +351,11 @@ Role classes override tokens, never duplicate the base. The base's structure is 
 
 | Token | Default | What it controls |
 |---|---|---|
-| `--button-accent` | `var(--text-primary)` | Brand color — feeds bg, border, and variant text |
-| `--button-faded` | `color-mix(... --button-accent ...)` | 15% alpha of accent — used by faded variants |
-| `--button-bg` | `var(--button-accent)` | Background fill |
-| `--button-border` | `var(--button-accent)` | Border stroke |
-| `--button-color` | `var(--text-inverted)` | Text colour |
+| `--button-color` | `var(--text-primary)` | The button's identity color — feeds bg, border, and variant text |
+| `--button-faded` | `color-mix(... --button-color ...)` | 15% alpha of button color — used by faded variants |
+| `--button-bg` | `var(--button-color)` | Background fill |
+| `--button-border` | `var(--button-color)` | Border stroke |
+| `--button-text-color` | `var(--text-inverted)` | Text colour |
 | `--button-font` | `var(--font-secondary)` | Font family |
 | `--button-text-size` | `var(--text-body)` | Text size |
 | `--button-padding-y` | `var(--space-m)` | Vertical padding |

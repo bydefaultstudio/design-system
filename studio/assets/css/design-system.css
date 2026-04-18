@@ -1231,11 +1231,11 @@ button {
 .button,
 button.button {
   /* -- Component tokens (overridable by exceptions + role classes) -- */
-  --button-accent: var(--text-primary);
-  --button-faded: color-mix(in srgb, var(--button-accent), var(--alpha-15));
-  --button-bg: var(--button-accent);
-  --button-border: var(--button-accent);
-  --button-color: var(--text-inverted);
+  --button-color: var(--text-primary);
+  --button-faded: color-mix(in srgb, var(--button-color), var(--alpha-15));
+  --button-bg: var(--button-color);
+  --button-border: var(--button-color);
+  --button-text-color: var(--text-inverted);
   --button-font: var(--font-secondary);
   --button-text-size: var(--text-body);
   --button-padding-y: var(--space-m);
@@ -1265,7 +1265,7 @@ button.button {
   letter-spacing: 0;
   text-transform: none;
   text-decoration: none;
-  color: var(--button-color);
+  color: var(--button-text-color);
 
   /* -- Other -- */
   cursor: pointer;
@@ -1281,31 +1281,31 @@ button.button {
 
 .button[data-variant="outline"] {
   --button-bg: transparent;
-  --button-color: var(--button-accent);
+  --button-text-color: var(--button-color);
 }
 
 .button[data-variant="faded"] {
   --button-bg: var(--button-faded);
   --button-border: transparent;
-  --button-color: var(--button-accent);
+  --button-text-color: var(--button-color);
 }
 
 .button[data-variant="outline-faded"] {
   --button-bg: transparent;
   --button-border: var(--button-faded);
-  --button-color: var(--button-accent);
+  --button-text-color: var(--button-color);
 }
 
 .button[data-variant="transparent"] {
   --button-bg: transparent;
   --button-border: transparent;
-  --button-color: var(--button-accent);
+  --button-text-color: var(--button-color);
 }
 
 .button[data-variant="text"] {
   --button-bg: transparent;
   --button-border: transparent;
-  --button-color: var(--button-accent);
+  --button-text-color: var(--button-color);
   --button-padding-x: 0;
   --button-padding-y: 0;
 }
@@ -1314,13 +1314,13 @@ button.button {
   text-underline-offset: 2.5px;
 }
 
-/* Unfilled variants: subtle accent fill on hover instead of darkening transparent */
+/* Unfilled variants: subtle fill on hover instead of darkening transparent */
 .button[data-variant="outline"]:hover,
 .button[data-variant="faded"]:hover,
 .button[data-variant="outline-faded"]:hover,
 .button[data-variant="transparent"]:hover,
 .button[data-variant="text"]:hover {
-  background: color-mix(in srgb, var(--button-accent), var(--alpha-10));
+  background: color-mix(in srgb, var(--button-color), var(--alpha-10));
 }
 
 /* -- Size exceptions -- */
@@ -1341,7 +1341,6 @@ button.button {
 
 .button[data-icon-only] {
   --button-padding-x: var(--button-padding-y);
-  aspect-ratio: 1 / 1;
 }
 
 .button[data-full-width] {
@@ -1350,47 +1349,47 @@ button.button {
 
 /* -- Colour exceptions -- */
 /* Semantic names and brand aliases produce identical output.
-   --button-accent drives bg, border, and faded automatically. */
+   --button-color drives bg, border, and faded automatically. */
 
 .button[data-color="danger"],
 .button[data-color="red"] {
-  --button-accent: var(--status-danger);
-  --button-color: var(--text-inverted);
+  --button-color: var(--status-danger);
+  --button-text-color: var(--text-inverted);
 }
 
 .button[data-color="success"],
 .button[data-color="green"] {
-  --button-accent: var(--status-success);
-  --button-color: var(--text-inverted);
+  --button-color: var(--status-success);
+  --button-text-color: var(--text-inverted);
 }
 
 .button[data-color="warning"],
 .button[data-color="yellow"] {
-  --button-accent: var(--status-warning);
-  --button-color: var(--text-inverted);
+  --button-color: var(--status-warning);
+  --button-text-color: var(--text-inverted);
 }
 
 .button[data-color="info"],
 .button[data-color="blue"] {
-  --button-accent: var(--status-info);
-  --button-color: var(--text-inverted);
+  --button-color: var(--status-info);
+  --button-text-color: var(--text-inverted);
 }
 
 .button[data-color="accent"],
 .button[data-color="purple"] {
-  --button-accent: var(--status-accent);
-  --button-color: var(--text-inverted);
+  --button-color: var(--status-accent);
+  --button-text-color: var(--text-inverted);
 }
 
 /* -- Dark mode: faded alpha adjusts for dark backgrounds -- */
 
 :root[data-theme="dark"] .button {
-  --button-faded: color-mix(in srgb, var(--button-accent), var(--alpha-80));
+  --button-faded: color-mix(in srgb, var(--button-color), var(--alpha-80));
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) .button {
-    --button-faded: color-mix(in srgb, var(--button-accent), var(--alpha-80));
+    --button-faded: color-mix(in srgb, var(--button-color), var(--alpha-80));
   }
 }
 
@@ -1411,11 +1410,11 @@ button.button {
 /* -- Close button role class -- */
 
 .close-btn {
-  --button-accent: var(--text-faded);
-  --button-color: var(--background-primary);
+  --button-color: var(--text-faded);
+  --button-text-color: var(--background-primary);
 }
 .close-btn:hover {
-  --button-accent: var(--status-danger);
+  --button-color: var(--status-danger);
 }
 
 .svg-icn {
