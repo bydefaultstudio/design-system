@@ -17,10 +17,12 @@ const ROOT = path.join(__dirname, '..');
 const CMS_DIR = path.join(ROOT, 'cms');
 const CSS_FILE = path.join(ROOT, 'assets', 'css', 'design-system.css');
 const PREAMBLE_FILE = path.join(__dirname, 'llms-preamble.md');
+const VERSION_FILE = path.join(ROOT, 'VERSION');
 const OUTPUT_INDEX = path.join(ROOT, 'llms.txt');
 const OUTPUT_FULL = path.join(ROOT, 'llms-full.txt');
 
 const BASE_URL = 'https://bydefault.design';
+const VERSION = fs.readFileSync(VERSION_FILE, 'utf8').trim();
 
 // ─── Helpers ──────────────────────────────────────────────
 
@@ -136,9 +138,9 @@ function buildIndex(components) {
   const full = `${BASE_URL}/llms-full.txt`;
 
   const lines = [
-    '# BrandOS Design System',
+    '# By Default Design System',
     '',
-    '> Complete design token, layout, component, and CSS reference for By Default Studio\'s BrandOS platform. Use this as your authoritative guide for generating on-brand HTML and CSS.',
+    `> Version ${VERSION} — Complete design token, layout, component, and CSS reference for By Default Studio\'s design system. Use this as your authoritative guide for generating on-brand HTML and CSS.`,
     '',
     'Always use semantic tokens over primitives. Follow the layout hierarchy: section > .padding-global > container > block. Accessibility required on all components.',
     '',
@@ -183,8 +185,8 @@ function buildReference() {
 
   const parts = [];
 
-  // 1. Preamble
-  parts.push(readFile(PREAMBLE_FILE));
+  // 1. Preamble (with version injected)
+  parts.push(readFile(PREAMBLE_FILE).replace('{{VERSION}}', VERSION));
 
   // 2. Layout System
   parts.push('## Layout System\n');
