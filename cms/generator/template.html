@@ -91,7 +91,7 @@
                 <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
                 <div class="button-group">
                     <button class="button" data-feedback="yes" type="button">{{icon:thumbs-up}} Yes</button>
-                    <button class="button is-faded" data-feedback="no" type="button">{{icon:thumbs-down}} No</button>
+                    <button class="button" data-variant="faded" data-feedback="no" type="button">{{icon:thumbs-down}} No</button>
                 </div>
                 <div class="page-feedback-success" aria-live="polite">
                     <div class="page-feedback-success-icon">{{icon:status-check}}</div>
@@ -108,8 +108,8 @@
                 <form class="feedback-form">
                     <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
                     <div class="button-group feedback-modal-actions">
-                        <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>
-                        <button type="submit" class="button is-small">Send feedback</button>
+                        <button type="button" class="button feedback-modal-close" data-size="small" data-variant="faded">Close</button>
+                        <button type="submit" class="button" data-size="small">Send feedback</button>
                     </div>
                 </form>
             </div>
@@ -229,7 +229,7 @@
 
     <!-- Back to Top -->
     <div class="back-to-top-wrapper">
-      <button class="button is-icon back-to-top-btn" aria-label="Back to top" type="button">
+      <button class="button back-to-top-btn" data-icon-only aria-label="Back to top" type="button">
         {{icon:arrow-top}}
       </button>
     </div>

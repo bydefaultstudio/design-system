@@ -536,7 +536,7 @@ function markdownToHtml(markdown) {
 
     return `
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#${codeId}" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default">${getIcon('copy')}</span><span class="copy-btn-copied">${getIcon('check')}</span></button>
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#${codeId}" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default">${getIcon('copy')}</span><span class="copy-btn-copied">${getIcon('check')}</span></button>
         <pre><code id="${codeId}"${attributes}>${code}</code></pre>
       </div>
     `;
@@ -1087,7 +1087,7 @@ function generatePage(file, template, pageOrder, sidebarOrderMap = {}) {
   const actionLabel = frontmatter.actionLabel || frontmatter.toolLabel || 'Open';
   const actionLinkHtml = actionUrl
     ? `<div class="button-group justify-center">
-        <a href="${actionUrl}" class="button is-small page-action-link">${actionLabel}</a>
+        <a href="${actionUrl}" class="button page-action-link" data-size="small">${actionLabel}</a>
       </div>`
     : '';
   if (frontmatter.title) {
@@ -1708,7 +1708,7 @@ function generateClientDocs(template) {
       const clientActionLabel = frontmatter.actionLabel || frontmatter.toolLabel || 'Open';
       const clientActionHtml = clientActionUrl
         ? `<div class="button-group justify-center">
-            <a href="${clientActionUrl}" class="button is-small page-action-link">${clientActionLabel}</a>
+            <a href="${clientActionUrl}" class="button page-action-link" data-size="small">${clientActionLabel}</a>
           </div>`
         : '';
       if (title) {
@@ -2288,11 +2288,11 @@ function generateBrandBook(template) {
             <div class="asset-card-footer">
               <p class="asset-card-title">${variantLabel}</p>
               <div class="asset-card-actions">
-                <button class="button is-small copy-btn is-icon-only" type="button" data-copy="${svgEscapedAttr}" data-tooltip="Copy SVG" aria-label="Copy SVG">
+                <button class="button copy-btn is-icon-only" data-size="small" type="button" data-copy="${svgEscapedAttr}" data-tooltip="Copy SVG" aria-label="Copy SVG">
                   <span class="copy-btn-default">${getIcon('copy')}</span>
                   <span class="copy-btn-copied">${getIcon('check')}</span>
                 </button>
-                <a class="button is-small" href="${downloadHref}" download="${file}" data-tooltip="Download" aria-label="Download SVG">
+                <a class="button" data-size="small" href="${downloadHref}" download="${file}" data-tooltip="Download" aria-label="Download SVG">
                   ${getIcon('download')}
                 </a>
               </div>

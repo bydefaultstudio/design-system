@@ -161,11 +161,14 @@ See `cms/iconography.md` for complete icon guidelines and the full icon registry
 See `cms/components.md` for the master component spec.
 
 **Naming convention:**
-- New components: `.component-name` base, `.component-name--modifier` for variants
-- Legacy (button only): `.is-outline`, `.is-faded`, `.is-small` etc. — kept for compatibility
-- State classes: `.is-active`, `.is-open`, `.is-disabled`, `.is-hidden` — shared across components
+- Components: `.component-name` base class
+- Variation: `data-*` attributes (CUBE pattern) — `data-variant`, `data-size`, `data-color`, `data-icon-only`, `data-full-width`
+- State classes: `.is-active`, `.is-open`, `.is-disabled`, `.is-hidden`, `.is-loading` — shared across components
+- Role classes: `.close-btn`, `.nav-btn`, `.hero-cta` — compose with `.button` + data attributes
 
 **The bare `<button>` element is a minimal reset only** — no background, border, or padding. Always add `class="button"` for styled buttons.
+
+**Button quick reference:** variation via `data-*` attributes, state via `.is-*` classes. See `cms/button.md` for the full CUBE pattern, role classes, and composition rules.
 
 **Border radius scale:** `--radius-xs` (4px), `--radius-s` (6px), `--radius-m` (10px), `--radius-l` (16px), `--radius-xl` (24px), `--radius-pill` (999px)
 

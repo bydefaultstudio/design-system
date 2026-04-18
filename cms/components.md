@@ -47,7 +47,7 @@ The `layer` field is **required** — the doc generator validates it on every bu
 - **Utility overrides:** use `!important` only on utility classes (e.g. `.gap-m`)
 - **JS hooks:** use `data-*` attributes, never CSS class names
 
-**Legacy note:** The button component uses `.is-outline`, `.is-faded`, `.is-small`, `.is-xsmall`, `.is-icon` as modifiers. These predate the `var(--modifier)` convention and are kept for backward compatibility. New components must use `var(--modifier)` syntax.
+**CUBE pattern (button):** The button component uses `data-*` attributes for variation (`data-variant`, `data-size`, `data-color`, `data-icon-only`, `data-full-width`) and `.is-*` classes for transient state only (`.is-disabled`, `.is-loading`, `.is-active`). Role classes (`.close-btn`, `.nav-btn`) compose with the base via token overrides. See `cms/button.md` for the full pattern. New components should adopt the same `data-*` attribute pattern for variation.
 
 ---
 

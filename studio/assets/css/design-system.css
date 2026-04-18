@@ -172,7 +172,7 @@
   --font-secondary: "RecifeText", Georgia, serif;
   --font-tertiary: "Bugrino", sans-serif;
   --font-quaternary: "IBM Plex Mono", monospace;
-  --button-font-family: var(--font-secondary);
+  /* --button-font-family removed — now a component token in .button */
 
   /* -- Palette -- */
   --off-white: var(--neutral-50); 
@@ -223,8 +223,7 @@
   --text-body: var(--font-m);
 
   /* -- UI font sizes -- */
-  --button-font-size: var(--text-body);
-  --button-font-size-small: var(--font-xs);
+  /* --button-font-size, --button-font-size-small removed — now component tokens in .button */
 
   /* -- Line height tokens -- */
   --line-height-xs: 0.7;
@@ -374,18 +373,14 @@
   --border-secondary: var(--neutral-300);
   --border-faded: var(--black-alpha-15);
 
-  --button-primary: var(--text-primary);
-  --button-text: var(--off-white);
-  --button-secondary: var(--black);
-  --button-secondary-text: var(--off-white);
-  --button-faded: color-mix(in srgb, var(--button-primary), var(--alpha-15));
+  /* --button-* root tokens removed — now component tokens in .button */
 
   /* -- Status colours (from brand book or defaults) -- */
   --status-info: var(--blue);
   --status-info-bg: var(--blue-lighter);
   --status-success: var(--green);
   --status-success-bg: var(--green-lighter);
-  --status-warning: var(--yellow-darker);
+  --status-warning: var(--yellow-dark);
   --status-warning-bg: var(--yellow-lighter);
   --status-danger: var(--red);
   --status-danger-bg: var(--red-lighter);
@@ -515,13 +510,6 @@
   --black-alpha-30: rgba(255, 255, 255, 0.22);
   --black-alpha-50: rgba(255, 255, 255, 0.45);
 
-  /* -- Button -- */
-  --button-primary: var(--text-primary);
-  --button-text:var(--background-primary);
-  --button-secondary: #e8e6e3;
-  --button-secondary-text: #1a1a1a;
-  --button-faded: color-mix(in srgb, var(--button-primary), var(--alpha-80));
-
   /* -- Status -- */
   --status-info: var(--blue-light);
   --status-success: var(--green-light);
@@ -612,12 +600,6 @@
     --black-alpha-20: rgba(255, 255, 255, 0.16);
     --black-alpha-30: rgba(255, 255, 255, 0.22);
     --black-alpha-50: rgba(255, 255, 255, 0.45);
-
-    --button-primary: #5bb89a;
-    --button-text: #1a1a1a;
-    --button-secondary: #e8e6e3;
-    --button-secondary-text: #1a1a1a;
-  --button-faded: color-mix(in srgb, var(--button-primary), var(--alpha-80));
 
     --status-info: var(--blue-light);
     --status-success: var(--green-light);
@@ -1011,6 +993,10 @@ section {
   align-items: flex-end;
 }
 
+.align-stretch {
+  align-items: stretch;
+}
+
 .justify-center {
   justify-content: center;
 }
@@ -1226,7 +1212,7 @@ section {
 
 /* -- Button reset (bare element) -- */
 button {
-  font-family: var(--button-font-family);
+  font-family: inherit;
   font-size: inherit;
   line-height: inherit;
   cursor: pointer;
@@ -1239,82 +1225,197 @@ button {
   gap: var(--space-s);
 }
 
-/* -- Button component -- */
-.button {
-  font-family: var(--button-font-family);
-  font-size: var(--button-font-size);
-  line-height: var(--line-height-m);
+/* -- Button component (CUBE pattern) -- */
+/* All tokens live at component level. data-* exceptions override them. */
+
+.button,
+button.button {
+  /* -- Component tokens (overridable by exceptions + role classes) -- */
+  --button-accent: var(--text-primary);
+  --button-faded: color-mix(in srgb, var(--button-accent), var(--alpha-15));
+  --button-bg: var(--button-accent);
+  --button-border: var(--button-accent);
+  --button-color: var(--text-inverted);
+  --button-font: var(--font-secondary);
+  --button-text-size: var(--text-body);
+  --button-padding-y: var(--space-m);
+  --button-padding-x: var(--space-xl);
+  --button-radius: 0;
+  --button-gap: var(--space-s);
+
+  /* -- Layout -- */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--button-gap);
+
+  /* -- Box model -- */
+  padding: var(--button-padding-y) var(--button-padding-x);
+  border-radius: var(--button-radius);
+
+  /* -- Visual -- */
+  background: var(--button-bg);
+  border: var(--border-s) solid var(--button-border);
+
+  /* -- Typography -- */
+  font-family: var(--button-font);
+  font-size: var(--button-text-size);
   font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
   letter-spacing: 0;
   text-transform: none;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
   text-decoration: none;
-  align-self: flex-start;
-  padding: var(--space-m) var(--space-xl);
-  background-color: var(--button-primary);
-  color: var(--button-text);
-  border: var(--border-s) solid var(--button-primary);
+  color: var(--button-color);
+
+  /* -- Other -- */
   cursor: pointer;
-  transition: all .15s ease-in-out;
-  display: flex;
-  gap: var(--space-s);
+  transition: background var(--duration-2xs) var(--ease-out), color var(--duration-2xs) var(--ease-out), border-color var(--duration-2xs) var(--ease-out);
 }
 
-.button:hover,
-.is-outline.is-faded:hover {
-  transform: scale(1.02);
+/* -- Hover -- */
+.button:hover {
+  background: color-mix(in srgb, var(--button-bg), #000 15%);
 }
 
-.button:active {
-  transform: scale3d(1.0, 1.0, 1.0);
+/* -- Variant exceptions -- */
+
+.button[data-variant="outline"] {
+  --button-bg: transparent;
+  --button-color: var(--button-accent);
 }
 
-.is-faded {
-  background-color: var(--button-faded);
-  color: var(--button-primary);
-  border: var(--border-s) solid var(--transparent);
+.button[data-variant="faded"] {
+  --button-bg: var(--button-faded);
+  --button-border: transparent;
+  --button-color: var(--button-accent);
 }
 
-.is-outline {
-  background-color: var(--transparent);
-  color: var(--button-primary);
-  border: var(--border-s) solid var(--button-primary);
+.button[data-variant="outline-faded"] {
+  --button-bg: transparent;
+  --button-border: var(--button-faded);
+  --button-color: var(--button-accent);
 }
 
-.is-outline.is-faded {
-  background-color: var(--transparent);
-  color: var(--button-primary);
-  border: var(--border-s) solid var(--button-faded);
+.button[data-variant="transparent"] {
+  --button-bg: transparent;
+  --button-border: transparent;
+  --button-color: var(--button-accent);
 }
 
-.is-link {
-  padding: 0;
-  background: none;
-  border: none;
-  color: var(--text-primary);
+.button[data-variant="text"] {
+  --button-bg: transparent;
+  --button-border: transparent;
+  --button-color: var(--button-accent);
+  --button-padding-x: 0;
+  --button-padding-y: 0;
+}
+.button[data-variant="text"]:hover {
+  text-decoration: underline;
+  text-underline-offset: 2.5px;
 }
 
-.is-small {
-  font-size: var(--button-font-size-small);
-  padding: var(--space-m) var(--space-xl);
+/* Unfilled variants: subtle accent fill on hover instead of darkening transparent */
+.button[data-variant="outline"]:hover,
+.button[data-variant="faded"]:hover,
+.button[data-variant="outline-faded"]:hover,
+.button[data-variant="transparent"]:hover,
+.button[data-variant="text"]:hover {
+  background: color-mix(in srgb, var(--button-accent), var(--alpha-10));
 }
 
-.is-xsmall {
-  font-size: var(--button-font-size-small);
-  padding: var(--space-s) var(--space-m);
+/* -- Size exceptions -- */
+
+.button[data-size="small"] {
+  --button-padding-y: var(--space-s);
+  --button-padding-x: var(--space-m);
+  --button-text-size: var(--font-xs);
 }
+
+.button[data-size="xsmall"] {
+  --button-padding-y: var(--space-xs);
+  --button-padding-x: var(--space-s);
+  --button-text-size: var(--font-2xs);
+}
+
+/* -- Boolean modifiers -- */
+
+.button[data-icon-only] {
+  --button-padding-x: var(--button-padding-y);
+  aspect-ratio: 1 / 1;
+}
+
+.button[data-full-width] {
+  width: 100%;
+}
+
+/* -- Colour exceptions -- */
+/* Semantic names and brand aliases produce identical output.
+   --button-accent drives bg, border, and faded automatically. */
+
+.button[data-color="danger"],
+.button[data-color="red"] {
+  --button-accent: var(--status-danger);
+  --button-color: var(--text-inverted);
+}
+
+.button[data-color="success"],
+.button[data-color="green"] {
+  --button-accent: var(--status-success);
+  --button-color: var(--text-inverted);
+}
+
+.button[data-color="warning"],
+.button[data-color="yellow"] {
+  --button-accent: var(--status-warning);
+  --button-color: var(--text-inverted);
+}
+
+.button[data-color="info"],
+.button[data-color="blue"] {
+  --button-accent: var(--status-info);
+  --button-color: var(--text-inverted);
+}
+
+.button[data-color="accent"],
+.button[data-color="purple"] {
+  --button-accent: var(--status-accent);
+  --button-color: var(--text-inverted);
+}
+
+/* -- Dark mode: faded alpha adjusts for dark backgrounds -- */
+
+:root[data-theme="dark"] .button {
+  --button-faded: color-mix(in srgb, var(--button-accent), var(--alpha-80));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .button {
+    --button-faded: color-mix(in srgb, var(--button-accent), var(--alpha-80));
+  }
+}
+
+/* -- States -- */
 
 .button:disabled,
 .button.is-disabled {
   opacity: 0.4;
-  cursor: not-allowed;
   pointer-events: none;
+  cursor: not-allowed;
 }
 
-.is-icon {
-  padding: var(--space-l);
+.button.is-loading {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* -- Close button role class -- */
+
+.close-btn {
+  --button-accent: var(--text-faded);
+  --button-color: var(--background-primary);
+}
+.close-btn:hover {
+  --button-accent: var(--status-danger);
 }
 
 .svg-icn {

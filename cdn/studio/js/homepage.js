@@ -331,7 +331,7 @@ function testimonialSlider() {
         },
       },
       classes: {
-        arrow: "button is-icon-only is-faded is-outline is-pill custom-arrows",
+        arrow: "button custom-arrows",
       },
     });
 

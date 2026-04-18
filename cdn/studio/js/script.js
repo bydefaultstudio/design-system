@@ -255,7 +255,7 @@ function blogPostSlider() {
       arrowPath:
         "M24.1125 24.5117C25.1624 23.4617 24.4188 21.6665 22.934 21.6665H6.66602V18.3332H22.934C24.4188 18.3332 25.1624 16.5379 24.1125 15.488L17.6243 8.99984L19.9993 6.6665L33.3327 19.9998L19.9993 33.3332L17.6243 30.9998L24.1125 24.5117Z",
       classes: {
-        arrow: "button is-icon-only is-faded is-outline is-pill custom-arrows",
+        arrow: "button custom-arrows",
       },
       padding: {
         right: "18%", // Peek at the next slide

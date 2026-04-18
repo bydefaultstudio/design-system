@@ -195,7 +195,8 @@ function initPageClose() {
 
     var close = document.createElement("a");
     close.id = "studio-close-btn";
-    close.className = "button is-icon close-btn";
+    close.className = "button close-btn";
+    close.setAttribute("data-icon-only", "");
     close.setAttribute("aria-label", "Close");
     close.innerHTML = '<div class="svg-icn" data-icon="close"><svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"></path></svg></div>';
 

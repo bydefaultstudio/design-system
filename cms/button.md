@@ -12,355 +12,403 @@ access: "team"
 client: "internal"
 ---
 
+# Button
+
 Buttons are interactive elements used to trigger actions. They size to their content by default and should communicate **clear intent and hierarchy**.
 
-The `.button` class is required for styled buttons. The bare `<button>` element has only a minimal reset — always add `class="button"` to get the full button appearance.
+The `.button` class is required. The bare `<button>` element only has a minimal reset — always add `class="button"` to get the full component appearance.
 
 ---
 
-## Primary Button
+## Anatomy
 
-The default `.button` is the most prominent action on the page.
+The button uses a CSS pattern called **CUBE** — *Composition, Utility, Block, Exception*. The practical consequence for anyone writing HTML or CSS:
 
-<div class="demo-preview is-joined">
-  <div class="block gap-xl">
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Default</p>
-      <div><button class="button">Primary Action</button></div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Hover</p>
-      <div><button class="button" style="transform: scale(1.05);">Primary Action</button></div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Disabled</p>
-      <div><button class="button" disabled>Primary Action</button></div>
-    </div>
-  </div>
+- **Attributes (`data-*`) change what the button looks like** — variant, size, colour, plus booleans for icon-only and full-width. In CUBE terms, these are *Exceptions*.
+- **State classes (`.is-*`) change what the button is doing right now** — loading, disabled, active.
+- **The base CSS is written once.** Every `data-*` attribute is a set of token overrides, so stacking multiple attributes composes without conflict — each one rewrites its own tokens.
+
+Each axis of variation has its own mechanism:
+
+| Axis | Mechanism | Example |
+|---|---|---|
+| Variant (hierarchy) | `data-variant` | `data-variant="outline"` |
+| Size | `data-size` | `data-size="small"` |
+| Colour | `data-color` | `data-color="danger"` |
+| Icon-only | `data-icon-only` (boolean) | `data-icon-only` |
+| Full width | `data-full-width` (boolean) | `data-full-width` |
+| State (transient) | `.is-*` class | `.is-loading` |
+
+
+---
+
+## Primary
+
+The default `.button` is the most prominent action on the page. Filled, high contrast, black by default.
+
+<div class="demo-preview is-joined" style="display: flex; gap: var(--space-m); flex-wrap: wrap;">
+  <button class="button">Primary Action</button>
+  <button class="button" disabled>Primary Disabled</button>
 </div>
 
 ```html
 <button class="button">Primary Action</button>
-<button class="button" disabled>Primary Action</button>
+<button class="button" disabled>Primary Disabled</button>
 ```
 
 ---
 
-## Outline Button
+## Variants
 
-`.is-outline` removes the filled background and uses a border instead. Use for secondary actions that shouldn't compete with the primary CTA.
+Variants change shape and visual hierarchy. Use to reduce visual competition between buttons on the same surface.
+
+### Outline
+
+Transparent background with a primary border. Use `data-variant="outline"` for secondary actions.
 
 <div class="demo-preview is-joined">
-  <div class="block gap-xl">
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Default</p>
-      <div><button class="button is-outline">Secondary Action</button></div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Hover</p>
-      <div><button class="button is-outline" style="transform: scale(1.05);">Secondary Action</button></div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Disabled</p>
-      <div><button class="button is-outline" disabled>Secondary Action</button></div>
-    </div>
-  </div>
+  <button class="button" data-variant="outline">Secondary Action</button>
 </div>
 
 ```html
-<button class="button is-outline">Secondary Action</button>
+<button class="button" data-variant="outline">Secondary Action</button>
 ```
+
+### Faded
+
+Subtle filled background (15% alpha of the primary colour). Use `data-variant="faded"` for low-priority or passive actions.
+
+<div class="demo-preview is-joined">
+  <button class="button" data-variant="faded">Optional Action</button>
+</div>
+
+```html
+<button class="button" data-variant="faded">Optional Action</button>
+```
+
+### Outline faded
+
+Transparent background with a faded border. Use `data-variant="outline-faded"` for tertiary or utility actions.
+
+<div class="demo-preview is-joined">
+  <button class="button" data-variant="outline-faded">Tertiary Action</button>
+</div>
+
+```html
+<button class="button" data-variant="outline-faded">Tertiary Action</button>
+```
+
+### Transparent
+
+No background, no border — the button is invisible until hovered. Use `data-variant="transparent"` for icon buttons in toolbars, overlays, or minimal UI where the button chrome should disappear.
+
+<div class="demo-preview is-joined" style="display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center;">
+  <button class="button" data-variant="transparent">Transparent</button>
+  <button class="button" data-variant="transparent" data-icon-only aria-label="Settings">{{icon:sun}}</button>
+</div>
+
+```html
+<button class="button" data-variant="transparent">Transparent</button>
+```
+
+### Text
+
+Unstyled text-only button with no padding. Adds underline on hover. Use `data-variant="text"` for inline actions that should look like a text link but semantically remain a button.
+
+<div class="demo-preview is-joined">
+  <button class="button" data-variant="text">Learn more</button>
+</div>
+
+```html
+<button class="button" data-variant="text">Learn more</button>
+```
+
+### All variants side by side
+
+<div class="demo-preview" style="display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center;">
+  <button class="button">Primary</button>
+  <button class="button" data-variant="outline">Outline</button>
+  <button class="button" data-variant="faded">Faded</button>
+  <button class="button" data-variant="outline-faded">Outline faded</button>
+  <button class="button" data-variant="transparent">Transparent</button>
+  <button class="button" data-variant="text">Text</button>
+</div>
 
 ---
 
-## Faded Button
+## Sizes
 
-`.is-faded` applies a subtle background for low-priority or passive actions.
+`data-size` reduces padding and font size. Use for dense UI, sidebar actions, or compact contexts.
 
-<div class="demo-preview is-joined">
-  <div class="block gap-xl">
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Default</p>
-      <div><button class="button is-faded">Optional Action</button></div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Hover</p>
-      <div><button class="button is-faded" style="transform: scale(1.05);">Optional Action</button></div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Disabled</p>
-      <div><button class="button is-faded" disabled>Optional Action</button></div>
-    </div>
-  </div>
+<div class="demo-preview is-joined" style="display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center;">
+  <button class="button">Default</button>
+  <button class="button" data-size="small">Small</button>
+  <button class="button" data-size="xsmall">Extra small</button>
 </div>
 
 ```html
-<button class="button is-faded">Optional Action</button>
+<button class="button">Default</button>
+<button class="button" data-size="small">Small</button>
+<button class="button" data-size="xsmall">Extra small</button>
 ```
+
+Sizes compose with variants:
+
+<div class="demo-preview" style="display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center;">
+  <button class="button" data-variant="outline" data-size="small">Small outline</button>
+  <button class="button" data-variant="faded" data-size="xsmall">Xsmall faded</button>
+</div>
 
 ---
 
-## Outline + Faded
+## Icon-only
 
-`.is-outline.is-faded` combines both modifiers for tertiary or utility actions.
+A boolean attribute. Add `data-icon-only` to produce a circular button with equal padding, designed for buttons whose content is a single icon. Always include `aria-label` for accessibility.
 
-<div class="demo-preview is-joined">
-  <div class="block gap-xl">
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Default</p>
-      <div><button class="button is-outline is-faded">Tertiary Action</button></div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Hover</p>
-      <div><button class="button is-outline is-faded" style="transform: scale(1.05);">Tertiary Action</button></div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Disabled</p>
-      <div><button class="button is-outline is-faded" disabled>Tertiary Action</button></div>
-    </div>
-  </div>
+<div class="demo-preview is-joined" style="display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center;">
+  <button class="button" data-icon-only aria-label="Close">{{icon:close}}</button>
+  <button class="button" data-icon-only data-variant="faded" aria-label="Settings">{{icon:sun}}</button>
+  <button class="button" data-icon-only data-variant="outline" aria-label="Menu">{{icon:menu}}</button>
+  <button class="button" data-icon-only data-color="danger" aria-label="Delete">{{icon:close}}</button>
 </div>
 
 ```html
-<button class="button is-outline is-faded">Tertiary Action</button>
-```
-
----
-
-## Small Button
-
-`.is-small` reduces font size and padding for dense UI areas.
-
-<div class="demo-preview is-joined">
-  <div class="block gap-xl">
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Default</p>
-      <div class="block row gap-m">
-        <button class="button is-small">Small Primary</button>
-        <button class="button is-small is-outline">Small Outline</button>
-        <button class="button is-small is-faded">Small Faded</button>
-        <button class="button is-small is-outline is-faded">Small Tertiary</button>
-      </div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Disabled</p>
-      <div class="block row gap-m">
-        <button class="button is-small" disabled>Small Primary</button>
-        <button class="button is-small is-outline" disabled>Small Outline</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-```html
-<button class="button is-small">Small Primary</button>
-<button class="button is-small is-outline">Small Outline</button>
-<button class="button is-small is-faded">Small Faded</button>
-```
-
----
-
-## Icon Button
-
-`.is-icon` creates a circular button designed for icons only. Always include `aria-label` for accessibility.
-
-<div class="demo-preview is-joined">
-  <div class="block gap-xl">
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Default</p>
-      <div class="block row gap-m">
-        <button class="button is-icon" aria-label="Close">
-          <div class="svg-icn" data-icon="close">
-            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
-              <path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/>
-            </svg>
-          </div>
-        </button>
-        <button class="button is-icon is-faded" aria-label="Search">
-          <div class="svg-icn" data-icon="search">
-            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
-              <path d="M18.6 20L15.5658 16.9658C14.8452 16.2452 13.7005 16.2131 12.7513 16.584C12.6932 16.6067 12.6344 16.6287 12.575 16.65C11.925 16.8833 11.2333 17 10.5 17C8.68333 17 7.14583 16.3708 5.8875 15.1125C4.62917 13.8542 4 12.3167 4 10.5C4 8.68333 4.62917 7.14583 5.8875 5.8875C7.14583 4.62917 8.68333 4 10.5 4C12.3167 4 13.8542 4.62917 15.1125 5.8875C16.3708 7.14583 17 8.68333 17 10.5C17 11.2333 16.8833 11.925 16.65 12.575C16.6287 12.6344 16.6067 12.6932 16.584 12.7513C16.2131 13.7005 16.2452 14.8452 16.9658 15.5658L20 18.6L18.6 20ZM10.5 15C11.75 15 12.8125 14.5625 13.6875 13.6875C14.5625 12.8125 15 11.75 15 10.5C15 9.25 14.5625 8.1875 13.6875 7.3125C12.8125 6.4375 11.75 6 10.5 6C9.25 6 8.1875 6.4375 7.3125 7.3125C6.4375 8.1875 6 9.25 6 10.5C6 11.75 6.4375 12.8125 7.3125 13.6875C8.1875 14.5625 9.25 15 10.5 15Z" fill="currentColor"/>
-            </svg>
-          </div>
-        </button>
-      </div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Disabled</p>
-      <div class="block row gap-m">
-        <button class="button is-icon" aria-label="Close" disabled>
-          <div class="svg-icn" data-icon="close">
-            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
-              <path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/>
-            </svg>
-          </div>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-```html
-<button class="button is-icon" aria-label="Close">
-  <div class="svg-icn" data-icon="close"><!-- SVG icon --></div>
+<button class="button" data-icon-only aria-label="Close">
+  <div class="svg-icn" data-icon="close"><!-- SVG --></div>
 </button>
 
-<button class="button is-icon is-faded" aria-label="Search">
-  <div class="svg-icn" data-icon="search"><!-- SVG icon --></div>
+<button class="button" data-icon-only data-variant="faded" aria-label="Settings">
+  <div class="svg-icn" data-icon="sun"><!-- SVG --></div>
 </button>
 ```
 
 ---
 
-## Button Group
+## Full width
 
-`.button-group` is a flex container for grouping multiple buttons together. It provides consistent spacing, wraps on smaller screens, and vertically centres buttons of different sizes.
+A boolean attribute. Add `data-full-width` to make the button span its container. Use for form submits, stacked CTAs on narrow viewports, and modal primary actions.
 
 <div class="demo-preview is-joined">
-  <div class="block gap-xl">
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Left-aligned (default)</p>
-      <div class="button-group">
-        <button class="button">Confirm</button>
-        <button class="button is-outline">Cancel</button>
-      </div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Centred</p>
-      <div class="button-group justify-center">
-        <button class="button">Confirm</button>
-        <button class="button is-outline">Cancel</button>
-      </div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Right-aligned</p>
-      <div class="button-group justify-end">
-        <button class="button is-faded">Cancel</button>
-        <button class="button">Confirm</button>
-      </div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Mixed sizes</p>
-      <div class="button-group">
-        <button class="button">Primary</button>
-        <button class="button is-small is-outline">Small Secondary</button>
-        <button class="button is-small is-faded">Small Tertiary</button>
-      </div>
-    </div>
+  <button class="button" data-full-width>Submit</button>
+</div>
+
+```html
+<button class="button" data-full-width>Submit</button>
+```
+
+### Alternative: layout-driven stretching
+
+For cases where multiple children should stretch together, use `.align-stretch` on the parent `.block`:
+
+```html
+<form class="block align-stretch gap-m">
+  <input type="email" placeholder="Email">
+  <button class="button">Subscribe</button>
+</form>
+```
+
+---
+
+## Colour
+
+`data-color` applies a semantic or brand colour. The colour cascades through the component's tokens, so every variant picks it up automatically.
+
+| Semantic | Brand alias | Use for |
+|---|---|---|
+| `data-color="danger"` | `data-color="red"` | Destructive actions, errors |
+| `data-color="success"` | `data-color="green"` | Confirmations, positive outcomes |
+| `data-color="warning"` | `data-color="yellow"` | Caution, attention needed |
+| `data-color="info"` | `data-color="blue"` | Informational, neutral CTAs |
+| `data-color="accent"` | `data-color="purple"` | Emphasis, special actions |
+
+### Primary coloured
+
+<div class="demo-preview" style="display: flex; gap: var(--space-m); flex-wrap: wrap;">
+  <button class="button" data-color="danger">Danger</button>
+  <button class="button" data-color="success">Success</button>
+  <button class="button" data-color="warning">Warning</button>
+  <button class="button" data-color="info">Info</button>
+  <button class="button" data-color="accent">Accent</button>
+</div>
+
+### Outline coloured
+
+<div class="demo-preview" style="display: flex; gap: var(--space-m); flex-wrap: wrap;">
+  <button class="button" data-variant="outline" data-color="danger">Danger</button>
+  <button class="button" data-variant="outline" data-color="success">Success</button>
+  <button class="button" data-variant="outline" data-color="warning">Warning</button>
+  <button class="button" data-variant="outline" data-color="info">Info</button>
+  <button class="button" data-variant="outline" data-color="accent">Accent</button>
+</div>
+
+### Faded coloured
+
+<div class="demo-preview is-joined" style="display: flex; gap: var(--space-m); flex-wrap: wrap;">
+  <button class="button" data-variant="faded" data-color="danger">Danger</button>
+  <button class="button" data-variant="faded" data-color="success">Success</button>
+  <button class="button" data-variant="faded" data-color="warning">Warning</button>
+  <button class="button" data-variant="faded" data-color="info">Info</button>
+  <button class="button" data-variant="faded" data-color="accent">Accent</button>
+</div>
+
+```html
+<button class="button" data-color="danger">Danger</button>
+<button class="button" data-variant="outline" data-color="success">Success</button>
+<button class="button" data-variant="faded" data-color="info">Info</button>
+```
+
+---
+
+## States
+
+States are transient — runtime-toggled, not permanent properties. They use `.is-*` classes shared across components.
+
+| Class | Purpose |
+|---|---|
+| `.is-disabled` (or `disabled` attribute) | Opacity 0.4, pointer events disabled |
+| `.is-loading` | Pointer disabled, reduced opacity |
+| `.is-active` | Pressed or selected state |
+
+<div class="demo-preview is-joined" style="display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center;">
+  <button class="button">Default</button>
+  <button class="button" disabled>Disabled</button>
+  <button class="button is-loading">Saving...</button>
+  <button class="button is-active" data-variant="faded">Active</button>
+</div>
+
+```html
+<button class="button" disabled>Disabled</button>
+<button class="button is-loading">Saving...</button>
+<button class="button is-active" data-variant="faded">Active</button>
+```
+
+---
+
+## Buttons vs links
+
+All attributes and state classes work identically on `<button>` and `<a class="button">`. The CSS targets `.button` — it doesn't care about the element.
+
+Use `<button>` when clicking **does something on this page**. Use `<a href>` when clicking **goes somewhere else**.
+
+<div class="demo-preview is-joined" style="display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center;">
+  <button class="button" type="submit">Submit (button)</button>
+  <a class="button" href="#" data-variant="outline">Navigate (link)</a>
+</div>
+
+```html
+<button class="button" type="submit">Submit (button)</button>
+<a class="button" href="/work" data-variant="outline">Navigate (link)</a>
+```
+
+### Disabled links
+
+HTML has no native `disabled` on `<a>`. Use this three-part pattern:
+
+<div class="demo-preview is-joined">
+  <a class="button is-disabled" aria-disabled="true" tabindex="-1">Can't click</a>
+</div>
+
+```html
+<a class="button is-disabled"
+   aria-disabled="true"
+   tabindex="-1">
+  Can't click
+</a>
+```
+
+---
+
+## Extending the button
+
+When you need something that doesn't fit the attribute API — a close button that turns red on hover, a nav item styled like a button, a hero CTA with a display font — create a **role class** that overrides tokens.
+
+### Role classes — the pattern
+
+Role classes override tokens, never duplicate the base. The base's structure is preserved automatically.
+
+```css
+/* ------ CLOSE BUTTON ------ */
+.close-btn {
+  --button-accent: var(--text-faded);
+  --button-color: var(--background-primary);
+}
+.close-btn:hover {
+  --button-accent: var(--status-danger);
+}
+```
+
+<div class="demo-preview is-joined" style="display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center;">
+  <button class="button close-btn" data-icon-only aria-label="Close">{{icon:close}}</button>
+</div>
+
+```html
+<button class="button close-btn" data-icon-only aria-label="Close">
+  <div class="svg-icn" data-icon="close"><!-- SVG --></div>
+</button>
+```
+
+### Tokens available for role class overrides
+
+| Token | Default | What it controls |
+|---|---|---|
+| `--button-accent` | `var(--text-primary)` | Brand color — feeds bg, border, and variant text |
+| `--button-faded` | `color-mix(... --button-accent ...)` | 15% alpha of accent — used by faded variants |
+| `--button-bg` | `var(--button-accent)` | Background fill |
+| `--button-border` | `var(--button-accent)` | Border stroke |
+| `--button-color` | `var(--text-inverted)` | Text colour |
+| `--button-font` | `var(--font-secondary)` | Font family |
+| `--button-text-size` | `var(--text-body)` | Text size |
+| `--button-padding-y` | `var(--space-m)` | Vertical padding |
+| `--button-padding-x` | `var(--space-xl)` | Horizontal padding |
+| `--button-radius` | `0` | Corner radius |
+| `--button-gap` | `var(--space-s)` | Icon-to-text gap |
+
+---
+
+## Button group
+
+`.button-group` is a flex container for grouping multiple buttons with consistent spacing.
+
+<div class="demo-preview is-joined" style="display: flex; gap: var(--space-m); flex-wrap: wrap;">
+  <div class="button-group">
+    <button class="button">Confirm</button>
+    <button class="button" data-variant="outline">Cancel</button>
   </div>
 </div>
 
 ```html
 <div class="button-group">
   <button class="button">Confirm</button>
-  <button class="button is-outline">Cancel</button>
+  <button class="button" data-variant="outline">Cancel</button>
 </div>
-
-<div class="button-group justify-center">...</div>
-<div class="button-group justify-end">...</div>
 ```
 
-| Class | Effect |
-| --- | --- |
-| `.button-group` | Flex container with consistent gap |
-| `.justify-center` | Centre-aligns the group |
-| `.justify-end` | Right-aligns the group |
+---
+
+## Accessibility
+
+- Icon-only buttons (`data-icon-only`) **must** include `aria-label` describing the action
+- `disabled` attribute or `.is-disabled` class prevents interaction and is announced by screen readers
+- Loading buttons (`.is-loading`) should set `aria-busy="true"` for screen reader clarity
+- Focus ring appears automatically on `:focus-visible`
+- Disabled links require `aria-disabled="true"` and `tabindex="-1"` alongside `.is-disabled`
+- Choose elements by semantics: `<button>` for actions, `<a href>` for navigation
 
 ---
 
-## All Variants
+## Usage rules
 
-A side-by-side comparison of every button style at default size.
+**Do**
 
-<div class="demo-preview is-joined">
-  <div class="block row gap-m" style="flex-wrap: wrap; align-items: center;">
-    <button class="button">Primary</button>
-    <button class="button is-outline">Outline</button>
-    <button class="button is-faded">Faded</button>
-    <button class="button is-outline is-faded">Outline Faded</button>
-    <button class="button is-small">Small</button>
-    <button class="button is-icon" aria-label="Icon"><div class="svg-icn" data-icon="add"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 13H5V11H11V5H13V11H19V13H13V19H11V13Z" fill="currentColor"/></svg></div></button>
-  </div>
-</div>
-
----
-
-## Copy Button
-
-The `.copy-btn` adds clipboard copy functionality to any button. It copies the value from `data-copy` and shows a "Copied!" state. Three variants are available. See the [Copy Button](copy-button.html) docs for full details.
-
-<div class="demo-preview is-joined">
-  <div class="block gap-xl">
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Icon + Text</p>
-      <div class="block row gap-m">
-        <button class="button is-small is-outline copy-btn" data-copy="var(--button-primary)" type="button">
-          <span class="copy-btn-default"><div class="svg-icn" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> Copy</span>
-          <span class="copy-btn-copied"><div class="svg-icn" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div> Copied!</span>
-        </button>
-        <button class="button is-small is-outline copy-btn is-copied" type="button">
-          <span class="copy-btn-default"><div class="svg-icn" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> Copy</span>
-          <span class="copy-btn-copied"><div class="svg-icn" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div> Copied!</span>
-        </button>
-      </div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Icon Only</p>
-      <div class="block row gap-m">
-        <button class="button is-small is-outline copy-btn is-icon-only" data-copy="var(--button-primary)" data-tooltip="Copy" type="button" aria-label="Copy">
-          <span class="copy-btn-default"><div class="svg-icn" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
-          <span class="copy-btn-copied"><div class="svg-icn" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
-        </button>
-        <button class="button is-small is-outline copy-btn is-icon-only is-copied" data-tooltip="Copied!" type="button" aria-label="Copy">
-          <span class="copy-btn-default"><div class="svg-icn" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
-          <span class="copy-btn-copied"><div class="svg-icn" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
-        </button>
-      </div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Ghost</p>
-      <div class="block row gap-m">
-        <button class="button copy-btn is-ghost" data-copy="var(--button-primary)" data-tooltip="Copy" type="button" aria-label="Copy">
-          <span class="copy-btn-default"><div class="svg-icn" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
-          <span class="copy-btn-copied"><div class="svg-icn" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
-        </button>
-        <button class="button copy-btn is-ghost is-copied" data-tooltip="Copied!" type="button" aria-label="Copy">
-          <span class="copy-btn-default"><div class="svg-icn" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
-          <span class="copy-btn-copied"><div class="svg-icn" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-```html
-<!-- Icon + Text -->
-<button class="button is-small is-outline copy-btn" data-copy="value" type="button">
-  <span class="copy-btn-default">{{icon:copy}} Copy</span>
-  <span class="copy-btn-copied">{{icon:check}} Copied!</span>
-</button>
-
-<!-- Icon Only -->
-<button class="button is-small is-outline copy-btn is-icon-only" data-copy="value" data-tooltip="Copy" type="button" aria-label="Copy">
-  <span class="copy-btn-default">{{icon:copy}}</span>
-  <span class="copy-btn-copied">{{icon:check}}</span>
-</button>
-
-<!-- Ghost -->
-<button class="button copy-btn is-ghost" data-copy="value" data-tooltip="Copy" type="button" aria-label="Copy">
-  <span class="copy-btn-default">{{icon:copy}}</span>
-  <span class="copy-btn-copied">{{icon:check}}</span>
-</button>
-```
-
-Requires `assets/js/copy-button.js`.
-
----
-
-## Usage Rules
-
-- Buttons should **never stretch full width** by default
 - Use one clear primary button per section when possible
-- Use outline or faded styles to reduce visual competition
-- Use icon buttons **only** when the icon meaning is clear
-- If a button feels too prominent or too quiet, change the modifier — not the base styles
+- Use `data-variant` to reduce visual competition between actions
+- Use `data-color` for meaning (danger for destructive, success for positive) — not decoration
+- Include `aria-label` on every icon button
+- Create a role class when a styling pattern repeats in multiple places
+
+**Don't**
+
+- Don't make buttons full-width by default — use `data-full-width` or `.align-stretch` when needed
+- Don't use `data-color` when hierarchy already communicates the meaning
+- Don't stack more than two coloured buttons on the same surface
+- Don't use `.is-active` for permanent variants — if something is always outlined, it's a `data-variant`, not a state

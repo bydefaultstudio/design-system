@@ -290,7 +290,9 @@
     PRESETS.forEach(function (preset) {
       var btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'button is-small is-outline is-faded';
+      btn.className = 'button';
+      btn.setAttribute('data-size', 'small');
+      btn.setAttribute('data-variant', 'outline-faded');
       btn.textContent = preset.label;
       btn.addEventListener('click', function () {
         selectedCities = preset.cities.slice();

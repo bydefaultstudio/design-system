@@ -305,8 +305,9 @@ body.is-sidebar-collapsed .layout {
   display: inline-flex;
   align-items: center;
   font-family: var(--font-tertiary);
-  font-size: var(--font-m);
-  font-weight: var(--font-weight-medium);
+  font-size: var(--font-xs);
+  text-transform: uppercase;
+  font-weight: var(--font-weight-bold);
   color: var(--text-primary);
   text-decoration: none;
   transition: color var(--duration-2xs) var(--ease-out);
@@ -440,31 +441,21 @@ body.is-sidebar-collapsed .layout {
   transition: opacity var(--duration-2xs) var(--ease-out), visibility var(--duration-2xs);
 }
 
+/* -- Nav button role class (token overrides on .button) -- */
 .nav-btn {
-  border-radius: 0;
-  padding: var(--space-xs);
-  color: var(--text-primary);
-  background-color: transparent;
-  border: var(--border-s) solid transparent;
-  /* border-radius: var(--radius-xs); */
-
+  --button-bg: transparent;
+  --button-border: transparent;
+  --button-color: var(--text-primary);
+  --button-radius: 0;
 }
 
 .nav-btn:hover {
-  background-color: var(--background-faded);
-
+  --button-bg: var(--background-faded);
 }
 
-/* Footer buttons stretch to fill the footer's cross-axis so both row (expanded)
-   and column (collapsed) flex directions produce an even, centred group. */
+/* Footer buttons stretch to fill the footer's cross-axis */
 .sidebar-footer .nav-btn {
   width: 100%;
-}
-
-.nav-btn .svg-icn {
-  width: 1.5rem;
-  height: 1.5rem;
-
 }
 
 /* [data-article] {
@@ -1452,16 +1443,18 @@ body[data-current-level="2"] .close-btn-wrap {
   display: flex;
 }
 
+/* Studio close-btn overrides — extends the core .close-btn role class */
 .close-btn {
-  background-color: var(--background-secondary);
-  padding: var(--space-s);
-  border: var(--border-s) solid transparent;
-  color: var(--text-primary);
-  transition: background-color var(--duration-2xs) var(--ease-out);
+  --button-bg: var(--background-secondary);
+  --button-border: transparent;
+  --button-color: var(--text-primary);
+  --button-padding-y: var(--space-s);
+  --button-padding-x: var(--space-s);
 }
 
 .close-btn:hover {
-  background: var(--background-faded);
+  --button-bg: var(--background-faded);
+  --button-accent: var(--text-primary);
 }
 
 .close-btn-label {
@@ -1573,9 +1566,9 @@ body.is-animating .close-btn-wrap {
 
 
 .contact-chips .button.is-selected {
-  background-color: var(--button-primary);
-  color: var(--button-text);
-  border-color: var(--button-primary);
+  --button-bg: var(--button-accent);
+  --button-color: var(--text-inverted);
+  --button-border: var(--button-accent);
 }
 
 .contact-chips .button .svg-icn {
@@ -2140,8 +2133,9 @@ body.is-animating .close-btn-wrap {
 }
 
 .button.is-light {
-  background: var(--background-primary);
-  color: var(--text-primary);
+  --button-bg: var(--background-primary);
+  --button-border: var(--background-primary);
+  --button-color: var(--text-primary);
 }
 
 

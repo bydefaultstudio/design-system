@@ -119,365 +119,514 @@
             <!-- Main Content -->
             <main class="docs-main">
                 <article>
-                    <p>Buttons are interactive elements used to trigger actions. They size to their content by default and should communicate <strong>clear intent and hierarchy</strong>.</p>
-<p>The <button type="button" class="token-copy is-class" data-copy=".button" aria-label="Copy .button"><code>.button</code></button> class is required for styled buttons. The bare <code>&lt;button&gt;</code> element has only a minimal reset — always add <code>class=&quot;button&quot;</code> to get the full button appearance.</p>
+                    <h1 id="button">Button</h1>
+<p>Buttons are interactive elements used to trigger actions. They size to their content by default and should communicate <strong>clear intent and hierarchy</strong>.</p>
+<p>The <button type="button" class="token-copy is-class" data-copy=".button" aria-label="Copy .button"><code>.button</code></button> class is required. The bare <code>&lt;button&gt;</code> element only has a minimal reset — always add <code>class=&quot;button&quot;</code> to get the full component appearance.</p>
 <hr>
-<h2 id="primary-button">Primary Button</h2>
-<p>The default <button type="button" class="token-copy is-class" data-copy=".button" aria-label="Copy .button"><code>.button</code></button> is the most prominent action on the page.</p>
-<div class="demo-preview is-joined">
-  <div class="block gap-xl">
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Default</p>
-      <div><button class="button">Primary Action</button></div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Hover</p>
-      <div><button class="button" style="transform: scale(1.05);">Primary Action</button></div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Disabled</p>
-      <div><button class="button" disabled>Primary Action</button></div>
-    </div>
-  </div>
+<h2 id="anatomy">Anatomy</h2>
+<p>The button uses a CSS pattern called <strong>CUBE</strong> — <em>Composition, Utility, Block, Exception</em>. The practical consequence for anyone writing HTML or CSS:</p>
+<ul>
+<li><strong>Attributes (<code>data-*</code>) change what the button looks like</strong> — variant, size, colour, plus booleans for icon-only and full-width. In CUBE terms, these are <em>Exceptions</em>.</li>
+<li><strong>State classes (<code>.is-*</code>) change what the button is doing right now</strong> — loading, disabled, active.</li>
+<li><strong>The base CSS is written once.</strong> Every <code>data-*</code> attribute is a set of token overrides, so stacking multiple attributes composes without conflict — each one rewrites its own tokens.</li>
+</ul>
+<p>Each axis of variation has its own mechanism:</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Axis</th>
+<th>Mechanism</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Variant (hierarchy)</td>
+<td><code>data-variant</code></td>
+<td><code>data-variant=&quot;outline&quot;</code></td>
+</tr>
+<tr>
+<td>Size</td>
+<td><code>data-size</code></td>
+<td><code>data-size=&quot;small&quot;</code></td>
+</tr>
+<tr>
+<td>Colour</td>
+<td><code>data-color</code></td>
+<td><code>data-color=&quot;danger&quot;</code></td>
+</tr>
+<tr>
+<td>Icon-only</td>
+<td><code>data-icon-only</code> (boolean)</td>
+<td><code>data-icon-only</code></td>
+</tr>
+<tr>
+<td>Full width</td>
+<td><code>data-full-width</code> (boolean)</td>
+<td><code>data-full-width</code></td>
+</tr>
+<tr>
+<td>State (transient)</td>
+<td><code>.is-*</code> class</td>
+<td><button type="button" class="token-copy is-class" data-copy=".is-loading" aria-label="Copy .is-loading"><code>.is-loading</code></button></td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="primary">Primary</h2>
+<p>The default <button type="button" class="token-copy is-class" data-copy=".button" aria-label="Copy .button"><code>.button</code></button> is the most prominent action on the page. Filled, high contrast, black by default.</p>
+<div class="demo-preview is-joined" style="display: flex; gap: var(--space-m); flex-wrap: wrap;">
+  <button class="button">Primary Action</button>
+  <button class="button" disabled>Primary Disabled</button>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-wqpmrbto7" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-wqpmrbto7" class="language-html">&lt;button class=&quot;button&quot;&gt;Primary Action&lt;/button&gt;
-&lt;button class=&quot;button&quot; disabled&gt;Primary Action&lt;/button&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-dmoq1c80v" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-dmoq1c80v" class="language-html">&lt;button class=&quot;button&quot;&gt;Primary Action&lt;/button&gt;
+&lt;button class=&quot;button&quot; disabled&gt;Primary Disabled&lt;/button&gt;
 </code></pre>
       </div>
     
 <hr>
-<h2 id="outline-button">Outline Button</h2>
-<p><button type="button" class="token-copy is-class" data-copy=".is-outline" aria-label="Copy .is-outline"><code>.is-outline</code></button> removes the filled background and uses a border instead. Use for secondary actions that shouldn&#39;t compete with the primary CTA.</p>
+<h2 id="variants">Variants</h2>
+<p>Variants change shape and visual hierarchy. Use to reduce visual competition between buttons on the same surface.</p>
+<h3 id="outline">Outline</h3>
+<p>Transparent background with a primary border. Use <code>data-variant=&quot;outline&quot;</code> for secondary actions.</p>
 <div class="demo-preview is-joined">
-  <div class="block gap-xl">
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Default</p>
-      <div><button class="button is-outline">Secondary Action</button></div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Hover</p>
-      <div><button class="button is-outline" style="transform: scale(1.05);">Secondary Action</button></div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Disabled</p>
-      <div><button class="button is-outline" disabled>Secondary Action</button></div>
-    </div>
-  </div>
+  <button class="button" data-variant="outline">Secondary Action</button>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-tctey8xfa" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-tctey8xfa" class="language-html">&lt;button class=&quot;button is-outline&quot;&gt;Secondary Action&lt;/button&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-q2i0mxi8t" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-q2i0mxi8t" class="language-html">&lt;button class=&quot;button&quot; data-variant=&quot;outline&quot;&gt;Secondary Action&lt;/button&gt;
 </code></pre>
       </div>
     
-<hr>
-<h2 id="faded-button">Faded Button</h2>
-<p><button type="button" class="token-copy is-class" data-copy=".is-faded" aria-label="Copy .is-faded"><code>.is-faded</code></button> applies a subtle background for low-priority or passive actions.</p>
+<h3 id="faded">Faded</h3>
+<p>Subtle filled background (15% alpha of the primary colour). Use <code>data-variant=&quot;faded&quot;</code> for low-priority or passive actions.</p>
 <div class="demo-preview is-joined">
-  <div class="block gap-xl">
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Default</p>
-      <div><button class="button is-faded">Optional Action</button></div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Hover</p>
-      <div><button class="button is-faded" style="transform: scale(1.05);">Optional Action</button></div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Disabled</p>
-      <div><button class="button is-faded" disabled>Optional Action</button></div>
-    </div>
-  </div>
+  <button class="button" data-variant="faded">Optional Action</button>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-io4leykml" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-io4leykml" class="language-html">&lt;button class=&quot;button is-faded&quot;&gt;Optional Action&lt;/button&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-ium8fgbcg" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-ium8fgbcg" class="language-html">&lt;button class=&quot;button&quot; data-variant=&quot;faded&quot;&gt;Optional Action&lt;/button&gt;
 </code></pre>
       </div>
     
-<hr>
-<h2 id="outline-faded">Outline + Faded</h2>
-<p><code>.is-outline.is-faded</code> combines both modifiers for tertiary or utility actions.</p>
+<h3 id="outline-faded">Outline faded</h3>
+<p>Transparent background with a faded border. Use <code>data-variant=&quot;outline-faded&quot;</code> for tertiary or utility actions.</p>
 <div class="demo-preview is-joined">
-  <div class="block gap-xl">
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Default</p>
-      <div><button class="button is-outline is-faded">Tertiary Action</button></div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Hover</p>
-      <div><button class="button is-outline is-faded" style="transform: scale(1.05);">Tertiary Action</button></div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Disabled</p>
-      <div><button class="button is-outline is-faded" disabled>Tertiary Action</button></div>
-    </div>
-  </div>
+  <button class="button" data-variant="outline-faded">Tertiary Action</button>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-6ulrjpoyz" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-6ulrjpoyz" class="language-html">&lt;button class=&quot;button is-outline is-faded&quot;&gt;Tertiary Action&lt;/button&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-w2ny6fak4" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-w2ny6fak4" class="language-html">&lt;button class=&quot;button&quot; data-variant=&quot;outline-faded&quot;&gt;Tertiary Action&lt;/button&gt;
 </code></pre>
       </div>
     
-<hr>
-<h2 id="small-button">Small Button</h2>
-<p><button type="button" class="token-copy is-class" data-copy=".is-small" aria-label="Copy .is-small"><code>.is-small</code></button> reduces font size and padding for dense UI areas.</p>
-<div class="demo-preview is-joined">
-  <div class="block gap-xl">
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Default</p>
-      <div class="block row gap-m">
-        <button class="button is-small">Small Primary</button>
-        <button class="button is-small is-outline">Small Outline</button>
-        <button class="button is-small is-faded">Small Faded</button>
-        <button class="button is-small is-outline is-faded">Small Tertiary</button>
-      </div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Disabled</p>
-      <div class="block row gap-m">
-        <button class="button is-small" disabled>Small Primary</button>
-        <button class="button is-small is-outline" disabled>Small Outline</button>
-      </div>
-    </div>
-  </div>
+<h3 id="transparent">Transparent</h3>
+<p>No background, no border — the button is invisible until hovered. Use <code>data-variant=&quot;transparent&quot;</code> for icon buttons in toolbars, overlays, or minimal UI where the button chrome should disappear.</p>
+<div class="demo-preview is-joined" style="display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center;">
+  <button class="button" data-variant="transparent">Transparent</button>
+  <button class="button" data-variant="transparent" data-icon-only aria-label="Settings"><div class="svg-icn"><svg data-icon="sun" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 5V1H13V5H11ZM17.65 7.75L16.275 6.375L19.075 3.5L20.475 4.925L17.65 7.75ZM19 13V11H23V13H19ZM11 23V19H13V23H11ZM6.35 7.7L3.5 4.925L4.925 3.525L7.75 6.35L6.35 7.7ZM19.05 20.5L16.275 17.625L17.625 16.275L20.475 19.025L19.05 20.5ZM1 13V11H5V13H1ZM4.925 20.5L3.525 19.075L6.325 16.275L7.05 16.95L7.775 17.65L4.925 20.5ZM12 18C10.3333 18 8.91667 17.4167 7.75 16.25C6.58333 15.0833 6 13.6667 6 12C6 10.3333 6.58333 8.91667 7.75 7.75C8.91667 6.58333 10.3333 6 12 6C13.6667 6 15.0833 6.58333 16.25 7.75C17.4167 8.91667 18 10.3333 18 12C18 13.6667 17.4167 15.0833 16.25 16.25C15.0833 17.4167 13.6667 18 12 18ZM12 16C13.1 16 14.0417 15.6083 14.825 14.825C15.6083 14.0417 16 13.1 16 12C16 10.9 15.6083 9.95833 14.825 9.175C14.0417 8.39167 13.1 8 12 8C10.9 8 9.95833 8.39167 9.175 9.175C8.39167 9.95833 8 10.9 8 12C8 13.1 8.39167 14.0417 9.175 14.825C9.95833 15.6083 10.9 16 12 16Z" fill="currentColor"/></svg></div></button>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-t615yhz9g" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-t615yhz9g" class="language-html">&lt;button class=&quot;button is-small&quot;&gt;Small Primary&lt;/button&gt;
-&lt;button class=&quot;button is-small is-outline&quot;&gt;Small Outline&lt;/button&gt;
-&lt;button class=&quot;button is-small is-faded&quot;&gt;Small Faded&lt;/button&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-ltsdlqema" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-ltsdlqema" class="language-html">&lt;button class=&quot;button&quot; data-variant=&quot;transparent&quot;&gt;Transparent&lt;/button&gt;
 </code></pre>
       </div>
     
-<hr>
-<h2 id="icon-button">Icon Button</h2>
-<p><button type="button" class="token-copy is-class" data-copy=".is-icon" aria-label="Copy .is-icon"><code>.is-icon</code></button> creates a circular button designed for icons only. Always include <code>aria-label</code> for accessibility.</p>
+<h3 id="text">Text</h3>
+<p>Unstyled text-only button with no padding. Adds underline on hover. Use <code>data-variant=&quot;text&quot;</code> for inline actions that should look like a text link but semantically remain a button.</p>
 <div class="demo-preview is-joined">
-  <div class="block gap-xl">
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Default</p>
-      <div class="block row gap-m">
-        <button class="button is-icon" aria-label="Close">
-          <div class="svg-icn" data-icon="close">
-            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
-              <path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/>
-            </svg>
-          </div>
-        </button>
-        <button class="button is-icon is-faded" aria-label="Search">
-          <div class="svg-icn" data-icon="search">
-            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
-              <path d="M18.6 20L15.5658 16.9658C14.8452 16.2452 13.7005 16.2131 12.7513 16.584C12.6932 16.6067 12.6344 16.6287 12.575 16.65C11.925 16.8833 11.2333 17 10.5 17C8.68333 17 7.14583 16.3708 5.8875 15.1125C4.62917 13.8542 4 12.3167 4 10.5C4 8.68333 4.62917 7.14583 5.8875 5.8875C7.14583 4.62917 8.68333 4 10.5 4C12.3167 4 13.8542 4.62917 15.1125 5.8875C16.3708 7.14583 17 8.68333 17 10.5C17 11.2333 16.8833 11.925 16.65 12.575C16.6287 12.6344 16.6067 12.6932 16.584 12.7513C16.2131 13.7005 16.2452 14.8452 16.9658 15.5658L20 18.6L18.6 20ZM10.5 15C11.75 15 12.8125 14.5625 13.6875 13.6875C14.5625 12.8125 15 11.75 15 10.5C15 9.25 14.5625 8.1875 13.6875 7.3125C12.8125 6.4375 11.75 6 10.5 6C9.25 6 8.1875 6.4375 7.3125 7.3125C6.4375 8.1875 6 9.25 6 10.5C6 11.75 6.4375 12.8125 7.3125 13.6875C8.1875 14.5625 9.25 15 10.5 15Z" fill="currentColor"/>
-            </svg>
-          </div>
-        </button>
-      </div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Disabled</p>
-      <div class="block row gap-m">
-        <button class="button is-icon" aria-label="Close" disabled>
-          <div class="svg-icn" data-icon="close">
-            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
-              <path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/>
-            </svg>
-          </div>
-        </button>
-      </div>
-    </div>
-  </div>
+  <button class="button" data-variant="text">Learn more</button>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-5flqw1dlo" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-5flqw1dlo" class="language-html">&lt;button class=&quot;button is-icon&quot; aria-label=&quot;Close&quot;&gt;
-  &lt;div class=&quot;svg-icn&quot; data-icon=&quot;close&quot;&gt;&lt;!-- SVG icon --&gt;&lt;/div&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-t01sgebo0" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-t01sgebo0" class="language-html">&lt;button class=&quot;button&quot; data-variant=&quot;text&quot;&gt;Learn more&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<h3 id="all-variants-side-by-side">All variants side by side</h3>
+<div class="demo-preview" style="display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center;">
+  <button class="button">Primary</button>
+  <button class="button" data-variant="outline">Outline</button>
+  <button class="button" data-variant="faded">Faded</button>
+  <button class="button" data-variant="outline-faded">Outline faded</button>
+  <button class="button" data-variant="transparent">Transparent</button>
+  <button class="button" data-variant="text">Text</button>
+</div>
+
+<hr>
+<h2 id="sizes">Sizes</h2>
+<p><code>data-size</code> reduces padding and font size. Use for dense UI, sidebar actions, or compact contexts.</p>
+<div class="demo-preview is-joined" style="display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center;">
+  <button class="button">Default</button>
+  <button class="button" data-size="small">Small</button>
+  <button class="button" data-size="xsmall">Extra small</button>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-67r9605nq" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-67r9605nq" class="language-html">&lt;button class=&quot;button&quot;&gt;Default&lt;/button&gt;
+&lt;button class=&quot;button&quot; data-size=&quot;small&quot;&gt;Small&lt;/button&gt;
+&lt;button class=&quot;button&quot; data-size=&quot;xsmall&quot;&gt;Extra small&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<p>Sizes compose with variants:</p>
+<div class="demo-preview" style="display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center;">
+  <button class="button" data-variant="outline" data-size="small">Small outline</button>
+  <button class="button" data-variant="faded" data-size="xsmall">Xsmall faded</button>
+</div>
+
+<hr>
+<h2 id="icon-only">Icon-only</h2>
+<p>A boolean attribute. Add <code>data-icon-only</code> to produce a circular button with equal padding, designed for buttons whose content is a single icon. Always include <code>aria-label</code> for accessibility.</p>
+<div class="demo-preview is-joined" style="display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center;">
+  <button class="button" data-icon-only aria-label="Close"><div class="svg-icn"><svg data-icon="close" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/></svg></div></button>
+  <button class="button" data-icon-only data-variant="faded" aria-label="Settings"><div class="svg-icn"><svg data-icon="sun" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 5V1H13V5H11ZM17.65 7.75L16.275 6.375L19.075 3.5L20.475 4.925L17.65 7.75ZM19 13V11H23V13H19ZM11 23V19H13V23H11ZM6.35 7.7L3.5 4.925L4.925 3.525L7.75 6.35L6.35 7.7ZM19.05 20.5L16.275 17.625L17.625 16.275L20.475 19.025L19.05 20.5ZM1 13V11H5V13H1ZM4.925 20.5L3.525 19.075L6.325 16.275L7.05 16.95L7.775 17.65L4.925 20.5ZM12 18C10.3333 18 8.91667 17.4167 7.75 16.25C6.58333 15.0833 6 13.6667 6 12C6 10.3333 6.58333 8.91667 7.75 7.75C8.91667 6.58333 10.3333 6 12 6C13.6667 6 15.0833 6.58333 16.25 7.75C17.4167 8.91667 18 10.3333 18 12C18 13.6667 17.4167 15.0833 16.25 16.25C15.0833 17.4167 13.6667 18 12 18ZM12 16C13.1 16 14.0417 15.6083 14.825 14.825C15.6083 14.0417 16 13.1 16 12C16 10.9 15.6083 9.95833 14.825 9.175C14.0417 8.39167 13.1 8 12 8C10.9 8 9.95833 8.39167 9.175 9.175C8.39167 9.95833 8 10.9 8 12C8 13.1 8.39167 14.0417 9.175 14.825C9.95833 15.6083 10.9 16 12 16Z" fill="currentColor"/></svg></div></button>
+  <button class="button" data-icon-only data-variant="outline" aria-label="Menu"><div class="svg-icn"><svg data-icon="menu" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 18V16H21V18H3ZM3 13V11H21V13H3ZM3 8V6H21V8H3Z" fill="currentColor"/></svg></div></button>
+  <button class="button" data-icon-only data-color="danger" aria-label="Delete"><div class="svg-icn"><svg data-icon="close" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/></svg></div></button>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-pmtue2z16" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-pmtue2z16" class="language-html">&lt;button class=&quot;button&quot; data-icon-only aria-label=&quot;Close&quot;&gt;
+  &lt;div class=&quot;svg-icn&quot; data-icon=&quot;close&quot;&gt;&lt;!-- SVG --&gt;&lt;/div&gt;
 &lt;/button&gt;
 
-&lt;button class=&quot;button is-icon is-faded&quot; aria-label=&quot;Search&quot;&gt;
-  &lt;div class=&quot;svg-icn&quot; data-icon=&quot;search&quot;&gt;&lt;!-- SVG icon --&gt;&lt;/div&gt;
+&lt;button class=&quot;button&quot; data-icon-only data-variant=&quot;faded&quot; aria-label=&quot;Settings&quot;&gt;
+  &lt;div class=&quot;svg-icn&quot; data-icon=&quot;sun&quot;&gt;&lt;!-- SVG --&gt;&lt;/div&gt;
 &lt;/button&gt;
 </code></pre>
       </div>
     
 <hr>
-<h2 id="button-group">Button Group</h2>
-<p><button type="button" class="token-copy is-class" data-copy=".button-group" aria-label="Copy .button-group"><code>.button-group</code></button> is a flex container for grouping multiple buttons together. It provides consistent spacing, wraps on smaller screens, and vertically centres buttons of different sizes.</p>
+<h2 id="full-width">Full width</h2>
+<p>A boolean attribute. Add <code>data-full-width</code> to make the button span its container. Use for form submits, stacked CTAs on narrow viewports, and modal primary actions.</p>
 <div class="demo-preview is-joined">
-  <div class="block gap-xl">
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Left-aligned (default)</p>
-      <div class="button-group">
-        <button class="button">Confirm</button>
-        <button class="button is-outline">Cancel</button>
-      </div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Centred</p>
-      <div class="button-group justify-center">
-        <button class="button">Confirm</button>
-        <button class="button is-outline">Cancel</button>
-      </div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Right-aligned</p>
-      <div class="button-group justify-end">
-        <button class="button is-faded">Cancel</button>
-        <button class="button">Confirm</button>
-      </div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Mixed sizes</p>
-      <div class="button-group">
-        <button class="button">Primary</button>
-        <button class="button is-small is-outline">Small Secondary</button>
-        <button class="button is-small is-faded">Small Tertiary</button>
-      </div>
-    </div>
-  </div>
+  <button class="button" data-full-width>Submit</button>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-7ml1jjouo" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-7ml1jjouo" class="language-html">&lt;div class=&quot;button-group&quot;&gt;
-  &lt;button class=&quot;button&quot;&gt;Confirm&lt;/button&gt;
-  &lt;button class=&quot;button is-outline&quot;&gt;Cancel&lt;/button&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;button-group justify-center&quot;&gt;...&lt;/div&gt;
-&lt;div class=&quot;button-group justify-end&quot;&gt;...&lt;/div&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-h6xg2xh0k" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-h6xg2xh0k" class="language-html">&lt;button class=&quot;button&quot; data-full-width&gt;Submit&lt;/button&gt;
 </code></pre>
       </div>
     
+<h3 id="alternative-layout-driven-stretching">Alternative: layout-driven stretching</h3>
+<p>For cases where multiple children should stretch together, use <button type="button" class="token-copy is-class" data-copy=".align-stretch" aria-label="Copy .align-stretch"><code>.align-stretch</code></button> on the parent <button type="button" class="token-copy is-class" data-copy=".block" aria-label="Copy .block"><code>.block</code></button>:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-h78ew6krk" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-h78ew6krk" class="language-html">&lt;form class=&quot;block align-stretch gap-m&quot;&gt;
+  &lt;input type=&quot;email&quot; placeholder=&quot;Email&quot;&gt;
+  &lt;button class=&quot;button&quot;&gt;Subscribe&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="colour">Colour</h2>
+<p><code>data-color</code> applies a semantic or brand colour. The colour cascades through the component&#39;s tokens, so every variant picks it up automatically.</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Semantic</th>
+<th>Brand alias</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>data-color=&quot;danger&quot;</code></td>
+<td><code>data-color=&quot;red&quot;</code></td>
+<td>Destructive actions, errors</td>
+</tr>
+<tr>
+<td><code>data-color=&quot;success&quot;</code></td>
+<td><code>data-color=&quot;green&quot;</code></td>
+<td>Confirmations, positive outcomes</td>
+</tr>
+<tr>
+<td><code>data-color=&quot;warning&quot;</code></td>
+<td><code>data-color=&quot;yellow&quot;</code></td>
+<td>Caution, attention needed</td>
+</tr>
+<tr>
+<td><code>data-color=&quot;info&quot;</code></td>
+<td><code>data-color=&quot;blue&quot;</code></td>
+<td>Informational, neutral CTAs</td>
+</tr>
+<tr>
+<td><code>data-color=&quot;accent&quot;</code></td>
+<td><code>data-color=&quot;purple&quot;</code></td>
+<td>Emphasis, special actions</td>
+</tr>
+</tbody></table></div>
+<h3 id="primary-coloured">Primary coloured</h3>
+<div class="demo-preview" style="display: flex; gap: var(--space-m); flex-wrap: wrap;">
+  <button class="button" data-color="danger">Danger</button>
+  <button class="button" data-color="success">Success</button>
+  <button class="button" data-color="warning">Warning</button>
+  <button class="button" data-color="info">Info</button>
+  <button class="button" data-color="accent">Accent</button>
+</div>
+
+<h3 id="outline-coloured">Outline coloured</h3>
+<div class="demo-preview" style="display: flex; gap: var(--space-m); flex-wrap: wrap;">
+  <button class="button" data-variant="outline" data-color="danger">Danger</button>
+  <button class="button" data-variant="outline" data-color="success">Success</button>
+  <button class="button" data-variant="outline" data-color="warning">Warning</button>
+  <button class="button" data-variant="outline" data-color="info">Info</button>
+  <button class="button" data-variant="outline" data-color="accent">Accent</button>
+</div>
+
+<h3 id="faded-coloured">Faded coloured</h3>
+<div class="demo-preview is-joined" style="display: flex; gap: var(--space-m); flex-wrap: wrap;">
+  <button class="button" data-variant="faded" data-color="danger">Danger</button>
+  <button class="button" data-variant="faded" data-color="success">Success</button>
+  <button class="button" data-variant="faded" data-color="warning">Warning</button>
+  <button class="button" data-variant="faded" data-color="info">Info</button>
+  <button class="button" data-variant="faded" data-color="accent">Accent</button>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-r5hcd3a90" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-r5hcd3a90" class="language-html">&lt;button class=&quot;button&quot; data-color=&quot;danger&quot;&gt;Danger&lt;/button&gt;
+&lt;button class=&quot;button&quot; data-variant=&quot;outline&quot; data-color=&quot;success&quot;&gt;Success&lt;/button&gt;
+&lt;button class=&quot;button&quot; data-variant=&quot;faded&quot; data-color=&quot;info&quot;&gt;Info&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="states">States</h2>
+<p>States are transient — runtime-toggled, not permanent properties. They use <code>.is-*</code> classes shared across components.</p>
 <div class="table-scroll"><table class="table">
 <thead>
 <tr>
 <th>Class</th>
-<th>Effect</th>
+<th>Purpose</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><button type="button" class="token-copy is-class" data-copy=".button-group" aria-label="Copy .button-group"><code>.button-group</code></button></td>
-<td>Flex container with consistent gap</td>
+<td><button type="button" class="token-copy is-class" data-copy=".is-disabled" aria-label="Copy .is-disabled"><code>.is-disabled</code></button> (or <code>disabled</code> attribute)</td>
+<td>Opacity 0.4, pointer events disabled</td>
 </tr>
 <tr>
-<td><button type="button" class="token-copy is-class" data-copy=".justify-center" aria-label="Copy .justify-center"><code>.justify-center</code></button></td>
-<td>Centre-aligns the group</td>
+<td><button type="button" class="token-copy is-class" data-copy=".is-loading" aria-label="Copy .is-loading"><code>.is-loading</code></button></td>
+<td>Pointer disabled, reduced opacity</td>
 </tr>
 <tr>
-<td><button type="button" class="token-copy is-class" data-copy=".justify-end" aria-label="Copy .justify-end"><code>.justify-end</code></button></td>
-<td>Right-aligns the group</td>
+<td><button type="button" class="token-copy is-class" data-copy=".is-active" aria-label="Copy .is-active"><code>.is-active</code></button></td>
+<td>Pressed or selected state</td>
+</tr>
+</tbody></table></div>
+<div class="demo-preview is-joined" style="display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center;">
+  <button class="button">Default</button>
+  <button class="button" disabled>Disabled</button>
+  <button class="button is-loading">Saving...</button>
+  <button class="button is-active" data-variant="faded">Active</button>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-741xzlu9p" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-741xzlu9p" class="language-html">&lt;button class=&quot;button&quot; disabled&gt;Disabled&lt;/button&gt;
+&lt;button class=&quot;button is-loading&quot;&gt;Saving...&lt;/button&gt;
+&lt;button class=&quot;button is-active&quot; data-variant=&quot;faded&quot;&gt;Active&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="buttons-vs-links">Buttons vs links</h2>
+<p>All attributes and state classes work identically on <code>&lt;button&gt;</code> and <code>&lt;a class=&quot;button&quot;&gt;</code>. The CSS targets <button type="button" class="token-copy is-class" data-copy=".button" aria-label="Copy .button"><code>.button</code></button> — it doesn&#39;t care about the element.</p>
+<p>Use <code>&lt;button&gt;</code> when clicking <strong>does something on this page</strong>. Use <code>&lt;a href&gt;</code> when clicking <strong>goes somewhere else</strong>.</p>
+<div class="demo-preview is-joined" style="display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center;">
+  <button class="button" type="submit">Submit (button)</button>
+  <a class="button" href="#" data-variant="outline">Navigate (link)</a>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-kqid2jo68" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-kqid2jo68" class="language-html">&lt;button class=&quot;button&quot; type=&quot;submit&quot;&gt;Submit (button)&lt;/button&gt;
+&lt;a class=&quot;button&quot; href=&quot;/work&quot; data-variant=&quot;outline&quot;&gt;Navigate (link)&lt;/a&gt;
+</code></pre>
+      </div>
+    
+<h3 id="disabled-links">Disabled links</h3>
+<p>HTML has no native <code>disabled</code> on <code>&lt;a&gt;</code>. Use this three-part pattern:</p>
+<div class="demo-preview is-joined">
+  <a class="button is-disabled" aria-disabled="true" tabindex="-1">Can't click</a>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-7m5pgp7eb" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-7m5pgp7eb" class="language-html">&lt;a class=&quot;button is-disabled&quot;
+   aria-disabled=&quot;true&quot;
+   tabindex=&quot;-1&quot;&gt;
+  Can&#39;t click
+&lt;/a&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="extending-the-button">Extending the button</h2>
+<p>When you need something that doesn&#39;t fit the attribute API — a close button that turns red on hover, a nav item styled like a button, a hero CTA with a display font — create a <strong>role class</strong> that overrides tokens.</p>
+<h3 id="role-classes-the-pattern">Role classes — the pattern</h3>
+<p>Role classes override tokens, never duplicate the base. The base&#39;s structure is preserved automatically.</p>
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-hseiv7t1k" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-hseiv7t1k" class="language-css">/* ------ CLOSE BUTTON ------ */
+.close-btn {
+  --button-accent: var(--text-faded);
+  --button-color: var(--background-primary);
+}
+.close-btn:hover {
+  --button-accent: var(--status-danger);
+}
+</code></pre>
+      </div>
+    
+<div class="demo-preview is-joined" style="display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center;">
+  <button class="button close-btn" data-icon-only aria-label="Close"><div class="svg-icn"><svg data-icon="close" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/></svg></div></button>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-iiqor58c9" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-iiqor58c9" class="language-html">&lt;button class=&quot;button close-btn&quot; data-icon-only aria-label=&quot;Close&quot;&gt;
+  &lt;div class=&quot;svg-icn&quot; data-icon=&quot;close&quot;&gt;&lt;!-- SVG --&gt;&lt;/div&gt;
+&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<h3 id="tokens-available-for-role-class-overrides">Tokens available for role class overrides</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Default</th>
+<th>What it controls</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--button-accent)" aria-label="Copy var(--button-accent)"><code>--button-accent</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button></td>
+<td>Brand color — feeds bg, border, and variant text</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--button-faded)" aria-label="Copy var(--button-faded)"><code>--button-faded</code></button></td>
+<td><code>color-mix(... --button-accent ...)</code></td>
+<td>15% alpha of accent — used by faded variants</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--button-bg)" aria-label="Copy var(--button-bg)"><code>--button-bg</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--button-accent)" aria-label="Copy var(--button-accent)"><code>var(--button-accent)</code></button></td>
+<td>Background fill</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--button-border)" aria-label="Copy var(--button-border)"><code>--button-border</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--button-accent)" aria-label="Copy var(--button-accent)"><code>var(--button-accent)</code></button></td>
+<td>Border stroke</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--button-color)" aria-label="Copy var(--button-color)"><code>--button-color</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-inverted)" aria-label="Copy var(--text-inverted)"><code>var(--text-inverted)</code></button></td>
+<td>Text colour</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--button-font)" aria-label="Copy var(--button-font)"><code>--button-font</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-secondary)" aria-label="Copy var(--font-secondary)"><code>var(--font-secondary)</code></button></td>
+<td>Font family</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--button-text-size)" aria-label="Copy var(--button-text-size)"><code>--button-text-size</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-body)" aria-label="Copy var(--text-body)"><code>var(--text-body)</code></button></td>
+<td>Text size</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--button-padding-y)" aria-label="Copy var(--button-padding-y)"><code>--button-padding-y</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-m)" aria-label="Copy var(--space-m)"><code>var(--space-m)</code></button></td>
+<td>Vertical padding</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--button-padding-x)" aria-label="Copy var(--button-padding-x)"><code>--button-padding-x</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-xl)" aria-label="Copy var(--space-xl)"><code>var(--space-xl)</code></button></td>
+<td>Horizontal padding</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--button-radius)" aria-label="Copy var(--button-radius)"><code>--button-radius</code></button></td>
+<td><code>0</code></td>
+<td>Corner radius</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--button-gap)" aria-label="Copy var(--button-gap)"><code>--button-gap</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-s)" aria-label="Copy var(--space-s)"><code>var(--space-s)</code></button></td>
+<td>Icon-to-text gap</td>
 </tr>
 </tbody></table></div>
 <hr>
-<h2 id="all-variants">All Variants</h2>
-<p>A side-by-side comparison of every button style at default size.</p>
-<div class="demo-preview is-joined">
-  <div class="block row gap-m" style="flex-wrap: wrap; align-items: center;">
-    <button class="button">Primary</button>
-    <button class="button is-outline">Outline</button>
-    <button class="button is-faded">Faded</button>
-    <button class="button is-outline is-faded">Outline Faded</button>
-    <button class="button is-small">Small</button>
-    <button class="button is-icon" aria-label="Icon"><div class="svg-icn" data-icon="add"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M11 13H5V11H11V5H13V11H19V13H13V19H11V13Z" fill="currentColor"/></svg></div></button>
-  </div>
-</div>
-
-<hr>
-<h2 id="copy-button">Copy Button</h2>
-<p>The <button type="button" class="token-copy is-class" data-copy=".copy-btn" aria-label="Copy .copy-btn"><code>.copy-btn</code></button> adds clipboard copy functionality to any button. It copies the value from <code>data-copy</code> and shows a &quot;Copied!&quot; state. Three variants are available. See the <a href="copy-button.html">Copy Button</a> docs for full details.</p>
-<div class="demo-preview is-joined">
-  <div class="block gap-xl">
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Icon + Text</p>
-      <div class="block row gap-m">
-        <button class="button is-small is-outline copy-btn" data-copy="var(--button-primary)" type="button">
-          <span class="copy-btn-default"><div class="svg-icn" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> Copy</span>
-          <span class="copy-btn-copied"><div class="svg-icn" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div> Copied!</span>
-        </button>
-        <button class="button is-small is-outline copy-btn is-copied" type="button">
-          <span class="copy-btn-default"><div class="svg-icn" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div> Copy</span>
-          <span class="copy-btn-copied"><div class="svg-icn" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div> Copied!</span>
-        </button>
-      </div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Icon Only</p>
-      <div class="block row gap-m">
-        <button class="button is-small is-outline copy-btn is-icon-only" data-copy="var(--button-primary)" data-tooltip="Copy" type="button" aria-label="Copy">
-          <span class="copy-btn-default"><div class="svg-icn" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
-          <span class="copy-btn-copied"><div class="svg-icn" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
-        </button>
-        <button class="button is-small is-outline copy-btn is-icon-only is-copied" data-tooltip="Copied!" type="button" aria-label="Copy">
-          <span class="copy-btn-default"><div class="svg-icn" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
-          <span class="copy-btn-copied"><div class="svg-icn" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
-        </button>
-      </div>
-    </div>
-    <div class="block gap-m">
-      <p class="demo-eyebrow">Ghost</p>
-      <div class="block row gap-m">
-        <button class="button copy-btn is-ghost" data-copy="var(--button-primary)" data-tooltip="Copy" type="button" aria-label="Copy">
-          <span class="copy-btn-default"><div class="svg-icn" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
-          <span class="copy-btn-copied"><div class="svg-icn" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
-        </button>
-        <button class="button copy-btn is-ghost is-copied" data-tooltip="Copied!" type="button" aria-label="Copy">
-          <span class="copy-btn-default"><div class="svg-icn" data-icon="copy"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span>
-          <span class="copy-btn-copied"><div class="svg-icn" data-icon="check"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span>
-        </button>
-      </div>
-    </div>
+<h2 id="button-group">Button group</h2>
+<p><button type="button" class="token-copy is-class" data-copy=".button-group" aria-label="Copy .button-group"><code>.button-group</code></button> is a flex container for grouping multiple buttons with consistent spacing.</p>
+<div class="demo-preview is-joined" style="display: flex; gap: var(--space-m); flex-wrap: wrap;">
+  <div class="button-group">
+    <button class="button">Confirm</button>
+    <button class="button" data-variant="outline">Cancel</button>
   </div>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button is-xsmall copy-btn is-icon-only" data-clipboard-target="#code-h6usvr8ro" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-h6usvr8ro" class="language-html">&lt;!-- Icon + Text --&gt;
-&lt;button class=&quot;button is-small is-outline copy-btn&quot; data-copy=&quot;value&quot; type=&quot;button&quot;&gt;
-  &lt;span class=&quot;copy-btn-default&quot;&gt;{{icon:copy}} Copy&lt;/span&gt;
-  &lt;span class=&quot;copy-btn-copied&quot;&gt;{{icon:check}} Copied!&lt;/span&gt;
-&lt;/button&gt;
-
-&lt;!-- Icon Only --&gt;
-&lt;button class=&quot;button is-small is-outline copy-btn is-icon-only&quot; data-copy=&quot;value&quot; data-tooltip=&quot;Copy&quot; type=&quot;button&quot; aria-label=&quot;Copy&quot;&gt;
-  &lt;span class=&quot;copy-btn-default&quot;&gt;{{icon:copy}}&lt;/span&gt;
-  &lt;span class=&quot;copy-btn-copied&quot;&gt;{{icon:check}}&lt;/span&gt;
-&lt;/button&gt;
-
-&lt;!-- Ghost --&gt;
-&lt;button class=&quot;button copy-btn is-ghost&quot; data-copy=&quot;value&quot; data-tooltip=&quot;Copy&quot; type=&quot;button&quot; aria-label=&quot;Copy&quot;&gt;
-  &lt;span class=&quot;copy-btn-default&quot;&gt;{{icon:copy}}&lt;/span&gt;
-  &lt;span class=&quot;copy-btn-copied&quot;&gt;{{icon:check}}&lt;/span&gt;
-&lt;/button&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-uqnjuwrhp" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-uqnjuwrhp" class="language-html">&lt;div class=&quot;button-group&quot;&gt;
+  &lt;button class=&quot;button&quot;&gt;Confirm&lt;/button&gt;
+  &lt;button class=&quot;button&quot; data-variant=&quot;outline&quot;&gt;Cancel&lt;/button&gt;
+&lt;/div&gt;
 </code></pre>
       </div>
     
-<p>Requires <code>assets/js/copy-button.js</code>.</p>
 <hr>
-<h2 id="usage-rules">Usage Rules</h2>
+<h2 id="accessibility">Accessibility</h2>
 <ul>
-<li>Buttons should <strong>never stretch full width</strong> by default</li>
+<li>Icon-only buttons (<code>data-icon-only</code>) <strong>must</strong> include <code>aria-label</code> describing the action</li>
+<li><code>disabled</code> attribute or <button type="button" class="token-copy is-class" data-copy=".is-disabled" aria-label="Copy .is-disabled"><code>.is-disabled</code></button> class prevents interaction and is announced by screen readers</li>
+<li>Loading buttons (<button type="button" class="token-copy is-class" data-copy=".is-loading" aria-label="Copy .is-loading"><code>.is-loading</code></button>) should set <code>aria-busy=&quot;true&quot;</code> for screen reader clarity</li>
+<li>Focus ring appears automatically on <code>:focus-visible</code></li>
+<li>Disabled links require <code>aria-disabled=&quot;true&quot;</code> and <code>tabindex=&quot;-1&quot;</code> alongside <button type="button" class="token-copy is-class" data-copy=".is-disabled" aria-label="Copy .is-disabled"><code>.is-disabled</code></button></li>
+<li>Choose elements by semantics: <code>&lt;button&gt;</code> for actions, <code>&lt;a href&gt;</code> for navigation</li>
+</ul>
+<hr>
+<h2 id="usage-rules">Usage rules</h2>
+<p><strong>Do</strong></p>
+<ul>
 <li>Use one clear primary button per section when possible</li>
-<li>Use outline or faded styles to reduce visual competition</li>
-<li>Use icon buttons <strong>only</strong> when the icon meaning is clear</li>
-<li>If a button feels too prominent or too quiet, change the modifier — not the base styles</li>
+<li>Use <code>data-variant</code> to reduce visual competition between actions</li>
+<li>Use <code>data-color</code> for meaning (danger for destructive, success for positive) — not decoration</li>
+<li>Include <code>aria-label</code> on every icon button</li>
+<li>Create a role class when a styling pattern repeats in multiple places</li>
+</ul>
+<p><strong>Don&#39;t</strong></p>
+<ul>
+<li>Don&#39;t make buttons full-width by default — use <code>data-full-width</code> or <button type="button" class="token-copy is-class" data-copy=".align-stretch" aria-label="Copy .align-stretch"><code>.align-stretch</code></button> when needed</li>
+<li>Don&#39;t use <code>data-color</code> when hierarchy already communicates the meaning</li>
+<li>Don&#39;t stack more than two coloured buttons on the same surface</li>
+<li>Don&#39;t use <button type="button" class="token-copy is-class" data-copy=".is-active" aria-label="Copy .is-active"><code>.is-active</code></button> for permanent variants — if something is always outlined, it&#39;s a <code>data-variant</code>, not a state</li>
 </ul>
 
                 </article>
@@ -486,7 +635,7 @@
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#primary-button" class="toc-link">Primary Button</a></li><li class="toc-item toc-level-2"><a href="#outline-button" class="toc-link">Outline Button</a></li><li class="toc-item toc-level-2"><a href="#faded-button" class="toc-link">Faded Button</a></li><li class="toc-item toc-level-2"><a href="#outline-faded" class="toc-link">Outline + Faded</a></li><li class="toc-item toc-level-2"><a href="#small-button" class="toc-link">Small Button</a></li><li class="toc-item toc-level-2"><a href="#icon-button" class="toc-link">Icon Button</a></li><li class="toc-item toc-level-2"><a href="#button-group" class="toc-link">Button Group</a></li><li class="toc-item toc-level-2"><a href="#all-variants" class="toc-link">All Variants</a></li><li class="toc-item toc-level-2"><a href="#copy-button" class="toc-link">Copy Button</a></li><li class="toc-item toc-level-2"><a href="#usage-rules" class="toc-link">Usage Rules</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-1"><a href="#button" class="toc-link">Button</a></li><li class="toc-item toc-level-2"><a href="#anatomy" class="toc-link">Anatomy</a></li><li class="toc-item toc-level-2"><a href="#primary" class="toc-link">Primary</a></li><li class="toc-item toc-level-2"><a href="#variants" class="toc-link">Variants</a></li><li class="toc-item toc-level-2"><a href="#sizes" class="toc-link">Sizes</a></li><li class="toc-item toc-level-2"><a href="#icon-only" class="toc-link">Icon-only</a></li><li class="toc-item toc-level-2"><a href="#full-width" class="toc-link">Full width</a></li><li class="toc-item toc-level-2"><a href="#colour" class="toc-link">Colour</a></li><li class="toc-item toc-level-2"><a href="#states" class="toc-link">States</a></li><li class="toc-item toc-level-2"><a href="#buttons-vs-links" class="toc-link">Buttons vs links</a></li><li class="toc-item toc-level-2"><a href="#extending-the-button" class="toc-link">Extending the button</a></li><li class="toc-item toc-level-2"><a href="#button-group" class="toc-link">Button group</a></li><li class="toc-item toc-level-2"><a href="#accessibility" class="toc-link">Accessibility</a></li><li class="toc-item toc-level-2"><a href="#usage-rules" class="toc-link">Usage rules</a></li></ul></nav></div>
     </aside>
         </div>
 
@@ -514,7 +663,7 @@
                 <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
                 <div class="button-group">
                     <button class="button" data-feedback="yes" type="button"><div class="svg-icn"><svg data-icon="thumbs-up" aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 3L14.5 8H23V12.5L19.5 21H2V8H7L14 1L16 3ZM9.29289 8.53426C9.10536 8.72179 9 8.97615 9 9.24136V17C9 18.1046 9.89543 19 11 19H16.8208C17.6312 19 18.3616 18.5109 18.6701 17.7615L21 12.1035V11C21 10.4477 20.5523 10 20 10H13.1555C12.4856 10 12.0052 9.35431 12.1976 8.71271L13.2907 5.06833C13.3504 4.86932 13.1046 4.72254 12.9577 4.86945L9.29289 8.53426ZM5 10C4.44772 10 4 10.4477 4 11V18C4 18.5523 4.44772 19 5 19H6C6.55228 19 7 18.5523 7 18V11C7 10.4477 6.55228 10 6 10H5Z" fill="currentColor"/></svg></div> Yes</button>
-                    <button class="button is-faded" data-feedback="no" type="button"><div class="svg-icn"><svg data-icon="thumbs-down" aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21L9.5 16H1L1 11.5L4.5 3L22 3L22 16L17 16L10 23L8 21ZM14.7071 15.4657C14.8946 15.2782 15 15.0239 15 14.7586L15 7C15 5.89543 14.1046 5 13 5L7.17921 5C6.36877 5 5.63845 5.48908 5.32986 6.23847L3 11.8965L3 13C3 13.5523 3.44772 14 4 14L10.8445 14C11.5144 14 11.9948 14.6457 11.8024 15.2873L10.7093 18.9317C10.6496 19.1307 10.8954 19.2775 11.0423 19.1305L14.7071 15.4657ZM19 14C19.5523 14 20 13.5523 20 13V6C20 5.44772 19.5523 5 19 5H18C17.4477 5 17 5.44772 17 6V13C17 13.5523 17.4477 14 18 14H19Z" fill="currentColor"/></svg></div> No</button>
+                    <button class="button" data-variant="faded" data-feedback="no" type="button"><div class="svg-icn"><svg data-icon="thumbs-down" aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21L9.5 16H1L1 11.5L4.5 3L22 3L22 16L17 16L10 23L8 21ZM14.7071 15.4657C14.8946 15.2782 15 15.0239 15 14.7586L15 7C15 5.89543 14.1046 5 13 5L7.17921 5C6.36877 5 5.63845 5.48908 5.32986 6.23847L3 11.8965L3 13C3 13.5523 3.44772 14 4 14L10.8445 14C11.5144 14 11.9948 14.6457 11.8024 15.2873L10.7093 18.9317C10.6496 19.1307 10.8954 19.2775 11.0423 19.1305L14.7071 15.4657ZM19 14C19.5523 14 20 13.5523 20 13V6C20 5.44772 19.5523 5 19 5H18C17.4477 5 17 5.44772 17 6V13C17 13.5523 17.4477 14 18 14H19Z" fill="currentColor"/></svg></div> No</button>
                 </div>
                 <div class="page-feedback-success" aria-live="polite">
                     <div class="page-feedback-success-icon"><div class="svg-icn"><svg data-icon="status-check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_14441_253)"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.0004 0.000396729C18.6276 0.000611138 24.0004 5.37311 24.0004 12.0004C24.0002 18.6275 18.6275 24.0002 12.0004 24.0004C5.37311 24.0004 0.000611143 18.6276 0.000396729 12.0004C0.000396729 5.37298 5.37298 0.000396729 12.0004 0.000396729ZM11.9643 13.7357C11.1833 14.5167 9.9172 14.5166 9.13614 13.7357L6.27481 10.8754L4.85001 12.3002L10.5502 18.0004L20.1498 8.39981L18.725 6.97501L11.9643 13.7357Z" fill="currentColor"/></g><defs><clipPath id="clip0_14441_253"><rect width="24" height="24" fill="white"/></clipPath></defs></svg></div></div>
@@ -531,8 +680,8 @@
                 <form class="feedback-form">
                     <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
                     <div class="button-group feedback-modal-actions">
-                        <button type="button" class="button is-small is-faded feedback-modal-close">Close</button>
-                        <button type="submit" class="button is-small">Send feedback</button>
+                        <button type="button" class="button feedback-modal-close" data-size="small" data-variant="faded">Close</button>
+                        <button type="submit" class="button" data-size="small">Send feedback</button>
                     </div>
                 </form>
             </div>
@@ -652,7 +801,7 @@
 
     <!-- Back to Top -->
     <div class="back-to-top-wrapper">
-      <button class="button is-icon back-to-top-btn" aria-label="Back to top" type="button">
+      <button class="button back-to-top-btn" data-icon-only aria-label="Back to top" type="button">
         <div class="svg-icn"><svg data-icon="arrow-top" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M4 4V2H20V4H4Z" fill="currentColor"/><path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/></svg></div>
       </button>
     </div>

@@ -134,8 +134,9 @@
         scenario.buttons.forEach(function (btn) {
           var el;
           var classes = 'button';
-          if (btn.type === 'secondary') classes += ' is-outline';
-          if (btn.type === 'ghost') classes += ' is-outline is-faded';
+          var variant = null;
+          if (btn.type === 'secondary') variant = 'outline';
+          if (btn.type === 'ghost') variant = 'outline-faded';
 
           if (btn.action === 'home') {
             el = document.createElement('a');
@@ -155,6 +156,7 @@
           }
 
           el.className = classes;
+          if (variant) el.setAttribute('data-variant', variant);
           el.textContent = btn.label;
 
           // Login actions: clear dev session and redirect
