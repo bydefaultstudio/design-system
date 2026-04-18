@@ -1254,7 +1254,7 @@ button.button {
   border-radius: var(--button-radius);
 
   /* -- Visual -- */
-  background: var(--button-bg);
+  background-color: var(--button-bg);
   border: var(--border-s) solid var(--button-border);
 
   /* -- Typography -- */
@@ -1269,12 +1269,12 @@ button.button {
 
   /* -- Other -- */
   cursor: pointer;
-  transition: background var(--duration-2xs) var(--ease-out), color var(--duration-2xs) var(--ease-out), border-color var(--duration-2xs) var(--ease-out);
+  transition: background-color var(--duration-2xs) var(--ease-out), color var(--duration-2xs) var(--ease-out), border-color var(--duration-2xs) var(--ease-out), opacity var(--duration-2xs) var(--ease-out);
 }
 
 /* -- Hover -- */
 .button:hover {
-  background: color-mix(in srgb, var(--button-bg), #000 15%);
+  opacity: 0.9;
 }
 
 /* -- Variant exceptions -- */
@@ -1320,7 +1320,7 @@ button.button {
 .button[data-variant="outline-faded"]:hover,
 .button[data-variant="transparent"]:hover,
 .button[data-variant="text"]:hover {
-  background: color-mix(in srgb, var(--button-color), var(--alpha-10));
+  background-color: color-mix(in srgb, var(--button-color), var(--alpha-10));
 }
 
 /* -- Size exceptions -- */
