@@ -12,55 +12,7 @@
   font-display: swap;
 }
 
-/* Bugrino — Upright */
-@font-face {
-  font-family: "Bugrino";
-  src: url("../fonts/bugrino/Bugrino-Fine.woff2") format("woff2");
-  font-weight: 100;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Bugrino";
-  src: url("../fonts/bugrino/Bugrino-Thin.woff2") format("woff2");
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Bugrino";
-  src: url("../fonts/bugrino/Bugrino-Light.woff2") format("woff2");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Bugrino";
-  src: url("../fonts/bugrino/Bugrino-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Bugrino";
-  src: url("../fonts/bugrino/Bugrino-Medium.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Bugrino";
-  src: url("../fonts/bugrino/Bugrino-SemiBold.woff2") format("woff2");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
+/* Bugrino — Bold + Bold Italic only */
 @font-face {
   font-family: "Bugrino";
   src: url("../fonts/bugrino/Bugrino-Bold.woff2") format("woff2");
@@ -71,89 +23,8 @@
 
 @font-face {
   font-family: "Bugrino";
-  src: url("../fonts/bugrino/Bugrino-Heavy.woff2") format("woff2");
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Bugrino";
-  src: url("../fonts/bugrino/Bugrino-Black.woff2") format("woff2");
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Bugrino — Italic */
-@font-face {
-  font-family: "Bugrino";
-  src: url("../fonts/bugrino/Bugrino-FineItalic.woff2") format("woff2");
-  font-weight: 100;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Bugrino";
-  src: url("../fonts/bugrino/Bugrino-ThinItalic.woff2") format("woff2");
-  font-weight: 200;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Bugrino";
-  src: url("../fonts/bugrino/Bugrino-LightItalic.woff2") format("woff2");
-  font-weight: 300;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Bugrino";
-  src: url("../fonts/bugrino/Bugrino-Italic.woff2") format("woff2");
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Bugrino";
-  src: url("../fonts/bugrino/Bugrino-MediumItalic.woff2") format("woff2");
-  font-weight: 500;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Bugrino";
-  src: url("../fonts/bugrino/Bugrino-SemiBoldItalic.woff2") format("woff2");
-  font-weight: 600;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Bugrino";
   src: url("../fonts/bugrino/Bugrino-BoldItalic.woff2") format("woff2");
   font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Bugrino";
-  src: url("../fonts/bugrino/Bugrino-HeavyItalic.woff2") format("woff2");
-  font-weight: 800;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Bugrino";
-  src: url("../fonts/bugrino/Bugrino-BlackItalic.woff2") format("woff2");
-  font-weight: 900;
   font-style: italic;
   font-display: swap;
 }
@@ -577,7 +448,7 @@
 /* -- Selection highlight -- */
 ::selection {
   color: var(--selection-text);
-  background: var(--selection-background);
+  background-color: var(--selection-background);
 }
 
 /* ------ 3. SYSTEM TOKENS - SPACING & TYPOGRAPHY ------ */
@@ -1345,8 +1216,8 @@ button.button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.3rem;
+  height: 1.3rem;
   display: flex;
   aspect-ratio: 1 / 1;
   transition: color var(--duration-m) var(--ease-out);
@@ -1454,7 +1325,7 @@ body {
   color: var(--text-primary);
   font-size: var(--text-body);
   font-weight: var(--font-weight-regular);
-  background: var(--background-primary);
+  background-color: var(--background-primary);
   line-height: var(--line-height-l);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -2210,7 +2081,7 @@ input[type="radio"]:disabled:checked {
 
 /* -- Skeleton loading -- */
 .skeleton-line {
-  background: var(--background-faded);
+  background-color: var(--background-faded);
   border-radius: 4px;
   animation: skeleton-pulse 1.5s ease-in-out infinite;
 }
@@ -2354,7 +2225,7 @@ details .disclosure-content {
   letter-spacing: var(--letter-spacing-l);
   padding: var(--space-2xs) var(--space-s);
   border-radius: 0;
-  background: var(--background-darker);
+  background-color: var(--background-darker);
   color: var(--text-primary);
   white-space: nowrap;
   line-height: var(--line-height-m);
@@ -2362,31 +2233,31 @@ details .disclosure-content {
 
 .badge[data-color="success"],
 .badge[data-color="green"] {
-  background: var(--status-success-bg);
+  background-color: var(--status-success-bg);
   color: var(--status-success);
 }
 
 .badge[data-color="warning"],
 .badge[data-color="yellow"] {
-  background: var(--status-warning-bg);
+  background-color: var(--status-warning-bg);
   color: var(--status-warning);
 }
 
 .badge[data-color="danger"],
 .badge[data-color="red"] {
-  background: var(--status-danger-bg);
+  background-color: var(--status-danger-bg);
   color: var(--status-danger);
 }
 
 .badge[data-color="info"],
 .badge[data-color="blue"] {
-  background: var(--status-info-bg);
+  background-color: var(--status-info-bg);
   color: var(--status-info);
 }
 
 .badge[data-color="accent"],
 .badge[data-color="purple"] {
-  background: var(--status-accent-bg);
+  background-color: var(--status-accent-bg);
   color: var(--status-accent);
 }
 
@@ -2394,7 +2265,7 @@ details .disclosure-content {
 /* ------ 17. CARD ------ */
 
 .card {
-  background: var(--background-primary);
+  background-color: var(--background-primary);
   border: var(--border-s) solid var(--border-faded);
   padding: var(--space-xl);
   transition: border 0.3s, background-color 0.3s, box-shadow 0.15s;
@@ -2413,7 +2284,7 @@ details .disclosure-content {
 }
 
 .card--interactive:hover {
-  background: var(--background-faded);
+  background-color: var(--background-faded);
   box-shadow: 0 4px 12px var(--black-alpha-10);
   /* border-color: var(--border-primary); */
 }
@@ -2443,12 +2314,12 @@ details .disclosure-content {
 
 /* -- Card dark mode -- */
 [data-theme="dark"] .card {
-  background: var(--background-secondary);
+  background-color: var(--background-secondary);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) .card {
-    background: var(--background-secondary);
+    background-color: var(--background-secondary);
   }
 }
 
@@ -2585,7 +2456,7 @@ details .disclosure-content {
   left: 0;
   right: 0;
   height: 2px;
-  background: var(--text-primary);
+  background-color: var(--text-primary);
 }
 
 .tab:focus-visible {
@@ -2620,18 +2491,18 @@ progress.progress-bar {
 }
 
 progress.progress-bar::-webkit-progress-bar {
-  background: var(--background-darker);
+  background-color: var(--background-darker);
   border-radius: 0;
 }
 
 progress.progress-bar::-webkit-progress-value {
-  background: var(--text-primary);
+  background-color: var(--text-primary);
   border-radius: 0;
   transition: width 0.3s ease-in-out;
 }
 
 progress.progress-bar::-moz-progress-bar {
-  background: var(--text-primary);
+  background-color: var(--text-primary);
   border-radius: 0;
 }
 
@@ -2654,7 +2525,7 @@ progress.progress-bar--danger::-moz-progress-bar { background: var(--status-dang
 .progress-tooltip {
   position: absolute;
   bottom: calc(100% + var(--space-xs));
-  background: var(--warm-black);
+  background-color: var(--warm-black);
   color: var(--off-white);
   font-size: var(--font-xs);
   border-radius: var(--radius-s);
@@ -2685,7 +2556,7 @@ progress.progress-bar--danger::-moz-progress-bar { background: var(--status-dang
   bottom: calc(100% + var(--space-xs));
   left: 50%;
   transform: translateX(-50%);
-  background: var(--warm-black);
+  background-color: var(--warm-black);
   color: var(--off-white);
   font-size: var(--font-xs);
   border-radius: var(--radius-s);
@@ -2733,14 +2604,14 @@ a[data-tooltip],
 /* -- Tooltip dark mode -- */
 [data-theme="dark"] [data-tooltip]::before,
 [data-theme="dark"] .progress-tooltip {
-  background: var(--neutral-100);
+  background-color: var(--neutral-100);
   color: var(--warm-black);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) [data-tooltip]::before,
   :root:not([data-theme]) .progress-tooltip {
-    background: var(--neutral-100);
+    background-color: var(--neutral-100);
     color: var(--warm-black);
   }
 }
@@ -2761,7 +2632,7 @@ a[data-tooltip],
 
 .toast {
   pointer-events: all;
-  background: var(--warm-black);
+  background-color: var(--warm-black);
   color: var(--off-white);
   padding: var(--space-m) var(--space-l);
   border: var(--border-s) solid var(--border-faded);
@@ -2806,13 +2677,13 @@ a[data-tooltip],
 
 /* -- Toast dark mode -- */
 [data-theme="dark"] .toast {
-  background: var(--neutral-100);
+  background-color: var(--neutral-100);
   color: var(--warm-black);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) .toast {
-    background: var(--neutral-100);
+    background-color: var(--neutral-100);
     color: var(--warm-black);
   }
 }
@@ -2824,7 +2695,7 @@ a[data-tooltip],
 code {
   font-family: var(--font-quaternary);
   font-size: calc(var(--text-body) - .2em);
-  background: color-mix(in srgb, var(--text-primary), var(--alpha-5));
+  background-color: color-mix(in srgb, var(--text-primary), var(--alpha-5));
   padding: var(--space-2xs) var(--space-xs);
   border-radius: var(--radius-xs);
   color: var(--text-primary);
@@ -2833,7 +2704,7 @@ code {
 
 /* -- Code block -- */
 pre {
-  background: var(--background-secondary);
+  background-color: var(--background-secondary);
   border: var(--border-s) solid var(--border-faded);
   padding: var(--space-l);
   overflow-x: auto;
@@ -2859,7 +2730,7 @@ kbd {
   line-height: var(--line-height-m);
   color: var(--text-secondary);
   vertical-align: middle;
-  background: var(--background-faded);
+  background-color: var(--background-faded);
   border: var(--border-s) solid var(--border-secondary);
   border-radius: var(--radius-xs);
   box-shadow: 0 1px 0 var(--border-secondary);
@@ -2868,20 +2739,20 @@ kbd {
 
 /* -- Highlighted text -- */
 mark {
-  background: var(--yellow-light);
+  background-color: var(--yellow-light);
   color: var(--warm-black);
   padding: 0 var(--space-2xs);
 }
 
 /* -- Mark dark mode -- */
 [data-theme="dark"] mark {
-  background: color-mix(in srgb, var(--yellow), var(--alpha-60));
+  background-color: color-mix(in srgb, var(--yellow), var(--alpha-60));
   color: var(--off-white);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) mark {
-    background: color-mix(in srgb, var(--yellow), var(--alpha-60));
+    background-color: color-mix(in srgb, var(--yellow), var(--alpha-60));
     color: var(--off-white);
   }
 }
@@ -3100,7 +2971,7 @@ hr {
 }
 
 .dropdown-trigger:hover {
-  background: var(--dropdown-item-hover);
+  background-color: var(--dropdown-item-hover);
   color: var(--text-plain);
 }
 
@@ -3111,7 +2982,7 @@ hr {
 }
 
 .dropdown.is-open > .dropdown-trigger {
-  background: var(--background-faded);
+  background-color: var(--background-faded);
 }
 
 /* -- Chevron (rotates on open) -- */
@@ -3134,7 +3005,7 @@ hr {
   top: 100%;
   left: 0;
   min-width: 250px;
-  background: var(--dropdown-background);
+  background-color: var(--dropdown-background);
   border: var(--border-s) solid var(--dropdown-border);
   border-top: none;
   z-index: 1000;
@@ -3170,13 +3041,13 @@ hr {
 }
 
 .dropdown-item:hover {
-  background: var(--dropdown-item-hover);
+  background-color: var(--dropdown-item-hover);
   color: var(--text-plain);
 }
 
 .dropdown-item:focus-visible {
   outline: none;
-  background: var(--dropdown-item-hover);
+  background-color: var(--dropdown-item-hover);
   box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--input-focus), var(--alpha-75));
 }
 
@@ -3196,7 +3067,7 @@ hr {
 }
 
 .dropdown-item--danger:hover {
-  background: color-mix(in srgb, var(--status-danger), var(--alpha-90));
+  background-color: color-mix(in srgb, var(--status-danger), var(--alpha-90));
 }
 
 /* -- Divider -- */
@@ -3246,7 +3117,7 @@ hr {
   font-weight: var(--font-weight-medium);
   padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-s);
   border-radius: var(--radius-s);
-  background: var(--background-darker);
+  background-color: var(--background-darker);
   border: var(--border-s) solid var(--border-faded);
   color: var(--text-primary);
   white-space: nowrap;
@@ -3255,28 +3126,28 @@ hr {
 
 .tag[data-color="success"],
 .tag[data-color="green"] {
-  background: var(--status-success-bg);
+  background-color: var(--status-success-bg);
   border-color: var(--green-light);
   color: var(--status-success);
 }
 
 .tag[data-color="warning"],
 .tag[data-color="yellow"] {
-  background: var(--status-warning-bg);
+  background-color: var(--status-warning-bg);
   border-color: var(--yellow-light);
   color: var(--status-warning);
 }
 
 .tag[data-color="danger"],
 .tag[data-color="red"] {
-  background: var(--status-danger-bg);
+  background-color: var(--status-danger-bg);
   border-color: var(--red-light);
   color: var(--status-danger);
 }
 
 .tag[data-color="info"],
 .tag[data-color="blue"] {
-  background: var(--status-info-bg);
+  background-color: var(--status-info-bg);
   border-color: var(--blue-light);
   color: var(--status-info);
 }
@@ -3303,7 +3174,7 @@ hr {
 
 .tag-remove:hover {
   opacity: 1;
-  background: var(--black-alpha-10);
+  background-color: var(--black-alpha-10);
 }
 
 .tag-remove:focus-visible {
@@ -3321,7 +3192,7 @@ hr {
 /* ------ 29. DIALOG ------ */
 
 .dialog {
-  background: var(--background-primary);
+  background-color: var(--background-primary);
   border: none;
   border-radius: 0;
   box-shadow: 0 8px 32px var(--black-alpha-20);
@@ -3333,7 +3204,7 @@ hr {
 }
 
 .dialog::backdrop {
-  background: var(--background-modal);
+  background-color: var(--background-modal);
   backdrop-filter: blur(2px);
 }
 
@@ -3397,13 +3268,13 @@ hr {
 
 /* -- Dialog dark mode -- */
 [data-theme="dark"] .dialog {
-  background: var(--background-secondary);
+  background-color: var(--background-secondary);
   box-shadow: 0 8px 40px var(--black-alpha-60);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) .dialog {
-    background: var(--background-secondary);
+    background-color: var(--background-secondary);
     box-shadow: 0 8px 40px var(--black-alpha-60);
   }
 }
@@ -3416,7 +3287,7 @@ input[type="range"] {
   appearance: none;
   width: 100%;
   height: 4px;
-  background: var(--background-darker);
+  background-color: var(--background-darker);
   border-radius: var(--radius-pill);
   outline: none;
   cursor: pointer;
@@ -3431,7 +3302,7 @@ input[type="range"]::-webkit-slider-thumb {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: var(--text-primary);
+  background-color: var(--text-primary);
   border: 2px solid var(--background-primary);
   cursor: pointer;
   box-shadow: 0 1px 4px var(--black-alpha-20);
@@ -3442,7 +3313,7 @@ input[type="range"]::-moz-range-thumb {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: var(--text-primary);
+  background-color: var(--text-primary);
   border: 2px solid var(--background-primary);
   cursor: pointer;
   box-shadow: 0 1px 4px var(--black-alpha-20);
@@ -3556,7 +3427,7 @@ input[type="range"]:disabled::-webkit-slider-thumb {
   width: fit-content;
   border: var(--border-s) solid var(--input-border);
   overflow: hidden;
-  background: var(--input-background);
+  background-color: var(--input-background);
 }
 
 .number-input:focus-within {
@@ -3591,7 +3462,7 @@ input[type="range"]:disabled::-webkit-slider-thumb {
   align-items: center;
   justify-content: center;
   width: 2.5rem;
-  background: var(--background-faded);
+  background-color: var(--background-faded);
   border: none;
   border-radius: 0;
   color: var(--text-primary);
@@ -3603,7 +3474,7 @@ input[type="range"]:disabled::-webkit-slider-thumb {
 }
 
 .number-input-btn:hover {
-  background: var(--background-darker);
+  background-color: var(--background-darker);
 }
 
 .number-input-btn:focus-visible {
