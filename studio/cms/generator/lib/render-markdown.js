@@ -94,8 +94,8 @@ const INLINE_SHORTCODES = {
     const src = attrs.src || "";
     const poster = attrs.poster ? ` poster="${attrs.poster}"` : "";
     return (
-      `<section class="bd-video" data-bd-scrubber data-bd-mute data-bd-fullscreen>\n` +
-      `  <video class="bd-video-player" src="${src}"${poster} muted playsinline preload="auto"></video>\n` +
+      `<section class="bd-video" data-bd-scrubber data-bd-mute data-bd-fullscreen data-bd-unmute-prompt>\n` +
+      `  <video class="bd-video-player" src="${src}"${poster} autoplay muted loop playsinline preload="auto"></video>\n` +
       `</section>`
     );
   },

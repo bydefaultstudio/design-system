@@ -2,8 +2,8 @@
  * Script Purpose: Configurable video player — play/pause, scrubber, mute, fullscreen, keyboard shortcuts
  * Author: By Default
  * Created: 2026-04-12
- * Version: 0.4.0
- * Last Updated: 2026-04-12
+ * Version: 0.5.0
+ * Last Updated: 2026-04-19
  *
  * Reusable video component for the By Default site. Targets every element with
  * .bd-video-player and initialises each independently with its own config.
@@ -50,7 +50,7 @@
  *   12. <source> format fallback — already works, document AV1/WebM/MP4 chain.
  */
 
-console.log("BD Video v0.4.0");
+// BD Video v0.5.0
 
 (function () {
 
@@ -182,6 +182,7 @@ function initPlayerInstance(video) {
     centerBtn.setAttribute("aria-label", "Pause");
     centerBtn.setAttribute("data-tooltip", "Pause");
     if (muteBtn) {
+      muteBtn.classList.remove("is-mute-hidden");
       muteBtn.innerHTML = ICON_SOUND_ON;
       muteBtn.setAttribute("aria-label", "Mute");
       muteBtn.setAttribute("data-tooltip", "Mute");
@@ -229,6 +230,7 @@ function initPlayerInstance(video) {
     video.muted = false;
     root.classList.add("is-unmuted");
     if (muteBtn) {
+      muteBtn.classList.remove("is-mute-hidden");
       muteBtn.innerHTML = ICON_SOUND_ON;
       muteBtn.setAttribute("aria-label", "Mute");
       muteBtn.setAttribute("data-tooltip", "Mute");
@@ -246,12 +248,37 @@ function initPlayerInstance(video) {
   }
 
   //
+  // -- Controls bar (ensure it exists for mute/fullscreen/scrubber) --
+  //
+
+  var controlsBar = root.querySelector(".bd-video-controls");
+  if (!controlsBar && (config.mute || config.fullscreen || config.scrubber)) {
+    controlsBar = document.createElement("div");
+    controlsBar.className = "bd-video-controls";
+    root.appendChild(controlsBar);
+  }
+
+  //
   // -- Mute button (config: mute) --
   //
 
   if (config.mute) {
     muteBtn = root.querySelector("[data-hv-mute]");
+    if (!muteBtn && controlsBar) {
+      muteBtn = document.createElement("button");
+      muteBtn.type = "button";
+      muteBtn.className = "bd-video-btn";
+      muteBtn.setAttribute("data-hv-mute", "");
+      muteBtn.setAttribute("aria-label", video.muted ? "Unmute" : "Mute");
+      muteBtn.setAttribute("data-tooltip", video.muted ? "Unmute" : "Mute");
+      muteBtn.innerHTML = video.muted ? ICON_SOUND_OFF : ICON_SOUND_ON;
+      controlsBar.appendChild(muteBtn);
+    }
     if (muteBtn) {
+      // When unmute prompt is active, hide the control bar mute button initially
+      if (config.unmutePrompt && video.muted) {
+        muteBtn.classList.add("is-mute-hidden");
+      }
       muteBtn.addEventListener("click", function handleMuteClick() {
         if (!video.muted) {
           video.muted = true;
@@ -271,6 +298,16 @@ function initPlayerInstance(video) {
 
   if (config.fullscreen) {
     fsBtn = root.querySelector("[data-hv-fs]");
+    if (!fsBtn && controlsBar) {
+      fsBtn = document.createElement("button");
+      fsBtn.type = "button";
+      fsBtn.className = "bd-video-btn";
+      fsBtn.setAttribute("data-hv-fs", "");
+      fsBtn.setAttribute("aria-label", "Fullscreen");
+      fsBtn.setAttribute("data-tooltip", "Fullscreen");
+      fsBtn.innerHTML = ICON_FS_ENTER;
+      controlsBar.appendChild(fsBtn);
+    }
     if (fsBtn) {
       fsBtn.addEventListener("click", function handleFullscreen() {
         if (document.fullscreenElement) {
@@ -323,8 +360,7 @@ function initPlayerInstance(video) {
     seekTooltip.textContent = "0:00";
     root.appendChild(seekTooltip);
 
-    // Create time display + group existing buttons into left/right layout
-    var controlsBar = root.querySelector(".bd-video-controls");
+    // Group existing buttons into left/right layout
     if (controlsBar) {
       // Wrap existing children (mute, fullscreen buttons) into a right group
       var rightGroup = document.createElement("div");
@@ -594,7 +630,6 @@ function initBdVideo(scope) {
   var root = scope || document;
   var players = root.querySelectorAll(".bd-video-player");
   players.forEach(initPlayerInstance);
-  console.log("BD Video — init", players.length, "player(s)");
 }
 
 // Expose for studio-barba.js to call after each navigation
