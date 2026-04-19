@@ -1,5 +1,5 @@
 [build]
-  command = "cd cms/generator && npm install && npm run docgen && cd ../.. && node tools/generate-llms-txt.js"
+  command = "node tools/bump-version.js && cd cms/generator && npm install && npm run docgen && cd ../.. && node tools/generate-llms-txt.js"
   publish = "."
   functions = "netlify/functions"
 
