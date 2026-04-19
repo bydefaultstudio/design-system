@@ -1,15 +1,28 @@
-          <section>
-            <div class="padding-global top-medium bottom-medium">
-              <div class="container-large">
-                <div class="block">
-                  <span class="post-label label">Case study</span>
-                  <h1>{{title}}</h1>
-                  <div class="post-meta">
-                    <span class="post-date">{{displayDate}}</span>{{clientBlock}}{{yearBlock}}{{roleBlock}}
-                  </div>{{servicesBlock}}{{categoriesBlock}}
-                  <img src="{{hero}}" alt="" class="post-hero" loading="lazy">
-{{body}}
+      <div class="cs-page" data-cs>
+        <section class="cs-header">
+          <div class="padding-global top-medium bottom-medium">
+            <div class="container-large">
+              <div class="cs-header-inner">
+                <div class="cs-header-content">
+                  <span class="label cs-client">{{client}}</span>
+                  <h1 class="cs-title">{{title}}</h1>
+                  <p class="cs-synopsis">{{synopsis}}</p>
+                  {{servicesBlock}}
                 </div>
+                {{infoToggle}}
               </div>
             </div>
-          </section>
+          </div>
+        </section>
+        <div class="cs-body">
+          <div class="cs-visuals">
+{{visualsBody}}
+          </div>
+          <div class="cs-content">
+            <div class="cs-content-inner">
+{{infoBody}}
+            </div>
+          </div>
+        </div>
+        {{fixedToggle}}
+      </div>

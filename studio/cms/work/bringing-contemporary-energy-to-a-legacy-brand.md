@@ -13,6 +13,24 @@ thumbnail-ratio: "4:5"
 order: 5
 ---
 
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+---
+
 ## 01. Overview
 
 LIFT Labs partners with early-stage startups that are shaping the future of enterprise innovation. The program connects founders with the scale, mentorship, and reach of a global media and technology leader. Yet its brand identity had fallen out of sync with that ambition, visually dated and inconsistent across all brand touch points. 

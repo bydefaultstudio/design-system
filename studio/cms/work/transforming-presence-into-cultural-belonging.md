@@ -15,6 +15,24 @@ order: 2
 
 {{video src="https://player.vimeo.com/progressive_redirect/playback/1134392513/rendition/540p/file.mp4%20%28540p%29.mp4?loc=external&log_user=0&signature=8ae703ff31619551630bdd73268c9e5b615d62ab736d007d682e810130902621" poster="https://cdn.prod.website-files.com/68e2be176459e98837a31ed9/690d14b8b7c2812b05f880e0_thumbnail.avif"}}
 
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+---
+
 ## 01. Overview
 
 Verizon sought to deepen its connection with young Black audiences. As the brand expanded its its community initiatives, it identified historically Black Colleges and Universities as vital cultural hubs shaping the next generation of culture. Verizon partnered with REVOLT to launch “Back In Session” an HBCU tour celebrating student life, creativity, and connection. By Default joined as creative partner to design and deliver the experience across three key markets: Atlanta, Houston, and Washington, DC.

@@ -13,6 +13,24 @@ thumbnail-ratio: "4:5"
 order: 4
 ---
 
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+---
+
 ## 01. Overview
 
 McDonald’s is all in on serving up moments that bring people together. Partnering with REVOLT, the brand set out to boost awareness for its McValue campaign. Educating audiences on what McValue truly means and positioning McDonald’s as a go-to for morning meals, not just late-night cravings. Together, we built a community-first, gamified experience that turned a promotion into a shared moment of participation and enjoyment.  

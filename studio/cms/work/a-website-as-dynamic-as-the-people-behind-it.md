@@ -15,6 +15,24 @@ order: 1
 
 {{video src="https://player.vimeo.com/progressive_redirect/playback/1135063571/rendition/540p/file.mp4%20%28540p%29.mp4?loc=external&log_user=0&signature=0bce3bfa829c36d088a79e93b9cef5ff45c6c23bd912a2f03d80fa9919f649e6" poster="https://cdn.prod.website-files.com/68e2be176459e98837a31ee6/6910b283c1295e0499633a80_Nimble-Gravity.jpg"}}
 
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+![](https://bydefault.design/image/1920x1080)
+
+---
+
 ## 01. Overview
 
 Nimble Gravity helps visionary companies scale smarter through data and artificial intelligence. But its website told a quieter story. For a team defined by innovation, adventure and curiosity, their digital presence looked like everyone else’s, safe, static and corporate.

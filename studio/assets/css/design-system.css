@@ -66,7 +66,6 @@
   --font-secondary: "trust-3a", "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-tertiary: "Bugrino", sans-serif;
   --font-quaternary: "IBM Plex Mono", monospace;
-  /* --button-font-family removed — now a component token in .button */
 
   /* -- Palette -- */
   --off-white: var(--neutral-50); 
@@ -117,7 +116,6 @@
   --text-body: var(--font-m);
 
   /* -- UI font sizes -- */
-  /* --button-font-size, --button-font-size-small removed — now component tokens in .button */
 
   /* -- Line height tokens -- */
   --line-height-xs: 0.7;
@@ -296,7 +294,6 @@
   --border-secondary: var(--neutral-300);
   --border-faded: var(--black-alpha-15);
 
-  /* --button-* root tokens removed — now component tokens in .button */
 
   /* -- Status colours (from brand book or defaults) -- */
   --status-info: var(--blue);
@@ -307,9 +304,6 @@
   --status-warning-bg: var(--yellow-lighter);
   --status-danger: var(--red);
   --status-danger-bg: var(--red-lighter);
-  --status-accent: var(--purple);
-  --status-accent-bg: var(--purple-lighter);
-
   /* -- Form semantic tokens -- */
   --input-border: var(--border-secondary);
   --input-background: var(--black-alpha-5);
@@ -410,7 +404,6 @@
   --status-success: var(--green-light);
   --status-warning: var(--yellow-light);
   --status-danger: var(--red-light);
-  --status-accent: var(--purple-light);
 
   /* -- Form -- */
   --input-border: #3a3a3a;
@@ -475,7 +468,6 @@
     --status-success: var(--green-light);
     --status-warning: var(--yellow-light);
     --status-danger: var(--red-light);
-    --status-accent: var(--purple-light);
 
     --input-border: #3a3a3a;
     --input-background: rgba(255, 255, 255, 0.08);
@@ -1079,7 +1071,7 @@ button {
 button.button {
   /* -- Component tokens (overridable by exceptions + role classes) -- */
   --button-color: var(--text-primary);
-  --button-faded: color-mix(in srgb, var(--button-color), var(--alpha-15));
+  --button-faded: color-mix(in srgb, var(--button-color), var(--alpha-10));
   --button-bg: var(--button-color);
   --button-border: var(--button-color);
   --button-text-color: var(--text-inverted);
@@ -1087,7 +1079,6 @@ button.button {
   --button-text-size: var(--text-body);
   --button-padding-y: var(--space-m);
   --button-padding-x: var(--space-xl);
-  --button-radius: 0;
   --button-gap: var(--space-s);
 
   /* -- Layout -- */
@@ -1098,7 +1089,6 @@ button.button {
 
   /* -- Box model -- */
   padding: var(--button-padding-y) var(--button-padding-x);
-  border-radius: var(--button-radius);
 
   /* -- Visual -- */
   background-color: var(--button-bg);
@@ -1116,12 +1106,17 @@ button.button {
 
   /* -- Other -- */
   cursor: pointer;
-  transition: background-color var(--duration-2xs) var(--ease-out), color var(--duration-2xs) var(--ease-out), border-color var(--duration-2xs) var(--ease-out), opacity var(--duration-2xs) var(--ease-out);
+  transition: background-color var(--duration-2xs) var(--ease-out), color var(--duration-2xs) var(--ease-out), border-color var(--duration-2xs) var(--ease-out), opacity var(--duration-2xs) var(--ease-out), transform var(--duration-2xs) var(--ease-out);
 }
 
 /* -- Hover -- */
 .button:hover {
-  opacity: 0.9;
+  --button-color: color-mix(in srgb, var(--text-primary), var(--background-primary) 10%)
+}
+
+/* -- Active (press) -- */
+.button:active {
+  transform: scale(0.97);
 }
 
 /* -- Variant exceptions -- */
@@ -1160,14 +1155,16 @@ button.button {
   text-decoration: underline;
   text-underline-offset: 2.5px;
 }
+.button[data-variant="text"]:active {
+  transform: none;
+}
 
 /* Unfilled variants: subtle fill on hover instead of darkening transparent */
 .button[data-variant="outline"]:hover,
 .button[data-variant="faded"]:hover,
 .button[data-variant="outline-faded"]:hover,
-.button[data-variant="transparent"]:hover,
-.button[data-variant="text"]:hover {
-  background-color: color-mix(in srgb, var(--button-color), var(--alpha-10));
+.button[data-variant="transparent"]:hover {
+  background-color: color-mix(in srgb, var(--button-color), var(--alpha-15));
 }
 
 /* -- Size exceptions -- */
@@ -1204,28 +1201,20 @@ button.button {
   --button-text-color: var(--text-inverted);
 }
 
+.button[data-color="danger"]:hover,
+.button[data-color="red"]:hover {
+  --button-color: color-mix(in srgb, var(--status-danger), var(--text-primary) 15%);
+}
+
 .button[data-color="success"],
 .button[data-color="green"] {
   --button-color: var(--status-success);
   --button-text-color: var(--text-inverted);
 }
 
-.button[data-color="warning"],
-.button[data-color="yellow"] {
-  --button-color: var(--status-warning);
-  --button-text-color: var(--text-inverted);
-}
-
-.button[data-color="info"],
-.button[data-color="blue"] {
-  --button-color: var(--status-info);
-  --button-text-color: var(--text-inverted);
-}
-
-.button[data-color="accent"],
-.button[data-color="purple"] {
-  --button-color: var(--status-accent);
-  --button-text-color: var(--text-inverted);
+.button[data-color="success"]:hover,
+.button[data-color="green"]:hover {
+  --button-color: color-mix(in srgb, var(--status-success), var(--text-primary) 15%);
 }
 
 /* -- Dark mode: faded alpha adjusts for dark backgrounds -- */
@@ -1254,15 +1243,13 @@ button.button {
   opacity: 0.6;
 }
 
-/* -- Close button role class -- */
+/* -- Reduced motion -- */
+@media (prefers-reduced-motion: reduce) {
+  .button:active {
+    transform: none;
+  }
+}
 
-.close-btn {
-  --button-color: var(--text-faded);
-  --button-text-color: var(--background-primary);
-}
-.close-btn:hover {
-  --button-color: var(--status-danger);
-}
 
 .svg-icn {
   flex-direction: column;
@@ -1694,15 +1681,6 @@ a:not([href]) {
 .callout[data-type="danger"] .callout-title,
 .callout[data-type="danger"] > .svg-icn {
   color: var(--status-danger);
-}
-
-.callout[data-type="accent"] {
-  background-color: var(--status-accent-bg);
-}
-
-.callout[data-type="accent"] .callout-title,
-.callout[data-type="accent"] > .svg-icn {
-  color: var(--status-accent);
 }
 
 /* ------ 12. FORM ELEMENTS ------ */
@@ -2301,12 +2279,6 @@ details .disclosure-content {
   color: var(--status-info);
 }
 
-.badge[data-color="accent"],
-.badge[data-color="purple"] {
-  background-color: var(--status-accent-bg);
-  color: var(--status-accent);
-}
-
 
 /* ------ 17. CARD ------ */
 
@@ -2701,9 +2673,6 @@ a[data-tooltip],
 
 .toast[data-type="info"],
 .toast[data-type="blue"] { background: var(--status-info-bg); color: var(--status-info); }
-
-.toast[data-type="accent"],
-.toast[data-type="purple"] { background: var(--status-accent-bg); color: var(--status-accent); }
 
 .toast-message {
   flex: 1;
@@ -3161,10 +3130,8 @@ hr {
   font-family: var(--font-primary);
   font-size: var(--font-xs);
   font-weight: var(--font-weight-medium);
-  padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-s);
-  border-radius: var(--radius-s);
+  padding: var(--space-s) var(--space-s);
   background-color: var(--background-darker);
-  border: var(--border-s) solid var(--border-faded);
   color: var(--text-primary);
   white-space: nowrap;
   line-height: var(--line-height-xs);

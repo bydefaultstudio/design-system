@@ -118,6 +118,26 @@ function buildServicesBlock(services) {
   return `\n                  <ul class="post-services">${items}</ul>`;
 }
 
+function buildCaseStudyServicesBlock(services) {
+  if (!services || !services.length) return "";
+  const tags = services
+    .map((s) => `<span class="tag">${escapeHtml(s)}</span>`)
+    .join("");
+  return `\n            <div class="cs-services">${tags}</div>`;
+}
+
+var CS_TOGGLE_ICONS = `<div class="svg-icn cs-toggle-icon cs-toggle-icon-add" data-icon="add"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div><div class="svg-icn cs-toggle-icon cs-toggle-icon-close" data-icon="close"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/></svg></div>`;
+
+function buildInfoToggle(hasInfo) {
+  if (!hasInfo) return "";
+  return `\n          <button type="button" class="button cs-toggle" data-cs-toggle>\n            <span class="cs-toggle-label">Project information</span>\n            ${CS_TOGGLE_ICONS}\n          </button>`;
+}
+
+function buildFixedToggle(hasInfo) {
+  if (!hasInfo) return "";
+  return `\n      <button type="button" class="button cs-toggle cs-toggle-fixed is-hidden" data-cs-toggle aria-label="Toggle project information">\n        <span class="cs-toggle-label">Project information</span>\n        ${CS_TOGGLE_ICONS}\n      </button>`;
+}
+
 function optionalMeta(label, value) {
   if (!value) return "";
   return `\n                    <span class="post-meta-item label"><span class="post-meta-label label">${label}:</span> ${escapeHtml(
@@ -146,42 +166,31 @@ function renderArticleInner(entry, bodyHtml, author) {
 /**
  * Render a case study's inner container content.
  */
-function renderCaseStudyInner(entry, bodyHtml) {
+function renderCaseStudyInner(entry, visualsHtml, infoHtml) {
+  var hasInfo = !!infoHtml;
   return CASE_STUDY_INNER.replace(/\{\{title\}\}/g, escapeHtml(entry.title))
-    .replace(/\{\{displayDate\}\}/g, formatDisplayDate(entry.date))
-    .replace(
-      /\{\{clientBlock\}\}/g,
-      optionalMeta("Client", entry.client)
-    )
-    .replace(
-      /\{\{yearBlock\}\}/g,
-      entry.year ? optionalMeta("Year", String(entry.year)) : ""
-    )
-    .replace(/\{\{roleBlock\}\}/g, optionalMeta("Role", entry.role))
-    .replace(/\{\{servicesBlock\}\}/g, buildServicesBlock(entry.services))
-    .replace(
-      /\{\{categoriesBlock\}\}/g,
-      buildCaseStudyCategoriesBlock(entry.categories)
-    )
-    .replace(
-      /\{\{hero\}\}/g,
-      escapeHtml(entry.hero || "https://bydefault.design/image/1920x1080")
-    )
-    .replace(/\{\{body\}\}/g, bodyHtml);
+    .replace(/\{\{client\}\}/g, escapeHtml(entry.client || ""))
+    .replace(/\{\{synopsis\}\}/g, escapeHtml(entry.synopsis || ""))
+    .replace(/\{\{servicesBlock\}\}/g, buildCaseStudyServicesBlock(entry.services))
+    .replace(/\{\{infoToggle\}\}/g, buildInfoToggle(hasInfo))
+    .replace(/\{\{fixedToggle\}\}/g, buildFixedToggle(hasInfo))
+    .replace(/\{\{visualsBody\}\}/g, visualsHtml)
+    .replace(/\{\{infoBody\}\}/g, infoHtml || "");
 }
 
 /**
  * Compose a full HTML page.
  * @param {object} entry  — canonicalised entry (from build-manifest.js)
- * @param {string} bodyHtml — rendered markdown HTML
+ * @param {string} bodyHtml — rendered markdown HTML (or visuals HTML for case studies)
  * @param {object} config — studio/cms/_config.json
+ * @param {string} [infoHtml] — info panel HTML for case studies (optional)
  */
-function renderPage(entry, bodyHtml, config) {
+function renderPage(entry, bodyHtml, config, infoHtml) {
   const author = resolveAuthor(entry.author, config.defaultAuthor);
   const containerInner =
     entry.type === "article"
       ? renderArticleInner(entry, bodyHtml, author)
-      : renderCaseStudyInner(entry, bodyHtml);
+      : renderCaseStudyInner(entry, bodyHtml, infoHtml || "");
 
   const seoTitle = `${entry.seoTitle || entry.title} — ${config.siteName}`;
   const seoDescription = entry.seoDescription || entry.synopsis;

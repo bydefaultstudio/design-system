@@ -172,8 +172,27 @@ function main() {
   // -- Phase 3: render + write each page
   const ctx = { icons };
   for (const entry of parsed) {
-    const bodyHtml = renderMarkdown(entry.body, ctx);
-    const pageHtml = renderPage(entry, bodyHtml, config);
+    let pageHtml;
+
+    if (entry.type === "case-study") {
+      // Split body at first horizontal rule (---) into visuals + info
+      const dividerIndex = entry.body.indexOf("\n---\n");
+      let visualsMd, infoMd;
+      if (dividerIndex !== -1) {
+        visualsMd = entry.body.slice(0, dividerIndex);
+        infoMd = entry.body.slice(dividerIndex + 5);
+      } else {
+        visualsMd = entry.body;
+        infoMd = "";
+      }
+      const visualsHtml = renderMarkdown(visualsMd, ctx);
+      const infoHtml = infoMd ? renderMarkdown(infoMd, ctx) : "";
+      pageHtml = renderPage(entry, visualsHtml, config, infoHtml);
+    } else {
+      const bodyHtml = renderMarkdown(entry.body, ctx);
+      pageHtml = renderPage(entry, bodyHtml, config);
+    }
+
     fs.mkdirSync(path.dirname(entry.outputPath), { recursive: true });
     fs.writeFileSync(entry.outputPath, pageHtml);
     console.log(`  ✓ ${entry.relSource}  →  ${path.relative(REPO_ROOT, entry.outputPath)}`);
