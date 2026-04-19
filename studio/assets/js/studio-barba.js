@@ -132,8 +132,8 @@ function shouldPrevent(payload) {
   try {
     var url = new URL(href, location.href);
     if (url.origin !== location.origin) return true;
-    // Same page with only a hash difference — let the browser handle it
-    if (url.pathname === location.pathname && url.hash !== "") return true;
+    // Same page — skip the transition entirely
+    if (url.pathname === location.pathname) return true;
   } catch (e) {
     return true;
   }
