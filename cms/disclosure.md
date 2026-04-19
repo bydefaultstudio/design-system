@@ -153,19 +153,6 @@ document.addEventListener('click', function (event) {
 
 ---
 
-## CSS Classes
-
-| Class | Purpose |
-|---|---|
-| `.details` (element) | Base container — border, border-radius |
-| `.summary` (element) | Toggle trigger — left-side chevron via `::before`, pointer cursor |
-| `.disclosure-content` | Content wrapper — padding, border-top separator, monospace font |
-| `.disclosure-table` | Grid layout for key-value pairs (2-column: label + value) |
-| `.button.is-small.copy-btn` | Copy-to-clipboard button — uses design system button with copy state |
-| `.copy-btn.is-copied` | Copied state — success color feedback |
-
----
-
 ## Accessibility
 
 - Native `<details>/<summary>` provides keyboard support (Enter/Space to toggle)
@@ -175,36 +162,53 @@ document.addEventListener('click', function (event) {
 
 ---
 
-## Design Tokens Used
-
-| Token | Usage |
-|---|---|
-| `var(--border-s)` | Border width for container and content separator |
-| `var(--border-faded)` | Border color |
-| `var(--font-quaternary)` | Monospace font for summary and content |
-| `var(--font-2xs)` | Font size for summary and content text |
-| `var(--text-faded)` | Summary text color, table labels |
-| `var(--text-secondary)` | Summary hover color, content text |
-| `var(--text-primary)` | Table values |
-| `var(--text-accent)` | Copy button text |
-| `var(--text-link)` | Copy button hover text |
-| `var(--background-faded)` | Copy button background |
-| `var(--background-secondary)` | Copy button hover background |
-| `var(--status-success)` | Copied state color |
-| `var(--input-focus)` | Focus ring color |
-| `var(--space-xs)` | Border radius |
-| `var(--space-s)`, `var(--space-m)` | Padding values |
-
----
-
-## When to Use
+## When to use
 
 - **Styleguide**: Show CSS details beneath typography, color, and component demos
 - **Documentation**: Collapse supplementary information that not all readers need
 - **Forms**: Hide advanced options or additional context
 
-## When Not to Use
+## When not to use
 
 - For primary content that all users need to see — use visible layout instead
 - For navigation — use proper nav patterns
 - For multi-panel accordions with mutual exclusion — this pattern allows multiple open simultaneously
+
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Tokens
+
+| Token | Default | What it controls |
+|---|---|---|
+| `--border-s` | — | Border width for container and content separator |
+| `--border-faded` | — | Border colour |
+| `--font-quaternary` | — | Monospace font for summary and content |
+| `--font-2xs` | — | Font size for summary and content text |
+| `--text-faded` | — | Summary text colour, table labels |
+| `--text-secondary` | — | Summary hover colour, content text |
+| `--text-primary` | — | Table values |
+| `--text-accent` | — | Copy button text |
+| `--text-link` | — | Copy button hover text |
+| `--background-faded` | — | Copy button background |
+| `--background-secondary` | — | Copy button hover background |
+| `--status-success` | — | Copied state colour |
+| `--input-focus` | — | Focus ring colour |
+| `--space-xs` | — | Border radius |
+| `--space-s`, `--space-m` | — | Padding values |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `details` | Base container — border, border-radius |
+| `summary` | Toggle trigger — left-side chevron via `::before`, pointer cursor |
+| `.disclosure-content` | Content wrapper — padding, border-top separator, monospace font |
+| `.disclosure-table` | Grid layout for key-value pairs (2-column: label + value) |
+| `.disclosure-table dt` | Key label — faded text colour |
+| `.disclosure-table dd` | Value — primary text colour |
+| `.copy-btn` | Copy-to-clipboard button — uses design system button |
+| `.copy-btn.is-copied` | Copied state — success colour feedback |

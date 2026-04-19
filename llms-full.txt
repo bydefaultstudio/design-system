@@ -2773,22 +2773,6 @@ Role classes override tokens, never duplicate the base. The base's structure is 
 </button>
 ```
 
-### Tokens available for role class overrides
-
-| Token | Default | What it controls |
-|---|---|---|
-| `--button-color` | `var(--text-primary)` | The button's identity color — feeds bg, border, and variant text |
-| `--button-faded` | `color-mix(... --button-color ...)` | 15% alpha of button color — used by faded variants |
-| `--button-bg` | `var(--button-color)` | Background fill |
-| `--button-border` | `var(--button-color)` | Border stroke |
-| `--button-text-color` | `var(--text-inverted)` | Text colour |
-| `--button-font` | `var(--font-secondary)` | Font family |
-| `--button-text-size` | `var(--text-body)` | Text size |
-| `--button-padding-y` | `var(--space-m)` | Vertical padding |
-| `--button-padding-x` | `var(--space-xl)` | Horizontal padding |
-| `--button-radius` | `0` | Corner radius |
-| `--button-gap` | `var(--space-s)` | Icon-to-text gap |
-
 ---
 
 ## Button group
@@ -2832,22 +2816,65 @@ Role classes override tokens, never duplicate the base. The base's structure is 
 - Don't stack more than two coloured buttons on the same surface
 - Don't use `.is-active` for permanent variants — if something is always outlined, it's a `data-variant`, not a state
 
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Tokens
+
+| Token | Default | What it controls |
+|---|---|---|
+| `--button-color` | `var(--text-primary)` | The button's identity colour — feeds bg, border, and variant text |
+| `--button-faded` | `color-mix(in srgb, var(--button-color), var(--alpha-15))` | 15% alpha of button colour — used by faded variants |
+| `--button-bg` | `var(--button-color)` | Background fill |
+| `--button-border` | `var(--button-color)` | Border stroke |
+| `--button-text-color` | `var(--text-inverted)` | Text colour |
+| `--button-font` | `var(--font-secondary)` | Font family |
+| `--button-text-size` | `var(--text-body)` | Text size |
+| `--button-padding-y` | `var(--space-m)` | Vertical padding |
+| `--button-padding-x` | `var(--space-xl)` | Horizontal padding |
+| `--button-radius` | `0` | Corner radius |
+| `--button-gap` | `var(--space-s)` | Icon-to-text gap |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.button` | Base component — all tokens, layout, typography, transitions |
+| `.button:hover` | Filled hover — `opacity: 0.9` |
+| `.button[data-variant="outline"]` | Transparent bg, primary border, text inherits `--button-color` |
+| `.button[data-variant="faded"]` | 15% alpha bg, no border, text inherits `--button-color` |
+| `.button[data-variant="outline-faded"]` | Transparent bg, faded border, text inherits `--button-color` |
+| `.button[data-variant="transparent"]` | No bg, no border, text inherits `--button-color` |
+| `.button[data-variant="text"]` | No bg, no border, zero padding, underline on hover |
+| `.button[data-variant="outline"]:hover`, etc. | Unfilled hover — `color-mix(in srgb, var(--button-color), var(--alpha-10))` fill |
+| `.button[data-size="small"]` | Reduced padding and font size |
+| `.button[data-size="xsmall"]` | Further reduced padding and font size |
+| `.button[data-icon-only]` | Equal padding (square/circle shape) |
+| `.button[data-full-width]` | `width: 100%` |
+| `.button[data-color="danger"]` / `[data-color="red"]` | Sets `--button-color` to `var(--status-danger)` |
+| `.button[data-color="success"]` / `[data-color="green"]` | Sets `--button-color` to `var(--status-success)` |
+| `.button[data-color="warning"]` / `[data-color="yellow"]` | Sets `--button-color` to `var(--status-warning)` |
+| `.button[data-color="info"]` / `[data-color="blue"]` | Sets `--button-color` to `var(--status-info)` |
+| `.button[data-color="accent"]` / `[data-color="purple"]` | Sets `--button-color` to `var(--status-accent)` |
+| `.button:disabled`, `.button.is-disabled` | Opacity 0.4, pointer events disabled |
+| `.button.is-loading` | Pointer disabled, opacity 0.6 |
+| `.button-group` | Flex container for grouping buttons with `var(--space-m)` gap |
+
+### Key rules
+
+- **Colour cascade:** `--button-color` is the single source. It feeds `--button-bg`, `--button-border`, and `--button-faded` automatically. `data-color` attributes only override `--button-color` — every variant picks it up without extra selectors.
+- **Hover formula (filled):** `opacity: 0.9` on `.button:hover`.
+- **Hover formula (unfilled):** `background-color: color-mix(in srgb, var(--button-color), var(--alpha-10))` — applies to outline, faded, outline-faded, transparent, and text variants.
+- **Focus ring:** inherits the global `:focus-visible` outline from the design system reset — no component-specific focus rule.
+- **Dark mode faded adjustment:** `--button-faded` changes from `var(--alpha-15)` to `var(--alpha-80)` in dark mode so the 15% tint remains visible on dark backgrounds.
+- **Transition:** `background-color`, `color`, `border-color`, and `opacity` all use `var(--duration-2xs) var(--ease-out)`.
+
 ### Card
 
 Cards are surface containers that group related content with a border and background. They support padding modifiers and an interactive (clickable) variant.
-
----
-
-## Styling
-
-Card uses system tokens directly — no component-level token indirection.
-
-| Property | Value |
-|---|---|
-| Background | `var(--background-primary)` (dark: `var(--background-secondary)`) |
-| Border | `var(--border-s) solid var(--border-faded)` |
-| Radius | `var(--radius-m)` |
-| Padding | `var(--space-xl)` |
 
 ---
 
@@ -2907,7 +2934,7 @@ Combine `.card--flush` with `.card--interactive` to create a clickable card with
 
 ---
 
-## Accessibility notes
+## Accessibility
 
 - Use semantic HTML inside cards (`<h3>`, `<p>`, `<ul>`, etc.)
 - Interactive cards (`<a>`) automatically receive focus ring on `focus-visible`
@@ -2915,7 +2942,7 @@ Combine `.card--flush` with `.card--interactive` to create a clickable card with
 
 ---
 
-## Do / Don't
+## Usage rules
 
 **Do:**
 - Use cards to group related content visually
@@ -2924,6 +2951,32 @@ Combine `.card--flush` with `.card--interactive` to create a clickable card with
 **Don't:**
 - Don't nest interactive cards inside other interactive elements
 - Don't use cards purely for visual decoration — they should contain meaningful content
+
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Styling
+
+| Property | Value |
+|---|---|
+| Background | `var(--background-primary)` (dark: `var(--background-secondary)`) |
+| Border | `var(--border-s) solid var(--border-faded)` |
+| Radius | `var(--radius-m)` |
+| Padding | `var(--space-xl)` |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.card` | Base component — background, border, radius, padding |
+| `.card--flush` | Removes padding |
+| `.card--interactive` | Adds hover background, shadow, focus ring, and link styling |
+| `.card-title` | Card heading — resets margin |
+| `.card-description` | Card body text — secondary text colour |
+| `.card-image` | Full-bleed image with top border-radius |
 
 ### Callout
 
@@ -3126,33 +3179,47 @@ How it works:
 | Use recommended icons for visual consistency | Add icons to every callout — use only when they add clarity |
 | Customise `--status-*` tokens per project | Hardcode colours on individual callouts |
 
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Styling
+
+| Property | Value |
+|---|---|
+| Padding | `var(--space-m) var(--space-l)` |
+| Margin | `var(--space-l) 0` |
+| Background | `var(--background-faded)` |
+| Border | `var(--border-s) solid var(--border-faded)` |
+
+### Icon layout (`data-icon`)
+
+| Property | Value |
+|---|---|
+| Display | `grid` |
+| Grid columns | `auto 1fr` |
+| Column gap | `var(--space-m)` |
+| Icon size | `1.25rem` |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.callout` | Base callout container |
+| `.callout[data-type="info"]` | Info variant — `var(--status-info-bg)` background |
+| `.callout[data-type="success"]` | Success variant — `var(--status-success-bg)` background |
+| `.callout[data-type="warning"]` | Warning variant — `var(--status-warning-bg)` background |
+| `.callout[data-type="danger"]` | Danger variant — `var(--status-danger-bg)` background |
+| `.callout[data-type="accent"]` | Accent variant — `var(--status-accent-bg)` background |
+| `.callout[data-icon]` | Enables two-column grid layout for icon + content |
+| `.callout-title` | Bold title row — semi-bold, `var(--font-s)` |
+| `.callout-description` | Body text — `var(--font-s)`, top margin `var(--space-xs)` |
+
 ### Form Elements
 
 Form elements are styled globally using semantic tokens. All text inputs, textareas, selects, checkboxes, and radios share **consistent sizing, focus states, and disabled styling**.
-
----
-
-## Form Tokens
-
-All form styling is controlled by semantic tokens in `:root`:
-
-| Token | Default | Purpose |
-|---|---|---|
-| `var(--input-border)` | `var(--border-secondary)` | Default border color |
-| `var(--input-background)` | `var(--background-primary)` | Input background |
-| `var(--input-text)` | `var(--text-plain)` | Input text color |
-| `var(--input-placeholder)` | `var(--text-faded)` | Placeholder text color |
-| `var(--input-focus)` | `var(--green)` | Focus border and ring color |
-| `var(--input-disabled-bg)` | `var(--background-faded)` | Disabled background |
-| `var(--input-disabled-text)` | `var(--text-faded)` | Disabled text color |
-| `var(--checkbox-background)` | `var(--neutral-100)` | Checkbox unchecked background |
-| `var(--checkbox-selected)` | `var(--text-primary)` | Checkbox/radio checked fill |
-| `var(--checkbox-border)` | `var(--border-secondary)` | Checkbox/radio border color |
-| `var(--checkbox-checkmark)` | `var(--off-white)` | Checkmark/dot color |
-| `var(--toggle-track)` | `var(--neutral-200)` | Toggle track background |
-| `var(--toggle-knob)` | `var(--neutral-500)` | Toggle knob (unchecked) |
-| `var(--toggle-selected)` | `var(--text-primary)` | Toggle track (checked) |
-| `var(--toggle-knob-selected)` | `var(--off-white)` | Toggle knob (checked) |
 
 ---
 
@@ -3509,7 +3576,7 @@ Requires `assets/js/number-input.js`.
 
 ---
 
-## Rules
+## Usage rules
 
 | Do | Don't |
 |---|---|
@@ -3521,6 +3588,64 @@ Requires `assets/js/number-input.js`.
 | Use semantic tokens for customization | Hardcode colors on individual inputs |
 | Use `<fieldset>` for logical grouping | Use `<div>` with borders to fake fieldsets |
 | Keep inputs full-width by default | Set fixed widths unless layout requires it |
+
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Tokens
+
+| Token | Default | What it controls |
+|---|---|---|
+| `--input-border` | `var(--border-secondary)` | Default border colour |
+| `--input-background` | `var(--background-primary)` | Input background |
+| `--input-text` | `var(--text-plain)` | Input text colour |
+| `--input-placeholder` | `var(--text-faded)` | Placeholder text colour |
+| `--input-focus` | `var(--green)` | Focus border and ring colour |
+| `--input-disabled-bg` | `var(--background-faded)` | Disabled background |
+| `--input-disabled-text` | `var(--text-faded)` | Disabled text colour |
+| `--checkbox-background` | `var(--neutral-100)` | Checkbox unchecked background |
+| `--checkbox-selected` | `var(--text-primary)` | Checkbox/radio checked fill |
+| `--checkbox-border` | `var(--border-secondary)` | Checkbox/radio border colour |
+| `--checkbox-checkmark` | `var(--off-white)` | Checkmark/dot colour |
+| `--toggle-track` | `var(--neutral-200)` | Toggle track background |
+| `--toggle-knob` | `var(--neutral-500)` | Toggle knob (unchecked) |
+| `--toggle-selected` | `var(--text-primary)` | Toggle track (checked) |
+| `--toggle-knob-selected` | `var(--off-white)` | Toggle knob (checked) |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `input[type="text"]`, `input[type="email"]`, etc. | Global text input styling — width, padding, border, font |
+| `input:focus`, `textarea:focus`, `select:focus` | Focus state — border colour + box-shadow ring |
+| `input:disabled`, `textarea:disabled`, `select:disabled` | Disabled state — muted background, not-allowed cursor |
+| `textarea` | Textarea — min-height, vertical resize |
+| `select` | Select — custom dropdown arrow, appearance reset |
+| `input[type="color"]` | Colour picker — appearance reset, aspect-ratio, swatch styling |
+| `input[type="checkbox"]`, `input[type="radio"]` | Custom checkbox/radio — appearance reset, checked state SVG |
+| `.form-check` | Inline checkbox/radio + label wrapper — flex, align-items, gap |
+| `.form-check label` | Label styling inside check wrapper — inline, regular weight |
+| `.form-toggle` | Toggle switch wrapper — grid layout for label + switch |
+| `.form-toggle input[type="checkbox"]` | Toggle track — pill shape, colour transition |
+| `.form-toggle input[type="checkbox"]::after` | Toggle knob — circular pseudo-element |
+| `.form-toggle input[type="checkbox"]:checked` | Checked track — `var(--toggle-selected)` background |
+| `.form-toggle.is-label-right label` | Label-right variant — reorders grid column |
+| `.form-group` | Label + input wrapper — bottom margin spacing |
+| `.form-hint` | Helper text below input |
+| `.form-error` | Error message styling |
+| `.segmented-control` | Button group track — faded background, pill radius |
+| `.segmented-control-btn` | Segment button — padding, transitions |
+| `.segmented-control-btn.is-active` | Active segment — primary bg, inverted text |
+| `.segmented-control-btn.is-icon` | Icon-only segment variant |
+| `.slider-wrapper` | Labelled slider container |
+| `.number-input` | Stepper wrapper — flex, border |
+| `.number-input-btn` | Increment/decrement button |
+| `.radio-group` | Radio group wrapper — vertical stack |
+| `.radio-group.is-horizontal` | Horizontal radio layout |
+| `.radio-group-label` | Group legend styling |
 
 ### Badge
 
@@ -3573,21 +3698,6 @@ The badge uses `data-color` for semantic colour variants. No component-level tok
 
 ---
 
-## Styling
-
-Badge uses system tokens directly — no component-level token indirection.
-
-| Property | Value |
-|---|---|
-| Font family | `var(--font-tertiary)` |
-| Font size | `var(--font-2xs)` |
-| Padding | `var(--space-2xs) var(--space-s)` |
-| Border radius | `0` |
-| Background | `var(--background-darker)` |
-| Text colour | `var(--text-primary)` |
-
----
-
 ## Accessibility
 
 - Badges are presentational — they do not require ARIA roles
@@ -3609,19 +3719,37 @@ Badge uses system tokens directly — no component-level token indirection.
 - Don't use badges as buttons — they are not interactive
 - Don't rely on colour alone to convey meaning
 
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Styling
+
+| Property | Value |
+|---|---|
+| Font family | `var(--font-tertiary)` |
+| Font size | `var(--font-2xs)` |
+| Padding | `var(--space-2xs) var(--space-s)` |
+| Border radius | `0` |
+| Background | `var(--background-darker)` |
+| Text colour | `var(--text-primary)` |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.badge` | Base component |
+| `.badge[data-color="success"]`, `.badge[data-color="green"]` | Success colour variant |
+| `.badge[data-color="warning"]`, `.badge[data-color="yellow"]` | Warning colour variant |
+| `.badge[data-color="danger"]`, `.badge[data-color="red"]` | Danger colour variant |
+| `.badge[data-color="info"]`, `.badge[data-color="blue"]` | Info colour variant |
+| `.badge[data-color="accent"]`, `.badge[data-color="purple"]` | Accent colour variant |
+
 ### Tabs
 
 Tabs organise content into panels that the user switches between. The component requires JavaScript (`assets/js/tabs.js`) for interaction and follows the WAI-ARIA tabs pattern.
-
----
-
-## Tokens
-
-| Token | Default | Purpose |
-|-------|---------|---------|
-| `var(--tab-active-color)` | `var(--text-primary)` | Active tab text colour |
-| `var(--tab-inactive-color)` | `var(--text-faded)` | Inactive tab text colour |
-| `var(--tab-indicator-color)` | `var(--text-primary)` | Bottom border indicator |
 
 ---
 
@@ -3683,7 +3811,7 @@ No manual initialisation is required.
 
 ---
 
-## Accessibility notes
+## Accessibility
 
 - The tab list uses `role="tablist"` with a descriptive `aria-label`
 - Each tab uses `role="tab"` with `aria-selected` and `aria-controls`
@@ -3693,7 +3821,7 @@ No manual initialisation is required.
 
 ---
 
-## Do / Don't
+## Usage rules
 
 **Do:**
 - Use unique IDs for tabs and panels on each page
@@ -3704,6 +3832,34 @@ No manual initialisation is required.
 - Don't use tabs for sequential steps (use a stepper pattern instead)
 - Don't nest tablists inside tab panels
 
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Tokens
+
+| Token | Default | What it controls |
+|---|---|---|
+| `--tab-active-color` | `var(--text-primary)` | Active tab text colour |
+| `--tab-inactive-color` | `var(--text-faded)` | Inactive tab text colour |
+| `--tab-indicator-color` | `var(--text-primary)` | Bottom border indicator |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.tabs` | Tab list container — flex row, bottom border |
+| `.tab` | Individual tab button — padding, colour, cursor |
+| `.tab:hover` | Tab hover — text colour change |
+| `.tab.is-active` | Active tab — active colour, bold weight |
+| `.tab.is-active::after` | Active indicator — bottom border pseudo-element |
+| `.tab:focus-visible` | Tab focus ring |
+| `.tab-panel` | Panel content container — padding |
+| `a.tab` | Link-as-tab variant — text-decoration reset |
+| `a.tab:hover` | Link tab hover |
+
 ### Toast
 
 # Toast
@@ -3711,17 +3867,6 @@ No manual initialisation is required.
 Toasts are temporary notifications that appear in the bottom-right corner and dismiss automatically. They require JavaScript (`assets/js/toast.js`).
 
 Toast uses `data-type` for semantic message types — the same attribute and vocabulary as callout. Both are feedback components where the type describes what the message means, not just what colour to show.
-
----
-
-## Styling
-
-Toast uses system tokens directly for default appearance. Status variants use `--status-*` tokens.
-
-| Property | Value (Light) | Value (Dark) |
-|---|---|---|
-| Background | `var(--warm-black)` | `var(--neutral-100)` |
-| Text colour | `var(--off-white)` | `var(--warm-black)` |
 
 ---
 
@@ -3738,20 +3883,6 @@ Then call `showToast()` from JavaScript:
 ```js
 showToast('Changes saved successfully.');
 ```
-
----
-
-## API
-
-```js
-showToast(message, type, duration);
-```
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `message` | string | — | Toast message text (required) |
-| `type` | string | `'default'` | `'default'`, `'success'`, `'warning'`, `'danger'`, `'info'` |
-| `duration` | number | `4000` | Auto-dismiss time in milliseconds |
 
 ---
 
@@ -3785,7 +3916,21 @@ Each variant uses `--status-*` and `--status-*-bg` tokens for colour.
 
 ---
 
-## HTML structure
+## JavaScript
+
+### API
+
+```js
+showToast(message, type, duration);
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `message` | string | — | Toast message text (required) |
+| `type` | string | `'default'` | `'default'`, `'success'`, `'warning'`, `'danger'`, `'info'` |
+| `duration` | number | `4000` | Auto-dismiss time in milliseconds |
+
+### HTML structure
 
 The JS creates this markup automatically:
 
@@ -3825,20 +3970,36 @@ The container is injected once at the end of `<body>`. Individual toasts are app
 - Don't use toasts for critical errors that require user action — use a modal or inline alert
 - Don't stack more than 3 toasts simultaneously
 
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Styling
+
+| Property | Value (Light) | Value (Dark) |
+|---|---|---|
+| Background | `var(--warm-black)` | `var(--neutral-100)` |
+| Text colour | `var(--off-white)` | `var(--warm-black)` |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.toast-container` | Fixed position container (bottom-right), holds all toasts |
+| `.toast` | Individual toast — background, text colour, layout |
+| `.toast[data-type="success"]`, `.toast[data-type="green"]` | Success colour variant |
+| `.toast[data-type="warning"]`, `.toast[data-type="yellow"]` | Warning colour variant |
+| `.toast[data-type="danger"]`, `.toast[data-type="red"]` | Danger colour variant |
+| `.toast[data-type="info"]`, `.toast[data-type="blue"]` | Info colour variant |
+| `.toast[data-type="accent"]`, `.toast[data-type="purple"]` | Accent colour variant |
+| `.toast-message` | Message text span |
+| `.toast-close` | Dismiss button |
+
 ### Tooltip
 
 Tooltips are CSS-only overlays that appear on hover or keyboard focus. They use the `data-tooltip` attribute — no JavaScript required.
-
----
-
-## Tokens
-
-| Token | Default (Light) | Default (Dark) | Purpose |
-|-------|-----------------|----------------|---------|
-| `var(--tooltip-background)` | `var(--warm-black)` | `var(--neutral-100)` | Bubble background |
-| `var(--tooltip-text)` | `var(--off-white)` | `var(--warm-black)` | Bubble text colour |
-| `var(--tooltip-radius)` | `var(--radius-s)` | — | Corner radius |
-| `var(--tooltip-font-size)` | `var(--font-xs)` | — | Font size |
 
 ---
 
@@ -3873,7 +4034,7 @@ By default, tooltips appear above the element. Use `data-tooltip-position` to ch
 
 ---
 
-## Accessibility notes
+## Accessibility
 
 - Tooltips appear on `:hover` and `:focus-visible`
 - Content is set via `data-tooltip` attribute and rendered with `content: attr(data-tooltip)` — it is not accessible to screen readers
@@ -3882,7 +4043,7 @@ By default, tooltips appear above the element. Use `data-tooltip-position` to ch
 
 ---
 
-## Do / Don't
+## Usage rules
 
 **Do:**
 - Use tooltips for supplementary, non-essential information
@@ -3893,6 +4054,33 @@ By default, tooltips appear above the element. Use `data-tooltip-position` to ch
 - Don't put interactive content (links, buttons) in tooltips
 - Don't use tooltips for critical information that must be visible
 - Don't use tooltips on touch-only interfaces (they require hover)
+
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Tokens
+
+| Token | Default (Light) | Default (Dark) | Purpose |
+|-------|-----------------|----------------|---------|
+| `var(--tooltip-background)` | `var(--warm-black)` | `var(--neutral-100)` | Bubble background |
+| `var(--tooltip-text)` | `var(--off-white)` | `var(--warm-black)` | Bubble text colour |
+| `var(--tooltip-radius)` | `var(--radius-s)` | — | Corner radius |
+| `var(--tooltip-font-size)` | `var(--font-xs)` | — | Font size |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `[data-tooltip]` | Base — sets relative positioning and `cursor: help` |
+| `[data-tooltip]::before` | Tooltip bubble — positioned above, hidden by default |
+| `[data-tooltip]:hover::before`, `[data-tooltip]:focus-visible::before` | Shows tooltip on hover/focus |
+| `[data-tooltip-position="bottom"]::before` | Bottom placement |
+| `[data-tooltip-position="left"]::before` | Left placement |
+| `[data-tooltip-position="right"]::before` | Right placement |
+| `button[data-tooltip]`, `a[data-tooltip]`, `.button[data-tooltip]` | Overrides cursor to `pointer` for interactive elements |
 
 ### Disclosure
 
@@ -4002,19 +4190,6 @@ document.addEventListener('click', function (event) {
 
 ---
 
-## CSS Classes
-
-| Class | Purpose |
-|---|---|
-| `.details` (element) | Base container — border, border-radius |
-| `.summary` (element) | Toggle trigger — left-side chevron via `::before`, pointer cursor |
-| `.disclosure-content` | Content wrapper — padding, border-top separator, monospace font |
-| `.disclosure-table` | Grid layout for key-value pairs (2-column: label + value) |
-| `.button.is-small.copy-btn` | Copy-to-clipboard button — uses design system button with copy state |
-| `.copy-btn.is-copied` | Copied state — success color feedback |
-
----
-
 ## Accessibility
 
 - Native `<details>/<summary>` provides keyboard support (Enter/Space to toggle)
@@ -4024,39 +4199,56 @@ document.addEventListener('click', function (event) {
 
 ---
 
-## Design Tokens Used
-
-| Token | Usage |
-|---|---|
-| `var(--border-s)` | Border width for container and content separator |
-| `var(--border-faded)` | Border color |
-| `var(--font-quaternary)` | Monospace font for summary and content |
-| `var(--font-2xs)` | Font size for summary and content text |
-| `var(--text-faded)` | Summary text color, table labels |
-| `var(--text-secondary)` | Summary hover color, content text |
-| `var(--text-primary)` | Table values |
-| `var(--text-accent)` | Copy button text |
-| `var(--text-link)` | Copy button hover text |
-| `var(--background-faded)` | Copy button background |
-| `var(--background-secondary)` | Copy button hover background |
-| `var(--status-success)` | Copied state color |
-| `var(--input-focus)` | Focus ring color |
-| `var(--space-xs)` | Border radius |
-| `var(--space-s)`, `var(--space-m)` | Padding values |
-
----
-
-## When to Use
+## When to use
 
 - **Styleguide**: Show CSS details beneath typography, color, and component demos
 - **Documentation**: Collapse supplementary information that not all readers need
 - **Forms**: Hide advanced options or additional context
 
-## When Not to Use
+## When not to use
 
 - For primary content that all users need to see — use visible layout instead
 - For navigation — use proper nav patterns
 - For multi-panel accordions with mutual exclusion — this pattern allows multiple open simultaneously
+
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Tokens
+
+| Token | Default | What it controls |
+|---|---|---|
+| `--border-s` | — | Border width for container and content separator |
+| `--border-faded` | — | Border colour |
+| `--font-quaternary` | — | Monospace font for summary and content |
+| `--font-2xs` | — | Font size for summary and content text |
+| `--text-faded` | — | Summary text colour, table labels |
+| `--text-secondary` | — | Summary hover colour, content text |
+| `--text-primary` | — | Table values |
+| `--text-accent` | — | Copy button text |
+| `--text-link` | — | Copy button hover text |
+| `--background-faded` | — | Copy button background |
+| `--background-secondary` | — | Copy button hover background |
+| `--status-success` | — | Copied state colour |
+| `--input-focus` | — | Focus ring colour |
+| `--space-xs` | — | Border radius |
+| `--space-s`, `--space-m` | — | Padding values |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `details` | Base container — border, border-radius |
+| `summary` | Toggle trigger — left-side chevron via `::before`, pointer cursor |
+| `.disclosure-content` | Content wrapper — padding, border-top separator, monospace font |
+| `.disclosure-table` | Grid layout for key-value pairs (2-column: label + value) |
+| `.disclosure-table dt` | Key label — faded text colour |
+| `.disclosure-table dd` | Value — primary text colour |
+| `.copy-btn` | Copy-to-clipboard button — uses design system button |
+| `.copy-btn.is-copied` | Copied state — success colour feedback |
 
 ### Breadcrumb
 
@@ -4089,7 +4281,27 @@ Breadcrumbs show the user's location within a site hierarchy. The component uses
 
 ---
 
-## Accessibility notes
+## Multi-level example
+
+Breadcrumbs support any depth. The last item uses `aria-current="page"` and is rendered as a `<span>` (not a link) to indicate the current location.
+
+```html
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a>
+  <span class="breadcrumb-separator" aria-hidden="true">/</span>
+  <a href="/design-system/">Design System</a>
+  <span class="breadcrumb-separator" aria-hidden="true">/</span>
+  <a href="/design-system/content/">Content</a>
+  <span class="breadcrumb-separator" aria-hidden="true">/</span>
+  <span aria-current="page">Breadcrumb</span>
+</nav>
+```
+
+The `aria-current="page"` attribute signals to assistive technology that this is the current page. It also receives distinct styling — primary text colour and medium font weight — so sighted users can identify the active page at a glance.
+
+---
+
+## Accessibility
 
 - Always wrap in a `<nav>` element with `aria-label="Breadcrumb"`
 - The current page uses `aria-current="page"` and is not a link
@@ -4098,7 +4310,7 @@ Breadcrumbs show the user's location within a site hierarchy. The component uses
 
 ---
 
-## Do / Don't
+## Usage rules
 
 **Do:**
 - Use breadcrumbs on pages with clear hierarchical structure
@@ -4108,20 +4320,36 @@ Breadcrumbs show the user's location within a site hierarchy. The component uses
 - Don't use breadcrumbs on single-level pages (e.g. homepage)
 - Don't make the current page a clickable link
 
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Styling
+
+| Property | Value |
+|---|---|
+| Display | `flex` |
+| Align items | `center` |
+| Flex wrap | `wrap` |
+| Gap | `var(--space-xs)` |
+| Font size | `var(--font-xs)` |
+| Color | `var(--text-faded)` |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.breadcrumb` | Base container — flex row with wrapping |
+| `.breadcrumb a` | Ancestor links — faded colour, underline on hover |
+| `.breadcrumb a:hover` | Hover state — `var(--text-primary)` with underline |
+| `.breadcrumb-separator` | Visual separator — faded colour, `user-select: none` |
+| `.breadcrumb [aria-current="page"]` | Current page — `var(--text-primary)`, medium weight |
+
 ### Progress Bar
 
 Progress bars use the native `<progress>` element styled with design system tokens. They indicate completion percentage and support status colour variants.
-
----
-
-## Tokens
-
-| Token | Default | Purpose |
-|-------|---------|---------|
-| `var(--progress-track)` | `var(--background-darker)` | Track (unfilled) background |
-| `var(--progress-fill)` | `var(--text-primary)` | Fill (completed) colour |
-| `var(--progress-radius)` | `var(--radius-pill)` | Corner radius |
-| `var(--progress-height)` | `var(--space-s)` | Bar height |
 
 ---
 
@@ -4145,7 +4373,7 @@ The fallback text (`60%`) is shown in browsers that do not support `<progress>`.
 
 ---
 
-## Accessibility notes
+## Accessibility
 
 - The native `<progress>` element is announced by screen readers automatically
 - Always include fallback text content inside the element
@@ -4153,7 +4381,7 @@ The fallback text (`60%`) is shown in browsers that do not support `<progress>`.
 
 ---
 
-## Do / Don't
+## Usage rules
 
 **Do:**
 - Use status variants to indicate outcome (green for complete, red for critical)
@@ -4163,20 +4391,36 @@ The fallback text (`60%`) is shown in browsers that do not support `<progress>`.
 - Don't use progress bars for indeterminate loading — use a spinner or skeleton instead
 - Don't animate the value attribute with JS unless the operation is genuinely progressing
 
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Tokens
+
+| Token | Default | Purpose |
+|-------|---------|---------|
+| `var(--progress-track)` | `var(--background-darker)` | Track (unfilled) background |
+| `var(--progress-fill)` | `var(--text-primary)` | Fill (completed) colour |
+| `var(--progress-radius)` | `var(--radius-pill)` | Corner radius |
+| `var(--progress-height)` | `var(--space-s)` | Bar height |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `progress.progress-bar` | Base component — width, height, border-radius, appearance reset |
+| `progress.progress-bar::-webkit-progress-bar` | Track background (WebKit) |
+| `progress.progress-bar::-webkit-progress-value` | Fill colour (WebKit) |
+| `progress.progress-bar::-moz-progress-bar` | Fill colour (Firefox) |
+| `progress.progress-bar--success` | Success status variant — green fill |
+| `progress.progress-bar--warning` | Warning status variant — yellow fill |
+| `progress.progress-bar--danger` | Danger status variant — red fill |
+
 ### Dialog
 
 Dialogs are modal windows built on the native `<dialog>` element. They trap focus, darken the backdrop, and support header, body, and footer sections. Opening and closing is handled via `data-dialog-open` and `data-dialog-close` attributes.
-
----
-
-## Tokens
-
-| Token | Default (Light) | Default (Dark) | Purpose |
-|-------|-----------------|----------------|---------|
-| `var(--dialog-background)` | `var(--background-primary)` | `var(--background-secondary)` | Dialog surface |
-| `var(--dialog-max-width)` | `560px` | — | Maximum width |
-| `var(--dialog-shadow)` | `0 8px 32px var(--black-alpha-20)` | `0 8px 40px var(--black-alpha-60)` | Drop shadow |
-| `var(--dialog-backdrop)` | `rgba(0, 0, 0, 0.6)` | — | Backdrop overlay |
 
 ---
 
@@ -4256,7 +4500,7 @@ Include `assets/js/dialog.js` on any page using dialogs.
 
 ---
 
-## Accessibility notes
+## Accessibility
 
 - Uses the native `<dialog>` element — focus trapping is handled by the browser
 - The dialog title should use `aria-labelledby` pointing to the `.dialog-title` ID
@@ -4265,7 +4509,7 @@ Include `assets/js/dialog.js` on any page using dialogs.
 
 ---
 
-## Do / Don't
+## Usage rules
 
 **Do:**
 - Use dialogs for actions that require confirmation or focused input
@@ -4277,19 +4521,40 @@ Include `assets/js/dialog.js` on any page using dialogs.
 - Don't stack dialogs on top of each other
 - Don't use dialogs for simple alerts — use callouts or toasts instead
 
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Tokens
+
+| Token | Default (Light) | Default (Dark) | What it controls |
+|---|---|---|---|
+| `--dialog-background` | `var(--background-primary)` | `var(--background-secondary)` | Dialog surface |
+| `--dialog-max-width` | `560px` | — | Maximum width |
+| `--dialog-shadow` | `0 8px 32px var(--black-alpha-20)` | `0 8px 40px var(--black-alpha-60)` | Drop shadow |
+| `--dialog-backdrop` | `rgba(0, 0, 0, 0.6)` | — | Backdrop overlay |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.dialog` | Base component — background, max-width, shadow, border, padding |
+| `.dialog::backdrop` | Backdrop overlay colour |
+| `.dialog[open]` | Open state — opacity transition for entrance animation |
+| `.dialog-header` | Flex row for title + close button |
+| `.dialog-title` | Dialog heading |
+| `.dialog-close` | Close button (icon button reset) |
+| `.dialog-close:hover` | Close button hover — text colour change |
+| `.dialog-close:focus-visible` | Close button focus ring |
+| `.dialog-body` | Content area with vertical padding |
+| `.dialog-footer` | Footer with flex-end alignment for action buttons |
+| `[data-theme="dark"] .dialog` | Dark mode overrides for background and shadow |
+
 ### Dropdown
 
 Dropdowns show a contextual menu when a trigger is clicked. They are the universal menu pattern — used in the site header, sticky bars, tool toolbars, and page content. One component, same classes everywhere.
-
----
-
-## Tokens
-
-| Token | Default | Purpose |
-|-------|---------|---------|
-| `var(--dropdown-background)` | `var(--background-primary)` | Menu background |
-| `var(--dropdown-border)` | `var(--border-faded)` | Menu and divider border |
-| `var(--dropdown-item-hover)` | `var(--background-faded)` | Item hover background |
 
 ---
 
@@ -4621,7 +4886,7 @@ Clicking a `.dropdown-trigger` toggles `.is-open` on the parent `.dropdown`. Cli
 
 ---
 
-## Accessibility notes
+## Accessibility
 
 - Trigger: `aria-haspopup="true"`, `aria-expanded="false"` (JS updates to `"true"` on open)
 - Icon-only triggers: add `aria-label` describing the action
@@ -4651,7 +4916,7 @@ Clicking a `.dropdown-trigger` toggles `.is-open` on the parent `.dropdown`. Cli
 
 ---
 
-## Do / Don't
+## Usage rules
 
 **Do:**
 - Use dropdowns for contextual actions and selections
@@ -4665,6 +4930,46 @@ Clicking a `.dropdown-trigger` toggles `.is-open` on the parent `.dropdown`. Cli
 - Don't nest dropdowns inside dropdowns
 - Don't use dropdowns for form field selection — use `<select>` instead
 - Don't put more than 10 items in a single dropdown — break into sections or use a different pattern
+
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Tokens
+
+| Token | Default | What it controls |
+|---|---|---|
+| `--dropdown-background` | `var(--background-primary)` | Menu background |
+| `--dropdown-border` | `var(--border-faded)` | Menu and divider border |
+| `--dropdown-item-hover` | `var(--background-faded)` | Item hover background |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.dropdown` | Positioning context (`position: relative`) |
+| `.dropdown-trigger` | Clickable trigger — flex layout, hover styles |
+| `.dropdown-trigger:hover` | Trigger hover state |
+| `.dropdown-trigger .svg-icn` | Icon sizing inside trigger |
+| `.dropdown.is-open > .dropdown-trigger` | Active trigger state when menu is open |
+| `.dropdown-chevron` | Rotating arrow indicator — transitions `transform` |
+| `.dropdown.is-open .dropdown-chevron` | Chevron rotated 180deg when open |
+| `.dropdown-menu` | Absolutely positioned menu panel — hidden by default |
+| `.dropdown-menu.is-right` | Right-aligned menu positioning |
+| `.dropdown.is-open .dropdown-menu` | Visible menu state |
+| `.dropdown-item` | Clickable row — padding, hover background |
+| `.dropdown-item:hover` | Item hover — uses `var(--dropdown-item-hover)` |
+| `.dropdown-item:focus-visible` | Item focus ring |
+| `.dropdown-item .svg-icn` | Icon sizing inside items |
+| `.dropdown-item.is-disabled` | Disabled item — reduced opacity, no pointer events |
+| `.dropdown-item--danger` | Destructive action — danger colour |
+| `.dropdown-item--danger:hover` | Danger item hover |
+| `.dropdown-divider` | Separator line between groups |
+| `.dropdown-label` | Non-interactive section header |
+| `.dropdown-desc` | Supporting text below item label |
+| `.dropdown-item-end` | Right-aligned trailing content inside an item |
 
 ### Tag
 
@@ -4777,6 +5082,43 @@ document.addEventListener('click', function (e) {
 - Don't use tags as buttons — they are labels, not actions
 - Don't use tags for navigation
 
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Styling
+
+| Property | Value |
+|---|---|
+| Display | `inline-flex` |
+| Align items | `center` |
+| Gap | `var(--space-xs)` |
+| Font family | `var(--font-primary)` |
+| Font size | `var(--font-xs)` |
+| Font weight | `var(--font-weight-medium)` |
+| Line height | `var(--line-height-xs)` |
+| Padding | `var(--space-xs) var(--space-xs) var(--space-xs) var(--space-s)` |
+| Border radius | `var(--radius-s)` |
+| Background | `var(--background-darker)` |
+| Border | `var(--border-s) solid var(--border-faded)` |
+| Color | `var(--text-primary)` |
+| White space | `nowrap` |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.tag` | Base tag styling |
+| `.tag[data-color="success"]` | Green status colour (alias: `green`) |
+| `.tag[data-color="warning"]` | Yellow status colour (alias: `yellow`) |
+| `.tag[data-color="danger"]` | Red status colour (alias: `red`) |
+| `.tag[data-color="info"]` | Blue status colour (alias: `blue`) |
+| `.tag-remove` | Dismiss button inside a tag |
+| `.tag-remove:hover` | Dismiss button hover — full opacity, subtle background |
+| `.tag-group` | Flex wrapper for multiple tags with `gap: var(--space-xs)` |
+
 ### Code / Pre / Kbd
 
 The design system styles three code-related elements: inline `code`, block-level `pre`, and keyboard shortcuts `kbd`. All use the mono font (`var(--font-quaternary)`).
@@ -4824,7 +5166,7 @@ The `kbd` element renders with a subtle 3D key appearance using `border` and `bo
 
 ---
 
-## Accessibility notes
+## Accessibility
 
 - `code` and `pre` elements are announced by screen readers as code
 - `kbd` is announced as "keyboard input" by most screen readers
@@ -4832,7 +5174,7 @@ The `kbd` element renders with a subtle 3D key appearance using `border` and `bo
 
 ---
 
-## Do / Don't
+## Usage rules
 
 **Do:**
 - Use `code` for inline references to variables, functions, filenames
@@ -4842,6 +5184,62 @@ The `kbd` element renders with a subtle 3D key appearance using `border` and `bo
 **Don't:**
 - Don't use `code` for emphasis — use `strong` or `em` instead
 - Don't use `pre` without a nested `code` element
+
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Inline `code`
+
+| Property | Value |
+|---|---|
+| Font family | `var(--font-quaternary)` |
+| Font size | `calc(var(--text-body) - .2em)` |
+| Background | `color-mix(in srgb, var(--text-primary), var(--alpha-5))` |
+| Padding | `var(--space-2xs) var(--space-xs)` |
+| Border radius | `var(--radius-xs)` |
+| Color | `var(--text-primary)` |
+| White space | `nowrap` |
+
+### Code blocks (`pre`)
+
+| Property | Value |
+|---|---|
+| Background | `var(--background-secondary)` |
+| Border | `var(--border-s) solid var(--border-faded)` |
+| Padding | `var(--space-l)` |
+| Overflow | `overflow-x: auto` |
+| Font family | `var(--font-quaternary)` |
+| Font size | `calc(var(--text-body) - 2px)` |
+| Line height | `var(--line-height-xl)` |
+
+`pre code` resets the inline code background, padding, and border-radius to prevent stacking.
+
+### Keyboard shortcut (`kbd`)
+
+| Property | Value |
+|---|---|
+| Display | `inline-block` |
+| Padding | `var(--space-xs) var(--space-s)` |
+| Font family | `var(--font-quaternary)` |
+| Font size | `var(--font-2xs)` |
+| Line height | `var(--line-height-m)` |
+| Color | `var(--text-secondary)` |
+| Background | `var(--background-faded)` |
+| Border | `var(--border-s) solid var(--border-secondary)` |
+| Border radius | `var(--radius-xs)` |
+| Box shadow | `0 1px 0 var(--border-secondary)` |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `code` | Inline code styling |
+| `pre` | Code block container |
+| `pre code` | Resets inline code styles inside blocks |
+| `kbd` | Keyboard shortcut key appearance |
 
 ### Mark / Abbr / Figure
 
@@ -4886,7 +5284,7 @@ The `<figure>` element wraps media content (images, code blocks, diagrams) with 
 
 ---
 
-## Accessibility notes
+## Accessibility
 
 - `<mark>` is announced by some screen readers as "highlighted" — use it for genuinely highlighted content, not for visual styling
 - `<abbr>` with `title` shows its expansion on hover — for critical abbreviations, spell out the full term on first use in the text
@@ -4894,7 +5292,7 @@ The `<figure>` element wraps media content (images, code blocks, diagrams) with 
 
 ---
 
-## Do / Don't
+## Usage rules
 
 **Do:**
 - Use `<mark>` for search result highlights or key phrases
@@ -4905,6 +5303,57 @@ The `<figure>` element wraps media content (images, code blocks, diagrams) with 
 - Don't use `<mark>` as a general-purpose text highlighter for emphasis — use `<strong>` or `<em>`
 - Don't omit `title` on `<abbr>` — it is the only way to convey the expansion
 - Don't use `<figcaption>` without a parent `<figure>`
+
+---
+
+## CSS reference
+
+This section documents how each element is built. For usage, see the sections above.
+
+### `mark`
+
+| Property | Value |
+|---|---|
+| Background | `var(--yellow-light)` |
+| Color | `var(--warm-black)` |
+| Padding | `0 var(--space-2xs)` |
+
+Dark mode (`[data-theme="dark"]`): background shifts to `color-mix(in srgb, var(--yellow), var(--alpha-60))`, colour to `var(--off-white)`.
+
+### `abbr[title]`
+
+| Property | Value |
+|---|---|
+| Text decoration | `underline dotted var(--text-faded)` |
+| Text underline offset | `2px` |
+| Cursor | `help` |
+
+### `figure`
+
+| Property | Value |
+|---|---|
+| Margin | `var(--space-xl) 0` |
+| Padding | `0` |
+
+### `figcaption`
+
+| Property | Value |
+|---|---|
+| Font size | `var(--font-xs)` |
+| Color | `var(--text-faded)` |
+| Margin top | `var(--space-s)` |
+| Line height | `var(--line-height-xl)` |
+| Font style | `italic` |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `mark` | Highlighted text with yellow background |
+| `[data-theme="dark"] mark` | Dark mode override for mark |
+| `abbr[title]` | Abbreviation with dotted underline |
+| `figure` | Media wrapper with vertical margin |
+| `figcaption` | Caption text — small, italic, faded |
 
 ### Table
 
@@ -5043,11 +5492,52 @@ Tables generated from markdown (via the doc generator) automatically receive the
 
 ---
 
-## Do Not
+## Usage rules
 
-- Do not apply spacing or margins to `.table` directly — use the scroll wrapper or parent block for spacing
-- Do not create combined classes like `.table-hover-filled` — compose existing modifiers instead
-- Do not hardcode border or colour values — use the design system tokens
+**Don't**
+
+- Don't apply spacing or margins to `.table` directly — use the scroll wrapper or parent block for spacing
+- Don't create combined classes like `.table-hover-filled` — compose existing modifiers instead
+- Don't hardcode border or colour values — use the design system tokens
+
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Styling
+
+| Property | Value |
+|---|---|
+| Border collapse | `collapse` |
+| Width | `fit-content` (max `100%`) |
+| Font size | `var(--text-body)` |
+| Cell padding | `var(--space-m) var(--space-l)` |
+| Header weight | `var(--font-weight-bold)` |
+| Header min width | `130px` |
+| Header border | `var(--border-s) solid var(--border-secondary)` |
+| Body row border | `var(--border-s) solid var(--border-faded)` |
+| Footer border top | `var(--border-m) solid var(--border-primary)` |
+
+### Mobile (max-width: 768px)
+
+| Property | Value |
+|---|---|
+| Cell padding | `var(--space-s) var(--space-m)` |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.table` | Base table — collapsed borders, fit-content width |
+| `.table-full` | Sets width to `100%` |
+| `.table-hover tbody tr:hover` | Row hover highlight — `var(--background-faded)` |
+| `.table-header-filled th` | Filled header cells — `var(--background-faded)` background, semi-bold |
+| `.table tfoot tr` | Footer row — heavier top border |
+| `.table-scroll` | Horizontal overflow wrapper with touch scrolling |
+| `.table-scroll.is-overflowing` | Adds right-edge fade hint when content overflows |
+| `.table-scroll.is-scrolled-end` | Removes fade hint when scrolled to end |
 
 ---
 

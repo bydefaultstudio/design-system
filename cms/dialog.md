@@ -16,17 +16,6 @@ Dialogs are modal windows built on the native `<dialog>` element. They trap focu
 
 ---
 
-## Tokens
-
-| Token | Default (Light) | Default (Dark) | Purpose |
-|-------|-----------------|----------------|---------|
-| `var(--dialog-background)` | `var(--background-primary)` | `var(--background-secondary)` | Dialog surface |
-| `var(--dialog-max-width)` | `560px` | — | Maximum width |
-| `var(--dialog-shadow)` | `0 8px 32px var(--black-alpha-20)` | `0 8px 40px var(--black-alpha-60)` | Drop shadow |
-| `var(--dialog-backdrop)` | `rgba(0, 0, 0, 0.6)` | — | Backdrop overlay |
-
----
-
 ## Basic usage
 
 <div class="demo-preview">
@@ -117,7 +106,7 @@ Include `assets/js/dialog.js` on any page using dialogs.
 
 ---
 
-## Accessibility notes
+## Accessibility
 
 - Uses the native `<dialog>` element — focus trapping is handled by the browser
 - The dialog title should use `aria-labelledby` pointing to the `.dialog-title` ID
@@ -126,7 +115,7 @@ Include `assets/js/dialog.js` on any page using dialogs.
 
 ---
 
-## Do / Don't
+## Usage rules
 
 **Do:**
 - Use dialogs for actions that require confirmation or focused input
@@ -137,3 +126,34 @@ Include `assets/js/dialog.js` on any page using dialogs.
 - Don't use dialogs for content that should be inline on the page
 - Don't stack dialogs on top of each other
 - Don't use dialogs for simple alerts — use callouts or toasts instead
+
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Tokens
+
+| Token | Default (Light) | Default (Dark) | What it controls |
+|---|---|---|---|
+| `--dialog-background` | `var(--background-primary)` | `var(--background-secondary)` | Dialog surface |
+| `--dialog-max-width` | `560px` | — | Maximum width |
+| `--dialog-shadow` | `0 8px 32px var(--black-alpha-20)` | `0 8px 40px var(--black-alpha-60)` | Drop shadow |
+| `--dialog-backdrop` | `rgba(0, 0, 0, 0.6)` | — | Backdrop overlay |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.dialog` | Base component — background, max-width, shadow, border, padding |
+| `.dialog::backdrop` | Backdrop overlay colour |
+| `.dialog[open]` | Open state — opacity transition for entrance animation |
+| `.dialog-header` | Flex row for title + close button |
+| `.dialog-title` | Dialog heading |
+| `.dialog-close` | Close button (icon button reset) |
+| `.dialog-close:hover` | Close button hover — text colour change |
+| `.dialog-close:focus-visible` | Close button focus ring |
+| `.dialog-body` | Content area with vertical padding |
+| `.dialog-footer` | Footer with flex-end alignment for action buttons |
+| `[data-theme="dark"] .dialog` | Dark mode overrides for background and shadow |

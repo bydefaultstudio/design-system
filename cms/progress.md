@@ -16,17 +16,6 @@ Progress bars use the native `<progress>` element styled with design system toke
 
 ---
 
-## Tokens
-
-| Token | Default | Purpose |
-|-------|---------|---------|
-| `var(--progress-track)` | `var(--background-darker)` | Track (unfilled) background |
-| `var(--progress-fill)` | `var(--text-primary)` | Fill (completed) colour |
-| `var(--progress-radius)` | `var(--radius-pill)` | Corner radius |
-| `var(--progress-height)` | `var(--space-s)` | Bar height |
-
----
-
 ## Basic usage
 
 <div class="demo-preview">
@@ -57,7 +46,7 @@ The fallback text (`60%`) is shown in browsers that do not support `<progress>`.
 
 ---
 
-## Accessibility notes
+## Accessibility
 
 - The native `<progress>` element is announced by screen readers automatically
 - Always include fallback text content inside the element
@@ -65,7 +54,7 @@ The fallback text (`60%`) is shown in browsers that do not support `<progress>`.
 
 ---
 
-## Do / Don't
+## Usage rules
 
 **Do:**
 - Use status variants to indicate outcome (green for complete, red for critical)
@@ -74,3 +63,30 @@ The fallback text (`60%`) is shown in browsers that do not support `<progress>`.
 **Don't:**
 - Don't use progress bars for indeterminate loading — use a spinner or skeleton instead
 - Don't animate the value attribute with JS unless the operation is genuinely progressing
+
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Tokens
+
+| Token | Default | Purpose |
+|-------|---------|---------|
+| `var(--progress-track)` | `var(--background-darker)` | Track (unfilled) background |
+| `var(--progress-fill)` | `var(--text-primary)` | Fill (completed) colour |
+| `var(--progress-radius)` | `var(--radius-pill)` | Corner radius |
+| `var(--progress-height)` | `var(--space-s)` | Bar height |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `progress.progress-bar` | Base component — width, height, border-radius, appearance reset |
+| `progress.progress-bar::-webkit-progress-bar` | Track background (WebKit) |
+| `progress.progress-bar::-webkit-progress-value` | Fill colour (WebKit) |
+| `progress.progress-bar::-moz-progress-bar` | Fill colour (Firefox) |
+| `progress.progress-bar--success` | Success status variant — green fill |
+| `progress.progress-bar--warning` | Warning status variant — yellow fill |
+| `progress.progress-bar--danger` | Danger status variant — red fill |

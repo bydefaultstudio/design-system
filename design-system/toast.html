@@ -123,42 +123,20 @@
 <p>Toasts are temporary notifications that appear in the bottom-right corner and dismiss automatically. They require JavaScript (<code>assets/js/toast.js</code>).</p>
 <p>Toast uses <code>data-type</code> for semantic message types — the same attribute and vocabulary as callout. Both are feedback components where the type describes what the message means, not just what colour to show.</p>
 <hr>
-<h2 id="styling">Styling</h2>
-<p>Toast uses system tokens directly for default appearance. Status variants use <code>--status-*</code> tokens.</p>
-<div class="table-scroll"><table class="table">
-<thead>
-<tr>
-<th>Property</th>
-<th>Value (Light)</th>
-<th>Value (Dark)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Background</td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--warm-black)" aria-label="Copy var(--warm-black)"><code>var(--warm-black)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--neutral-100)" aria-label="Copy var(--neutral-100)"><code>var(--neutral-100)</code></button></td>
-</tr>
-<tr>
-<td>Text colour</td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--off-white)" aria-label="Copy var(--off-white)"><code>var(--off-white)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--warm-black)" aria-label="Copy var(--warm-black)"><code>var(--warm-black)</code></button></td>
-</tr>
-</tbody></table></div>
-<hr>
 <h2 id="basic-usage">Basic usage</h2>
 <p>Include the script on any page that uses toasts:</p>
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-oar9bxlcn" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-oar9bxlcn" class="language-html">&lt;script src=&quot;/assets/js/toast.js&quot;&gt;&lt;/script&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-q4dx9o3gl" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-q4dx9o3gl" class="language-html">&lt;script src=&quot;/assets/js/toast.js&quot;&gt;&lt;/script&gt;
 </code></pre>
       </div>
     
 <p>Then call <code>showToast()</code> from JavaScript:</p>
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-2myxkfxor" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-2myxkfxor" class="language-js">showToast(&#39;Changes saved successfully.&#39;);
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-ibrzt3ue7" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-ibrzt3ue7" class="language-js">showToast(&#39;Changes saved successfully.&#39;);
 </code></pre>
       </div>
     
@@ -166,43 +144,6 @@
   <button class="button" onclick="showToast('Changes saved successfully.')">Show default toast</button>
 </div>
 
-<hr>
-<h2 id="api">API</h2>
-
-      <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-snjdiquj4" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-snjdiquj4" class="language-js">showToast(message, type, duration);
-</code></pre>
-      </div>
-    
-<div class="table-scroll"><table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>message</code></td>
-<td>string</td>
-<td>—</td>
-<td>Toast message text (required)</td>
-</tr>
-<tr>
-<td><code>type</code></td>
-<td>string</td>
-<td><code>&#39;default&#39;</code></td>
-<td><code>&#39;default&#39;</code>, <code>&#39;success&#39;</code>, <code>&#39;warning&#39;</code>, <code>&#39;danger&#39;</code>, <code>&#39;info&#39;</code></td>
-</tr>
-<tr>
-<td><code>duration</code></td>
-<td>number</td>
-<td><code>4000</code></td>
-<td>Auto-dismiss time in milliseconds</td>
-</tr>
-</tbody></table></div>
 <hr>
 <h2 id="types">Types</h2>
 <p>Use the second argument to set the message type. The JS sets <code>data-type</code> on the toast element, which drives the CSS colour.</p>
@@ -236,8 +177,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-8knijonua" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-8knijonua" class="language-js">showToast(&#39;Changes saved.&#39;, &#39;success&#39;);
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-gdn1r86wz" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-gdn1r86wz" class="language-js">showToast(&#39;Changes saved.&#39;, &#39;success&#39;);
 showToast(&#39;Connection unstable.&#39;, &#39;warning&#39;);
 showToast(&#39;Failed to save.&#39;, &#39;danger&#39;);
 showToast(&#39;New version available.&#39;, &#39;info&#39;);
@@ -246,12 +187,49 @@ showToast(&#39;New version available.&#39;, &#39;info&#39;);
     
 <p>Each variant uses <code>--status-*</code> and <code>--status-*-bg</code> tokens for colour.</p>
 <hr>
-<h2 id="html-structure">HTML structure</h2>
+<h2 id="javascript">JavaScript</h2>
+<h3 id="api">API</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-veppfgajt" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-veppfgajt" class="language-js">showToast(message, type, duration);
+</code></pre>
+      </div>
+    
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>message</code></td>
+<td>string</td>
+<td>—</td>
+<td>Toast message text (required)</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>string</td>
+<td><code>&#39;default&#39;</code></td>
+<td><code>&#39;default&#39;</code>, <code>&#39;success&#39;</code>, <code>&#39;warning&#39;</code>, <code>&#39;danger&#39;</code>, <code>&#39;info&#39;</code></td>
+</tr>
+<tr>
+<td><code>duration</code></td>
+<td>number</td>
+<td><code>4000</code></td>
+<td>Auto-dismiss time in milliseconds</td>
+</tr>
+</tbody></table></div>
+<h3 id="html-structure">HTML structure</h3>
 <p>The JS creates this markup automatically:</p>
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-eq0d97adu" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-eq0d97adu" class="language-html">&lt;div class=&quot;toast-container&quot; aria-live=&quot;polite&quot; aria-atomic=&quot;false&quot;&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-259r9zwsm" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-259r9zwsm" class="language-html">&lt;div class=&quot;toast-container&quot; aria-live=&quot;polite&quot; aria-atomic=&quot;false&quot;&gt;
   &lt;div class=&quot;toast&quot; data-type=&quot;success&quot; role=&quot;alert&quot;&gt;
     &lt;span class=&quot;toast-message&quot;&gt;Changes saved.&lt;/span&gt;
     &lt;button class=&quot;toast-close&quot; aria-label=&quot;Dismiss&quot;&gt;
@@ -283,6 +261,74 @@ showToast(&#39;New version available.&#39;, &#39;info&#39;);
 <li>Don&#39;t use toasts for critical errors that require user action — use a modal or inline alert</li>
 <li>Don&#39;t stack more than 3 toasts simultaneously</li>
 </ul>
+<hr>
+<h2 id="css-reference">CSS reference</h2>
+<p>This section documents how the component is built. For usage, see the sections above.</p>
+<h3 id="styling">Styling</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Property</th>
+<th>Value (Light)</th>
+<th>Value (Dark)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Background</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--warm-black)" aria-label="Copy var(--warm-black)"><code>var(--warm-black)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--neutral-100)" aria-label="Copy var(--neutral-100)"><code>var(--neutral-100)</code></button></td>
+</tr>
+<tr>
+<td>Text colour</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--off-white)" aria-label="Copy var(--off-white)"><code>var(--off-white)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--warm-black)" aria-label="Copy var(--warm-black)"><code>var(--warm-black)</code></button></td>
+</tr>
+</tbody></table></div>
+<h3 id="selectors">Selectors</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Selector</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><button type="button" class="token-copy is-class" data-copy=".toast-container" aria-label="Copy .toast-container"><code>.toast-container</code></button></td>
+<td>Fixed position container (bottom-right), holds all toasts</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-class" data-copy=".toast" aria-label="Copy .toast"><code>.toast</code></button></td>
+<td>Individual toast — background, text colour, layout</td>
+</tr>
+<tr>
+<td><code>.toast[data-type=&quot;success&quot;]</code>, <code>.toast[data-type=&quot;green&quot;]</code></td>
+<td>Success colour variant</td>
+</tr>
+<tr>
+<td><code>.toast[data-type=&quot;warning&quot;]</code>, <code>.toast[data-type=&quot;yellow&quot;]</code></td>
+<td>Warning colour variant</td>
+</tr>
+<tr>
+<td><code>.toast[data-type=&quot;danger&quot;]</code>, <code>.toast[data-type=&quot;red&quot;]</code></td>
+<td>Danger colour variant</td>
+</tr>
+<tr>
+<td><code>.toast[data-type=&quot;info&quot;]</code>, <code>.toast[data-type=&quot;blue&quot;]</code></td>
+<td>Info colour variant</td>
+</tr>
+<tr>
+<td><code>.toast[data-type=&quot;accent&quot;]</code>, <code>.toast[data-type=&quot;purple&quot;]</code></td>
+<td>Accent colour variant</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-class" data-copy=".toast-message" aria-label="Copy .toast-message"><code>.toast-message</code></button></td>
+<td>Message text span</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-class" data-copy=".toast-close" aria-label="Copy .toast-close"><code>.toast-close</code></button></td>
+<td>Dismiss button</td>
+</tr>
+</tbody></table></div>
 
                 </article>
             </main>
@@ -290,7 +336,7 @@ showToast(&#39;New version available.&#39;, &#39;info&#39;);
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-1"><a href="#toast" class="toc-link">Toast</a></li><li class="toc-item toc-level-2"><a href="#styling" class="toc-link">Styling</a></li><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#api" class="toc-link">API</a></li><li class="toc-item toc-level-2"><a href="#types" class="toc-link">Types</a></li><li class="toc-item toc-level-2"><a href="#html-structure" class="toc-link">HTML structure</a></li><li class="toc-item toc-level-2"><a href="#accessibility" class="toc-link">Accessibility</a></li><li class="toc-item toc-level-2"><a href="#usage-rules" class="toc-link">Usage rules</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-1"><a href="#toast" class="toc-link">Toast</a></li><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#types" class="toc-link">Types</a></li><li class="toc-item toc-level-2"><a href="#javascript" class="toc-link">JavaScript</a></li><li class="toc-item toc-level-2"><a href="#accessibility" class="toc-link">Accessibility</a></li><li class="toc-item toc-level-2"><a href="#usage-rules" class="toc-link">Usage rules</a></li><li class="toc-item toc-level-2"><a href="#css-reference" class="toc-link">CSS reference</a></li></ul></nav></div>
     </aside>
         </div>
 

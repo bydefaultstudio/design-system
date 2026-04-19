@@ -255,3 +255,41 @@ How it works:
 | Use `.callout-title` for labeling | Use headings (h1–h6) inside callouts |
 | Use recommended icons for visual consistency | Add icons to every callout — use only when they add clarity |
 | Customise `--status-*` tokens per project | Hardcode colours on individual callouts |
+
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Styling
+
+| Property | Value |
+|---|---|
+| Padding | `var(--space-m) var(--space-l)` |
+| Margin | `var(--space-l) 0` |
+| Background | `var(--background-faded)` |
+| Border | `var(--border-s) solid var(--border-faded)` |
+
+### Icon layout (`data-icon`)
+
+| Property | Value |
+|---|---|
+| Display | `grid` |
+| Grid columns | `auto 1fr` |
+| Column gap | `var(--space-m)` |
+| Icon size | `1.25rem` |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.callout` | Base callout container |
+| `.callout[data-type="info"]` | Info variant — `var(--status-info-bg)` background |
+| `.callout[data-type="success"]` | Success variant — `var(--status-success-bg)` background |
+| `.callout[data-type="warning"]` | Warning variant — `var(--status-warning-bg)` background |
+| `.callout[data-type="danger"]` | Danger variant — `var(--status-danger-bg)` background |
+| `.callout[data-type="accent"]` | Accent variant — `var(--status-accent-bg)` background |
+| `.callout[data-icon]` | Enables two-column grid layout for icon + content |
+| `.callout-title` | Bold title row — semi-bold, `var(--font-s)` |
+| `.callout-description` | Body text — `var(--font-s)`, top margin `var(--space-xs)` |

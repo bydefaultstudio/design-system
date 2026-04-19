@@ -16,16 +16,6 @@ Dropdowns show a contextual menu when a trigger is clicked. They are the univers
 
 ---
 
-## Tokens
-
-| Token | Default | Purpose |
-|-------|---------|---------|
-| `var(--dropdown-background)` | `var(--background-primary)` | Menu background |
-| `var(--dropdown-border)` | `var(--border-faded)` | Menu and divider border |
-| `var(--dropdown-item-hover)` | `var(--background-faded)` | Item hover background |
-
----
-
 ## Trigger patterns
 
 The trigger is the element that opens the dropdown. `.dropdown-trigger` provides built-in styling — no additional classes needed.
@@ -406,7 +396,7 @@ Clicking a `.dropdown-trigger` toggles `.is-open` on the parent `.dropdown`. Cli
 
 ---
 
-## Accessibility notes
+## Accessibility
 
 - Trigger: `aria-haspopup="true"`, `aria-expanded="false"` (JS updates to `"true"` on open)
 - Icon-only triggers: add `aria-label` describing the action
@@ -436,7 +426,7 @@ Clicking a `.dropdown-trigger` toggles `.is-open` on the parent `.dropdown`. Cli
 
 ---
 
-## Do / Don't
+## Usage rules
 
 **Do:**
 - Use dropdowns for contextual actions and selections
@@ -450,3 +440,43 @@ Clicking a `.dropdown-trigger` toggles `.is-open` on the parent `.dropdown`. Cli
 - Don't nest dropdowns inside dropdowns
 - Don't use dropdowns for form field selection — use `<select>` instead
 - Don't put more than 10 items in a single dropdown — break into sections or use a different pattern
+
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Tokens
+
+| Token | Default | What it controls |
+|---|---|---|
+| `--dropdown-background` | `var(--background-primary)` | Menu background |
+| `--dropdown-border` | `var(--border-faded)` | Menu and divider border |
+| `--dropdown-item-hover` | `var(--background-faded)` | Item hover background |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.dropdown` | Positioning context (`position: relative`) |
+| `.dropdown-trigger` | Clickable trigger — flex layout, hover styles |
+| `.dropdown-trigger:hover` | Trigger hover state |
+| `.dropdown-trigger .svg-icn` | Icon sizing inside trigger |
+| `.dropdown.is-open > .dropdown-trigger` | Active trigger state when menu is open |
+| `.dropdown-chevron` | Rotating arrow indicator — transitions `transform` |
+| `.dropdown.is-open .dropdown-chevron` | Chevron rotated 180deg when open |
+| `.dropdown-menu` | Absolutely positioned menu panel — hidden by default |
+| `.dropdown-menu.is-right` | Right-aligned menu positioning |
+| `.dropdown.is-open .dropdown-menu` | Visible menu state |
+| `.dropdown-item` | Clickable row — padding, hover background |
+| `.dropdown-item:hover` | Item hover — uses `var(--dropdown-item-hover)` |
+| `.dropdown-item:focus-visible` | Item focus ring |
+| `.dropdown-item .svg-icn` | Icon sizing inside items |
+| `.dropdown-item.is-disabled` | Disabled item — reduced opacity, no pointer events |
+| `.dropdown-item--danger` | Destructive action — danger colour |
+| `.dropdown-item--danger:hover` | Danger item hover |
+| `.dropdown-divider` | Separator line between groups |
+| `.dropdown-label` | Non-interactive section header |
+| `.dropdown-desc` | Supporting text below item label |
+| `.dropdown-item-end` | Right-aligned trailing content inside an item |

@@ -16,17 +16,6 @@ Tooltips are CSS-only overlays that appear on hover or keyboard focus. They use 
 
 ---
 
-## Tokens
-
-| Token | Default (Light) | Default (Dark) | Purpose |
-|-------|-----------------|----------------|---------|
-| `var(--tooltip-background)` | `var(--warm-black)` | `var(--neutral-100)` | Bubble background |
-| `var(--tooltip-text)` | `var(--off-white)` | `var(--warm-black)` | Bubble text colour |
-| `var(--tooltip-radius)` | `var(--radius-s)` | — | Corner radius |
-| `var(--tooltip-font-size)` | `var(--font-xs)` | — | Font size |
-
----
-
 ## Basic usage
 
 <div class="demo-preview is-centered">
@@ -73,7 +62,7 @@ By default, tooltips appear above the element. Use `data-tooltip-position` to ch
 
 ---
 
-## Accessibility notes
+## Accessibility
 
 - Tooltips appear on `:hover` and `:focus-visible`
 - Content is set via `data-tooltip` attribute and rendered with `content: attr(data-tooltip)` — it is not accessible to screen readers
@@ -82,7 +71,7 @@ By default, tooltips appear above the element. Use `data-tooltip-position` to ch
 
 ---
 
-## Do / Don't
+## Usage rules
 
 **Do:**
 - Use tooltips for supplementary, non-essential information
@@ -93,3 +82,30 @@ By default, tooltips appear above the element. Use `data-tooltip-position` to ch
 - Don't put interactive content (links, buttons) in tooltips
 - Don't use tooltips for critical information that must be visible
 - Don't use tooltips on touch-only interfaces (they require hover)
+
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Tokens
+
+| Token | Default (Light) | Default (Dark) | Purpose |
+|-------|-----------------|----------------|---------|
+| `var(--tooltip-background)` | `var(--warm-black)` | `var(--neutral-100)` | Bubble background |
+| `var(--tooltip-text)` | `var(--off-white)` | `var(--warm-black)` | Bubble text colour |
+| `var(--tooltip-radius)` | `var(--radius-s)` | — | Corner radius |
+| `var(--tooltip-font-size)` | `var(--font-xs)` | — | Font size |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `[data-tooltip]` | Base — sets relative positioning and `cursor: help` |
+| `[data-tooltip]::before` | Tooltip bubble — positioned above, hidden by default |
+| `[data-tooltip]:hover::before`, `[data-tooltip]:focus-visible::before` | Shows tooltip on hover/focus |
+| `[data-tooltip-position="bottom"]::before` | Bottom placement |
+| `[data-tooltip-position="left"]::before` | Left placement |
+| `[data-tooltip-position="right"]::before` | Right placement |
+| `button[data-tooltip]`, `a[data-tooltip]`, `.button[data-tooltip]` | Overrides cursor to `pointer` for interactive elements |

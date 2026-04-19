@@ -134,8 +134,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-smj1h90yc" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-smj1h90yc" class="language-html">&lt;nav class=&quot;breadcrumb&quot; aria-label=&quot;Breadcrumb&quot;&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-rfwcudicy" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-rfwcudicy" class="language-html">&lt;nav class=&quot;breadcrumb&quot; aria-label=&quot;Breadcrumb&quot;&gt;
   &lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt;
   &lt;span class=&quot;breadcrumb-separator&quot; aria-hidden=&quot;true&quot;&gt;/&lt;/span&gt;
   &lt;a href=&quot;/design-system/&quot;&gt;Design System&lt;/a&gt;
@@ -172,7 +172,38 @@
 </tr>
 </tbody></table></div>
 <hr>
-<h2 id="accessibility-notes">Accessibility notes</h2>
+<h2 id="multi-level-example">Multi-level example</h2>
+<p>Breadcrumbs support any depth. The last item uses <code>aria-current=&quot;page&quot;</code> and is rendered as a <code>&lt;span&gt;</code> (not a link) to indicate the current location.</p>
+<div class="demo-preview">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span class="breadcrumb-separator" aria-hidden="true">/</span>
+    <a href="/design-system/">Design System</a>
+    <span class="breadcrumb-separator" aria-hidden="true">/</span>
+    <a href="/design-system/content/">Content</a>
+    <span class="breadcrumb-separator" aria-hidden="true">/</span>
+    <span aria-current="page">Breadcrumb</span>
+  </nav>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-tpwhfz9ty" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-tpwhfz9ty" class="language-html">&lt;nav class=&quot;breadcrumb&quot; aria-label=&quot;Breadcrumb&quot;&gt;
+  &lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt;
+  &lt;span class=&quot;breadcrumb-separator&quot; aria-hidden=&quot;true&quot;&gt;/&lt;/span&gt;
+  &lt;a href=&quot;/design-system/&quot;&gt;Design System&lt;/a&gt;
+  &lt;span class=&quot;breadcrumb-separator&quot; aria-hidden=&quot;true&quot;&gt;/&lt;/span&gt;
+  &lt;a href=&quot;/design-system/content/&quot;&gt;Content&lt;/a&gt;
+  &lt;span class=&quot;breadcrumb-separator&quot; aria-hidden=&quot;true&quot;&gt;/&lt;/span&gt;
+  &lt;span aria-current=&quot;page&quot;&gt;Breadcrumb&lt;/span&gt;
+&lt;/nav&gt;
+</code></pre>
+      </div>
+    
+<p>The <code>aria-current=&quot;page&quot;</code> attribute signals to assistive technology that this is the current page. It also receives distinct styling — primary text colour and medium font weight — so sighted users can identify the active page at a glance.</p>
+<hr>
+<h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>Always wrap in a <code>&lt;nav&gt;</code> element with <code>aria-label=&quot;Breadcrumb&quot;</code></li>
 <li>The current page uses <code>aria-current=&quot;page&quot;</code> and is not a link</li>
@@ -180,7 +211,7 @@
 <li>Links are focusable with standard keyboard navigation</li>
 </ul>
 <hr>
-<h2 id="do-don39t">Do / Don&#39;t</h2>
+<h2 id="usage-rules">Usage rules</h2>
 <p><strong>Do:</strong></p>
 <ul>
 <li>Use breadcrumbs on pages with clear hierarchical structure</li>
@@ -191,6 +222,71 @@
 <li>Don&#39;t use breadcrumbs on single-level pages (e.g. homepage)</li>
 <li>Don&#39;t make the current page a clickable link</li>
 </ul>
+<hr>
+<h2 id="css-reference">CSS reference</h2>
+<p>This section documents how the component is built. For usage, see the sections above.</p>
+<h3 id="styling">Styling</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Display</td>
+<td><code>flex</code></td>
+</tr>
+<tr>
+<td>Align items</td>
+<td><code>center</code></td>
+</tr>
+<tr>
+<td>Flex wrap</td>
+<td><code>wrap</code></td>
+</tr>
+<tr>
+<td>Gap</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--space-xs)" aria-label="Copy var(--space-xs)"><code>var(--space-xs)</code></button></td>
+</tr>
+<tr>
+<td>Font size</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-xs)" aria-label="Copy var(--font-xs)"><code>var(--font-xs)</code></button></td>
+</tr>
+<tr>
+<td>Color</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-faded)" aria-label="Copy var(--text-faded)"><code>var(--text-faded)</code></button></td>
+</tr>
+</tbody></table></div>
+<h3 id="selectors">Selectors</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Selector</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><button type="button" class="token-copy is-class" data-copy=".breadcrumb" aria-label="Copy .breadcrumb"><code>.breadcrumb</code></button></td>
+<td>Base container — flex row with wrapping</td>
+</tr>
+<tr>
+<td><code>.breadcrumb a</code></td>
+<td>Ancestor links — faded colour, underline on hover</td>
+</tr>
+<tr>
+<td><code>.breadcrumb a:hover</code></td>
+<td>Hover state — <button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button> with underline</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-class" data-copy=".breadcrumb-separator" aria-label="Copy .breadcrumb-separator"><code>.breadcrumb-separator</code></button></td>
+<td>Visual separator — faded colour, <code>user-select: none</code></td>
+</tr>
+<tr>
+<td><code>.breadcrumb [aria-current=&quot;page&quot;]</code></td>
+<td>Current page — <button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button>, medium weight</td>
+</tr>
+</tbody></table></div>
 
                 </article>
             </main>
@@ -198,7 +294,7 @@
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#structure" class="toc-link">Structure</a></li><li class="toc-item toc-level-2"><a href="#accessibility-notes" class="toc-link">Accessibility notes</a></li><li class="toc-item toc-level-2"><a href="#do-don39t" class="toc-link">Do / Don&#39;t</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#structure" class="toc-link">Structure</a></li><li class="toc-item toc-level-2"><a href="#multi-level-example" class="toc-link">Multi-level example</a></li><li class="toc-item toc-level-2"><a href="#accessibility" class="toc-link">Accessibility</a></li><li class="toc-item toc-level-2"><a href="#usage-rules" class="toc-link">Usage rules</a></li><li class="toc-item toc-level-2"><a href="#css-reference" class="toc-link">CSS reference</a></li></ul></nav></div>
     </aside>
         </div>
 

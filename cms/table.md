@@ -256,8 +256,49 @@ Tables generated from markdown (via the doc generator) automatically receive the
 
 ---
 
-## Do Not
+## Usage rules
 
-- Do not apply spacing or margins to `.table` directly — use the scroll wrapper or parent block for spacing
-- Do not create combined classes like `.table-hover-filled` — compose existing modifiers instead
-- Do not hardcode border or colour values — use the design system tokens
+**Don't**
+
+- Don't apply spacing or margins to `.table` directly — use the scroll wrapper or parent block for spacing
+- Don't create combined classes like `.table-hover-filled` — compose existing modifiers instead
+- Don't hardcode border or colour values — use the design system tokens
+
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Styling
+
+| Property | Value |
+|---|---|
+| Border collapse | `collapse` |
+| Width | `fit-content` (max `100%`) |
+| Font size | `var(--text-body)` |
+| Cell padding | `var(--space-m) var(--space-l)` |
+| Header weight | `var(--font-weight-bold)` |
+| Header min width | `130px` |
+| Header border | `var(--border-s) solid var(--border-secondary)` |
+| Body row border | `var(--border-s) solid var(--border-faded)` |
+| Footer border top | `var(--border-m) solid var(--border-primary)` |
+
+### Mobile (max-width: 768px)
+
+| Property | Value |
+|---|---|
+| Cell padding | `var(--space-s) var(--space-m)` |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.table` | Base table — collapsed borders, fit-content width |
+| `.table-full` | Sets width to `100%` |
+| `.table-hover tbody tr:hover` | Row hover highlight — `var(--background-faded)` |
+| `.table-header-filled th` | Filled header cells — `var(--background-faded)` background, semi-bold |
+| `.table tfoot tr` | Footer row — heavier top border |
+| `.table-scroll` | Horizontal overflow wrapper with touch scrolling |
+| `.table-scroll.is-overflowing` | Adds right-edge fade hint when content overflows |
+| `.table-scroll.is-scrolled-end` | Removes fade hint when scrolled to end |

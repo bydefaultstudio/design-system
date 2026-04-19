@@ -121,8 +121,111 @@
                 <article>
                     <p>Cards are surface containers that group related content with a border and background. They support padding modifiers and an interactive (clickable) variant.</p>
 <hr>
-<h2 id="styling">Styling</h2>
-<p>Card uses system tokens directly — no component-level token indirection.</p>
+<h2 id="basic-usage">Basic usage</h2>
+<div class="demo-preview">
+  <div class="card">
+    <p>Card content goes here. Cards provide a contained surface for grouping related information.</p>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-mnd126u2p" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-mnd126u2p" class="language-html">&lt;div class=&quot;card&quot;&gt;
+  &lt;p&gt;Card content goes here.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="flush-card">Flush card</h2>
+<p>Remove internal padding with <button type="button" class="token-copy is-class" data-copy=".card--flush" aria-label="Copy .card--flush"><code>.card--flush</code></button> — useful when the card contains a full-bleed image or nested content that manages its own spacing.</p>
+<div class="demo-preview">
+  <div class="card card--flush">
+    <div style="padding: var(--space-xl); background: var(--background-faded);">
+      Full-bleed content area
+    </div>
+  </div>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-ussq9rxbx" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-ussq9rxbx" class="language-html">&lt;div class=&quot;card card--flush&quot;&gt;
+  &lt;!-- Content manages its own padding --&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="interactive-card">Interactive card</h2>
+<p>Wrap in an <code>&lt;a&gt;</code> tag with <button type="button" class="token-copy is-class" data-copy=".card--interactive" aria-label="Copy .card--interactive"><code>.card--interactive</code></button> for clickable cards. Adds hover shadow and focus ring.</p>
+<h3 id="clickable-card">Clickable card</h3>
+<div class="demo-preview">
+  <a class="card card--interactive" href="#">
+    <h3 class="card-title">Clickable card</h3>
+    <p class="card-description">This entire card is a link.</p>
+  </a>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-q7dvx9hej" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-q7dvx9hej" class="language-html">&lt;a class=&quot;card card--interactive&quot; href=&quot;#&quot;&gt;
+  &lt;h3 class=&quot;card-title&quot;&gt;Clickable card&lt;/h3&gt;
+  &lt;p class=&quot;card-description&quot;&gt;This entire card is a link.&lt;/p&gt;
+&lt;/a&gt;
+</code></pre>
+      </div>
+    
+<h3 id="image-card">Image card</h3>
+<p>Combine <button type="button" class="token-copy is-class" data-copy=".card--flush" aria-label="Copy .card--flush"><code>.card--flush</code></button> with <button type="button" class="token-copy is-class" data-copy=".card--interactive" aria-label="Copy .card--interactive"><code>.card--interactive</code></button> to create a clickable card with a full-bleed image. The <button type="button" class="token-copy is-class" data-copy=".img" aria-label="Copy .img"><code>.img</code></button> and <button type="button" class="token-copy is-class" data-copy=".card-image" aria-label="Copy .card-image"><code>.card-image</code></button> classes handle display and border-radius. Use a padded inner wrapper for the text content.</p>
+<div class="demo-preview">
+  <a class="card card--flush card--interactive" href="#" style="max-width: 320px;">
+    <img class="img img-16x9 card-image" src="../assets/images/og/og-default.jpg" alt="Example image">
+    <div style="padding: var(--space-xl);">
+      <h3 class="card-title">Card with image</h3>
+      <p class="card-description">Supporting text below the image.</p>
+    </div>
+  </a>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-5m5m5hgza" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-5m5m5hgza" class="language-html">&lt;a class=&quot;card card--flush card--interactive&quot; href=&quot;#&quot;&gt;
+  &lt;img class=&quot;img img-16x9 card-image&quot; src=&quot;image.jpg&quot; alt=&quot;Description&quot;&gt;
+  &lt;div style=&quot;padding: var(--space-xl);&quot;&gt;
+    &lt;h3 class=&quot;card-title&quot;&gt;Card with image&lt;/h3&gt;
+    &lt;p class=&quot;card-description&quot;&gt;Supporting text below the image.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/a&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>Use semantic HTML inside cards (<code>&lt;h3&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;ul&gt;</code>, etc.)</li>
+<li>Interactive cards (<code>&lt;a&gt;</code>) automatically receive focus ring on <code>focus-visible</code></li>
+<li>If a card contains multiple interactive elements, do not wrap the entire card in an <code>&lt;a&gt;</code></li>
+</ul>
+<hr>
+<h2 id="usage-rules">Usage rules</h2>
+<p><strong>Do:</strong></p>
+<ul>
+<li>Use cards to group related content visually</li>
+<li>Use <button type="button" class="token-copy is-class" data-copy=".card--flush" aria-label="Copy .card--flush"><code>.card--flush</code></button> when content needs full-bleed layout</li>
+</ul>
+<p><strong>Don&#39;t:</strong></p>
+<ul>
+<li>Don&#39;t nest interactive cards inside other interactive elements</li>
+<li>Don&#39;t use cards purely for visual decoration — they should contain meaningful content</li>
+</ul>
+<hr>
+<h2 id="css-reference">CSS reference</h2>
+<p>This section documents how the component is built. For usage, see the sections above.</p>
+<h3 id="styling">Styling</h3>
 <div class="table-scroll"><table class="table">
 <thead>
 <tr>
@@ -147,108 +250,39 @@
 <td><button type="button" class="token-copy is-token" data-copy="var(--space-xl)" aria-label="Copy var(--space-xl)"><code>var(--space-xl)</code></button></td>
 </tr>
 </tbody></table></div>
-<hr>
-<h2 id="basic-usage">Basic usage</h2>
-<div class="demo-preview">
-  <div class="card">
-    <p>Card content goes here. Cards provide a contained surface for grouping related information.</p>
-  </div>
-</div>
-
-
-      <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-ksv131lgl" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-ksv131lgl" class="language-html">&lt;div class=&quot;card&quot;&gt;
-  &lt;p&gt;Card content goes here.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="flush-card">Flush card</h2>
-<p>Remove internal padding with <button type="button" class="token-copy is-class" data-copy=".card--flush" aria-label="Copy .card--flush"><code>.card--flush</code></button> — useful when the card contains a full-bleed image or nested content that manages its own spacing.</p>
-<div class="demo-preview">
-  <div class="card card--flush">
-    <div style="padding: var(--space-xl); background: var(--background-faded);">
-      Full-bleed content area
-    </div>
-  </div>
-</div>
-
-
-      <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-whrmr4ivg" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-whrmr4ivg" class="language-html">&lt;div class=&quot;card card--flush&quot;&gt;
-  &lt;!-- Content manages its own padding --&gt;
-&lt;/div&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="interactive-card">Interactive card</h2>
-<p>Wrap in an <code>&lt;a&gt;</code> tag with <button type="button" class="token-copy is-class" data-copy=".card--interactive" aria-label="Copy .card--interactive"><code>.card--interactive</code></button> for clickable cards. Adds hover shadow and focus ring.</p>
-<h3 id="clickable-card">Clickable card</h3>
-<div class="demo-preview">
-  <a class="card card--interactive" href="#">
-    <h3 class="card-title">Clickable card</h3>
-    <p class="card-description">This entire card is a link.</p>
-  </a>
-</div>
-
-
-      <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-dsj57nfp0" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-dsj57nfp0" class="language-html">&lt;a class=&quot;card card--interactive&quot; href=&quot;#&quot;&gt;
-  &lt;h3 class=&quot;card-title&quot;&gt;Clickable card&lt;/h3&gt;
-  &lt;p class=&quot;card-description&quot;&gt;This entire card is a link.&lt;/p&gt;
-&lt;/a&gt;
-</code></pre>
-      </div>
-    
-<h3 id="image-card">Image card</h3>
-<p>Combine <button type="button" class="token-copy is-class" data-copy=".card--flush" aria-label="Copy .card--flush"><code>.card--flush</code></button> with <button type="button" class="token-copy is-class" data-copy=".card--interactive" aria-label="Copy .card--interactive"><code>.card--interactive</code></button> to create a clickable card with a full-bleed image. The <button type="button" class="token-copy is-class" data-copy=".img" aria-label="Copy .img"><code>.img</code></button> and <button type="button" class="token-copy is-class" data-copy=".card-image" aria-label="Copy .card-image"><code>.card-image</code></button> classes handle display and border-radius. Use a padded inner wrapper for the text content.</p>
-<div class="demo-preview">
-  <a class="card card--flush card--interactive" href="#" style="max-width: 320px;">
-    <img class="img img-16x9 card-image" src="../assets/images/og/og-default.jpg" alt="Example image">
-    <div style="padding: var(--space-xl);">
-      <h3 class="card-title">Card with image</h3>
-      <p class="card-description">Supporting text below the image.</p>
-    </div>
-  </a>
-</div>
-
-
-      <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-1xsgpzkru" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-1xsgpzkru" class="language-html">&lt;a class=&quot;card card--flush card--interactive&quot; href=&quot;#&quot;&gt;
-  &lt;img class=&quot;img img-16x9 card-image&quot; src=&quot;image.jpg&quot; alt=&quot;Description&quot;&gt;
-  &lt;div style=&quot;padding: var(--space-xl);&quot;&gt;
-    &lt;h3 class=&quot;card-title&quot;&gt;Card with image&lt;/h3&gt;
-    &lt;p class=&quot;card-description&quot;&gt;Supporting text below the image.&lt;/p&gt;
-  &lt;/div&gt;
-&lt;/a&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="accessibility-notes">Accessibility notes</h2>
-<ul>
-<li>Use semantic HTML inside cards (<code>&lt;h3&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;ul&gt;</code>, etc.)</li>
-<li>Interactive cards (<code>&lt;a&gt;</code>) automatically receive focus ring on <code>focus-visible</code></li>
-<li>If a card contains multiple interactive elements, do not wrap the entire card in an <code>&lt;a&gt;</code></li>
-</ul>
-<hr>
-<h2 id="do-don39t">Do / Don&#39;t</h2>
-<p><strong>Do:</strong></p>
-<ul>
-<li>Use cards to group related content visually</li>
-<li>Use <button type="button" class="token-copy is-class" data-copy=".card--flush" aria-label="Copy .card--flush"><code>.card--flush</code></button> when content needs full-bleed layout</li>
-</ul>
-<p><strong>Don&#39;t:</strong></p>
-<ul>
-<li>Don&#39;t nest interactive cards inside other interactive elements</li>
-<li>Don&#39;t use cards purely for visual decoration — they should contain meaningful content</li>
-</ul>
+<h3 id="selectors">Selectors</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Selector</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><button type="button" class="token-copy is-class" data-copy=".card" aria-label="Copy .card"><code>.card</code></button></td>
+<td>Base component — background, border, radius, padding</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-class" data-copy=".card--flush" aria-label="Copy .card--flush"><code>.card--flush</code></button></td>
+<td>Removes padding</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-class" data-copy=".card--interactive" aria-label="Copy .card--interactive"><code>.card--interactive</code></button></td>
+<td>Adds hover background, shadow, focus ring, and link styling</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-class" data-copy=".card-title" aria-label="Copy .card-title"><code>.card-title</code></button></td>
+<td>Card heading — resets margin</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-class" data-copy=".card-description" aria-label="Copy .card-description"><code>.card-description</code></button></td>
+<td>Card body text — secondary text colour</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-class" data-copy=".card-image" aria-label="Copy .card-image"><code>.card-image</code></button></td>
+<td>Full-bleed image with top border-radius</td>
+</tr>
+</tbody></table></div>
 
                 </article>
             </main>
@@ -256,7 +290,7 @@
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#styling" class="toc-link">Styling</a></li><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#flush-card" class="toc-link">Flush card</a></li><li class="toc-item toc-level-2"><a href="#interactive-card" class="toc-link">Interactive card</a></li><li class="toc-item toc-level-2"><a href="#accessibility-notes" class="toc-link">Accessibility notes</a></li><li class="toc-item toc-level-2"><a href="#do-don39t" class="toc-link">Do / Don&#39;t</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#flush-card" class="toc-link">Flush card</a></li><li class="toc-item toc-level-2"><a href="#interactive-card" class="toc-link">Interactive card</a></li><li class="toc-item toc-level-2"><a href="#accessibility" class="toc-link">Accessibility</a></li><li class="toc-item toc-level-2"><a href="#usage-rules" class="toc-link">Usage rules</a></li><li class="toc-item toc-level-2"><a href="#css-reference" class="toc-link">CSS reference</a></li></ul></nav></div>
     </aside>
         </div>
 

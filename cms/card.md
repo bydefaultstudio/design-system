@@ -16,19 +16,6 @@ Cards are surface containers that group related content with a border and backgr
 
 ---
 
-## Styling
-
-Card uses system tokens directly — no component-level token indirection.
-
-| Property | Value |
-|---|---|
-| Background | `var(--background-primary)` (dark: `var(--background-secondary)`) |
-| Border | `var(--border-s) solid var(--border-faded)` |
-| Radius | `var(--radius-m)` |
-| Padding | `var(--space-xl)` |
-
----
-
 ## Basic usage
 
 <div class="demo-preview">
@@ -111,7 +98,7 @@ Combine `.card--flush` with `.card--interactive` to create a clickable card with
 
 ---
 
-## Accessibility notes
+## Accessibility
 
 - Use semantic HTML inside cards (`<h3>`, `<p>`, `<ul>`, etc.)
 - Interactive cards (`<a>`) automatically receive focus ring on `focus-visible`
@@ -119,7 +106,7 @@ Combine `.card--flush` with `.card--interactive` to create a clickable card with
 
 ---
 
-## Do / Don't
+## Usage rules
 
 **Do:**
 - Use cards to group related content visually
@@ -128,3 +115,29 @@ Combine `.card--flush` with `.card--interactive` to create a clickable card with
 **Don't:**
 - Don't nest interactive cards inside other interactive elements
 - Don't use cards purely for visual decoration — they should contain meaningful content
+
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Styling
+
+| Property | Value |
+|---|---|
+| Background | `var(--background-primary)` (dark: `var(--background-secondary)`) |
+| Border | `var(--border-s) solid var(--border-faded)` |
+| Radius | `var(--radius-m)` |
+| Padding | `var(--space-xl)` |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.card` | Base component — background, border, radius, padding |
+| `.card--flush` | Removes padding |
+| `.card--interactive` | Adds hover background, shadow, focus ring, and link styling |
+| `.card-title` | Card heading — resets margin |
+| `.card-description` | Card body text — secondary text colour |
+| `.card-image` | Full-bleed image with top border-radius |

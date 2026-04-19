@@ -151,4 +151,6 @@
   } else {
     initFeedback();
   }
+
+  window.bdInitFeedback = initFeedback;
 })();

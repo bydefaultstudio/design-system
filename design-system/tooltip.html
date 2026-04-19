@@ -121,7 +121,78 @@
                 <article>
                     <p>Tooltips are CSS-only overlays that appear on hover or keyboard focus. They use the <code>data-tooltip</code> attribute — no JavaScript required.</p>
 <hr>
-<h2 id="tokens">Tokens</h2>
+<h2 id="basic-usage">Basic usage</h2>
+<div class="demo-preview is-centered">
+  <span data-tooltip="This is a tooltip">Hover over me</span>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-7yufgzaku" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-7yufgzaku" class="language-html">&lt;span data-tooltip=&quot;This is a tooltip&quot;&gt;Hover over me&lt;/span&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="on-interactive-elements">On interactive elements</h2>
+<div class="demo-preview is-centered">
+  <button class="button" data-tooltip="Save your changes">Save</button>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-8kqcagjtt" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-8kqcagjtt" class="language-html">&lt;button class=&quot;button&quot; data-tooltip=&quot;Save your changes&quot;&gt;Save&lt;/button&gt;
+</code></pre>
+      </div>
+    
+<p>On buttons and links, the cursor remains <code>pointer</code> instead of the default <code>help</code>.</p>
+<hr>
+<h2 id="positions">Positions</h2>
+<p>By default, tooltips appear above the element. Use <code>data-tooltip-position</code> to change placement.</p>
+<div class="demo-preview is-centered" style="padding: var(--space-5xl);">
+  <span data-tooltip="Above (default)" style="margin-right: var(--space-xl);">Top</span>
+  <span data-tooltip="Below" data-tooltip-position="bottom" style="margin-right: var(--space-xl);">Bottom</span>
+  <span data-tooltip="To the left" data-tooltip-position="left" style="margin-right: var(--space-xl);">Left</span>
+  <span data-tooltip="To the right" data-tooltip-position="right">Right</span>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-oihwpcwsh" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-oihwpcwsh" class="language-html">&lt;span data-tooltip=&quot;Above (default)&quot;&gt;Top&lt;/span&gt;
+&lt;span data-tooltip=&quot;Below&quot; data-tooltip-position=&quot;bottom&quot;&gt;Bottom&lt;/span&gt;
+&lt;span data-tooltip=&quot;To the left&quot; data-tooltip-position=&quot;left&quot;&gt;Left&lt;/span&gt;
+&lt;span data-tooltip=&quot;To the right&quot; data-tooltip-position=&quot;right&quot;&gt;Right&lt;/span&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>Tooltips appear on <code>:hover</code> and <code>:focus-visible</code></li>
+<li>Content is set via <code>data-tooltip</code> attribute and rendered with <code>content: attr(data-tooltip)</code> — it is not accessible to screen readers</li>
+<li>For critical information, do not rely on tooltips alone — add <code>aria-label</code> or visible text</li>
+<li>Tooltips use <code>pointer-events: none</code> so they do not interfere with interaction</li>
+</ul>
+<hr>
+<h2 id="usage-rules">Usage rules</h2>
+<p><strong>Do:</strong></p>
+<ul>
+<li>Use tooltips for supplementary, non-essential information</li>
+<li>Keep tooltip text short (one sentence max)</li>
+<li>Add <code>aria-label</code> when the tooltip contains essential context</li>
+</ul>
+<p><strong>Don&#39;t:</strong></p>
+<ul>
+<li>Don&#39;t put interactive content (links, buttons) in tooltips</li>
+<li>Don&#39;t use tooltips for critical information that must be visible</li>
+<li>Don&#39;t use tooltips on touch-only interfaces (they require hover)</li>
+</ul>
+<hr>
+<h2 id="css-reference">CSS reference</h2>
+<p>This section documents how the component is built. For usage, see the sections above.</p>
+<h3 id="tokens">Tokens</h3>
 <div class="table-scroll"><table class="table">
 <thead>
 <tr>
@@ -156,75 +227,43 @@
 <td>Font size</td>
 </tr>
 </tbody></table></div>
-<hr>
-<h2 id="basic-usage">Basic usage</h2>
-<div class="demo-preview is-centered">
-  <span data-tooltip="This is a tooltip">Hover over me</span>
-</div>
-
-
-      <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-6fcbgdadu" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-6fcbgdadu" class="language-html">&lt;span data-tooltip=&quot;This is a tooltip&quot;&gt;Hover over me&lt;/span&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="on-interactive-elements">On interactive elements</h2>
-<div class="demo-preview is-centered">
-  <button class="button" data-tooltip="Save your changes">Save</button>
-</div>
-
-
-      <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-8vm6vym4m" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-8vm6vym4m" class="language-html">&lt;button class=&quot;button&quot; data-tooltip=&quot;Save your changes&quot;&gt;Save&lt;/button&gt;
-</code></pre>
-      </div>
-    
-<p>On buttons and links, the cursor remains <code>pointer</code> instead of the default <code>help</code>.</p>
-<hr>
-<h2 id="positions">Positions</h2>
-<p>By default, tooltips appear above the element. Use <code>data-tooltip-position</code> to change placement.</p>
-<div class="demo-preview is-centered" style="padding: var(--space-5xl);">
-  <span data-tooltip="Above (default)" style="margin-right: var(--space-xl);">Top</span>
-  <span data-tooltip="Below" data-tooltip-position="bottom" style="margin-right: var(--space-xl);">Bottom</span>
-  <span data-tooltip="To the left" data-tooltip-position="left" style="margin-right: var(--space-xl);">Left</span>
-  <span data-tooltip="To the right" data-tooltip-position="right">Right</span>
-</div>
-
-
-      <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-7jb60fy89" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-7jb60fy89" class="language-html">&lt;span data-tooltip=&quot;Above (default)&quot;&gt;Top&lt;/span&gt;
-&lt;span data-tooltip=&quot;Below&quot; data-tooltip-position=&quot;bottom&quot;&gt;Bottom&lt;/span&gt;
-&lt;span data-tooltip=&quot;To the left&quot; data-tooltip-position=&quot;left&quot;&gt;Left&lt;/span&gt;
-&lt;span data-tooltip=&quot;To the right&quot; data-tooltip-position=&quot;right&quot;&gt;Right&lt;/span&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="accessibility-notes">Accessibility notes</h2>
-<ul>
-<li>Tooltips appear on <code>:hover</code> and <code>:focus-visible</code></li>
-<li>Content is set via <code>data-tooltip</code> attribute and rendered with <code>content: attr(data-tooltip)</code> — it is not accessible to screen readers</li>
-<li>For critical information, do not rely on tooltips alone — add <code>aria-label</code> or visible text</li>
-<li>Tooltips use <code>pointer-events: none</code> so they do not interfere with interaction</li>
-</ul>
-<hr>
-<h2 id="do-don39t">Do / Don&#39;t</h2>
-<p><strong>Do:</strong></p>
-<ul>
-<li>Use tooltips for supplementary, non-essential information</li>
-<li>Keep tooltip text short (one sentence max)</li>
-<li>Add <code>aria-label</code> when the tooltip contains essential context</li>
-</ul>
-<p><strong>Don&#39;t:</strong></p>
-<ul>
-<li>Don&#39;t put interactive content (links, buttons) in tooltips</li>
-<li>Don&#39;t use tooltips for critical information that must be visible</li>
-<li>Don&#39;t use tooltips on touch-only interfaces (they require hover)</li>
-</ul>
+<h3 id="selectors">Selectors</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Selector</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>[data-tooltip]</code></td>
+<td>Base — sets relative positioning and <code>cursor: help</code></td>
+</tr>
+<tr>
+<td><code>[data-tooltip]::before</code></td>
+<td>Tooltip bubble — positioned above, hidden by default</td>
+</tr>
+<tr>
+<td><code>[data-tooltip]:hover::before</code>, <code>[data-tooltip]:focus-visible::before</code></td>
+<td>Shows tooltip on hover/focus</td>
+</tr>
+<tr>
+<td><code>[data-tooltip-position=&quot;bottom&quot;]::before</code></td>
+<td>Bottom placement</td>
+</tr>
+<tr>
+<td><code>[data-tooltip-position=&quot;left&quot;]::before</code></td>
+<td>Left placement</td>
+</tr>
+<tr>
+<td><code>[data-tooltip-position=&quot;right&quot;]::before</code></td>
+<td>Right placement</td>
+</tr>
+<tr>
+<td><code>button[data-tooltip]</code>, <code>a[data-tooltip]</code>, <code>.button[data-tooltip]</code></td>
+<td>Overrides cursor to <code>pointer</code> for interactive elements</td>
+</tr>
+</tbody></table></div>
 
                 </article>
             </main>
@@ -232,7 +271,7 @@
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#tokens" class="toc-link">Tokens</a></li><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#on-interactive-elements" class="toc-link">On interactive elements</a></li><li class="toc-item toc-level-2"><a href="#positions" class="toc-link">Positions</a></li><li class="toc-item toc-level-2"><a href="#accessibility-notes" class="toc-link">Accessibility notes</a></li><li class="toc-item toc-level-2"><a href="#do-don39t" class="toc-link">Do / Don&#39;t</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#on-interactive-elements" class="toc-link">On interactive elements</a></li><li class="toc-item toc-level-2"><a href="#positions" class="toc-link">Positions</a></li><li class="toc-item toc-level-2"><a href="#accessibility" class="toc-link">Accessibility</a></li><li class="toc-item toc-level-2"><a href="#usage-rules" class="toc-link">Usage rules</a></li><li class="toc-item toc-level-2"><a href="#css-reference" class="toc-link">CSS reference</a></li></ul></nav></div>
     </aside>
         </div>
 

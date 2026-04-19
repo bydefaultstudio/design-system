@@ -224,6 +224,7 @@
       if (typeof window.refreshNavActive === 'function') window.refreshNavActive();
       if (typeof window.bdInitCopyButtons === 'function') window.bdInitCopyButtons();
       if (typeof window.bdRefreshAccessFilter === 'function') window.bdRefreshAccessFilter();
+      if (typeof window.bdInitFeedback === 'function') window.bdInitFeedback();
     } catch (e) {
       console.warn('[Barba] refreshPageInit error:', e);
     }

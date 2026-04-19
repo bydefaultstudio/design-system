@@ -64,7 +64,7 @@ The `<figure>` element wraps media content (images, code blocks, diagrams) with 
 
 ---
 
-## Accessibility notes
+## Accessibility
 
 - `<mark>` is announced by some screen readers as "highlighted" — use it for genuinely highlighted content, not for visual styling
 - `<abbr>` with `title` shows its expansion on hover — for critical abbreviations, spell out the full term on first use in the text
@@ -72,7 +72,7 @@ The `<figure>` element wraps media content (images, code blocks, diagrams) with 
 
 ---
 
-## Do / Don't
+## Usage rules
 
 **Do:**
 - Use `<mark>` for search result highlights or key phrases
@@ -83,3 +83,54 @@ The `<figure>` element wraps media content (images, code blocks, diagrams) with 
 - Don't use `<mark>` as a general-purpose text highlighter for emphasis — use `<strong>` or `<em>`
 - Don't omit `title` on `<abbr>` — it is the only way to convey the expansion
 - Don't use `<figcaption>` without a parent `<figure>`
+
+---
+
+## CSS reference
+
+This section documents how each element is built. For usage, see the sections above.
+
+### `mark`
+
+| Property | Value |
+|---|---|
+| Background | `var(--yellow-light)` |
+| Color | `var(--warm-black)` |
+| Padding | `0 var(--space-2xs)` |
+
+Dark mode (`[data-theme="dark"]`): background shifts to `color-mix(in srgb, var(--yellow), var(--alpha-60))`, colour to `var(--off-white)`.
+
+### `abbr[title]`
+
+| Property | Value |
+|---|---|
+| Text decoration | `underline dotted var(--text-faded)` |
+| Text underline offset | `2px` |
+| Cursor | `help` |
+
+### `figure`
+
+| Property | Value |
+|---|---|
+| Margin | `var(--space-xl) 0` |
+| Padding | `0` |
+
+### `figcaption`
+
+| Property | Value |
+|---|---|
+| Font size | `var(--font-xs)` |
+| Color | `var(--text-faded)` |
+| Margin top | `var(--space-s)` |
+| Line height | `var(--line-height-xl)` |
+| Font style | `italic` |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `mark` | Highlighted text with yellow background |
+| `[data-theme="dark"] mark` | Dark mode override for mark |
+| `abbr[title]` | Abbreviation with dotted underline |
+| `figure` | Media wrapper with vertical margin |
+| `figcaption` | Caption text — small, italic, faded |

@@ -161,3 +161,40 @@ document.addEventListener('click', function (e) {
 
 - Don't use tags as buttons — they are labels, not actions
 - Don't use tags for navigation
+
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Styling
+
+| Property | Value |
+|---|---|
+| Display | `inline-flex` |
+| Align items | `center` |
+| Gap | `var(--space-xs)` |
+| Font family | `var(--font-primary)` |
+| Font size | `var(--font-xs)` |
+| Font weight | `var(--font-weight-medium)` |
+| Line height | `var(--line-height-xs)` |
+| Padding | `var(--space-xs) var(--space-xs) var(--space-xs) var(--space-s)` |
+| Border radius | `var(--radius-s)` |
+| Background | `var(--background-darker)` |
+| Border | `var(--border-s) solid var(--border-faded)` |
+| Color | `var(--text-primary)` |
+| White space | `nowrap` |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.tag` | Base tag styling |
+| `.tag[data-color="success"]` | Green status colour (alias: `green`) |
+| `.tag[data-color="warning"]` | Yellow status colour (alias: `yellow`) |
+| `.tag[data-color="danger"]` | Red status colour (alias: `red`) |
+| `.tag[data-color="info"]` | Blue status colour (alias: `blue`) |
+| `.tag-remove` | Dismiss button inside a tag |
+| `.tag-remove:hover` | Dismiss button hover — full opacity, subtle background |
+| `.tag-group` | Flex wrapper for multiple tags with `gap: var(--space-xs)` |

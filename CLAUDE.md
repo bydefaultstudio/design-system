@@ -30,9 +30,10 @@ Before generating or modifying code, treat the following files as authoritative:
 12. `cms/button.md` — button component usage
 13. `cms/disclosure.md` — details/summary disclosure component
 14. `cms/components.md` — master component spec (naming, tokens, accessibility, build rules)
-15. `cms/seo-best-practices.md` — SEO meta tags and social sharing
-16. `cms/folder-structure.md` — file organization rules
-17. `cms/setup.md` — project setup and customization
+15. `cms/documenting-components.md` — how to write component docs (section order, CSS reference, template)
+16. `cms/seo-best-practices.md` — SEO meta tags and social sharing
+17. `cms/folder-structure.md` — file organization rules
+18. `cms/setup.md` — project setup and customization
 18. `studio/README.md` — **read when working on files inside `studio/` or `cdn/studio/`**; studio layout, Barba transitions, feed system, page conventions
 
 If any instruction conflicts with these documents, **the documents take precedence**.

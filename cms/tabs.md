@@ -16,16 +16,6 @@ Tabs organise content into panels that the user switches between. The component 
 
 ---
 
-## Tokens
-
-| Token | Default | Purpose |
-|-------|---------|---------|
-| `var(--tab-active-color)` | `var(--text-primary)` | Active tab text colour |
-| `var(--tab-inactive-color)` | `var(--text-faded)` | Inactive tab text colour |
-| `var(--tab-indicator-color)` | `var(--text-primary)` | Bottom border indicator |
-
----
-
 ## Basic usage
 
 <div class="demo-preview">
@@ -90,7 +80,7 @@ No manual initialisation is required.
 
 ---
 
-## Accessibility notes
+## Accessibility
 
 - The tab list uses `role="tablist"` with a descriptive `aria-label`
 - Each tab uses `role="tab"` with `aria-selected` and `aria-controls`
@@ -100,7 +90,7 @@ No manual initialisation is required.
 
 ---
 
-## Do / Don't
+## Usage rules
 
 **Do:**
 - Use unique IDs for tabs and panels on each page
@@ -110,3 +100,31 @@ No manual initialisation is required.
 **Don't:**
 - Don't use tabs for sequential steps (use a stepper pattern instead)
 - Don't nest tablists inside tab panels
+
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Tokens
+
+| Token | Default | What it controls |
+|---|---|---|
+| `--tab-active-color` | `var(--text-primary)` | Active tab text colour |
+| `--tab-inactive-color` | `var(--text-faded)` | Inactive tab text colour |
+| `--tab-indicator-color` | `var(--text-primary)` | Bottom border indicator |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.tabs` | Tab list container — flex row, bottom border |
+| `.tab` | Individual tab button — padding, colour, cursor |
+| `.tab:hover` | Tab hover — text colour change |
+| `.tab.is-active` | Active tab — active colour, bold weight |
+| `.tab.is-active::after` | Active indicator — bottom border pseudo-element |
+| `.tab:focus-visible` | Tab focus ring |
+| `.tab-panel` | Panel content container — padding |
+| `a.tab` | Link-as-tab variant — text-decoration reset |
+| `a.tab:hover` | Link tab hover |

@@ -16,30 +16,6 @@ Form elements are styled globally using semantic tokens. All text inputs, textar
 
 ---
 
-## Form Tokens
-
-All form styling is controlled by semantic tokens in `:root`:
-
-| Token | Default | Purpose |
-|---|---|---|
-| `var(--input-border)` | `var(--border-secondary)` | Default border color |
-| `var(--input-background)` | `var(--background-primary)` | Input background |
-| `var(--input-text)` | `var(--text-plain)` | Input text color |
-| `var(--input-placeholder)` | `var(--text-faded)` | Placeholder text color |
-| `var(--input-focus)` | `var(--green)` | Focus border and ring color |
-| `var(--input-disabled-bg)` | `var(--background-faded)` | Disabled background |
-| `var(--input-disabled-text)` | `var(--text-faded)` | Disabled text color |
-| `var(--checkbox-background)` | `var(--neutral-100)` | Checkbox unchecked background |
-| `var(--checkbox-selected)` | `var(--text-primary)` | Checkbox/radio checked fill |
-| `var(--checkbox-border)` | `var(--border-secondary)` | Checkbox/radio border color |
-| `var(--checkbox-checkmark)` | `var(--off-white)` | Checkmark/dot color |
-| `var(--toggle-track)` | `var(--neutral-200)` | Toggle track background |
-| `var(--toggle-knob)` | `var(--neutral-500)` | Toggle knob (unchecked) |
-| `var(--toggle-selected)` | `var(--text-primary)` | Toggle track (checked) |
-| `var(--toggle-knob-selected)` | `var(--off-white)` | Toggle knob (checked) |
-
----
-
 ## Labels
 
 Labels are styled as block elements with medium weight:
@@ -498,7 +474,7 @@ Requires `assets/js/number-input.js`.
 
 ---
 
-## Rules
+## Usage rules
 
 | Do | Don't |
 |---|---|
@@ -510,3 +486,61 @@ Requires `assets/js/number-input.js`.
 | Use semantic tokens for customization | Hardcode colors on individual inputs |
 | Use `<fieldset>` for logical grouping | Use `<div>` with borders to fake fieldsets |
 | Keep inputs full-width by default | Set fixed widths unless layout requires it |
+
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Tokens
+
+| Token | Default | What it controls |
+|---|---|---|
+| `--input-border` | `var(--border-secondary)` | Default border colour |
+| `--input-background` | `var(--background-primary)` | Input background |
+| `--input-text` | `var(--text-plain)` | Input text colour |
+| `--input-placeholder` | `var(--text-faded)` | Placeholder text colour |
+| `--input-focus` | `var(--green)` | Focus border and ring colour |
+| `--input-disabled-bg` | `var(--background-faded)` | Disabled background |
+| `--input-disabled-text` | `var(--text-faded)` | Disabled text colour |
+| `--checkbox-background` | `var(--neutral-100)` | Checkbox unchecked background |
+| `--checkbox-selected` | `var(--text-primary)` | Checkbox/radio checked fill |
+| `--checkbox-border` | `var(--border-secondary)` | Checkbox/radio border colour |
+| `--checkbox-checkmark` | `var(--off-white)` | Checkmark/dot colour |
+| `--toggle-track` | `var(--neutral-200)` | Toggle track background |
+| `--toggle-knob` | `var(--neutral-500)` | Toggle knob (unchecked) |
+| `--toggle-selected` | `var(--text-primary)` | Toggle track (checked) |
+| `--toggle-knob-selected` | `var(--off-white)` | Toggle knob (checked) |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `input[type="text"]`, `input[type="email"]`, etc. | Global text input styling — width, padding, border, font |
+| `input:focus`, `textarea:focus`, `select:focus` | Focus state — border colour + box-shadow ring |
+| `input:disabled`, `textarea:disabled`, `select:disabled` | Disabled state — muted background, not-allowed cursor |
+| `textarea` | Textarea — min-height, vertical resize |
+| `select` | Select — custom dropdown arrow, appearance reset |
+| `input[type="color"]` | Colour picker — appearance reset, aspect-ratio, swatch styling |
+| `input[type="checkbox"]`, `input[type="radio"]` | Custom checkbox/radio — appearance reset, checked state SVG |
+| `.form-check` | Inline checkbox/radio + label wrapper — flex, align-items, gap |
+| `.form-check label` | Label styling inside check wrapper — inline, regular weight |
+| `.form-toggle` | Toggle switch wrapper — grid layout for label + switch |
+| `.form-toggle input[type="checkbox"]` | Toggle track — pill shape, colour transition |
+| `.form-toggle input[type="checkbox"]::after` | Toggle knob — circular pseudo-element |
+| `.form-toggle input[type="checkbox"]:checked` | Checked track — `var(--toggle-selected)` background |
+| `.form-toggle.is-label-right label` | Label-right variant — reorders grid column |
+| `.form-group` | Label + input wrapper — bottom margin spacing |
+| `.form-hint` | Helper text below input |
+| `.form-error` | Error message styling |
+| `.segmented-control` | Button group track — faded background, pill radius |
+| `.segmented-control-btn` | Segment button — padding, transitions |
+| `.segmented-control-btn.is-active` | Active segment — primary bg, inverted text |
+| `.segmented-control-btn.is-icon` | Icon-only segment variant |
+| `.slider-wrapper` | Labelled slider container |
+| `.number-input` | Stepper wrapper — flex, border |
+| `.number-input-btn` | Increment/decrement button |
+| `.radio-group` | Radio group wrapper — vertical stack |
+| `.radio-group.is-horizontal` | Horizontal radio layout |
+| `.radio-group-label` | Group legend styling |

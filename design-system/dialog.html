@@ -121,42 +121,6 @@
                 <article>
                     <p>Dialogs are modal windows built on the native <code>&lt;dialog&gt;</code> element. They trap focus, darken the backdrop, and support header, body, and footer sections. Opening and closing is handled via <code>data-dialog-open</code> and <code>data-dialog-close</code> attributes.</p>
 <hr>
-<h2 id="tokens">Tokens</h2>
-<div class="table-scroll"><table class="table">
-<thead>
-<tr>
-<th>Token</th>
-<th>Default (Light)</th>
-<th>Default (Dark)</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--dialog-background)" aria-label="Copy var(--dialog-background)"><code>var(--dialog-background)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--background-primary)" aria-label="Copy var(--background-primary)"><code>var(--background-primary)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--background-secondary)" aria-label="Copy var(--background-secondary)"><code>var(--background-secondary)</code></button></td>
-<td>Dialog surface</td>
-</tr>
-<tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--dialog-max-width)" aria-label="Copy var(--dialog-max-width)"><code>var(--dialog-max-width)</code></button></td>
-<td><code>560px</code></td>
-<td>—</td>
-<td>Maximum width</td>
-</tr>
-<tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--dialog-shadow)" aria-label="Copy var(--dialog-shadow)"><code>var(--dialog-shadow)</code></button></td>
-<td><code>0 8px 32px var(--black-alpha-20)</code></td>
-<td><code>0 8px 40px var(--black-alpha-60)</code></td>
-<td>Drop shadow</td>
-</tr>
-<tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--dialog-backdrop)" aria-label="Copy var(--dialog-backdrop)"><code>var(--dialog-backdrop)</code></button></td>
-<td><code>rgba(0, 0, 0, 0.6)</code></td>
-<td>—</td>
-<td>Backdrop overlay</td>
-</tr>
-</tbody></table></div>
-<hr>
 <h2 id="basic-usage">Basic usage</h2>
 <div class="demo-preview">
   <button class="button" type="button" data-dialog-open="demo-dialog-basic">Open dialog</button>
@@ -179,8 +143,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-6ccpceot5" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-6ccpceot5" class="language-html">&lt;button class=&quot;button&quot; type=&quot;button&quot; data-dialog-open=&quot;my-dialog&quot;&gt;Open dialog&lt;/button&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-w2ktzbgs8" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-w2ktzbgs8" class="language-html">&lt;button class=&quot;button&quot; type=&quot;button&quot; data-dialog-open=&quot;my-dialog&quot;&gt;Open dialog&lt;/button&gt;
 
 &lt;dialog id=&quot;my-dialog&quot; class=&quot;dialog&quot;&gt;
   &lt;div class=&quot;dialog-header&quot;&gt;
@@ -225,8 +189,8 @@
 <p>Include <code>assets/js/dialog.js</code> on any page using dialogs.</p>
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-4bgl3rhdu" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-4bgl3rhdu" class="language-html">&lt;script src=&quot;/assets/js/dialog.js&quot;&gt;&lt;/script&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-bc09tm0kp" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-bc09tm0kp" class="language-html">&lt;script src=&quot;/assets/js/dialog.js&quot;&gt;&lt;/script&gt;
 </code></pre>
       </div>
     
@@ -258,7 +222,7 @@
 </tr>
 </tbody></table></div>
 <hr>
-<h2 id="accessibility-notes">Accessibility notes</h2>
+<h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>Uses the native <code>&lt;dialog&gt;</code> element — focus trapping is handled by the browser</li>
 <li>The dialog title should use <code>aria-labelledby</code> pointing to the <button type="button" class="token-copy is-class" data-copy=".dialog-title" aria-label="Copy .dialog-title"><code>.dialog-title</code></button> ID</li>
@@ -266,7 +230,7 @@
 <li>The backdrop is created by the browser&#39;s <code>::backdrop</code> pseudo-element</li>
 </ul>
 <hr>
-<h2 id="do-don39t">Do / Don&#39;t</h2>
+<h2 id="usage-rules">Usage rules</h2>
 <p><strong>Do:</strong></p>
 <ul>
 <li>Use dialogs for actions that require confirmation or focused input</li>
@@ -279,6 +243,97 @@
 <li>Don&#39;t stack dialogs on top of each other</li>
 <li>Don&#39;t use dialogs for simple alerts — use callouts or toasts instead</li>
 </ul>
+<hr>
+<h2 id="css-reference">CSS reference</h2>
+<p>This section documents how the component is built. For usage, see the sections above.</p>
+<h3 id="tokens">Tokens</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Default (Light)</th>
+<th>Default (Dark)</th>
+<th>What it controls</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--dialog-background)" aria-label="Copy var(--dialog-background)"><code>--dialog-background</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-primary)" aria-label="Copy var(--background-primary)"><code>var(--background-primary)</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--background-secondary)" aria-label="Copy var(--background-secondary)"><code>var(--background-secondary)</code></button></td>
+<td>Dialog surface</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--dialog-max-width)" aria-label="Copy var(--dialog-max-width)"><code>--dialog-max-width</code></button></td>
+<td><code>560px</code></td>
+<td>—</td>
+<td>Maximum width</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--dialog-shadow)" aria-label="Copy var(--dialog-shadow)"><code>--dialog-shadow</code></button></td>
+<td><code>0 8px 32px var(--black-alpha-20)</code></td>
+<td><code>0 8px 40px var(--black-alpha-60)</code></td>
+<td>Drop shadow</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--dialog-backdrop)" aria-label="Copy var(--dialog-backdrop)"><code>--dialog-backdrop</code></button></td>
+<td><code>rgba(0, 0, 0, 0.6)</code></td>
+<td>—</td>
+<td>Backdrop overlay</td>
+</tr>
+</tbody></table></div>
+<h3 id="selectors">Selectors</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Selector</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><button type="button" class="token-copy is-class" data-copy=".dialog" aria-label="Copy .dialog"><code>.dialog</code></button></td>
+<td>Base component — background, max-width, shadow, border, padding</td>
+</tr>
+<tr>
+<td><code>.dialog::backdrop</code></td>
+<td>Backdrop overlay colour</td>
+</tr>
+<tr>
+<td><code>.dialog[open]</code></td>
+<td>Open state — opacity transition for entrance animation</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-class" data-copy=".dialog-header" aria-label="Copy .dialog-header"><code>.dialog-header</code></button></td>
+<td>Flex row for title + close button</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-class" data-copy=".dialog-title" aria-label="Copy .dialog-title"><code>.dialog-title</code></button></td>
+<td>Dialog heading</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-class" data-copy=".dialog-close" aria-label="Copy .dialog-close"><code>.dialog-close</code></button></td>
+<td>Close button (icon button reset)</td>
+</tr>
+<tr>
+<td><code>.dialog-close:hover</code></td>
+<td>Close button hover — text colour change</td>
+</tr>
+<tr>
+<td><code>.dialog-close:focus-visible</code></td>
+<td>Close button focus ring</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-class" data-copy=".dialog-body" aria-label="Copy .dialog-body"><code>.dialog-body</code></button></td>
+<td>Content area with vertical padding</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-class" data-copy=".dialog-footer" aria-label="Copy .dialog-footer"><code>.dialog-footer</code></button></td>
+<td>Footer with flex-end alignment for action buttons</td>
+</tr>
+<tr>
+<td><code>[data-theme=&quot;dark&quot;] .dialog</code></td>
+<td>Dark mode overrides for background and shadow</td>
+</tr>
+</tbody></table></div>
 
                 </article>
             </main>
@@ -286,7 +341,7 @@
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#tokens" class="toc-link">Tokens</a></li><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#confirmation-dialog" class="toc-link">Confirmation dialog</a></li><li class="toc-item toc-level-2"><a href="#javascript" class="toc-link">JavaScript</a></li><li class="toc-item toc-level-2"><a href="#keyboard-interactions" class="toc-link">Keyboard interactions</a></li><li class="toc-item toc-level-2"><a href="#accessibility-notes" class="toc-link">Accessibility notes</a></li><li class="toc-item toc-level-2"><a href="#do-don39t" class="toc-link">Do / Don&#39;t</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#confirmation-dialog" class="toc-link">Confirmation dialog</a></li><li class="toc-item toc-level-2"><a href="#javascript" class="toc-link">JavaScript</a></li><li class="toc-item toc-level-2"><a href="#keyboard-interactions" class="toc-link">Keyboard interactions</a></li><li class="toc-item toc-level-2"><a href="#accessibility" class="toc-link">Accessibility</a></li><li class="toc-item toc-level-2"><a href="#usage-rules" class="toc-link">Usage rules</a></li><li class="toc-item toc-level-2"><a href="#css-reference" class="toc-link">CSS reference</a></li></ul></nav></div>
     </aside>
         </div>
 

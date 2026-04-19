@@ -121,7 +121,59 @@
                 <article>
                     <p>Progress bars use the native <code>&lt;progress&gt;</code> element styled with design system tokens. They indicate completion percentage and support status colour variants.</p>
 <hr>
-<h2 id="tokens">Tokens</h2>
+<h2 id="basic-usage">Basic usage</h2>
+<div class="demo-preview">
+  <progress class="progress-bar" value="60" max="100">60%</progress>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-08olml7us" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-08olml7us" class="language-html">&lt;progress class=&quot;progress-bar&quot; value=&quot;60&quot; max=&quot;100&quot;&gt;60%&lt;/progress&gt;
+</code></pre>
+      </div>
+    
+<p>The fallback text (<code>60%</code>) is shown in browsers that do not support <code>&lt;progress&gt;</code>.</p>
+<hr>
+<h2 id="status-variants">Status variants</h2>
+<div class="demo-preview" style="display: grid; gap: var(--space-m);">
+  <progress class="progress-bar progress-bar--success" value="100" max="100">100%</progress>
+  <progress class="progress-bar progress-bar--warning" value="40" max="100">40%</progress>
+  <progress class="progress-bar progress-bar--danger" value="10" max="100">10%</progress>
+</div>
+
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-ymbhjhl71" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-ymbhjhl71" class="language-html">&lt;progress class=&quot;progress-bar progress-bar--success&quot; value=&quot;100&quot; max=&quot;100&quot;&gt;100%&lt;/progress&gt;
+&lt;progress class=&quot;progress-bar progress-bar--warning&quot; value=&quot;40&quot; max=&quot;100&quot;&gt;40%&lt;/progress&gt;
+&lt;progress class=&quot;progress-bar progress-bar--danger&quot; value=&quot;10&quot; max=&quot;100&quot;&gt;10%&lt;/progress&gt;
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>The native <code>&lt;progress&gt;</code> element is announced by screen readers automatically</li>
+<li>Always include fallback text content inside the element</li>
+<li>If the progress represents a named process, associate it with a label using <code>aria-label</code> or a visible <code>&lt;label&gt;</code></li>
+</ul>
+<hr>
+<h2 id="usage-rules">Usage rules</h2>
+<p><strong>Do:</strong></p>
+<ul>
+<li>Use status variants to indicate outcome (green for complete, red for critical)</li>
+<li>Include fallback text inside the <code>&lt;progress&gt;</code> element</li>
+</ul>
+<p><strong>Don&#39;t:</strong></p>
+<ul>
+<li>Don&#39;t use progress bars for indeterminate loading — use a spinner or skeleton instead</li>
+<li>Don&#39;t animate the value attribute with JS unless the operation is genuinely progressing</li>
+</ul>
+<hr>
+<h2 id="css-reference">CSS reference</h2>
+<p>This section documents how the component is built. For usage, see the sections above.</p>
+<h3 id="tokens">Tokens</h3>
 <div class="table-scroll"><table class="table">
 <thead>
 <tr>
@@ -151,56 +203,43 @@
 <td>Bar height</td>
 </tr>
 </tbody></table></div>
-<hr>
-<h2 id="basic-usage">Basic usage</h2>
-<div class="demo-preview">
-  <progress class="progress-bar" value="60" max="100">60%</progress>
-</div>
-
-
-      <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-9zl853bvv" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-9zl853bvv" class="language-html">&lt;progress class=&quot;progress-bar&quot; value=&quot;60&quot; max=&quot;100&quot;&gt;60%&lt;/progress&gt;
-</code></pre>
-      </div>
-    
-<p>The fallback text (<code>60%</code>) is shown in browsers that do not support <code>&lt;progress&gt;</code>.</p>
-<hr>
-<h2 id="status-variants">Status variants</h2>
-<div class="demo-preview" style="display: grid; gap: var(--space-m);">
-  <progress class="progress-bar progress-bar--success" value="100" max="100">100%</progress>
-  <progress class="progress-bar progress-bar--warning" value="40" max="100">40%</progress>
-  <progress class="progress-bar progress-bar--danger" value="10" max="100">10%</progress>
-</div>
-
-
-      <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-7ly3inrlj" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-7ly3inrlj" class="language-html">&lt;progress class=&quot;progress-bar progress-bar--success&quot; value=&quot;100&quot; max=&quot;100&quot;&gt;100%&lt;/progress&gt;
-&lt;progress class=&quot;progress-bar progress-bar--warning&quot; value=&quot;40&quot; max=&quot;100&quot;&gt;40%&lt;/progress&gt;
-&lt;progress class=&quot;progress-bar progress-bar--danger&quot; value=&quot;10&quot; max=&quot;100&quot;&gt;10%&lt;/progress&gt;
-</code></pre>
-      </div>
-    
-<hr>
-<h2 id="accessibility-notes">Accessibility notes</h2>
-<ul>
-<li>The native <code>&lt;progress&gt;</code> element is announced by screen readers automatically</li>
-<li>Always include fallback text content inside the element</li>
-<li>If the progress represents a named process, associate it with a label using <code>aria-label</code> or a visible <code>&lt;label&gt;</code></li>
-</ul>
-<hr>
-<h2 id="do-don39t">Do / Don&#39;t</h2>
-<p><strong>Do:</strong></p>
-<ul>
-<li>Use status variants to indicate outcome (green for complete, red for critical)</li>
-<li>Include fallback text inside the <code>&lt;progress&gt;</code> element</li>
-</ul>
-<p><strong>Don&#39;t:</strong></p>
-<ul>
-<li>Don&#39;t use progress bars for indeterminate loading — use a spinner or skeleton instead</li>
-<li>Don&#39;t animate the value attribute with JS unless the operation is genuinely progressing</li>
-</ul>
+<h3 id="selectors">Selectors</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Selector</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>progress.progress-bar</code></td>
+<td>Base component — width, height, border-radius, appearance reset</td>
+</tr>
+<tr>
+<td><code>progress.progress-bar::-webkit-progress-bar</code></td>
+<td>Track background (WebKit)</td>
+</tr>
+<tr>
+<td><code>progress.progress-bar::-webkit-progress-value</code></td>
+<td>Fill colour (WebKit)</td>
+</tr>
+<tr>
+<td><code>progress.progress-bar::-moz-progress-bar</code></td>
+<td>Fill colour (Firefox)</td>
+</tr>
+<tr>
+<td><code>progress.progress-bar--success</code></td>
+<td>Success status variant — green fill</td>
+</tr>
+<tr>
+<td><code>progress.progress-bar--warning</code></td>
+<td>Warning status variant — yellow fill</td>
+</tr>
+<tr>
+<td><code>progress.progress-bar--danger</code></td>
+<td>Danger status variant — red fill</td>
+</tr>
+</tbody></table></div>
 
                 </article>
             </main>
@@ -208,7 +247,7 @@
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#tokens" class="toc-link">Tokens</a></li><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#status-variants" class="toc-link">Status variants</a></li><li class="toc-item toc-level-2"><a href="#accessibility-notes" class="toc-link">Accessibility notes</a></li><li class="toc-item toc-level-2"><a href="#do-don39t" class="toc-link">Do / Don&#39;t</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#status-variants" class="toc-link">Status variants</a></li><li class="toc-item toc-level-2"><a href="#accessibility" class="toc-link">Accessibility</a></li><li class="toc-item toc-level-2"><a href="#usage-rules" class="toc-link">Usage rules</a></li><li class="toc-item toc-level-2"><a href="#css-reference" class="toc-link">CSS reference</a></li></ul></nav></div>
     </aside>
         </div>
 

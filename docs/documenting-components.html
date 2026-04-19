@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documenting Components - By Default Brand OS</title>
+    <meta name="description" content="Standard structure and rules for writing component markdown files that serve both human developers and AI tools.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Documenting Components - By Default Brand OS">
+    <meta property="og:description" content="Standard structure and rules for writing component markdown files that serve both human developers and AI tools.">
+    <meta property="og:image" content="../assets/images/og/og-default.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Design System Framework (path set in cms/docs.config.js) -->
+    <link rel="stylesheet" href="../assets/css/design-system.css" id="design-system-css"
+          onerror="document.getElementById('ds-missing-banner').style.display='flex'">
+    
+
+    <!-- Google Fonts (configured in cms/docs.config.js) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Markdown CSS -->
+
+    <!-- Docs-site styles (layout, nav, page chrome, components, auth) -->
+    <link rel="stylesheet" href="../assets/css/docs-site.css">
+
+    
+
+    <!-- Early theme loader: apply cached client theme before first paint -->
+    <script>
+    (function(){try{var V='20260407',VK='bdd-client-theme-version';if(localStorage.getItem(VK)!==V){localStorage.removeItem('bdd-client-theme');localStorage.setItem(VK,V)}if(document.documentElement.getAttribute('data-client-theme'))return;var c=localStorage.getItem('bdd-client-theme');if(!c)return;var p=c.split('|'),k=p[0],css=p[1],fonts=p[2];if(!k||!css)return;var b='../';var l=document.createElement('link');l.id='client-theme-css';l.rel='stylesheet';l.href=b+css;document.head.appendChild(l);document.documentElement.setAttribute('data-client-theme',k);if(fonts){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://fonts.googleapis.com';pc.id='client-theme-fonts-preconnect';document.head.appendChild(pc);var pc2=document.createElement('link');pc2.rel='preconnect';pc2.href='https://fonts.gstatic.com';pc2.crossOrigin='anonymous';pc2.id='client-theme-fonts-preconnect2';document.head.appendChild(pc2);var fl=document.createElement('link');fl.id='client-theme-fonts';fl.rel='stylesheet';fl.href=fonts;document.head.appendChild(fl)}}catch(e){}})();
+    </script>
+
+    <!-- GoTrue JS — Netlify Identity API client (skipped on localhost) -->
+    <script>
+      window._gotrueReady = (function() {
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0') {
+          return Promise.resolve(null);
+        }
+        return import('https://cdn.jsdelivr.net/npm/gotrue-js@0.9.29/+esm')
+          .then(function(m) { var G = m.default && m.default.default ? m.default.default : m.default; window.GoTrue = G; return G; })
+          .catch(function(e) { console.error('[Auth] GoTrue load failed:', e); return null; });
+      })();
+    </script>
+</head>
+<body class="auth-loading" data-access="team">
+
+    <!-- Design system missing banner (shown by JS if CSS variables fail to load) -->
+    <div id="ds-missing-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#fffbea;border-bottom:1px solid #f0c040;padding:12px 20px;font-family:sans-serif;font-size:14px;color:#7a5c00;align-items:center;gap:12px;">
+        <span>⚠️</span>
+        <span>Design system CSS not found. Check the path in <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">cms/docs.config.js</code> → <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">designSystemPath</code>, then re-run <code style="background:#fef3c7;padding:2px 6px;border-radius:4px;">npm run docgen</code>.</span>
+        <button onclick="document.getElementById('ds-missing-banner').style.display='none'" style="margin-left:auto;background:none;border:1px solid #f0c040;border-radius:4px;padding:4px 10px;cursor:pointer;color:#7a5c00;font-size:13px;">Dismiss</button>
+    </div>
+
+    <!-- Layout grid: nav.js injects header + sidebar before <main> via insertAdjacentHTML -->
+    <div class="docs-layout" id="site-nav" data-base="../">
+    <main class="docs-main-area">
+    <div data-barba="wrapper">
+    <div data-barba="container" data-barba-namespace="docs" data-section="docs" data-order="5" data-level="2">
+        <!-- Page Header (full width, outside grid) -->
+        <div class="page-header">
+      <div class="container-small">
+        <h1 data-flip-id="documenting-components">Documenting Components</h1>
+        <p class="page-subtitle" data-text-wrap="pretty">How to write component documentation for humans and AI</p>
+        
+      </div>
+    </div>
+
+        <!-- Page sub-header bar (full width, sticky — breadcrumb + filename + actions) -->
+        <div class="sticky-bar sticky-bar-page">
+      <div class="sticky-bar-container">
+        <div class="sticky-bar-content">
+          <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
+            <a href="../docs/index.html">Docs</a>
+            <span class="breadcrumb-separator">/</span>
+            <span>Documenting Components</span>
+          </nav>
+        </div>
+        <div class="sticky-bar-actions">
+          <div class="dropdown">
+            <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Markdown source options">
+              <div class="svg-icn"><svg data-icon="more-horizontal" aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M2 10L6 10V14H2L2 10ZM10 10L14 10V14H10V10ZM18 10L22 10V14H18V10Z" fill="currentColor"/></svg></div>
+            </button>
+            <div class="dropdown-menu is-right">
+              <button type="button" class="dropdown-item js-copy-url" aria-label="Copy page link to clipboard">
+                <div class="svg-icn"><svg data-icon="link" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M14.8284 16.2426L8.46446 22.6066L1.39339 15.5355L7.75735 9.17158L9.17156 10.5858L5.63603 14.1213C4.85498 14.9024 4.85498 16.1687 5.63603 16.9498L7.05024 18.364C7.83129 19.145 9.09762 19.145 9.87867 18.364L13.4142 14.8284L14.8284 16.2426ZM9.17156 16.2426L7.75735 14.8284L14.8284 7.75736L16.2426 9.17158L9.17156 16.2426ZM16.2426 14.8284L14.8284 13.4142L18.3639 9.87868C19.145 9.09763 19.145 7.8313 18.3639 7.05026L16.9497 5.63604C16.1687 4.85499 14.9024 4.85499 14.1213 5.63604L10.5858 9.17158L9.17156 7.75736L15.5355 1.3934L22.6066 8.46447L16.2426 14.8284Z" fill="currentColor"/></svg></div>
+                <span>Copy link</span>
+              </button>
+              <div data-auth-role="team">
+                <div class="dropdown-divider"></div>
+                <a href="../cms/documenting-components.md" class="dropdown-item js-md-download" download>
+                  <div class="svg-icn"><svg data-icon="download" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M12 17L5 10L6.4 8.6L9.29482 11.4791C9.92557 12.1064 11 11.6597 11 10.7701V3H13V10.7608C13 11.6517 14.0771 12.0979 14.7071 11.4679L17.6 8.575L19 10L12 17Z" fill="currentColor"/><path d="M4 21V15H6V17C6 18.1046 6.89543 19 8 19H16C17.1046 19 18 18.1046 18 17V15H20V21H4Z" fill="currentColor"/></svg></div>
+                  <span>Download .md file</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="../cms/documenting-components.md" class="dropdown-item js-md-open" target="_blank" rel="noopener noreferrer">
+                  <div class="svg-icn"><svg data-icon="open-full" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M3 21V13H5V15.1858C5 16.0767 6.07714 16.5229 6.70711 15.8929L15.8929 6.70711C16.5229 6.07714 16.0767 5 15.1858 5H13V3H21V11H19V8.81421C19 7.92331 17.9229 7.47714 17.2929 8.10711L8.10711 17.2929C7.47714 17.9229 7.92331 19 8.81421 19H11V21H3Z" fill="currentColor"/></svg></div>
+                  <span>Open .md in new tab</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <a href="../docs/index.html" class="sticky-bar-close" aria-label="Close Documenting Components">
+            <div class="svg-icn"><svg data-icon="close-large" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M5.4 20L4 18.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L4 5.4L5.4 4L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L18.6 4L20 5.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L20 18.6L18.6 20L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L5.4 20Z" fill="currentColor"/></svg></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+        <!-- Main Content + TOC grid -->
+        <div class="docs-content-grid padding-global">
+            <!-- Main Content -->
+            <main class="docs-main">
+                <article>
+                    <h2 id="purpose">Purpose</h2>
+<p>Component docs serve two audiences:</p>
+<ol>
+<li><strong>Humans</strong> — designers and developers who need to know how to USE the component: what variants exist, what HTML to write, what combinations work, accessibility rules</li>
+<li><strong>AI tools</strong> — reading <code>llms-full.txt</code> and need to know how the component is BUILT: what CSS properties it uses, what tokens it references, what selectors exist</li>
+</ol>
+<p>The docs lead with human usage and end with CSS implementation. This standard defines the section order, what goes in each, and when sections are required.</p>
+<hr>
+<h2 id="section-order">Section order</h2>
+<p>Every component markdown file follows this structure:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-c3zzxqqlh" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-c3zzxqqlh">---
+frontmatter
+---
+
+# Component Name                           REQUIRED
+
+## Anatomy                                 IF has data-* axes
+
+## Basic usage                             REQUIRED
+
+## [Variants / Features]                   IF has variants
+
+## [Composition / Grouping]                IF has group pattern
+
+## [Semantic guidance]                     IF element choice matters
+
+## JavaScript                              IF requires JS
+
+## Accessibility                           REQUIRED
+
+## Usage rules                             REQUIRED
+
+## CSS reference                           REQUIRED
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="what-goes-in-each-section">What goes in each section</h2>
+<h3>Intro (no heading — paragraph after <code># Component Name</code>)</h3>
+<p>One paragraph: what the component is, when to use it, what base class is required.</p>
+<ul>
+<li>Always mention the base class: &quot;The <button type="button" class="token-copy is-class" data-copy=".badge" aria-label="Copy .badge"><code>.badge</code></button> class is required.&quot;</li>
+<li>If the component has no custom class (bare HTML elements like <code>code</code>, <code>mark</code>), say so.</li>
+<li>If the component uses <code>data-*</code> attributes, name them here.</li>
+</ul>
+<h3 id="anatomy">Anatomy</h3>
+<p>Required for components with more than one axis of variation. Include a table:</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Axis</th>
+<th>Mechanism</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Colour</td>
+<td><code>data-color</code></td>
+<td><code>data-color=&quot;success&quot;</code></td>
+</tr>
+<tr>
+<td>Type</td>
+<td><code>data-type</code></td>
+<td><code>data-type=&quot;info&quot;</code></td>
+</tr>
+</tbody></table></div>
+<p>Below the table, one sentence stating whether the component uses component tokens or references system tokens directly.</p>
+<p>Omit for simple components with no variation axes (breadcrumb, code, table, mark).</p>
+<h3 id="basic-usage">Basic usage</h3>
+<p>One demo preview + one HTML code block showing the simplest valid instance. If the component requires a wrapper (<code>&lt;nav&gt;</code> for breadcrumb, <button type="button" class="token-copy is-class" data-copy=".table-scroll" aria-label="Copy .table-scroll"><code>.table-scroll</code></button> for tables), show it here.</p>
+<h3 id="variants-features">Variants / Features</h3>
+<p>One <code>##</code> section per axis of variation or distinct feature. Each section: short description, demo preview, HTML code block.</p>
+<p>For components with many variants of the same axis (e.g. all 5 colour options), group them under one heading with sub-examples.</p>
+<p>Name sections after what they control: &quot;Variants&quot;, &quot;Sizes&quot;, &quot;Colour&quot;, &quot;Types&quot;, &quot;Icon-only&quot;, &quot;Full width&quot;, &quot;Dismissible tag&quot;, etc.</p>
+<p>For complex components, show composition examples — how axes combine: &quot;Sizes compose with variants.&quot;</p>
+<h3 id="composition-grouping">Composition / Grouping</h3>
+<p>Only when the component has a dedicated container pattern (<button type="button" class="token-copy is-class" data-copy=".button-group" aria-label="Copy .button-group"><code>.button-group</code></button>, <button type="button" class="token-copy is-class" data-copy=".tag-group" aria-label="Copy .tag-group"><code>.tag-group</code></button>). Demo + HTML for the group wrapper.</p>
+<h3 id="semantic-guidance">Semantic guidance</h3>
+<p>Only when element choice matters. Example: &quot;Buttons vs links&quot; in button docs — explaining when to use <code>&lt;button&gt;</code> vs <code>&lt;a class=&quot;button&quot;&gt;</code>.</p>
+<h3 id="javascript">JavaScript</h3>
+<p>Only when the component requires JS. State which script file to include and describe the JS API if one exists.</p>
+<h3 id="accessibility">Accessibility</h3>
+<p>Required for all. Bullet list using imperative language:</p>
+<ul>
+<li>&quot;Must include <code>aria-label</code>&quot; — not &quot;Consider adding&quot;</li>
+<li>Focus behaviour, screen reader considerations, keyboard requirements</li>
+</ul>
+<h3 id="usage-rules">Usage rules</h3>
+<p>Required for all. Do/Don&#39;t format, 3-5 items per list. Focus on decisions, not mechanics.</p>
+<h3 id="css-reference">CSS reference</h3>
+<p>Required for all. This is the AI-targeted section. Start with: <em>&quot;This section documents how the component is built. For usage, see the sections above.&quot;</em></p>
+<p>Content depends on whether the component has its own tokens.</p>
+<hr>
+<h2 id="css-reference-two-tiers">CSS reference: two tiers</h2>
+<h3 id="components-with-component-tokens">Components WITH component tokens</h3>
+<p>Components that define <code>--component-*</code> custom properties (button, dropdown, dialog, form, tabs, progress, tooltip, toggle, rating):</p>
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-hfvk7lzpg" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-hfvk7lzpg" class="language-markdown">### Tokens
+
+| Token | Default | What it controls |
+|---|---|---|
+| `--button-color` | `var(--text-primary)` | Identity colour — feeds bg, border, variant text |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.button` | Base component |
+| `.button[data-variant=&quot;outline&quot;]` | Outline variant |
+
+### Key rules
+
+Hover (filled): `opacity: 0.9`.
+Colour cascade: `data-color` sets `--button-color`, all variants read from it.
+</code></pre>
+      </div>
+    
+<h3 id="components-without-component-tokens">Components WITHOUT component tokens</h3>
+<p>Components that reference system tokens directly (badge, tag, callout, toast, card, breadcrumb, code, mark, table):</p>
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-i3h10cwfc" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-i3h10cwfc" class="language-markdown">### Styling
+
+| Property | Value |
+|---|---|
+| Background | `var(--background-darker)` |
+| Font size | `var(--font-2xs)` |
+| Padding | `var(--space-2xs) var(--space-s)` |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.badge` | Base component |
+| `.badge[data-color=&quot;success&quot;]` | Success colour variant |
+</code></pre>
+      </div>
+    
+<hr>
+<h2 id="complexity-tiers">Complexity tiers</h2>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Section</th>
+<th>Complex</th>
+<th>Medium</th>
+<th>Simple</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Intro</td>
+<td>Required</td>
+<td>Required</td>
+<td>Required</td>
+</tr>
+<tr>
+<td>Anatomy</td>
+<td>Required</td>
+<td>If has data-*</td>
+<td>Omit</td>
+</tr>
+<tr>
+<td>Basic usage</td>
+<td>Required</td>
+<td>Required</td>
+<td>Required</td>
+</tr>
+<tr>
+<td>Variants</td>
+<td>Required (multiple)</td>
+<td>As needed</td>
+<td>If modifiers exist</td>
+</tr>
+<tr>
+<td>Composition</td>
+<td>If applicable</td>
+<td>If applicable</td>
+<td>Omit</td>
+</tr>
+<tr>
+<td>Semantic guidance</td>
+<td>Required</td>
+<td>If applicable</td>
+<td>Omit</td>
+</tr>
+<tr>
+<td>JavaScript</td>
+<td>If has JS</td>
+<td>If has JS</td>
+<td>Omit</td>
+</tr>
+<tr>
+<td>Accessibility</td>
+<td>Required</td>
+<td>Required</td>
+<td>Required</td>
+</tr>
+<tr>
+<td>Usage rules</td>
+<td>Required</td>
+<td>Required</td>
+<td>Required</td>
+</tr>
+<tr>
+<td>CSS reference</td>
+<td>Full (tokens + selectors + key rules)</td>
+<td>Styling + selectors</td>
+<td>Styling table</td>
+</tr>
+</tbody></table></div>
+<p><strong>Complex:</strong> button, dropdown, dialog, form<br><strong>Medium:</strong> badge, tag, callout, toast, tabs, tooltip, progress, disclosure<br><strong>Simple:</strong> card, breadcrumb, table, code, mark</p>
+<hr>
+<h2 id="frontmatter-requirements">Frontmatter requirements</h2>
+<p>Every component doc must include:</p>
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-z3fdlahmh" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-z3fdlahmh" class="language-yaml">---
+title: &quot;Component Name&quot;
+subtitle: &quot;Short description&quot;
+description: &quot;One-sentence description for meta tags&quot;
+author: &quot;Studio&quot;
+section: &quot;Design System&quot;
+layer: &quot;core&quot;           # or &quot;foundation&quot;, &quot;docs-site&quot;, &quot;app&quot;
+subsection: &quot;Category&quot;  # e.g. &quot;Feedback&quot;, &quot;Data Entry&quot;, &quot;Navigation&quot;
+order: 1
+status: &quot;published&quot;
+access: &quot;team&quot;
+client: &quot;internal&quot;
+---
+</code></pre>
+      </div>
+    
+<p>The <code>layer</code> field determines whether the component appears in the portable design system (<code>foundation</code>, <code>core</code>) or is specific to BrandOS (<code>docs-site</code>, <code>app</code>).</p>
+<hr>
+<h2 id="heading-consistency">Heading consistency</h2>
+<p>Use these exact heading names:</p>
+<ul>
+<li><code>## Accessibility</code> — not &quot;Accessibility notes&quot;</li>
+<li><code>## Usage rules</code> — not &quot;Do / Don&#39;t&quot; or &quot;Rules&quot;</li>
+<li><code>## CSS reference</code> — not &quot;Tokens&quot;, &quot;Styling&quot;, or &quot;How it&#39;s built&quot;</li>
+<li><code>## Basic usage</code> — not &quot;Usage&quot; or &quot;Getting started&quot;</li>
+</ul>
+
+                </article>
+            </main>
+
+            <!-- Table of Contents -->
+            <aside class="docs-toc">
+      <span class="toc-header">On this page</span>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#purpose" class="toc-link">Purpose</a></li><li class="toc-item toc-level-2"><a href="#section-order" class="toc-link">Section order</a></li><li class="toc-item toc-level-2"><a href="#what-goes-in-each-section" class="toc-link">What goes in each section</a></li><li class="toc-item toc-level-2"><a href="#css-reference-two-tiers" class="toc-link">CSS reference: two tiers</a></li><li class="toc-item toc-level-2"><a href="#complexity-tiers" class="toc-link">Complexity tiers</a></li><li class="toc-item toc-level-2"><a href="#frontmatter-requirements" class="toc-link">Frontmatter requirements</a></li><li class="toc-item toc-level-2"><a href="#heading-consistency" class="toc-link">Heading consistency</a></li></ul></nav></div>
+    </aside>
+        </div>
+
+        <!-- Page Navigation (Previous / Next) -->
+        <nav class="page-nav" aria-label="Page navigation"><div class="page-nav-inner padding-global"><a href="layout.html" class="page-nav-link page-nav-prev" rel="prev">
+      <div class="svg-icn page-nav-arrow"><svg data-icon="chevron-left-large" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M15.225 22L5.225 12L15.225 2L17 3.775L10.1892 10.5858C9.40817 11.3668 9.40816 12.6332 10.1892 13.4142L17 20.225L15.225 22Z" fill="currentColor"/></svg></div>
+      <span class="page-nav-text">
+        <span class="page-nav-label">Previous</span>
+        
+        <h3 class="page-nav-title">HTML Layout</h3>
+      </span>
+    </a><a href="seo-best-practices.html" class="page-nav-link page-nav-next" rel="next">
+      <span class="page-nav-text">
+        <span class="page-nav-label">Next</span>
+        
+        <h3 class="page-nav-title">SEO</h3>
+      </span>
+      <div class="svg-icn page-nav-arrow"><svg data-icon="chevron-right-large" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8.775 22L7 20.225L13.8108 13.4142C14.5918 12.6332 14.5918 11.3668 13.8108 10.5858L7 3.775L8.775 2L18.775 12L8.775 22Z" fill="currentColor"/></svg></div>
+    </a></div></nav>
+
+        <!-- Page Feedback -->
+        <section class="page-feedback" aria-label="Page feedback">
+            <div class="page-feedback-inner padding-global">
+                <h3 class="page-feedback-prompt">Was this page helpful?</h3>
+                <p class="page-feedback-description">We use this feedback to improve our documentation.</p>
+                <div class="button-group">
+                    <button class="button" data-feedback="yes" type="button"><div class="svg-icn"><svg data-icon="thumbs-up" aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 3L14.5 8H23V12.5L19.5 21H2V8H7L14 1L16 3ZM9.29289 8.53426C9.10536 8.72179 9 8.97615 9 9.24136V17C9 18.1046 9.89543 19 11 19H16.8208C17.6312 19 18.3616 18.5109 18.6701 17.7615L21 12.1035V11C21 10.4477 20.5523 10 20 10H13.1555C12.4856 10 12.0052 9.35431 12.1976 8.71271L13.2907 5.06833C13.3504 4.86932 13.1046 4.72254 12.9577 4.86945L9.29289 8.53426ZM5 10C4.44772 10 4 10.4477 4 11V18C4 18.5523 4.44772 19 5 19H6C6.55228 19 7 18.5523 7 18V11C7 10.4477 6.55228 10 6 10H5Z" fill="currentColor"/></svg></div> Yes</button>
+                    <button class="button" data-variant="faded" data-feedback="no" type="button"><div class="svg-icn"><svg data-icon="thumbs-down" aria-hidden="true" viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21L9.5 16H1L1 11.5L4.5 3L22 3L22 16L17 16L10 23L8 21ZM14.7071 15.4657C14.8946 15.2782 15 15.0239 15 14.7586L15 7C15 5.89543 14.1046 5 13 5L7.17921 5C6.36877 5 5.63845 5.48908 5.32986 6.23847L3 11.8965L3 13C3 13.5523 3.44772 14 4 14L10.8445 14C11.5144 14 11.9948 14.6457 11.8024 15.2873L10.7093 18.9317C10.6496 19.1307 10.8954 19.2775 11.0423 19.1305L14.7071 15.4657ZM19 14C19.5523 14 20 13.5523 20 13V6C20 5.44772 19.5523 5 19 5H18C17.4477 5 17 5.44772 17 6V13C17 13.5523 17.4477 14 18 14H19Z" fill="currentColor"/></svg></div> No</button>
+                </div>
+                <div class="page-feedback-success" aria-live="polite">
+                    <div class="page-feedback-success-icon"><div class="svg-icn"><svg data-icon="status-check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_14441_253)"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.0004 0.000396729C18.6276 0.000611138 24.0004 5.37311 24.0004 12.0004C24.0002 18.6275 18.6275 24.0002 12.0004 24.0004C5.37311 24.0004 0.000611143 18.6276 0.000396729 12.0004C0.000396729 5.37298 5.37298 0.000396729 12.0004 0.000396729ZM11.9643 13.7357C11.1833 14.5167 9.9172 14.5166 9.13614 13.7357L6.27481 10.8754L4.85001 12.3002L10.5502 18.0004L20.1498 8.39981L18.725 6.97501L11.9643 13.7357Z" fill="currentColor"/></g><defs><clipPath id="clip0_14441_253"><rect width="24" height="24" fill="white"/></clipPath></defs></svg></div></div>
+                    <h3 class="page-feedback-success-title">Thanks for your feedback</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Modal -->
+        <dialog class="feedback-modal" aria-label="Send feedback">
+            <div class="feedback-modal-content">
+                <h3 class="feedback-modal-title">Send feedback</h3>
+                <p class="feedback-modal-subtitle"></p>
+                <form class="feedback-form">
+                    <textarea name="feedback" class="feedback-textarea" placeholder="Share your feedback here" rows="4"></textarea>
+                    <div class="button-group feedback-modal-actions">
+                        <button type="button" class="button feedback-modal-close" data-size="small" data-variant="faded">Close</button>
+                        <button type="submit" class="button" data-size="small">Send feedback</button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
+
+        <!-- Footer -->
+        <footer class="docs-footer">
+            <div class="docs-footer-inner padding-global">
+                <p class="docs-footer-text">© 2026 By Default</p>
+            </div>
+        </footer>
+
+        <!-- Per-page scripts (inside Barba container so they re-execute on transition) -->
+        
+    </div>
+    </div><!-- /data-barba="wrapper" -->
+    </main>
+    </div><!-- /.docs-layout #site-nav -->
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- Initialize Highlight.js and TOC (re-callable for Barba transitions) -->
+    <script>
+        (function() {
+            'use strict';
+
+            // Track TOC observer + scroll listener so we can clean up before re-init
+            var tocObserver = null;
+            var tocScrollHandler = null;
+
+            window.bdInitHighlight = function initHighlight() {
+                if (!window.hljs) return;
+                document.querySelectorAll('pre code').forEach(function(block) {
+                    hljs.highlightElement(block);
+                });
+            };
+
+            window.bdInitTOCActiveState = function initTOCActiveState() {
+                // Tear down any prior observer + scroll listener (Barba re-init)
+                if (tocObserver) { tocObserver.disconnect(); tocObserver = null; }
+                if (tocScrollHandler) {
+                    window.removeEventListener('scroll', tocScrollHandler);
+                    tocScrollHandler = null;
+                }
+
+                var tocLinks = document.querySelectorAll('.toc-link');
+                var headings = document.querySelectorAll('h1[id], h2[id]');
+                if (tocLinks.length === 0 || headings.length === 0) return;
+
+                var linkMap = new Map();
+                tocLinks.forEach(function(link) {
+                    var href = link.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        linkMap.set(href.substring(1), link);
+                    }
+                });
+
+                var observerOptions = { rootMargin: '-20% 0px -70% 0px', threshold: 0 };
+
+                tocObserver = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        var id = entry.target.id;
+                        var link = linkMap.get(id);
+                        if (entry.isIntersecting) {
+                            tocLinks.forEach(function(l) { l.classList.remove('toc-link-active'); });
+                            if (link) link.classList.add('toc-link-active');
+                        }
+                    });
+                }, observerOptions);
+
+                headings.forEach(function(heading) {
+                    if (heading.id) tocObserver.observe(heading);
+                });
+
+                function setInitialActive() {
+                    var activeHeading = null;
+                    var maxTop = -Infinity;
+                    headings.forEach(function(heading) {
+                        var rect = heading.getBoundingClientRect();
+                        if (rect.top <= 100 && rect.top > maxTop) {
+                            maxTop = rect.top;
+                            activeHeading = heading;
+                        }
+                    });
+                    if (activeHeading && activeHeading.id) {
+                        var link = linkMap.get(activeHeading.id);
+                        if (link) {
+                            tocLinks.forEach(function(l) { l.classList.remove('toc-link-active'); });
+                            link.classList.add('toc-link-active');
+                        }
+                    }
+                }
+
+                setInitialActive();
+
+                var scrollTimeout;
+                tocScrollHandler = function() {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(setInitialActive, 100);
+                };
+                window.addEventListener('scroll', tocScrollHandler);
+            };
+
+            function init() {
+                window.bdInitHighlight();
+                window.bdInitTOCActiveState();
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+
+    <!-- Back to Top -->
+    <div class="back-to-top-wrapper">
+      <button class="button back-to-top-btn" data-icon-only aria-label="Back to top" type="button">
+        <div class="svg-icn"><svg data-icon="arrow-top" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M4 4V2H20V4H4Z" fill="currentColor"/><path d="M11 22V12.2392C11 11.3483 9.92286 10.9021 9.29289 11.5321L5.4 15.425L4 14L12 6L20 14L18.6 15.425L14.7071 11.5321C14.0771 10.9021 13 11.3483 13 12.2392V22H11Z" fill="currentColor"/></svg></div>
+      </button>
+    </div>
+    <script>
+      (function() {
+        var btn = document.querySelector('.back-to-top-wrapper');
+        if (!btn) return;
+        window.addEventListener('scroll', function() {
+          btn.classList.toggle('is-visible', window.scrollY > 300);
+        });
+        btn.querySelector('button').addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+
+    <!-- Dropdown -->
+    <script src="../assets/js/dropdown.js"></script>
+
+    <!-- Site Navigation -->
+    <script src="../assets/js/nav.js"></script>
+    <!-- Auth -->
+    <script src="../assets/js/auth-config.js"></script>
+    <!-- Theme -->
+    <script src="../assets/js/theme-config.js"></script>
+    <script src="../assets/js/theme-loader.js"></script>
+    <!-- Auth (must load after theme scripts) -->
+    <script src="../assets/js/auth.js"></script>
+    <!-- Feedback -->
+    <script src="../assets/js/feedback.js"></script>
+    <!-- Copy to clipboard -->
+    <script src="../assets/js/copy-button.js"></script>
+    <!-- Number input stepper -->
+    <script src="../assets/js/number-input.js"></script>
+    <!-- Accordion -->
+    <script src="../assets/js/accordion.js"></script>
+    <!-- Tabs -->
+    <script src="../assets/js/tabs.js"></script>
+    <!-- Toast notifications -->
+    <script src="../assets/js/toast.js"></script>
+    <!-- Dialog -->
+    <script src="../assets/js/dialog.js"></script>
+    <!-- Rating -->
+    <script src="../assets/js/rating.js"></script>
+    <!-- Markdown download/open — strips frontmatter and block HTML -->
+    <script src="../assets/js/md-strip.js"></script>
+    <!-- Barba.js page transitions (vendored locally) — must load after auth/nav/theme -->
+    <script src="../assets/js/vendor/barba/barba.min.js"></script>
+    <script src="../assets/js/barba-init.js"></script>
+
+    <script>
+      /* Tag dismiss — delegated to document, attached once */
+      document.addEventListener('click', function (e) {
+        var removeBtn = e.target.closest('.tag-remove');
+        if (removeBtn) {
+          var tag = removeBtn.closest('.tag');
+          if (tag) tag.remove();
+        }
+      });
+
+      /* Table scroll overflow hint — re-callable for Barba transitions */
+      (function() {
+        function checkOverflow(wrapper) {
+          var isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
+          var isAtEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 1;
+          wrapper.classList.toggle('is-overflowing', isOverflowing);
+          wrapper.classList.toggle('is-scrolled-end', isAtEnd);
+        }
+
+        window.bdInitTableScroll = function initTableScroll() {
+          var wrappers = document.querySelectorAll('.table-scroll');
+          wrappers.forEach(function(wrapper) {
+            if (wrapper.__bdTableScrollBound) return;
+            wrapper.__bdTableScrollBound = true;
+            checkOverflow(wrapper);
+            wrapper.addEventListener('scroll', function() { checkOverflow(wrapper); });
+          });
+        };
+
+        // Window resize handler attached once — re-checks all wrappers
+        window.addEventListener('resize', function() {
+          document.querySelectorAll('.table-scroll').forEach(checkOverflow);
+        });
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', window.bdInitTableScroll);
+        } else {
+          window.bdInitTableScroll();
+        }
+      })();
+    </script>
+    <div class="cursor-default"></div>
+    <div class="cursor-halo"></div>
+</body>
+</html>

@@ -373,22 +373,6 @@ Role classes override tokens, never duplicate the base. The base's structure is 
 </button>
 ```
 
-### Tokens available for role class overrides
-
-| Token | Default | What it controls |
-|---|---|---|
-| `--button-color` | `var(--text-primary)` | The button's identity color — feeds bg, border, and variant text |
-| `--button-faded` | `color-mix(... --button-color ...)` | 15% alpha of button color — used by faded variants |
-| `--button-bg` | `var(--button-color)` | Background fill |
-| `--button-border` | `var(--button-color)` | Border stroke |
-| `--button-text-color` | `var(--text-inverted)` | Text colour |
-| `--button-font` | `var(--font-secondary)` | Font family |
-| `--button-text-size` | `var(--text-body)` | Text size |
-| `--button-padding-y` | `var(--space-m)` | Vertical padding |
-| `--button-padding-x` | `var(--space-xl)` | Horizontal padding |
-| `--button-radius` | `0` | Corner radius |
-| `--button-gap` | `var(--space-s)` | Icon-to-text gap |
-
 ---
 
 ## Button group
@@ -438,3 +422,59 @@ Role classes override tokens, never duplicate the base. The base's structure is 
 - Don't use `data-color` when hierarchy already communicates the meaning
 - Don't stack more than two coloured buttons on the same surface
 - Don't use `.is-active` for permanent variants — if something is always outlined, it's a `data-variant`, not a state
+
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Tokens
+
+| Token | Default | What it controls |
+|---|---|---|
+| `--button-color` | `var(--text-primary)` | The button's identity colour — feeds bg, border, and variant text |
+| `--button-faded` | `color-mix(in srgb, var(--button-color), var(--alpha-15))` | 15% alpha of button colour — used by faded variants |
+| `--button-bg` | `var(--button-color)` | Background fill |
+| `--button-border` | `var(--button-color)` | Border stroke |
+| `--button-text-color` | `var(--text-inverted)` | Text colour |
+| `--button-font` | `var(--font-secondary)` | Font family |
+| `--button-text-size` | `var(--text-body)` | Text size |
+| `--button-padding-y` | `var(--space-m)` | Vertical padding |
+| `--button-padding-x` | `var(--space-xl)` | Horizontal padding |
+| `--button-radius` | `0` | Corner radius |
+| `--button-gap` | `var(--space-s)` | Icon-to-text gap |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.button` | Base component — all tokens, layout, typography, transitions |
+| `.button:hover` | Filled hover — `opacity: 0.9` |
+| `.button[data-variant="outline"]` | Transparent bg, primary border, text inherits `--button-color` |
+| `.button[data-variant="faded"]` | 15% alpha bg, no border, text inherits `--button-color` |
+| `.button[data-variant="outline-faded"]` | Transparent bg, faded border, text inherits `--button-color` |
+| `.button[data-variant="transparent"]` | No bg, no border, text inherits `--button-color` |
+| `.button[data-variant="text"]` | No bg, no border, zero padding, underline on hover |
+| `.button[data-variant="outline"]:hover`, etc. | Unfilled hover — `color-mix(in srgb, var(--button-color), var(--alpha-10))` fill |
+| `.button[data-size="small"]` | Reduced padding and font size |
+| `.button[data-size="xsmall"]` | Further reduced padding and font size |
+| `.button[data-icon-only]` | Equal padding (square/circle shape) |
+| `.button[data-full-width]` | `width: 100%` |
+| `.button[data-color="danger"]` / `[data-color="red"]` | Sets `--button-color` to `var(--status-danger)` |
+| `.button[data-color="success"]` / `[data-color="green"]` | Sets `--button-color` to `var(--status-success)` |
+| `.button[data-color="warning"]` / `[data-color="yellow"]` | Sets `--button-color` to `var(--status-warning)` |
+| `.button[data-color="info"]` / `[data-color="blue"]` | Sets `--button-color` to `var(--status-info)` |
+| `.button[data-color="accent"]` / `[data-color="purple"]` | Sets `--button-color` to `var(--status-accent)` |
+| `.button:disabled`, `.button.is-disabled` | Opacity 0.4, pointer events disabled |
+| `.button.is-loading` | Pointer disabled, opacity 0.6 |
+| `.button-group` | Flex container for grouping buttons with `var(--space-m)` gap |
+
+### Key rules
+
+- **Colour cascade:** `--button-color` is the single source. It feeds `--button-bg`, `--button-border`, and `--button-faded` automatically. `data-color` attributes only override `--button-color` — every variant picks it up without extra selectors.
+- **Hover formula (filled):** `opacity: 0.9` on `.button:hover`.
+- **Hover formula (unfilled):** `background-color: color-mix(in srgb, var(--button-color), var(--alpha-10))` — applies to outline, faded, outline-faded, transparent, and text variants.
+- **Focus ring:** inherits the global `:focus-visible` outline from the design system reset — no component-specific focus rule.
+- **Dark mode faded adjustment:** `--button-faded` changes from `var(--alpha-15)` to `var(--alpha-80)` in dark mode so the 15% tint remains visible on dark backgrounds.
+- **Transition:** `background-color`, `color`, `border-color`, and `opacity` all use `var(--duration-2xs) var(--ease-out)`.

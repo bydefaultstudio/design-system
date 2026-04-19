@@ -121,32 +121,6 @@
                 <article>
                     <p>Tabs organise content into panels that the user switches between. The component requires JavaScript (<code>assets/js/tabs.js</code>) for interaction and follows the WAI-ARIA tabs pattern.</p>
 <hr>
-<h2 id="tokens">Tokens</h2>
-<div class="table-scroll"><table class="table">
-<thead>
-<tr>
-<th>Token</th>
-<th>Default</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--tab-active-color)" aria-label="Copy var(--tab-active-color)"><code>var(--tab-active-color)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button></td>
-<td>Active tab text colour</td>
-</tr>
-<tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--tab-inactive-color)" aria-label="Copy var(--tab-inactive-color)"><code>var(--tab-inactive-color)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--text-faded)" aria-label="Copy var(--text-faded)"><code>var(--text-faded)</code></button></td>
-<td>Inactive tab text colour</td>
-</tr>
-<tr>
-<td><button type="button" class="token-copy is-token" data-copy="var(--tab-indicator-color)" aria-label="Copy var(--tab-indicator-color)"><code>var(--tab-indicator-color)</code></button></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button></td>
-<td>Bottom border indicator</td>
-</tr>
-</tbody></table></div>
-<hr>
 <h2 id="basic-usage">Basic usage</h2>
 <div class="demo-preview">
   <div class="tabs" role="tablist" aria-label="Demo tabs">
@@ -167,8 +141,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-4fdje9ugl" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-4fdje9ugl" class="language-html">&lt;div class=&quot;tabs&quot; role=&quot;tablist&quot; aria-label=&quot;Section name&quot;&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-a4dhdl7x4" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-a4dhdl7x4" class="language-html">&lt;div class=&quot;tabs&quot; role=&quot;tablist&quot; aria-label=&quot;Section name&quot;&gt;
   &lt;button class=&quot;tab is-active&quot; role=&quot;tab&quot; aria-selected=&quot;true&quot; aria-controls=&quot;panel-1&quot; id=&quot;tab-1&quot;&gt;Tab One&lt;/button&gt;
   &lt;button class=&quot;tab&quot; role=&quot;tab&quot; aria-selected=&quot;false&quot; aria-controls=&quot;panel-2&quot; id=&quot;tab-2&quot;&gt;Tab Two&lt;/button&gt;
   &lt;button class=&quot;tab&quot; role=&quot;tab&quot; aria-selected=&quot;false&quot; aria-controls=&quot;panel-3&quot; id=&quot;tab-3&quot;&gt;Tab Three&lt;/button&gt;
@@ -191,8 +165,8 @@
 <p>Include <code>assets/js/tabs.js</code> on any page that uses tabs. The script automatically initialises all <code>[role=&quot;tablist&quot;]</code> elements on the page.</p>
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-j3rgvjhdq" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-j3rgvjhdq" class="language-html">&lt;script src=&quot;/assets/js/tabs.js&quot;&gt;&lt;/script&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-bu29u8zor" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-bu29u8zor" class="language-html">&lt;script src=&quot;/assets/js/tabs.js&quot;&gt;&lt;/script&gt;
 </code></pre>
       </div>
     
@@ -232,7 +206,7 @@
 </tr>
 </tbody></table></div>
 <hr>
-<h2 id="accessibility-notes">Accessibility notes</h2>
+<h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>The tab list uses <code>role=&quot;tablist&quot;</code> with a descriptive <code>aria-label</code></li>
 <li>Each tab uses <code>role=&quot;tab&quot;</code> with <code>aria-selected</code> and <code>aria-controls</code></li>
@@ -241,7 +215,7 @@
 <li>Focus ring appears on <code>focus-visible</code></li>
 </ul>
 <hr>
-<h2 id="do-don39t">Do / Don&#39;t</h2>
+<h2 id="usage-rules">Usage rules</h2>
 <p><strong>Do:</strong></p>
 <ul>
 <li>Use unique IDs for tabs and panels on each page</li>
@@ -253,6 +227,79 @@
 <li>Don&#39;t use tabs for sequential steps (use a stepper pattern instead)</li>
 <li>Don&#39;t nest tablists inside tab panels</li>
 </ul>
+<hr>
+<h2 id="css-reference">CSS reference</h2>
+<p>This section documents how the component is built. For usage, see the sections above.</p>
+<h3 id="tokens">Tokens</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Token</th>
+<th>Default</th>
+<th>What it controls</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--tab-active-color)" aria-label="Copy var(--tab-active-color)"><code>--tab-active-color</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button></td>
+<td>Active tab text colour</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--tab-inactive-color)" aria-label="Copy var(--tab-inactive-color)"><code>--tab-inactive-color</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-faded)" aria-label="Copy var(--text-faded)"><code>var(--text-faded)</code></button></td>
+<td>Inactive tab text colour</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--tab-indicator-color)" aria-label="Copy var(--tab-indicator-color)"><code>--tab-indicator-color</code></button></td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-primary)" aria-label="Copy var(--text-primary)"><code>var(--text-primary)</code></button></td>
+<td>Bottom border indicator</td>
+</tr>
+</tbody></table></div>
+<h3 id="selectors">Selectors</h3>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Selector</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><button type="button" class="token-copy is-class" data-copy=".tabs" aria-label="Copy .tabs"><code>.tabs</code></button></td>
+<td>Tab list container — flex row, bottom border</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-class" data-copy=".tab" aria-label="Copy .tab"><code>.tab</code></button></td>
+<td>Individual tab button — padding, colour, cursor</td>
+</tr>
+<tr>
+<td><code>.tab:hover</code></td>
+<td>Tab hover — text colour change</td>
+</tr>
+<tr>
+<td><code>.tab.is-active</code></td>
+<td>Active tab — active colour, bold weight</td>
+</tr>
+<tr>
+<td><code>.tab.is-active::after</code></td>
+<td>Active indicator — bottom border pseudo-element</td>
+</tr>
+<tr>
+<td><code>.tab:focus-visible</code></td>
+<td>Tab focus ring</td>
+</tr>
+<tr>
+<td><button type="button" class="token-copy is-class" data-copy=".tab-panel" aria-label="Copy .tab-panel"><code>.tab-panel</code></button></td>
+<td>Panel content container — padding</td>
+</tr>
+<tr>
+<td><code>a.tab</code></td>
+<td>Link-as-tab variant — text-decoration reset</td>
+</tr>
+<tr>
+<td><code>a.tab:hover</code></td>
+<td>Link tab hover</td>
+</tr>
+</tbody></table></div>
 
                 </article>
             </main>
@@ -260,7 +307,7 @@
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#tokens" class="toc-link">Tokens</a></li><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#javascript" class="toc-link">JavaScript</a></li><li class="toc-item toc-level-2"><a href="#keyboard-interactions" class="toc-link">Keyboard interactions</a></li><li class="toc-item toc-level-2"><a href="#accessibility-notes" class="toc-link">Accessibility notes</a></li><li class="toc-item toc-level-2"><a href="#do-don39t" class="toc-link">Do / Don&#39;t</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#basic-usage" class="toc-link">Basic usage</a></li><li class="toc-item toc-level-2"><a href="#javascript" class="toc-link">JavaScript</a></li><li class="toc-item toc-level-2"><a href="#keyboard-interactions" class="toc-link">Keyboard interactions</a></li><li class="toc-item toc-level-2"><a href="#accessibility" class="toc-link">Accessibility</a></li><li class="toc-item toc-level-2"><a href="#usage-rules" class="toc-link">Usage rules</a></li><li class="toc-item toc-level-2"><a href="#css-reference" class="toc-link">CSS reference</a></li></ul></nav></div>
     </aside>
         </div>
 

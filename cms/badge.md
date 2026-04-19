@@ -74,21 +74,6 @@ The badge uses `data-color` for semantic colour variants. No component-level tok
 
 ---
 
-## Styling
-
-Badge uses system tokens directly — no component-level token indirection.
-
-| Property | Value |
-|---|---|
-| Font family | `var(--font-tertiary)` |
-| Font size | `var(--font-2xs)` |
-| Padding | `var(--space-2xs) var(--space-s)` |
-| Border radius | `0` |
-| Background | `var(--background-darker)` |
-| Text colour | `var(--text-primary)` |
-
----
-
 ## Accessibility
 
 - Badges are presentational — they do not require ARIA roles
@@ -109,3 +94,31 @@ Badge uses system tokens directly — no component-level token indirection.
 
 - Don't use badges as buttons — they are not interactive
 - Don't rely on colour alone to convey meaning
+
+---
+
+## CSS reference
+
+This section documents how the component is built. For usage, see the sections above.
+
+### Styling
+
+| Property | Value |
+|---|---|
+| Font family | `var(--font-tertiary)` |
+| Font size | `var(--font-2xs)` |
+| Padding | `var(--space-2xs) var(--space-s)` |
+| Border radius | `0` |
+| Background | `var(--background-darker)` |
+| Text colour | `var(--text-primary)` |
+
+### Selectors
+
+| Selector | Purpose |
+|---|---|
+| `.badge` | Base component |
+| `.badge[data-color="success"]`, `.badge[data-color="green"]` | Success colour variant |
+| `.badge[data-color="warning"]`, `.badge[data-color="yellow"]` | Warning colour variant |
+| `.badge[data-color="danger"]`, `.badge[data-color="red"]` | Danger colour variant |
+| `.badge[data-color="info"]`, `.badge[data-color="blue"]` | Info colour variant |
+| `.badge[data-color="accent"]`, `.badge[data-color="purple"]` | Accent colour variant |
