@@ -128,12 +128,22 @@ function shouldPrevent(payload) {
   if (href.startsWith("mailto:")) return true;
   if (href.startsWith("tel:")) return true;
 
-  // External origin or same-page (hash-only difference)
   try {
     var url = new URL(href, location.href);
     if (url.origin !== location.origin) return true;
-    // Same page with only a hash difference — let the browser handle it
-    if (url.pathname === location.pathname && url.hash !== "") return true;
+
+    // Normalize pathnames — strip .html, index.html, trailing slashes
+    var normLink = url.pathname.replace(/\/?(index)?\.html$/, "") || "/";
+    var normPage = location.pathname.replace(/\/?(index)?\.html$/, "") || "/";
+
+    // Same page with hash — let the browser scroll to the anchor
+    if (normLink === normPage && url.hash) return true;
+
+    // Same page without hash — block both Barba and browser navigation
+    if (normLink === normPage && !url.hash) {
+      if (payload.event) payload.event.preventDefault();
+      return true;
+    }
   } catch (e) {
     return true;
   }
