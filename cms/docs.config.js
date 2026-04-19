@@ -12,8 +12,8 @@ module.exports = {
   // Set to null if using the framework defaults only
   brandCssPath: null,
 
-  // Google Fonts URL — set to null to disable
-  googleFontsUrl: 'https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap',
+  // Google Fonts URL — set to null to disable (fonts are now self-hosted + Adobe Typekit)
+  googleFontsUrl: null,
 
   // Footer text
   footerText: '© 2026 By Default',

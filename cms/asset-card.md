@@ -125,7 +125,7 @@ The same wrapper works for type specimens — drop the alphabet and numbers into
     </div>
   </div>
   <div class="asset-card-footer">
-    <p class="asset-card-title">Inclusive Sans</p>
+    <p class="asset-card-title">Zalando Sans</p>
   </div>
 </div>
 ```

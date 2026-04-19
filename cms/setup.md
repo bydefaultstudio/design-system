@@ -48,9 +48,9 @@ Update font families in `assets/css/design-system.css` under the **Brand Tokens*
 - `var(--font-quaternary)` — Your monospace font (if used)
 
 **Also update:**
-- Google Fonts link in `cms/docs.config.js` (if using Google Fonts)
-- Google Fonts link in `design-system/index.html` (if using Google Fonts)
-- Google Fonts link in `brand-book/index.html` (if using Google Fonts)
+- `@font-face` declarations in `assets/css/design-system.css` if swapping self-hosted fonts
+- Adobe Typekit link in `cms/generator/template.html` and `templates/page-template.html` if changing the secondary font
+- `googleFontsUrl` in `cms/docs.config.js` if the project uses Google Fonts for client themes
 
 ---
 
@@ -92,7 +92,7 @@ The documentation is ready to use, but you may want to:
 - [ ] Update font families in `assets/css/design-system.css` (Brand Tokens section)
 - [ ] Replace logos in `assets/images/logos/bydefault/`
 - [ ] Fill in `PROJECT_BRIEF.md`
-- [ ] Update Google Fonts links (if applicable)
+- [ ] Update font loading (Typekit link in templates, `@font-face` in design-system.css)
 - [ ] Set up client theme (if applicable) — see [Client Theming](#client-theming)
 - [ ] Review and customize documentation
 
@@ -123,7 +123,7 @@ Theme CSS **must always load after** all other stylesheets (`design-system.css`,
 ```html
 <!-- 1. Design System Framework -->
 <link rel="stylesheet" href="../assets/css/design-system.css" />
-<!-- 2. Google Fonts -->
+<!-- 2. Adobe Typekit + font preloads -->
 ...
 <!-- 3. Docs-site styles (layout, nav, page chrome, components, auth) -->
 <link rel="stylesheet" href="../assets/css/docs-site.css">
@@ -186,7 +186,7 @@ Admins see a **Theme Preview** section in the header dropdown menu. Selecting a 
 
 | File | Purpose |
 |------|---------|
-| `assets/js/theme-config.js` | Registry of available themes (clientFolder → CSS path + Google Fonts URL) |
+| `assets/js/theme-config.js` | Registry of available themes (clientFolder → CSS path + optional font URL) |
 | `assets/js/theme-loader.js` | Loads/unloads theme CSS and fonts dynamically |
 | `assets/js/auth.js` | Calls `initThemeForUser()` after auth resolves |
 | `themes/theme-template.css` | Starter template for new client themes |

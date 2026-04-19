@@ -4,29 +4,52 @@
 
 
 /* -- @font-face: Local fonts -- */
+
+/* Zalando Sans — variable font (weight 300-900, width 75%-125%) */
 @font-face {
-  font-family: "RecifeText";
-  src: url("../fonts/recife-text/RecifeText-Regular.ttf") format("truetype");
-  font-weight: 400;
+  font-family: "Zalando Sans";
+  src: url("../fonts/zalando-sans/ZalandoSans-VariableFont_wdth,wght.ttf") format("truetype");
+  font-weight: 300 900;
+  font-stretch: 75% 125%;
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: "Zalando Sans";
+  src: url("../fonts/zalando-sans/ZalandoSans-Italic-VariableFont_wdth,wght.ttf") format("truetype");
+  font-weight: 300 900;
+  font-stretch: 75% 125%;
+  font-style: italic;
+  font-display: swap;
+}
 
-/* Bugrino — Bold + Bold Italic only */
+/* IBM Plex Mono — self-hosted (Regular, Medium, SemiBold) */
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../fonts/ibm-plex-mono/IBMPlexMono-Regular.ttf") format("truetype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../fonts/ibm-plex-mono/IBMPlexMono-Medium.ttf") format("truetype");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../fonts/ibm-plex-mono/IBMPlexMono-SemiBold.ttf") format("truetype");
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+
+/* Bugrino — Regular, Medium, Bold, Bold Italic */
 @font-face {
   font-family: "Bugrino";
   src: url("../fonts/bugrino/Bugrino-Bold.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
+  font-weight: 700; font-style: normal; font-display: swap;
 }
-
 @font-face {
   font-family: "Bugrino";
   src: url("../fonts/bugrino/Bugrino-BoldItalic.woff2") format("woff2");
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
+  font-weight: 700; font-style: italic; font-display: swap;
 }
 
 
@@ -39,8 +62,8 @@
 
 :root {
   /* -- Typography -- */
-  --font-primary: "Inclusive Sans", sans-serif;
-  --font-secondary: "RecifeText", Georgia, serif;
+  --font-primary: "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-secondary: "trust-3a", "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-tertiary: "Bugrino", sans-serif;
   --font-quaternary: "IBM Plex Mono", monospace;
   /* --button-font-family removed — now a component token in .button */
@@ -99,7 +122,7 @@
   /* -- Line height tokens -- */
   --line-height-xs: 0.7;
   --line-height-s: 1;
-  --line-height-m: 1.3;
+  --line-height-m: 1.2;
   --line-height-l: 1.4;
   --line-height-xl: 1.6;
   --line-height-2xl: 1.8;
@@ -119,6 +142,35 @@
   --letter-spacing-m: 0.06em;
   --letter-spacing-l: 0.12em;
   --letter-spacing-xl: 0.24em;
+
+  /* -- Type roles — semantic tokens composing the primitives into four
+     role-based building blocks (headline, title, label, body). Each role
+     covers four dimensions: size, weight, leading (line-height), and
+     tracking (letter-spacing). -- */
+
+  /* Headline — the biggest thing on a page; one per page (h1). */
+  --headline-size:     clamp(var(--font-4xl), 1rem + 5vw, var(--font-8xl));
+  --headline-weight:   500;
+  --headline-leading:  var(--line-height-s);
+  --headline-tracking: -0.02em;
+
+  /* Title — section heads and recurring labels within a page (h2). */
+  --title-size:     clamp(var(--font-2xl), 0.8rem + 2vw, var(--font-6xl));
+  --title-weight:   500;
+  --title-leading:  var(--line-height-m);
+  --title-tracking: -0.01em;
+
+  /* Label — meta rows, eyebrows, captions */
+  --label-size:     var(--font-xs);
+  --label-weight:   500;
+  --label-leading:  var(--line-height-s);
+  --label-tracking: var(--letter-spacing-m);
+
+  /* Body — running text */
+  --body-size:     var(--text-body);
+  --body-weight:   var(--font-weight-regular);
+  --body-leading:  var(--line-height-xl);
+  --body-tracking: 0;
 }
 
 /* ------ 2. SYSTEM TOKENS - COLORS ------ */
@@ -525,9 +577,9 @@
   --section-xl: var(--space-14xl);
 
   /* -- Border width tokens -- */
-  --border-s: 1.5px;
-  --border-m: 2px;
-  --border-l: 4px;
+  --border-s: 0.0625rem;  /* 1px */
+  --border-m: 0.125rem;   /* 2px */
+  --border-l: 0.25rem;    /* 4px */
 
   /* -- Border composition variables -- */
   --border-width: var(--border-s);
@@ -1001,7 +1053,7 @@ section {
   font-size: var(--font-xs);
   line-height: var(--line-height-m);
   font-weight: var(--font-weight-extra-bold);
-  letter-spacing: var(--letter-spacing-xl);
+  letter-spacing: var(--letter-spacing-l);
   text-transform: uppercase;
 }
 
@@ -1333,14 +1385,30 @@ body {
 }
 
 /* -- Headings -- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-medium);
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-l);
+}
+
 h1 {
-  font-size: var(--font-7xl);
-  line-height: var(--line-height-m);
+  font-size: var(--headline-size);
+  font-weight: var(--headline-weight);
+  line-height: var(--headline-leading);
+  letter-spacing: var(--headline-tracking);
 }
 
 h2 {
-  font-size: var(--font-5xl);
-  line-height: var(--line-height-m);
+  font-size: var(--title-size);
+  font-weight: var(--title-weight);
+  line-height: var(--title-leading);
+  letter-spacing: var(--title-tracking);
 }
 
 h3 {
@@ -1361,29 +1429,6 @@ h5 {
 h6 {
   font-size: var(--font-xl);
   line-height: var(--line-height-l);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-secondary);
-  font-weight: var(--font-weight-regular);
-  margin-top: var(--space-xl);
-  margin-bottom: var(--space-l);
-}
-
-/* -- Headings — mobile -- */
-@media (max-width: 768px) {
-  h1 {
-    font-size: var(--font-5xl);
-  }
-
-  h2 {
-    font-size: var(--font-3xl);
-  }
 }
 
 /* -- Paragraphs -- */
@@ -1481,7 +1526,8 @@ blockquote {
   padding-left: var(--space-l);
   border-left: var(--border-m) solid var(--border-secondary);
   color: var(--text-secondary);
-  font-size: var(--font-m);
+  font-family: var(--font-secondary);
+  font-size: var(--font-xl);
   font-style: italic;
 }
 

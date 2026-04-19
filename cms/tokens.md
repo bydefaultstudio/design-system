@@ -32,8 +32,8 @@ The four typeface stacks used across the system.
 
 | Token | Value | Description |
 | --- | --- | --- |
-| `var(--font-primary)` | `"Inclusive Sans", sans-serif` | Body text and UI |
-| `var(--font-secondary)` | `"RecifeText", Georgia, serif` | Headings and display |
+| `var(--font-primary)` | `"Zalando Sans", system-ui, …` | Body text and UI |
+| `var(--font-secondary)` | `"trust-3a", "Zalando Sans", …` | Headings and display |
 | `var(--font-tertiary)` | `"Bugrino", sans-serif` | Brand display, eyebrows, buttons, badges |
 | `var(--font-quaternary)` | `"IBM Plex Mono", monospace` | Code and monospace |
 
@@ -113,7 +113,7 @@ Vertical rhythm values from tight display text to loose body copy.
 | --- | --- | --- |
 | `var(--line-height-xs)` | `0.7` | Tight display text |
 | `var(--line-height-s)` | `1` | Compact headings |
-| `var(--line-height-m)` | `1.3` | Default headings |
+| `var(--line-height-m)` | `1.2` | Default headings |
 | `var(--line-height-l)` | `1.4` | Short paragraphs |
 | `var(--line-height-xl)` | `1.6` | Body text |
 | `var(--line-height-2xl)` | `1.8` | Loose body text |

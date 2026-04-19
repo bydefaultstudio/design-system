@@ -15,56 +15,6 @@
  */
 
 
-/* ------ FONTS (self-hosted) ------ */
-
-@font-face {
-  font-family: "Zalando Sans";
-  src: url("../fonts/zalando-sans/ZalandoSans-VariableFont_wdth,wght.ttf") format("truetype-variations");
-  font-weight: 300 900;
-  font-stretch: 75% 125%;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Zalando Sans";
-  src: url("../fonts/zalando-sans/ZalandoSans-Italic-VariableFont_wdth,wght.ttf") format("truetype-variations");
-  font-weight: 300 900;
-  font-stretch: 75% 125%;
-  font-style: italic;
-  font-display: swap;
-}
-@font-face {
-  font-family: "IBM Plex Mono";
-  src: url("../fonts/ibm-plex-mono/IBMPlexMono-Regular.ttf") format("truetype");
-  font-weight: 400; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "IBM Plex Mono";
-  src: url("../fonts/ibm-plex-mono/IBMPlexMono-Medium.ttf") format("truetype");
-  font-weight: 500; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "IBM Plex Mono";
-  src: url("../fonts/ibm-plex-mono/IBMPlexMono-SemiBold.ttf") format("truetype");
-  font-weight: 600; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "Bugrino";
-  src: url("../fonts/bugrino/Bugrino-Regular.woff2") format("woff2");
-  font-weight: 400; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "Bugrino";
-  src: url("../fonts/bugrino/Bugrino-Medium.woff2") format("woff2");
-  font-weight: 500; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "Bugrino";
-  src: url("../fonts/bugrino/Bugrino-Bold.woff2") format("woff2");
-  font-weight: 700; font-style: normal; font-display: swap;
-}
-
-
 /* ------ FOCUS INDICATOR ------ */
 
 /* Keyboard focus indicator — applies to all interactive elements that
@@ -80,16 +30,6 @@
 /* ------ TOKENS ------ */
 
 :root {
-  /* Design system overrides — studio brand differences.
-     These cascade over design-system.css values. */
-  --font-primary: "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-secondary: "trust-3a", "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-tertiary: "Bugrino", sans-serif;
-  --line-height-m: 1.2;
-  --border-s: 0.0625rem;
-  --border-m: 0.125rem;
-  --border-l: 0.25rem;
-
   /* Studio layout tokens */
   --sidebar-width: 400px;
   --sidebar-collapsed-width: 64px;
@@ -105,35 +45,6 @@
   --scroll-offset: var(--studio-gap);
   --duration-stagger: 30ms;
   --sidebar-logo-width: 240px;
-
-  /* Type roles — semantic tokens composing the primitives into four
-     role-based building blocks (title, headline, label, body). Each role
-     covers four dimensions: size, weight, leading (line-height), and
-     tracking (letter-spacing). */
-
-  /* Headline — the biggest thing on a page; one per page (h1). */
-  --headline-size:     clamp(var(--font-4xl), 1rem + 5vw, var(--font-8xl));
-  --headline-weight:   500;
-  --headline-leading:  var(--line-height-s);
-  --headline-tracking: -0.02em;
-
-  /* Title — section heads and recurring labels within a page (h2). */
-  --title-size:     clamp(var(--font-2xl), 0.8rem + 2vw, var(--font-6xl));
-  --title-weight:   500;
-  --title-leading:  var(--line-height-m);
-  --title-tracking: -0.01em;
-
-  /* Label — meta rows, eyebrows, captions */
-  --label-size:     var(--font-xs);
-  --label-weight:   500;
-  --label-leading:  var(--line-height-s);
-  --label-tracking: var(--letter-spacing-m);
-
-  /* Body — running text */
-  --body-size:     var(--text-body);
-  --body-weight:   var(--font-weight-regular);
-  --body-leading:  var(--line-height-xl);
-  --body-tracking: 0;
 }
 
 /* Dark mode token overrides */
@@ -158,27 +69,6 @@
 
 
 /* ------ BASE TYPOGRAPHY ------ */
-
-h1 {
-  font-size: var(--headline-size);
-  font-weight: var(--headline-weight);
-  line-height: var(--headline-leading);
-  letter-spacing: var(--headline-tracking);
-}
-
-h2 {
-  font-size: var(--title-size);
-  font-weight: var(--title-weight);
-  line-height: var(--title-leading);
-  letter-spacing: var(--title-tracking);
-}
-
-p {
-  font-size: var(--body-size);
-  font-weight: var(--body-weight);
-  line-height: var(--body-leading);
-  letter-spacing: var(--body-tracking);
-}
 
 .text-title {
   font-size: var(--title-size);
@@ -447,10 +337,6 @@ body.is-sidebar-collapsed .layout {
   --button-border: transparent;
   --button-text-color: var(--text-primary);
   --button-radius: 0;
-}
-
-.nav-btn:hover {
-  --button-bg: var(--background-faded);
 }
 
 /* Footer buttons stretch to fill the footer's cross-axis */

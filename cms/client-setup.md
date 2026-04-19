@@ -25,7 +25,7 @@ When a client logs in, the following elements personalise automatically:
 | **Logo** | By Default | Client logo from `client-name/assets/` |
 | **Home link** | `index.html` | `client-name/index.html` |
 | **Theme** | By Default brand | Client `theme.css` |
-| **Fonts** | Inclusive Sans + RecifeText | Per `theme-config.js` |
+| **Fonts** | Zalando Sans + trust-3a | Per `theme-config.js` |
 | **Sidebar** | Full navigation | Auto-filtered by page access |
 
 All of this is driven by the user's `clientFolder` value in Netlify Identity.

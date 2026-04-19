@@ -90,9 +90,9 @@ Width classes modify the border thickness. The default is `var(--border-s)`.
 
 | Class | Token | px Equivalent |
 | --- | --- | --- |
-| `.border-s` | `var(--border-s)` | 1.5px |
-| `.border-m` | `var(--border-m)` | 2px |
-| `.border-l` | `var(--border-l)` | 4px |
+| `.border-s` | `var(--border-s)` | 1px (0.0625rem) |
+| `.border-m` | `var(--border-m)` | 2px (0.125rem) |
+| `.border-l` | `var(--border-l)` | 4px (0.25rem) |
 
 ---
 

@@ -52,7 +52,7 @@ Single source of truth for all assets. No duplication.
 - `css/docs-site.css` → Docs-site layout, navigation, page chrome, components, auth UI
 - `js/auth.js` → Authentication module (Netlify Identity)
 - `js/auth-config.js` → Auth role hierarchy and settings
-- `js/theme-config.js` → Theme registry (maps clientFolder → CSS path + Google Fonts URL)
+- `js/theme-config.js` → Theme registry (maps clientFolder → CSS path + optional font URL)
 - `js/theme-loader.js` → Dynamic theme loading/unloading module
 - `fonts/` → Web fonts
 - `icons/` → Favicons and app icons

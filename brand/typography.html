@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Typography - By Default Brand OS</title>
-    <meta name="description" content="The brand type system — a sans for interface, a serif for headlines, a mono for code — and where each one is loaded from.">
+    <meta name="description" content="The brand type system — a variable sans for interface, a display font for headlines, a brand face for display, a mono for code — and where each one is loaded from.">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
@@ -12,7 +12,7 @@
 
     <!-- Open Graph -->
     <meta property="og:title" content="Typography - By Default Brand OS">
-    <meta property="og:description" content="The brand type system — a sans for interface, a serif for headlines, a mono for code — and where each one is loaded from.">
+    <meta property="og:description" content="The brand type system — a variable sans for interface, a display font for headlines, a brand face for display, a mono for code — and where each one is loaded from.">
     <meta property="og:image" content="../assets/images/og/og-default.jpg">
     <meta property="og:type" content="website">
 
@@ -21,10 +21,11 @@
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     
 
-    <!-- Google Fonts (configured in cms/docs.config.js) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Adobe Typekit (trust-3a secondary font) -->
+    <link rel="stylesheet" href="https://use.typekit.net/wgr3lwl.css">
+    <!-- Preload primary variable font -->
+    <link rel="preload" href="../assets/fonts/zalando-sans/ZalandoSans-VariableFont_wdth,wght.ttf" as="font" type="font/ttf" crossorigin>
+    
 
     <!-- Markdown CSS -->
 
@@ -68,7 +69,7 @@
         <div class="page-header">
       <div class="container-small">
         <h1 data-flip-id="typography">Typography</h1>
-        <p class="page-subtitle" data-text-wrap="pretty">The three type families behind the brand</p>
+        <p class="page-subtitle" data-text-wrap="pretty">The four type families behind the brand</p>
         
       </div>
     </div>
@@ -119,12 +120,12 @@
             <!-- Main Content -->
             <main class="docs-main">
                 <article>
-                    <p class="drop-cap">The brand runs on three type families. Each one has a job; together they cover everything from a 12px tooltip to a 72px hero headline.</p>
+                    <p class="drop-cap">The brand runs on four type families. Each one has a job; together they cover everything from a 12px tooltip to a 72px hero headline.</p>
 <p>This page is the <strong>brand-side</strong> view — what each typeface is for, how it feels, and what to reach for in which situation. For the developer-facing token reference (sizes, weights, line heights), see <a href="../design-system/typography.html">Typography</a>.</p>
 <hr>
-<h2 id="inclusive-sans-interface-and-body">Inclusive Sans — interface and body</h2>
-<p>A geometric humanist sans designed by Olivia King for <strong>maximum legibility at small sizes</strong>. Open apertures, generous spacing, neutral personality. It does not call attention to itself, which is exactly why it works for body copy and UI: the eye reads through it, not at it.</p>
-<p>Use Inclusive Sans for body text, navigation, buttons, form fields, captions, and anything else that needs to be read quickly without friction.</p>
+<h2 id="zalando-sans-interface-and-body">Zalando Sans — interface and body</h2>
+<p>A variable sans-serif with a weight range of 300–900 and width range of 75%–125%. Clean, modern, and highly legible at all sizes. It does not call attention to itself, which is exactly why it works for body copy and UI: the eye reads through it, not at it.</p>
+<p>Use Zalando Sans for body text, navigation, buttons, form fields, captions, and anything else that needs to be read quickly without friction.</p>
 <div class="asset-card">
   <div class="asset-card-preview asset-card-preview--light" style="text-align: center;">
     <div style="font-family: var(--font-primary);">
@@ -133,15 +134,15 @@
     </div>
   </div>
   <div class="asset-card-footer">
-    <p class="asset-card-title">Inclusive Sans</p>
+    <p class="asset-card-title">Zalando Sans</p>
   </div>
 </div>
 
-<p><strong>Loaded from:</strong> Google Fonts CDN — <a href="https://fonts.google.com/specimen/Inclusive+Sans" target="_blank" rel="noopener noreferrer"><code>fonts.googleapis.com</code></a>.<br><strong>Licence:</strong> SIL Open Font Licence 1.1 (free to use, embed, and self-host).<br><strong>Weights in use:</strong> 300, 400, 500, 600, 700.</p>
+<p><strong>Loaded from:</strong> self-hosted variable font in <a href="../assets/fonts/zalando-sans/"><code>assets/fonts/zalando-sans/</code></a>.<br><strong>Licence:</strong> proprietary — self-host for By Default properties only.<br><strong>Weights in use:</strong> 300–900 (variable).</p>
 <hr>
-<h2 id="recifetext-headlines-and-editorial">RecifeText — headlines and editorial</h2>
-<p>A contemporary text serif from DSType, drawn by Dino dos Santos. Tall x-height, low contrast, slightly informal. It carries weight without feeling stuffy — the right register for editorial headlines, big statements, and the kind of brand moments where the type itself should be doing some of the lifting.</p>
-<p>Use RecifeText for headings (<code>h1</code>–<code>h6</code>), pull quotes, hero statements, and anywhere a headline needs to feel like a <em>headline</em> rather than just larger body text.</p>
+<h2 id="trust-3a-headlines-and-editorial">trust-3a — headlines and editorial</h2>
+<p>A display typeface loaded via Adobe Typekit. It carries weight without feeling stuffy — the right register for editorial headlines, big statements, and the kind of brand moments where the type itself should be doing some of the lifting.</p>
+<p>Use trust-3a for headings (<code>h1</code>–<code>h6</code>), pull quotes, hero statements, and anywhere a headline needs to feel like a <em>headline</em> rather than just larger body text.</p>
 <div class="asset-card">
   <div class="asset-card-preview asset-card-preview--light" style="text-align: center;">
     <div style="font-family: var(--font-secondary);">
@@ -150,11 +151,27 @@
     </div>
   </div>
   <div class="asset-card-footer">
-    <p class="asset-card-title">RecifeText</p>
+    <p class="asset-card-title">trust-3a</p>
   </div>
 </div>
 
-<p><strong>Loaded from:</strong> self-hosted in <a href="../assets/fonts/recife-text/"><code>assets/fonts/recife-text/</code></a>.<br><strong>Licence:</strong> Commercial — DSType desktop + web licence. Self-host for By Default properties only; do not redistribute or serve from a public CDN.<br><strong>Weights in use:</strong> 400 (regular).</p>
+<p><strong>Loaded from:</strong> Adobe Typekit — <a href="https://use.typekit.net/wgr3lwl.css" target="_blank" rel="noopener noreferrer"><code>use.typekit.net/wgr3lwl.css</code></a>.<br><strong>Licence:</strong> Adobe Fonts subscription — served via Typekit CDN.<br><strong>Weights in use:</strong> as provided by the Typekit kit.</p>
+<hr>
+<h2 id="bugrino-brand-display">Bugrino — brand display</h2>
+<p>A distinctive sans-serif used for brand moments, eyebrows, buttons, and badges. Available in Regular, Medium, and Bold weights with Bold Italic.</p>
+<div class="asset-card">
+  <div class="asset-card-preview asset-card-preview--light" style="text-align: center;">
+    <div style="font-family: var(--font-tertiary);">
+      <p style="font-size: var(--font-10xl); margin: 0; line-height: 1; font-weight: 700;">Aa</p>
+      <p style="font-size: var(--font-s); margin: var(--space-l) 0 0;">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>0123456789</p>
+    </div>
+  </div>
+  <div class="asset-card-footer">
+    <p class="asset-card-title">Bugrino</p>
+  </div>
+</div>
+
+<p><strong>Loaded from:</strong> self-hosted in <a href="../assets/fonts/bugrino/"><code>assets/fonts/bugrino/</code></a>.<br><strong>Licence:</strong> commercial — self-host for By Default properties only.<br><strong>Weights in use:</strong> 400, 500, 700, 700 italic.</p>
 <hr>
 <h2 id="ibm-plex-mono-code-and-labels">IBM Plex Mono — code and labels</h2>
 <p>IBM&#39;s open monospace from the Plex superfamily. Rounded, even, and unmistakably technical. Use it for code blocks, inline <code>code</code>, keyboard shortcuts, file paths, and any small label that needs to read as &quot;machine output&quot; rather than running prose.</p>
@@ -170,7 +187,7 @@
   </div>
 </div>
 
-<p><strong>Loaded from:</strong> Google Fonts CDN — <a href="https://fonts.google.com/specimen/IBM+Plex+Mono" target="_blank" rel="noopener noreferrer"><code>fonts.googleapis.com</code></a>.<br><strong>Licence:</strong> SIL Open Font Licence 1.1.<br><strong>Weights in use:</strong> 400, 500, 600.</p>
+<p><strong>Loaded from:</strong> self-hosted in <a href="../assets/fonts/ibm-plex-mono/"><code>assets/fonts/ibm-plex-mono/</code></a>.<br><strong>Licence:</strong> SIL Open Font Licence 1.1.<br><strong>Weights in use:</strong> 400, 500, 600.</p>
 <hr>
 <h2 id="when-to-reach-for-which">When to reach for which</h2>
 <div class="table-scroll"><table class="table">
@@ -183,23 +200,28 @@
 </thead>
 <tbody><tr>
 <td>Body copy, paragraphs, lists</td>
-<td>Inclusive Sans</td>
+<td>Zalando Sans</td>
 <td><button type="button" class="token-copy is-token" data-copy="var(--font-primary)" aria-label="Copy var(--font-primary)"><code>var(--font-primary)</code></button></td>
 </tr>
 <tr>
 <td>Buttons, form fields, navigation</td>
-<td>Inclusive Sans</td>
+<td>Zalando Sans</td>
 <td><button type="button" class="token-copy is-token" data-copy="var(--font-primary)" aria-label="Copy var(--font-primary)"><code>var(--font-primary)</code></button></td>
 </tr>
 <tr>
 <td>Page headings (<code>h1</code>–<code>h6</code>)</td>
-<td>RecifeText</td>
+<td>trust-3a</td>
 <td><button type="button" class="token-copy is-token" data-copy="var(--font-secondary)" aria-label="Copy var(--font-secondary)"><code>var(--font-secondary)</code></button></td>
 </tr>
 <tr>
 <td>Hero statements, pull quotes</td>
-<td>RecifeText</td>
+<td>trust-3a</td>
 <td><button type="button" class="token-copy is-token" data-copy="var(--font-secondary)" aria-label="Copy var(--font-secondary)"><code>var(--font-secondary)</code></button></td>
+</tr>
+<tr>
+<td>Brand display, eyebrows, badges</td>
+<td>Bugrino</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-tertiary)" aria-label="Copy var(--font-tertiary)"><code>var(--font-tertiary)</code></button></td>
 </tr>
 <tr>
 <td>Code blocks, file paths, kbd</td>
@@ -211,15 +233,17 @@
 <h2 id="pairing-rules">Pairing rules</h2>
 <p><strong>Do</strong></p>
 <ul>
-<li>Use RecifeText for the headline and Inclusive Sans for everything underneath. That&#39;s the default rhythm.</li>
-<li>Lean on weight, not colour, to create hierarchy inside Inclusive Sans body copy.</li>
+<li>Use trust-3a for the headline and Zalando Sans for everything underneath. That&#39;s the default rhythm.</li>
+<li>Lean on weight, not colour, to create hierarchy inside Zalando Sans body copy.</li>
+<li>Use Bugrino for brand moments — eyebrows, display text, buttons — where the type needs personality.</li>
 <li>Use Plex Mono for anything that should feel literally &quot;as written&quot; — file names, terminal output, raw values.</li>
 </ul>
 <p><strong>Don&#39;t</strong></p>
 <ul>
-<li>Don&#39;t set body copy in RecifeText. It&#39;s a display serif — at small sizes the texture gets noisy.</li>
-<li>Don&#39;t pair RecifeText with another serif. It&#39;s the only serif in the system.</li>
+<li>Don&#39;t set body copy in trust-3a. It&#39;s a display font — at small sizes the texture gets noisy.</li>
+<li>Don&#39;t pair trust-3a with another serif or display font. It&#39;s the only display face in the system.</li>
 <li>Don&#39;t use Plex Mono for decorative text. It carries a strong &quot;code&quot; connotation; it shouldn&#39;t be doing aesthetic duty.</li>
+<li>Don&#39;t use Bugrino for body copy or long reads — it&#39;s a brand accent, not a workhorse.</li>
 </ul>
 <hr>
 <h2 id="see-also">See also</h2>
@@ -234,7 +258,7 @@
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#inclusive-sans-interface-and-body" class="toc-link">Inclusive Sans — interface and body</a></li><li class="toc-item toc-level-2"><a href="#recifetext-headlines-and-editorial" class="toc-link">RecifeText — headlines and editorial</a></li><li class="toc-item toc-level-2"><a href="#ibm-plex-mono-code-and-labels" class="toc-link">IBM Plex Mono — code and labels</a></li><li class="toc-item toc-level-2"><a href="#when-to-reach-for-which" class="toc-link">When to reach for which</a></li><li class="toc-item toc-level-2"><a href="#pairing-rules" class="toc-link">Pairing rules</a></li><li class="toc-item toc-level-2"><a href="#see-also" class="toc-link">See also</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#zalando-sans-interface-and-body" class="toc-link">Zalando Sans — interface and body</a></li><li class="toc-item toc-level-2"><a href="#trust-3a-headlines-and-editorial" class="toc-link">trust-3a — headlines and editorial</a></li><li class="toc-item toc-level-2"><a href="#bugrino-brand-display" class="toc-link">Bugrino — brand display</a></li><li class="toc-item toc-level-2"><a href="#ibm-plex-mono-code-and-labels" class="toc-link">IBM Plex Mono — code and labels</a></li><li class="toc-item toc-level-2"><a href="#when-to-reach-for-which" class="toc-link">When to reach for which</a></li><li class="toc-item toc-level-2"><a href="#pairing-rules" class="toc-link">Pairing rules</a></li><li class="toc-item toc-level-2"><a href="#see-also" class="toc-link">See also</a></li></ul></nav></div>
     </aside>
         </div>
 

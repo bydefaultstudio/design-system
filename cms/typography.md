@@ -14,7 +14,7 @@ client: "internal"
 
 Typography tokens provide a **consistent, modular system** for all text across the products. They are designed for **clarity, readability, and hierarchy**, while remaining flexible across devices.
 
-The system uses three font families — a primary sans-serif for body and UI, a secondary serif for headings, and a tertiary monospace for code and labels. For the full list of typography token values, see the [Tokens](tokens.html) page.
+The system uses four font families — a primary sans-serif for body and UI, a secondary display font for headings, a tertiary brand font for display and buttons, and a monospace for code. Fonts are self-hosted (Zalando Sans, Bugrino, IBM Plex Mono) or loaded via Adobe Typekit (trust-3a). For the full list of typography token values, see the [Tokens](tokens.html) page.
 
 ---
 
@@ -47,7 +47,7 @@ The scale uses a **progressive step** approach: +2px in the body range, +4px in 
 
 ## Headings
 
-All headings use `var(--font-secondary)` (RecifeText) at `var(--font-weight-regular)` (400). Each level steps down in size to create a clear visual hierarchy.
+All headings use `var(--font-secondary)` (trust-3a). `h1` and `h2` use the role-based type tokens (`--headline-*` and `--title-*`) with fluid `clamp()` sizing that scales smoothly with viewport width. Lower headings use fixed sizes from the type scale.
 
 <div class="demo-preview is-joined">
   <div class="block gap-xl">
@@ -84,16 +84,16 @@ All headings use `var(--font-secondary)` (RecifeText) at `var(--font-weight-regu
 <h3>Structure creates clarity in complexity</h3>
 ```
 
-| Element | Token | px | Mobile (≤768px) | Line Height | Value |
-| --- | --- | --- | --- | --- | --- |
-| `h1` | `var(--font-7xl)` | 48px | `var(--font-5xl)` (36px) | `var(--line-height-m)` | 1.3 |
-| `h2` | `var(--font-5xl)` | 36px | `var(--font-3xl)` (28px) | `var(--line-height-m)` | 1.3 |
-| `h3` | `var(--font-3xl)` | 28px | — | `var(--line-height-m)` | 1.3 |
-| `h4` | `var(--font-2xl)` | 24px | — | `var(--line-height-m)` | 1.3 |
-| `h5` | `var(--font-xl)` | 22px | — | `var(--line-height-m)` | 1.3 |
-| `h6` | `var(--font-xl)` | 22px | — | `var(--line-height-l)` | 1.4 |
+| Element | Size | Range | Line Height | Letter Spacing |
+| --- | --- | --- | --- | --- |
+| `h1` | `var(--headline-size)` | 32px → 56px (fluid) | `var(--line-height-s)` (1) | -0.02em |
+| `h2` | `var(--title-size)` | 24px → 40px (fluid) | `var(--line-height-m)` (1.2) | -0.01em |
+| `h3` | `var(--font-3xl)` | 28px | `var(--line-height-m)` (1.2) | — |
+| `h4` | `var(--font-2xl)` | 24px | `var(--line-height-m)` (1.2) | — |
+| `h5` | `var(--font-xl)` | 22px | `var(--line-height-m)` (1.2) | — |
+| `h6` | `var(--font-xl)` | 22px | `var(--line-height-l)` (1.4) | — |
 
-Headings use `var(--line-height-m)` (1.3) so multi-line titles have breathing room. On mobile (≤768px), `h1` and `h2` step down a level to prevent giant titles from dominating small viewports.
+`h1` and `h2` use `clamp()` for fluid sizing — no media query breakpoints needed. Display text uses negative letter-spacing for tighter, more impactful headlines.
 
 ---
 
@@ -181,7 +181,7 @@ A small, uppercase label used to provide context above headings, within sections
 
 | Element | Token | Line Height | Value |
 | --- | --- | --- | --- |
-| `.eyebrow` | `var(--font-xs)` | `var(--line-height-m)` | 1.3 |
+| `.eyebrow` | `var(--font-xs)` | `var(--line-height-m)` | 1.2 |
 
 ---
 
@@ -230,7 +230,7 @@ Links use text-color underlines with a hover transition. The default state shows
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">External link</p>
-      <p style="margin: 0;">Typography is powered by <a href="https://fonts.google.com" target="_blank" rel="noopener noreferrer">Google Fonts</a> for web delivery.</p>
+      <p style="margin: 0;">Typography is powered by <a href="https://fonts.adobe.com/typekit" target="_blank" rel="noopener noreferrer">Adobe Typekit</a> and self-hosted variable fonts.</p>
     </div>
   </div>
 </div>
@@ -240,7 +240,7 @@ Links use text-color underlines with a hover transition. The default state shows
 <p>Read the full <a href="/brand">brand guidelines</a> before starting.</p>
 
 <!-- External link (icon added automatically) -->
-<p>Typography is powered by <a href="https://fonts.google.com" target="_blank" rel="noopener noreferrer">Google Fonts</a> for web delivery.</p>
+<p>Typography is powered by <a href="https://fonts.adobe.com/typekit" target="_blank" rel="noopener noreferrer">Adobe Typekit</a> and self-hosted variable fonts.</p>
 ```
 
 | Property | Value |
@@ -262,11 +262,11 @@ The system uses four font stacks, each with a distinct role.
 <div class="demo-preview is-joined">
   <div class="block gap-xl">
     <div class="block gap-m">
-      <p class="demo-eyebrow">Primary — Inclusive Sans</p>
+      <p class="demo-eyebrow">Primary — Zalando Sans</p>
       <p style="margin: 0; font-family: var(--font-primary); font-size: var(--font-3xl);">Typography is the voice of design</p>
     </div>
     <div class="block gap-m">
-      <p class="demo-eyebrow">Secondary — RecifeText</p>
+      <p class="demo-eyebrow">Secondary — trust-3a</p>
       <p style="margin: 0; font-family: var(--font-secondary); font-size: var(--font-3xl);">Typography is the voice of design</p>
     </div>
     <div class="block gap-m">
@@ -286,12 +286,12 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-secondary); }
 code, pre, kbd { font-family: var(--font-quaternary); }
 ```
 
-| Token | Font | Used For |
-| --- | --- | --- |
-| `var(--font-primary)` | Inclusive Sans | Body text, UI, labels |
-| `var(--font-secondary)` | RecifeText | Headings, blockquotes |
-| `var(--font-tertiary)` | Bugrino | Brand display, eyebrows, buttons, badges |
-| `var(--font-quaternary)` | IBM Plex Mono | Code, pre, kbd |
+| Token | Font | Source | Used For |
+| --- | --- | --- | --- |
+| `var(--font-primary)` | Zalando Sans | Self-hosted (variable font) | Body text, UI, labels |
+| `var(--font-secondary)` | trust-3a | Adobe Typekit | Headings, blockquotes |
+| `var(--font-tertiary)` | Bugrino | Self-hosted (woff2) | Brand display, eyebrows, buttons, badges |
+| `var(--font-quaternary)` | IBM Plex Mono | Self-hosted (ttf) | Code, pre, kbd |
 
 ---
 
@@ -389,7 +389,7 @@ line-height: var(--line-height-l);
 | --- | --- | --- |
 | `var(--line-height-xs)` | 0.7 | Tight display text |
 | `var(--line-height-s)` | 1 | Tight display text |
-| `var(--line-height-m)` | 1.3 | Headings, eyebrows |
+| `var(--line-height-m)` | 1.2 | Headings, eyebrows |
 | `var(--line-height-l)` | 1.4 | Body text, paragraphs |
 | `var(--line-height-xl)` | 1.6 | Small text, captions |
 | `var(--line-height-2xl)` | 1.8 | Spacious body text |
@@ -427,7 +427,33 @@ letter-spacing: var(--letter-spacing-xl);
 
 | Token | Value | Used For |
 | --- | --- | --- |
+| `var(--letter-spacing-xs)` | -0.03em | Negative tracking |
 | `var(--letter-spacing-s)` | 0.03em | Subtle tracking |
 | `var(--letter-spacing-m)` | 0.06em | Medium tracking |
 | `var(--letter-spacing-l)` | 0.12em | Wide tracking |
 | `var(--letter-spacing-xl)` | 0.24em | Eyebrows, labels |
+
+---
+
+## Type Roles
+
+Four semantic roles compose the primitive tokens into building blocks. Each role defines four dimensions: size, weight, leading (line-height), and tracking (letter-spacing).
+
+| Role | Size | Weight | Leading | Tracking | Used For |
+| --- | --- | --- | --- | --- | --- |
+| Headline | `clamp(--font-4xl, 1rem + 5vw, --font-8xl)` | 500 | `--line-height-s` (1) | -0.02em | Page hero, h1 |
+| Title | `clamp(--font-2xl, 0.8rem + 2vw, --font-6xl)` | 500 | `--line-height-m` (1.2) | -0.01em | Section heads, h2 |
+| Label | `--font-xs` (14px) | 500 | `--line-height-s` (1) | `--letter-spacing-m` (0.06em) | Eyebrows, meta, captions |
+| Body | `--text-body` (18px) | 400 | `--line-height-xl` (1.6) | 0 | Running text |
+
+```css
+/* Use role tokens directly */
+.custom-headline {
+  font-size: var(--headline-size);
+  font-weight: var(--headline-weight);
+  line-height: var(--headline-leading);
+  letter-spacing: var(--headline-tracking);
+}
+```
+
+Headline and title sizes use `clamp()` for fluid scaling — they grow with the viewport between a minimum and maximum, with no breakpoints needed.

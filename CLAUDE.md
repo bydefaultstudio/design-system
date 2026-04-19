@@ -621,6 +621,16 @@ When studio mode is active, follow the rules in this section. Everything else in
 
 **`studio/README.md`** is the single source of truth for studio work. Read it before making any studio changes. It covers layout, Barba transitions, feed system, page hierarchy, and deployment.
 
+### Shared asset sync (pre-commit hook)
+
+`design-system.css` and `accordion.js` are shared between root and studio. A **bi-directional git pre-commit hook** (`.git/hooks/pre-commit`) keeps them in sync:
+
+- Stage `assets/css/design-system.css` → hook copies to `studio/assets/css/` and stages it
+- Stage `studio/assets/css/design-system.css` → hook copies to `assets/css/` and stages it
+- If both are staged, **root wins**
+
+**Do not manually copy `design-system.css` between root and studio.** Just edit whichever copy you need — the hook handles sync at commit time. The same applies to `assets/js/accordion.js` ↔ `studio/assets/js/accordion.js`.
+
 ### CSS rules
 
 - **All studio CSS goes in `studio/assets/css/studio.css`** — never in `design-system.css` or `docs-site.css`
@@ -669,6 +679,17 @@ Transition mapping lives in `TRANSITION_MAP` at the top of `studio-barba.js`. Re
 - Brand icons only rule (§3, §4 Iconography)
 - SVG processing workflow (§15)
 - JS code structure conventions (`cms/js-code-structure.md`)
+
+### Local development
+
+Studio's dev server always runs on **port 2000**:
+
+```bash
+npm run serve:studio
+# → http://localhost:2000/
+```
+
+This serves `studio/` as the root — no `/studio` prefix in the URL. Port 2000 is a permanent convention; do not change it.
 
 ### What does NOT apply in studio mode
 

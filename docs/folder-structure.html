@@ -21,10 +21,11 @@
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     
 
-    <!-- Google Fonts (configured in cms/docs.config.js) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Adobe Typekit (trust-3a secondary font) -->
+    <link rel="stylesheet" href="https://use.typekit.net/wgr3lwl.css">
+    <!-- Preload primary variable font -->
+    <link rel="preload" href="../assets/fonts/zalando-sans/ZalandoSans-VariableFont_wdth,wght.ttf" as="font" type="font/ttf" crossorigin>
+    
 
     <!-- Markdown CSS -->
 
@@ -158,7 +159,7 @@
 <li><code>css/docs-site.css</code> → Docs-site layout, navigation, page chrome, components, auth UI</li>
 <li><code>js/auth.js</code> → Authentication module (Netlify Identity)</li>
 <li><code>js/auth-config.js</code> → Auth role hierarchy and settings</li>
-<li><code>js/theme-config.js</code> → Theme registry (maps clientFolder → CSS path + Google Fonts URL)</li>
+<li><code>js/theme-config.js</code> → Theme registry (maps clientFolder → CSS path + optional font URL)</li>
 <li><code>js/theme-loader.js</code> → Dynamic theme loading/unloading module</li>
 <li><code>fonts/</code> → Web fonts</li>
 <li><code>icons/</code> → Favicons and app icons</li>

@@ -21,10 +21,11 @@
           onerror="document.getElementById('ds-missing-banner').style.display='flex'">
     
 
-    <!-- Google Fonts (configured in cms/docs.config.js) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Adobe Typekit (trust-3a secondary font) -->
+    <link rel="stylesheet" href="https://use.typekit.net/wgr3lwl.css">
+    <!-- Preload primary variable font -->
+    <link rel="preload" href="../assets/fonts/zalando-sans/ZalandoSans-VariableFont_wdth,wght.ttf" as="font" type="font/ttf" crossorigin>
+    
 
     <!-- Markdown CSS -->
 
@@ -120,7 +121,7 @@
             <main class="docs-main">
                 <article>
                     <p>Typography tokens provide a <strong>consistent, modular system</strong> for all text across the products. They are designed for <strong>clarity, readability, and hierarchy</strong>, while remaining flexible across devices.</p>
-<p>The system uses three font families — a primary sans-serif for body and UI, a secondary serif for headings, and a tertiary monospace for code and labels. For the full list of typography token values, see the <a href="tokens.html">Tokens</a> page.</p>
+<p>The system uses four font families — a primary sans-serif for body and UI, a secondary display font for headings, a tertiary brand font for display and buttons, and a monospace for code. Fonts are self-hosted (Zalando Sans, Bugrino, IBM Plex Mono) or loaded via Adobe Typekit (trust-3a). For the full list of typography token values, see the <a href="tokens.html">Tokens</a> page.</p>
 <hr>
 <h2 id="font-sizes">Font Sizes</h2>
 <p>The full type scale used across the system. Reference these tokens when setting font sizes on any element.</p>
@@ -233,7 +234,7 @@
 </tbody></table></div>
 <hr>
 <h2 id="headings">Headings</h2>
-<p>All headings use <button type="button" class="token-copy is-token" data-copy="var(--font-secondary)" aria-label="Copy var(--font-secondary)"><code>var(--font-secondary)</code></button> (RecifeText) at <button type="button" class="token-copy is-token" data-copy="var(--font-weight-regular)" aria-label="Copy var(--font-weight-regular)"><code>var(--font-weight-regular)</code></button> (400). Each level steps down in size to create a clear visual hierarchy.</p>
+<p>All headings use <button type="button" class="token-copy is-token" data-copy="var(--font-secondary)" aria-label="Copy var(--font-secondary)"><code>var(--font-secondary)</code></button> (trust-3a). <code>h1</code> and <code>h2</code> use the role-based type tokens (<code>--headline-*</code> and <code>--title-*</code>) with fluid <code>clamp()</code> sizing that scales smoothly with viewport width. Lower headings use fixed sizes from the type scale.</p>
 <div class="demo-preview is-joined">
   <div class="block gap-xl">
     <div class="block gap-m">
@@ -265,8 +266,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-of2spjkun" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-of2spjkun" class="language-html">&lt;h1&gt;Build systems that scale with your ambition&lt;/h1&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-zb5z3d13c" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-zb5z3d13c" class="language-html">&lt;h1&gt;Build systems that scale with your ambition&lt;/h1&gt;
 &lt;h2&gt;Every detail contributes to the whole&lt;/h2&gt;
 &lt;h3&gt;Structure creates clarity in complexity&lt;/h3&gt;
 </code></pre>
@@ -276,63 +277,56 @@
 <thead>
 <tr>
 <th>Element</th>
-<th>Token</th>
-<th>px</th>
-<th>Mobile (≤768px)</th>
+<th>Size</th>
+<th>Range</th>
 <th>Line Height</th>
-<th>Value</th>
+<th>Letter Spacing</th>
 </tr>
 </thead>
 <tbody><tr>
 <td><code>h1</code></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--font-7xl)" aria-label="Copy var(--font-7xl)"><code>var(--font-7xl)</code></button></td>
-<td>48px</td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--font-5xl)" aria-label="Copy var(--font-5xl)"><code>var(--font-5xl)</code></button> (36px)</td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-m)" aria-label="Copy var(--line-height-m)"><code>var(--line-height-m)</code></button></td>
-<td>1.3</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--headline-size)" aria-label="Copy var(--headline-size)"><code>var(--headline-size)</code></button></td>
+<td>32px → 56px (fluid)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-s)" aria-label="Copy var(--line-height-s)"><code>var(--line-height-s)</code></button> (1)</td>
+<td>-0.02em</td>
 </tr>
 <tr>
 <td><code>h2</code></td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--font-5xl)" aria-label="Copy var(--font-5xl)"><code>var(--font-5xl)</code></button></td>
-<td>36px</td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--font-3xl)" aria-label="Copy var(--font-3xl)"><code>var(--font-3xl)</code></button> (28px)</td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-m)" aria-label="Copy var(--line-height-m)"><code>var(--line-height-m)</code></button></td>
-<td>1.3</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--title-size)" aria-label="Copy var(--title-size)"><code>var(--title-size)</code></button></td>
+<td>24px → 40px (fluid)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-m)" aria-label="Copy var(--line-height-m)"><code>var(--line-height-m)</code></button> (1.2)</td>
+<td>-0.01em</td>
 </tr>
 <tr>
 <td><code>h3</code></td>
 <td><button type="button" class="token-copy is-token" data-copy="var(--font-3xl)" aria-label="Copy var(--font-3xl)"><code>var(--font-3xl)</code></button></td>
 <td>28px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-m)" aria-label="Copy var(--line-height-m)"><code>var(--line-height-m)</code></button> (1.2)</td>
 <td>—</td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-m)" aria-label="Copy var(--line-height-m)"><code>var(--line-height-m)</code></button></td>
-<td>1.3</td>
 </tr>
 <tr>
 <td><code>h4</code></td>
 <td><button type="button" class="token-copy is-token" data-copy="var(--font-2xl)" aria-label="Copy var(--font-2xl)"><code>var(--font-2xl)</code></button></td>
 <td>24px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-m)" aria-label="Copy var(--line-height-m)"><code>var(--line-height-m)</code></button> (1.2)</td>
 <td>—</td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-m)" aria-label="Copy var(--line-height-m)"><code>var(--line-height-m)</code></button></td>
-<td>1.3</td>
 </tr>
 <tr>
 <td><code>h5</code></td>
 <td><button type="button" class="token-copy is-token" data-copy="var(--font-xl)" aria-label="Copy var(--font-xl)"><code>var(--font-xl)</code></button></td>
 <td>22px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-m)" aria-label="Copy var(--line-height-m)"><code>var(--line-height-m)</code></button> (1.2)</td>
 <td>—</td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-m)" aria-label="Copy var(--line-height-m)"><code>var(--line-height-m)</code></button></td>
-<td>1.3</td>
 </tr>
 <tr>
 <td><code>h6</code></td>
 <td><button type="button" class="token-copy is-token" data-copy="var(--font-xl)" aria-label="Copy var(--font-xl)"><code>var(--font-xl)</code></button></td>
 <td>22px</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-l)" aria-label="Copy var(--line-height-l)"><code>var(--line-height-l)</code></button> (1.4)</td>
 <td>—</td>
-<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-l)" aria-label="Copy var(--line-height-l)"><code>var(--line-height-l)</code></button></td>
-<td>1.4</td>
 </tr>
 </tbody></table></div>
-<p>Headings use <button type="button" class="token-copy is-token" data-copy="var(--line-height-m)" aria-label="Copy var(--line-height-m)"><code>var(--line-height-m)</code></button> (1.3) so multi-line titles have breathing room. On mobile (≤768px), <code>h1</code> and <code>h2</code> step down a level to prevent giant titles from dominating small viewports.</p>
+<p><code>h1</code> and <code>h2</code> use <code>clamp()</code> for fluid sizing — no media query breakpoints needed. Display text uses negative letter-spacing for tighter, more impactful headlines.</p>
 <hr>
 <h2 id="body-text">Body Text</h2>
 <p>The default paragraph style used for all running content. The <button type="button" class="token-copy is-token" data-copy="var(--text-body)" aria-label="Copy var(--text-body)"><code>var(--text-body)</code></button> token controls the base size globally — changing it updates paragraphs, inputs, code, tables, and buttons at once. Size modifier classes let you step up or down from the default.</p>
@@ -363,8 +357,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-t8ke8batf" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-t8ke8batf" class="language-html">&lt;p class=&quot;text-size-xlarge&quot;&gt;Lead paragraph text.&lt;/p&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-37m8dw0t6" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-37m8dw0t6" class="language-html">&lt;p class=&quot;text-size-xlarge&quot;&gt;Lead paragraph text.&lt;/p&gt;
 &lt;p class=&quot;text-size-large&quot;&gt;Introductory text.&lt;/p&gt;
 &lt;p&gt;Default body text (no class needed).&lt;/p&gt;
 &lt;p class=&quot;text-size-small&quot;&gt;Smaller supporting text.&lt;/p&gt;
@@ -441,8 +435,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-nmbfhk2xh" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-nmbfhk2xh" class="language-html">&lt;!-- On a paragraph --&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-yhqkawadg" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-yhqkawadg" class="language-html">&lt;!-- On a paragraph --&gt;
 &lt;p class=&quot;eyebrow&quot;&gt;Case Study&lt;/p&gt;
 &lt;h2&gt;Building a design system from the ground up&lt;/h2&gt;
 
@@ -467,7 +461,7 @@
 <td><button type="button" class="token-copy is-class" data-copy=".eyebrow" aria-label="Copy .eyebrow"><code>.eyebrow</code></button></td>
 <td><button type="button" class="token-copy is-token" data-copy="var(--font-xs)" aria-label="Copy var(--font-xs)"><code>var(--font-xs)</code></button></td>
 <td><button type="button" class="token-copy is-token" data-copy="var(--line-height-m)" aria-label="Copy var(--line-height-m)"><code>var(--line-height-m)</code></button></td>
-<td>1.3</td>
+<td>1.2</td>
 </tr>
 </tbody></table></div>
 <hr>
@@ -492,8 +486,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-3ncs3eafh" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-3ncs3eafh" class="language-html">&lt;blockquote&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-boov2n39b" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-boov2n39b" class="language-html">&lt;blockquote&gt;
   &lt;p&gt;Good typography is invisible. Bad typography is everywhere.&lt;/p&gt;
 &lt;/blockquote&gt;
 </code></pre>
@@ -526,19 +520,19 @@
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">External link</p>
-      <p style="margin: 0;">Typography is powered by <a href="https://fonts.google.com" target="_blank" rel="noopener noreferrer">Google Fonts</a> for web delivery.</p>
+      <p style="margin: 0;">Typography is powered by <a href="https://fonts.adobe.com/typekit" target="_blank" rel="noopener noreferrer">Adobe Typekit</a> and self-hosted variable fonts.</p>
     </div>
   </div>
 </div>
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-u7wxpul76" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-u7wxpul76" class="language-html">&lt;!-- Inline link --&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-sv243sthf" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-sv243sthf" class="language-html">&lt;!-- Inline link --&gt;
 &lt;p&gt;Read the full &lt;a href=&quot;/brand&quot;&gt;brand guidelines&lt;/a&gt; before starting.&lt;/p&gt;
 
 &lt;!-- External link (icon added automatically) --&gt;
-&lt;p&gt;Typography is powered by &lt;a href=&quot;https://fonts.google.com&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Google Fonts&lt;/a&gt; for web delivery.&lt;/p&gt;
+&lt;p&gt;Typography is powered by &lt;a href=&quot;https://fonts.adobe.com/typekit&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Adobe Typekit&lt;/a&gt; and self-hosted variable fonts.&lt;/p&gt;
 </code></pre>
       </div>
     
@@ -584,11 +578,11 @@
 <div class="demo-preview is-joined">
   <div class="block gap-xl">
     <div class="block gap-m">
-      <p class="demo-eyebrow">Primary — Inclusive Sans</p>
+      <p class="demo-eyebrow">Primary — Zalando Sans</p>
       <p style="margin: 0; font-family: var(--font-primary); font-size: var(--font-3xl);">Typography is the voice of design</p>
     </div>
     <div class="block gap-m">
-      <p class="demo-eyebrow">Secondary — RecifeText</p>
+      <p class="demo-eyebrow">Secondary — trust-3a</p>
       <p style="margin: 0; font-family: var(--font-secondary); font-size: var(--font-3xl);">Typography is the voice of design</p>
     </div>
     <div class="block gap-m">
@@ -604,8 +598,8 @@
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-07tlzul7p" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-07tlzul7p" class="language-css">body { font-family: var(--font-primary); }
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-k47xtrz2a" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-k47xtrz2a" class="language-css">body { font-family: var(--font-primary); }
 h1, h2, h3, h4, h5, h6 { font-family: var(--font-secondary); }
 code, pre, kbd { font-family: var(--font-quaternary); }
 </code></pre>
@@ -616,27 +610,32 @@ code, pre, kbd { font-family: var(--font-quaternary); }
 <tr>
 <th>Token</th>
 <th>Font</th>
+<th>Source</th>
 <th>Used For</th>
 </tr>
 </thead>
 <tbody><tr>
 <td><button type="button" class="token-copy is-token" data-copy="var(--font-primary)" aria-label="Copy var(--font-primary)"><code>var(--font-primary)</code></button></td>
-<td>Inclusive Sans</td>
+<td>Zalando Sans</td>
+<td>Self-hosted (variable font)</td>
 <td>Body text, UI, labels</td>
 </tr>
 <tr>
 <td><button type="button" class="token-copy is-token" data-copy="var(--font-secondary)" aria-label="Copy var(--font-secondary)"><code>var(--font-secondary)</code></button></td>
-<td>RecifeText</td>
+<td>trust-3a</td>
+<td>Adobe Typekit</td>
 <td>Headings, blockquotes</td>
 </tr>
 <tr>
 <td><button type="button" class="token-copy is-token" data-copy="var(--font-tertiary)" aria-label="Copy var(--font-tertiary)"><code>var(--font-tertiary)</code></button></td>
 <td>Bugrino</td>
+<td>Self-hosted (woff2)</td>
 <td>Brand display, eyebrows, buttons, badges</td>
 </tr>
 <tr>
 <td><button type="button" class="token-copy is-token" data-copy="var(--font-quaternary)" aria-label="Copy var(--font-quaternary)"><code>var(--font-quaternary)</code></button></td>
 <td>IBM Plex Mono</td>
+<td>Self-hosted (ttf)</td>
 <td>Code, pre, kbd</td>
 </tr>
 </tbody></table></div>
@@ -678,8 +677,8 @@ code, pre, kbd { font-family: var(--font-quaternary); }
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-ke1k87gaf" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-ke1k87gaf" class="language-css">font-weight: var(--font-weight-bold);
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-dcxg7klha" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-dcxg7klha" class="language-css">font-weight: var(--font-weight-bold);
 </code></pre>
       </div>
     
@@ -753,8 +752,8 @@ code, pre, kbd { font-family: var(--font-quaternary); }
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-e73a9nufr" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-e73a9nufr" class="language-css">line-height: var(--line-height-l);
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-v56fo2ilk" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-v56fo2ilk" class="language-css">line-height: var(--line-height-l);
 </code></pre>
       </div>
     
@@ -778,7 +777,7 @@ code, pre, kbd { font-family: var(--font-quaternary); }
 </tr>
 <tr>
 <td><button type="button" class="token-copy is-token" data-copy="var(--line-height-m)" aria-label="Copy var(--line-height-m)"><code>var(--line-height-m)</code></button></td>
-<td>1.3</td>
+<td>1.2</td>
 <td>Headings, eyebrows</td>
 </tr>
 <tr>
@@ -823,8 +822,8 @@ code, pre, kbd { font-family: var(--font-quaternary); }
 
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-nhuj9jsev" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-nhuj9jsev" class="language-css">letter-spacing: var(--letter-spacing-xl);
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-3f92okvv7" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-3f92okvv7" class="language-css">letter-spacing: var(--letter-spacing-xl);
 </code></pre>
       </div>
     
@@ -837,6 +836,11 @@ code, pre, kbd { font-family: var(--font-quaternary); }
 </tr>
 </thead>
 <tbody><tr>
+<td><button type="button" class="token-copy is-token" data-copy="var(--letter-spacing-xs)" aria-label="Copy var(--letter-spacing-xs)"><code>var(--letter-spacing-xs)</code></button></td>
+<td>-0.03em</td>
+<td>Negative tracking</td>
+</tr>
+<tr>
 <td><button type="button" class="token-copy is-token" data-copy="var(--letter-spacing-s)" aria-label="Copy var(--letter-spacing-s)"><code>var(--letter-spacing-s)</code></button></td>
 <td>0.03em</td>
 <td>Subtle tracking</td>
@@ -857,6 +861,67 @@ code, pre, kbd { font-family: var(--font-quaternary); }
 <td>Eyebrows, labels</td>
 </tr>
 </tbody></table></div>
+<hr>
+<h2 id="type-roles">Type Roles</h2>
+<p>Four semantic roles compose the primitive tokens into building blocks. Each role defines four dimensions: size, weight, leading (line-height), and tracking (letter-spacing).</p>
+<div class="table-scroll"><table class="table">
+<thead>
+<tr>
+<th>Role</th>
+<th>Size</th>
+<th>Weight</th>
+<th>Leading</th>
+<th>Tracking</th>
+<th>Used For</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Headline</td>
+<td><code>clamp(--font-4xl, 1rem + 5vw, --font-8xl)</code></td>
+<td>500</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-s)" aria-label="Copy var(--line-height-s)"><code>--line-height-s</code></button> (1)</td>
+<td>-0.02em</td>
+<td>Page hero, h1</td>
+</tr>
+<tr>
+<td>Title</td>
+<td><code>clamp(--font-2xl, 0.8rem + 2vw, --font-6xl)</code></td>
+<td>500</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-m)" aria-label="Copy var(--line-height-m)"><code>--line-height-m</code></button> (1.2)</td>
+<td>-0.01em</td>
+<td>Section heads, h2</td>
+</tr>
+<tr>
+<td>Label</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--font-xs)" aria-label="Copy var(--font-xs)"><code>--font-xs</code></button> (14px)</td>
+<td>500</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-s)" aria-label="Copy var(--line-height-s)"><code>--line-height-s</code></button> (1)</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--letter-spacing-m)" aria-label="Copy var(--letter-spacing-m)"><code>--letter-spacing-m</code></button> (0.06em)</td>
+<td>Eyebrows, meta, captions</td>
+</tr>
+<tr>
+<td>Body</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--text-body)" aria-label="Copy var(--text-body)"><code>--text-body</code></button> (18px)</td>
+<td>400</td>
+<td><button type="button" class="token-copy is-token" data-copy="var(--line-height-xl)" aria-label="Copy var(--line-height-xl)"><code>--line-height-xl</code></button> (1.6)</td>
+<td>0</td>
+<td>Running text</td>
+</tr>
+</tbody></table></div>
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-fnyrhwysy" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-fnyrhwysy" class="language-css">/* Use role tokens directly */
+.custom-headline {
+  font-size: var(--headline-size);
+  font-weight: var(--headline-weight);
+  line-height: var(--headline-leading);
+  letter-spacing: var(--headline-tracking);
+}
+</code></pre>
+      </div>
+    
+<p>Headline and title sizes use <code>clamp()</code> for fluid scaling — they grow with the viewport between a minimum and maximum, with no breakpoints needed.</p>
 
                 </article>
             </main>
@@ -864,7 +929,7 @@ code, pre, kbd { font-family: var(--font-quaternary); }
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#font-sizes" class="toc-link">Font Sizes</a></li><li class="toc-item toc-level-2"><a href="#headings" class="toc-link">Headings</a></li><li class="toc-item toc-level-2"><a href="#body-text" class="toc-link">Body Text</a></li><li class="toc-item toc-level-2"><a href="#eyebrow" class="toc-link">Eyebrow</a></li><li class="toc-item toc-level-2"><a href="#blockquote" class="toc-link">Blockquote</a></li><li class="toc-item toc-level-2"><a href="#links" class="toc-link">Links</a></li><li class="toc-item toc-level-2"><a href="#font-families" class="toc-link">Font Families</a></li><li class="toc-item toc-level-2"><a href="#font-weight" class="toc-link">Font Weight</a></li><li class="toc-item toc-level-2"><a href="#line-height" class="toc-link">Line Height</a></li><li class="toc-item toc-level-2"><a href="#letter-spacing" class="toc-link">Letter Spacing</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#font-sizes" class="toc-link">Font Sizes</a></li><li class="toc-item toc-level-2"><a href="#headings" class="toc-link">Headings</a></li><li class="toc-item toc-level-2"><a href="#body-text" class="toc-link">Body Text</a></li><li class="toc-item toc-level-2"><a href="#eyebrow" class="toc-link">Eyebrow</a></li><li class="toc-item toc-level-2"><a href="#blockquote" class="toc-link">Blockquote</a></li><li class="toc-item toc-level-2"><a href="#links" class="toc-link">Links</a></li><li class="toc-item toc-level-2"><a href="#font-families" class="toc-link">Font Families</a></li><li class="toc-item toc-level-2"><a href="#font-weight" class="toc-link">Font Weight</a></li><li class="toc-item toc-level-2"><a href="#line-height" class="toc-link">Line Height</a></li><li class="toc-item toc-level-2"><a href="#letter-spacing" class="toc-link">Letter Spacing</a></li><li class="toc-item toc-level-2"><a href="#type-roles" class="toc-link">Type Roles</a></li></ul></nav></div>
     </aside>
         </div>
 
