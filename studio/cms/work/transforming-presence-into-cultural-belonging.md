@@ -13,23 +13,49 @@ thumbnail-video: "https://player.vimeo.com/progressive_redirect/playback/1134392
 order: 2
 ---
 
-{{video src="https://player.vimeo.com/progressive_redirect/playback/1134392513/rendition/540p/file.mp4%20%28540p%29.mp4?loc=external&log_user=0&signature=8ae703ff31619551630bdd73268c9e5b615d62ab736d007d682e810130902621" poster="https://cdn.prod.website-files.com/68e2be176459e98837a31ed9/690d14b8b7c2812b05f880e0_thumbnail.avif"}}
+{{video src="https://player.vimeo.com/progressive_redirect/playback/1134431594/rendition/720p/file.mp4%20%28720p%29.mp4?loc=external&log_user=0&signature=c388cb54dc98a6121c6c7f8cb572b336408694af97b8999e19174a74d904c2f1" poster="../assets/images/work/verizon/wide-03.jpg"}}
 
-![](https://bydefault.design/image/1920x1080)
+{{grid cols="2"}}
+{{bg-video src="https://player.vimeo.com/progressive_redirect/playback/1134420223/rendition/720p/file.mp4%20%28720p%29.mp4?loc=external&log_user=0&signature=992c5218d904719a7a4908bf98e9b2455ccbd2b1a9631d233255a2dbb22875df" ratio="4:5"}}
+{{bg-video src="https://player.vimeo.com/progressive_redirect/playback/1134417669/rendition/720p/file.mp4%20%28720p%29.mp4?loc=external&log_user=0&signature=a82ab46029fb4cb69226719d25c93f827177a4fa412c1ecfbedcab1f3555eb68" ratio="4:5"}}
+{{/grid}}
 
-![](https://bydefault.design/image/1920x1080)
+{{grid cols="2"}}
+![Verizon Filter Campaign](../assets/images/work/verizon/filter-campaign.jpg)
+{{bg-video src="https://player.vimeo.com/progressive_redirect/playback/1134442143/rendition/720p/file.mp4%20%28720p%29.mp4?loc=external&log_user=0&signature=19e5baf4b2e12d4b88f8678c17c29f3a32193572419803cd9f45612d9935bacd" ratio="4:5"}}
+{{/grid}}
 
-![](https://bydefault.design/image/1920x1080)
+{{grid cols="3"}}
+{{bg-video src="https://player.vimeo.com/progressive_redirect/playback/1134427977/rendition/720p/file.mp4%20%28720p%29.mp4?loc=external&log_user=0&signature=578ca7f68d1dfc81b0666de3f5f20cd910aa18b4ed64ad671ba87550250553ed" ratio="9:16"}}
+{{bg-video src="https://player.vimeo.com/progressive_redirect/playback/1134428004/rendition/720p/file.mp4%20%28720p%29.mp4?loc=external&log_user=0&signature=63f858754dba97f8ce03974a14612bbf5b521f14ae1c2dbf478f9152afe616cb" ratio="9:16"}}
+{{bg-video src="https://player.vimeo.com/progressive_redirect/playback/1134428016/rendition/720p/file.mp4%20%28720p%29.mp4?loc=external&log_user=0&signature=65135c0022cc5dec90da320c080dc51cbd624301fe330db09b37ff182c8dcb91" ratio="9:16"}}
+{{/grid}}
 
-![](https://bydefault.design/image/1920x1080)
+{{grid cols="2"}}
+{{bg-video src="https://player.vimeo.com/progressive_redirect/playback/1134433430/rendition/720p/file.mp4%20%28720p%29.mp4?loc=external&log_user=0&signature=25f98bf7e9032158f688558f0a5ab395ddba17e30e440b62566b7e7ce0085b1d" ratio="4:5"}}
+![Motion Graphic Character Illustration](../assets/images/work/verizon/character-illustration.jpg)
+{{/grid}}
 
-![](https://bydefault.design/image/1920x1080)
+![](../assets/images/work/verizon/wide-01.avif)
 
-![](https://bydefault.design/image/1920x1080)
+{{grid cols="2"}}
+![](../assets/images/work/verizon/portrait-09.jpg)
+![](../assets/images/work/verizon/portrait-08.jpg)
+{{/grid}}
 
-![](https://bydefault.design/image/1920x1080)
+![](../assets/images/work/verizon/wide-02.avif)
 
-![](https://bydefault.design/image/1920x1080)
+{{grid cols="2"}}
+![](../assets/images/work/verizon/portrait-06.jpg)
+![](../assets/images/work/verizon/portrait-05.jpg)
+{{/grid}}
+
+{{grid cols="2"}}
+![](../assets/images/work/verizon/portrait-04.jpg)
+![](../assets/images/work/verizon/portrait-03.jpg)
+{{/grid}}
+
+![](../assets/images/work/verizon/wide-03.jpg)
 
 ---
 

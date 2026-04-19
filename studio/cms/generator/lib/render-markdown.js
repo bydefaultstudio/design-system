@@ -73,9 +73,12 @@ const BLOCK_SHORTCODES = {
     const mapped = TYPE_MAP[raw] || raw;
     return `<aside class="callout" data-type="${mapped}">\n${inner}\n</aside>`;
   },
-  gallery(inner) {
-    // Inner is markdown-rendered <p><img><img></p> — unwrap and rewrap.
-    return `<div class="gallery">\n${inner}\n</div>`;
+  grid(inner, attrs) {
+    var cols = attrs.cols || "2";
+    // Grid content is exclusively media — strip all <p> wrappers so grid
+    // children are the media elements directly (img, video, bd-video sections).
+    var stripped = inner.replace(/<\/?p>/g, "");
+    return `<div class="cs-grid" data-cols="${cols}">\n${stripped}\n</div>`;
   }
 };
 
@@ -102,8 +105,9 @@ const INLINE_SHORTCODES = {
     const src = attrs.src || "";
     const poster = attrs.poster ? ` poster="${attrs.poster}"` : "";
     const loop = attrs.loop === "false" ? "" : " loop";
+    const ratio = attrs.ratio ? ` data-ratio="${attrs.ratio}"` : "";
     return (
-      `<video class="bg-video" src="${src}"${poster}` +
+      `<video class="bg-video" src="${src}"${poster}${ratio}` +
       ` autoplay muted playsinline${loop} preload="metadata" aria-hidden="true"></video>`
     );
   }
@@ -113,7 +117,7 @@ const INLINE_SHORTCODES = {
 
 function processBlockShortcodes(input, ctx) {
   // Match {{name attrs}}...{{/name}} (non-greedy, multiline)
-  const re = /\{\{(\w+)([^}]*)\}\}([\s\S]*?)\{\{\/\1\}\}/g;
+  const re = /\{\{([\w-]+)([^}]*)\}\}([\s\S]*?)\{\{\/\1\}\}/g;
   return input.replace(re, (match, name, attrStr, inner) => {
     const handler = BLOCK_SHORTCODES[name];
     if (!handler) return match; // leave for later or unknown
@@ -128,8 +132,8 @@ function processInlineShortcodes(input, ctx) {
   input = input.replace(/\{\{icon:([\w-]+)\}\}/g, (_, name) =>
     renderIcon(name, ctx.icons)
   );
-  // {{name attrs}} (self-closing, no body)
-  input = input.replace(/\{\{(\w+)([^}]*)\}\}/g, (match, name, attrStr) => {
+  // {{name attrs}} (self-closing, no body — supports hyphenated names like bg-video)
+  input = input.replace(/\{\{([\w-]+)([^}]*)\}\}/g, (match, name, attrStr) => {
     const handler = INLINE_SHORTCODES[name];
     if (!handler) return match;
     return handler(parseAttrs(attrStr));
@@ -145,9 +149,7 @@ function processInlineShortcodes(input, ctx) {
 function render(input, ctx) {
   // 1. Block shortcodes first (recurse into their inner).
   let out = processBlockShortcodes(input, ctx);
-  // 2. Protect inline shortcodes from marked by resolving them to HTML first.
-  //    Wrap output fragments in a token, substitute back after marked.
-  const stash = [];
+  // 2. Resolve inline shortcodes to HTML before marked processes the rest.
   out = processInlineShortcodes(out, ctx);
 
   // 3. Marked handles the remaining markdown. We rely on marked preserving

@@ -34,7 +34,7 @@
  * Reduced motion: instant swap.
  */
 
-console.log("Studio Barba v0.3.0");
+// Studio Barba v0.3.0
 
 // Flag set by click handler on .next-read — consumed once by resolveScenario
 var _nextReadNav = false;
@@ -442,6 +442,9 @@ function initStudioBarba() {
 
   window.barba.hooks.before(function onBefore() {
     document.body.classList.add("is-animating");
+    if (typeof window.cleanupCaseStudy === "function") {
+      window.cleanupCaseStudy();
+    }
     document.dispatchEvent(new CustomEvent("studio:before-nav"));
   });
 
@@ -474,6 +477,9 @@ function initStudioBarba() {
     }
     if (typeof window.initSidebarSlot === "function") {
       window.initSidebarSlot();
+    }
+    if (typeof window.initCaseStudy === "function") {
+      window.initCaseStudy();
     }
     document.body.classList.remove("is-animating");
     // Clean up role/scenario attributes + any inline styles set by the
