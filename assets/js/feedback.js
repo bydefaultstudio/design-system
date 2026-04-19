@@ -61,9 +61,10 @@
   //------- Main Logic -------//
   //
 
-  function initFeedback() {
-    var section = document.querySelector('.page-feedback');
-    var dialog = document.querySelector('.feedback-modal');
+  function initFeedback(scope) {
+    var root = scope || document;
+    var section = root.querySelector('.page-feedback');
+    var dialog = root.querySelector('.feedback-modal');
     if (!section || !dialog) return;
 
     var yesBtn = section.querySelector('[data-feedback="yes"]');
