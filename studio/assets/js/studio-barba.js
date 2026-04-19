@@ -128,10 +128,12 @@ function shouldPrevent(payload) {
   if (href.startsWith("mailto:")) return true;
   if (href.startsWith("tel:")) return true;
 
-  // External origin
+  // External origin or same-page (hash-only difference)
   try {
     var url = new URL(href, location.href);
     if (url.origin !== location.origin) return true;
+    // Same page with only a hash difference — let the browser handle it
+    if (url.pathname === location.pathname && url.hash !== "") return true;
   } catch (e) {
     return true;
   }
@@ -431,20 +433,6 @@ function updateMetaFromContainer(container) {
 //
 //------- Initialize -------//
 //
-
-// Block clicks on links pointing to the current page — prevents both
-// Barba transitions and browser navigation for same-page links.
-document.addEventListener("click", function blockSamePageNav(e) {
-  var link = e.target.closest("a[href]");
-  if (!link) return;
-  try {
-    var url = new URL(link.getAttribute("href"), location.href);
-    if (url.origin === location.origin && url.pathname === location.pathname) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  } catch (err) { /* malformed href, ignore */ }
-});
 
 function initStudioBarba() {
   if (typeof window.barba === "undefined") {
