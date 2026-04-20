@@ -1,10 +1,10 @@
 /**
  * Case Study Page Scripts
- * Version: 0.4.0
- * Purpose: Toggle, sticky info panel, fixed button for case study pages
+ * Version: 0.5.0
+ * Purpose: Toggle, sticky info panel, fixed button, related work slider
  */
 
-// studio-case-study v0.4.0
+// studio-case-study v0.5.0
 
 // ------ Module state ------ //
 
@@ -12,6 +12,7 @@ var caseStudyToggleBound = false;
 var csResizeObserver = null;
 var csIntersectionObserver = null;
 var csTransitionTimeout = null;
+var csSplideInstance = null;
 var CS_TRANSITION_MS = 800;
 var CS_TRANSITION_FALLBACK_MS = CS_TRANSITION_MS + 100;
 
@@ -174,36 +175,133 @@ function initCaseStudyFixedToggle() {
   }
 
   var headerToggle = document.querySelector(".cs-header .cs-toggle");
+  var slider = document.querySelector(".cs-slider");
   var wrap = ensureFixedToggleWrap();
 
   if (!headerToggle) {
-    // Not a case study page — hide the wrap
     wrap.classList.remove("is-visible");
     wrap.classList.remove("is-hidden");
     return;
   }
 
-  // Show the wrap (starts hidden via is-hidden until scroll triggers)
   wrap.classList.add("is-visible");
   wrap.classList.add("is-hidden");
 
+  // Track both boundaries: header toggle (top) and slider (bottom)
+  var headerVisible = true;
+  var sliderVisible = false;
+
+  function updateVisibility() {
+    if (headerVisible || sliderVisible) {
+      wrap.classList.add("is-hidden");
+    } else {
+      wrap.classList.remove("is-hidden");
+    }
+  }
+
   csIntersectionObserver = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        wrap.classList.add("is-hidden");
-      } else {
-        wrap.classList.remove("is-hidden");
+      if (entry.target === headerToggle) {
+        headerVisible = entry.isIntersecting;
+      } else if (entry.target === slider) {
+        sliderVisible = entry.isIntersecting;
       }
     });
+    updateVisibility();
   }, { threshold: 0 });
 
   csIntersectionObserver.observe(headerToggle);
+  if (slider) csIntersectionObserver.observe(slider);
+}
+
+
+// ------ Related Work Slider ------ //
+
+var SPLIDE_JS = "https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js";
+var SPLIDE_CSS = "https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css";
+
+function ensureSplide(callback) {
+  if (typeof Splide !== "undefined") return callback();
+  // Inject CSS if not already present
+  if (!document.querySelector('link[href*="splide"]')) {
+    var link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = SPLIDE_CSS;
+    document.head.appendChild(link);
+  }
+  // Inject JS
+  var script = document.createElement("script");
+  script.src = SPLIDE_JS;
+  script.onload = callback;
+  document.head.appendChild(script);
+}
+
+function initCaseStudySlider() {
+  var list = document.querySelector("[data-cs-slides]");
+  if (!list || typeof window.loadStudioContent !== "function") return;
+
+  var barbaContainer = document.querySelector("[data-barba-namespace]");
+  var currentSlug = (barbaContainer ? barbaContainer.getAttribute("data-barba-namespace") : "").replace(/^work-/, "");
+  var prefix = typeof window.getStudioPrefix === "function" ? window.getStudioPrefix() : "";
+
+  window.loadStudioContent().then(function (data) {
+    var studies = (data.caseStudies || []).filter(function (cs) { return cs.slug !== currentSlug; });
+    if (!studies.length) return;
+
+    list.innerHTML = studies.map(function (entry) {
+      var src = entry.thumbnailVideo || entry.thumbnail || entry.hero || "";
+      var alt = (entry.thumbnailAlt || entry.title || "").replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+      var media = entry.thumbnailVideo
+        ? '<video class="vdo-thumb" src="' + src + '" poster="' + (entry.thumbnailVideoPoster || entry.thumbnail || entry.hero || "").replace(/"/g, "&quot;") + '" muted playsinline preload="metadata" aria-hidden="true"></video>'
+        : '<img class="img-thumb" src="' + src + '" alt="' + alt + '" loading="lazy">';
+
+      return '<div class="splide__slide">' +
+        '<a href="' + prefix + entry.url + '" class="post" data-post-type="standard">' +
+          '<div class="post-thumbnail" data-ratio="16:9">' + media + '</div>' +
+          '<div class="post-header"><span class="post-label label">Case study</span></div>' +
+          '<div class="post-body">' +
+            '<h3 class="post-title">' + entry.title + '</h3>' +
+            (entry.synopsis ? '<p class="post-excerpt">' + entry.synopsis + '</p>' : '') +
+            (entry.client ? '<div class="post-meta bottom-meta"><span class="post-meta-item post-client label">' + entry.client + '</span></div>' : '') +
+          '</div>' +
+        '</a>' +
+      '</div>';
+    }).join("");
+
+    ensureSplide(function () {
+      var styles = getComputedStyle(document.documentElement);
+      var gap = styles.getPropertyValue("--studio-gap").trim() || "1rem";
+
+      csSplideInstance = new Splide(list.closest(".cs-splide"), {
+        type: "loop",
+        perPage: 3,
+        perMove: 1,
+        gap: gap,
+        arrows: true,
+        pagination: false,
+        speed: 800,
+        easing: "ease-out",
+        padding: { left: gap, right: gap },
+        trimSpace: false,
+        breakpoints: {
+          991: { perPage: 2, padding: { left: gap, right: gap } },
+          600: { perPage: 1, padding: { left: gap, right: gap } }
+        }
+      }).mount();
+
+      if (typeof window.initThumbHover === "function") window.initThumbHover(list);
+    });
+  });
 }
 
 
 // ------ Init + Cleanup ------ //
 
 function cleanupCaseStudy() {
+  if (csSplideInstance) {
+    csSplideInstance.destroy();
+    csSplideInstance = null;
+  }
   if (csResizeObserver) {
     csResizeObserver.disconnect();
     csResizeObserver = null;
@@ -227,6 +325,7 @@ function initCaseStudy() {
   cleanupCaseStudy();
   initCaseStudyToggle();
   initCaseStudyFixedToggle();
+  initCaseStudySlider();
 }
 
 window.initCaseStudy = initCaseStudy;

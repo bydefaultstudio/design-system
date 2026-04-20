@@ -16,7 +16,7 @@ client: "internal"
 
 Callouts are used to **highlight important information** within content. They draw attention to informational notes, success tips, warnings, and other contextual messages.
 
-The `.callout` class is required. Type variants use `data-type` with the shared status vocabulary (`info`, `success`, `warning`, `danger`, `accent`). The icon layout uses the `data-icon` boolean attribute.
+The `.callout` class is required. Type variants use `data-type` with the shared status vocabulary (`info`, `success`, `warning`, `danger`). The icon layout uses the `data-icon` boolean attribute.
 
 ---
 
@@ -47,8 +47,6 @@ Callout types are powered by status colour tokens defined in `:root`:
 | `var(--status-warning-bg)` | `var(--yellow-lighter)` | Warning background |
 | `var(--status-danger)` | `var(--red)` | Risks, destructive actions |
 | `var(--status-danger-bg)` | `var(--red-lighter)` | Danger background |
-| `var(--status-accent)` | `var(--purple)` | Emphasis, special importance |
-| `var(--status-accent-bg)` | `var(--purple-lighter)` | Accent background |
 
 Callouts, badges, toasts, and other components reference these tokens directly — no intermediate `--callout-*` layer needed.
 
@@ -82,7 +80,6 @@ Use `data-type` to set the semantic variant. Each type applies a coloured backgr
 | `success` | Helpful advice, positive outcomes |
 | `warning` | Urgent information to avoid problems |
 | `danger` | Risks or negative outcomes |
-| `accent` | Key information, emphasis |
 
 ### Info
 
@@ -148,22 +145,6 @@ Use `data-type` to set the semantic variant. Each type applies a coloured backgr
 </div>
 ```
 
-### Accent
-
-<div class="demo-preview is-joined">
-  <div class="callout" data-type="accent">
-    <div class="callout-title">Important</div>
-    <p class="callout-description">Key information users need to know.</p>
-  </div>
-</div>
-
-```html
-<div class="callout" data-type="accent">
-  <div class="callout-title">Important</div>
-  <p class="callout-description">Key information users need to know.</p>
-</div>
-```
-
 ---
 
 ## Callout with icon
@@ -200,7 +181,6 @@ How it works:
 | `success` | {{icon:bolt}} Lightning bolt | `{{icon:bolt}}` |
 | `warning` | {{icon:warning}} Warning triangle | `{{icon:warning}}` |
 | `danger` | {{icon:close-circled}} Close circle | `{{icon:close-circled}}` |
-| `accent` | {{icon:exclamation}} Exclamation circle | `{{icon:exclamation}}` |
 
 ### All types with icons
 
@@ -233,14 +213,6 @@ How it works:
     {{icon:close-circled}}
     <div class="callout-title">Caution</div>
     <p class="callout-description">Risks or negative outcomes of certain actions.</p>
-  </div>
-</div>
-
-<div class="demo-preview is-joined">
-  <div class="callout" data-type="accent" data-icon>
-    {{icon:exclamation}}
-    <div class="callout-title">Important</div>
-    <p class="callout-description">Key information users need to know.</p>
   </div>
 </div>
 
@@ -289,7 +261,6 @@ This section documents how the component is built. For usage, see the sections a
 | `.callout[data-type="success"]` | Success variant — `var(--status-success-bg)` background |
 | `.callout[data-type="warning"]` | Warning variant — `var(--status-warning-bg)` background |
 | `.callout[data-type="danger"]` | Danger variant — `var(--status-danger-bg)` background |
-| `.callout[data-type="accent"]` | Accent variant — `var(--status-accent-bg)` background |
 | `.callout[data-icon]` | Enables two-column grid layout for icon + content |
 | `.callout-title` | Bold title row — semi-bold, `var(--font-s)` |
 | `.callout-description` | Body text — `var(--font-s)`, top margin `var(--space-xs)` |

@@ -219,7 +219,6 @@ For cases where multiple children should stretch together, use `.align-stretch` 
 | `data-color="success"` | `data-color="green"` | Confirmations, positive outcomes |
 | `data-color="warning"` | `data-color="yellow"` | Caution, attention needed |
 | `data-color="info"` | `data-color="blue"` | Informational, neutral CTAs |
-| `data-color="accent"` | `data-color="purple"` | Emphasis, special actions |
 
 ### Primary coloured
 
@@ -228,7 +227,6 @@ For cases where multiple children should stretch together, use `.align-stretch` 
   <button class="button" data-color="success">Success</button>
   <button class="button" data-color="warning">Warning</button>
   <button class="button" data-color="info">Info</button>
-  <button class="button" data-color="accent">Accent</button>
 </div>
 
 ### Outline coloured
@@ -238,7 +236,6 @@ For cases where multiple children should stretch together, use `.align-stretch` 
   <button class="button" data-variant="outline" data-color="success">Success</button>
   <button class="button" data-variant="outline" data-color="warning">Warning</button>
   <button class="button" data-variant="outline" data-color="info">Info</button>
-  <button class="button" data-variant="outline" data-color="accent">Accent</button>
 </div>
 
 ### Faded coloured
@@ -248,7 +245,6 @@ For cases where multiple children should stretch together, use `.align-stretch` 
   <button class="button" data-variant="faded" data-color="success">Success</button>
   <button class="button" data-variant="faded" data-color="warning">Warning</button>
   <button class="button" data-variant="faded" data-color="info">Info</button>
-  <button class="button" data-variant="faded" data-color="accent">Accent</button>
 </div>
 
 ```html
@@ -261,27 +257,42 @@ For cases where multiple children should stretch together, use `.align-stretch` 
 
 ## Hover
 
-All buttons transition on hover. The CSS property used is `background-color` (not the `background` shorthand).
+All buttons transition on hover.
 
-**Filled buttons** (primary and all `data-color` variants): reduce to `opacity: 0.9`.
+**Filled buttons** (primary and all `data-color` variants): the button colour shifts via `color-mix` to blend 10% of the background into the text colour.
 
-**Unfilled variants** (outline, faded, outline-faded, transparent, text): gain a subtle accent fill at 10% alpha of the button's identity colour.
+**Unfilled variants** (outline, faded, outline-faded, transparent): gain a subtle accent fill at 10% alpha of the button's identity colour.
 
 ```css
 /* Filled hover */
-.button:hover { opacity: 0.9; }
+.button:hover {
+  --button-color: color-mix(in srgb, var(--text-primary), var(--background-primary) 10%);
+}
 
 /* Unfilled hover */
 .button[data-variant="outline"]:hover,
 .button[data-variant="faded"]:hover,
 .button[data-variant="outline-faded"]:hover,
-.button[data-variant="transparent"]:hover,
-.button[data-variant="text"]:hover {
+.button[data-variant="transparent"]:hover {
   background-color: color-mix(in srgb, var(--button-color), var(--alpha-10));
 }
 ```
 
-The **text** variant also adds an underline on hover.
+The **text** variant adds an underline on hover but does not gain a background fill.
+
+---
+
+## Press (active)
+
+When a button is pressed (`:active`), it scales down to 97% to simulate a physical press. The transform transitions at `--duration-2xs` (100ms) with `--ease-out` for a snappy feel.
+
+```css
+.button:active {
+  transform: scale(0.97);
+}
+```
+
+The **text** variant is excluded from the press effect since it has no visible container to scale. Users who prefer reduced motion see no transform.
 
 ---
 
@@ -450,7 +461,8 @@ This section documents how the component is built. For usage, see the sections a
 | Selector | Purpose |
 |---|---|
 | `.button` | Base component — all tokens, layout, typography, transitions |
-| `.button:hover` | Filled hover — `opacity: 0.9` |
+| `.button:hover` | Filled hover — `color-mix` tint shift |
+| `.button:active` | Press effect — `transform: scale(0.97)` |
 | `.button[data-variant="outline"]` | Transparent bg, primary border, text inherits `--button-color` |
 | `.button[data-variant="faded"]` | 15% alpha bg, no border, text inherits `--button-color` |
 | `.button[data-variant="outline-faded"]` | Transparent bg, faded border, text inherits `--button-color` |
@@ -465,7 +477,6 @@ This section documents how the component is built. For usage, see the sections a
 | `.button[data-color="success"]` / `[data-color="green"]` | Sets `--button-color` to `var(--status-success)` |
 | `.button[data-color="warning"]` / `[data-color="yellow"]` | Sets `--button-color` to `var(--status-warning)` |
 | `.button[data-color="info"]` / `[data-color="blue"]` | Sets `--button-color` to `var(--status-info)` |
-| `.button[data-color="accent"]` / `[data-color="purple"]` | Sets `--button-color` to `var(--status-accent)` |
 | `.button:disabled`, `.button.is-disabled` | Opacity 0.4, pointer events disabled |
 | `.button.is-loading` | Pointer disabled, opacity 0.6 |
 | `.button-group` | Flex container for grouping buttons with `var(--space-m)` gap |
@@ -473,8 +484,9 @@ This section documents how the component is built. For usage, see the sections a
 ### Key rules
 
 - **Colour cascade:** `--button-color` is the single source. It feeds `--button-bg`, `--button-border`, and `--button-faded` automatically. `data-color` attributes only override `--button-color` — every variant picks it up without extra selectors.
-- **Hover formula (filled):** `opacity: 0.9` on `.button:hover`.
-- **Hover formula (unfilled):** `background-color: color-mix(in srgb, var(--button-color), var(--alpha-10))` — applies to outline, faded, outline-faded, transparent, and text variants.
+- **Hover formula (filled):** `--button-color: color-mix(in srgb, var(--text-primary), var(--background-primary) 10%)` on `.button:hover`.
+- **Hover formula (unfilled):** `background-color: color-mix(in srgb, var(--button-color), var(--alpha-10))` — applies to outline, faded, outline-faded, transparent variants.
+- **Press effect:** `transform: scale(0.97)` on `.button:active` — excluded for text variant, disabled under `prefers-reduced-motion`.
 - **Focus ring:** inherits the global `:focus-visible` outline from the design system reset — no component-specific focus rule.
 - **Dark mode faded adjustment:** `--button-faded` changes from `var(--alpha-15)` to `var(--alpha-80)` in dark mode so the 15% tint remains visible on dark backgrounds.
 - **Transition:** `background-color`, `color`, `border-color`, and `opacity` all use `var(--duration-2xs) var(--ease-out)`.

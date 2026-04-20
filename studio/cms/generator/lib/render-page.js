@@ -133,11 +133,6 @@ function buildInfoToggle(hasInfo) {
   return `\n          <button type="button" class="button cs-toggle" data-cs-toggle>\n            <span class="cs-toggle-label">Project information</span>\n            ${CS_TOGGLE_ICONS}\n          </button>`;
 }
 
-function buildFixedToggle(hasInfo) {
-  if (!hasInfo) return "";
-  return `\n      <button type="button" class="button cs-toggle cs-toggle-fixed is-hidden" data-cs-toggle aria-label="Toggle project information">\n        <span class="cs-toggle-label">Project information</span>\n        ${CS_TOGGLE_ICONS}\n      </button>`;
-}
-
 function optionalMeta(label, value) {
   if (!value) return "";
   return `\n                    <span class="post-meta-item label"><span class="post-meta-label label">${label}:</span> ${escapeHtml(
@@ -173,7 +168,6 @@ function renderCaseStudyInner(entry, visualsHtml, infoHtml) {
     .replace(/\{\{synopsis\}\}/g, escapeHtml(entry.synopsis || ""))
     .replace(/\{\{servicesBlock\}\}/g, buildCaseStudyServicesBlock(entry.services))
     .replace(/\{\{infoToggle\}\}/g, buildInfoToggle(hasInfo))
-    .replace(/\{\{fixedToggle\}\}/g, buildFixedToggle(hasInfo))
     .replace(/\{\{visualsBody\}\}/g, visualsHtml)
     .replace(/\{\{infoBody\}\}/g, infoHtml || "");
 }

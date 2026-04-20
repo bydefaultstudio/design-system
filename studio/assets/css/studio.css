@@ -532,7 +532,7 @@ body.is-sidebar-collapsed .sidebar-footer {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-l);
+  gap: var(--space-xs);
 
 }
 
@@ -593,6 +593,7 @@ body.is-sidebar-collapsed .sidebar-footer {
   position: relative;
   min-height: calc(100vh - var(--mobile-bar-height));
   background-color: var(--background-primary);
+  min-width: 0;
 }
 
 [data-barba="wrapper"] {
@@ -1074,6 +1075,7 @@ article.article {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-s);
+  z-index: 10;
 }
 
 .post-body {
@@ -1135,11 +1137,16 @@ article.article {
   margin-left: var(--space-s);
 }
 .post-read-status {
+  display: none;
   color: var(--text-faded);
   flex-shrink: 0;
   background: none;
   padding: 0;
   gap: var(--space-xs);
+}
+
+.post-item.is-read .post-read-status {
+  display: flex;
 }
 
 .post-read-status .svg-icn {
@@ -1376,7 +1383,7 @@ body.is-cs-open .cs-toggle-wrap .cs-toggle-icon-close {
 .cs-content-inner {
   position: sticky;
   top: 0;
-  padding: var(--studio-gap);
+  padding: var(--studio-gap) var(--studio-gap) var(--space-8xl) var(--studio-gap);
   display: flex;
   flex-direction: column;
   gap: var(--space-xl);
@@ -1454,6 +1461,55 @@ body.is-cs-open .cs-toggle-wrap .cs-toggle-icon-close {
   .cs-grid[data-cols="3"] {
     grid-template-columns: 1fr;
   }
+}
+
+
+/* -- Related work slider -- */
+
+
+
+.cs-slider:empty { display: none; }
+
+.cs-slider {
+  overflow: hidden;
+  width: 100%;
+  padding: var(--space-2xl) 0;
+ }
+
+.cs-slider-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-l);
+}
+
+.cs-slider-title {
+  font-weight: var(--title-weight);
+  margin: 0;
+}
+
+.cs-splide {
+  width: 100%;
+}
+.splide__track {
+  width: 100%;
+}
+
+.cs-splide .splide__slide .post {
+  height: 100%;
+}
+
+.splide__arrow--prev svg {
+    transform: none !important;
+}
+
+.cs-slider-arrow {
+}
+
+.cs-slider-arrow:hover {
+}
+
+.cs-slider-arrow svg {
 }
 
 
@@ -1548,16 +1604,9 @@ body.is-mobile-nav-open .sidebar-backdrop {
 }
 
 
+
+
 /* ------ PAGE CLOSE BUTTON (X) ------ */
-/*
- * Pinned to the top-right of the main area whenever the current Barba
- * container is non-home (data-level >= 1). Real <a href="index.html">, so
- * Barba intercepts the click and runs the close scenario.
- *
- * Visibility is driven by body[data-current-level], which studio.js seeds
- * on init from the initial container and studio-barba.js syncs on every
- * navigation in its afterEnter hook.
- */
 
 .close-btn-wrap {
   display: none;
@@ -1619,6 +1668,7 @@ body.is-animating .close-btn-wrap {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
+  padding: var(--space-3xl) 0;
 }
 
 .contact-headline {
@@ -1697,9 +1747,15 @@ body.is-animating .close-btn-wrap {
 
 
 .contact-chips .button.is-selected {
-  --button-bg: var(--button-color);
-  --button-text-color: var(--text-inverted);
-  --button-border: var(--button-color);
+  --button-bg: var(--text-primary);
+  --button-text-color: var(--background-primary);
+  --button-border: var(--text-primary);
+}
+
+.contact-chips .button.is-selected:hover {
+  background-color: var(--text-primary) !important;
+  color: var(--background-primary) !important;
+  border-color: var(--text-primary) !important;
 }
 
 .contact-chips .button .svg-icn {
@@ -2027,11 +2083,7 @@ body.is-animating .close-btn-wrap {
   width: 100%;
 }
 
-/* Page-wide wrapper — child of the Barba container, contains every
-   services section (header, accordion, capability, process, cta).
-   Gives the whole page a paintable card surface. Mirrors the .article
-   card pattern so pages feel like siblings. overflow:hidden so the
-   dark CTA section clips cleanly at the card's rounded bottom edge. */
+
 .services-card {
   background: var(--bg-faded-3);
   overflow: hidden;
@@ -2077,6 +2129,21 @@ body.is-animating .close-btn-wrap {
 
 .formats-section .accordion {
   border-top: none;
+}
+
+.services-accordion .accordion-title {
+  font-family: var(--font-secondary);
+  font-size: var(--font-4xl);
+  font-weight: var(--font-weight-medium);
+}
+
+.accordion-header {
+      padding: var(--space-m) var(--space-xl);
+}
+
+.accordion-body {
+      padding: var(--space-m) var(--space-xl);
+
 }
 
 /* -- Mini case tile (inverted) -- */
@@ -2129,33 +2196,7 @@ body.is-animating .close-btn-wrap {
   margin: 0;
 }
 
-/* -- Section 3: capability footer -- */
-
-.services-capability {
-  padding: var(--space-2xl) var(--space-l);
-  background: var(--background-faded);
-  border-radius: var(--radius-m);
-}
-
-.services-capability-title {
-  font-size: var(--font-xl);
-  color: var(--text-secondary);
-  margin: 0;
-}
-
-.services-capability-link {
-  font-family: var(--font-quaternary, monospace);
-  font-size: var(--font-2xs);
-  letter-spacing: var(--letter-spacing-l);
-  text-transform: uppercase;
-  color: var(--text-primary);
-  border-bottom: var(--border-s) solid var(--text-primary);
-  padding-bottom: 2px;
-  text-decoration: none;
-  align-self: flex-start;
-}
-
-/* -- Section 4: how we work (process steps) -- */
+/* -- Section 3: how we work (process steps) -- */
 
 .process-steps {
   display: flex;
@@ -2190,7 +2231,7 @@ body.is-animating .close-btn-wrap {
   margin: 0;
 }
 
-/* -- Section 5: closing CTA (tabbed, dark) -- */
+/* -- Section 4: closing CTA (tabbed, dark) -- */
 
 .services-cta {
   background: var(--text-primary);

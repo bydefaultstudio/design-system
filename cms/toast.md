@@ -160,6 +160,5 @@ This section documents how the component is built. For usage, see the sections a
 | `.toast[data-type="warning"]`, `.toast[data-type="yellow"]` | Warning colour variant |
 | `.toast[data-type="danger"]`, `.toast[data-type="red"]` | Danger colour variant |
 | `.toast[data-type="info"]`, `.toast[data-type="blue"]` | Info colour variant |
-| `.toast[data-type="accent"]`, `.toast[data-type="purple"]` | Accent colour variant |
 | `.toast-message` | Message text span |
 | `.toast-close` | Dismiss button |

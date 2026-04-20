@@ -625,11 +625,11 @@ When studio mode is active, follow the rules in this section. Everything else in
 
 `design-system.css` and `accordion.js` are shared between root and studio. A **bi-directional git pre-commit hook** (`.git/hooks/pre-commit`) keeps them in sync:
 
-- Stage `assets/css/design-system.css` → hook copies to `studio/assets/css/` and stages it
 - Stage `studio/assets/css/design-system.css` → hook copies to `assets/css/` and stages it
-- If both are staged, **root wins**
+- Stage `assets/css/design-system.css` → hook copies to `studio/assets/css/` and stages it
+- If both are staged, **studio wins**
 
-**Do not manually copy `design-system.css` between root and studio.** Just edit whichever copy you need — the hook handles sync at commit time. The same applies to `assets/js/accordion.js` ↔ `studio/assets/js/accordion.js`.
+The studio copy is the primary working file. **Do not manually copy `design-system.css` between root and studio.** Just edit whichever copy you need — the hook handles sync at commit time. The same applies to `assets/js/accordion.js` ↔ `studio/assets/js/accordion.js`.
 
 ### CSS rules
 

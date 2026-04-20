@@ -315,8 +315,6 @@ Semantic colors for informational, success, warning, danger, and accent states.
 | `var(--status-warning-bg)` | `var(--yellow-lighter)` | Warning background |
 | `var(--status-danger)` | `var(--red)` | Danger/error |
 | `var(--status-danger-bg)` | `var(--red-lighter)` | Danger background |
-| `var(--status-accent)` | `var(--purple)` | Accent/highlight |
-| `var(--status-accent-bg)` | `var(--purple-lighter)` | Accent background |
 
 ### Form
 

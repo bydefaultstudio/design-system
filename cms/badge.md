@@ -52,7 +52,6 @@ The badge uses `data-color` for semantic colour variants. No component-level tok
 | `data-color="success"` | `data-color="green"` | Live, published, positive |
 | `data-color="warning"` | `data-color="yellow"` | Draft, pending, attention |
 | `data-color="info"` | `data-color="blue"` | Informational, neutral |
-| `data-color="accent"` | `data-color="purple"` | Emphasis, special |
 
 <div class="demo-preview" style="display: flex; gap: var(--space-m); flex-wrap: wrap;">
   <span class="badge">Default</span>
@@ -60,7 +59,6 @@ The badge uses `data-color` for semantic colour variants. No component-level tok
   <span class="badge" data-color="warning">Warning</span>
   <span class="badge" data-color="danger">Danger</span>
   <span class="badge" data-color="info">Info</span>
-  <span class="badge" data-color="accent">Accent</span>
 </div>
 
 ```html
@@ -69,7 +67,6 @@ The badge uses `data-color` for semantic colour variants. No component-level tok
 <span class="badge" data-color="warning">Warning</span>
 <span class="badge" data-color="danger">Danger</span>
 <span class="badge" data-color="info">Info</span>
-<span class="badge" data-color="accent">Accent</span>
 ```
 
 ---
@@ -121,4 +118,3 @@ This section documents how the component is built. For usage, see the sections a
 | `.badge[data-color="warning"]`, `.badge[data-color="yellow"]` | Warning colour variant |
 | `.badge[data-color="danger"]`, `.badge[data-color="red"]` | Danger colour variant |
 | `.badge[data-color="info"]`, `.badge[data-color="blue"]` | Info colour variant |
-| `.badge[data-color="accent"]`, `.badge[data-color="purple"]` | Accent colour variant |

@@ -418,11 +418,13 @@ function initFeedFilters() {
 // the user has seen this session. Called on init + after every Barba nav.
 function trackPageView() {
   var path = location.pathname;
-  var viewed = JSON.parse(sessionStorage.getItem("pagesViewed") || "[]");
+  var viewed = JSON.parse(localStorage.getItem("pagesViewed") || "[]");
   if (viewed.indexOf(path) === -1) {
     viewed.push(path);
-    sessionStorage.setItem("pagesViewed", JSON.stringify(viewed));
+    localStorage.setItem("pagesViewed", JSON.stringify(viewed));
+    console.log("[read-tracking] tracked new page:", path);
   }
+  console.log("[read-tracking] all viewed pages:", viewed);
 }
 
 // Also capture referrer and landing page on first visit
@@ -442,39 +444,24 @@ function initSessionTracking() {
 var ICON_CHECK = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg>';
 
 function markReadPosts() {
-  var viewed = JSON.parse(sessionStorage.getItem("pagesViewed") || "[]");
-  if (!viewed.length) return;
+  var viewed = JSON.parse(localStorage.getItem("pagesViewed") || "[]");
+  console.log("[read-tracking] markReadPosts — viewed:", viewed);
+  if (!viewed.length) { console.log("[read-tracking] no viewed pages, skipping"); return; }
 
   var posts = document.querySelectorAll(".post-item");
+  console.log("[read-tracking] found", posts.length, "post items");
   posts.forEach(function checkPost(item) {
     var link = item.querySelector("a.post");
     if (!link) return;
-
-    // Resolve the href to an absolute path for comparison
     var href = link.getAttribute("href");
     if (!href) return;
     var resolved;
-    try {
-      resolved = new URL(href, location.href).pathname;
-    } catch (e) {
-      return;
-    }
-
-    var isRead = viewed.indexOf(resolved) !== -1;
+    try { resolved = new URL(href, location.href).pathname; } catch (e) { return; }
+    var normalized = resolved.replace(/\.html$/, "");
+    var isRead = viewed.some(function (v) { return v.replace(/\.html$/, "") === normalized; });
+    console.log("[read-tracking] comparing — href:", normalized, "| match:", isRead);
+    if (isRead) console.log("[read-tracking] ✓ marking as read:", normalized);
     item.classList.toggle("is-read", isRead);
-
-    var header = link.querySelector(".post-header");
-    if (!header) return;
-
-    var existing = header.querySelector(".post-read-status");
-    if (isRead && !existing) {
-      var badge = document.createElement("div");
-      badge.className = "post-read-status badge label";
-      badge.innerHTML = '<div class="svg-icn" data-icon="check">' + ICON_CHECK + '</div>Read';
-      header.appendChild(badge);
-    } else if (!isRead && existing) {
-      existing.remove();
-    }
   });
 }
 
@@ -951,7 +938,10 @@ function renderFeedItem(entry) {
   wrap.setAttribute("data-feed-date", entry.date);
   wrap.innerHTML =
     '<a href="' + getStudioPrefix() + entry.url + '" class="post" data-post-type="' + postType + '"' + thumb.postRatioAttr + ">" +
-      '<div class="post-header"><span class="post-label label">' + label + '</span></div>' +
+      '<div class="post-header">' +
+        '<span class="post-label label">' + label + '</span>' +
+        '<div class="post-read-status badge label"><div class="svg-icn" data-icon="check">' + ICON_CHECK + '</div>Read</div>' +
+      '</div>' +
       '<div class="post-body">' +
         '<h3 class="post-title">' + entry.title + '</h3>' +
         excerpt +
@@ -1014,52 +1004,6 @@ function initServices() {
 window.initServices = initServices;
 
 
-// ------ Case Study Toggle ------ //
-
-var caseStudyToggleBound = false;
-
-function initCaseStudyToggle() {
-  if (caseStudyToggleBound) return;
-  caseStudyToggleBound = true;
-
-  document.addEventListener("click", function handleCsToggle(e) {
-    var btn = e.target.closest("[data-cs-toggle]");
-    if (!btn) return;
-    var cs = btn.closest("[data-cs]");
-    if (!cs) return;
-    var isOpening = !cs.classList.contains("is-info-open");
-    cs.classList.toggle("is-info-open");
-
-    if (isOpening) {
-      var body = cs.querySelector(".cs-body");
-      if (body) {
-        body.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
-  });
-}
-
-function initCaseStudyFixedToggle() {
-  var headerToggle = document.querySelector(".cs-header .cs-toggle");
-  var fixedToggle = document.querySelector(".cs-toggle-fixed");
-  if (!headerToggle || !fixedToggle) return;
-
-  var observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        fixedToggle.classList.add("is-hidden");
-      } else {
-        fixedToggle.classList.remove("is-hidden");
-      }
-    });
-  }, { threshold: 0 });
-
-  observer.observe(headerToggle);
-}
-
-window.initCaseStudyFixedToggle = initCaseStudyFixedToggle;
-
-
 document.addEventListener("DOMContentLoaded", function initStudio() {
   initSidebarCollapse();
   initMobileDrawer();
@@ -1076,14 +1020,11 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
   initFeed();
   initNextRead();
   initServices();
-  initCaseStudyToggle();
-  initCaseStudyFixedToggle();
 
   // Re-init after Barba navigations
   document.addEventListener("studio:after-nav", function onAfterNav() {
     markReadPosts();
     initFeed();
     initServices();
-    initCaseStudyFixedToggle();
   });
 });
