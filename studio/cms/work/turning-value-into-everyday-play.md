@@ -1,5 +1,6 @@
 ---
 type: case-study
+featured: false
 title: "Turning value into everyday play"
 synopsis: "How a gamified card game turned a promotional campaign into culture, 3.3M impressions, played and shared by Black Gen Z audiences nationwide."
 date: 2026-04-09

@@ -40,7 +40,7 @@
   font-weight: 600; font-style: normal; font-display: swap;
 }
 
-/* Bugrino — Regular, Medium, Bold, Bold Italic */
+/* Bugrino — Bold, Bold Italic */
 @font-face {
   font-family: "Bugrino";
   src: url("../fonts/bugrino/Bugrino-Bold.woff2") format("woff2");
@@ -63,7 +63,7 @@
 :root {
   /* -- Typography -- */
   --font-primary: "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-secondary: "trust-3a", "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-secondary: "trust-3a","ivypresto-headline", "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", serif;
   --font-tertiary: "Bugrino", sans-serif;
   --font-quaternary: "IBM Plex Mono", monospace;
 
@@ -128,6 +128,7 @@
   /* -- Font weight tokens -- */
   --font-weight-light: 300;
   --font-weight-regular: 400;
+  --font-weight-book: 450;
   --font-weight-medium: 500;
   --font-weight-semi-bold: 600;
   --font-weight-bold: 700;
@@ -147,19 +148,19 @@
      tracking (letter-spacing). -- */
 
   /* Headline — the biggest thing on a page; one per page (h1). */
-  --headline-size:     clamp(var(--font-4xl), 1rem + 5vw, var(--font-8xl));
+  --headline-size:     clamp(var(--font-6xl), 1rem + 5vw, var(--font-9xl));
   --headline-weight:   500;
   --headline-leading:  var(--line-height-s);
-  --headline-tracking: -0.02em;
+  --headline-tracking: -0.03em;
 
   /* Title — section heads and recurring labels within a page (h2). */
-  --title-size:     clamp(var(--font-2xl), 0.8rem + 2vw, var(--font-6xl));
+  --title-size:     clamp(var(--font-2xl), 0.8rem + 2vw, var(--font-7xl));
   --title-weight:   500;
   --title-leading:  var(--line-height-m);
   --title-tracking: -0.01em;
 
   /* Label — meta rows, eyebrows, captions */
-  --label-size:     var(--font-xs);
+  --label-size:     var(--font-2xs);
   --label-weight:   500;
   --label-leading:  var(--line-height-s);
   --label-tracking: var(--letter-spacing-m);
@@ -1041,10 +1042,9 @@ section {
 
 /* -- Eyebrow text -- */
 .eyebrow {
-  font-family: var(--font-tertiary);
   font-size: var(--font-xs);
   line-height: var(--line-height-m);
-  font-weight: var(--font-weight-extra-bold);
+  font-weight: var(--font-weight-bold);
   letter-spacing: var(--letter-spacing-l);
   text-transform: uppercase;
 }
@@ -1076,7 +1076,7 @@ button.button {
   --button-border: var(--button-color);
   --button-text-color: var(--text-inverted);
   --button-font: var(--font-secondary);
-  --button-text-size: var(--text-body);
+  --button-text-size: var(--font-m);
   --button-padding-y: var(--space-m);
   --button-padding-x: var(--space-xl);
   --button-gap: var(--space-s);
@@ -1097,9 +1097,9 @@ button.button {
   /* -- Typography -- */
   font-family: var(--button-font);
   font-size: var(--button-text-size);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-m);
-  letter-spacing: 0;
+  font-weight: var(--font-weight-semi-bold);
+  line-height: var(--line-height-xs);
+  letter-spacing: var(--letter-spacing-s);
   text-transform: none;
   text-decoration: none;
   color: var(--button-text-color);
@@ -1116,7 +1116,7 @@ button.button {
 
 /* -- Active (press) -- */
 .button:active {
-  transform: scale(0.97);
+  transform: scale(0.98);
 }
 
 /* -- Variant exceptions -- */
@@ -1379,9 +1379,10 @@ h4,
 h5,
 h6 {
   font-family: var(--font-secondary);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-book);
   margin-top: var(--space-xl);
   margin-bottom: var(--space-l);
+  letter-spacing: -0.03em;
 }
 
 h1 {
@@ -2396,6 +2397,8 @@ details .disclosure-content {
   gap: var(--space-m);
   padding: var(--space-m) 0;
   color: var(--text-primary);
+  z-index: 10;
+  position: relative;
 }
 
 .accordion-header .svg-icn {
@@ -2413,6 +2416,8 @@ details .disclosure-content {
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows var(--duration-m) var(--ease-out);
+  z-index: 5;
+  position: relative;
 }
 
 .accordion-item.is-open > .accordion-content {
@@ -3131,7 +3136,7 @@ hr {
   font-size: var(--font-xs);
   font-weight: var(--font-weight-medium);
   padding: var(--space-s) var(--space-s);
-  background-color: var(--background-darker);
+  background-color: var(--bg-faded-5);
   color: var(--text-primary);
   white-space: nowrap;
   line-height: var(--line-height-xs);

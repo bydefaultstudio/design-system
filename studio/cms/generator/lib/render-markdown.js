@@ -93,9 +93,33 @@ const INLINE_SHORTCODES = {
   video(attrs) {
     const src = attrs.src || "";
     const poster = attrs.poster ? ` poster="${attrs.poster}"` : "";
+    const mode = attrs.mode || "";
+    const ratio = attrs.ratio ? ` data-ratio="${attrs.ratio}"` : "";
+
+    // Background mode — bare video element, no bd-video wrapper
+    if (mode === "background") {
+      const loop = attrs.loop === "false" ? "" : " loop";
+      return (
+        `<video class="bg-video" src="${src}"${poster}${ratio}` +
+        ` autoplay muted playsinline${loop} preload="metadata" aria-hidden="true"></video>`
+      );
+    }
+
+    // Build data attributes based on mode
+    var dataAttrs = "data-bd-scrubber data-bd-mute data-bd-fullscreen data-bd-unmute-prompt";
+    var videoAttrs = "autoplay muted loop";
+
+    if (mode === "inline") {
+      dataAttrs = "data-bd-scrubber data-bd-mute data-bd-fullscreen";
+      videoAttrs = "muted";
+    } else if (mode === "preview") {
+      dataAttrs = "data-bd-unmute-prompt";
+      videoAttrs = "autoplay muted loop";
+    }
+
     return (
-      `<section class="bd-video" data-bd-scrubber data-bd-mute data-bd-fullscreen data-bd-unmute-prompt>\n` +
-      `  <video class="bd-video-player" src="${src}"${poster} autoplay muted loop playsinline preload="auto"></video>\n` +
+      `<section class="bd-video" ${dataAttrs}>\n` +
+      `  <video class="bd-video-player" src="${src}"${poster} ${videoAttrs} playsinline preload="auto"></video>\n` +
       `</section>`
     );
   },

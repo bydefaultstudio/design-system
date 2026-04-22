@@ -1,5 +1,6 @@
 ---
 type: case-study
+featured: false
 title: "Bringing contemporary energy to a legacy brand"
 synopsis: "How a startup accelerator buried inside a media giant got a brand as bold as the founders it backs."
 date: 2026-04-09
