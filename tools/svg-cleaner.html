@@ -408,8 +408,11 @@
       }
 
       if (options.icon && !options.logo) {
-        var da = options.iconName ? ' data-icon="' + sanitiseName(options.iconName) + '"' : '';
-        result = '<div class="svg-icn"' + da + '>\n  ' + result + '\n</div>';
+        if (options.iconName) {
+          var icn = sanitiseName(options.iconName);
+          result = result.replace(/<svg([^>]*)>/, '<svg data-icon="' + icn + '"$1>');
+        }
+        result = '<div class="svg-icn">\n  ' + result + '\n</div>';
       }
 
       if (options.css) {

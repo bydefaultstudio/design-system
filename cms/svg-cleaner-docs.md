@@ -45,13 +45,13 @@ Locks on: **Size 100%**, **currentColor**, **Strip Comments**
 
 ### Icon
 
-Wraps the SVG in a `<div class="svg-icn" data-icon="[name]">` container. See the [Iconography docs](../design-system/iconography/) for full icon guidelines.
+Wraps the SVG in a `<div class="svg-icn">` container. The icon name is added as a `data-icon` attribute on the `<svg>` element. See the [Iconography docs](../design-system/iconography/) for full icon guidelines.
 
 Locks on: **Size 100%**, **currentColor**, **Strip Comments**
 
 ```html
-<div class="svg-icn" data-icon="arrow-right">
-  <svg viewBox="0 0 24 24" width="100%" height="100%">
+<div class="svg-icn">
+  <svg data-icon="arrow-right" viewBox="0 0 24 24" width="100%" height="100%">
     <path d="M5 12h14M12 5l7 7-7 7" fill="currentColor"/>
   </svg>
 </div>
@@ -79,7 +79,7 @@ Locks off: **Icon**, **Logo**, **currentColor**, **Size 100%**
 | `var(--logo)` | Wraps in `<div class="svg-logo">` with `data-logo` on SVG |
 | `--logo-name NAME` | Sets the `data-logo` attribute value |
 | `var(--icon)` | Wraps in `<div class="svg-icn">` |
-| `--icon-name NAME` | Sets the `data-icon` attribute |
+| `--icon-name NAME` | Sets the `data-icon` attribute on SVG |
 
 ---
 

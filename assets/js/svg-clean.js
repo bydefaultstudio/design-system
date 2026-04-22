@@ -126,7 +126,7 @@ Options:
   --size             Force width="100%" height="100%" (default for inline mode)
   --keep-size        Keep original width/height (default for --standalone mode)
   --icon             Wrap output in <div class="svg-icn">
-  --icon-name NAME   Add data-icon attribute to the wrapper (use with --icon)
+  --icon-name NAME   Add data-icon attribute to the SVG (use with --icon)
   --logo             Wrap in <div class="svg-logo"> with data-logo on SVG
   --logo-name NAME   Set the logo name (added as data-logo attribute)
   --standalone       Re-add xmlns and XML declaration for standalone .svg files
@@ -372,8 +372,11 @@ function processSVG(svgCode, options = {}) {
 
   // Wrap in icon block if requested
   if (options.icon && !options.logo) {
-    const dataAttr = options.iconName ? ` data-icon="${sanitiseName(options.iconName)}"` : '';
-    result = `<div class="svg-icn"${dataAttr}>\n  ${result}\n</div>`;
+    if (options.iconName) {
+      const iconName = sanitiseName(options.iconName);
+      result = result.replace(/<svg([^>]*)>/, `<svg data-icon="${iconName}"$1>`);
+    }
+    result = `<div class="svg-icn">\n  ${result}\n</div>`;
   }
 
   return result;
