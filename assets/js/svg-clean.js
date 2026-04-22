@@ -4,14 +4,14 @@
  * Script Purpose: CLI tool for cleaning and optimising SVG files
  * Author: By Default Studio
  * Created: 2026-03-22
- * Version: 1.3.0
- * Last Updated: 2026-04-07
+ * Version: 1.4.0
+ * Last Updated: 2026-04-22
  */
 
 const fs = require('fs');
 const path = require('path');
 
-console.error('svg-clean v1.3.0');
+console.error('svg-clean v1.4.0');
 
 //
 //------- Utility Functions -------//
@@ -127,8 +127,8 @@ Options:
   --keep-size        Keep original width/height (default for --standalone mode)
   --icon             Wrap output in <div class="svg-icn">
   --icon-name NAME   Add data-icon attribute to the wrapper (use with --icon)
-  --logo             Wrap in <div class="svg-logo-NAME"> with aspect-ratio
-  --logo-name NAME   Set the logo name (e.g. svg-logo-brand)
+  --logo             Wrap in <div class="svg-logo"> with data-logo on SVG
+  --logo-name NAME   Set the logo name (added as data-logo attribute)
   --standalone       Re-add xmlns and XML declaration for standalone .svg files
   --strip-comments   Remove XML/HTML comments
   --strip-metadata   Remove data-* attributes and editor class names
@@ -365,7 +365,9 @@ function processSVG(svgCode, options = {}) {
     const aspectStyle = (originalWidth && originalHeight)
       ? ` style="aspect-ratio: ${originalWidth} / ${originalHeight}"`
       : '';
-    result = `<div class="svg-logo-${logoName}"${aspectStyle}>\n  ${result}\n</div>`;
+    // Add data-logo attribute to the <svg> element
+    result = result.replace(/<svg([^>]*)>/, `<svg data-logo="${logoName}"$1>`);
+    result = `<div class="svg-logo"${aspectStyle}>\n  ${result}\n</div>`;
   }
 
   // Wrap in icon block if requested

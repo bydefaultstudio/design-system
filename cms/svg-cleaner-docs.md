@@ -31,13 +31,13 @@ The cleaner has three mutually exclusive modes. Each locks the relevant options 
 
 ### Logo
 
-Wraps the SVG in a `<div class="svg-logo-[name]">` container with an `aspect-ratio` derived from the original dimensions. The SVG is set to `width="100%" height="100%"` to fill the wrapper.
+Wraps the SVG in a `<div class="svg-logo">` container with an `aspect-ratio` derived from the original dimensions. The logo name is added as a `data-logo` attribute on the `<svg>` element for semantic identification — matching how icons use `data-icon`.
 
 Locks on: **Size 100%**, **currentColor**, **Strip Comments**
 
 ```html
-<div class="svg-logo-brand" style="aspect-ratio: 200 / 50">
-  <svg viewBox="0 0 200 50" width="100%" height="100%">
+<div class="svg-logo" style="aspect-ratio: 200 / 50">
+  <svg data-logo="brand" viewBox="0 0 200 50" width="100%" height="100%">
     <path d="M10 10h80v30H10z" fill="currentColor"/>
   </svg>
 </div>
@@ -76,8 +76,8 @@ Locks off: **Icon**, **Logo**, **currentColor**, **Size 100%**
 | `var(--strip-metadata)` | Removes `data-*` attributes and editor class names |
 | `--precision N` | Rounds decimal values to N decimal places |
 | `var(--minify)` | Collapses whitespace and optimises path data |
-| `var(--logo)` | Wraps in `<div class="svg-logo-NAME">` with aspect-ratio |
-| `--logo-name NAME` | Sets the logo class name |
+| `var(--logo)` | Wraps in `<div class="svg-logo">` with `data-logo` on SVG |
+| `--logo-name NAME` | Sets the `data-logo` attribute value |
 | `var(--icon)` | Wraps in `<div class="svg-icn">` |
 | `--icon-name NAME` | Sets the `data-icon` attribute |
 

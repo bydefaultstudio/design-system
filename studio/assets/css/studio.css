@@ -248,12 +248,12 @@ body.is-sidebar-collapsed .layout {
   background-color: transparent;
 }
 
-.svg-logo-by-default-centered {
+.svg-logo:has([data-logo="by-default-centered"]) {
   width: var(--sidebar-logo-width);
   aspect-ratio: 1050 / 505;
 }
 
-.svg-logo-by-default-centered svg {
+.svg-logo:has([data-logo="by-default-centered"]) svg {
   display: block;
   width: 100%;
   height: 100%;
@@ -499,7 +499,7 @@ body.is-sound-off .sound-toggle .sound-icon-off {
   padding: var(--space-s) 0;
 }
 
-.svg-logo-by-default-mini {
+.svg-logo:has([data-logo="by-default-mini"]) {
   width: 32px;
   aspect-ratio: 1 / 1;
 }
@@ -564,7 +564,7 @@ body.is-sidebar-collapsed .sidebar-footer {
   text-decoration: none;
 }
 
-.mobile-bar-logo .svg-logo-by-default-centered {
+.mobile-bar-logo .svg-logo:has([data-logo="by-default-centered"]) {
   width: auto;
   height: 100%;
   aspect-ratio: 1050 / 505;
@@ -1490,28 +1490,28 @@ body.is-cs-open .cs-toggle-wrap .cs-toggle-icon-close {
   margin: 0;
 }
 
-.cs-splide {
+.case-study-splide {
   width: 100%;
 }
-.splide__track {
+.case-study-track {
   width: 100%;
 }
 
-.cs-splide .splide__slide .post {
+.case-study-slide .post {
   height: 100%;
 }
 
-.splide__arrow--prev svg {
+.case-study-arrow.splide__arrow--prev svg {
     transform: none !important;
 }
 
-.cs-slider-arrow {
+.case-study-arrow {
 }
 
-.cs-slider-arrow:hover {
+.case-study-arrow:hover {
 }
 
-.cs-slider-arrow svg {
+.case-study-arrow svg {
 }
 
 
@@ -2649,5 +2649,46 @@ body.is-animating .close-btn-wrap {
   .table-styleguide th:first-child,
   .table-styleguide td:first-child {
     width: 120px;
+  }
+}
+
+/* ------- Split Grid ------- */
+
+.split-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .split-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-l);
+  }
+}
+
+/* ------- Logo Ticker ------- */
+
+.logo-ticker-section {
+  overflow: hidden;
+  margin-top: var(--space-2xl);
+}
+
+.logo-ticker-slide {
+  display: flex;
+  align-items: center;
+}
+
+.logo-ticker-slide img {
+  display: block;
+  height: 40px;
+  width: auto;
+  opacity: 0.5;
+}
+
+@media (max-width: 600px) {
+  .logo-ticker-slide img {
+    height: 32px;
   }
 }

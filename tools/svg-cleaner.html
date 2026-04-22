@@ -403,7 +403,8 @@
       if (options.logo) {
         var ln = sanitiseName(options.logoName || 'default');
         var as = (origW && origH) ? ' style="aspect-ratio: ' + origW + ' / ' + origH + '"' : '';
-        result = '<div class="svg-logo-' + ln + '"' + as + '>\n  ' + result + '\n</div>';
+        result = result.replace(/<svg([^>]*)>/, '<svg data-logo="' + ln + '"$1>');
+        result = '<div class="svg-logo"' + as + '>\n  ' + result + '\n</div>';
       }
 
       if (options.icon && !options.logo) {

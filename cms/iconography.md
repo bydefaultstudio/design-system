@@ -93,6 +93,47 @@ Use lowercase kebab-case for icon names (e.g. `arrow-right`, `chevron-down`, `ex
 
 ---
 
+## Logos
+
+Logos follow the same data-attribute pattern as icons, using `data-logo` instead of `data-icon`. The wrapper uses a generic `.svg-logo` class, and the logo name goes on the `<svg>` element.
+
+```html
+<div class="svg-logo" style="aspect-ratio: 1050 / 505">
+  <svg data-logo="by-default-centered" viewBox="0 0 1050 505" width="100%" height="100%" fill="none" aria-hidden="true">
+    <path d="..." fill="currentColor"/>
+  </svg>
+</div>
+```
+
+### Key differences from icons
+
+| | Icons | Logos |
+|---|---|---|
+| **Wrapper class** | `.svg-icn` | `.svg-logo` |
+| **Data attribute** | `data-icon="name"` | `data-logo="name"` |
+| **Aspect ratio** | Fixed 1:1 via CSS | Preserved via inline `style="aspect-ratio: W / H"` |
+| **Size** | Fixed (1.3rem default) | Responsive (width set by context) |
+
+### CSS targeting
+
+Use `:has()` to target the wrapper based on a specific logo:
+
+```css
+.svg-logo:has([data-logo="by-default-centered"]) {
+  width: var(--sidebar-logo-width);
+}
+```
+
+### SVG Cleaner workflow
+
+```bash
+node assets/js/svg-clean.js --logo --logo-name brand-name --current-color --strip-comments
+```
+
+This outputs a `<div class="svg-logo">` wrapper with `data-logo="brand-name"` on the `<svg>` element.
+
+---
+
 ## Icon in Buttons
 
 For icon-only buttons, add the `data-icon-only` attribute and `.svg-icn` as the SVG wrapper. Always include `aria-label`.
