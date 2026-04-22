@@ -17,8 +17,8 @@ var CS_TRANSITION_MS = 800;
 var CS_TRANSITION_FALLBACK_MS = CS_TRANSITION_MS + 100;
 
 // SVG icon markup (shared between header toggle and fixed toggle)
-var CS_ICON_ADD = '<div class="svg-icn cs-toggle-icon cs-toggle-icon-add" data-icon="add"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>';
-var CS_ICON_CLOSE = '<div class="svg-icn cs-toggle-icon cs-toggle-icon-close" data-icon="close"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/></svg></div>';
+var CS_ICON_ADD = '<div class="svg-icn cs-toggle-icon cs-toggle-icon-add"><svg data-icon="add" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>';
+var CS_ICON_CLOSE = '<div class="svg-icn cs-toggle-icon cs-toggle-icon-close"><svg data-icon="close" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/></svg></div>';
 
 
 // ------ Toggle ------ //
@@ -255,7 +255,7 @@ function initCaseStudySlider() {
         ? '<video class="vdo-thumb" src="' + src + '" poster="' + (entry.thumbnailVideoPoster || entry.thumbnail || entry.hero || "").replace(/"/g, "&quot;") + '" muted playsinline preload="metadata" aria-hidden="true"></video>'
         : '<img class="img-thumb" src="' + src + '" alt="' + alt + '" loading="lazy">';
 
-      return '<div class="splide__slide">' +
+      return '<div class="splide__slide case-study-slide">' +
         '<a href="' + prefix + entry.url + '" class="post" data-post-type="standard">' +
           '<div class="post-thumbnail" data-ratio="16:9">' + media + '</div>' +
           '<div class="post-header"><span class="post-label label">Case study</span></div>' +
@@ -272,7 +272,7 @@ function initCaseStudySlider() {
       var styles = getComputedStyle(document.documentElement);
       var gap = styles.getPropertyValue("--studio-gap").trim() || "1rem";
 
-      csSplideInstance = new Splide(list.closest(".cs-splide"), {
+      csSplideInstance = new Splide(list.closest(".case-study-splide"), {
         type: "loop",
         perPage: 3,
         perMove: 1,

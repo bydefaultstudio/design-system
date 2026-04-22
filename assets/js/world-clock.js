@@ -274,7 +274,7 @@
       removeBtn.type = 'button';
       removeBtn.className = 'tag-remove';
       removeBtn.setAttribute('aria-label', 'Remove ' + getCityLabel(tz));
-      removeBtn.innerHTML = '<div class="svg-icn" data-icon="close"><svg viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M12 10.5858L16.2929 6.29289L17.7071 7.70711L13.4142 12L17.7071 16.2929L16.2929 17.7071L12 13.4142L7.70711 17.7071L6.29289 16.2929L10.5858 12L6.29289 7.70711L7.70711 6.29289L12 10.5858Z" fill="currentColor"/></svg></div>';
+      removeBtn.innerHTML = '<div class="svg-icn"><svg data-icon="close" viewBox="0 0 24 24" fill="none" width="100%" height="100%" aria-hidden="true"><path d="M12 10.5858L16.2929 6.29289L17.7071 7.70711L13.4142 12L17.7071 16.2929L16.2929 17.7071L12 13.4142L7.70711 17.7071L6.29289 16.2929L10.5858 12L6.29289 7.70711L7.70711 6.29289L12 10.5858Z" fill="currentColor"/></svg></div>';
       removeBtn.addEventListener('click', function () {
         handleRemoveCity(tz);
       });
