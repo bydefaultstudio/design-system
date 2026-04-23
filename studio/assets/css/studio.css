@@ -652,6 +652,12 @@ body.is-animating [data-studio-role="leave"][data-studio-scenario="push"] { z-in
 body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-index: 1; }
 
 
+/* ------ HOME HEADLINE ------ */
+
+.home-headline {
+  padding: var(--space-7xl) var(--space-3xl);
+}
+
 /* ------ HERO SECTION (wraps a .bd-video player; studio-specific padding + chrome) ------ */
 
 .hero-section {
@@ -745,18 +751,36 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
 }
 
 
-/* ------ ABOUT HERO IMAGE ------ */
+/* ------ ABOUT PAGE ------ */
 
-.about-hero-image {
-  padding: var(--studio-gap);
+.about-card {
+  background: var(--bg-faded-3);
+  overflow: hidden;
 }
 
-.about-hero-image img {
+.about-header img {
   width: 100%;
   height: auto;
   aspect-ratio: 16 / 9;
   object-fit: cover;
   display: block;
+}
+
+.about-bridge {
+  font-family: var(--font-secondary, var(--font-primary));
+  font-style: italic;
+  font-size: var(--font-xl);
+  color: var(--text-secondary);
+}
+
+.about-sub {
+  font-size: var(--font-2xl);
+  color: var(--text-secondary);
+  max-width: 44ch;
+}
+
+.about-sub-wrap {
+  padding: var(--space-5xl) var(--space-3xl);
 }
 
 
@@ -2680,15 +2704,6 @@ body.is-animating .close-btn-wrap {
   align-items: center;
 }
 
-.logo-ticker-slide img {
+.logo-ticker-slide svg {
   display: block;
-  height: 40px;
-  width: auto;
-  opacity: 0.5;
-}
-
-@media (max-width: 600px) {
-  .logo-ticker-slide img {
-    height: 32px;
-  }
 }

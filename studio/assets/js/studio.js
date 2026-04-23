@@ -1056,12 +1056,16 @@ function ensureSplideAutoScroll(callback) {
 function mountLogoSliders() {
   var logoSplides = document.querySelectorAll(".logo-slider");
   for (var i = 0; i < logoSplides.length; i++) {
+    // Inject logo SVGs from studio-logos.js before Splide mounts
+    if (typeof buildLogoSlides === "function") {
+      buildLogoSlides(logoSplides[i]);
+    }
     var instance = new Splide(logoSplides[i], {
       type: "loop",
       autoWidth: true,
       arrows: false,
       pagination: false,
-      gap: "2.5rem",
+      gap: "5rem",
       drag: false,
       autoScroll: {
         autoStart: true,
@@ -1070,8 +1074,8 @@ function mountLogoSliders() {
       },
       breakpoints: {
         600: {
-          gap: "1.5rem",
-          autoScroll: { speed: 0.5 },
+          gap: "2.5rem",
+          autoScroll: { speed: 0.3 },
         },
       },
     }).mount({

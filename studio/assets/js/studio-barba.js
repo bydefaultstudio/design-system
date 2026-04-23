@@ -455,6 +455,9 @@ function initStudioBarba() {
     if (typeof window.cleanupCaseStudy === "function") {
       window.cleanupCaseStudy();
     }
+    if (typeof window.destroyLogoSliders === "function") {
+      window.destroyLogoSliders();
+    }
     document.dispatchEvent(new CustomEvent("studio:before-nav"));
   });
 
@@ -490,6 +493,9 @@ function initStudioBarba() {
     }
     if (typeof window.initCaseStudy === "function") {
       window.initCaseStudy();
+    }
+    if (typeof window.logoSlider === "function") {
+      window.logoSlider();
     }
     document.body.classList.remove("is-animating");
     // Clean up role/scenario attributes + any inline styles set by the

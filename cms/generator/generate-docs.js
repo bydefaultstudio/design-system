@@ -145,6 +145,29 @@ function renderBookCover(opts) {
 }
 
 /**
+ * Render a book-page row for L1 section index pages.
+ * Wide horizontal row — title + description left-aligned,
+ * icon on the right (revealed on hover).
+ * @param {Object} opts - { href, title, subtitle, author, access }
+ * @returns {string} HTML string
+ */
+function renderBookPage(opts) {
+  const accessAttr = opts.access ? ` data-access="${opts.access}"` : '';
+  const description = opts.subtitle
+    ? `<p class="book-page-description" data-text-wrap="pretty">${opts.subtitle}</p>`
+    : '';
+  const flipId = flipIdFromHref(opts.href);
+  const flipAttr = flipId ? ` data-flip-id="${flipId}"` : '';
+  return `<a href="${opts.href}" class="book-page"${accessAttr}>
+        <div class="book-page-content">
+          <h3 class="book-page-title"${flipAttr}>${opts.title}</h3>
+          ${description}
+        </div>
+        <div class="book-page-action">${getIcon('open-full')}</div>
+      </a>`;
+}
+
+/**
  * Derive a Barba/GSAP Flip identifier from a destination href.
  * Only the filename slug is needed — the source and destination pages
  * resolve the element by attribute within their own DOM, and the two
@@ -686,7 +709,7 @@ function generateSectionIndexPage(section, template, files, filesBySection) {
 
   // Ungrouped files first
   if (ungrouped.length > 0) {
-    cards += `<div class="docs-section"><div class="grid cols-2 gap-xl">`;
+    cards += `<div class="docs-section"><div class="book-page-list">`;
     for (const file of ungrouped) {
       let cardHref = file.htmlName;
       let cardAccess = deriveDataAccess(file.frontmatter);
@@ -695,7 +718,7 @@ function generateSectionIndexPage(section, template, files, filesBySection) {
         cardHref = cardActionUrl;
         cardAccess = file.frontmatter.actionAccess || file.frontmatter.toolAccess || cardAccess;
       }
-      cards += renderBookCover({
+      cards += renderBookPage({
         href: cardHref,
         title: file.title,
         subtitle: file.frontmatter.subtitle,
@@ -718,9 +741,9 @@ function generateSectionIndexPage(section, template, files, filesBySection) {
   });
 
   for (const sub of subs) {
-    cards += `<div class="docs-section"><h2 class="eyebrow">${sub}</h2><div class="grid cols-2 gap-xl">`;
+    cards += `<div class="docs-section"><h2 class="eyebrow">${sub}</h2><div class="book-page-list">`;
     for (const file of grouped[sub]) {
-      cards += renderBookCover({
+      cards += renderBookPage({
         href: file.htmlName,
         title: file.title,
         subtitle: file.frontmatter.subtitle,
@@ -739,9 +762,9 @@ function generateSectionIndexPage(section, template, files, filesBySection) {
       if (orderA !== orderB) return orderA - orderB;
       return a.title.localeCompare(b.title);
     });
-    cards += `<div class="docs-section"><h2 class="eyebrow">Tools</h2><div class="grid cols-2 gap-xl">`;
+    cards += `<div class="docs-section"><h2 class="eyebrow">Tools</h2><div class="book-page-list">`;
     for (const file of toolFiles) {
-      cards += renderBookCover({
+      cards += renderBookPage({
         href: `../${file.htmlPath}`,
         title: file.title,
         subtitle: file.frontmatter.subtitle,
