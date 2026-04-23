@@ -129,13 +129,13 @@ function initMobileDrawer() {
 //------- Nav Link Sync -------//
 //
 
-// Fix all sidebar nav links and the close button after Barba navigations.
-// Nav links are written as "contact.html" or "../contact.html" — after Barba
-// changes the URL, the relative path may no longer resolve correctly.
-// This strips any existing prefix and re-applies the correct one.
+// Fix all sidebar nav links, sidebar slot links, and the close button after
+// Barba navigations. Links are written as "contact.html" or "../contact.html"
+// — after Barba changes the URL, the relative path may no longer resolve
+// correctly. This strips any existing prefix and re-applies the correct one.
 function syncNavHrefs() {
   var prefix = getStudioPrefix();
-  var links = document.querySelectorAll(".nav-link");
+  var links = document.querySelectorAll(".nav-link, .sidebar-slot-link");
   links.forEach(function fixHref(link) {
     var href = link.getAttribute("href");
     if (!href) return;
@@ -158,32 +158,9 @@ function syncPageCloseHref() {
 //------- Page Close -------//
 //
 
-// Inject the close button wrapper (icon + ESC label) once and seed
-// body[data-current-level] from the initial Barba container so it's
-// visible from frame one on direct loads of L1/L2 pages.
+// Close button href sync, Escape key handler, and data-level seeding.
+// The close button markup now lives in the HTML template.
 function initPageClose() {
-  if (!document.getElementById("studio-close-wrap")) {
-    var wrap = document.createElement("div");
-    wrap.id = "studio-close-wrap";
-    wrap.className = "close-btn-wrap";
-
-    var close = document.createElement("a");
-    close.id = "studio-close-btn";
-    close.className = "button close-btn";
-    close.setAttribute("data-icon-only", "");
-    close.setAttribute("data-size", "small");
-    close.setAttribute("aria-label", "Close");
-    close.innerHTML = '<div class="svg-icn"><svg data-icon="close" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"></path></svg></div>';
-
-    var label = document.createElement("span");
-    label.className = "close-btn-label";
-    label.textContent = "ESC";
-
-    wrap.appendChild(label);
-    wrap.appendChild(close);
-    document.body.appendChild(wrap);
-  }
-
   syncPageCloseHref();
 
   // Re-sync the href after every Barba navigation (location.pathname changes)
@@ -234,51 +211,10 @@ function studioRefreshActiveNav() {
 //------- Sidebar Slot -------//
 //
 
-var SERVICES_REGISTRY = [
-  {
-    url: "services.html",
-    title: "Interactive Ads",
-    excerpt: "Ad formats that turn audiences into active participants with digital advertising formats",
-    thumb: "https://bydefault.design/image/96x64"
-  },
-  {
-    url: "services.html",
-    title: "Interactive Content",
-    excerpt: "Editorial and branded content people do, not just see. Memory sticks. Trust compounds.",
-    thumb: "https://bydefault.design/image/96x64"
-  },
-  {
-    url: "services.html",
-    title: "Interactive Activations",
-    excerpt: "Campaign moments designed for participation — built to make the digital experience feel like the brand.",
-    thumb: "https://bydefault.design/image/96x64"
-  }
-];
-
+// Sidebar slot links are now in the HTML template. This function syncs
+// their hrefs after Barba navigations (handled by syncNavHrefs).
 function initSidebarSlot() {
-  var container = document.querySelector(".sidebar-slot");
-  if (!container) return;
-
-  // Remove previously-rendered service links without wiping the section title
-  // that's nested inside .sidebar-slot.
-  container.querySelectorAll(".sidebar-slot-link").forEach(function remove(el) {
-    el.remove();
-  });
-
-  var prefix = getStudioPrefix();
-
-  SERVICES_REGISTRY.forEach(function buildPost(entry) {
-    var link = document.createElement("a");
-    link.className = "sidebar-slot-link";
-    link.href = prefix + entry.url;
-    link.innerHTML =
-      '<img src="' + entry.thumb + '" alt="" class="sidebar-slot-link-thumb" loading="lazy">' +
-      '<span class="sidebar-slot-link-text">' +
-        '<span class="sidebar-slot-link-title">' + entry.title + '</span>' +
-        '<span class="sidebar-slot-link-excerpt">' + entry.excerpt + '</span>' +
-      '</span>';
-    container.appendChild(link);
-  });
+  syncNavHrefs();
 }
 
 //
