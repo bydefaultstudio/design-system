@@ -701,6 +701,8 @@ function initShareLinks() {
   });
 }
 
+window.initShareLinks = initShareLinks;
+
 //
 //------- Sidebar Posts -------//
 //
