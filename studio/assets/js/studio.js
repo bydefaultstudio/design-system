@@ -20,9 +20,7 @@ function trackPageView() {
   if (viewed.indexOf(path) === -1) {
     viewed.push(path);
     localStorage.setItem("pagesViewed", JSON.stringify(viewed));
-    console.log("[read-tracking] tracked new page:", path);
   }
-  console.log("[read-tracking] all viewed pages:", viewed);
 }
 
 // Also capture referrer and landing page on first visit

@@ -171,11 +171,9 @@ function initFeedFilters() {
 // Injects a badge with check icon into the top-right of the .post card.
 function markReadPosts() {
   var viewed = JSON.parse(localStorage.getItem("pagesViewed") || "[]");
-  console.log("[read-tracking] markReadPosts — viewed:", viewed);
-  if (!viewed.length) { console.log("[read-tracking] no viewed pages, skipping"); return; }
+  if (!viewed.length) return;
 
   var posts = document.querySelectorAll(".post-item");
-  console.log("[read-tracking] found", posts.length, "post items");
   posts.forEach(function checkPost(item) {
     var link = item.querySelector("a.post");
     if (!link) return;
@@ -185,8 +183,6 @@ function markReadPosts() {
     try { resolved = new URL(href, location.href).pathname; } catch (e) { return; }
     var normalized = resolved.replace(/\.html$/, "");
     var isRead = viewed.some(function (v) { return v.replace(/\.html$/, "") === normalized; });
-    console.log("[read-tracking] comparing — href:", normalized, "| match:", isRead);
-    if (isRead) console.log("[read-tracking] ✓ marking as read:", normalized);
     item.classList.toggle("is-read", isRead);
   });
 }
