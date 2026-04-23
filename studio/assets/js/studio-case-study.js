@@ -17,8 +17,8 @@ var CS_TRANSITION_MS = 800;
 var CS_TRANSITION_FALLBACK_MS = CS_TRANSITION_MS + 100;
 
 // SVG icon markup (shared between header toggle and fixed toggle)
-var CS_ICON_ADD = '<div class="svg-icn cs-toggle-icon cs-toggle-icon-add"><svg data-icon="add" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>';
-var CS_ICON_CLOSE = '<div class="svg-icn cs-toggle-icon cs-toggle-icon-close"><svg data-icon="close" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/></svg></div>';
+var CS_ICON_ADD = '<div class="svg-icn case-study-toggle-icon case-study-toggle-icon-add"><svg data-icon="add" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor"/></svg></div>';
+var CS_ICON_CLOSE = '<div class="svg-icn case-study-toggle-icon case-study-toggle-icon-close"><svg data-icon="close" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.4 19L5 17.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L5 6.4L6.4 5L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L17.6 5L19 6.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L19 17.6L17.6 19L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L6.4 19Z" fill="currentColor"/></svg></div>';
 
 
 // ------ Toggle ------ //
@@ -28,17 +28,17 @@ function initCaseStudyToggle() {
   caseStudyToggleBound = true;
 
   document.addEventListener("click", function handleCsToggle(e) {
-    var btn = e.target.closest("[data-cs-toggle]");
+    var btn = e.target.closest("[data-case-study-toggle]");
     if (!btn) return;
-    var cs = document.querySelector("[data-cs]");
+    var cs = document.querySelector("[data-case-study]");
     if (!cs) return;
     var isOpening = !cs.classList.contains("is-info-open");
     cs.classList.toggle("is-info-open");
-    document.body.classList.toggle("is-cs-open", isOpening);
+    document.body.classList.toggle("is-case-study-open", isOpening);
 
     if (isOpening) {
-      var content = cs.querySelector(".cs-content");
-      var body = cs.querySelector(".cs-body");
+      var content = cs.querySelector(".case-study-content");
+      var body = cs.querySelector(".case-study-body");
 
       function afterTransition() {
         updateCsStickyTop();
@@ -72,7 +72,7 @@ function initCaseStudyToggle() {
         clearTimeout(csTransitionTimeout);
         csTransitionTimeout = null;
       }
-      var inner = cs.querySelector(".cs-content-inner");
+      var inner = cs.querySelector(".case-study-content-inner");
       if (inner) {
         inner.style.top = "";
         inner.style.position = "";
@@ -89,10 +89,10 @@ function initCaseStudyToggle() {
 // ------ Sticky Info Panel ------ //
 
 function updateCsStickyTop() {
-  var inner = document.querySelector(".cs-page.is-info-open .cs-content-inner");
+  var inner = document.querySelector(".case-study-page.is-info-open .case-study-content-inner");
   if (!inner) return;
 
-  var csBody = inner.closest(".cs-body");
+  var csBody = inner.closest(".case-study-body");
   if (!csBody) return;
 
   var isStacked = getComputedStyle(csBody).flexDirection === "column";
@@ -122,7 +122,7 @@ function initCsStickyObserver() {
     csResizeObserver = null;
   }
 
-  var inner = document.querySelector(".cs-page.is-info-open .cs-content-inner");
+  var inner = document.querySelector(".case-study-page.is-info-open .case-study-content-inner");
   if (!inner) return;
 
   csResizeObserver = new ResizeObserver(function () {
@@ -141,20 +141,20 @@ window.addEventListener("resize", function () {
 // ------ Fixed Toggle Wrap (persistent, outside Barba) ------ //
 
 function ensureFixedToggleWrap() {
-  var wrap = document.getElementById("cs-toggle-wrap");
+  var wrap = document.getElementById("case-study-toggle-wrap");
   if (wrap) return wrap;
 
   wrap = document.createElement("div");
-  wrap.id = "cs-toggle-wrap";
-  wrap.className = "cs-toggle-wrap";
+  wrap.id = "case-study-toggle-wrap";
+  wrap.className = "case-study-toggle-wrap";
 
   var btn = document.createElement("button");
   btn.type = "button";
-  btn.className = "button cs-toggle";
-  btn.setAttribute("data-cs-toggle", "");
+  btn.className = "button case-study-toggle";
+  btn.setAttribute("data-case-study-toggle", "");
   btn.setAttribute("aria-label", "Toggle project information");
   btn.innerHTML =
-    '<span class="cs-toggle-label">Project information</span>' +
+    '<span class="case-study-toggle-label">Project information</span>' +
     CS_ICON_ADD + CS_ICON_CLOSE;
 
   wrap.appendChild(btn);
@@ -174,8 +174,8 @@ function initCaseStudyFixedToggle() {
     csIntersectionObserver = null;
   }
 
-  var headerToggle = document.querySelector(".cs-header .cs-toggle");
-  var slider = document.querySelector(".cs-slider");
+  var headerToggle = document.querySelector(".case-study-header .case-study-toggle");
+  var slider = document.querySelector(".case-study-slider");
   var wrap = ensureFixedToggleWrap();
 
   if (!headerToggle) {
@@ -237,7 +237,7 @@ function ensureSplide(callback) {
 }
 
 function initCaseStudySlider() {
-  var list = document.querySelector("[data-cs-slides]");
+  var list = document.querySelector("[data-case-study-slides]");
   if (!list || typeof window.loadStudioContent !== "function") return;
 
   var barbaContainer = document.querySelector("[data-barba-namespace]");
@@ -318,7 +318,7 @@ function cleanupCaseStudy() {
     clearTimeout(csResizeTimeout);
     csResizeTimeout = null;
   }
-  document.body.classList.remove("is-cs-open");
+  document.body.classList.remove("is-case-study-open");
 }
 
 function initCaseStudy() {

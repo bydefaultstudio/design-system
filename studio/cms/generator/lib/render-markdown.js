@@ -78,7 +78,7 @@ const BLOCK_SHORTCODES = {
     // Grid content is exclusively media — strip all <p> wrappers so grid
     // children are the media elements directly (img, video, bd-video sections).
     var stripped = inner.replace(/<\/?p>/g, "");
-    return `<div class="cs-grid" data-cols="${cols}">\n${stripped}\n</div>`;
+    return `<div class="case-study-grid" data-cols="${cols}">\n${stripped}\n</div>`;
   }
 };
 
