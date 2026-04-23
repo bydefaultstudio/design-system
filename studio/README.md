@@ -209,6 +209,28 @@ Filtering and sorting UI will land in the top bar later — that's why the top b
 - New CSS goes in `assets/css/studio.css`. Anything genuinely reusable belongs in the parent `assets/css/design-system.css` instead.
 - JS follows [cms/js-code-structure.md](../cms/js-code-structure.md): named functions, one `console.log` at the top, init inside `DOMContentLoaded`, no globals (only `studioRefreshActiveNav` is exposed for Barba to call).
 
+### Section naming convention
+
+Every `<section>` inside the Barba container must have a class following **`{page}-{role}`**:
+
+- **`{page}`** matches `data-barba-namespace` on the container (e.g. `home`, `about`, `services`, `contact`, `article`, `case-study`)
+- **`{role}`** describes the section's purpose — not its appearance
+
+**Standard roles:**
+
+| Role | Meaning |
+|---|---|
+| `header` | Intro/hero area at the top |
+| `hero` | A visual hero (image, video) distinct from the header |
+| `body` | Main content area |
+| `footer` | Closing CTA or sign-off section |
+| `feed` | Content listing/grid |
+| `wrapper` | Page-level div wrapping all sections (when needed) |
+
+Roles are extensible — add new ones when a section doesn't fit. Name the purpose, not the look.
+
+**Examples:** `home-header`, `home-hero`, `home-feed`, `about-header`, `about-services`, `services-formats`, `article-header`, `case-study-body`.
+
 ## Deploying standalone
 
 When the site is ready to ship as its own deployable project:
