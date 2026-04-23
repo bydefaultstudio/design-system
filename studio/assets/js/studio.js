@@ -1,12 +1,12 @@
 /**
- * Script Purpose: Studio site entry — sidebar collapse, mobile drawer, active nav, page tracking, contact form
+ * Script Purpose: Studio site entry — preferences, tracking, services, logo slider, orchestrator
  * Author: By Default
  * Created: 2026-04-11
- * Version: 0.6.0
- * Last Updated: 2026-04-12
+ * Version: 0.7.0
+ * Last Updated: 2026-04-23
  */
 
-console.log("Studio v0.6.0");
+console.log("Studio v0.7.0");
 
 //
 //------- Page Visit Tracking -------//
@@ -36,11 +36,6 @@ function initSessionTracking() {
   trackPageView();
   document.addEventListener("studio:after-nav", trackPageView);
 }
-
-//
-//------- Contact Form -------//
-//
-// Handled by studio-contact.js (chips, validation, submission, abandonment)
 
 //
 //------- Dark Mode -------//
