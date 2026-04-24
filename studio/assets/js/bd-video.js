@@ -1,9 +1,9 @@
 /**
- * Script Purpose: Configurable video player — play/pause, scrubber, mute, fullscreen, keyboard shortcuts
+ * Script Purpose: Configurable video player — play/pause, scrubber, mute, fullscreen, keyboard shortcuts, timed cues
  * Author: By Default
  * Created: 2026-04-12
- * Version: 0.5.0
- * Last Updated: 2026-04-19
+ * Version: 0.6.0
+ * Last Updated: 2026-04-24
  *
  * Reusable video component for the By Default site. Targets every element with
  * .bd-video-player and initialises each independently with its own config.
@@ -18,6 +18,7 @@
  *   data-bd-mute           — enable mute/unmute button
  *   data-bd-fullscreen     — enable fullscreen button
  *   data-bd-unmute-prompt  — show large unmute prompt (for autoplay muted)
+ *   data-bd-cues           — enable timed link cards via inline JSON data block
  *
  * Always-on features:
  *   - Large centered play/pause button with tooltip
@@ -27,6 +28,7 @@
  *   - Reduced motion: video does not autoplay, poster shows
  *   - Global keyboard shortcuts (Space/K, M, F, arrows)
  *   - ARIA labels update dynamically with state
+ *   - Timestamped link cards via data-bd-cues + inline JSON data block
  *
  * Sustainability roadmap (priority-ordered, NOT built yet):
  *   1. [CRITICAL] Captions / subtitles — <track kind="subtitles"> + data-bd-captions
@@ -35,8 +37,9 @@
  *                  avoids the "is it frozen?" problem on slow connections.
  *   3. Error state class (.is-error on `error`) — prevents silent broken state
  *                  when a source fails (e.g. expired URLs).
- *   4. Public custom events — bd-video:play / pause / ended / error bubbling
- *                  on the .bd-video root. Enables analytics + coordination.
+ *   4. Public custom events — partially implemented (cue events only:
+ *                  bd-video:cue-enter, bd-video:cue-exit). Remaining:
+ *                  bd-video:play / pause / ended / error / waiting still pending.
  *   5. Visibility-based pause (data-bd-pause-offscreen) — IntersectionObserver.
  *                  Saves CPU/battery on long pages with multiple videos.
  *   6. Lazy preload upgrade — preload="none" default, upgrade to "metadata" on
@@ -48,9 +51,12 @@
  *   10. Transcript toggle — sibling <details>, WCAG 1.2.3 alternative.
  *   11. Cross-video exclusivity (data-bd-exclusive) — pause others on play.
  *   12. <source> format fallback — already works, document AV1/WebM/MP4 chain.
+ *
+ * TODO (accessibility, not blocking V1):
+ *   - Below-video text list of cues as WCAG 1.2.3 media alternative
  */
 
-// BD Video v0.5.0
+// BD Video v0.6.0
 
 (function () {
 
@@ -95,6 +101,10 @@ function formatTimeDisplay(seconds) {
   return mins + ":" + (secs < 10 ? "0" : "") + secs;
 }
 
+function dispatch(root, name, detail) {
+  root.dispatchEvent(new CustomEvent(name, { bubbles: true, detail: detail }));
+}
+
 //
 //------- Player Instance -------//
 //
@@ -110,13 +120,15 @@ function initPlayerInstance(video) {
     scrubber: root.hasAttribute("data-bd-scrubber"),
     mute: root.hasAttribute("data-bd-mute"),
     fullscreen: root.hasAttribute("data-bd-fullscreen"),
-    unmutePrompt: root.hasAttribute("data-bd-unmute-prompt")
+    unmutePrompt: root.hasAttribute("data-bd-unmute-prompt"),
+    cues: root.hasAttribute("data-bd-cues")
   };
 
   // Per-instance state
   var hideTimer = null;
   var isScrubbing = false;
   var isPreview = video.muted && video.autoplay;
+  var previewExitAt = 0;
 
   // Element references (set conditionally below)
   var muteBtn = null;
@@ -173,6 +185,7 @@ function initPlayerInstance(video) {
   function exitPreview() {
     if (!isPreview) return;
     isPreview = false;
+    previewExitAt = Date.now();
     root.classList.remove("is-preview");
     video.currentTime = 0;
     video.muted = false;
@@ -541,6 +554,227 @@ function initPlayerInstance(video) {
         showControls();
       }
     });
+  }
+
+  //
+  // -- Timed cue cards (config: cues) --
+  //
+
+  if (config.cues) {
+    // 1. Parse inline JSON
+    var cueDataEl = root.querySelector('script[data-bd-cues-data]');
+    var cues = [];
+    if (cueDataEl) {
+      try {
+        cues = JSON.parse(cueDataEl.textContent);
+      } catch (err) {
+        console.warn("BD Video cues: invalid JSON", err);
+      }
+    }
+
+    if (cues.length > 0) {
+      // 2. Validate entries — drop invalid, keep valid
+      cues = cues.filter(function validateCue(c, i) {
+        if (typeof c.start !== "number" || typeof c.end !== "number" ||
+            !c.title || !c.href || !c.image) {
+          console.warn("BD Video cues: invalid entry at index " + i, c);
+          return false;
+        }
+        if (c.end <= c.start) {
+          console.warn("BD Video cues: end <= start at index " + i, c);
+          return false;
+        }
+        return true;
+      });
+
+      // 3. Sort by start ascending (idempotent)
+      cues.sort(function sortByStart(a, b) { return a.start - b.start; });
+
+      // 4. Preload thumbnails
+      cues.forEach(function preloadThumb(c) { (new Image()).src = c.image; });
+
+      // 5. Build cue slot DOM
+      var cueRegion = document.createElement("div");
+      cueRegion.className = "bd-video-cue-region";
+      cueRegion.setAttribute("aria-live", "polite");
+
+      var cueSlot = document.createElement("a");
+      cueSlot.className = "bd-video-cue-slot";
+
+      var cueThumb = document.createElement("img");
+      cueThumb.className = "bd-video-cue-thumb";
+      cueThumb.loading = "eager";
+      cueThumb.alt = "";
+      cueSlot.appendChild(cueThumb);
+
+      var cueTextWrap = document.createElement("span");
+      cueTextWrap.className = "bd-video-cue-text";
+
+      var cueTitle = document.createElement("span");
+      cueTitle.className = "bd-video-cue-title";
+      cueTextWrap.appendChild(cueTitle);
+
+      var cueExcerpt = document.createElement("span");
+      cueExcerpt.className = "bd-video-cue-excerpt";
+      cueTextWrap.appendChild(cueExcerpt);
+
+      cueSlot.appendChild(cueTextWrap);
+      cueRegion.appendChild(cueSlot);
+      root.appendChild(cueRegion);
+
+      // 6. State
+      var currentCueIndex = -1;
+      var announcedCues = {};
+      var hoverHolding = false;
+      var hoverHoldTimer = null;
+
+      // 7. Resolve active cue from current time
+      function resolveActiveCue(t) {
+        // Suppress during preview
+        if (isPreview) return -1;
+        // Suppress during scrubbing
+        if (isScrubbing) return -1;
+        // Suppress briefly after preview exit
+        if (previewExitAt > 0 && Date.now() - previewExitAt < 800) return -1;
+
+        for (var i = 0; i < cues.length; i++) {
+          if (t >= cues[i].start && t < cues[i].end) return i;
+        }
+        return -1;
+      }
+
+      // 8. Show a cue
+      function showCue(index) {
+        var c = cues[index];
+        cueThumb.src = c.image;
+        cueTitle.textContent = c.title;
+        cueExcerpt.textContent = c.excerpt || "";
+        cueSlot.href = c.href;
+        root.classList.add("is-cue-visible");
+
+        // Only update live region text on first announcement per cue.
+        // Changing textContent in a persistent aria-live region triggers SR.
+        // On subsequent loops, text is unchanged so SR stays silent.
+        if (!announcedCues[index]) {
+          cueRegion.setAttribute("aria-label", c.title + " — " + (c.excerpt || ""));
+          announcedCues[index] = true;
+        }
+
+        dispatch(root, "bd-video:cue-enter", {
+          cue: { start: c.start, end: c.end, title: c.title, href: c.href, index: index }
+        });
+      }
+
+      // 9. Hide the active cue
+      function hideCue(reason) {
+        var outgoing = cues[currentCueIndex];
+
+        // Focus management — move focus before hiding.
+        // Only focus centerBtn if it's visible (paused or controls shown).
+        if (document.activeElement === cueSlot) {
+          if (!root.classList.contains("is-controls-hidden") || video.paused) {
+            centerBtn.focus();
+          } else {
+            cueSlot.blur();
+          }
+        }
+
+        root.classList.remove("is-cue-visible");
+
+        if (outgoing) {
+          dispatch(root, "bd-video:cue-exit", {
+            cue: { start: outgoing.start, end: outgoing.end, title: outgoing.title, href: outgoing.href, index: currentCueIndex },
+            reason: reason || "time"
+          });
+        }
+      }
+
+      // 10. Evaluate on each tick
+      function handleCueTick() {
+        var resolved = resolveActiveCue(video.currentTime);
+
+        if (resolved === currentCueIndex) return;
+
+        // Hover hold — if user is hovering, defer hide until mouseleave.
+        // Timeout fallback prevents :hover sticking on touch devices.
+        if (currentCueIndex !== -1 && resolved !== currentCueIndex) {
+          if (cueSlot.matches(":hover")) {
+            hoverHolding = true;
+            clearTimeout(hoverHoldTimer);
+            hoverHoldTimer = setTimeout(function forceReleaseHold() {
+              if (!hoverHolding) return;
+              hoverHolding = false;
+              var fresh = resolveActiveCue(video.currentTime);
+              if (fresh !== currentCueIndex) {
+                hideCue("time");
+                if (fresh !== -1) showCue(fresh);
+                currentCueIndex = fresh;
+              }
+            }, 3000);
+            return;
+          }
+          hideCue("time");
+        }
+
+        if (resolved !== -1) {
+          showCue(resolved);
+        }
+
+        currentCueIndex = resolved;
+      }
+
+      // 11. Click handler — pause + navigate (fullscreen-aware)
+      cueSlot.addEventListener("click", function handleCueClick(e) {
+        e.preventDefault();
+        var href = cueSlot.href;
+
+        if (document.fullscreenElement) {
+          // Exit fullscreen first, then navigate
+          document.addEventListener("fullscreenchange", function onFsExit() {
+            video.pause();
+            if (typeof barba !== "undefined" && barba.go) {
+              barba.go(href);
+            } else {
+              window.location.href = href;
+            }
+          }, { once: true });
+          document.exitFullscreen();
+        } else {
+          video.pause();
+          if (typeof barba !== "undefined" && barba.go) {
+            barba.go(href);
+          } else {
+            window.location.href = href;
+          }
+        }
+      });
+
+      // 12. Hover hold — release on mouseleave
+      cueSlot.addEventListener("mouseleave", function handleCueMouseLeave() {
+        if (!hoverHolding) return;
+        hoverHolding = false;
+        clearTimeout(hoverHoldTimer);
+        // Re-evaluate — the cue time window may have passed
+        var resolved = resolveActiveCue(video.currentTime);
+        if (resolved !== currentCueIndex) {
+          hideCue("time");
+          if (resolved !== -1) {
+            showCue(resolved);
+          }
+          currentCueIndex = resolved;
+        }
+      });
+
+      // 13. Attach listeners
+      video.addEventListener("timeupdate", handleCueTick);
+      video.addEventListener("seeked", handleCueTick);
+      video.addEventListener("ended", function handleCueEnded() {
+        if (currentCueIndex !== -1) {
+          hideCue("ended");
+          currentCueIndex = -1;
+        }
+      });
+    }
   }
 
   //
