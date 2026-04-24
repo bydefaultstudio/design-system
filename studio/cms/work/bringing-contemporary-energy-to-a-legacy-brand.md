@@ -14,21 +14,21 @@ thumbnail-ratio: "4:5"
 order: 5
 ---
 
-![](https://bydefault.design/image/1920x1080)
+{{img src="https://bydefault.design/image/1920x1080" ratio="16:9"}}
 
-![](https://bydefault.design/image/1920x1080)
+{{img src="https://bydefault.design/image/1920x1080" ratio="16:9"}}
 
-![](https://bydefault.design/image/1920x1080)
+{{img src="https://bydefault.design/image/1920x1080" ratio="16:9"}}
 
-![](https://bydefault.design/image/1920x1080)
+{{img src="https://bydefault.design/image/1920x1080" ratio="16:9"}}
 
-![](https://bydefault.design/image/1920x1080)
+{{img src="https://bydefault.design/image/1920x1080" ratio="16:9"}}
 
-![](https://bydefault.design/image/1920x1080)
+{{img src="https://bydefault.design/image/1920x1080" ratio="16:9"}}
 
-![](https://bydefault.design/image/1920x1080)
+{{img src="https://bydefault.design/image/1920x1080" ratio="16:9"}}
 
-![](https://bydefault.design/image/1920x1080)
+{{img src="https://bydefault.design/image/1920x1080" ratio="16:9"}}
 
 ---
 

@@ -22,7 +22,7 @@ order: 2
 {{/grid}}
 
 {{grid cols="2"}}
-![Verizon Filter Campaign](../assets/images/work/verizon/filter-campaign.jpg)
+{{img src="../assets/images/work/verizon/filter-campaign.jpg" alt="Verizon Filter Campaign" ratio="4:5"}}
 {{bg-video src="https://player.vimeo.com/progressive_redirect/playback/1134442143/rendition/720p/file.mp4%20%28720p%29.mp4?loc=external&log_user=0&signature=19e5baf4b2e12d4b88f8678c17c29f3a32193572419803cd9f45612d9935bacd" ratio="4:5"}}
 {{/grid}}
 
@@ -34,29 +34,29 @@ order: 2
 
 {{grid cols="2"}}
 {{bg-video src="https://player.vimeo.com/progressive_redirect/playback/1134433430/rendition/720p/file.mp4%20%28720p%29.mp4?loc=external&log_user=0&signature=25f98bf7e9032158f688558f0a5ab395ddba17e30e440b62566b7e7ce0085b1d" ratio="4:5"}}
-![Motion Graphic Character Illustration](../assets/images/work/verizon/character-illustration.jpg)
+{{img src="../assets/images/work/verizon/character-illustration.jpg" alt="Motion Graphic Character Illustration" ratio="4:5"}}
 {{/grid}}
 
-![](../assets/images/work/verizon/wide-01.avif)
+{{img src="../assets/images/work/verizon/wide-01.avif" ratio="16:9"}}
 
 {{grid cols="2"}}
-![](../assets/images/work/verizon/portrait-09.jpg)
-![](../assets/images/work/verizon/portrait-08.jpg)
+{{img src="../assets/images/work/verizon/portrait-09.jpg" ratio="4:5"}}
+{{img src="../assets/images/work/verizon/portrait-08.jpg" ratio="4:5"}}
 {{/grid}}
 
-![](../assets/images/work/verizon/wide-02.avif)
+{{img src="../assets/images/work/verizon/wide-02.avif" ratio="16:9"}}
 
 {{grid cols="2"}}
-![](../assets/images/work/verizon/portrait-06.jpg)
-![](../assets/images/work/verizon/portrait-05.jpg)
+{{img src="../assets/images/work/verizon/portrait-06.jpg" ratio="4:5"}}
+{{img src="../assets/images/work/verizon/portrait-05.jpg" ratio="4:5"}}
 {{/grid}}
 
 {{grid cols="2"}}
-![](../assets/images/work/verizon/portrait-04.jpg)
-![](../assets/images/work/verizon/portrait-03.jpg)
+{{img src="../assets/images/work/verizon/portrait-04.jpg" ratio="4:5"}}
+{{img src="../assets/images/work/verizon/portrait-03.jpg" ratio="4:5"}}
 {{/grid}}
 
-![](../assets/images/work/verizon/wide-03.jpg)
+{{img src="../assets/images/work/verizon/wide-03.jpg" ratio="16:9"}}
 
 ---
 

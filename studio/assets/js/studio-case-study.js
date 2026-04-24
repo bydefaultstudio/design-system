@@ -42,6 +42,8 @@ function initCaseStudyToggle() {
 
       function afterTransition() {
         updateCsStickyTop();
+        // Recalculate ScrollTrigger positions — panel width change shifted all targets
+        if (typeof ScrollTrigger !== "undefined") ScrollTrigger.refresh();
         if (body) {
           body.scrollIntoView({ behavior: "smooth", block: "start" });
         }
@@ -80,6 +82,24 @@ function initCaseStudyToggle() {
       if (csResizeObserver) {
         csResizeObserver.disconnect();
         csResizeObserver = null;
+      }
+      // Refresh ScrollTrigger after close transition completes
+      var content = cs.querySelector(".case-study-content");
+      if (content) {
+        var closeFired = false;
+        content.addEventListener("transitionend", function onCloseEnd(evt) {
+          if (evt.target !== content || evt.propertyName !== "width" || closeFired) return;
+          closeFired = true;
+          content.removeEventListener("transitionend", onCloseEnd);
+          if (typeof ScrollTrigger !== "undefined") ScrollTrigger.refresh();
+        });
+        csTransitionTimeout = setTimeout(function () {
+          if (!closeFired) {
+            closeFired = true;
+            if (typeof ScrollTrigger !== "undefined") ScrollTrigger.refresh();
+          }
+          csTransitionTimeout = null;
+        }, CS_TRANSITION_FALLBACK_MS);
       }
     }
   });

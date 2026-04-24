@@ -78,30 +78,80 @@ const BLOCK_SHORTCODES = {
     // Grid content is exclusively media — strip all <p> wrappers so grid
     // children are the media elements directly (img, video, bd-video sections).
     var stripped = inner.replace(/<\/?p>/g, "");
+    // Wrap bare <img> elements (from markdown ![](url) syntax) in .cs-media.
+    // Shortcode outputs already sit inside a .cs-media wrapper, so skip those
+    // by checking if the img is already inside one (no data-bd-animate on the img).
+    stripped = stripped.replace(/<img\s+([^>]*?)>/g, function (match, attrs) {
+      if (attrs.includes("loading=")) return match; // already wrapped by shortcode
+      var srcMatch = attrs.match(/src="([^"]*)"/);
+      var altMatch = attrs.match(/alt="([^"]*)"/);
+      var src = srcMatch ? srcMatch[1] : "";
+      var alt = altMatch ? altMatch[1] : "";
+      return (
+        '<div class="cs-media" ' + csMediaRatio("16:9") + ' data-bd-animate="slide-up">\n' +
+        '  <img src="' + src + '" alt="' + alt + '" loading="lazy">\n' +
+        "</div>"
+      );
+    });
+    // Add stagger delays to child scroll-reveal animations within the grid
+    var childIndex = 0;
+    stripped = stripped.replace(/data-bd-animate="slide-up"/g, function (match) {
+      var delay = childIndex * 0.15;
+      childIndex++;
+      if (delay === 0) return match;
+      return match + ' data-bd-delay="' + delay + '"';
+    });
     return `<div class="case-study-grid" data-cols="${cols}">\n${stripped}\n</div>`;
   }
 };
+
+// Helper: parse ratio string "W:H" into inline aspect-ratio style
+function csMediaRatio(ratio) {
+  var r = ratio || "16:9";
+  var parts = r.split(":");
+  return 'style="aspect-ratio:' + parts[0] + "/" + parts[1] + ';"';
+}
 
 const INLINE_SHORTCODES = {
   figure(attrs) {
     const src = attrs.src || "";
     const caption = attrs.caption || "";
     const alt = attrs.alt || caption;
+    const ratio = attrs.ratio || "16:9";
     const captionHtml = caption ? `\n  <figcaption>${caption}</figcaption>` : "";
-    return `<figure>\n  <img src="${src}" alt="${alt}" loading="lazy">${captionHtml}\n</figure>`;
+    // Trailing \n ensures marked sees a blank-line boundary after the <div>
+    return (
+      `<div class="cs-media" ${csMediaRatio(ratio)} data-bd-animate="slide-up">` +
+      `\n  <img src="${src}" alt="${alt}" loading="lazy">` +
+      captionHtml +
+      `\n</div>\n`
+    );
+  },
+  img(attrs) {
+    const src = attrs.src || "";
+    const alt = attrs.alt || "";
+    const ratio = attrs.ratio || "16:9";
+    return (
+      `<div class="cs-media" ${csMediaRatio(ratio)} data-bd-animate="slide-up">` +
+      `\n  <img src="${src}" alt="${alt}" loading="lazy">` +
+      `\n</div>\n`
+    );
   },
   video(attrs) {
     const src = attrs.src || "";
     const poster = attrs.poster ? ` poster="${attrs.poster}"` : "";
     const mode = attrs.mode || "";
-    const ratio = attrs.ratio ? ` data-ratio="${attrs.ratio}"` : "";
+    const ratio = attrs.ratio || "16:9";
+    const ratioAttr = ` data-ratio="${ratio}"`;
 
     // Background mode — bare video element, no bd-video wrapper
     if (mode === "background") {
       const loop = attrs.loop === "false" ? "" : " loop";
       return (
-        `<video class="bg-video" src="${src}"${poster}${ratio}` +
-        ` autoplay muted playsinline${loop} preload="metadata" aria-hidden="true"></video>`
+        `<div class="cs-media" ${csMediaRatio(ratio)} data-bd-animate="slide-up">` +
+        `\n  <video class="bg-video" src="${src}"${poster}${ratioAttr}` +
+        ` autoplay muted playsinline${loop} preload="metadata" aria-hidden="true"></video>` +
+        `\n</div>\n`
       );
     }
 
@@ -118,9 +168,11 @@ const INLINE_SHORTCODES = {
     }
 
     return (
-      `<section class="bd-video" ${dataAttrs}>\n` +
-      `  <video class="bd-video-player" src="${src}"${poster} ${videoAttrs} playsinline preload="auto"></video>\n` +
-      `</section>`
+      `<div class="cs-media" ${csMediaRatio(ratio)} data-bd-animate="slide-up">` +
+      `\n  <section class="bd-video" ${dataAttrs}>` +
+      `\n    <video class="bd-video-player" src="${src}"${poster} ${videoAttrs} playsinline preload="auto"></video>` +
+      `\n  </section>` +
+      `\n</div>\n`
     );
   },
   "bg-video"(attrs) {
@@ -129,10 +181,13 @@ const INLINE_SHORTCODES = {
     const src = attrs.src || "";
     const poster = attrs.poster ? ` poster="${attrs.poster}"` : "";
     const loop = attrs.loop === "false" ? "" : " loop";
-    const ratio = attrs.ratio ? ` data-ratio="${attrs.ratio}"` : "";
+    const ratio = attrs.ratio || "16:9";
+    const ratioAttr = ` data-ratio="${ratio}"`;
     return (
-      `<video class="bg-video" src="${src}"${poster}${ratio}` +
-      ` autoplay muted playsinline${loop} preload="metadata" aria-hidden="true"></video>`
+      `<div class="cs-media" ${csMediaRatio(ratio)} data-bd-animate="slide-up">` +
+      `\n  <video class="bg-video" src="${src}"${poster}${ratioAttr}` +
+      ` autoplay muted playsinline${loop} preload="metadata" aria-hidden="true"></video>` +
+      `\n</div>\n`
     );
   }
 };
@@ -188,4 +243,27 @@ marked.setOptions({
   mangle: false
 });
 
-module.exports = { render, loadIcons };
+/**
+ * Post-process rendered HTML to wrap bare <p><img></p> blocks in .cs-media
+ * containers with aspect-ratio and scroll-reveal animation.
+ * Call on case study visuals HTML after render() to catch markdown images
+ * that don't use the figure/img shortcode.
+ */
+function wrapBareMedia(html) {
+  return html.replace(
+    /<p>\s*(<img\s[^>]*>)\s*<\/p>/g,
+    function (match, imgTag) {
+      var srcMatch = imgTag.match(/src="([^"]*)"/);
+      var altMatch = imgTag.match(/alt="([^"]*)"/);
+      var src = srcMatch ? srcMatch[1] : "";
+      var alt = altMatch ? altMatch[1] : "";
+      return (
+        '<div class="cs-media" ' + csMediaRatio("16:9") + ' data-bd-animate="slide-up">\n' +
+        '  <img src="' + src + '" alt="' + alt + '" loading="lazy">\n' +
+        "</div>"
+      );
+    }
+  );
+}
+
+module.exports = { render, loadIcons, wrapBareMedia };

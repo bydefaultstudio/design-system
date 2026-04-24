@@ -106,6 +106,12 @@
 
       gsap.set(element, fromProps);
 
+      // Above-fold: animate immediately instead of waiting for ScrollTrigger
+      if (scrubValue === undefined && isInViewport(element)) {
+        gsap.to(element, Object.assign({ duration: 0.8 }, toProps, { delay: delayValue }));
+        return;
+      }
+
       var tweenConfig = Object.assign({ duration: 0.8 }, toProps, {
         delay: delayValue,
         scrollTrigger: {

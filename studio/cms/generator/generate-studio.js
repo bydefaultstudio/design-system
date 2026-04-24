@@ -19,7 +19,7 @@ const path = require("path");
 const matter = require("gray-matter");
 
 const { validate } = require("./lib/validate");
-const { render: renderMarkdown, loadIcons } = require("./lib/render-markdown");
+const { render: renderMarkdown, loadIcons, wrapBareMedia } = require("./lib/render-markdown");
 const { renderPage } = require("./lib/render-page");
 const { writeManifest } = require("./lib/build-manifest");
 
@@ -185,7 +185,7 @@ function main() {
         visualsMd = entry.body;
         infoMd = "";
       }
-      const visualsHtml = renderMarkdown(visualsMd, ctx);
+      const visualsHtml = wrapBareMedia(renderMarkdown(visualsMd, ctx));
       const infoHtml = infoMd ? renderMarkdown(infoMd, ctx) : "";
       pageHtml = renderPage(entry, visualsHtml, config, infoHtml);
     } else {
