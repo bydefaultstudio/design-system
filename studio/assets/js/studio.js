@@ -262,10 +262,12 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
   logoSlider();
 
   // Re-init after Barba navigations
+  // logoSlider is intentionally NOT here — it runs in the after hook's
+  // rAF (studio-barba.js) where the old container is gone and layout is settled.
+  // Calling it here (afterEnter) caused double-init races with async CDN scripts.
   document.addEventListener("studio:after-nav", function onAfterNav() {
     markReadPosts();
     initFeed();
     initServices();
-    logoSlider();
   });
 });

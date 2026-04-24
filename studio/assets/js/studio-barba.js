@@ -40,7 +40,7 @@
 var _nextReadNav = false;
 
 document.addEventListener("click", function detectNextReadClick(e) {
-  if (e.target.closest(".is-next-read")) {
+  if (e.target.closest(".is-next-read") || e.target.closest(".case-study-slider a")) {
     _nextReadNav = true;
   }
 });
@@ -423,11 +423,10 @@ var studioTransition = {
       outPromise = window.bdAnimateElementsOut(data.current.container);
     }
 
-    // After elements are out: cleanup GSAP context, then run WAAPI page transition
+    // After elements are out: run WAAPI page transition.
+    // GSAP cleanup is deferred to the after hook so ctx.revert() doesn't
+    // snap animated elements to opacity:0 while the leaving page is still visible.
     return outPromise.then(function () {
-      if (typeof window.bdAnimationsCleanup === "function") {
-        window.bdAnimationsCleanup();
-      }
       return runLeave(data.current.container, scenario, scrollOffset, { nextReadTop: nextReadTop });
     });
   },
@@ -520,6 +519,11 @@ function initStudioBarba() {
     // Deferred init — runs after layout settles (is-animating removed,
     // containers back to static positioning, scroll at top).
     requestAnimationFrame(function () {
+      // Clean up old GSAP context now that the leaving container is gone.
+      // Must run before bdAnimationsInit creates the new context.
+      if (typeof window.bdAnimationsCleanup === "function") {
+        window.bdAnimationsCleanup();
+      }
       // Features that measure layout (Splide, logo slider)
       if (typeof window.initCaseStudy === "function") {
         window.initCaseStudy();
