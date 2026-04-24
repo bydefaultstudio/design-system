@@ -6,7 +6,7 @@ synopsis: "How a B2B data consultancy moved from corporate and forgettable to a 
 date: 2026-04-09
 client: "Nimble Gravity"
 year: 2026
-services: ["Web Design", "Development", "UX Strategy", "Art Direction", "UX Copywriting"]
+services: ["Web Design", "Development", "UX Strategy", "Art Direction"]
 categories: ["Finance", "Data & AI Consultancy"]
 hero: "https://cdn.prod.website-files.com/68e2be176459e98837a31ee6/6910b283c1295e0499633a80_Nimble-Gravity.avif"
 thumbnail: "https://cdn.prod.website-files.com/68e2be176459e98837a31ee6/6910b283c1295e0499633a80_Nimble-Gravity.jpg"

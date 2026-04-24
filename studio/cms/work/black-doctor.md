@@ -6,7 +6,7 @@ synopsis: "How we rebranded legacy Black health media platform BlackDoctor into 
 date: 2026-04-24
 client: "BlackDoctor"
 year: 2026
-services: ["Brand Identity", "Brand Strategy", "Web Design", "Development", "Creative Direction", "Event Design", "UI/UX Design"]
+services: ["Brand Identity", "Brand Strategy", "Web Design", "Creative Direction"]
 categories: ["Health & Wellness"]
 hero: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1920&h=1080&fit=crop"
 thumbnail: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=800&h=1000&fit=crop"

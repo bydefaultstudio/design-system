@@ -31,12 +31,12 @@
 
 :root {
   /* Studio layout tokens */
-  --sidebar-width: 400px;
+  --sidebar-width: 360px;
   --sidebar-collapsed-width: 64px;
   --mobile-bar-height: 56px;
-  --mobile-drawer-width: min(85vw, 320px);
+  --mobile-drawer-width: 100vw;
   --post-spacing: var(--space-l);
-  --studio-gap: var(--space-m);
+  --studio-gap: 1rem;
   --z-mobile-bar: 40;
   --z-sidebar: 50;
   --z-backdrop: 90;
@@ -156,7 +156,7 @@ body.is-sidebar-collapsed .layout {
   background: var(--background-sidebar);
   z-index: var(--z-sidebar);
   box-sizing: border-box;
-  padding: var(--studio-gap) var(--studio-gap) 0 var(--studio-gap);
+  padding: 0 var(--studio-gap);
   transition: width var(--duration-xl) var(--ease-out);
 }
 
@@ -176,6 +176,7 @@ body.is-sidebar-collapsed .layout {
   align-items: stretch;
   justify-content: space-between;
   gap: 0;
+  flex-shrink: 0;
 }
 
 .nav-wrapper:hover {
@@ -187,19 +188,24 @@ body.is-sidebar-collapsed .layout {
   flex-direction: row;
   align-items: stretch;
   gap: 0;
+  width: 100%;
+  border-bottom: var(--border-s) solid var(--border-faded);
+
 }
 
 .nav-link {
   display: inline-flex;
   align-items: center;
-  font-size: var(--font-xs);
+  justify-content: center;
+  flex: 1;
+  font-size: 0.75rem;
   text-transform: uppercase;
   font-weight: var(--font-weight-medium);
   color: var(--text-primary);
   text-decoration: none;
   transition: color var(--duration-2xs) var(--ease-out);
   white-space: nowrap;
-  padding: 0 var(--s);
+  padding: var(--l) var(--s);
   height: 100%;
 }
 
@@ -207,6 +213,11 @@ body.is-sidebar-collapsed .layout {
 .nav-link.is-active {
   color: var(--text-accent);
   background-color: color-mix(in srgb, var(--text-primary), var(--alpha-5));
+}
+
+/* Home link — hidden on desktop (logo links home); shown on mobile */
+.nav-link-home {
+  display: none;
 }
 
 
@@ -244,7 +255,8 @@ body.is-sidebar-collapsed .layout {
 }
 
 .intro-block:hover::after,
-.intro-block:has(+ .sidebar-about:hover)::after {
+.intro-block:has(+ .sidebar-about:hover)::after,
+.intro-block:has(+ .sidebar-cta:hover)::after {
   background-color: transparent;
 }
 
@@ -314,6 +326,49 @@ body.is-sidebar-collapsed .layout {
   font-weight: var(--font-weight-medium);
   color: var(--text-accent);
   align-self: flex-start;
+}
+
+/* -- Sidebar CTA (same pattern as .sidebar-about) -- */
+
+.sidebar-cta {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: calc(var(--studio-gap) * 2) var(--studio-gap);
+  text-decoration: none;
+  color: var(--text-primary);
+  background-color: transparent;
+  transition: background-color var(--duration-m) var(--ease-out);
+}
+
+.sidebar-cta:hover {
+  background-color: var(--background-faded);
+}
+
+.sidebar-cta::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--border-s);
+  background: var(--border-faded);
+  transition: background-color var(--duration-m) var(--ease-out);
+}
+
+.sidebar-cta:hover::after {
+  background-color: transparent;
+}
+
+.sidebar-cta .sidebar-label {
+  padding-left: 0;
+}
+
+.sidebar-cta-copy {
+  font-size: var(--font-s);
+  color: var(--text-secondary);
+  margin: 0;
 }
 
 .sidebar-footer {
@@ -394,7 +449,7 @@ body.is-sound-off .sound-toggle .sound-icon-off {
   padding: 0 var(--studio-gap);
   margin: 0 0 var(--space-xs) 0;
   font-family: var(--font-secondary);
-  font-size: var(--font-3xl);
+  font-size: var(--font-2xl);
   text-transform: none;
   letter-spacing: 0;
   color: inherit;
@@ -454,7 +509,42 @@ body.is-sound-off .sound-toggle .sound-icon-off {
 }
 
 
+/* Left accent bar — hidden by default, revealed on .is-active */
+.sidebar-slot-link::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: color-mix(in srgb, var(--text-primary), var(--alpha-20));
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform var(--duration-xs) var(--ease-out);
+}
+
+/* ── Active state ── */
+
 .sidebar-slot-link.is-active {
+  background-color: var(--background-darker);
+}
+
+.sidebar-slot-link.is-active::before {
+  transform: scaleY(1);
+}
+
+.sidebar-slot-link.is-active .sidebar-slot-link-excerpt {
+  color: var(--text-secondary);
+}
+
+/* Suppress dividers adjacent to the active card — mirrors hover pattern */
+.sidebar-slot-link.is-active::after,
+.sidebar-slot-link:has(+ .sidebar-slot-link.is-active)::after {
+  background-color: transparent;
+}
+
+/* Hold active background on hover — don't regress to the lighter hover tint */
+.sidebar-slot-link.is-active:hover {
   background-color: var(--background-darker);
 }
 
@@ -475,14 +565,20 @@ body.is-sound-off .sound-toggle .sound-icon-off {
 
 .sidebar-slot-link-title {
   font-family: var(--font-secondary);
-  font-size: var(--font-l);
+  font-size: var(--font-m);
   line-height: var(--line-height-m);
+  font-weight: var(--font-weight-medium);
 }
 
 .sidebar-slot-link-excerpt {
   font-size: var(--font-xs);
   line-height: var(--line-height-m);
   color: var(--text-faded);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 
@@ -525,6 +621,7 @@ body.is-sidebar-collapsed .sidebar-footer p {
 body.is-sidebar-collapsed .nav-wrapper,
 body.is-sidebar-collapsed .intro-block,
 body.is-sidebar-collapsed .sidebar-about,
+body.is-sidebar-collapsed .sidebar-cta,
 body.is-sidebar-collapsed .sidebar-slot {
   display: none;
 }
@@ -653,10 +750,10 @@ body.is-animating [data-studio-role="leave"][data-studio-scenario="push"] { z-in
 body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-index: 1; }
 
 
-/* ------ HOME HEADER ------ */
+/* ------ HOME INTRO ------ */
 
-.home-header {
-  padding: var(--space-7xl) var(--space-3xl);
+.home-intro {
+  padding: var(--space-8xl) var(--space-3xl);
 }
 
 .hero-title {
@@ -941,7 +1038,7 @@ article.article {
 .article-body {
   flex: 0 1 auto;
   width: 60%;
-  max-width: 820px;
+  max-width: 600px;
 }
 
 
@@ -1301,11 +1398,12 @@ article.article {
 
 /* -- Toggle button -- */
 
-.case-study-toggle {
+.button.case-study-toggle {
   flex-shrink: 0;
   align-self: flex-end;
   gap: var(--space-xs);
   white-space: nowrap;
+  --button-border: var(--button-text-color);
 }
 
 .case-study-toggle-icon-close {
@@ -1673,11 +1771,34 @@ body.is-mobile-nav-open .sidebar-backdrop {
     align-items: stretch;
   }
 
+  /* Home link visible on mobile (hidden on desktop where logo links home) */
+  .nav-link-home {
+    display: inline-flex;
+  }
+
+  /* Hide wordmark block on mobile — mobile bar already has logo */
+  .intro-block {
+    display: none;
+  }
+
+  /* Stack nav links vertically for large touch targets */
+  .nav {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .nav-link {
+    padding: var(--space-m) var(--studio-gap);
+    font-size: var(--font-s);
+    border-bottom: var(--border-s) solid var(--border-faded);
+  }
+
   body.is-sidebar-collapsed .sidebar-intro,
   body.is-sidebar-collapsed .sidebar-footer p,
   body.is-sidebar-collapsed .nav-wrapper,
   body.is-sidebar-collapsed .intro-block,
   body.is-sidebar-collapsed .sidebar-about,
+  body.is-sidebar-collapsed .sidebar-cta,
   body.is-sidebar-collapsed .sidebar-slot {
     display: revert;
     opacity: 1;
@@ -1937,17 +2058,24 @@ body.is-animating .case-study-content {
 
 /* -- Success state -- */
 
-/* -- Wrapper: form/success state toggle -- */
+/* -- Page wrapper -- */
 
-.contact-wrapper .contact-success {
+.contact-wrapper {
+  background: var(--bg-faded-3);
+  overflow: hidden;
+}
+
+/* -- Form state toggle -- */
+
+.contact-form-state .contact-success {
   display: none;
 }
 
-.contact-wrapper.is-submitted .contact-form {
+.contact-form-state.is-submitted .contact-form {
   display: none;
 }
 
-.contact-wrapper.is-submitted .contact-success {
+.contact-form-state.is-submitted .contact-success {
   display: flex;
   flex-direction: column;
   gap: var(--space-l);
@@ -2477,7 +2605,10 @@ body.is-animating .case-study-content {
   .close-btn,
   .contact-chips .button,
   .skip-link,
-  .error-page__code {
+  .error-page__code,
+  .sidebar-slot-link,
+  .sidebar-slot-link::before,
+  .sidebar-slot-link::after {
     transition: none;
     animation: none;
   }

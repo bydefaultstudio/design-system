@@ -6,7 +6,7 @@ synopsis: "How culture-first AR turned Verizon's HBCU sponsorship into sold-out 
 date: 2026-04-09
 client: "Verizon"
 year: 2026
-services: ["Campaign Identity", "AR Experience", "Website Development", "Social Media Marketing", "Motion Graphics & Film", "Creative Direction"]
+services: ["Campaign Identity", "AR Experience", "Creative Direction", "Motion Graphics & Film"]
 categories: ["Telecom & Media Network"]
 hero: "https://cdn.prod.website-files.com/68e2be176459e98837a31ee6/690d186ce5a71d86c57ee150_thumb.avif"
 thumbnail: "https://cdn.prod.website-files.com/68e2be176459e98837a31ed9/690d14b8b7c2812b05f880e0_thumbnail.avif"

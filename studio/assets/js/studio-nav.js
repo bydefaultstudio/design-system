@@ -88,15 +88,19 @@ function initMobileDrawer() {
     }
   }
 
-  function closeDrawer() {
+  function closeDrawer(skipFocusRestore) {
     if (!document.body.classList.contains("is-mobile-nav-open")) return;
     document.body.classList.remove("is-mobile-nav-open");
     if (hamburger) hamburger.setAttribute("aria-expanded", "false");
     if (main) main.removeAttribute("inert");
-    if (previouslyFocused && typeof previouslyFocused.focus === "function") {
-      previouslyFocused.focus();
-    } else if (hamburger) {
-      hamburger.focus();
+    // When closing due to Barba navigation (skipFocusRestore=true), don't
+    // snap focus to the hamburger — afterEnter will focus <main> instead.
+    if (!skipFocusRestore) {
+      if (previouslyFocused && typeof previouslyFocused.focus === "function") {
+        previouslyFocused.focus();
+      } else if (hamburger) {
+        hamburger.focus();
+      }
     }
     previouslyFocused = null;
   }
@@ -113,7 +117,9 @@ function initMobileDrawer() {
   }
 
   if (backdrop) {
-    backdrop.addEventListener("click", closeDrawer);
+    backdrop.addEventListener("click", function handleBackdropClick() {
+      closeDrawer();
+    });
   }
 
   document.addEventListener("keydown", function handleKeydown(e) {
@@ -121,8 +127,11 @@ function initMobileDrawer() {
     else trapFocus(e);
   });
 
-  // Close drawer after a Barba navigation finishes
-  document.addEventListener("studio:after-nav", closeDrawer);
+  // Close drawer after a Barba navigation finishes — skip focus restore
+  // because afterEnter will focus <main> for screen reader announcement.
+  document.addEventListener("studio:after-nav", function handleNavClose() {
+    closeDrawer(true);
+  });
 }
 
 //
@@ -189,21 +198,39 @@ function initPageClose() {
 //------- Active Nav -------//
 //
 
-// Active nav link state — toggles .is-active + aria-current on the matching sidebar link
+// Active state — toggles .is-active + aria-current on the matching nav link
+// AND the matching sidebar work card. Runs on DOMContentLoaded and after every
+// Barba transition (called from the afterEnter hook in studio-barba.js).
 function studioRefreshActiveNav() {
   var current = getCurrentPagePath();
-  var links = document.querySelectorAll(".nav-link");
-  links.forEach(function markActive(link) {
+
+  // -- Top nav links (.nav-link) --
+  var navLinks = document.querySelectorAll(".nav-link");
+  navLinks.forEach(function markNavActive(link) {
     var href = link.getAttribute("href") || "";
     // Compare filenames only — strip any ../ prefix
     var linkFile = href.replace(/^(\.\.\/)+/, "");
     var isActive = linkFile === current;
     link.classList.toggle("is-active", isActive);
-    if (isActive) {
-      link.setAttribute("aria-current", "page");
-    } else {
-      link.removeAttribute("aria-current");
-    }
+    if (isActive) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
+  });
+
+  // -- Sidebar slot links (.sidebar-slot-link, case study cards) --
+  // Extract the terminal filename from the href — robust against absolute
+  // paths (/work/slug.html), relative paths (../work/slug.html), and
+  // post-syncNavHrefs rewrites. Order-independent with syncNavHrefs.
+  // Strips .html from both sides so clean URLs (/work/starry) still match
+  // hrefs written with .html (/work/starry.html).
+  var bare = current.replace(/\.html$/, "");
+  var slotLinks = document.querySelectorAll(".sidebar-slot-link");
+  slotLinks.forEach(function markSlotActive(link) {
+    var href = link.getAttribute("href") || "";
+    var hrefSlug = href.split("/").pop().split("?")[0].split("#")[0].replace(/\.html$/, "");
+    var isActive = hrefSlug !== "" && hrefSlug === bare;
+    link.classList.toggle("is-active", isActive);
+    if (isActive) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
   });
 }
 

@@ -484,6 +484,10 @@ function initStudioBarba() {
       window.initBdVideo(data.next.container);
     }
     document.dispatchEvent(new CustomEvent("studio:after-nav"));
+    // Focus <main> so screen readers announce the new page. Runs after
+    // studio:after-nav (synchronous) so closeDrawer has removed inert first.
+    var mainEl = document.getElementById("main");
+    if (mainEl) mainEl.focus({ preventScroll: true });
   });
 
   window.barba.hooks.after(function onAfter(data) {

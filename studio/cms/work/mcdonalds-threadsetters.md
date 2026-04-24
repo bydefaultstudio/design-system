@@ -6,11 +6,11 @@ synopsis: "How we turned McDonald's crew uniforms into a cultural fashion moment
 date: 2026-04-24
 client: "McDonald's"
 year: 2026
-services: ["Campaign Identity", "Creative Direction", "Social Media Marketing", "Development", "Motion Graphics & Film"]
+services: ["Campaign Identity", "Creative Direction", "Social Media Marketing", "Development"]
 categories: ["Food & Beverage"]
 hero: "https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=1920&h=1080&fit=crop"
 thumbnail: "https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=800&h=1000&fit=crop"
-thumbnail-ratio: "4:5"
+thumbnail-ratio: "1:1"
 order: 8
 ---
 

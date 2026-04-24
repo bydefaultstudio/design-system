@@ -34,7 +34,7 @@ console.log("Studio Contact v0.1.0");
 
   // -- Selectors --
 
-  function getWrapper() { return document.querySelector("[data-contact-wrapper]"); }
+  function getWrapper() { return document.querySelector("[data-contact-form-state]"); }
   function getForm() { return document.querySelector('[data-studio-form="contact"]'); }
   function getSuccessEl() { return document.querySelector(".contact-success"); }
   function getSubmitBtn() { return document.querySelector("[data-contact-submit]"); }

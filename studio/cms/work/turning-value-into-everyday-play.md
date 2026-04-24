@@ -6,7 +6,7 @@ synopsis: "How a gamified card game turned a promotional campaign into culture, 
 date: 2026-04-09
 client: "McDonald's"
 year: 2026
-services: ["Campaign Identity", "Game Strategy", "Development", "Creative Direction", "UI/UX Design", "UX Strategy", "UX Copywriting"]
+services: ["Campaign Identity", "Game Strategy", "Development", "Creative Direction"]
 categories: ["Food & Beverage"]
 hero: "https://images.unsplash.com/photo-1775836214307-1a2b1194a769?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 thumbnail: "https://images.unsplash.com/photo-1775836214307-1a2b1194a769?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
