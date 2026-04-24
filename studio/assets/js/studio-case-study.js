@@ -89,7 +89,7 @@ function initCaseStudyToggle() {
 // ------ Sticky Info Panel ------ //
 
 function updateCsStickyTop() {
-  var inner = document.querySelector(".case-study-page.is-info-open .case-study-content-inner");
+  var inner = document.querySelector(".case-study-wrapper.is-info-open .case-study-content-inner");
   if (!inner) return;
 
   var csBody = inner.closest(".case-study-body");
@@ -122,7 +122,7 @@ function initCsStickyObserver() {
     csResizeObserver = null;
   }
 
-  var inner = document.querySelector(".case-study-page.is-info-open .case-study-content-inner");
+  var inner = document.querySelector(".case-study-wrapper.is-info-open .case-study-content-inner");
   if (!inner) return;
 
   csResizeObserver = new ResizeObserver(function () {

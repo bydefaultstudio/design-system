@@ -2,8 +2,8 @@
  * Script Purpose: Studio Barba init — hierarchy-aware page transitions
  * Author: By Default
  * Created: 2026-04-11
- * Version: 0.3.0
- * Last Updated: 2026-04-12
+ * Version: 0.4.0
+ * Last Updated: 2026-04-23
  *
  * Architecture:
  *
@@ -34,7 +34,7 @@
  * Reduced motion: instant swap.
  */
 
-// Studio Barba v0.3.0
+// Studio Barba v0.4.0
 
 // Flag set by click handler on .next-read — consumed once by resolveScenario
 var _nextReadNav = false;
@@ -417,7 +417,19 @@ var studioTransition = {
     }
     var scrollOffset = -scrollY;
 
-    return runLeave(data.current.container, scenario, scrollOffset, { nextReadTop: nextReadTop });
+    // GSAP element-out animations (skip for push — morph would conflict)
+    var outPromise = Promise.resolve();
+    if (scenario !== "push" && typeof window.bdAnimateElementsOut === "function") {
+      outPromise = window.bdAnimateElementsOut(data.current.container);
+    }
+
+    // After elements are out: cleanup GSAP context, then run WAAPI page transition
+    return outPromise.then(function () {
+      if (typeof window.bdAnimationsCleanup === "function") {
+        window.bdAnimationsCleanup();
+      }
+      return runLeave(data.current.container, scenario, scrollOffset, { nextReadTop: nextReadTop });
+    });
   },
   enter: function studioEnter(data) {
     var scenario = data.next.container.getAttribute("data-studio-scenario") || "fade";
@@ -452,12 +464,11 @@ function initStudioBarba() {
 
   window.barba.hooks.before(function onBefore() {
     document.body.classList.add("is-animating");
-    if (typeof window.cleanupCaseStudy === "function") {
-      window.cleanupCaseStudy();
-    }
-    if (typeof window.destroyLogoSliders === "function") {
-      window.destroyLogoSliders();
-    }
+    // Lightweight state cleanup — remove body classes and disconnect observers
+    // so they don't fire during the transition. Splide instances are NOT
+    // destroyed here (that would strip inline styles while the old container
+    // is still visible). Full cleanup + reinit happens in the after hook's rAF.
+    document.body.classList.remove("is-case-study-open");
     document.dispatchEvent(new CustomEvent("studio:before-nav"));
   });
 
@@ -491,12 +502,6 @@ function initStudioBarba() {
     if (typeof window.initSidebarSlot === "function") {
       window.initSidebarSlot();
     }
-    if (typeof window.initCaseStudy === "function") {
-      window.initCaseStudy();
-    }
-    if (typeof window.logoSlider === "function") {
-      window.logoSlider();
-    }
     document.body.classList.remove("is-animating");
     // Clean up role/scenario attributes + any inline styles set by the
     // animation (transform from scroll-compensation, transformOrigin/opacity
@@ -511,6 +516,28 @@ function initStudioBarba() {
       if (survivingTitle) survivingTitle.classList.remove("is-morphing");
     }
     window.scrollTo(0, 0);
+
+    // Deferred init — runs after layout settles (is-animating removed,
+    // containers back to static positioning, scroll at top).
+    requestAnimationFrame(function () {
+      // Features that measure layout (Splide, logo slider)
+      if (typeof window.initCaseStudy === "function") {
+        window.initCaseStudy();
+      }
+      if (typeof window.logoSlider === "function") {
+        window.logoSlider();
+      }
+      // GSAP scroll animations
+      if (typeof window.bdAnimationsInit === "function") {
+        window.bdAnimationsInit(data.next.container);
+      }
+      if (typeof window.bdAnimateElementsIn === "function") {
+        window.bdAnimateElementsIn(data.next.container);
+      }
+      if (typeof ScrollTrigger !== "undefined") {
+        ScrollTrigger.refresh();
+      }
+    });
   });
 
   // Hover-prefetch plugin (optional; skipped if CDN script didn't load).
@@ -519,6 +546,7 @@ function initStudioBarba() {
   }
 
   window.barba.init({
+    preventRunning: true,
     transitions: [studioTransition],
     prevent: shouldPrevent,
     debug: false,

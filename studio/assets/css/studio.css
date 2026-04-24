@@ -658,6 +658,14 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
   padding: var(--space-7xl) var(--space-3xl);
 }
 
+.hero-title {
+  font-size: 6vw;
+}
+.hero-subline {
+  font-size: var(--font-3xl);
+
+}
+
 /* ------ HOME HERO (wraps a .bd-video player; studio-specific padding + chrome) ------ */
 
 .home-hero {
@@ -1294,12 +1302,12 @@ article.article {
   display: none;
 }
 
-.case-study-page.is-info-open .case-study-toggle-icon-add,
+.case-study-wrapper.is-info-open .case-study-toggle-icon-add,
 body.is-case-study-open .case-study-toggle-wrap .case-study-toggle-icon-add {
   display: none;
 }
 
-.case-study-page.is-info-open .case-study-toggle-icon-close,
+.case-study-wrapper.is-info-open .case-study-toggle-icon-close,
 body.is-case-study-open .case-study-toggle-wrap .case-study-toggle-icon-close {
   display: block;
 }
@@ -1396,11 +1404,11 @@ body.is-case-study-open .case-study-toggle-wrap .case-study-toggle-icon-close {
   transition-delay: 0ms, 0ms;
 }
 
-.case-study-page {
+.case-study-wrapper {
   background-color: var(--bg-faded-3);
 }
 
-.case-study-page.is-info-open .case-study-content {
+.case-study-wrapper.is-info-open .case-study-content {
   width: 50%;
   height: auto;
   opacity: 1;
@@ -1470,7 +1478,7 @@ body.is-case-study-open .case-study-toggle-wrap .case-study-toggle-icon-close {
     transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1), ease-out;
   }
 
-  .case-study-page.is-info-open .case-study-content {
+  .case-study-wrapper.is-info-open .case-study-content {
     width: 100%;
     max-height: 200vh;
     opacity: 1;
@@ -1647,6 +1655,7 @@ body.is-mobile-nav-open .sidebar-backdrop {
 body[data-current-level="1"] .close-btn-wrap,
 body[data-current-level="2"] .close-btn-wrap {
   display: flex;
+  transition: opacity 200ms ease-out;
 }
 
 /* Studio close-btn overrides — extends the core .close-btn role class */
@@ -1672,11 +1681,20 @@ body[data-current-level="2"] .close-btn-wrap {
   color: var(--text-faded);
 }
 
-/* Hide the X for the duration of any Barba navigation. The page slides
-   without the X hovering over it; afterwards body[data-current-level]
-   determines whether it should reappear (level 0 → no, level 1/2 → yes). */
+/* Fade the X out during Barba navigation instead of instant display:none.
+   pointer-events: none prevents clicks during the transition. */
 body.is-animating .close-btn-wrap {
-  display: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Disable case study layout transitions during page transitions.
+   These transitions are for user interactions (info panel toggle),
+   not for Barba page animations. Without this, the 800ms layout
+   transition fires during the page transition and creates stutter. */
+body.is-animating .case-study-visuals,
+body.is-animating .case-study-content {
+  transition: none;
 }
 
 @media (max-width: 768px) {
@@ -2706,4 +2724,26 @@ body.is-animating .close-btn-wrap {
 
 .logo-ticker-slide svg {
   display: block;
+}
+
+/* ------- GSAP FOUC Prevention ------- */
+/* Hide animated elements until JS reveals them.
+   Scoped to .js so content remains visible if JavaScript is disabled. */
+
+.js [data-bd-animate],
+.js [data-text-animate] {
+  opacity: 0;
+}
+
+/* ------- Print Safety ------- */
+/* Ensure GSAP-animated elements are visible when printing */
+
+@media print {
+  [data-bd-animate],
+  [data-text-animate],
+  [data-bd-leave] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
 }

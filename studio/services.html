@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>document.documentElement.classList.add("js");</script>
   <title>Services — By Default</title>
   <meta name="description" content="Interactive advertising, content, and activations that turn audiences into participants. Formats the audience actually stops for." />
 
@@ -113,10 +114,10 @@
                   <p class="services-bridge">Getting seen isn’t the challenge anymore. Being remembered is.</p>
                 </div>
               </div>
-              <div style="padding: 0 var(--studio-gap);">
+              <div style="padding: 0 var(--studio-gap);" data-bd-animate="fade">
           <img src="https://bydefault.design/image/1920x1080">
           </div>
-              <div class="services-sub-wrap">
+              <div class="services-sub-wrap" data-bd-animate="slide">
                 <p class="services-sub">We help brands and publishers build the work their audience actually stops for, the kind that earns attention in a saturated feed and leaves something behind.</p>
               </div>
 
@@ -312,19 +313,19 @@
           <section id="process" class="services-process bottom-large">
             <div class="padding-global">
                 <div class="block gap-l">
-                  <p class="eyebrow">How we work</p>
+                  <p class="eyebrow" data-bd-animate="fade">How we work</p>
                   <div class="process-steps">
-                    <div class="process-step">
+                    <div class="process-step" data-bd-animate="slide" data-bd-delay="0">
                       <p class="process-step-number">01 — Discover</p>
                       <h3 class="process-step-title">Strategy and audience insight</h3>
                       <p class="process-step-desc">Understanding where the brand lives across touchpoints and where the decision moments actually are.</p>
                     </div>
-                    <div class="process-step">
+                    <div class="process-step" data-bd-animate="slide" data-bd-delay="0.1">
                       <p class="process-step-number">02 — Develop</p>
                       <h3 class="process-step-title">Creative direction and interactive build</h3>
                       <p class="process-step-desc">We lead the thinking and shape the brief before we answer it. We’re not a production shop executing someone else’s deck.</p>
                     </div>
-                    <div class="process-step">
+                    <div class="process-step" data-bd-animate="slide" data-bd-delay="0.2">
                       <p class="process-step-number">03 — Deliver</p>
                       <h3 class="process-step-title">Production, integration, performance</h3>
                       <p class="process-step-desc">We stay accountable after launch.</p>
@@ -340,7 +341,7 @@
               <div class="container-large">
                 <div class="block gap-xl">
 
-                  <div class="cta-tabs" role="tablist" aria-label="Audience">
+                  <div class="cta-tabs" role="tablist" aria-label="Audience" data-bd-animate="fade">
                     <button type="button" class="cta-tab is-active" role="tab" aria-selected="true" aria-controls="cta-panel-brands" id="cta-tab-brands" data-cta-tab="brands">For Brands</button>
                     <button type="button" class="cta-tab" role="tab" aria-selected="false" aria-controls="cta-panel-publishers" id="cta-tab-publishers" data-cta-tab="publishers">For Publishers</button>
                     <button type="button" class="cta-tab" role="tab" aria-selected="false" aria-controls="cta-panel-agencies" id="cta-tab-agencies" data-cta-tab="agencies">For Agencies</button>
@@ -387,6 +388,11 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@barba/core@2.10.3/dist/barba.umd.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/@barba/prefetch@2.2.0/dist/barba-prefetch.umd.min.js" defer></script>
+  <!-- GSAP + Plugins -->
+  <script src="assets/js/vendor/gsap/gsap.min.js" defer></script>
+  <script src="assets/js/vendor/gsap/ScrollTrigger.min.js" defer></script>
+  <script src="assets/js/vendor/gsap/SplitText.min.js" defer></script>
+  <script src="assets/js/bd-animations.js" defer></script>
   <script src="../assets/js/accordion.js" defer></script>
   <script src="assets/js/studio-utils.js" defer></script>
   <script src="assets/js/studio-nav.js" defer></script>
