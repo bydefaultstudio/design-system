@@ -31,12 +31,13 @@
 
 :root {
   /* Studio layout tokens */
-  --sidebar-width: 360px;
+  --sidebar-width: 400px;
   --sidebar-collapsed-width: 64px;
   --mobile-bar-height: 56px;
   --mobile-drawer-width: 100vw;
   --post-spacing: var(--space-l);
-  --studio-gap: 1rem;
+  --studio-gap: .75rem;
+  --studio-gap-2x: 1.5rem;
   --z-mobile-bar: 40;
   --z-sidebar: 50;
   --z-backdrop: 90;
@@ -141,6 +142,26 @@
 body.is-sidebar-collapsed .layout {
   grid-template-columns: var(--sidebar-collapsed-width) 1fr;
 }
+
+
+/* ------ INSET (universal gap primitive) ------ */
+/*
+ * Apply on any element to add a gap on chosen edges. Uses padding so the
+ * element's own background fills the gap and the inner content is pushed
+ * inward. Works on page wrappers, sections, cards — any block element.
+ *
+ *   <div data-inset="all">              ← all four sides
+ *   <div data-inset="left right">       ← horizontal only
+ *   <div data-inset="top right">        ← two specific edges
+ *
+ * No attribute = full bleed (no inner gap; content sits flush to edges).
+ */
+
+[data-inset~="top"]    { padding-top:    var(--studio-gap); }
+[data-inset~="right"]  { padding-right:  var(--studio-gap); }
+[data-inset~="bottom"] { padding-bottom: var(--studio-gap); }
+[data-inset~="left"]   { padding-left:   var(--studio-gap); }
+[data-inset="all"]     { padding: var(--studio-gap); }
 
 
 /* ------ SIDEBAR ------ */
@@ -449,6 +470,7 @@ body.is-sound-off .sound-toggle .sound-icon-off {
   padding: 0 var(--studio-gap);
   margin: 0 0 var(--space-xs) 0;
   font-family: var(--font-secondary);
+  font-weight: var(--title-weight);
   font-size: var(--font-2xl);
   text-transform: none;
   letter-spacing: 0;
@@ -492,9 +514,10 @@ body.is-sound-off .sound-toggle .sound-icon-off {
   transition: background-color var(--duration-m) var(--ease-out);
 }
 
-.sidebar-slot-link:hover {
+.sidebar-slot-link:hover, .sidebar-slot-link.is-active {
   background-color: var(--background-faded);
 }
+
 
 /* Also hide the divider on the previous sibling — so hovering any post clears
    the lines on both sides of it. Uses :has() to look forward for a hovered
@@ -517,7 +540,7 @@ body.is-sound-off .sound-toggle .sound-icon-off {
   top: 0;
   bottom: 0;
   width: 2px;
-  background-color: color-mix(in srgb, var(--text-primary), var(--alpha-20));
+  background-color: color-mix(in srgb, var(--text-primary), var(--alpha-5));
   transform: scaleY(0);
   transform-origin: top center;
   transition: transform var(--duration-xs) var(--ease-out);
@@ -525,9 +548,7 @@ body.is-sound-off .sound-toggle .sound-icon-off {
 
 /* ── Active state ── */
 
-.sidebar-slot-link.is-active {
-  background-color: var(--background-darker);
-}
+
 
 .sidebar-slot-link.is-active::before {
   transform: scaleY(1);
@@ -567,7 +588,7 @@ body.is-sound-off .sound-toggle .sound-icon-off {
   font-family: var(--font-secondary);
   font-size: var(--font-m);
   line-height: var(--line-height-m);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--title-weight);
 }
 
 .sidebar-slot-link-excerpt {
@@ -750,17 +771,78 @@ body.is-animating [data-studio-role="leave"][data-studio-scenario="push"] { z-in
 body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-index: 1; }
 
 
+/* ------ SECTION HEADER (sticky pattern) ------ */
+
+.section-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+  padding: var(--space-l) 0;
+  background-color: var(--background-primary);
+  border-bottom: var(--border-s) solid var(--border-primary);
+}
+
+.section-header[data-sticky="false"] {
+  position: static;
+}
+
+.section-header-start {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  min-width: 0;
+}
+
+.section-header-end {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  flex-shrink: 0;
+}
+
+.section-content {
+  padding: var(--space-3xl) 0;
+}
+
+
+.eyebrow-header {
+  margin: 0;
+  font-size: var(--font-5xl);
+}
+
+@media (max-width: 768px) {
+  .section-header {
+    top: var(--mobile-bar-height);
+    padding: var(--space-m) 0;
+  }
+  .section-header-end {
+    display: none;
+  }
+  .eyebrow-header {
+    font-size: var(--font-l);
+  }
+}
+
+
+.home-wrapper {
+}
+
+
 /* ------ HOME INTRO ------ */
 
 .home-intro {
-  padding: var(--space-8xl) var(--space-3xl);
 }
 
 .hero-title {
-  font-size: 6vw;
+  font-size: 5vw;
+  font-weight: 300;
 }
 .hero-subline {
-  font-size: var(--font-3xl);
+  font-size: var(--font-4xl);
 
 }
 
@@ -768,7 +850,6 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
 
 .home-hero {
   --bd-video-inset: var(--studio-gap);
-  padding: var(--studio-gap) var(--studio-gap) 0 0;
 }
 
 .home-hero .bd-video-player {
@@ -798,7 +879,6 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
 .content-feed {
   column-count: 3;
   column-gap: var(--studio-gap);
-  padding: var(--studio-gap) var(--studio-gap) var(--studio-gap) 0;
   width: 100%;
 }
 
@@ -1250,6 +1330,11 @@ article.article {
   margin: 0;
   font-size: var(--font-s);
   color: var(--text-faded);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .post:hover .post-excerpt {
@@ -1425,8 +1510,8 @@ body.is-case-study-open .case-study-toggle-wrap .case-study-toggle-icon-close {
 .case-study-toggle-wrap {
   display: none;
   position: fixed;
-  bottom: calc(var(--studio-gap) + var(--studio-gap));
-  right: calc(var(--studio-gap) + var(--studio-gap));
+  bottom: var(--studio-gap-2x);
+  right: var(--studio-gap-2x);
   z-index: 50;
   transition: opacity var(--duration-xs) var(--ease-out),
               transform var(--duration-xs) var(--ease-out);
@@ -1830,8 +1915,8 @@ body.is-mobile-nav-open .sidebar-backdrop {
 .close-btn-wrap {
   display: none;
   position: fixed;
-  top: calc(var(--studio-gap) + var(--studio-gap));
-  right: calc(var(--studio-gap) + var(--studio-gap));
+  top: var(--studio-gap-2x);
+  right: var(--studio-gap-2x);
   z-index: 100;
   align-items: center;
   gap: var(--space-s);
@@ -2296,6 +2381,8 @@ body.is-animating .case-study-content {
 /* -- Section 1: page header -- */
 
 .services-headline {
+  font-size: 5vw;
+  font-weight: var(--font-weight-light);
 
 }
 
