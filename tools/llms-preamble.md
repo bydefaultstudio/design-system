@@ -21,7 +21,7 @@ Every page section uses this exact structure. Copy-paste, then fill in the block
 ```html
 <section class="top-large bottom-large">
   <div class="padding-global">
-    <div class="container-medium">
+    <div class="container-m">
       <div class="block gap-m">
         <h2>Heading</h2>
         <p>Body text</p>

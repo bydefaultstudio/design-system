@@ -63,7 +63,7 @@
 :root {
   /* -- Typography -- */
   --font-primary: "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-secondary: "trust-3a","ivypresto-headline", "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", serif;
+  --font-secondary: "Zalando Sans", "trust-3a","ivypresto-headline", "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", serif;
   --font-tertiary: "Bugrino", sans-serif;
   --font-quaternary: "IBM Plex Mono", monospace;
 
@@ -155,7 +155,7 @@
 
   /* Title — section heads and recurring labels within a page (h2). */
   --title-size:     clamp(var(--font-2xl), 0.8rem + 2vw, var(--font-7xl));
-  --title-weight:   500;
+  --title-weight:   300;
   --title-leading:  var(--line-height-m);
   --title-tracking: -0.01em;
 
@@ -547,6 +547,20 @@
   --space-13xl: var(--13xl);
   --space-14xl: var(--14xl);
 
+  /* -- Container widths -- */
+  --container-xs: 480px;
+  --container-s: 640px;
+  --container-m: 960px;
+  --container-l: 1200px;
+  --container-xl: 1440px;
+
+  /* -- Max-widths -- */
+  --max-width-xs: 480px;
+  --max-width-s: 640px;
+  --max-width-m: 960px;
+  --max-width-l: 1200px;
+  --max-width-xl: 1440px;
+
   /* -- Section spacing variables -- */
   --section-xs: var(--space-xl);
   --section-s: var(--space-2xl);
@@ -670,41 +684,65 @@
 }
 
 /* -- Containers -- */
-.container-small {
+.container-xs {
   display: block;
-  max-width: 640px;
+  max-width: var(--container-xs);
   width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
 
-.container-medium {
+.container-s {
   display: block;
-  max-width: 1040px;
+  max-width: var(--container-s);
   width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
 
-.container-large {
+.container-m {
   display: block;
-  max-width: 1200px;
+  max-width: var(--container-m);
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-l {
+  display: block;
+  max-width: var(--container-l);
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-xl {
+  display: block;
+  max-width: var(--container-xl);
   width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
 
 /* -- Max-width utilities -- */
-.max-width-small {
-  max-width: 640px;
+.max-width-xs {
+  max-width: var(--max-width-xs);
 }
 
-.max-width-medium {
-  max-width: 960px;
+.max-width-s {
+  max-width: var(--max-width-s);
 }
 
-.max-width-large {
-  max-width: 1200px;
+.max-width-m {
+  max-width: var(--max-width-m);
+}
+
+.max-width-l {
+  max-width: var(--max-width-l);
+}
+
+.max-width-xl {
+  max-width: var(--max-width-xl);
 }
 
 .max-width-full {
@@ -1034,7 +1072,7 @@ section {
 .eyebrow {
   font-size: var(--font-xs);
   line-height: var(--line-height-m);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-regular);
   letter-spacing: var(--letter-spacing-l);
   text-transform: uppercase;
 }

@@ -38,7 +38,7 @@ body
 ```html
 <section>
   <div class="padding-global">
-    <div class="container-medium">
+    <div class="container-m">
       <div class="block">
         <!-- Content -->
       </div>
@@ -85,7 +85,7 @@ Sections group **major content areas** and control **vertical spacing**.
 
 ```html
 <div class="padding-global">
-  <div class="container-medium">
+  <div class="container-m">
     <!-- Content -->
   </div>
 </div>
@@ -111,7 +111,7 @@ Containers constrain width and centre content in the viewport.
 * Use one container per section (in most cases)
 
 ```html
-<div class="container-medium">
+<div class="container-m">
   <div class="block">
     <h2>Heading</h2>
     <p>Content</p>
@@ -123,21 +123,21 @@ Containers constrain width and centre content in the viewport.
 
 <div class="demo-preview is-joined">
   <div style="background: var(--background-faded); padding: var(--space-m) 0;">
-    <div class="container-small" style="background: var(--text-accent); color: var(--off-white); padding: var(--space-s); text-align: center;  font-size: var(--font-xs);">.container-small</div>
+    <div class="container-s" style="background: var(--text-accent); color: var(--off-white); padding: var(--space-s); text-align: center;  font-size: var(--font-xs);">.container-s</div>
   </div>
   <div style="background: var(--background-faded); padding: var(--space-m) 0;">
-    <div class="container-medium" style="background: var(--text-accent); color: var(--off-white); padding: var(--space-s); text-align: center;  font-size: var(--font-xs);">.container-medium</div>
+    <div class="container-m" style="background: var(--text-accent); color: var(--off-white); padding: var(--space-s); text-align: center;  font-size: var(--font-xs);">.container-m</div>
   </div>
   <div style="background: var(--background-faded); padding: var(--space-m) 0;">
-    <div class="container-large" style="background: var(--text-accent); color: var(--off-white); padding: var(--space-s); text-align: center;  font-size: var(--font-xs);">.container-large</div>
+    <div class="container-l" style="background: var(--text-accent); color: var(--off-white); padding: var(--space-s); text-align: center;  font-size: var(--font-xs);">.container-l</div>
   </div>
 </div>
 
 | Class              | Use                    |
 | ------------------ | ---------------------- |
-| `.container-small` | Narrow layouts |
-| `.container-medium` | Default readable width |
-| `.container-large` | Wider layouts |
+| `.container-s` | Narrow layouts |
+| `.container-m` | Default readable width |
+| `.container-l` | Wider layouts |
 
 ---
 
@@ -153,9 +153,9 @@ Max-width utilities apply **width limits only**.
 
 | Class              | Use               |
 | ------------------ | ----------------- |
-| `.max-width-small` | Narrow constraint |
-| `.max-width-medium` | Default readable |
-| `.max-width-large` | Wide constraint |
+| `.max-width-s` | Narrow constraint |
+| `.max-width-m` | Default readable |
+| `.max-width-l` | Wide constraint |
 | `.max-width-full` | No constraint |
 
 **Rule of thumb**

@@ -213,33 +213,33 @@ Containers centre content and cap its maximum width. Use them inside sections to
 
 <div class="demo-preview is-joined">
   <div style="background: var(--background-faded); padding: var(--space-l) 0;">
-    <div class="container-small" style="background: var(--background-primary); padding: var(--space-l); border: var(--border-s) solid var(--border-faded);">
-      <p style="text-align: center;"><code>.container-small</code> — 640px</p>
+    <div class="container-s" style="background: var(--background-primary); padding: var(--space-l); border: var(--border-s) solid var(--border-faded);">
+      <p style="text-align: center;"><code>.container-s</code> — 640px</p>
     </div>
   </div>
   <div style="background: var(--background-faded); padding: var(--space-l) 0;">
-    <div class="container-medium" style="background: var(--background-primary); padding: var(--space-l); border: var(--border-s) solid var(--border-faded);">
-      <p style="text-align: center;"><code>.container-medium</code> — 1040px</p>
+    <div class="container-m" style="background: var(--background-primary); padding: var(--space-l); border: var(--border-s) solid var(--border-faded);">
+      <p style="text-align: center;"><code>.container-m</code> — 1040px</p>
     </div>
   </div>
   <div style="background: var(--background-faded); padding: var(--space-l) 0;">
-    <div class="container-large" style="background: var(--background-primary); padding: var(--space-l); border: var(--border-s) solid var(--border-faded);">
-      <p style="text-align: center;"><code>.container-large</code> — 1200px</p>
+    <div class="container-l" style="background: var(--background-primary); padding: var(--space-l); border: var(--border-s) solid var(--border-faded);">
+      <p style="text-align: center;"><code>.container-l</code> — 1200px</p>
     </div>
   </div>
 </div>
 
 ```html
-<div class="container-small">Narrow content</div>
-<div class="container-medium">Standard content</div>
-<div class="container-large">Wide content</div>
+<div class="container-s">Narrow content</div>
+<div class="container-m">Standard content</div>
+<div class="container-l">Wide content</div>
 ```
 
 | Class | Max Width | Use Case |
 |-------|-----------|----------|
-| `.container-small` | 640px | Long-form text, forms, narrow content |
-| `.container-medium` | 1040px | Standard page content |
-| `.container-large` | 1200px | Dashboards, wide layouts |
+| `.container-s` | 640px | Long-form text, forms, narrow content |
+| `.container-m` | 1040px | Standard page content |
+| `.container-l` | 1200px | Dashboards, wide layouts |
 
 ### Rules
 
@@ -255,13 +255,13 @@ Max-width utilities cap width **without centring**. Use them on individual eleme
 
 | Class | Max Width |
 |-------|-----------|
-| `.max-width-small` | 640px |
-| `.max-width-medium` | 960px |
-| `.max-width-large` | 1200px |
+| `.max-width-s` | 640px |
+| `.max-width-m` | 960px |
+| `.max-width-l` | 1200px |
 | `.max-width-full` | 100% |
 
 ```html
-<p class="max-width-small">This paragraph won't exceed 640px.</p>
+<p class="max-width-s">This paragraph won't exceed 640px.</p>
 ```
 
 ### Containers vs Max-Width
@@ -278,7 +278,7 @@ Max-width utilities cap width **without centring**. Use them on individual eleme
 ```html
 <section>
   <div class="padding-global">
-    <div class="container-medium">
+    <div class="container-m">
       <!-- Content here -->
     </div>
   </div>

@@ -1117,7 +1117,7 @@ function generatePage(file, template, pageOrder, sidebarOrderMap = {}) {
     const pageFlipId = flipIdFromHref(file.htmlName);
     const pageFlipAttr = pageFlipId ? ` data-flip-id="${pageFlipId}"` : '';
     pageHeader = `<div class="page-header">
-      <div class="container-small">
+      <div class="container-s">
         <h1${pageFlipAttr}>${frontmatter.title}</h1>
         ${frontmatter.subtitle ? `<p class="page-subtitle" data-text-wrap="pretty">${frontmatter.subtitle}</p>` : ''}
         ${actionLinkHtml}
@@ -1738,7 +1738,7 @@ function generateClientDocs(template) {
         const clientPageFlipId = flipIdFromHref(htmlName);
         const clientPageFlipAttr = clientPageFlipId ? ` data-flip-id="${clientPageFlipId}"` : '';
         pageHeader = `<div class="page-header">
-          <div class="container-small">
+          <div class="container-s">
             <h1${clientPageFlipAttr}>${title}</h1>
             ${frontmatter.subtitle ? `<p class="page-subtitle" data-text-wrap="pretty">${frontmatter.subtitle}</p>` : ''}
             ${clientActionHtml}
@@ -2212,7 +2212,7 @@ function generateBrandBook(template) {
 
     // Build the full-width page header (slots into PAGE_HEADER, outside the content grid)
     const brandBookPageHeader = `<div class="page-header">
-      <div class="container-small">
+      <div class="container-s">
         <p class="eyebrow">${clientLabel}</p>
         <h1 data-flip-id="brand-book">${pageTitle}</h1>
         <p class="page-subtitle" data-text-wrap="pretty">${pageSubtitle}</p>
