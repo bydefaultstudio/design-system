@@ -19,12 +19,12 @@ Restructured the studio sidebar navigation across all pages (29 files changed).
 
 ### 3. Sidebar pinned zones
 
-Moved `.sidebar-logo-mini` and `.nav-wrapper` outside `.sidebar-inner` in the DOM so they stay fixed while the work cards scroll. Structure is now:
+Moved `.sidebar-logo-mini` and `.sidebar-header` outside `.sidebar-inner` in the DOM so they stay fixed while the work cards scroll. Structure is now:
 
 ```
 aside.sidebar
   ├ a.sidebar-logo-mini (flex-shrink: 0 — pinned)
-  ├ div.nav-wrapper (flex-shrink: 0 — pinned)
+  ├ div.sidebar-header (flex-shrink: 0 — pinned)
   ├ div.sidebar-inner (flex: 1, overflow-y: auto — scrolls)
   │   ├ a.intro-block (wordmark + subtitle)
   │   ├ a.sidebar-cta (CTA block)

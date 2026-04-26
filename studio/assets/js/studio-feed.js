@@ -78,9 +78,8 @@ function initFeedFilters() {
 
     // Already active — just scroll to feed top
     if (btn.classList.contains("is-active")) {
-      var styles = getComputedStyle(document.documentElement);
-      var scrollOffset = parseInt(styles.getPropertyValue("--scroll-offset"), 10) || 0;
-      var feedTop = feed.getBoundingClientRect().top + window.scrollY - getMobileBarHeight() - scrollOffset;
+      var stickyOffset = readCssVarPx("--studio-bar-height") + readCssVarPx("--studio-gap");
+      var feedTop = feed.getBoundingClientRect().top + window.scrollY - stickyOffset;
       window.scrollTo({ top: Math.max(0, feedTop), behavior: "smooth" });
       return;
     }
@@ -155,9 +154,8 @@ function initFeedFilters() {
       }
 
       // Scroll after DOM has updated
-      var styles = getComputedStyle(document.documentElement);
-      var scrollOffset = parseInt(styles.getPropertyValue("--scroll-offset"), 10) || 0;
-      var feedTop = feed.getBoundingClientRect().top + window.scrollY - getMobileBarHeight() - scrollOffset;
+      var stickyOffset = readCssVarPx("--studio-bar-height") + readCssVarPx("--studio-gap");
+      var feedTop = feed.getBoundingClientRect().top + window.scrollY - stickyOffset;
       window.scrollTo({ top: Math.max(0, feedTop), behavior: "smooth" });
     }, hideDuration);
   });

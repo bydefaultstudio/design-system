@@ -75,6 +75,24 @@ Below 768px the grid collapses to a single column. The sidebar becomes a fixed-p
 - **Body scroll** is locked while it's open
 - After a Barba navigation finishes, the drawer auto-closes
 
+### 12-column grid (opt-in)
+
+Add `data-grid` to a `.section-content` to make it a 12-column CSS grid. Children declare their column span via `data-col-span="1..12"` and an optional start position via `data-col-start="1..12"`.
+
+```html
+<div class="section-content" data-grid>
+  <div class="block" data-col-span="6">…</div>
+  <div class="block" data-col-span="4" data-col-start="9">…</div>
+  <div class="block">…</div> <!-- no attributes → full 12 cols, fresh row -->
+</div>
+```
+
+- **Column gap**: `--studio-gap` (12px). **Row gap**: `--space-xl` (24px).
+- A child without `data-col-span` defaults to full width (span 12).
+- Auto-flow: a child with `data-col-span="4"` and no start drops at the next available slot. Two consecutive `data-col-span="4"` blocks land at columns 1–4 and 5–8, leaving 9–12 empty.
+- Two children with the same `data-col-start` don't collide — grid auto-flow places them on consecutive rows in the same column track.
+- Below 768px the grid collapses to a single column; spans and starts are ignored. Per-breakpoint span overrides aren't supported yet — add when a real use case appears.
+
 ## Page transitions (Barba)
 
 Studio uses **Barba 2.x** (loaded from CDN, no parent dependency) with a single hierarchy-aware transition based on a **three-level page model**.

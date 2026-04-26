@@ -2,11 +2,11 @@
  * Script Purpose: Shared utility functions for the Studio site
  * Author: By Default
  * Created: 2026-04-23
- * Version: 0.1.0
- * Last Updated: 2026-04-23
+ * Version: 0.2.0
+ * Last Updated: 2026-04-26
  */
 
-console.log("Studio Utils v0.1.0");
+console.log("Studio Utils v0.2.0");
 
 //
 //------- Utility Functions -------//
@@ -23,6 +23,20 @@ function getCurrentPagePath() {
 function getMobileBarHeight() {
   var bar = document.querySelector(".mobile-bar");
   return bar ? bar.offsetHeight : 0;
+}
+
+// Read a CSS custom property and return its computed pixel value.
+// Handles rem, em, and px units. Returns 0 if the variable is unset.
+function readCssVarPx(varName) {
+  var rootStyles = getComputedStyle(document.documentElement);
+  var raw = rootStyles.getPropertyValue(varName).trim();
+  if (!raw) return 0;
+  var num = parseFloat(raw);
+  if (isNaN(num)) return 0;
+  if (raw.endsWith("rem") || raw.endsWith("em")) {
+    return num * parseFloat(rootStyles.fontSize);
+  }
+  return num;
 }
 
 // Compute how many directory levels deep the current page is from the site root.
@@ -90,6 +104,7 @@ function loadStudioContent() {
 
 window.getCurrentPagePath = getCurrentPagePath;
 window.getMobileBarHeight = getMobileBarHeight;
+window.readCssVarPx = readCssVarPx;
 window.getStudioPrefix = getStudioPrefix;
 window.attrEscape = attrEscape;
 window.formatStudioDate = formatStudioDate;

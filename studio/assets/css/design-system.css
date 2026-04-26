@@ -148,10 +148,14 @@
      tracking (letter-spacing). -- */
 
   /* Headline — the biggest thing on a page; one per page (h1). */
-  --headline-size:     clamp(var(--font-6xl), 1rem + 5vw, var(--font-9xl));
-  --headline-weight:   500;
+  --headline-size:      5vw;
+  --headline-weight:   300;
   --headline-leading:  var(--line-height-s);
   --headline-tracking: -0.03em;
+
+  /* Subline */
+  --subline-size: var(--font-4xl);
+
 
   /* Title — section heads and recurring labels within a page (h2). */
   --title-size:     clamp(var(--font-2xl), 0.8rem + 2vw, var(--font-7xl));
@@ -1965,7 +1969,6 @@ input[type="radio"]:disabled:checked {
 /* -- Segmented control (single-select button group) -- */
 .segmented-control {
   display: inline-flex;
-  background-color: var(--background-faded);
   padding: 3px;
   gap: 2px;
 }
@@ -1973,7 +1976,7 @@ input[type="radio"]:disabled:checked {
 .segmented-control-btn {
   padding: var(--space-s) var(--space-l);
   font-size: var(--font-s);
-  font-weight: var(--font-weight-semi-bold);
+  font-weight: var(--font-weight-regular);
   border-radius: 0;
   border: none;
   background: transparent;
@@ -2437,7 +2440,7 @@ details .disclosure-content {
 }
 
 .accordion-item.is-open > .accordion-header .svg-icn {
-  transform: rotate(45deg);
+  transform: rotate(180deg);
 }
 
 .accordion-content {
