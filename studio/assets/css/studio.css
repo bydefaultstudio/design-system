@@ -1029,6 +1029,51 @@ body.is-sidebar-collapsed .page-header {
 }
 
 
+/* ------ HOME SERVICES (lettered specialties list) ------ */
+/* Letters A/B/C/D are rendered via CSS counter on ::before, so adding or
+   reordering items keeps the markers in sync without manual edits. */
+
+.services-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: services-counter;
+}
+
+.services-list-item {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  align-items: baseline;
+  column-gap: var(--space-2xl);
+  padding-block: var(--space-l);
+  counter-increment: services-counter;
+  font-family: var(--font-primary);
+  font-size: var(--headline-size);
+  font-weight: var(--font-weight-light);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.services-list-item::before {
+  content: counter(services-counter, upper-alpha);
+  align-self: start;
+  padding-top: 0.6em;
+  font-family: var(--font-primary);
+  font-size: var(--font-2xs);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: 0.05em;
+  color: var(--text-faded);
+}
+
+@media (max-width: 768px) {
+  .services-list-item {
+    grid-template-columns: 1.5rem 1fr;
+    column-gap: var(--space-m);
+    padding-block: var(--space-m);
+  }
+}
+
+
 /* ------ CONTENT FEED (masonry grid) ------ */
 /*
  * CSS column-based masonry. Cards flow top-to-bottom, left-to-right, filling
@@ -3301,6 +3346,146 @@ body.is-animating .case-study-content {
 @media (max-width: 768px) {
   .logo-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ------- Testimonials ------- */
+
+.home-testimonials {
+  overflow: hidden;
+}
+
+.testimonial-slider {
+  /* Words shouldn't clip when active; neighboring slides bleed in from edges. */
+  overflow: visible;
+}
+
+/* Splide's vendor CSS sets overflow: hidden on the track and list, which
+   clips anything positioned above the card edge (e.g. a half-overlapping
+   avatar). Override here so the mark rebuild is free to overflow. */
+.testimonial-slider .splide__track,
+.testimonial-slider .splide__list {
+  overflow: visible;
+}
+
+.testimonial-slide {
+  display: flex;
+  align-items: stretch;
+}
+
+.testimonial-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+  width: 36rem;
+  max-width: 80vw;
+  padding: var(--space-2xl);
+  padding-top: var(--space-3xl);
+  background-color: var(--background-faded);
+  /* No border-radius — sharp corners per studio convention. The circular
+     mark below is the only rounded element in this section. */
+}
+
+/* .testimonial-mark — intentionally left unstyled. Rebuild from scratch. */
+
+/* Quote text — large serif display, line-fade animation runs on the
+   per-word <span>s injected by GSAP SplitText. Words start at 0.2
+   opacity (set in studio-testimonials.js) and tween to 1 when active.
+   .js opacity-0 baseline prevents FOUC: the raw text would otherwise
+   render at full opacity for the few frames between DOMContentLoaded
+   and SplitText running. studio-testimonials.js sets the parent back
+   to opacity 1 in initTestimonialSplit() after splitting. */
+.testimonial-quote {
+  font-family: var(--font-secondary);
+  font-size: var(--font-3xl);
+  line-height: 1.3;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.testimonial-mark {
+    color: var(--white);
+    background: var(--black);
+    border-radius: 50%;
+    overflow: hidden;
+    padding: 5px;
+    height: 65px;
+    width: 65px;
+}
+
+.js .testimonial-quote {
+  opacity: 0;
+}
+
+.testimonial-attribution {
+  color: var(--text-faded);
+}
+
+/* Centered cluster: progress + pause + arrows. Below the slider track. */
+.testimonial-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-l);
+  margin-top: var(--space-2xl);
+}
+
+.testimonial-progress {
+  width: 8rem;
+  height: 1px;
+  background-color: var(--divider-color);
+  overflow: hidden;
+}
+
+.testimonial-progress .splide__progress__bar {
+  background-color: var(--text-primary);
+  height: 100%;
+  width: 0%;
+}
+
+.testimonial-controls .splide__arrows {
+  display: flex;
+  gap: var(--space-s);
+}
+
+/* Override Splide's default absolute arrow positioning — we render them
+   inside the centered controls cluster, not at the track edges. */
+.testimonial-controls .splide__arrow--prev,
+.testimonial-controls .splide__arrow--next,
+.testimonial-controls .testimonial-pause {
+  position: static;
+  transform: none;
+  opacity: 1;
+}
+
+/* Pause/play icon swap — only one icon visible at a time, driven by
+   the `.is-paused` class on the button. */
+.testimonial-pause .testimonial-pause-icon-play {
+  display: none;
+}
+
+.testimonial-pause.is-paused .testimonial-pause-icon-pause {
+  display: none;
+}
+
+.testimonial-pause.is-paused .testimonial-pause-icon-play {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  .testimonial-card {
+    width: 24rem;
+    padding: var(--space-xl);
+    padding-top: var(--space-2xl);
+  }
+
+  .testimonial-quote {
+    font-size: var(--font-3xl);
+  }
+
+  .testimonial-progress {
+    width: 5rem;
   }
 }
 

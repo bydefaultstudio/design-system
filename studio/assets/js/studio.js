@@ -261,6 +261,7 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
   initServices();
   logoSlider();
   if (typeof populateLogoGrid === "function") populateLogoGrid();
+  if (typeof mountTestimonialSliders === "function") mountTestimonialSliders();
 
   // Re-init after Barba navigations
   // logoSlider is intentionally NOT here — it runs in the after hook's

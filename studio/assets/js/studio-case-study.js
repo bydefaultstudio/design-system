@@ -237,24 +237,8 @@ function initCaseStudyFixedToggle() {
 
 // ------ Related Work Slider ------ //
 
-var SPLIDE_JS = "https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js";
-var SPLIDE_CSS = "https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css";
-
-function ensureSplide(callback) {
-  if (typeof Splide !== "undefined") return callback();
-  // Inject CSS if not already present
-  if (!document.querySelector('link[href*="splide"]')) {
-    var link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = SPLIDE_CSS;
-    document.head.appendChild(link);
-  }
-  // Inject JS
-  var script = document.createElement("script");
-  script.src = SPLIDE_JS;
-  script.onload = callback;
-  document.head.appendChild(script);
-}
+// Splide loader hoisted to studio-utils.js (window.ensureSplide) — shared
+// with studio-testimonials.js and any future slider consumers.
 
 function initCaseStudySlider() {
   var list = document.querySelector("[data-case-study-slides]");
@@ -288,7 +272,7 @@ function initCaseStudySlider() {
       '</div>';
     }).join("");
 
-    ensureSplide(function () {
+    window.ensureSplide(function () {
       var styles = getComputedStyle(document.documentElement);
       var gap = styles.getPropertyValue("--studio-gap").trim() || "1rem";
 

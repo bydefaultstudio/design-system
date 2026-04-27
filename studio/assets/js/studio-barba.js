@@ -628,6 +628,9 @@ function initStudioBarba() {
       if (typeof window.logoSlider === "function") {
         window.logoSlider();
       }
+      if (typeof window.mountTestimonialSliders === "function") {
+        window.mountTestimonialSliders();
+      }
       // GSAP scroll animations
       if (typeof window.bdAnimationsInit === "function") {
         window.bdAnimationsInit(data.next.container);

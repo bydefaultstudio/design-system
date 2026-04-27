@@ -59,6 +59,15 @@ var LOGOS = [
     viewBox: "0 0 1037 150",
     svg: '<path d="M17.1363 5.38668H0V147.161H17.1363V5.38668Z" fill="currentColor"/><path d="M58.5506 71.6885C72.7634 67.0633 82.1988 54.2398 82.1988 39.2913C82.1988 29.1664 77.6208 20.5068 68.9582 14.2467C61.0508 8.53319 50.447 5.38668 39.0992 5.38668H31.9615V10.4682H35.8304C50.3565 10.4682 65.0615 20.7894 65.0615 40.5173C65.0615 57.1377 52.7601 70.1574 37.0563 70.1574H36.6607V75.0333H37.0563C57.448 75.0333 72.826 89.094 72.826 107.739C72.826 129.241 59.683 142.079 37.6688 142.079H31.9615V147.16H41.551C71.5385 147.16 90.1668 132.133 90.1668 107.944C90.1668 89.6684 77.8171 75.5882 58.5506 71.6885Z" fill="currentColor"/><path d="M108.975 147.161H125.09V0L108.975 2.79405V147.161Z" fill="currentColor"/><path d="M225.56 142.08C220.179 142.08 216.965 137.797 216.965 130.623V75.6612C216.965 54.3025 204.749 41.552 184.287 41.552C172.457 41.552 159.661 46.8062 154.59 51.6749L154.469 51.7911V58.9288L155.116 58.3934C159.344 54.8944 168.227 49.0648 180.188 49.2899C193.382 49.703 201.259 59.7139 201.259 76.0702V129.399C201.259 141.955 207.613 148.591 219.634 148.591C225.867 148.591 229.811 146.514 230.871 145.877L231.063 145.762V140.883L230.53 141.083C228.939 141.678 226.941 142.079 225.56 142.079V142.08Z" fill="currentColor"/><path d="M144.76 125.312C144.76 138.801 154.981 148.591 169.061 148.591C176.465 148.591 181.851 147.027 188.273 143.013L188.459 142.897V136.877L187.863 137.23C183.349 139.898 180.104 140.444 176.621 140.444C166.787 140.444 159.649 132.704 159.649 122.042C159.649 108.142 170.895 101.069 177.598 98.0886L188.459 93.2856V87.7571L175.465 92.6577C150.087 101.864 144.76 115.496 144.76 125.312Z" fill="currentColor"/><path d="M321.609 58.3543L322.297 59.1107V48.2448L322.083 48.1338C316.268 45.1199 310.145 42.3628 299.243 41.7565L298.826 41.7329V46.7938L299.177 46.8349C311.576 48.2654 319.481 56.0135 321.609 58.3543Z" fill="currentColor"/><path d="M294.868 141.059C284.284 140.858 274.393 135.92 267.018 127.152C259.402 118.099 255.209 105.69 255.209 92.2107C255.209 73.2689 264.403 51.8907 284.943 46.8267L285.244 46.7527V41.7226L284.817 41.7586C272.225 42.7903 260.686 48.3866 252.325 57.5168C243.402 67.2616 238.685 80.1775 238.685 94.8691C238.685 110.288 244.224 124.23 254.281 134.124C264.03 143.717 277.353 149.001 291.796 149.001C307.301 149.001 318.239 144.628 323.306 140.536L323.453 140.417V131.17L322.793 131.761C316.097 137.765 305.65 141.245 294.868 141.059Z" fill="currentColor"/><path d="M340.539 147.161H356.653V1.02246L340.539 3.81445V147.161Z" fill="currentColor"/><path d="M425.133 42.9825H416.865L369.93 90.1247L409.759 146.993L409.877 147.161H429.851L384.648 83.6724L425.133 42.9825Z" fill="currentColor"/><path d="M540.39 23.6143C526.542 11.8595 507.285 5.38668 486.167 5.38668H475.964V10.4682H484.124C520.343 10.4682 545.639 37.528 545.639 76.2736C545.639 95.5114 539.899 111.926 529.041 123.743C518.014 135.739 502.482 142.08 484.124 142.08H475.965V147.161H486.168C507.783 147.161 527.204 140.696 540.853 128.957C555.597 116.277 563.39 97.9889 563.39 76.0702C563.39 54.5245 555.438 36.3863 540.391 23.6153L540.39 23.6143Z" fill="currentColor"/><path d="M461.361 5.38668H444.224V147.161H461.361V5.38668Z" fill="currentColor"/><path d="M591.003 57.0513C581.659 66.9225 576.719 80.0696 576.719 95.0726C576.719 110.076 581.658 123.223 591.002 133.093C599.567 142.142 611.168 147.646 623.67 148.591L624.096 148.623V143.591L623.788 143.521C605.481 139.343 593.652 120.326 593.652 95.0736C593.652 70.0567 605.761 50.5867 623.785 46.6263L624.096 46.5585V41.5233L623.67 41.5551C611.17 42.5005 599.569 48.0044 591.003 57.0534V57.0513Z" fill="currentColor"/><path d="M637.897 41.5531L637.472 41.5202V46.5554L637.781 46.6243C655.806 50.6288 667.917 70.0988 667.917 95.0715C667.917 120.324 656.087 139.341 637.779 143.519L637.472 143.589V148.622L637.897 148.589C661.229 146.809 684.848 127.854 684.848 95.0705C684.848 62.287 661.229 43.3319 637.897 41.551V41.5531Z" fill="currentColor"/><path d="M780.346 58.3543L781.034 59.1107V48.2458L780.821 48.1349C775.007 45.1209 768.886 42.3628 757.981 41.7576L757.563 41.7339V46.7938L757.913 46.8349C770.311 48.2654 778.217 56.0135 780.345 58.3543H780.346Z" fill="currentColor"/><path d="M753.605 141.497C743.021 141.297 733.13 136.358 725.755 127.591C718.14 118.538 713.946 106.128 713.946 92.6504C713.946 73.7086 723.141 52.3304 743.682 47.2654L743.982 47.1914V42.1623L743.554 42.1983C730.962 43.23 719.423 48.8263 711.062 57.9565C702.14 67.7013 697.423 80.6172 697.423 95.3078C697.423 110.727 702.962 124.668 713.019 134.564C722.768 144.157 736.091 149.44 750.534 149.44C766.037 149.44 776.976 145.067 782.044 140.975L782.191 140.857V131.609L781.531 132.2C774.833 138.204 764.397 141.689 753.605 141.497Z" fill="currentColor"/><path d="M837.881 141.262C830.424 141.262 825.607 136.606 825.607 129.399V48.4729H846.244V42.9825H825.607V23.7067L809.697 26.287V42.9825H796.825V48.4729H809.697V128.173C809.697 141.603 817.747 149 832.362 149C838.57 149 844.535 147.446 848.32 144.843L848.492 144.725V138.32L847.901 138.657C845.174 140.215 841.146 141.262 837.881 141.262Z" fill="currentColor"/><path d="M915.82 41.5531L915.395 41.5202V46.5554L915.704 46.6243C933.729 50.6299 945.839 70.0988 945.839 95.0715C945.839 120.324 934.01 139.341 915.702 143.52L915.395 143.59V148.622L915.82 148.589C939.152 146.809 962.771 127.856 962.771 95.0705C962.771 62.2849 939.152 43.3319 915.82 41.551V41.5531Z" fill="currentColor"/><path d="M868.924 57.0513C859.58 66.9225 854.64 80.0696 854.64 95.0726C854.64 110.076 859.579 123.222 868.924 133.093C877.489 142.142 889.09 147.646 901.591 148.591L902.016 148.623V143.592L901.709 143.522C883.401 139.343 871.573 120.326 871.573 95.0736C871.573 70.0567 883.682 50.5867 901.706 46.6263L902.016 46.5585V41.5233L901.591 41.5551C889.091 42.5015 877.49 48.0054 868.924 57.0534V57.0513Z" fill="currentColor"/><path d="M978.418 147.161H994.532V41.4781L978.418 44.2711V147.161Z" fill="currentColor"/><path d="M1036.26 42.6033C1033.9 41.662 1031.32 41.5531 1029.57 41.5531C1022.09 41.5531 1015.95 44.8095 1009.65 52.1168L1005.68 56.926V60.9233L1009.59 57.9895C1015.02 53.6479 1020.75 51.5372 1027.12 51.5372C1029.9 51.5372 1032.64 52.0356 1035.99 53.1526L1036.51 53.3253V42.7019L1036.26 42.6033Z" fill="currentColor"/>',
   },
+  // TODO: replace with real Country & Townhouse wordmark — using
+  // temporary text glyph until the brand SVG is supplied. Same workflow
+  // as BlackDoctor (paste real SVG here, replace svg + viewBox).
+  // No font-family on the <text> — inherits from .testimonial-mark.
+  {
+    name: "country-and-townhouse",
+    viewBox: "0 0 100 100",
+    svg: '<text x="50" y="62" text-anchor="middle" font-weight="700" font-size="34" fill="currentColor">C&amp;T</text>',
+  },
 ];
 
 // Area-based optical sizing — equalises visual weight across all aspect ratios.
@@ -98,38 +107,47 @@ function buildLogoSlides(container) {
   });
 }
 
-// Static logo grid — equal-area scaling (mirrors the ticker's
-// buildLogoSlides math). Each logo's width/height are computed so its
-// rendered area is approximately TARGET_AREA_GRID rem², adjusted by the
-// per-logo `scale` from the LOGOS array. Wide logos get a shorter height,
-// compact logos a taller one — visual presence stays consistent across
-// the grid. Tune TARGET_AREA_GRID to scale all cells up or down together.
+// Equal-area optical sizing helper — shared by populateLogoGrid (clients
+// section) and any future consumer (e.g. testimonial brand marks). Given
+// a logo name and a target rendered area in rem², returns the inline
+// SVG markup plus the computed width/height in rem so the caller can set
+// CSS variables on the wrapper. Width/height preserve viewBox aspect
+// ratio and apply the per-logo `scale` for ink-density correction.
+function resolveLogoSvg(name, areaRem) {
+  var entry = LOGOS.find(function matchByName(l) { return l.name === name; });
+  if (!entry) {
+    console.warn('[studio-logos] no logo for name="' + name + '"');
+    return null;
+  }
+  var parts = entry.viewBox.split(" ");
+  var vbW = parseFloat(parts[2]);
+  var vbH = parseFloat(parts[3]);
+  var ratio = vbW / vbH;
+  var s = entry.scale || 1;
+  var h = Math.sqrt(areaRem / ratio) * s;
+  var w = h * ratio;
+  return {
+    svg: '<svg aria-label="' + name + '" fill="none" viewBox="' + entry.viewBox + '">' + entry.svg + "</svg>",
+    w: w,
+    h: h,
+  };
+}
+
+// Static logo grid — equal-area scaling. Tune TARGET_AREA_GRID to scale
+// every cell up or down together.
 var TARGET_AREA_GRID = 20; // rem²
 
 function populateLogoGrid() {
   var cells = document.querySelectorAll(".logo-mark[data-logo]");
   cells.forEach(function injectLogo(cell) {
     if (cell.firstElementChild) return;
-    var name = cell.getAttribute("data-logo");
-    var entry = LOGOS.find(function matchByName(l) { return l.name === name; });
-    if (!entry) {
-      console.warn('[studio-logos] no logo for data-logo="' + name + '"');
-      return;
-    }
-    var parts = entry.viewBox.split(" ");
-    var vbW = parseFloat(parts[2]);
-    var vbH = parseFloat(parts[3]);
-    var ratio = vbW / vbH;
-    var s = entry.scale || 1;
-    var h = Math.sqrt(TARGET_AREA_GRID / ratio) * s;
-    var w = h * ratio;
-    cell.style.setProperty("--logo-w", w + "rem");
-    cell.style.setProperty("--logo-h", h + "rem");
-    cell.innerHTML =
-      '<svg aria-label="' + name + '" fill="none" viewBox="' + entry.viewBox + '">' +
-      entry.svg +
-      "</svg>";
+    var info = resolveLogoSvg(cell.getAttribute("data-logo"), TARGET_AREA_GRID);
+    if (!info) return;
+    cell.style.setProperty("--logo-w", info.w + "rem");
+    cell.style.setProperty("--logo-h", info.h + "rem");
+    cell.innerHTML = info.svg;
   });
 }
 
+window.resolveLogoSvg = resolveLogoSvg;
 window.populateLogoGrid = populateLogoGrid;
