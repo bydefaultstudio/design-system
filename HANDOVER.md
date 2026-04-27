@@ -1,121 +1,78 @@
-# Session Handover — `.page-header` component + sticky-jump fix pending
+# Session Handover — Studio transition jumps fixed (page-header refactor + supporting cleanups)
 
-## Next up — implement the sticky-jump fix (plan ready, NOT applied)
+## What landed this round (2026-04-27)
 
-User reported a visual "jump" of `.page-header` during article (and case-study) transitions. **Diagnosis confirmed:** Barba's `push-up` and `conveyor-up` transitions in [studio/assets/js/studio-barba.js:282-326](studio/assets/js/studio-barba.js#L282) apply `transform: translateY(...)` to the Barba container. Per CSS spec, an ancestor with `transform` creates a containing block for `position: sticky` AND `position: fixed` descendants — so `.page-header[data-sticky]` detaches from the viewport mid-transition, rides along with the transformed container, then snaps back. That snap is the jump.
+The persistent `.page-header` was reflowing the document on every show/hide because `position: sticky` takes flow space — `[hidden]` toggles caused visible 3.5 rem jumps (down on open, up after close). Fixed by switching the header to `position: fixed` (out of flow) and reserving its visual space via `padding-top` on the entering page-wrapper, keyed to the container's own `data-level` (NOT body-level state, which updates too late). Three supporting fixes shipped alongside.
 
-**Switching `sticky` → `fixed` does not help** (same containing-block constraint). Real fix is to fade during transitions — same pattern that the old `.close-btn-wrap` used (`body.is-animating { opacity: 0 }`) before the close button got folded into `.page-header`.
+### Architectural refactor — `.page-header` out of flow
 
-**Plan file:** `/Users/erlenmasson/.claude/plans/i-think-i-want-cosmic-trinket.md`
+[studio/assets/css/studio.css](studio/assets/css/studio.css):
+- `.page-header` → `position: fixed; top: 0; left: var(--sidebar-width); right: 0; z-index: 100`. Old `[data-sticky]` rule (and its mobile override) removed.
+- `body.is-sidebar-collapsed .page-header { left: var(--sidebar-collapsed-width) }` follows sidebar collapse, with a `transition: left var(--duration-s)` for smooth tracking.
+- Mobile media query: `.page-header { left: 0; top: var(--mobile-bar-height) }` plus `body.is-sidebar-collapsed .page-header { left: 0 }`.
+- Wrapper space reservation: `[data-barba="container"][data-level="1"] > .page-wrapper, [data-barba="container"][data-level="2"] > .page-wrapper { padding-top: var(--studio-bar-height) }` — same value on desktop and mobile.
+- Defensive `.page-header[hidden] { display: none }` retained.
+- The `data-sticky` HTML attribute remains across 20 files as a harmless no-op.
 
-**Three CSS additions to [studio/assets/css/studio.css](studio/assets/css/studio.css):**
-1. Add `transition: opacity var(--duration-xs) var(--ease-out)` to `.page-header[data-sticky]` (~line 820)
-2. Same on `.section-header` (~line 776) — has the same latent issue
-3. New rule near the existing is-animating block (~line 2050):
-   ```css
-   body.is-animating .page-header[data-sticky],
-   body.is-animating .section-header {
-     opacity: 0;
-     pointer-events: none;
-   }
-   ```
+### Supporting fixes
 
-No JS, no markup, no Barba changes.
+**Sticky-element fade rules** ([studio.css:798-810](studio/assets/css/studio.css#L798)) — extended the existing `.section-header` is-animating fade to also cover `.toc-block`, `.share-block`, `.case-study-content-inner`. Same root cause (transformed-ancestor breaks sticky); same patch.
 
----
+**Scroll-snap timing** ([studio-barba.js:429-432](studio/assets/js/studio-barba.js#L429)) — apply leaving container's compensating transform BEFORE `window.scrollTo(0, 0)` instead of waiting for the GSAP timeline to resolve. Closes the 300–600 ms window where the user could see the un-compensated home page snapped to scrollY=0.
 
-## What was done this session
+**Next-read morph alignment** ([studio-barba.js:411-414](studio/assets/js/studio-barba.js#L411)) — `nextReadTop` now subtracts both `mobileBar.offsetHeight` AND `pageHeader.offsetHeight`. The next-read card lands flush below the page-header where the entering article's `.article-lead` actually sits, instead of at viewport top behind the header.
 
-### 1. `--studio-bar-height` token + `nav-wrapper` → `sidebar-header` rename
+**Cleanup** ([studio-barba.js:514-519](studio/assets/js/studio-barba.js#L514)) — dropped redundant `pageHeader.style.transform = ""` from the close `.then()`. The `after` hook clears it on every transition; one place is enough.
 
-- New token `--studio-bar-height: 4rem` in [studio/assets/css/studio.css](studio/assets/css/studio.css) `:root`.
-- Applied as `min-height` to three bars: top of sidebar, bottom of sidebar (`.sidebar-footer`), and main content header (`.section-header`).
-- Renamed `.nav-wrapper` → `.sidebar-header` for symmetry with `.sidebar-footer`. Touched 4 CSS occurrences + 20 HTML files.
+## Verification
 
-### 2. New `.page-header` component (top-of-page bar with close button)
+`npm run serve:studio` → http://localhost:2000/. Walk through:
 
-Replaces both the misuse of `.section-header` at page-top AND the floating `.close-btn-wrap` overlay.
+1. Home (any scroll position) → article — no jump down at start; header slides in from above; both meet at T=1200.
+2. Article → home — header slides up off the top; home settles cleanly with no upward jump at T=1200.
+3. Article 1 → article 2 (next-read card) — card lands flush below page-header; morph aligns.
+4. Article 1 → article 2 (sidebar nav) — header doesn't move; eyebrow stays "Article".
+5. Open article with TOC + share rails sticky-pinned, navigate away — TOC + share fade smoothly, no glitch.
+6. Open case study with sticky info panel, navigate away — info panel fades smoothly.
+7. Sidebar collapse with header visible — header repositions smoothly (transition on `left`).
+8. Mobile — header sits below mobile bar; article content correctly padded; sticky elements fade.
+9. Reduced motion — header appears/disappears instantly via the existing `animate()` short-circuit.
 
-**Markup pattern** (lives inside `.page-wrapper`, before any `<section>`):
-```html
-<div class="page-header" data-sticky>
-  <div class="page-header-inner">
-    <div class="page-header-start">
-      <p class="eyebrow-header">{Title}</p>
-    </div>
-    <div class="page-header-end">
-      <span class="close-btn-label">ESC</span>
-      <a id="studio-close-btn" class="button close-btn"
-         data-variant="transparent" data-icon-only data-size="small"
-         aria-label="Close" href="index.html">{X icon}</a>
-    </div>
-  </div>
-</div>
-```
+## Pre-flight commit
 
-**Default behaviour:** not sticky. `data-sticky` (attribute presence) opts in to `position: sticky; top: 0; z-index: 100`.
+Checkpoint `17d9c57` ("persist studio page-header outside barba container, animate in sync with transitions") captures all prior work in this stream — persistent header migration, animation coordination, generator updates, all 17 page HTML changes, accordion spacing tokens, styleguide additions. Created before this round so we have a clean rollback target.
 
-**Pages with `.page-header`:**
-- L1 hand-authored (5): services, about, contact, 404, styleguide (sticky)
-- L2 generated (12): 9 work pages, 3 articles — all sticky
-- Templates (3): page-template, case-study-inner, article-inner
+## Tech debt deferred (raised by outsider review, not in this round)
 
-**L0 (index.html)** does not use `.page-header` — home is headerless.
+These came up during the four-agent pressure-test of the plan but were out of scope:
 
-### 3. `.page-header-inner` split (separate full-bleed surface from inset content)
+- **CSS-grid shell** — `<main>` could use `grid-template-rows: auto 1fr` with `.page-header` in row 1 instead of fixed + padding. Cleaner conceptually but introduces conditional row-sizing timing issues. Consider for a future layout refactor.
+- **Rect-based morph targeting** — read the entering `.article-lead.getBoundingClientRect()` directly instead of subtracting offsets. Robust to any future top chrome (announcement bar, breadcrumb). Defer until the next time the morph breaks.
+- **"Don't scroll the window"** — the snap-then-compensate pattern is a smell. Cleaner: animate transforms only, never `window.scrollTo` during transitions. Bigger refactor.
+- **Stop transforming the scroll container** — root architectural fix for sticky-children glitches. Would require an overlay technique for the leaving page. The opacity fade is the pragmatic patch.
 
-`.page-header` now owns: background, sticky behaviour. `.page-header-inner` owns: flex layout, `min-height: var(--studio-bar-height)`. User has been iterating on padding / border placement — current state has horizontal padding on the outer (`padding: 0 var(--studio-gap)`) and the border-bottom on the inner (so border is inset, not full-bleed).
+## Outstanding flags from earlier passes
 
-### 4. Close button uses `data-variant="transparent"`
+- **Case-study toggle race** ([studio-case-study.js](studio/assets/js/studio-case-study.js)) — global click handler can call `ScrollTrigger.refresh()` mid-transition. Add an `is-animating` guard. Low priority unless hit.
+- **Share-link listener accumulation** ([studio-article.js:130-155](studio/assets/js/studio-article.js#L130)) — event listeners attached on each page enter, never removed. Minor leak. Use event delegation scoped to container.
+- **Multiple `ScrollTrigger.refresh()` calls** — redundant but not harmful.
 
-`.close-btn` simplified to one rule: `.close-btn { --button-color: var(--text-primary); }`. Variant handles bg, border, text-color, hover. Twelve lines of custom CSS removed.
+## Files changed (this round only — diff vs `17d9c57`)
 
-### 5. Sidebar nav links spread evenly
+| File | Why |
+|---|---|
+| [studio/assets/css/studio.css](studio/assets/css/studio.css) | page-header → fixed; wrapper padding-top rule; expanded sticky-fade rule; mobile media query update |
+| [studio/assets/js/studio-barba.js](studio/assets/js/studio-barba.js) | scroll-compensation order; next-read offset includes page-header; close `.then()` cleanup simplified |
 
-`.nav` got `justify-content: space-between` + `gap: var(--space-s)`. `.nav-link` lost `flex: 1`. Links are content-sized, hugging left/right edges of the sidebar header.
+No HTML / template changes. No generator regenerate.
 
-### 6. `--headline-size` token now `clamp(var(--font-6xl), 5vw, var(--font-9xl))`
+## Memory updates
 
-Was `1rem + 5vw` preferred. `.hero-title` and `.services-headline` migrated from raw `5vw` to `var(--headline-size)`.
+- Updated [project_studio_page_header.md](.claude/memory/project_studio_page_header.md) — current architecture (position: fixed, wrapper padding-top, animation coordination via WAAPI).
+- Created [feedback_layout_flow_reflow.md](.claude/memory/feedback_layout_flow_reflow.md) — rule of thumb: avoid `[hidden]` on in-flow elements during transitions; default to fixed/absolute and reserve space via padding.
+- Updated [MEMORY.md](.claude/memory/MEMORY.md) index.
 
-### 7. `data-grid` is now universal (not scoped to `.section-content`)
+## Plan files
 
-User removed `.section-content` prefix from all 28 grid rules in studio.css. `[data-grid]` works on any element. Empty `.section-content { }` rule remains as dead code at [studio/assets/css/studio.css:857-858](studio/assets/css/studio.css#L857) — could be deleted.
-
-User considered renaming to `data-bd-grid` for namespacing but decided against it — collision risk is functionally zero today.
-
-### 8. Removed `data-inset="all"` from `.case-study-wrapper`
-
-Across 1 generator template + 9 L2 work outputs. Wrapper is now edge-to-edge of `.main`.
-
-### 9. Case study eyebrow text: "Work" → "Case Study"
-
-Across 1 generator template + 9 L2 work outputs.
-
----
-
-## Outstanding flags / future tasks
-
-- **`.about-wrapper` has `overflow: hidden`** ([studio/assets/css/studio.css:1048](studio/assets/css/studio.css#L1048)) which breaks `position: sticky` on its descendants — known issue, deferred per user. Hero thumbnail already has its own clipping; the wrapper rule is redundant. Fix: remove the `overflow: hidden`.
-- **services.html `.page-wrapper` lacks `data-inset="all"`** while every other L1 page has it. Visual inconsistency — flagged but not addressed.
-- **L2 generator not run after template updates.** Generator templates ([studio/cms/generator/templates/case-study-inner.html](studio/cms/generator/templates/case-study-inner.html), [article-inner.html](studio/cms/generator/templates/article-inner.html)) are in sync with the existing 12 L2 outputs that were hand-updated. If markdown sources change, run `npm run gen` from `studio/cms/generator/`.
-- **Empty `.section-content { }` rule** — dead code, deletable any time.
-- **`.about-headline` and `.case-study-title`** — could migrate to `var(--headline-size)` for consistency with `.hero-title` / `.services-headline`. Out of scope this session.
-
----
-
-## Verification commands
-
-```bash
-cd "$STUDIO_ROOT"
-
-# Counts that should hold after the sticky-jump fix is applied:
-grep -rl 'class="page-header"' studio/ | wc -l        # 20 (5 L1 + 12 L2 + 3 templates)
-grep -rl 'class="page-header-inner"' studio/ | wc -l  # 20 (1:1 with page-header)
-grep -rl 'id="studio-close-btn"' studio/ | wc -l      # 20
-grep -rln 'close-btn-wrap' studio/ cdn/               # zero
-grep -rln 'nav-wrapper' studio/ cdn/                  # zero
-
-# Local dev:
-npm run serve:studio   # → http://localhost:2000/
-```
+- Approved plan for this round: `/Users/erlenmasson/.claude/plans/lets-make-a-plan-vast-leaf.md`
+- Earlier session plans: `/Users/erlenmasson/.claude/plans/transition-polish-pass.md` (superseded by the architectural refactor) and `/Users/erlenmasson/.claude/plans/page-header-transition-coordination.md` (animation coordination, shipped in checkpoint commit).

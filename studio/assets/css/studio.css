@@ -787,13 +787,26 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
   transition: opacity var(--duration-xs) var(--ease-out);
 }
 
-/* .section-header lives inside the Barba container, which gets transform: translateY()
-   during transitions — that creates a containing block for the sticky child, causing
-   it to ride the transform and snap. Fade it during transitions to mask the jump.
-   (.page-header avoids this by living outside the Barba wrapper entirely.) */
-body.is-animating .section-header {
+/* All sticky elements that live inside the Barba container suffer the same
+   transformed-ancestor issue as .section-header: when the container animates
+   with translateY(...), the sticky child detaches from the viewport, rides
+   the transform, then snaps. Fade them during transitions to hide the jump.
+   (.page-header avoids this entirely by living outside the Barba wrapper.)
+   Transition is set on this rule so the fast fade-out applies during the
+   transition; .toc-block / .share-block keep their existing slower fade-in
+   transition (--duration-l) for the reveal after is-animating is removed. */
+body.is-animating .section-header,
+body.is-animating .toc-block,
+body.is-animating .share-block,
+body.is-animating .case-study-content-inner {
   opacity: 0;
   pointer-events: none;
+  transition: opacity var(--duration-xs) var(--ease-out);
+}
+
+/* Baseline transition for .case-study-content-inner (the others already have one) */
+.case-study-content-inner {
+  transition: opacity var(--duration-xs) var(--ease-out);
 }
 
 .section-header[data-sticky="false"] {
@@ -823,19 +836,33 @@ body.is-animating .section-header {
 
 /* ------ PAGE HEADER (top-of-page bar with close button) ------ */
 
+/* Lives outside the Barba wrapper (sibling of <main>'s data-barba="wrapper").
+   Position: fixed (not sticky) so it doesn't take flow space — toggling
+   [hidden] doesn't reflow the document. The page-wrapper's padding-top
+   (rule below) reserves the visual space for L1+ pages. The data-sticky
+   attribute in markup is now a harmless no-op. */
 .page-header {
+  position: fixed;
+  top: 0;
+  left: var(--sidebar-width);
+  right: 0;
+  z-index: 100;
   background-color: var(--background-faded);
   padding: 0 var(--studio-gap);
+  transition: left var(--duration-s) var(--ease-out);
 }
 
-/* Lives outside the Barba wrapper (sibling of <main>'s data-barba="wrapper"),
-   so sticky behaves correctly — no transformed ancestor during transitions.
-   Eyebrow text + visibility synced from each container's data-page-eyebrow
-   in syncPageHeaderFrom() (studio-barba.js). */
-.page-header[data-sticky] {
-  position: sticky;
-  top: 0;
-  z-index: 100;
+body.is-sidebar-collapsed .page-header {
+  left: var(--sidebar-collapsed-width);
+}
+
+/* Reserve space for the fixed header on L1+ pages. Padding lives on the
+   container's own page-wrapper so the entering page is correctly padded
+   BEFORE animating in (driven by the container's own data-level, not by
+   body[data-current-level] which updates late in afterEnter). */
+[data-barba="container"][data-level="1"] > .page-wrapper,
+[data-barba="container"][data-level="2"] > .page-wrapper {
+  padding-top: var(--studio-bar-height);
 }
 
 /* Defensive — beats `.page-header { display: ... }` specificity when [hidden]
@@ -947,8 +974,12 @@ body.is-animating .section-header {
   .section-header-end .segmented-control-btn {
     flex: 1;
   }
-  .page-header[data-sticky] {
+  .page-header {
+    left: 0;
     top: var(--mobile-bar-height);
+  }
+  body.is-sidebar-collapsed .page-header {
+    left: 0;
   }
   .eyebrow-header {
     font-size: var(--font-l);

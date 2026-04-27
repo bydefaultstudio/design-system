@@ -400,13 +400,17 @@ var studioTransition = {
     data.next.container.setAttribute("data-studio-role", "enter");
 
     // For push scenario, capture next-read card position before scroll snap.
-    // Subtract the top bar height so the card stops at the top of the main
-    // area, not behind the fixed top bar.
+    // Subtract the top bar height (mobile bar + persistent page-header) so the
+    // card stops flush BELOW the fixed page-header — aligned with the entering
+    // article's .article-lead (which sits below the header in flow due to
+    // the wrapper's padding-top).
     var nextReadTop = 0;
     if (scenario === "push") {
       var nextRead = data.current.container.querySelector(".article-lead.is-next-read");
       var mobileBar = document.querySelector(".mobile-bar");
-      var topBarHeight = mobileBar ? mobileBar.offsetHeight : 0;
+      var pageHeader = document.querySelector(".page-header:not([hidden])");
+      var topBarHeight = (mobileBar ? mobileBar.offsetHeight : 0)
+                       + (pageHeader ? pageHeader.offsetHeight : 0);
       if (nextRead) nextReadTop = nextRead.getBoundingClientRect().top - topBarHeight;
 
       // Tag both sections so CSS can react declaratively during the morph.
@@ -415,12 +419,16 @@ var studioTransition = {
       if (enteringTitle) enteringTitle.classList.add("is-morphing");
     }
 
-    // Scroll compensation: capture the user's scroll position, snap the
-    // window to top so absolute-positioned containers render in the visible
-    // area, then pass the offset to the animation so the leaving container
-    // visually stays put at the user's prior position before animating.
+    // Scroll compensation: capture the user's scroll position, apply the
+    // compensating transform to the leaving container BEFORE the scroll snap
+    // (so the user never sees an un-compensated frame), then snap the window
+    // to top so absolute-positioned containers render in the visible area.
+    // runLeave's WAAPI animation starts from translateY(scrollY) → end state,
+    // so the inline transform here is exactly the start frame — no double-
+    // application, no one-frame snap.
     var scrollY = window.scrollY || 0;
     if (scrollY > 0) {
+      data.current.container.style.transform = "translateY(" + scrollY + "px)";
       window.scrollTo(0, 0);
     }
     var scrollOffset = -scrollY;
@@ -504,9 +512,10 @@ function animatePageHeader(scenario, nextContainer) {
       [{ transform: "translateY(0)" }, { transform: "translateY(-100%)" }],
       { duration: MOTION.pageClose.duration, easing: MOTION.pageClose.easing, fill: "forwards" }
     ).then(function onCloseDone() {
+      // The `after` hook clears pageHeader.style.transform on every transition,
+      // so don't duplicate that here. Just hide the element and reset the eyebrow.
       pageHeader.toggleAttribute("hidden", true);
       if (eyebrowEl) eyebrowEl.textContent = "";
-      pageHeader.style.transform = "";
     });
   }
 
