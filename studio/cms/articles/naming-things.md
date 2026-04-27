@@ -2,7 +2,7 @@
 type: article
 title: "Naming things: the hardest problem in design systems"
 synopsis: "A design token called --blue-500 is a value. One called --text-primary is a decision. The difference is everything."
-date: 2026-01-18
+date: 2026-04-28
 author:
   name: "By Default"
   avatar: "https://bydefault.design/image/64x64?text=BD"
@@ -11,7 +11,7 @@ read-time: "7 min read"
 featured: true
 hero: "https://images.unsplash.com/photo-1773332585754-f1436987743b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 thumbnail: "https://images.unsplash.com/photo-1773332585754-f1436987743b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-thumbnail-ratio: "4:5"
+thumbnail-ratio: "1:1"
 ---
 
 There are only two hard things in computer science: cache invalidation and naming things. Design systems inherit the naming problem and make it worse, because the names need to make sense to designers, developers, and stakeholders — three groups with different mental models.

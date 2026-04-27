@@ -1,6 +1,6 @@
 ---
 type: case-study
-featured: false
+featured: true
 title: "Ads people actually want to interact with"
 synopsis: "How we reimagined display advertising as interactive micro-experiences, turning standard ad units into engagement tools that outperform static creative."
 date: 2026-04-24

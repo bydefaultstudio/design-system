@@ -242,10 +242,10 @@ function renderFeedItem(entry) {
   var label = isArticle ? "Article" : "Case study";
   var postType = entry.featured ? "featured" : (entry.feedVariant || "standard");
   var excerpt = entry.synopsis ? '<p class="post-excerpt">' + entry.synopsis + '</p>' : "";
+  var clientLabel = !isArticle && entry.client ? '<span class="post-client-label label">' + entry.client + '</span>' : "";
 
   var metaParts = ['<span class="post-meta-item post-date label">' + formatStudioDate(entry.date) + '</span>'];
   if (isArticle && entry.readTime) metaParts.push('<span class="post-meta-item post-read-time label">' + entry.readTime + '</span>');
-  if (!isArticle && entry.client) metaParts.push('<span class="post-meta-item post-client label">' + entry.client + '</span>');
 
   var thumb = buildThumbnailBlock(entry);
 
@@ -262,6 +262,7 @@ function renderFeedItem(entry) {
       '<div class="post-body">' +
         '<h3 class="post-title">' + entry.title + '</h3>' +
         excerpt +
+        clientLabel +
         '<div class="post-meta bottom-meta">' + metaParts.join("") + '</div>' +
       '</div>' +
       thumb.html +

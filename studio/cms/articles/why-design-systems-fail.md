@@ -2,12 +2,13 @@
 type: article
 title: "Why design systems fail (and what to do about it)"
 synopsis: "Most design systems fail not from technical debt but from adoption debt. Here's what kills them and how to stop it."
-date: 2026-03-28
+date: 2026-04-16
 author:
   name: "By Default"
   avatar: "https://bydefault.design/image/64x64?text=BD"
 categories: ["Systems", "Design ops"]
 read-time: "6 min read"
+featured: true
 hero: "https://images.unsplash.com/photo-1773332611573-5e5bfa8e5de5?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 thumbnail: "https://images.unsplash.com/photo-1773332611573-5e5bfa8e5de5?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 thumbnail-ratio: "1:1"

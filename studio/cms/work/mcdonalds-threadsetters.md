@@ -1,6 +1,6 @@
 ---
 type: case-study
-featured: false
+featured: true
 title: "McDonald's Threadsetters"
 synopsis: "How we turned McDonald's crew uniforms into a cultural fashion moment, bridging fast food and streetwear with a campaign that Gen Z claimed as their own."
 date: 2026-04-24
