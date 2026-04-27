@@ -39,6 +39,11 @@
 // Flag set by click handler on .next-read — consumed once by resolveScenario
 var _nextReadNav = false;
 
+// Scenario resolved in `before` hook and consumed by `studioLeave`. Avoids
+// calling resolveScenario twice per transition (which would double-consume
+// the one-shot _nextReadNav flag and misclassify next-read clicks).
+var _pendingScenario = null;
+
 document.addEventListener("click", function detectNextReadClick(e) {
   if (e.target.closest(".is-next-read") || e.target.closest(".case-study-slider a")) {
     _nextReadNav = true;
@@ -382,7 +387,10 @@ var studioTransition = {
   name: "studio-directional",
   sync: true,
   leave: function studioLeave(data) {
-    var scenario = resolveScenario(data.current.container, data.next.container);
+    // Use the scenario resolved in the `before` hook. Defensive fallback to
+    // resolveScenario in case `before` didn't fire (shouldn't happen).
+    var scenario = _pendingScenario || resolveScenario(data.current.container, data.next.container);
+    _pendingScenario = null;
     // Mark scenario + role on both containers so the CSS can layer them
     // correctly during the animation (Barba 2.x does NOT apply its own
     // .barba-leave / .barba-enter classes).
@@ -451,6 +459,63 @@ function updateMetaFromContainer(container) {
   }
 }
 
+// Instant sync — used at first paint and as the body of the no-animation scenarios.
+// Reads the next container's data-page-eyebrow and applies it to the persistent
+// page-header (which lives outside the Barba wrapper, so it's never destroyed).
+function syncPageHeaderFrom(container) {
+  if (!container) return;
+  var pageHeader = document.querySelector(".page-header");
+  if (!pageHeader) return;
+  var newEyebrow = (container.getAttribute("data-page-eyebrow") || "").trim();
+  var eyebrowEl = pageHeader.querySelector(".eyebrow-header");
+  if (eyebrowEl) eyebrowEl.textContent = newEyebrow;
+  pageHeader.toggleAttribute("hidden", !newEyebrow);
+}
+
+// Coordinate the persistent page-header with the page transition. Runs in the
+// `before` hook with the resolved scenario.
+//
+//   open  — header slides DOWN from above the viewport (translateY -100% → 0),
+//           in sync with the entering page sliding UP from below. Eyebrow set
+//           upfront so the bar carries the right label as it slides in.
+//   close — header slides UP off the top (translateY 0 → -100%), in sync with
+//           the leaving page sliding DOWN. After the animation, hide + clear.
+//   swap / push / fade — header doesn't move; eyebrow swaps instantly via the
+//           same path as syncPageHeaderFrom (used on cross-type swaps).
+function animatePageHeader(scenario, nextContainer) {
+  var pageHeader = document.querySelector(".page-header");
+  if (!pageHeader) return Promise.resolve();
+  var eyebrowEl = pageHeader.querySelector(".eyebrow-header");
+  var newEyebrow = ((nextContainer && nextContainer.getAttribute("data-page-eyebrow")) || "").trim();
+
+  if (scenario === "open") {
+    if (eyebrowEl) eyebrowEl.textContent = newEyebrow;
+    pageHeader.removeAttribute("hidden");
+    return animate(
+      pageHeader,
+      [{ transform: "translateY(-100%)" }, { transform: "translateY(0)" }],
+      { duration: MOTION.pageOpen.duration, easing: MOTION.pageOpen.easing, fill: "forwards" }
+    );
+  }
+
+  if (scenario === "close") {
+    return animate(
+      pageHeader,
+      [{ transform: "translateY(0)" }, { transform: "translateY(-100%)" }],
+      { duration: MOTION.pageClose.duration, easing: MOTION.pageClose.easing, fill: "forwards" }
+    ).then(function onCloseDone() {
+      pageHeader.toggleAttribute("hidden", true);
+      if (eyebrowEl) eyebrowEl.textContent = "";
+      pageHeader.style.transform = "";
+    });
+  }
+
+  // swap / push / fade — instant eyebrow swap, header doesn't move
+  if (eyebrowEl) eyebrowEl.textContent = newEyebrow;
+  pageHeader.toggleAttribute("hidden", !newEyebrow);
+  return Promise.resolve();
+}
+
 //
 //------- Initialize -------//
 //
@@ -461,8 +526,18 @@ function initStudioBarba() {
     return;
   }
 
-  window.barba.hooks.before(function onBefore() {
+  window.barba.hooks.before(function onBefore(data) {
     document.body.classList.add("is-animating");
+    // Resolve scenario once per transition. studioLeave will read it from
+    // _pendingScenario instead of re-resolving (which would re-consume the
+    // _nextReadNav flag and misclassify next-read clicks).
+    _pendingScenario = resolveScenario(
+      data && data.current ? data.current.container : null,
+      data && data.next ? data.next.container : null
+    );
+    // Coordinate the persistent page-header with the page transition. open/close
+    // animate the header in/out; swap/push/fade just sync the eyebrow text.
+    animatePageHeader(_pendingScenario, data && data.next ? data.next.container : null);
     // Lightweight state cleanup — remove body classes and disconnect observers
     // so they don't fire during the transition. Splide instances are NOT
     // destroyed here (that would strip inline styles while the old container
@@ -518,6 +593,12 @@ function initStudioBarba() {
       var survivingTitle = data.next.container.querySelector(".article-lead.is-morphing");
       if (survivingTitle) survivingTitle.classList.remove("is-morphing");
     }
+    // Clear inline transform on the persistent page-header so subsequent
+    // transitions start from a clean slate (close leaves it at translateY(-100%)
+    // until cleanup; open leaves it at translateY(0) which is identity but
+    // still worth clearing).
+    var pageHeader = document.querySelector(".page-header");
+    if (pageHeader) pageHeader.style.transform = "";
     window.scrollTo(0, 0);
 
     // Deferred init — runs after layout settles (is-animating removed,
@@ -559,6 +640,10 @@ function initStudioBarba() {
     prevent: shouldPrevent,
     debug: false,
   });
+
+  // Initial sync — persistent header lives in static HTML with hand-authored eyebrow,
+  // but on home (data-page-eyebrow="") it must be hidden from first paint.
+  syncPageHeaderFrom(document.querySelector('[data-barba="container"]'));
 }
 
 // Wait for Barba CDN script to load before initializing

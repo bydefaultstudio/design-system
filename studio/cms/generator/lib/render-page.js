@@ -192,6 +192,8 @@ function renderPage(entry, bodyHtml, config, infoHtml) {
   const canonical = resolveCanonical(entry, config);
   const jsonLd = buildJsonLd({ ...entry, seoDescription }, config, author);
 
+  const pageEyebrow = entry.type === "article" ? "Article" : "Case Study";
+
   return LAYOUT.replace(/\{\{seoTitle\}\}/g, escapeHtml(seoTitle))
     .replace(/\{\{seoDescription\}\}/g, escapeHtml(seoDescription))
     .replace(/\{\{canonical\}\}/g, escapeHtml(canonical))
@@ -205,6 +207,7 @@ function renderPage(entry, bodyHtml, config, infoHtml) {
     .replace(/\{\{jsonLd\}\}/g, jsonLd)
     .replace(/\{\{namespace\}\}/g, entry.slug)
     .replace(/\{\{order\}\}/g, String(entry.order))
+    .replace(/\{\{pageEyebrow\}\}/g, pageEyebrow)
     .replace(/\{\{containerInner\}\}/g, containerInner);
 }
 

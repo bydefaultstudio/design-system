@@ -784,6 +784,16 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
   min-height: var(--studio-bar-height);
   background-color: var(--background-primary);
   border-bottom: var(--border-s) solid var(--border-faded);
+  transition: opacity var(--duration-xs) var(--ease-out);
+}
+
+/* .section-header lives inside the Barba container, which gets transform: translateY()
+   during transitions — that creates a containing block for the sticky child, causing
+   it to ride the transform and snap. Fade it during transitions to mask the jump.
+   (.page-header avoids this by living outside the Barba wrapper entirely.) */
+body.is-animating .section-header {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .section-header[data-sticky="false"] {
@@ -814,14 +824,24 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
 /* ------ PAGE HEADER (top-of-page bar with close button) ------ */
 
 .page-header {
-  background-color: var(--background-primary);
+  background-color: var(--background-faded);
   padding: 0 var(--studio-gap);
 }
 
+/* Lives outside the Barba wrapper (sibling of <main>'s data-barba="wrapper"),
+   so sticky behaves correctly — no transformed ancestor during transitions.
+   Eyebrow text + visibility synced from each container's data-page-eyebrow
+   in syncPageHeaderFrom() (studio-barba.js). */
 .page-header[data-sticky] {
   position: sticky;
   top: 0;
   z-index: 100;
+}
+
+/* Defensive — beats `.page-header { display: ... }` specificity when [hidden]
+   is toggled on the persistent instance (e.g. on L0 home). */
+.page-header[hidden] {
+  display: none;
 }
 
 .page-header-inner {
@@ -1096,6 +1116,8 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-in
 /* ------ ARTICLE HEADER ------ */
 
 article.article {
+    background-color: pink;
+
 }
 
 .article-lead {
@@ -2220,7 +2242,6 @@ body.is-animating .case-study-content {
 /* -- Page wrapper -- */
 
 .contact-wrapper {
-  background: var(--bg-faded-3);
   overflow: hidden;
 }
 
@@ -2527,15 +2548,14 @@ body.is-animating .case-study-content {
 
 /* Parent items */
 .services-accordion [data-depth="0"] > .accordion-content > .accordion-inner {
-  display: flex;
-  justify-content: flex-end;
-  padding-right: var(--studio-gap);
+  /* display: flex; */
+  /* justify-content: flex-end; */
 }
 
 
 
 .services-accordion [data-depth="0"] > .accordion-content > .accordion-inner > .accordion-body {
-  max-width: 45rem;
+  /* max-width: 45rem; */
 }
 
 
@@ -2559,6 +2579,11 @@ body.is-animating .case-study-content {
 
 .formats-section {
   border-top: var(--border-s) solid var(--border-faded);
+}
+
+
+.formats-section .accordion-item:last-child {
+  border-bottom: none;
 }
 
 .formats-section .accordion {

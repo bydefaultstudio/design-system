@@ -572,6 +572,11 @@
   --section-l: var(--space-10xl);
   --section-xl: var(--space-14xl);
 
+
+  /* -- Accordion spacing variables -- */
+  --accordion-padding-x: var(--space-l);
+  --accordion-padding-y: var(--space-l);
+
   /* -- Border width tokens -- */
   --border-s: 0.0625rem;  /* 1px */
   --border-m: 0.125rem;   /* 2px */
@@ -2419,6 +2424,8 @@ details .disclosure-content {
   border-bottom: var(--border-s) solid var(--border-faded);
 }
 
+
+
 .accordion-header {
   display: flex;
   align-items: center;
@@ -2426,7 +2433,7 @@ details .disclosure-content {
   width: 100%;
   text-align: left;
   gap: var(--space-m);
-  padding: var(--space-m) 0;
+  padding: var(--accordion-padding-y) var(--accordion-padding-x);
   color: var(--text-primary);
   z-index: 10;
   position: relative;
@@ -2471,7 +2478,7 @@ details .disclosure-content {
 }
 
 .accordion-body {
-  padding-bottom: var(--space-l);
+  padding:  0 var(--accordion-padding-x) var(--accordion-padding-y) var(--accordion-padding-x);
 }
 
 
