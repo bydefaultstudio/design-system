@@ -31,6 +31,7 @@
 
 :root {
   /* Studio layout tokens */
+  --background-sidebar: var(--background-primary);
   --sidebar-width: 400px;
   --sidebar-collapsed-width: 64px;
   --studio-bar-height: 3.5rem;
@@ -47,6 +48,7 @@
   --scroll-offset: var(--studio-gap);
   --duration-stagger: 30ms;
   --sidebar-logo-width: 220px;
+  --feed-gap: calc(var(--space-l));
 }
 
 /* Dark mode token overrides */
@@ -877,7 +879,7 @@ body.is-sidebar-collapsed .page-header {
   justify-content: space-between;
   gap: var(--space-m);
   min-height: var(--studio-bar-height);
-  border-bottom: var(--border-s) solid var(--border-primary);
+  border-bottom: var(--border-s) solid var(--border-faded);
 }
 
 .page-header-start {
@@ -1034,10 +1036,12 @@ body.is-sidebar-collapsed .page-header {
  * and the columns reflow automatically — no JS redistribution needed.
  */
 
+
+
 .content-feed {
-  padding-top: var(--studio-gap);
+  padding-top: var(--feed-gap);
   column-count: 3;
-  column-gap: var(--studio-gap);
+  column-gap: var(--feed-gap);
   width: 100%;
 }
 
@@ -1046,7 +1050,7 @@ body.is-sidebar-collapsed .page-header {
 
 .post-item {
   break-inside: avoid;
-  margin-bottom: var(--studio-gap);
+  margin-bottom: var(--feed-gap);
 }
 
 /* -- Feed transition states -- */
@@ -1105,19 +1109,26 @@ body.is-sidebar-collapsed .page-header {
   overflow: hidden;
 }
 
-/* -- Hero thumbnail mask (about + services) -- */
+/* -- Media frame (feature/hero mask — image, video, or BD-Video player) -- */
 
-.about-hero-thumbnail,
-.services-hero-thumbnail {
+.media-frame {
+  width: 100%;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
-  padding: 0 var(--studio-gap);
 }
 
-.about-hero-thumbnail img,
-.services-hero-thumbnail img {
+.media-frame[data-ratio="16:9"] { aspect-ratio: 16 / 9; }
+.media-frame[data-ratio="4:5"]  { aspect-ratio: 4 / 5; }
+.media-frame[data-ratio="1:1"]  { aspect-ratio: 1 / 1; }
+.media-frame[data-ratio="9:16"] { aspect-ratio: 9 / 16; }
+.media-frame[data-ratio="21:9"] { aspect-ratio: 21 / 9; }
+
+.media-frame > img,
+.media-frame > video,
+.media-frame > .bd-video,
+.media-frame > .bg-video {
   width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
+  height: 100%;
   object-fit: cover;
   display: block;
 }
@@ -1150,7 +1161,7 @@ article.article {
 }
 
 .article-lead {
-  padding: var(--section-m) var(--space-xl);
+  padding: var(--section-l) 0;
 }
 
 .article-header > .block {
@@ -1184,6 +1195,8 @@ article.article {
 .article-headline {
   margin: 0;
   font-size: 4vw;
+  line-height: var(--line-height-m);
+  text-wrap: balance;
 }
 
 
@@ -1215,30 +1228,6 @@ article.article {
 }
 
 
-
-/* -- Article hero (media container — image or video) -- */
-
-.article-hero {
-  width: 100%;
-  max-width: 60rem;
-  margin: 0 auto;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  /* border-radius: var(--radius-m); */
-}
-
-.article-hero[data-ratio="16:9"] { aspect-ratio: 16 / 9; }
-.article-hero[data-ratio="4:5"]  { aspect-ratio: 4 / 5; }
-.article-hero[data-ratio="1:1"]  { aspect-ratio: 1 / 1; }
-.article-hero[data-ratio="9:16"] { aspect-ratio: 9 / 16; }
-.article-hero[data-ratio="21:9"] { aspect-ratio: 21 / 9; }
-
-.article-hero-media {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
 
 /* -- Article content wrapper (3-column layout) -- */
 
@@ -1360,7 +1349,16 @@ article.article {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: var(--space-m);
   padding: var(--space-l) 0;
+}
+
+.next-read::before,
+.next-read::after {
+  content: "";
+  flex: 1;
+  height: var(--border-s);
+  background-color: var(--divider-color);
 }
 
 .next-read-label {
@@ -1623,18 +1621,15 @@ article.article {
 
 /* -- Header -- */
 
-.case-study-header-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: var(--space-xl);
-}
-
 .case-study-header-content {
   display: flex;
   flex-direction: column;
   gap: var(--space-m);
-  max-width: 48rem;
+}
+
+.case-study-header-actions {
+  justify-self: end;
+  align-self: end;
 }
 
 .case-study-client {
@@ -1644,7 +1639,6 @@ article.article {
 
 .case-study-synopsis {
   color: var(--text-secondary);
-  max-width: 40rem;
 }
 
 .case-study-services {
@@ -1656,8 +1650,6 @@ article.article {
 /* -- Toggle button -- */
 
 .button.case-study-toggle {
-  flex-shrink: 0;
-  align-self: flex-end;
   gap: var(--space-xs);
   white-space: nowrap;
   --button-border: var(--button-text-color);
@@ -1704,6 +1696,7 @@ body.is-case-study-open .case-study-toggle-wrap .case-study-toggle-icon-close {
 .case-study-body {
   display: flex;
   align-items: stretch;
+  scroll-margin-top: var(--studio-bar-height);
 }
 
 .case-study-visuals {
@@ -1873,16 +1866,21 @@ body.is-case-study-open .case-study-toggle-wrap .case-study-toggle-icon-close {
 /* -- Case study mobile -- */
 
 @media (max-width: 768px) {
-  .case-study-header-inner {
-    flex-direction: column;
+  .case-study-header [data-grid] > .block {
+    grid-column: 1 / -1;
   }
 
-  .case-study-toggle {
-    align-self: stretch;
+  .case-study-header-actions {
+    justify-self: stretch;
+  }
+
+  .case-study-header-actions .case-study-toggle {
+    width: 100%;
   }
 
   .case-study-body {
     flex-direction: column;
+    scroll-margin-top: calc(var(--mobile-bar-height) + var(--studio-bar-height));
   }
 
   .case-study-content {
@@ -2109,6 +2107,10 @@ body.is-animating .case-study-content {
 @media (max-width: 768px) {
   .close-btn-label {
     display: none;
+  }
+  /* Label hides → restore square padding so the button matches other icon-only buttons */
+  .close-btn {
+    --button-padding-x: var(--button-padding-y);
   }
 }
 
@@ -2414,6 +2416,148 @@ body.is-animating .case-study-content {
 .skip-link:focus-visible {
   transform: translateY(0);
   outline: none;
+}
+
+
+/* ------ FOOTER ------ */
+/* Dark surface scoped to the footer via [data-theme="dark"]. The design system
+   flips --background-primary, --text-primary, --text-faded, --border-color
+   inside this element only, so it remains dark regardless of the global theme. */
+
+.footer {
+  background-color: var(--neutral-900);
+  color: var(--text-primary);
+  padding: 0 var(--space-2xl);
+}
+
+/* -- Top grid: links / brand / contact -- */
+
+.footer-grid {
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-2xl);
+  align-items: end;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+}
+
+.footer-col-end {
+  text-align: right;
+}
+
+.footer-label {
+  color: var(--text-faded);
+}
+
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.footer-link {
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color var(--duration-xs) var(--ease-out);
+}
+
+.footer-link:hover,
+.footer-link:focus-visible {
+  color: var(--text-secondary);
+}
+
+/* -- Brand block (centered logo + tagline) -- */
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-l);
+  text-align: center;
+  padding: var(--space-5xl) 0;
+}
+
+.footer-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  color: var(--text-primary);
+}
+
+.footer-logo .svg-logo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1050 / 505;
+  max-width: 300px;
+}
+
+.footer-tagline {
+  margin: 0;
+  font-family: var(--font-tertiary);
+  font-size: var(--font-3xl);
+  color: var(--text-primary);
+}
+
+/* -- Bottom row: copyright + legal -- */
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-m) var(--space-l);
+  padding: var(--space-2xl) 0;
+  border-top: var(--border-s) solid var(--border-faded);
+  font-size: var(--font-xs);
+  color: var(--text-faded);
+}
+
+.footer-copyright {
+  margin: 0;
+}
+
+.footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-l);
+}
+
+.footer-legal-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--duration-xs) var(--ease-out);
+}
+
+.footer-legal-link:hover,
+.footer-legal-link:focus-visible {
+  color: var(--text-primary);
+}
+
+/* -- Responsive: stack columns on narrow viewports -- */
+/* The design system's mobile reset ([data-grid] > *) has lower specificity than
+   the data-col-start rules, so we re-stack the footer blocks explicitly here. */
+
+@media (max-width: 768px) {
+  .footer-grid > .block {
+    grid-column: 1 / -1;
+  }
+
+  .footer-col-end {
+    text-align: left;
+  }
+
+  .footer-bottom {
+    justify-content: flex-start;
+  }
 }
 
 
@@ -3128,6 +3272,36 @@ body.is-animating .case-study-content {
 
 .logo-ticker-slide svg {
   display: block;
+}
+
+/* ------- Logo Grid ------- */
+
+.logo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--studio-gap);
+}
+
+.logo-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 5rem;
+  padding: var(--space-m);
+  color: var(--text-primary);
+}
+
+.logo-mark > svg {
+  width: var(--logo-w);
+  height: var(--logo-h);
+  max-width: 100%;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .logo-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* ------- GSAP FOUC Prevention ------- */

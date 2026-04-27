@@ -589,6 +589,9 @@ function initStudioBarba() {
     if (typeof window.initSidebarSlot === "function") {
       window.initSidebarSlot();
     }
+    if (typeof window.populateLogoGrid === "function") {
+      window.populateLogoGrid();
+    }
     document.body.classList.remove("is-animating");
     // Clean up role/scenario attributes + any inline styles set by the
     // animation (transform from scroll-compensation, transformOrigin/opacity
