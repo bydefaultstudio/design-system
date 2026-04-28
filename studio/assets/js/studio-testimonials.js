@@ -146,10 +146,10 @@ function animateTestimonialQuote(activeSlide, slider) {
     return;
   }
 
-  // Block rapid duplicate calls. Splide's mount sequence with clones:6 +
-  // focus:center fires `active` multiple times within a few ms; without
-  // this guard the competing tweens race and word[0] of the active slide
-  // gets stuck at the 0.2 baseline.
+  // Block rapid duplicate calls. Even with the clone filter on the active
+  // event, edge cases (loop transitions, drag-snap settle) can fire two
+  // active events within a few ms; this guard keeps the staggered ripple
+  // from racing with itself.
   if (isTransitioning) return;
   isTransitioning = true;
   setTimeout(function () { isTransitioning = false; }, 100);
@@ -294,12 +294,18 @@ function mountTestimonialSliders() {
         if (next) next.setAttribute("aria-label", "Next testimonial");
       });
 
-      // 'active' fires for whatever slide is centered, including clones —
-      // 'moved' would give us the logical index whose .slide property
-      // is the original DOM node, not the visible clone, so the word-fade
-      // would animate an off-screen element when looping.
+      // Splide fires `active` once per clone of the active logical slide
+      // (verified via diagnostic — testimonial 1 fires 4 events: clone03,
+      // slide01, clone07, clone11). Without filtering, an offscreen clone
+      // can win the race and the visible centered slide never animates.
+      // Skip clones via the stable `splide__slide--clone` class (set at
+      // clone-creation time, synchronously available — unlike `is-visible`
+      // which Splide applies AFTER the active event fires). Filtering out
+      // clones leaves only the original (the visible centered slide).
       instance.on("active", function onActive(Slide) {
-        if (Slide && Slide.slide) animateTestimonialQuote(Slide.slide, slider);
+        if (!Slide || !Slide.slide) return;
+        if (Slide.slide.classList.contains("splide__slide--clone")) return;
+        animateTestimonialQuote(Slide.slide, slider);
       });
 
       instance.mount();

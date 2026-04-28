@@ -2469,8 +2469,8 @@ body.is-animating .case-study-content {
    flips --background-primary, --text-primary, --text-faded, --border-color
    inside this element only, so it remains dark regardless of the global theme. */
 
-.footer {
-  background-color: var(--neutral-900);
+.footer-wrapper {
+  background-color: var(--background-primary);
   color: var(--text-primary);
   padding: 0 var(--space-2xl);
 }
@@ -3409,9 +3409,16 @@ body.is-animating .case-study-content {
     background: var(--black);
     border-radius: 50%;
     overflow: hidden;
-    padding: 5px;
     height: 65px;
     width: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.testimonial-mark svg {
+  max-width: 50px;
+  max-height: 50px;
 }
 
 .js .testimonial-quote {
