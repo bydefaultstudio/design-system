@@ -63,18 +63,51 @@
 //
 //------- Icon SVGs -------//
 //
+// The player carries its own scoped sprite so it works in any page without a
+// dependency on the studio-wide icon sprite. Symbol IDs are namespaced as
+// #bd-video-* so they can't clash with a host page's main sprite.
+// The sprite host is injected into <body> on first init via ensureBdVideoSprite().
 
-var ICON_PLAY = '<div class="svg-icn"><svg data-icon="play" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M19 11.1357V12.8643L7.50391 20L6 19V5L7.50391 4L19 11.1357Z" fill="currentColor"></path></svg></div>';
+var BD_VIDEO_SPRITE_HOST_ID = "bd-video-sprite-host";
+var BD_VIDEO_SPRITE = ''
+  + '<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">'
+  +   '<symbol id="bd-video-play" viewBox="0 0 24 24"><path d="M19 11.1357V12.8643L7.50391 20L6 19V5L7.50391 4L19 11.1357Z" fill="currentColor"/></symbol>'
+  +   '<symbol id="bd-video-pause" viewBox="0 0 24 24"><path d="M13 19V5H19V19H13ZM5 19V5H11V19H5ZM15 16C15 16.5523 15.4477 17 16 17C16.5523 17 17 16.5523 17 16V8C17 7.44772 16.5523 7 16 7C15.4477 7 15 7.44772 15 8V16ZM7 16C7 16.5523 7.44772 17 8 17C8.55228 17 9 16.5523 9 16V8C9 7.44772 8.55228 7 8 7C7.44772 7 7 7.44772 7 8V16Z" fill="currentColor"/></symbol>'
+  +   '<symbol id="bd-video-sound-on" viewBox="0 0 24 24"><path d="M14 2.98535C17.7763 4.24145 20.5 7.80184 20.5 12C20.5 16.1981 17.7761 19.7575 14 21.0137V18.873C16.6483 17.7155 18.5 15.0751 18.5 12C18.5 8.92479 16.6485 6.28347 14 5.12598V2.98535Z" fill="currentColor"/><path d="M14 7.39062C15.5048 8.37203 16.5 10.0694 16.5 12C16.5 13.9304 15.5046 15.627 14 16.6084V7.39062Z" fill="currentColor"/><path d="M12 20L6.66699 16H3V8H6.66699L12 4V20ZM7.33301 10H6C5.44772 10 5 10.4477 5 11V13C5 13.5523 5.44772 14 6 14H7.33301L9.20002 15.4001C9.52965 15.6473 10 15.4121 10 15.0001V8.99924C10 8.58718 9.52954 8.352 9.19993 8.5993L7.33301 10Z" fill="currentColor"/></symbol>'
+  +   '<symbol id="bd-video-sound-off" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M21.7031 21.2969L20.293 22.707L16.9707 19.3848C16.0951 20.0931 15.0921 20.6504 14 21.0137V18.873C14.5538 18.631 15.0714 18.3222 15.5459 17.96L12 14.4141V20L6.66699 16H3V8H5.58594L1.29297 3.70703L2.70312 2.29688L21.7031 21.2969ZM6 10C5.44772 10 5 10.4477 5 11V13C5 13.5523 5.44772 14 6 14H7.33301L9.2002 15.4004C9.52981 15.6473 10 15.4119 10 15V12.4141L7.58594 10H6Z" fill="currentColor"/><path d="M14 2.98535C17.7763 4.24145 20.5 7.80184 20.5 12C20.5 13.5314 20.1356 14.9766 19.4912 16.2568L17.9795 14.7451C18.315 13.8952 18.5 12.9695 18.5 12C18.5 8.92479 16.6485 6.28347 14 5.12598V2.98535Z" fill="currentColor"/><path d="M14 7.39062C15.5048 8.37203 16.5 10.0694 16.5 12C16.5 12.3925 16.4564 12.7747 16.3779 13.1436L14 10.7656V7.39062Z" fill="currentColor"/><path d="M12 8.76562L9.27637 6.04199L12 4V8.76562Z" fill="currentColor"/></symbol>'
+  +   '<symbol id="bd-video-fullscreen-enter" viewBox="0 0 24 24"><path d="M9.70703 15.707L6.26762 19.1464C5.95263 19.4614 6.17572 20 6.62117 20H9V22H2V15H4V17.3788C4 17.8243 4.53857 18.0474 4.85355 17.7324L8.29297 14.293L9.70703 15.707ZM19.1464 17.7324C19.4614 18.0474 20 17.8243 20 17.3788V15H22V22H15V20H17.3788C17.8243 20 18.0474 19.4614 17.7324 19.1464L14.293 15.707L15.707 14.293L19.1464 17.7324ZM9 2V4H6.62117C6.17572 4 5.95263 4.53857 6.26762 4.85355L9.70703 8.29297L8.29297 9.70703L4.85355 6.26762C4.53857 5.95263 4 6.17572 4 6.62117V9H2V2H9ZM22 9H20V6.62117C20 6.17572 19.4614 5.95263 19.1464 6.26762L15.707 9.70703L14.293 8.29297L17.7324 4.85355C18.0474 4.53857 17.8243 4 17.3788 4H15V2H22V9Z" fill="currentColor"/></symbol>'
+  +   '<symbol id="bd-video-fullscreen-exit" viewBox="0 0 24 24"><path d="M14.293 8.29297L17.7324 4.85355C18.0474 4.53857 17.8243 4 17.3788 4H15V2H22V9H20V6.62117C20 6.17572 19.4614 5.95263 19.1464 6.26762L15.707 9.70703L14.293 8.29297ZM4.85355 6.26762C4.53857 5.95263 4 6.17572 4 6.62117V9H2V2H9V4H6.62117C6.17572 4 5.95263 4.53857 6.26762 4.85355L9.70703 8.29297L8.29297 9.70703L4.85355 6.26762ZM8.29297 14.293L4.85355 17.7324C4.53857 18.0474 4 17.8243 4 17.3788V15H2V22H9V20H6.62117C6.17572 20 5.95263 19.4614 6.26762 19.1464L9.70703 15.707L8.29297 14.293ZM15.707 14.293L19.1464 17.7324C19.4614 18.0474 20 17.8243 20 17.3788V15H22V22H15V20H17.3788C17.8243 20 18.0474 19.4614 17.7324 19.1464L14.293 15.707L15.707 14.293Z" fill="currentColor"/></symbol>'
+  + '</svg>';
 
-var ICON_PAUSE = '<div class="svg-icn"><svg data-icon="pause" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M13 19V5H19V19H13ZM5 19V5H11V19H5ZM15 16C15 16.5523 15.4477 17 16 17C16.5523 17 17 16.5523 17 16V8C17 7.44772 16.5523 7 16 7C15.4477 7 15 7.44772 15 8V16ZM7 16C7 16.5523 7.44772 17 8 17C8.55228 17 9 16.5523 9 16V8C9 7.44772 8.55228 7 8 7C7.44772 7 7 7.44772 7 8V16Z" fill="currentColor"></path></svg></div>';
+function ensureBdVideoSprite() {
+  if (document.getElementById(BD_VIDEO_SPRITE_HOST_ID)) return;
+  var host = document.createElement("div");
+  host.id = BD_VIDEO_SPRITE_HOST_ID;
+  host.style.display = "none";
+  host.setAttribute("aria-hidden", "true");
+  host.innerHTML = BD_VIDEO_SPRITE;
+  if (document.body) {
+    document.body.prepend(host);
+  } else {
+    document.documentElement.appendChild(host);
+  }
+}
 
-var ICON_SOUND_ON = '<div class="svg-icn"><svg data-icon="sound-on" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M14 2.98535C17.7763 4.24145 20.5 7.80184 20.5 12C20.5 16.1981 17.7761 19.7575 14 21.0137V18.873C16.6483 17.7155 18.5 15.0751 18.5 12C18.5 8.92479 16.6485 6.28347 14 5.12598V2.98535Z" fill="currentColor"></path><path d="M14 7.39062C15.5048 8.37203 16.5 10.0694 16.5 12C16.5 13.9304 15.5046 15.627 14 16.6084V7.39062Z" fill="currentColor"></path><path d="M12 20L6.66699 16H3V8H6.66699L12 4V20ZM7.33301 10H6C5.44772 10 5 10.4477 5 11V13C5 13.5523 5.44772 14 6 14H7.33301L9.20002 15.4001C9.52965 15.6473 10 15.4121 10 15.0001V8.99924C10 8.58718 9.52954 8.352 9.19993 8.5993L7.33301 10Z" fill="currentColor"></path></svg></div>';
+function bdVideoIcon(name, dataIconName) {
+  return ''
+    + '<div class="svg-icn">'
+    +   '<svg data-icon="' + dataIconName + '" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
+    +     '<use href="#bd-video-' + name + '"/>'
+    +   '</svg>'
+    + '</div>';
+}
 
-var ICON_SOUND_OFF = '<div class="svg-icn"><svg data-icon="sound-off" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M21.7031 21.2969L20.293 22.707L16.9707 19.3848C16.0951 20.0931 15.0921 20.6504 14 21.0137V18.873C14.5538 18.631 15.0714 18.3222 15.5459 17.96L12 14.4141V20L6.66699 16H3V8H5.58594L1.29297 3.70703L2.70312 2.29688L21.7031 21.2969ZM6 10C5.44772 10 5 10.4477 5 11V13C5 13.5523 5.44772 14 6 14H7.33301L9.2002 15.4004C9.52981 15.6473 10 15.4119 10 15V12.4141L7.58594 10H6Z" fill="currentColor"></path><path d="M14 2.98535C17.7763 4.24145 20.5 7.80184 20.5 12C20.5 13.5314 20.1356 14.9766 19.4912 16.2568L17.9795 14.7451C18.315 13.8952 18.5 12.9695 18.5 12C18.5 8.92479 16.6485 6.28347 14 5.12598V2.98535Z" fill="currentColor"></path><path d="M14 7.39062C15.5048 8.37203 16.5 10.0694 16.5 12C16.5 12.3925 16.4564 12.7747 16.3779 13.1436L14 10.7656V7.39062Z" fill="currentColor"></path><path d="M12 8.76562L9.27637 6.04199L12 4V8.76562Z" fill="currentColor"></path></svg></div>';
-
-var ICON_FS_ENTER = '<div class="svg-icn"><svg data-icon="fullscreen-enter" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.70703 15.707L6.26762 19.1464C5.95263 19.4614 6.17572 20 6.62117 20H9V22H2V15H4V17.3788C4 17.8243 4.53857 18.0474 4.85355 17.7324L8.29297 14.293L9.70703 15.707ZM19.1464 17.7324C19.4614 18.0474 20 17.8243 20 17.3788V15H22V22H15V20H17.3788C17.8243 20 18.0474 19.4614 17.7324 19.1464L14.293 15.707L15.707 14.293L19.1464 17.7324ZM9 2V4H6.62117C6.17572 4 5.95263 4.53857 6.26762 4.85355L9.70703 8.29297L8.29297 9.70703L4.85355 6.26762C4.53857 5.95263 4 6.17572 4 6.62117V9H2V2H9ZM22 9H20V6.62117C20 6.17572 19.4614 5.95263 19.1464 6.26762L15.707 9.70703L14.293 8.29297L17.7324 4.85355C18.0474 4.53857 17.8243 4 17.3788 4H15V2H22V9Z" fill="currentColor"></path></svg></div>';
-
-var ICON_FS_EXIT = '<div class="svg-icn"><svg data-icon="fullscreen-exit" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M14.293 8.29297L17.7324 4.85355C18.0474 4.53857 17.8243 4 17.3788 4H15V2H22V9H20V6.62117C20 6.17572 19.4614 5.95263 19.1464 6.26762L15.707 9.70703L14.293 8.29297ZM4.85355 6.26762C4.53857 5.95263 4 6.17572 4 6.62117V9H2V2H9V4H6.62117C6.17572 4 5.95263 4.53857 6.26762 4.85355L9.70703 8.29297L8.29297 9.70703L4.85355 6.26762ZM8.29297 14.293L4.85355 17.7324C4.53857 18.0474 4 17.8243 4 17.3788V15H2V22H9V20H6.62117C6.17572 20 5.95263 19.4614 6.26762 19.1464L9.70703 15.707L8.29297 14.293ZM15.707 14.293L19.1464 17.7324C19.4614 18.0474 20 17.8243 20 17.3788V15H22V22H15V20H17.3788C17.8243 20 18.0474 19.4614 17.7324 19.1464L14.293 15.707L15.707 14.293Z" fill="currentColor"></path></svg></div>';
+var ICON_PLAY = bdVideoIcon("play", "play");
+var ICON_PAUSE = bdVideoIcon("pause", "pause");
+var ICON_SOUND_ON = bdVideoIcon("sound-on", "sound-on");
+var ICON_SOUND_OFF = bdVideoIcon("sound-off", "sound-off");
+var ICON_FS_ENTER = bdVideoIcon("fullscreen-enter", "fullscreen-enter");
+var ICON_FS_EXIT = bdVideoIcon("fullscreen-exit", "fullscreen-exit");
 
 //
 //------- Constants -------//
@@ -863,6 +896,10 @@ function initPlayerInstance(video) {
 function initBdVideo(scope) {
   var root = scope || document;
   var players = root.querySelectorAll(".bd-video-player");
+  if (players.length === 0) return;
+  // Inject the icon sprite into <body> so the players' <use> refs resolve.
+  // Idempotent — no-op if already present.
+  ensureBdVideoSprite();
   players.forEach(initPlayerInstance);
 }
 

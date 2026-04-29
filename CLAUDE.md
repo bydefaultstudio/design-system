@@ -699,3 +699,43 @@ This serves `studio/` as the root — no `/studio` prefix in the URL. Port 2000 
 - UX copy rules from §16 — studio is a marketing site with its own voice
 - Component specs from §4 (`.button`, `.card`, etc.) — studio may define its own components (`.post`, `.post-title`, etc.)
 - `docs-site.css` — studio does not load or depend on it
+
+---
+
+## 19. Subagents
+
+Project subagents live in `.claude/agents/`. They are research-only — they return reviews and plans, the main agent applies edits.
+
+### Auto-delegate (mandatory)
+
+You MUST delegate to these agents whenever the matching trigger applies — in plan mode and during execution. Do not skip them because the change feels small; consistency is the point. When triggers overlap (common: GSAP timeline inside a Barba hook on a Splide carousel), invoke the relevant agents **in parallel** — single message, multiple Agent calls.
+
+- **`gsap-expert`** — fires when:
+  - editing or reviewing any file that imports `gsap`, `ScrollTrigger`, `SplitText`, `Flip`, `ScrollSmoother`, `Draggable`, or `MotionPathPlugin`
+  - writing a new animation timeline or modifying an existing one
+  - the user mentions: animation, timeline, scroll-trigger, split-text, ease, duration, stagger, scrub, pin, snap
+  - debugging stutter, jank, orphan ScrollTriggers, or post-Barba animation issues
+  - choosing motion durations or easings (must reference `cms/motion.md`)
+
+- **`barba-expert`** — fires when:
+  - editing `assets/js/barba-init.js`, `studio/assets/js/studio-barba.js`, or any file with Barba hooks
+  - the user mentions: page transition, Barba, hook, scenario, namespace, prefetch, route, scroll restoration
+  - debugging scroll jumps after navigation, double-init, or transition flashes
+  - adding or changing transitions between L0 / L1 / L2 pages
+
+- **`splide-expert`** — fires when:
+  - editing or reviewing any file that imports `@splidejs/splide` or references `splide__` classes
+  - touching `studio-testimonials.js`, `studio-logos.js`, `studio-case-study.js`, or any new carousel
+  - the user mentions: carousel, slider, slide, pagination, autoplay, loop, sync, splide
+  - debugging clone math, autoplay leaks across Barba transitions, or breakpoint behavior
+
+- **`a11y-expert`** — fires when:
+  - adding or modifying interactive components (buttons, dialogs, dropdowns, tabs, accordions, carousels, forms)
+  - adding ARIA attributes, focus handlers, or keyboard listeners
+  - introducing GSAP animation that runs without an explicit `prefers-reduced-motion` guard
+  - the user mentions: accessibility, a11y, screen reader, keyboard, focus, ARIA, contrast, WCAG
+  - touching focus management across Barba transitions
+
+### Explicit invocation only
+
+- **`outsider-challenger`** — never auto-fire. Only invoke when the user explicitly says "challenge this", "outsider review", "is this over-engineered", or `@outsider-challenger`. Reads source only; ignores `CLAUDE.md` and `cms/` docs by design.

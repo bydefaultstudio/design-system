@@ -45,13 +45,17 @@ function loadIcons(iconsDir) {
   return ICON_CACHE;
 }
 
+// Emits a sprite reference rather than inline SVG. The sprite is built by
+// studio/cms/generator/build-icon-sprite.js and lives at
+// /studio/assets/images/svg-icons/_sprite.svg.
+// The icons cache is still consulted to validate the icon exists at build time
+// (its SVG content is no longer used downstream — could be slimmed later).
 function renderIcon(name, icons) {
-  const svg = icons[name];
-  if (!svg) {
+  if (!icons[name]) {
     console.warn(`  ⚠ unknown icon: "${name}"`);
     return `<!-- icon:${name} (not found) -->`;
   }
-  return `<div class="svg-icn">${svg}</div>`;
+  return `<div class="svg-icn"><svg data-icon="${name}" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#${name}"/></svg></div>`;
 }
 
 // ---- Shortcode handlers ----
@@ -105,11 +109,10 @@ const BLOCK_SHORTCODES = {
   }
 };
 
-// Helper: parse ratio string "W:H" into inline aspect-ratio style
+// Helper: emit data-ratio="W:H" — paired with the global [data-ratio] rule
+// in studio.css so the same attribute works on any element.
 function csMediaRatio(ratio) {
-  var r = ratio || "16:9";
-  var parts = r.split(":");
-  return 'style="aspect-ratio:' + parts[0] + "/" + parts[1] + ';"';
+  return 'data-ratio="' + (ratio || "16:9") + '"';
 }
 
 const INLINE_SHORTCODES = {

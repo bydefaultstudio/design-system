@@ -1,3 +1,28 @@
+/* ============================================================
+   BD Video player — component-scoped CSS
+   ============================================================
+   This file is designed to be portable: it can be lifted out of
+   the parent design system and dropped into any HTML page.
+
+   - Themable / scale-based tokens are scoped under .bd-video as
+     --bd-video-* with a design-system fallback chain.
+     Inside the design system: tokens flow through.
+     Outside the design system: hard-coded fallbacks apply.
+   - Incidental primitives (overlay opacities, white text, pill
+     radius, focus ring) are inlined directly as literal values
+     rather than tokenized. They aren't themable; tokenizing them
+     would just add bureaucratic indirection.
+   - .svg-icn is defined locally (scoped to .bd-video) so the
+     component doesn't depend on the design system's global rule.
+   - All classes are namespaced (.bd-video-*) — no leakage.
+
+   When extending or modifying:
+   - Add new themable tokens as --bd-video-* with a fallback.
+   - Inline incidental literal values directly (don't tokenize).
+   - Never reference design system tokens directly inside rules.
+   - Keep all selectors scoped under .bd-video.
+   ============================================================ */
+
 /* ------ BD VIDEO COMPONENT ------ */
 /*
  * Reusable video player with custom controls. Used for the hero showreel
@@ -22,17 +47,60 @@
  *
  * JS: bd-video.js (self-initialising, exits early if no .bd-video-player)
  */
-/* -- Tokens -- */
-:root {
-  --bd-video-inset: var(--space-s);
-}
 
+/* -- Component tokens — scoped under .bd-video -- */
 .bd-video {
+  /* COLOR — themable brand surfaces */
+  --bd-video-color-accent: var(--text-accent, #3485cd);
+  --bd-video-color-cue-bg: var(--yellow-lighter, #fff8e0);
+  --bd-video-color-cue-bg-hover: var(--yellow-light, #ffe89c);
+  --bd-video-color-cue-text: var(--neutral-900, #1f1f1f);
+  --bd-video-color-cue-meta: var(--neutral-700, #565656);
+
+  /* MOTION — design system scale */
+  --bd-video-duration-fast: var(--duration-2xs, 100ms);
+  --bd-video-duration-transition: var(--duration-s, 400ms);
+  --bd-video-duration-mobile-scrubber: var(--duration-m, 600ms);
+  --bd-video-duration-fade: var(--duration-2xl, 1200ms);
+  --bd-video-ease: var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+
+  /* SPACING — design system scale */
+  --bd-video-space-xs: var(--space-xs, 0.5rem);
+  --bd-video-space-s: var(--space-s, 0.75rem);
+  --bd-video-space-m: var(--space-m, 1rem);
+  --bd-video-space-l: var(--space-l, 1.5rem);
+  --bd-video-space-xl: var(--space-xl, 2rem);
+  --bd-video-space-3xl: var(--space-3xl, 4rem);
+  --bd-video-inset: var(--space-s, 0.75rem); /* outer inset for scrubber + cue region */
+
+  /* TYPOGRAPHY — design system scale */
+  --bd-video-font-family: var(--font-primary, system-ui, -apple-system, sans-serif);
+  --bd-video-font-2xs: var(--font-2xs, 0.75rem);
+  --bd-video-font-xs: var(--font-xs, 0.875rem);
+  --bd-video-font-m: var(--font-m, 1.125rem);
+
+  /* RADIUS — design system scale (pill is inlined as 999px in the rules) */
+  --bd-video-radius-s: var(--radius-s, 6px);
+  --bd-video-radius-m: var(--radius-m, 10px);
+
   position: relative;
   width: 100%;
   /* padding moved to consumer wrapper (e.g. .home-hero) so the player itself
      can carry rounded corners + border without padding visually leaking. */
   overflow: hidden;
+}
+
+/* Local .svg-icn — scoped to .bd-video so the component doesn't depend on
+   the design system's global rule. */
+.bd-video .svg-icn {
+  display: flex;
+  width: 1.3rem;
+  height: 1.3rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1 / 1;
+  transition: color var(--bd-video-duration-transition) var(--bd-video-ease);
 }
 
 .bd-video-player {
@@ -57,22 +125,22 @@
   width: 72px;
   height: 72px;
   padding: 0;
-  background: var(--black-alpha-50);
+  background: rgba(0, 0, 0, 0.5);
   border: none;
-  border-radius: var(--radius-pill);
-  color: var(--white);
+  border-radius: 999px;
+  color: #fff;
   cursor: pointer;
   z-index: 2;
-  transition: opacity var(--duration-s) var(--ease-out),
-              background-color var(--duration-2xs) var(--ease-out);
+  transition: opacity var(--bd-video-duration-transition) var(--bd-video-ease),
+              background-color var(--bd-video-duration-fast) var(--bd-video-ease);
 }
 
 .bd-video-center-play:hover {
-  background: var(--black-alpha-70);
+  background: rgba(0, 0, 0, 0.7);
 }
 
 .bd-video-center-play:focus-visible {
-  outline: 2px solid var(--text-inverted);
+  outline: 2px solid #fff;
   outline-offset: 2px;
 }
 
@@ -98,15 +166,15 @@
 .bd-video-btn[data-tooltip]:hover::after {
   content: attr(data-tooltip);
   position: absolute;
-  bottom: calc(100% + var(--space-xs));
+  bottom: calc(100% + var(--bd-video-space-xs));
   left: 50%;
   transform: translateX(-50%);
-  padding: var(--space-xs) var(--space-s);
-  background: var(--black-alpha-80);
-  color: var(--white);
-  font-family: var(--font-primary);
-  font-size: var(--font-xs);
-  border-radius: var(--radius-s);
+  padding: var(--bd-video-space-xs) var(--bd-video-space-s);
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-family: var(--bd-video-font-family);
+  font-size: var(--bd-video-font-xs);
+  border-radius: var(--bd-video-radius-s);
   white-space: nowrap;
   pointer-events: none;
 }
@@ -116,30 +184,30 @@
 
 .bd-video-unmute-prompt {
   position: absolute;
-  top: var(--space-xl);
+  top: var(--bd-video-space-xl);
   left: 50%;
   transform: translateX(-50%);
   display: inline-flex;
   align-items: center;
-  gap: var(--space-s);
-  padding: var(--space-s) var(--space-l);
-  background: var(--black-alpha-70);
+  gap: var(--bd-video-space-s);
+  padding: var(--bd-video-space-s) var(--bd-video-space-l);
+  background: rgba(0, 0, 0, 0.7);
   border: none;
-  color: var(--white);
-  font-family: var(--font-primary);
-  font-size: var(--font-m);
+  color: #fff;
+  font-family: var(--bd-video-font-family);
+  font-size: var(--bd-video-font-m);
   cursor: pointer;
   z-index: 2;
-  transition: opacity var(--duration-s) var(--ease-out),
-              background-color var(--duration-2xs) var(--ease-out);
+  transition: opacity var(--bd-video-duration-transition) var(--bd-video-ease),
+              background-color var(--bd-video-duration-fast) var(--bd-video-ease);
 }
 
 .bd-video-unmute-prompt:hover {
-  background: var(--black-alpha-70);
+  background: rgba(0, 0, 0, 0.7);
 }
 
 .bd-video-unmute-prompt:focus-visible {
-  outline: 2px solid var(--text-inverted);
+  outline: 2px solid #fff;
   outline-offset: 2px;
 }
 
@@ -161,11 +229,11 @@
   bottom: var(--bd-video-inset);
   left: var(--bd-video-inset);
   right: var(--bd-video-inset);
-  height: var(--space-xs);
-  background: var(--black-alpha-20);
+  height: var(--bd-video-space-xs);
+  background: rgba(0, 0, 0, 0.2);
   cursor: pointer;
   z-index: 3;
-  transition: height var(--duration-2xs) var(--ease-out);
+  transition: height var(--bd-video-duration-fast) var(--bd-video-ease);
 }
 
 /* Expanded hit area — 40px tall touch/click zone overlapping and extending above the track */
@@ -177,24 +245,24 @@
   right: 0;
   height: 30px;
   cursor: pointer;
-  /* background-color: var(--white-alpha-20); */
+  /* background-color: rgba(255, 255, 255, 0.2); */
 }
 
 .bd-video:hover .bd-video-scrubber,
 .bd-video-scrubber.is-scrubbing,
 .bd-video-scrubber:focus-visible {
-  height: var(--space-s);
+  height: var(--bd-video-space-s);
 }
 
 .bd-video-scrubber:focus-visible {
-  outline: 2px solid var(--text-inverted);
+  outline: 2px solid #fff;
   outline-offset: 2px;
 }
 
 .bd-video-scrubber-fill {
   height: 100%;
   width: 0%;
-  background: var(--text-accent);
+  background: var(--bd-video-color-accent);
   pointer-events: none;
 }
 
@@ -207,7 +275,7 @@
 }
 
 .bd-video.is-preview .bd-video-center-play {
-  background: var(--black-alpha-60);
+  background: rgba(0, 0, 0, 0.6);
    width: 90px;
   height: 90px;
 
@@ -217,14 +285,14 @@
 
 .bd-video-seek-tooltip {
   position: absolute;
-  bottom: calc(var(--space-s) + var(--space-l));
+  bottom: calc(var(--bd-video-space-s) + var(--bd-video-space-l));
   left: 0;
-  padding: var(--space-xs) var(--space-s);
-  background: var(--black-alpha-80);
-  color: var(--white);
-  font-family: var(--font-primary);
-  font-size: var(--font-xs);
-  border-radius: var(--radius-s);
+  padding: var(--bd-video-space-xs) var(--bd-video-space-s);
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-family: var(--bd-video-font-family);
+  font-size: var(--bd-video-font-xs);
+  border-radius: var(--bd-video-radius-s);
   white-space: nowrap;
   pointer-events: none;
   opacity: 0;
@@ -240,11 +308,11 @@
 /* -- Time display -- */
 
 .bd-video-time {
-  font-family: var(--font-primary);
-  font-size: var(--font-xs);
-  color: var(--white);
+  font-family: var(--bd-video-font-family);
+  font-size: var(--bd-video-font-xs);
+  color: #fff;
   white-space: nowrap;
-  padding: 0 var(--space-xs);
+  padding: 0 var(--bd-video-space-xs);
 }
 
 
@@ -252,22 +320,22 @@
 
 .bd-video-controls {
   position: absolute;
-  padding: 0 var(--space-m);
-  bottom: var(--space-3xl);
-  left: var(--space-l);
-  right: var(--space-xl);
+  padding: 0 var(--bd-video-space-m);
+  bottom: var(--bd-video-space-3xl);
+  left: var(--bd-video-space-l);
+  right: var(--bd-video-space-xl);
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: var(--space-xs);
+  gap: var(--bd-video-space-xs);
   z-index: 5;
-  transition: opacity var(--duration-2xl) var(--ease-out);
+  transition: opacity var(--bd-video-duration-fade) var(--bd-video-ease);
 }
 
 .bd-video-controls-right {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
+  gap: var(--bd-video-space-xs);
 }
 
 .bd-video.is-controls-hidden .bd-video-controls {
@@ -283,20 +351,20 @@
   width: 40px;
   height: 40px;
   padding: 0;
-  color: var(--white);
-  background: var(--black-alpha-50);
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
   border: none;
-  border-radius: var(--radius-pill);
+  border-radius: 999px;
   cursor: pointer;
-  transition: background-color var(--duration-2xs) var(--ease-out);
+  transition: background-color var(--bd-video-duration-fast) var(--bd-video-ease);
 }
 
 .bd-video-btn:hover {
-  background: var(--black-alpha-70);
+  background: rgba(0, 0, 0, 0.7);
 }
 
 .bd-video-btn:focus-visible {
-  outline: 2px solid var(--white);
+  outline: 2px solid #fff;
   outline-offset: 2px;
 }
 
@@ -328,13 +396,13 @@
   }
 
   .bd-video-scrubber {
-    height: var(--space-s);
+    height: var(--bd-video-space-s);
   }
 
   .bd-video:hover .bd-video-scrubber,
   .bd-video-scrubber.is-scrubbing,
   .bd-video-scrubber:focus-visible {
-    height: var(--space-m);
+    height: var(--bd-video-space-m);
   }
 
   .bd-video-time {
@@ -359,9 +427,9 @@
 
 
 /* -- Cue overlay (timed link cards) -- */
-/* All cue tokens are primitives — theme-proof, same as other bd-video overlays.
-   Never use semantic tokens (--text-primary etc.) here — they flip in dark mode
-   but the video background doesn't. */
+/* Cue colors are themable via --bd-video-color-cue-* tokens (see top of file).
+   They never inherit semantic color tokens like --text-primary, because those
+   flip in dark mode and the video background doesn't. */
 
 /* Persistent wrapper — always in DOM, hosts aria-live */
 .bd-video-cue-region {
@@ -376,21 +444,21 @@
 .bd-video-cue-slot {
   display: flex;
   align-items: center;
-  gap: var(--space-s);
+  gap: var(--bd-video-space-s);
   max-width: 320px;
-  padding: var(--space-s) var(--space-m);
-  background: var(--yellow-lighter);
-  color: var(--neutral-900);
-  border-radius: var(--radius-m);
+  padding: var(--bd-video-space-s) var(--bd-video-space-m);
+  background: var(--bd-video-color-cue-bg);
+  color: var(--bd-video-color-cue-text);
+  border-radius: var(--bd-video-radius-m);
   text-decoration: none;
   opacity: 0;
   visibility: hidden;
   transform: translateY(-4px);
   pointer-events: none;
   transition:
-    opacity var(--duration-s) var(--ease-out),
-    transform var(--duration-s) var(--ease-out),
-    visibility 0ms var(--duration-s);
+    opacity var(--bd-video-duration-transition) var(--bd-video-ease),
+    transform var(--bd-video-duration-transition) var(--bd-video-ease),
+    visibility 0ms var(--bd-video-duration-transition);
 }
 
 .bd-video.is-cue-visible .bd-video-cue-slot {
@@ -399,8 +467,8 @@
   transform: translateY(0);
   pointer-events: auto;
   transition:
-    opacity var(--duration-s) var(--ease-out),
-    transform var(--duration-s) var(--ease-out),
+    opacity var(--bd-video-duration-transition) var(--bd-video-ease),
+    transform var(--bd-video-duration-transition) var(--bd-video-ease),
     visibility 0ms 0ms;
 }
 
@@ -408,7 +476,7 @@
   width: 96px;
   height: 64px;
   object-fit: cover;
-  border-radius: var(--radius-s);
+  border-radius: var(--bd-video-radius-s);
   flex-shrink: 0;
 }
 
@@ -420,38 +488,38 @@
 }
 
 .bd-video-cue-title {
-  font-size: var(--font-xs);
+  font-size: var(--bd-video-font-xs);
   font-weight: 600;
   line-height: 1.2;
 }
 
 .bd-video-cue-excerpt {
-  font-size: var(--font-2xs);
+  font-size: var(--bd-video-font-2xs);
   line-height: 1.3;
-  color: var(--neutral-700);
+  color: var(--bd-video-color-cue-meta);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* Hover / focus — primitives only */
+/* Hover / focus */
 .bd-video-cue-slot:hover {
-  background: var(--yellow-light);
+  background: var(--bd-video-color-cue-bg-hover);
   transform: translateY(-1px);
 }
 
 .bd-video-cue-slot:focus-visible {
-  outline: 2px solid var(--text-inverted);
+  outline: 2px solid #fff;
   outline-offset: 2px;
 }
 
 /* Mobile — text only + arrow, no thumbnail or excerpt */
 @media (max-width: 768px) {
   .bd-video-cue-region {
-    top: var(--space-s);
-    left: var(--space-s);
-    right: var(--space-s);
+    top: var(--bd-video-space-s);
+    left: var(--bd-video-space-s);
+    right: var(--bd-video-space-s);
   }
   .bd-video-cue-slot {
     max-width: 100%;
@@ -466,7 +534,7 @@
   .bd-video-cue-slot::after {
     content: "\2192";
     flex-shrink: 0;
-    font-size: var(--font-xs);
-    color: var(--neutral-700);
+    font-size: var(--bd-video-font-xs);
+    color: var(--bd-video-color-cue-meta);
   }
 }

@@ -226,6 +226,7 @@ Filtering and sorting UI will land in the top bar later — that's why the top b
 - Use semantic design system tokens, never primitives.
 - New CSS goes in `assets/css/studio.css`. Anything genuinely reusable belongs in the parent `assets/css/design-system.css` instead.
 - JS follows [cms/js-code-structure.md](../cms/js-code-structure.md): named functions, one `console.log` at the top, init inside `DOMContentLoaded`, no globals (only `studioRefreshActiveNav` is exposed for Barba to call).
+- **Aspect ratios** — apply `data-ratio="W:H"` to any element to set its aspect ratio (e.g. `data-ratio="16:9"`). Available ratios: `1:1`, `4:3`, `3:2`, `16:9`, `21:9`, `4:5`, `9:16`. Defined globally at the bottom of `assets/css/studio.css`. Components set their own default `aspect-ratio`; `data-ratio` overrides it.
 
 ### Section naming convention
 

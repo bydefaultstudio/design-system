@@ -9,7 +9,9 @@
  * Data: TESTIMONIALS array below. Each entry has a `brand` field that
  * matches a `name` in studio-logos.js LOGOS — the testimonial mark
  * (circular black avatar) is rendered from that shared SVG sprite via
- * window.resolveLogoSvg().
+ * window.resolveLogoSvg() with the "avatar" variant. Brands that define
+ * an `avatar` block in LOGOS get a dedicated avatar artwork; brands
+ * without one fall back to their default mark.
  *
  * Cleanup: destroyTestimonialSliders() must run before re-mount on Barba
  * navigation. It disconnects the IntersectionObserver, kills GSAP tweens
@@ -17,6 +19,21 @@
  */
 
 console.log("Studio Testimonials v0.1.0");
+
+//
+//------- Tuning -------//
+//
+// Word-by-word reveal feel. Lower baseline = words "appear" rather than
+// brighten. Stagger pacing matches comfortable reading (~5 words/sec).
+// QUOTE_REST_MS is the read-time the user gets after the animation
+// completes, before the carousel auto-advances — so total slide hold
+// scales with quote length: animation + REST.
+
+var WORD_FADE_DURATION_MS = 500;
+var WORD_STAGGER_MS = 220;
+var QUOTE_BASELINE_OPACITY = 0.2;
+var WORD_EASE = "power2.out";
+var QUOTE_REST_MS = 6000;
 
 //
 //------- Testimonial data -------//
@@ -84,9 +101,15 @@ function buildTestimonialSlides(slider) {
   TESTIMONIALS.forEach(function buildOne(t) {
     var li = document.createElement("li");
     li.className = "splide__slide testimonial-slide";
+    // Per-slide hold = word-reveal animation duration + read-time rest.
+    // Splide reads data-splide-interval per slide (overrides global
+    // interval). Set before mount so clones inherit the attribute.
+    var wordCount = t.quote.trim().split(/\s+/).length;
+    var animationMs = (wordCount - 1) * WORD_STAGGER_MS + WORD_FADE_DURATION_MS;
+    li.setAttribute("data-splide-interval", animationMs + QUOTE_REST_MS);
     li.innerHTML =
+      '<div class="testimonial-mark" data-logo="' + t.brand + '"></div>' +
       '<div class="testimonial-card">' +
-        '<div class="testimonial-mark" data-logo="' + t.brand + '"></div>' +
         '<p class="testimonial-quote">' + window.attrEscape(t.quote) + '</p>' +
         '<div class="testimonial-attribution label">' + window.attrEscape(t.attribution) + '</div>' +
       '</div>';
@@ -98,7 +121,7 @@ function buildTestimonialSlides(slider) {
     // use the --logo-w / --logo-h variables for optical sizing.
     var mark = li.querySelector(".testimonial-mark");
     var info = typeof window.resolveLogoSvg === "function"
-      ? window.resolveLogoSvg(t.brand, 5)
+      ? window.resolveLogoSvg(t.brand, 5, "avatar")
       : null;
     if (info) {
       mark.style.setProperty("--logo-w", info.w + "rem");
@@ -132,7 +155,7 @@ function initTestimonialSplit(slider) {
     // Reveal the parent <p> (CSS keeps it at opacity 0 for FOUC), then
     // dim the words to baseline. Per-word opacity is animated independently.
     gsap.set(quote, { opacity: 1 });
-    gsap.set(words, { opacity: 0.2 });
+    gsap.set(words, { opacity: QUOTE_BASELINE_OPACITY });
   });
 }
 
@@ -166,12 +189,12 @@ function animateTestimonialQuote(activeSlide, slider) {
     var activeEntry = splitInstanceCache.get(activeQuote);
     if (activeEntry) {
       gsap.killTweensOf(activeEntry.words);
-      gsap.set(activeEntry.words, { opacity: 0.2 });
+      gsap.set(activeEntry.words, { opacity: QUOTE_BASELINE_OPACITY });
       gsap.to(activeEntry.words, {
         opacity: 1,
-        duration: 2.2,
-        ease: "power2.out",
-        stagger: 0.1,
+        duration: WORD_FADE_DURATION_MS / 1000,
+        ease: WORD_EASE,
+        stagger: WORD_STAGGER_MS / 1000,
         overwrite: "auto",
       });
     }
@@ -187,12 +210,12 @@ function animateTestimonialQuote(activeSlide, slider) {
     var entry = splitInstanceCache.get(quote);
     if (!entry || !entry.words.length) return;
     var current = gsap.getProperty(entry.words[0], "opacity");
-    if (current <= 0.25) return;
+    if (current <= QUOTE_BASELINE_OPACITY * 2) return;
     gsap.killTweensOf(entry.words);
     gsap.to(entry.words, {
-      opacity: 0.2,
+      opacity: QUOTE_BASELINE_OPACITY,
       duration: 0.4,
-      ease: "power2.out",
+      ease: WORD_EASE,
       overwrite: "auto",
     });
   });
@@ -257,7 +280,13 @@ function mountTestimonialSliders() {
 
       var instance = new Splide(slider, {
         type: "loop",
-        autoWidth: true,
+        // fixedWidth as a percentage scales every slide to a fraction of
+        // the Splide track width. The track already accounts for the
+        // sidebar (400px on desktop, drawer-hidden below 768px), so the
+        // slide grows/shrinks fluidly with the available main content area.
+        // Breakpoints bump the percentage on smaller screens where the
+        // user usually wants more of the viewport given to the card.
+        fixedWidth: "65%",
         focus: "center",
         gap: "2rem",
         drag: "free",
@@ -270,14 +299,17 @@ function mountTestimonialSliders() {
         pagination: false,
         easing: "ease-out",
         trimSpace: false,
-        // autoWidth disables Splide's auto-clone calculation. Force enough
-        // clones (n × 1.5) so the loop seam never produces a visible gap
+        // fixedWidth disables Splide's auto-clone calculation. Force
+        // enough clones so the loop seam never produces a visible gap
         // when 2-3 slides are visible at once on wide viewports.
         clones: 6,
         breakpoints: {
-          // Gap-only tightening for narrow tablets — separate from the
-          // 768px studio mobile/desktop layout flip.
-          600: { gap: "1.5rem" },
+          // <=768px viewport: sidebar collapses to a drawer (off-screen),
+          // full viewport is available. Bump the percentage so the card
+          // gets more breathing room, tighten the gap.
+          768: { fixedWidth: "85%", gap: "1.5rem" },
+          // <=480px (small phones): nearly full-width card.
+          480: { fixedWidth: "92%", gap: "1rem" },
         },
       });
 

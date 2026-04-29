@@ -68,8 +68,9 @@ function formatStudioDate(iso) {
   return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
-// Shared check icon SVG used by feed cards and read badges
-var ICON_CHECK = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg>';
+// Shared check icon SVG used by feed cards and read badges. References the
+// studio sprite at /assets/images/svg-icons/_sprite.svg#check.
+var ICON_CHECK = '<svg data-icon="check" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#check"/></svg>';
 
 //
 //------- Splide Lazy-Loader (single-flight) -------//

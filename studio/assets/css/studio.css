@@ -38,7 +38,7 @@
   --mobile-bar-height: 56px;
   --mobile-drawer-width: 100vw;
   --post-spacing: var(--space-l);
-  --studio-gap: .75rem;
+  --studio-gap: 1rem;
   --studio-gap-2x: 1.5rem;
   --z-mobile-bar: 40;
   --z-sidebar: 50;
@@ -180,7 +180,7 @@ body.is-sidebar-collapsed .layout {
   background: var(--background-sidebar);
   z-index: var(--z-sidebar);
   box-sizing: border-box;
-  padding: 0 var(--studio-gap);
+  padding-left: var(--studio-gap);
   transition: width var(--duration-xl) var(--ease-out);
 }
 
@@ -191,6 +191,11 @@ body.is-sidebar-collapsed .layout {
   overflow-y: auto;
   overflow-x: hidden;
   gap: 0;
+  scrollbar-width: none;
+}
+
+.sidebar-inner::-webkit-scrollbar {
+  display: none;
 }
 
 /* -- Nav row (top of sidebar — text-only horizontal nav) -- */
@@ -260,8 +265,10 @@ body.is-sidebar-collapsed .layout {
   transition: background-color var(--duration-m) var(--ease-out);
 }
 
-.intro-block:hover {
-  background-color: var(--background-faded);
+a.intro-block:hover {
+  background-color: transparent;
+  color: var(--text-primary);
+  opacity: 0.8;
 }
 
 .intro-block::after {
@@ -271,7 +278,7 @@ body.is-sidebar-collapsed .layout {
   right: 0;
   bottom: 0;
   height: var(--border-s);
-  background: var(--border-faded);
+  /* background: var(--border-faded); */
   transition: background-color var(--duration-m) var(--ease-out);
 }
 
@@ -362,6 +369,7 @@ body.is-sidebar-collapsed .layout {
   color: var(--text-primary);
   background-color: transparent;
   transition: background-color var(--duration-m) var(--ease-out);
+  display: none;
 }
 
 .sidebar-cta:hover {
@@ -484,27 +492,32 @@ body.is-sound-off .sound-toggle .sound-icon-off {
   padding-left: 0;
 }
 
-/* -- Sidebar posts (case study mini-cards) -- */
+/* -- Sidebar posts (case study mini-cards) --
+
+   Architecture: structural base + parent combo variants.
+   Apply a variant by adding a combo class on the parent .sidebar-slot:
+     <nav class="sidebar-slot slot-minimal">  → divider-line look
+     <nav class="sidebar-slot slot-card">     → background-card look
+*/
 
 .sidebar-slot {
   display: flex;
   flex-direction: column;
-  padding-top: calc(var(--studio-gap) * 2);
 }
+
+/* ── Base — invariant structure for any variant ── */
 
 .sidebar-slot-link {
   position: relative;
   display: flex;
   align-items: flex-start;
   gap: var(--studio-gap);
-  padding: var(--studio-gap);
   text-decoration: none;
-  /* border-radius: var(--radius-m); */
   color: var(--text-primary);
-  background-color: var(--background-sidebar);
   transition: background-color var(--duration-m) var(--ease-out);
 }
 
+/* Bottom divider scaffold — variants set the color */
 .sidebar-slot-link::after {
   content: "";
   position: absolute;
@@ -512,29 +525,10 @@ body.is-sound-off .sound-toggle .sound-icon-off {
   right: 0;
   bottom: 0;
   height: var(--border-s);
-  background: var(--border-faded);
   transition: background-color var(--duration-m) var(--ease-out);
 }
 
-.sidebar-slot-link:hover, .sidebar-slot-link.is-active {
-  background-color: var(--background-faded);
-}
-
-
-/* Also hide the divider on the previous sibling — so hovering any post clears
-   the lines on both sides of it. Uses :has() to look forward for a hovered
-   next sibling (CSS has no previous-sibling combinator). */
-.sidebar-slot-link:hover::after,
-.sidebar-slot-link:has(+ .sidebar-slot-link:hover)::after {
-  background-color: transparent;
-}
-
-.sidebar-slot-link:last-child::after {
-  background-color: transparent;
-}
-
-
-/* Left accent bar — hidden by default, revealed on .is-active */
+/* Left accent scaffold + active-state mechanism — variants set the color */
 .sidebar-slot-link::before {
   content: "";
   position: absolute;
@@ -542,66 +536,151 @@ body.is-sound-off .sound-toggle .sound-icon-off {
   top: 0;
   bottom: 0;
   width: 2px;
-  background-color: color-mix(in srgb, var(--text-primary), var(--alpha-5));
   transform: scaleY(0);
   transform-origin: top center;
   transition: transform var(--duration-xs) var(--ease-out);
 }
 
-/* ── Active state ── */
-
-
-
 .sidebar-slot-link.is-active::before {
   transform: scaleY(1);
 }
 
-.sidebar-slot-link.is-active .sidebar-slot-link-excerpt {
-  color: var(--text-secondary);
-}
-
-/* Suppress dividers adjacent to the active card — mirrors hover pattern */
-.sidebar-slot-link.is-active::after,
-.sidebar-slot-link:has(+ .sidebar-slot-link.is-active)::after {
-  background-color: transparent;
-}
-
-/* Hold active background on hover — don't regress to the lighter hover tint */
-.sidebar-slot-link.is-active:hover {
-  background-color: var(--background-darker);
-}
-
 .sidebar-slot-link-thumb {
-  height: 80px;
   object-fit: cover;
   flex-shrink: 0;
   aspect-ratio: 1/1;
-  /* border-radius: var(--radius-s); */
 }
 
 .sidebar-slot-link-text {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2xs);
   min-width: 0;
 }
 
-.sidebar-slot-link-title {
+.sidebar-slot-link-excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Variant: slot-minimal — divider line between slots, minimal weight ── */
+
+.sidebar-slot.slot-minimal .sidebar-slot-link {
+  padding: var(--studio-gap);
+  background-color: var(--background-sidebar);
+}
+
+.sidebar-slot.slot-minimal .sidebar-slot-link:hover,
+.sidebar-slot.slot-minimal .sidebar-slot-link.is-active {
+  background-color: var(--background-faded);
+}
+
+/* Hold active background on hover — don't regress to the lighter hover tint */
+.sidebar-slot.slot-minimal .sidebar-slot-link.is-active:hover {
+  background-color: var(--background-darker);
+}
+
+.sidebar-slot.slot-minimal .sidebar-slot-link.is-active .sidebar-slot-link-excerpt {
+  color: color-mix(in srgb, var(--text-primary), var(--alpha-50));
+}
+
+.sidebar-slot.slot-minimal .sidebar-slot-link::after {
+  background-color: var(--border-faded);
+}
+
+/* Hide dividers adjacent to a hovered or active slot, and on the last child.
+   :has(+ ... :hover) reaches the previous sibling forward, since CSS has no
+   previous-sibling combinator. */
+.sidebar-slot.slot-minimal .sidebar-slot-link:hover::after,
+.sidebar-slot.slot-minimal .sidebar-slot-link:has(+ .sidebar-slot-link:hover)::after,
+.sidebar-slot.slot-minimal .sidebar-slot-link.is-active::after,
+.sidebar-slot.slot-minimal .sidebar-slot-link:has(+ .sidebar-slot-link.is-active)::after,
+.sidebar-slot.slot-minimal .sidebar-slot-link:last-child::after {
+  background-color: transparent;
+}
+
+.sidebar-slot.slot-minimal .sidebar-slot-link::before {
+  background-color: color-mix(in srgb, var(--text-primary), var(--alpha-5));
+}
+
+.sidebar-slot.slot-minimal .sidebar-slot-link-thumb {
+  height: 80px;
+}
+
+.sidebar-slot.slot-minimal .sidebar-slot-link-text {
+  gap: var(--space-2xs);
+}
+
+.sidebar-slot.slot-minimal .sidebar-slot-link-title {
   font-family: var(--font-secondary);
   font-size: var(--font-m);
   line-height: var(--line-height-m);
   font-weight: var(--title-weight);
 }
 
-.sidebar-slot-link-excerpt {
+.sidebar-slot.slot-minimal .sidebar-slot-link-excerpt {
   font-size: var(--font-xs);
   line-height: var(--line-height-m);
-  color: var(--text-faded);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  color: color-mix(in srgb, var(--text-primary), var(--alpha-50));
+}
+
+/* ── Variant: slot-card — background-color cards with vertical gap ── */
+
+.sidebar-slot.slot-card {
+  gap: var(--space-s);
+}
+
+.sidebar-slot.slot-card .sidebar-slot-link {
+  padding: var(--studio-gap);
+  background-color: var(--bg-faded-3);
+  border-radius: var(--radius-s);
+
+}
+
+.sidebar-slot.slot-card .sidebar-slot-link:hover,
+.sidebar-slot.slot-card .sidebar-slot-link.is-active,
+.sidebar-slot.slot-card .sidebar-slot-link.is-active:hover {
+  background-color: var(--bg-faded-7);
+  color: var(--text-primary);
+
+}
+
+
+
+.sidebar-slot.slot-card .sidebar-slot-link.is-active .sidebar-slot-link-excerpt {
+  color: color-mix(in srgb, var(--text-primary), var(--alpha-50));
+}
+
+/* Gap replaces the divider as the separator */
+.sidebar-slot.slot-card .sidebar-slot-link::after {
+  background-color: transparent;
+}
+
+.sidebar-slot.slot-card .sidebar-slot-link::before {
+  background-color: color-mix(in srgb, var(--text-primary), var(--alpha-5));
+}
+
+.sidebar-slot.slot-card .sidebar-slot-link-thumb {
+  height: 80px;
+}
+
+.sidebar-slot.slot-card .sidebar-slot-link-text {
+  gap: var(--space-2xs);
+}
+
+.sidebar-slot.slot-card .sidebar-slot-link-title {
+  font-family: var(--font-secondary);
+  font-size: var(--font-m);
+  line-height: var(--line-height-m);
+  font-weight: var(--title-weight);
+}
+
+.sidebar-slot.slot-card .sidebar-slot-link-excerpt {
+  font-size: var(--font-xs);
+  line-height: var(--line-height-m);
+  color: color-mix(in srgb, var(--text-primary), var(--alpha-50));
 }
 
 
@@ -1003,7 +1082,20 @@ body.is-sidebar-collapsed .page-header {
 .page-subline {
   font-family: var(--font-secondary, var(--font-primary));
   font-size: var(--subline-size);
+  font-weight: var(--subline-weight);
   line-height: var(--line-height-l);
+}
+
+/* Inline image inside a headline — scales with the surrounding font-size,
+   sits on the baseline, breathes a touch on each side. Multiple images per
+   headline use the same class with no extra rules. */
+.img-headline {
+  display: inline-block;
+  height: 0.7em;
+  width: auto;
+  vertical-align: baseline;
+  margin: 0 0.15em;
+  object-fit: cover;
 }
 
 /* ------ HOME HERO (wraps a .bd-video player; studio-specific padding + chrome) ------ */
@@ -1055,7 +1147,7 @@ body.is-sidebar-collapsed .page-header {
 }
 
 .services-list-item::before {
-  content: counter(services-counter, upper-alpha);
+  content: counter(services-counter, decimal-leading-zero);
   align-self: start;
   padding-top: 0.6em;
   font-family: var(--font-primary);
@@ -1161,12 +1253,6 @@ body.is-sidebar-collapsed .page-header {
   aspect-ratio: 16 / 9;
   overflow: hidden;
 }
-
-.media-frame[data-ratio="16:9"] { aspect-ratio: 16 / 9; }
-.media-frame[data-ratio="4:5"]  { aspect-ratio: 4 / 5; }
-.media-frame[data-ratio="1:1"]  { aspect-ratio: 1 / 1; }
-.media-frame[data-ratio="9:16"] { aspect-ratio: 9 / 16; }
-.media-frame[data-ratio="21:9"] { aspect-ratio: 21 / 9; }
 
 .media-frame > img,
 .media-frame > video,
@@ -1469,10 +1555,6 @@ article.article {
   /* border-radius: var(--radius-s); */
 }
 
-.post-thumbnail[data-ratio="1:1"]  { aspect-ratio: 1 / 1; }
-.post-thumbnail[data-ratio="4:5"]  { aspect-ratio: 4 / 5; }
-.post-thumbnail[data-ratio="9:16"] { aspect-ratio: 9 / 16; }
-
 .img-thumb,
 .vdo-thumb {
   width: 100%;
@@ -1599,20 +1681,16 @@ article.article {
 
 /* -- Featured post (full-bleed image with text overlay) -- */
 /* Card height is driven by aspect-ratio on the post itself (default 4:5).
-   Override with data-ratio="9:16" on the .post element for taller cards. */
+   Override with data-ratio="W:H" on the .post element. The :not([data-ratio])
+   rule scopes the default so the global [data-ratio] block can win. */
 
 .post[data-post-type="featured"] {
   position: relative;
   padding: 0;
+}
+
+.post[data-post-type="featured"]:not([data-ratio]) {
   aspect-ratio: 4 / 5;
-}
-
-.post[data-post-type="featured"][data-ratio="1:1"] {
-  aspect-ratio: 1 / 1;
-}
-
-.post[data-post-type="featured"][data-ratio="9:16"] {
-  aspect-ratio: 9 / 16;
 }
 
 .post[data-post-type="featured"] .post-header {
@@ -1786,14 +1864,6 @@ body.is-case-study-open .case-study-toggle-wrap .case-study-toggle-icon-close {
   object-fit: cover;
   display: block;
 }
-
-/* Aspect ratio helpers for bg-video inside grids */
-.case-study-grid .bg-video[data-ratio="4:5"]  { aspect-ratio: 4 / 5; }
-.case-study-grid .bg-video[data-ratio="9:16"] { aspect-ratio: 9 / 16; }
-.case-study-grid .bg-video[data-ratio="16:9"] { aspect-ratio: 16 / 9; }
-
-.case-study-grid img[data-ratio="4:5"]  { aspect-ratio: 4 / 5; }
-.case-study-grid img[data-ratio="9:16"] { aspect-ratio: 9 / 16; }
 
 /* -- Media wrapper (placeholder + scroll-reveal container) -- */
 
@@ -2129,6 +2199,7 @@ body.is-mobile-nav-open .sidebar-backdrop {
 /* Studio close-btn — extends the .button.transparent variant with a high-contrast icon color */
 .close-btn {
   --button-color: var(--text-primary);
+  --icon-size: 1.3rem;
 }
 
 .close-btn-label {
@@ -2470,7 +2541,7 @@ body.is-animating .case-study-content {
    inside this element only, so it remains dark regardless of the global theme. */
 
 .footer-wrapper {
-  background-color: var(--background-primary);
+  background-color: var(--neutral-950);
   color: var(--text-primary);
   padding: 0 var(--space-2xl);
 }
@@ -3323,8 +3394,9 @@ body.is-animating .case-study-content {
 
 .logo-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--studio-gap);
+  min-height: 400px;
 }
 
 .logo-mark {
@@ -3351,13 +3423,23 @@ body.is-animating .case-study-content {
 
 /* ------- Testimonials ------- */
 
-.home-testimonials {
+.home-clients {
+}
+
+.splide__arrow--prev svg {
+    transform: scaleX(1) !important;
+}
+
+.testimonial-pause {
+  display: none !important;
+}
+
+.testimonial-wrapper {
   overflow: hidden;
 }
 
-.testimonial-slider {
-  /* Words shouldn't clip when active; neighboring slides bleed in from edges. */
-  overflow: visible;
+.splide__arrows .button {
+  border-radius: var(--radius-pill);
 }
 
 /* Splide's vendor CSS sets overflow: hidden on the track and list, which
@@ -3370,32 +3452,24 @@ body.is-animating .case-study-content {
 
 .testimonial-slide {
   display: flex;
-  align-items: stretch;
+  align-items: flex-start;
+  overflow: visible;
+  gap: var(--space-xl);
 }
 
 .testimonial-card {
-  position: relative;
+  margin-top: 25px;
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: var(--space-l);
-  width: 36rem;
-  max-width: 80vw;
   padding: var(--space-2xl);
-  padding-top: var(--space-3xl);
   background-color: var(--background-faded);
-  /* No border-radius — sharp corners per studio convention. The circular
-     mark below is the only rounded element in this section. */
+  /* Top-left stays sharp (anchors to the avatar). Other three corners
+     round to soften the card. */
+  border-radius: 0 var(--radius-l) var(--radius-l) var(--radius-l);
 }
 
-/* .testimonial-mark — intentionally left unstyled. Rebuild from scratch. */
-
-/* Quote text — large serif display, line-fade animation runs on the
-   per-word <span>s injected by GSAP SplitText. Words start at 0.2
-   opacity (set in studio-testimonials.js) and tween to 1 when active.
-   .js opacity-0 baseline prevents FOUC: the raw text would otherwise
-   render at full opacity for the few frames between DOMContentLoaded
-   and SplitText running. studio-testimonials.js sets the parent back
-   to opacity 1 in initTestimonialSplit() after splitting. */
 .testimonial-quote {
   font-family: var(--font-secondary);
   font-size: var(--font-3xl);
@@ -3405,20 +3479,22 @@ body.is-animating .case-study-content {
 }
 
 .testimonial-mark {
+    flex: 0 0 auto;
     color: var(--white);
     background: var(--black);
     border-radius: 50%;
     overflow: hidden;
-    height: 65px;
-    width: 65px;
+    height: 60px;
+    width: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 10px;
 }
 
 .testimonial-mark svg {
-  max-width: 50px;
-  max-height: 50px;
+  max-width: 45px;
+  max-height: 45px;
 }
 
 .js .testimonial-quote {
@@ -3482,9 +3558,9 @@ body.is-animating .case-study-content {
 
 @media (max-width: 768px) {
   .testimonial-card {
-    width: 24rem;
+    /* Slide width is now controlled by Splide's fixedWidth breakpoints;
+       the card stays at its desktop percentage of slide width. */
     padding: var(--space-xl);
-    padding-top: var(--space-2xl);
   }
 
   .testimonial-quote {
@@ -3517,3 +3593,17 @@ body.is-animating .case-study-content {
     filter: none !important;
   }
 }
+
+/* ------- Aspect ratio — global utility attribute ------- */
+/* Apply data-ratio="W:H" to any element to set its aspect ratio.
+   Component defaults set their own aspect-ratio; data-ratio overrides it.
+   Lives at the end of the file so source-order beats component defaults
+   at the same (0,1,0) specificity. */
+
+[data-ratio="1:1"]  { aspect-ratio: 1 / 1; }
+[data-ratio="4:3"]  { aspect-ratio: 4 / 3; }
+[data-ratio="3:2"]  { aspect-ratio: 3 / 2; }
+[data-ratio="16:9"] { aspect-ratio: 16 / 9; }
+[data-ratio="21:9"] { aspect-ratio: 21 / 9; }
+[data-ratio="4:5"]  { aspect-ratio: 4 / 5; }
+[data-ratio="9:16"] { aspect-ratio: 9 / 16; }
