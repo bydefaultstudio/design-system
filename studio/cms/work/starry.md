@@ -1,6 +1,10 @@
 ---
 type: case-study
 featured: false
+stat:
+  value: "40%"
+  caption: "Improvement in sign-up completion"
+  icon: arrow-up
 title: "Making a new brand impossible to ignore"
 synopsis: "How we helped PepsiCo's newest lemon-lime brand break through a saturated category with interactive experiences that earned attention instead of buying it."
 date: 2026-04-24

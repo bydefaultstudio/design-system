@@ -399,7 +399,7 @@
   /* -- Border -- */
   --border-primary: #e8e6e3;
   --border-secondary: #3a3a3a;
-  --border-faded: rgba(255, 255, 255, 0.12);
+  --border-faded: var(--white-alpha-20);
 
   /* -- Status -- */
   --status-info: var(--blue-light);
@@ -457,7 +457,7 @@
 
     --border-primary: #e8e6e3;
     --border-secondary: #3a3a3a;
-    --border-faded: rgba(255, 255, 255, 0.12);
+    --border-faded: var(--white-alpha-20);
 
     --status-info: var(--blue-light);
     --status-success: var(--green-light);
@@ -3184,13 +3184,16 @@ hr {
   align-items: center;
   gap: var(--space-xs);
   font-family: var(--font-primary);
-  font-size: var(--font-xs);
-  font-weight: var(--font-weight-medium);
+  font-size: var(--font-2xs);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: .05em;
+  text-transform: uppercase;
   padding: var(--space-s) var(--space-s);
   background-color: var(--bg-faded-5);
-  color: var(--text-primary);
+  color: var(--text-secondary);
   white-space: nowrap;
   line-height: var(--line-height-xs);
+  border-radius: 3px;
 }
 
 .tag[data-color="success"],

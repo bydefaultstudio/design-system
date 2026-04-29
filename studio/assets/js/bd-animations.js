@@ -37,6 +37,7 @@
   // ------- Configurable Parameters ------- //
 
   var animationStagger = { chars: 0.05, words: 0.1, lines: 0.15 };
+  var FADED_FROM_OPACITY = 0.2;
 
   function getFadeStart() {
     return window.innerWidth < 768 ? "top 100%" : "top 100%";
@@ -80,6 +81,13 @@
     var delayValue = parseFloat(delayAttr);
     if (isNaN(delayValue) || delayValue < 0) return defaultDelay;
     return delayValue;
+  }
+
+  // data-bd-faded — boolean opt-in. Starts split units at 0.2 instead of 0
+  // for a "ghosted reveal" where the text outline is faintly visible from
+  // the start and crisps up as the stagger plays.
+  function getFromOpacity(element) {
+    return element.hasAttribute("data-bd-faded") ? FADED_FROM_OPACITY : 0;
   }
 
   function isInViewport(element) {
@@ -269,10 +277,16 @@
     return config;
   }
 
+  // Reveal the parent that the FOUC-prevention CSS rule
+  // (`.js [data-text-animate] { opacity: 0 }` in studio.css) keeps hidden.
+  // Children opacity drives the actual animation; this just unhides the
+  // wrapper. ctx.revert() clears the inline style on Barba transition,
+  // restoring the FOUC guard for the next page.
   function fadeCharacters(self) {
     self.selector("[data-text-animate='chars']").forEach(function (element) {
       var split = new SplitText(element, { type: "chars", tag: "span" });
-      gsap.set(split.chars, { opacity: 0 });
+      gsap.set(split.chars, { opacity: getFromOpacity(element) });
+      gsap.set(element, { opacity: 1 });
 
       gsap.to(split.chars, {
         opacity: 1,
@@ -286,7 +300,8 @@
   function fadeWords(self) {
     self.selector("[data-text-animate='words']").forEach(function (element) {
       var split = new SplitText(element, { type: "words", tag: "span" });
-      gsap.set(split.words, { opacity: 0 });
+      gsap.set(split.words, { opacity: getFromOpacity(element) });
+      gsap.set(element, { opacity: 1 });
 
       gsap.to(split.words, {
         opacity: 1,
@@ -300,7 +315,8 @@
   function fadeLines(self) {
     self.selector("[data-text-animate='lines']").forEach(function (element) {
       var split = new SplitText(element, { type: "lines" });
-      gsap.set(split.lines, { opacity: 0 });
+      gsap.set(split.lines, { opacity: getFromOpacity(element) });
+      gsap.set(element, { opacity: 1 });
 
       gsap.to(split.lines, {
         opacity: 1,
@@ -318,9 +334,11 @@
       );
       if (elements.length === 0) return;
 
+      var fromOpacity = getFromOpacity(richTextElement);
+
       elements.forEach(function (element) {
         var split = new SplitText(element, { type: "lines", tag: "span" });
-        gsap.set(split.lines, { opacity: 0 });
+        gsap.set(split.lines, { opacity: fromOpacity });
 
         gsap.to(split.lines, {
           opacity: 1,
@@ -329,6 +347,8 @@
           scrollTrigger: splitScrollConfig(richTextElement, getFadeEnd)
         });
       });
+
+      gsap.set(richTextElement, { opacity: 1 });
     });
   }
 
@@ -337,7 +357,8 @@
       var items = list.querySelectorAll("li");
       if (items.length === 0) return;
 
-      gsap.set(items, { opacity: 0 });
+      gsap.set(items, { opacity: getFromOpacity(list) });
+      gsap.set(list, { opacity: 1 });
       gsap.to(items, {
         opacity: 1,
         stagger: 0.2,

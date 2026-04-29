@@ -142,6 +142,30 @@ Use `data-text-animate` to split and animate text by characters, words, or lines
 <p data-text-animate="lines">Line animation</p>
 ```
 
+### Faded reveal
+
+Add `data-bd-faded` to start each split unit at 20% opacity instead of 0. The text outline stays faintly visible from the start and crisps up to full opacity as the stagger plays — useful for editorial headlines where you want presence before emphasis.
+
+<div class="demo-preview">
+  <div class="block gap-xl">
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Words — faded</p>
+      <h2 data-text-animate="words" data-bd-faded data-bd-scrub="true">Each word starts faded then crisps up</h2>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Characters — faded</p>
+      <h2 data-text-animate="chars" data-bd-faded data-bd-scrub="true">Characters crisp up</h2>
+    </div>
+  </div>
+</div>
+
+```html
+<h2 data-text-animate="words" data-bd-faded>Faded word reveal</h2>
+<h2 data-text-animate="chars" data-bd-faded>Faded char reveal</h2>
+```
+
+Boolean — presence only, no value. Composes with all `data-text-animate` variants.
+
 ---
 
 ## Delays
@@ -300,6 +324,7 @@ Only works with `data-bd-animate="in-view"`.
 |-----------|-------------|
 | `data-bd-delay` | Delay in seconds (e.g. `"0.5"`) |
 | `data-bd-scrub` | Scroll-tied (`"true"` or `"0.1"` to `"5.0"`) |
+| `data-bd-faded` | Start `data-text-animate` units at 20% opacity instead of 0 (boolean) |
 
 ---
 

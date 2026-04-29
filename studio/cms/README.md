@@ -131,6 +131,7 @@ Only set when search-facing copy needs to differ from reader-facing.
 | `role` | string | no | Header strip ("Our role"). |
 | `services` | string[] | no | e.g. `["Strategy", "Design", "Build"]`. Header strip + feed. Separate from `categories` — `services` = what we did; `categories` = topic tags. |
 | `client-url` | string | no | Optional outbound link from the header strip. |
+| `stat` | object | no | Headline metric for the home featured-case-study card. Shape: `{ value: "70%", caption: "Higher CTR on Meta", icon?: "arrow-up" }`. When set, `value` and `caption` are required; `icon` is optional and validated against the icon sprite. The icon is decorative — its meaning is conveyed by the value + caption. |
 
 ## Client logo registry
 
@@ -166,7 +167,8 @@ The sprite id is a **kebab-case slug derived from the brand's own word boundarie
 2. (Optional) Add a circular-friendly avatar variant at `<id>-avatar.svg` if the wide wordmark won't fit a testimonial badge.
 3. Register it in the `LOGOS` array in [studio/assets/js/studio-logos.js](../assets/js/studio-logos.js) — copy an existing entry and update `name` + `viewBox` (and `scale` if the mark needs ink-density correction). Add `avatar: { viewBox, scale? }` only if you supplied an avatar variant.
 4. Run `npm run gen` to rebuild the sprite. The build hard-fails if any case-study `logo:` references a missing id.
-5. (Optional) Add `<div class="logo-mark" data-bd-animate="slide-up" data-bd-scrub data-logo="<id>"></div>` to the home-page logo grid in [studio/index.html](../../index.html) if the brand should appear there as social proof.
+
+The home logo ticker auto-picks up everything in `LOGOS`, so once registered the brand appears there with no further work. To opt a brand out of a specific ticker instance, add `data-exclude="<id>"` to the `.logo-slider` container.
 
 If a case study sets `logo:` and the value isn't in the sprite, the build aborts with the full registry list and a "did you mean" hint derived from the case study's `client:` field.
 

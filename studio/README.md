@@ -244,7 +244,7 @@ body.is-scrolling .my-overlay {
 
 The listener is registered once at `DOMContentLoaded` on `window`, so it survives Barba page transitions automatically (Barba only swaps `[data-barba="container"]`). Don't re-bind it in `afterEnter` — that would stack listeners.
 
-First consumer: `.work-card-logo` on the home page work cards (`studio/index.html`), revealing the brand mark over the case study media while the user scrolls.
+First consumer: `.case-study-card-logo` on the home page case-study cards (`studio/index.html`), revealing the brand mark over the case study media while the user scrolls.
 
 ### Section naming convention
 

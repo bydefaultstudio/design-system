@@ -260,8 +260,8 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
   initNextRead();
   initServices();
   logoSlider();
-  if (typeof populateLogoGrid === "function") populateLogoGrid();
   if (typeof mountTestimonialSliders === "function") mountTestimonialSliders();
+  if (typeof initHomeFeatured === "function") initHomeFeatured();
 
   // Re-init after Barba navigations
   // logoSlider is intentionally NOT here — it runs in the after hook's
@@ -271,5 +271,6 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
     markReadPosts();
     initFeed();
     initServices();
+    if (typeof initHomeFeatured === "function") initHomeFeatured();
   });
 });

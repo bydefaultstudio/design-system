@@ -199,7 +199,7 @@ function initNextRead() {
       '<a class="next-read-link" href="' + getStudioPrefix() + next.url + '" aria-label="Read: ' + attrEscape(next.title) + '"></a>' +
       '<section class="article-lead is-next-read">' +
         '<div class="article-header" data-grid>' +
-          '<div class="block" data-col-span="10" data-col-start="2">' +
+          '<div class="block" data-col-start="2" data-col-span="10">' +
             '<div class="article-meta">' +
               (next.readTime ? '<span class="article-meta-item label"><div class="svg-icn"><svg data-icon="clock" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#clock"/></svg></div>' + attrEscape(next.readTime) + '</span>' : '') +
               '<span class="article-meta-item label">' + formatStudioDate(next.date) + '</span>' +

@@ -1,10 +1,15 @@
 ---
 type: case-study
-featured: false
+featured: true
+stat:
+  value: "3.4M"
+  caption: "Map interactions in the campaign's first month"
+  icon: arrow-up
 title: "Mastercard's Interactive Map"
 synopsis: "How location data became a discovery tool, an interactive map that turned geograph data into something people actually wanted to explore."
 date: 2026-04-09
 client: "Mastercard"
+logo: mastercard
 year: 2026
 services: ["Creative Direction", "Website Development", "Illustration"]
 hero: "https://cdn.prod.website-files.com/68e2be176459e98837a31ee6/69115d8f794007e7d9d08f79_thumb_mastercard.avif"

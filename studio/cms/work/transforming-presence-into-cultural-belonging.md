@@ -1,6 +1,10 @@
 ---
 type: case-study
-featured: false
+featured: true
+stat:
+  value: "2M"
+  caption: "Fans reached across 3 sold-out HBCU events"
+  icon: arrow-up
 title: "Transforming presence into cultural belonging"
 synopsis: "How culture-first AR turned Verizon's HBCU sponsorship into sold-out events across 3 cities and a genuine connection with 2M fans."
 date: 2026-04-09

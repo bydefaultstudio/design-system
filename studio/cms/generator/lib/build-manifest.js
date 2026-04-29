@@ -48,6 +48,7 @@ function toManifestRecord(entry) {
     record.services = entry.services || [];
     record.clientUrl = entry["client-url"] || null;
     record.logo = entry.logo || null;
+    record.stat = entry.stat || null;
   }
   return record;
 }

@@ -192,7 +192,7 @@ function renderPage(entry, bodyHtml, config, infoHtml) {
   const canonical = resolveCanonical(entry, config);
   const jsonLd = buildJsonLd({ ...entry, seoDescription }, config, author);
 
-  const pageEyebrow = entry.type === "article" ? "Article" : "Case Study";
+  const pageEyebrow = entry.type === "article" ? "Article" : entry.client;
 
   return LAYOUT.replace(/\{\{seoTitle\}\}/g, escapeHtml(seoTitle))
     .replace(/\{\{seoDescription\}\}/g, escapeHtml(seoDescription))

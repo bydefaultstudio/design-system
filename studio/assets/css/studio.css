@@ -67,7 +67,17 @@
 
 
 
-.svg-logo { width: auto; max-width: none; aspect-ratio: auto; }
+/* Canonical sprite-logo contract — every place the studio renders a
+   brand logo wraps the <svg> in `.svg-logo`. The wrapper carries
+   inline aspect-ratio (from sprite metadata) and is the sizing surface;
+   the SVG inside fills it via this single global rule. Together they
+   mean: style the wrapper's width OR height in CSS and proportions
+   stay correct without per-logo overrides. */
+.svg-logo > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 
 .badge { text-transform: none; letter-spacing: normal; }
 
@@ -244,11 +254,6 @@ body.is-sidebar-collapsed .layout {
 /* Home link — hidden on desktop (logo links home); shown on mobile */
 .nav-link-home {
   display: none;
-}
-
-
-.work-card {
-  overflow: hidden;
 }
 
 /* -- Intro block (logo + intro line, centered) -- */
@@ -495,20 +500,15 @@ body.is-sound-off .sound-toggle .sound-icon-off {
   padding-left: 0;
 }
 
-/* -- Sidebar posts (case study mini-cards) --
-
-   Architecture: structural base + parent combo variants.
-   Apply a variant by adding a combo class on the parent .sidebar-slot:
-     <nav class="sidebar-slot slot-minimal">  → divider-line look
-     <nav class="sidebar-slot slot-card">     → background-card look
-*/
+/* -- Sidebar slot — case-study + article mini-cards rendered into the
+   sidebar from the manifest. Card-style: padded link with a faded
+   background, vertical gap between cards. -- */
 
 .sidebar-slot {
   display: flex;
   flex-direction: column;
+  gap: var(--space-s);
 }
-
-/* ── Base — invariant structure for any variant ── */
 
 .sidebar-slot-link {
   position: relative;
@@ -568,119 +568,48 @@ body.is-sound-off .sound-toggle .sound-icon-off {
   overflow: hidden;
 }
 
-/* ── Variant: slot-minimal — divider line between slots, minimal weight ── */
-
-.sidebar-slot.slot-minimal .sidebar-slot-link {
-  padding: var(--studio-gap);
-  background-color: var(--background-sidebar);
-}
-
-.sidebar-slot.slot-minimal .sidebar-slot-link:hover,
-.sidebar-slot.slot-minimal .sidebar-slot-link.is-active {
-  background-color: var(--background-faded);
-}
-
-/* Hold active background on hover — don't regress to the lighter hover tint */
-.sidebar-slot.slot-minimal .sidebar-slot-link.is-active:hover {
-  background-color: var(--background-darker);
-}
-
-.sidebar-slot.slot-minimal .sidebar-slot-link.is-active .sidebar-slot-link-excerpt {
-  color: color-mix(in srgb, var(--text-primary), var(--alpha-50));
-}
-
-.sidebar-slot.slot-minimal .sidebar-slot-link::after {
-  background-color: var(--border-faded);
-}
-
-/* Hide dividers adjacent to a hovered or active slot, and on the last child.
-   :has(+ ... :hover) reaches the previous sibling forward, since CSS has no
-   previous-sibling combinator. */
-.sidebar-slot.slot-minimal .sidebar-slot-link:hover::after,
-.sidebar-slot.slot-minimal .sidebar-slot-link:has(+ .sidebar-slot-link:hover)::after,
-.sidebar-slot.slot-minimal .sidebar-slot-link.is-active::after,
-.sidebar-slot.slot-minimal .sidebar-slot-link:has(+ .sidebar-slot-link.is-active)::after,
-.sidebar-slot.slot-minimal .sidebar-slot-link:last-child::after {
-  background-color: transparent;
-}
-
-.sidebar-slot.slot-minimal .sidebar-slot-link::before {
-  background-color: color-mix(in srgb, var(--text-primary), var(--alpha-5));
-}
-
-.sidebar-slot.slot-minimal .sidebar-slot-link-thumb {
-  height: 80px;
-}
-
-.sidebar-slot.slot-minimal .sidebar-slot-link-text {
-  gap: var(--space-2xs);
-}
-
-.sidebar-slot.slot-minimal .sidebar-slot-link-title {
-  font-family: var(--font-secondary);
-  font-size: var(--font-m);
-  line-height: var(--line-height-m);
-  font-weight: var(--title-weight);
-}
-
-.sidebar-slot.slot-minimal .sidebar-slot-link-excerpt {
-  font-size: var(--font-xs);
-  line-height: var(--line-height-m);
-  color: color-mix(in srgb, var(--text-primary), var(--alpha-50));
-}
-
-/* ── Variant: slot-card — background-color cards with vertical gap ── */
-
-.sidebar-slot.slot-card {
-  gap: var(--space-s);
-}
-
-.sidebar-slot.slot-card .sidebar-slot-link {
+.sidebar-slot .sidebar-slot-link {
   padding: var(--studio-gap);
   background-color: var(--bg-faded-3);
   border-radius: var(--radius-s);
-
 }
 
-.sidebar-slot.slot-card .sidebar-slot-link:hover,
-.sidebar-slot.slot-card .sidebar-slot-link.is-active,
-.sidebar-slot.slot-card .sidebar-slot-link.is-active:hover {
+.sidebar-slot .sidebar-slot-link:hover,
+.sidebar-slot .sidebar-slot-link.is-active,
+.sidebar-slot .sidebar-slot-link.is-active:hover {
   background-color: var(--bg-faded-7);
   color: var(--text-primary);
-
 }
 
-
-
-.sidebar-slot.slot-card .sidebar-slot-link.is-active .sidebar-slot-link-excerpt {
+.sidebar-slot .sidebar-slot-link.is-active .sidebar-slot-link-excerpt {
   color: color-mix(in srgb, var(--text-primary), var(--alpha-50));
 }
 
 /* Gap replaces the divider as the separator */
-.sidebar-slot.slot-card .sidebar-slot-link::after {
+.sidebar-slot .sidebar-slot-link::after {
   background-color: transparent;
 }
 
-.sidebar-slot.slot-card .sidebar-slot-link::before {
+.sidebar-slot .sidebar-slot-link::before {
   background-color: color-mix(in srgb, var(--text-primary), var(--alpha-5));
 }
 
-.sidebar-slot.slot-card .sidebar-slot-link-thumb {
+.sidebar-slot .sidebar-slot-link-thumb {
   height: 80px;
 }
 
-.sidebar-slot.slot-card .sidebar-slot-link-text {
+.sidebar-slot .sidebar-slot-link-text {
   gap: var(--space-2xs);
 }
 
-.sidebar-slot.slot-card .sidebar-slot-link-title {
+.sidebar-slot .sidebar-slot-link-title {
   font-family: var(--font-secondary);
   font-size: var(--font-m);
   line-height: var(--line-height-m);
   font-weight: var(--title-weight);
 }
 
-.sidebar-slot.slot-card .sidebar-slot-link-excerpt {
+.sidebar-slot .sidebar-slot-link-excerpt {
   font-size: var(--font-xs);
   line-height: var(--line-height-m);
   color: color-mix(in srgb, var(--text-primary), var(--alpha-50));
@@ -1713,11 +1642,6 @@ article.article {
   align-self: end;
 }
 
-.case-study-client {
-  text-transform: uppercase;
-  color: var(--text-faded);
-}
-
 .case-study-synopsis {
   color: var(--text-secondary);
 }
@@ -2201,7 +2125,9 @@ body.is-animating .case-study-content {
 }
 
 .contact-headline {
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--headline-weight);
+  font-size: var(--headline-size);
+  line-height: var(--headline-leading);
 }
 
 .contact-speed-signal {
@@ -2227,9 +2153,9 @@ body.is-animating .case-study-content {
 
 .contact-label {
   font-family: var(--font-primary);
-  font-size: var(--font-m);
+  font-size: var(--body-size);
   color: var(--text-primary);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-regular);
   white-space: nowrap;
   margin-bottom: 0;
 }
@@ -2738,8 +2664,6 @@ body.is-animating .case-study-content {
 
 .services-sub {
   font-size: var(--font-2xl); 
-  color: var(--text-secondary);
-  max-width: 44ch;
 }
 
 .services-divider {
@@ -2755,7 +2679,7 @@ body.is-animating .case-study-content {
 /* -- Section 2: services content (inside accordion panels) -- */
 
 .services-sub-wrap {
-  padding: var(--space-5xl) var(--space-3xl);
+  padding: var(--space-5xl) 0;
 }
 
 .service-description p {
@@ -2811,17 +2735,6 @@ body.is-animating .case-study-content {
 .services-accordion [data-depth="0"] > .accordion-content > .accordion-inner {
   /* display: flex; */
   /* justify-content: flex-end; */
-}
-
-
-
-.services-accordion [data-depth="0"] > .accordion-content > .accordion-inner > .accordion-body {
-  /* max-width: 45rem; */
-}
-
-
-.accordion-item.is-open {
-  background-color: var(--bg-faded-3);
 }
 
 
@@ -3395,84 +3308,65 @@ body.is-animating .case-study-content {
   display: block;
 }
 
-/* ------- Logo Grid ------- */
+/* ------- Home: Case Studies ------- */
 
-.logo-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--studio-gap);
-  min-height: 400px;
-}
-
-.logo-mark {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 5rem;
-  padding: var(--space-m);
-  color: var(--text-primary);
-}
-
-.logo-mark > svg {
-  width: var(--logo-w);
-  height: var(--logo-h);
-  max-width: 100%;
-  display: block;
-}
-
-@media (max-width: 768px) {
-  .logo-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* Temporary: hide static grid on home while ticker is under evaluation */
-.home-clients .logo-grid {
-  display: none;
-}
-
-/* ------- Home: Latest Work ------- */
-
-.work-cards {
+.case-study-cards {
   display: flex;
   flex-direction: column;
 }
 
 /* Card is a link; reset link styles so inner type rules win. */
-.work-card {
+.case-study-card {
   display: grid;
   text-decoration: none;
   color: var(--text-primary);
   margin: var(--space-12xl) 0;
+  overflow: hidden;
 }
 
-a.work-card:hover {
+a.case-study-card:hover {
   color: var(--text-primary);
 }
 
 /* Info column: title at top, stat at bottom — stretches to match
    the right-side media-frame's height (set by 16:9 ratio). */
-.work-card-info {
+.case-study-card-info {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: var(--space-l);
 }
 
-.work-card-title {
-  margin-top: 0;
+/* Heading group: eyebrow (client name) sits tight above the title.
+   Wrapping these two in their own flex column means the parent
+   .case-study-card-info can keep `justify-content: space-between` and
+   still push the stat to the bottom of the column. */
+.case-study-card-heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+}
+
+.case-study-card-client {
+  margin: 0;
+  color: var(--text-faded);
+}
+
+.case-study-card-title {
+  margin: 0;
+  font-weight: var(--font-weight-regular);
 }
 
 /* Stat: <p> wraps the whole thing — its rules style the caption text
    directly. The value <span> is a block-level inline-flex callout
    (icon + number) above the caption. */
-.work-card-stat {
+.case-study-card-stat {
   margin: 0;
   font-size: var(--font-xs);
   color: var(--text-secondary);
 }
 
-.work-card-stat-value {
+.case-study-card-stat-value {
   display: flex;
   align-items: center;
   gap: var(--space-s);
@@ -3482,21 +3376,21 @@ a.work-card:hover {
   color: var(--text-primary);
 }
 
-.work-card-stat-value .svg-icn {
+.case-study-card-stat-value .svg-icn {
   width: 1em;
   height: 1em;
 }
 
 /* Media block is the positioning context for the logo overlay
    (and any future scroll-revealed overlay layered on top). */
-.work-card-media {
+.case-study-card-media {
   position: relative;
 }
 
-/* Brand logo overlay — fills .work-card-media. Decorative
+/* Brand logo overlay — fills .case-study-card-media. Decorative
    (aria-hidden in markup); revealed only while body.is-scrolling.
    Phase 1 ships text content; Phase 2 swaps for an <img>. */
-.work-card-logo {
+.case-study-card-logo {
   position: absolute;
   inset: 0;
   display: flex;
@@ -3515,15 +3409,30 @@ a.work-card:hover {
   text-align: center;
 }
 
-/* Phase 2: caps the logo image when content becomes <img>. */
-.work-card-logo img {
+/* Logo mark — wrapper sizing for the sprite SVG. The .case-study-card-logo
+   parent is the full-size scrim; this child caps the artwork itself so the
+   logo reads as a centred mark, not a stretched fill.
+   `aspect-ratio` is set inline by studio-home-featured.js from the sprite
+   viewBox, so the wrapper sizes proportionally without per-logo CSS.
+   Per-brand overrides hook in via `[data-logo="<name>"]`. */
+.case-study-card-logo-mark {
+  width: 30%;
+  max-width: 20%;
+  max-height: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Legacy <img> path — kept for any future bitmap-logo case. */
+.case-study-card-logo img {
   max-width: 30%;
   max-height: 40%;
   width: auto;
   height: auto;
 }
 
-body.is-scrolling .work-card-logo {
+body.is-scrolling .case-study-card-logo {
   opacity: 1;
 }
 
@@ -3532,10 +3441,10 @@ body.is-scrolling .work-card-logo {
    it entirely is preferable to an instant opacity flip for vestibular
    sensitivity. */
 @media (prefers-reduced-motion: reduce) {
-  .work-card-logo {
+  .case-study-card-logo {
     transition: none;
   }
-  body.is-scrolling .work-card-logo {
+  body.is-scrolling .case-study-card-logo {
     opacity: 0;
   }
 }
@@ -3599,8 +3508,8 @@ body.is-scrolling .work-card-logo {
 
 .testimonial-mark {
     flex: 0 0 auto;
-    color: var(--white);
-    background: var(--black);
+    color: var(--background-primary);
+    background: var(--text-primary);
     border-radius: 50%;
     overflow: hidden;
     height: 60px;
@@ -3611,7 +3520,7 @@ body.is-scrolling .work-card-logo {
     padding: 10px;
 }
 
-.testimonial-mark svg {
+.testimonial-mark .svg-logo {
   max-width: 45px;
   max-height: 45px;
 }

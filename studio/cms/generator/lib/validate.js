@@ -29,6 +29,20 @@ const LOGO_SPRITE_PATH = path.resolve(
   "_sprite.svg"
 );
 
+// Icon sprite is built by studio/cms/generator/build-icon-sprite.js into
+// studio/assets/images/svg-icons/_sprite.svg. Used to validate `stat.icon`
+// front-matter values on case studies.
+const ICON_SPRITE_PATH = path.resolve(
+  __dirname,
+  "..",
+  "..",
+  "..",
+  "assets",
+  "images",
+  "svg-icons",
+  "_sprite.svg"
+);
+
 function loadLogoIds() {
   if (!fs.existsSync(LOGO_SPRITE_PATH)) {
     throw new Error(
@@ -51,15 +65,44 @@ function loadLogoIds() {
   return ids;
 }
 
-// Lazy-loaded so requiring this module doesn't crash when the sprite
-// hasn't been built yet (e.g. fresh checkout, watch mode without prior gen).
-// First validate() call materialises the list.
+function loadIconIds() {
+  if (!fs.existsSync(ICON_SPRITE_PATH)) {
+    throw new Error(
+      `icon sprite missing at ${ICON_SPRITE_PATH} — run \`npm run build:icons\` (or \`npm run gen\`) to build it`
+    );
+  }
+  const sprite = fs.readFileSync(ICON_SPRITE_PATH, "utf8");
+  const ids = [];
+  const re = /<symbol\s+id="([^"]+)"/g;
+  let m;
+  while ((m = re.exec(sprite)) !== null) {
+    ids.push(m[1]);
+  }
+  if (ids.length === 0) {
+    throw new Error(
+      `icon sprite at ${ICON_SPRITE_PATH} contains no <symbol> entries — sprite may be malformed`
+    );
+  }
+  return ids;
+}
+
+// Lazy-loaded so requiring this module doesn't crash when sprites haven't
+// been built yet (e.g. fresh checkout, watch mode without prior gen).
+// First validate() call that needs the list materialises it.
 let _validLogoIds = null;
 function getValidLogoIds() {
   if (_validLogoIds === null) {
     _validLogoIds = loadLogoIds();
   }
   return _validLogoIds;
+}
+
+let _validIconIds = null;
+function getValidIconIds() {
+  if (_validIconIds === null) {
+    _validIconIds = loadIconIds();
+  }
+  return _validIconIds;
 }
 
 // Mechanical slug for the validator's "did you mean" hint. Lowercase, strip
@@ -136,6 +179,31 @@ function validate(data, sourcePath) {
         errors.push(
           `${sourcePath}: \`logo: ${data.logo}\` not found in logo sprite.${hint} Valid ids: ${validLogoIds.join(", ")}`
         );
+      }
+    }
+  }
+
+  if (data.stat !== undefined) {
+    if (typeof data.stat !== "object" || data.stat === null || Array.isArray(data.stat)) {
+      errors.push(`${sourcePath}: \`stat\` must be an object with \`value\` and \`caption\``);
+    } else {
+      if (!data.stat.value || String(data.stat.value).trim() === "") {
+        errors.push(`${sourcePath}: \`stat.value\` is required when \`stat\` is set`);
+      }
+      if (!data.stat.caption || String(data.stat.caption).trim() === "") {
+        errors.push(`${sourcePath}: \`stat.caption\` is required when \`stat\` is set`);
+      }
+      if (data.stat.icon !== undefined) {
+        if (typeof data.stat.icon !== "string") {
+          errors.push(`${sourcePath}: \`stat.icon\` must be a string icon id`);
+        } else {
+          const validIconIds = getValidIconIds();
+          if (!validIconIds.includes(data.stat.icon)) {
+            errors.push(
+              `${sourcePath}: \`stat.icon: ${data.stat.icon}\` not found in icon sprite. Valid ids: ${validIconIds.join(", ")}`
+            );
+          }
+        }
       }
     }
   }

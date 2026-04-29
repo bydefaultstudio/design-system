@@ -9,9 +9,9 @@
  * Data: TESTIMONIALS array below. Each entry has a `brand` field that
  * matches a `name` in studio-logos.js LOGOS — the testimonial mark
  * (circular black avatar) is rendered from that shared SVG sprite via
- * window.resolveLogoSvg() with the "avatar" variant. Brands that define
- * an `avatar` block in LOGOS get a dedicated avatar artwork; brands
- * without one fall back to their default mark.
+ * window.renderLogoSpriteMarkup() with the "avatar" variant. Brands
+ * that define an `avatar` block in LOGOS get a dedicated avatar
+ * artwork; brands without one fall back to their default mark.
  *
  * Cleanup: destroyTestimonialSliders() must run before re-mount on Barba
  * navigation. It disconnects the IntersectionObserver, kills GSAP tweens
@@ -33,7 +33,7 @@ var WORD_FADE_DURATION_MS = 500;
 var WORD_STAGGER_MS = 220;
 var QUOTE_BASELINE_OPACITY = 0.2;
 var WORD_EASE = "power2.out";
-var QUOTE_REST_MS = 6000;
+var QUOTE_REST_MS = 4500;
 
 //
 //------- Testimonial data -------//
@@ -115,18 +115,25 @@ function buildTestimonialSlides(slider) {
       '</div>';
     list.appendChild(li);
 
-    // Inject the brand SVG into the mark via the shared optical-sizing helper.
-    // The mark itself is intentionally unstyled in CSS — the user writes
-    // their own .testimonial-mark / .testimonial-mark > svg rules and may
-    // use the --logo-w / --logo-h variables for optical sizing.
+    // Inject the brand SVG into the mark via the canonical helper.
+    // .testimonial-mark is the circular badge (60px, overflow:hidden);
+    // the .svg-logo wrapper inside carries inline aspect-ratio +
+    // equal-area dimensions for optical sizing within the badge.
     var mark = li.querySelector(".testimonial-mark");
-    var info = typeof window.resolveLogoSvg === "function"
-      ? window.resolveLogoSvg(t.brand, 5, "avatar")
+    var dims = typeof window.getLogoSpriteDimensions === "function"
+      ? window.getLogoSpriteDimensions(t.brand, 5, { variant: "avatar" })
       : null;
-    if (info) {
-      mark.style.setProperty("--logo-w", info.w + "rem");
-      mark.style.setProperty("--logo-h", info.h + "rem");
-      mark.innerHTML = info.svg;
+    var markup = typeof window.renderLogoSpriteMarkup === "function"
+      ? window.renderLogoSpriteMarkup(t.brand, {
+          variant: "avatar",
+          className: "testimonial-logo-mark",
+        })
+      : null;
+    if (mark && markup && dims) {
+      mark.innerHTML = markup;
+      var inner = mark.firstElementChild;
+      inner.style.width = dims.w + "rem";
+      inner.style.height = dims.h + "rem";
     }
   });
 }
@@ -286,7 +293,7 @@ function mountTestimonialSliders() {
         // slide grows/shrinks fluidly with the available main content area.
         // Breakpoints bump the percentage on smaller screens where the
         // user usually wants more of the viewport given to the card.
-        fixedWidth: "65%",
+        fixedWidth: "50%",
         focus: "center",
         gap: "2rem",
         drag: "free",

@@ -1,6 +1,10 @@
 ---
 type: case-study
 featured: false
+stat:
+  value: "26M"
+  caption: "Monthly readers across the platform"
+  icon: arrow-up
 title: "Where culture meets care"
 synopsis: "How we rebranded legacy Black health media platform BlackDoctor into a sophisticated, trust-first digital experience reaching 26 million people monthly."
 date: 2026-04-24
