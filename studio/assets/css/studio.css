@@ -180,7 +180,7 @@ body.is-sidebar-collapsed .layout {
   background: var(--background-sidebar);
   z-index: var(--z-sidebar);
   box-sizing: border-box;
-  padding-left: var(--studio-gap);
+  padding: 0 var(--studio-gap);
   transition: width var(--duration-xl) var(--ease-out);
 }
 
@@ -263,6 +263,7 @@ body.is-sidebar-collapsed .layout {
   gap: var(--space-xl);
   background-color: transparent;
   transition: background-color var(--duration-m) var(--ease-out);
+  font-size: var(--font-s);
 }
 
 a.intro-block:hover {
@@ -3419,6 +3420,76 @@ body.is-animating .case-study-content {
   .logo-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+/* ------- Home: Latest Work ------- */
+
+.latest-work {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Card is a link; reset link styles so inner type rules win. */
+.latest-work-item {
+  display: grid;
+  text-decoration: none;
+  color: var(--text-primary);
+  margin: var(--space-12xl) 0;
+}
+
+a.latest-work-item:hover {
+  color: var(--text-primary);
+}
+
+/* Left text column: title at top, excerpt at bottom — stretches to
+   match the right-side media-frame's height (set by 16:9 ratio). */
+.latest-work-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-l);
+}
+
+.latest-work-title {
+  margin-top: 0;
+}
+
+.latest-work-excerpt {
+  font-size: var(--font-s);
+}
+
+/* Foot group: excerpt sits above stat block, stacked. */
+.latest-work-foot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+}
+
+/* Stat: pill-icon + bold value on top row, caption below. */
+.latest-work-stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.latest-work-stat-value {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--space-s);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-l);
+}
+
+.latest-work-stat-value .svg-icn {
+  width: 1em;
+  height: 1em;
+}
+
+.latest-work-stat-caption {
+  color: var(--text-secondary);
+  font-size: var(--font-xs);
 }
 
 /* ------- Testimonials ------- */
