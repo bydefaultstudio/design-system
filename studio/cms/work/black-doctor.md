@@ -1,10 +1,11 @@
 ---
 type: case-study
-featured: true
+featured: false
 title: "Where culture meets care"
 synopsis: "How we rebranded legacy Black health media platform BlackDoctor into a sophisticated, trust-first digital experience reaching 26 million people monthly."
 date: 2026-04-24
 client: "BlackDoctor"
+logo: blackdoctor
 year: 2026
 services: ["Brand Identity", "Brand Strategy", "Web Design", "Creative Direction"]
 categories: ["Health & Wellness"]

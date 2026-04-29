@@ -55,20 +55,20 @@ One field → many destinations. Authors write reader-facing copy (`title`, `syn
 | `thumbnail-focus` | string | no | CSS `object-position` override, e.g. `"50% 30%"`. Use only when the source crops badly — better to re-crop the image. |
 | `thumbnail-video` | string | no | Path/URL to an MP4. When present, the feed card becomes a hover-to-play video preview (desktop only). See **Video thumbnails** below. |
 | `thumbnail-video-poster` | string | no | Poster frame for the video thumbnail. Falls back to `thumbnail` → `hero`. |
-| `feed-variant` | `"featured"` \| `"standard"` \| `"compact"` \| `"text"` | no | Drives the card's visual treatment. Defaults to `"standard"`. |
+| `layout` | `"editorial"` \| `"cover"` | no | Card composition. `editorial` stacks image on top, text below. `cover` overlays text on a full-bleed image. Defaults to `"cover"`. |
+| `featured` | boolean | no | Editorial promotion flag — separate from layout. Set `true` to mark the post for the home-page featured slot. Defaults to `false`. |
+| `logo` | string | no | Case-studies only. References a `<symbol>` id in `studio/assets/images/svg-logos/_sprite.svg` (e.g. `verizon`, `mcdonalds`). Build hard-fails if the id isn't in the sprite. |
 | `order` | number | no | Manual sort override (lower = earlier). Default: assigned from date-desc sort, writes to `data-order`. |
 | `status` | `"published"` \| `"draft"` | no | Drafts are skipped from output + manifest. |
 
 ### Thumbnail rules
 
-The feed card shape and crop come from two coordinated settings: the **variant** (how big/prominent the card is) and the **ratio** (the image's aspect). Variants imply a sensible default ratio — only set `thumbnail-ratio` when you need to override it.
+The feed card shape and crop come from two coordinated settings: the **layout** (how the card composes image and text) and the **ratio** (the image's aspect). Each layout has a sensible default ratio — only set `thumbnail-ratio` when you need to override it.
 
-| `feed-variant` | Default ratio | Image rendered? | Typical use |
+| `layout` | Default ratio | Composition | Typical use |
 |---|---|---|---|
-| `featured` | `4:5` | Full-bleed background with text overlay | Hero moments, flagship case studies. Use `9:16` for portrait-first storytelling. |
-| `standard` | `16:9` | Image on top, text below | Most posts — the default. |
-| `compact` | `16:9` | Image on top, smaller card | Side-column or dense grid rows. Use `1:1` for square tiles. |
-| `text` | — | **No image.** `thumbnail` is ignored. | Quick-reads, opinion posts, status updates. |
+| `cover` (default) | `4:5` | Full-bleed image with title + body overlaid on it | Visual-led posts, case studies, magazine-cover energy. Use `9:16` for portrait-first storytelling. |
+| `editorial` | `16:9` | Image on top, title + body stacked below | Article-card feel, content-led posts. |
 
 **Authoring rules of thumb:**
 
@@ -131,6 +131,44 @@ Only set when search-facing copy needs to differ from reader-facing.
 | `role` | string | no | Header strip ("Our role"). |
 | `services` | string[] | no | e.g. `["Strategy", "Design", "Build"]`. Header strip + feed. Separate from `categories` — `services` = what we did; `categories` = topic tags. |
 | `client-url` | string | no | Optional outbound link from the header strip. |
+
+## Client logo registry
+
+The `logo:` front-matter field on a case study references a `<symbol>` id in the logo sprite at `studio/assets/images/svg-logos/_sprite.svg`. The same sprite powers the **logo grid** on the home page, the **logo ticker** above testimonials, and **testimonial avatars** — so adding a logo here makes it available everywhere at once.
+
+### Sprite ID rule
+
+The sprite id is a **kebab-case slug derived from the brand's own word boundaries**:
+
+- Lowercase, ASCII alphanumeric, hyphen-separated.
+- Strip apostrophes (no replacement).
+- Replace `&` with `and`.
+- **Mirror how the brand spells itself.** Brands written as one word stay one word in the slug: `BlackDoctor` → `blackdoctor`, `Hypebeast` → `hypebeast`, `Copa90` → `copa90`. Brands written as multiple words split: `Country & Town House` → `country-and-town-house`, `The Sole Supplier` → `the-sole-supplier`.
+
+### Current sprite ids
+
+| Brand display | Sprite id | In feed grid? | Has avatar variant? |
+|---|---|---|---|
+| BET | `bet` | ✓ | — |
+| BlackDoctor | `blackdoctor` | ✓ | — |
+| Copa90 | `copa90` | ✓ | — |
+| Country & Town House | `country-and-town-house` | — | ✓ (`country-and-town-house-avatar`) |
+| Hypebeast | `hypebeast` | ✓ | — |
+| Lift Labs | `lift-labs` | ✓ | — |
+| McDonald's | `mcdonalds` | ✓ | — |
+| Revolt | `revolt` | ✓ | — |
+| The Sole Supplier | `the-sole-supplier` | ✓ | — |
+| Verizon | `verizon` | ✓ | — |
+
+### Adding a new logo
+
+1. Drop a clean `<svg>` (paths must use `fill="currentColor"`, no hardcoded colors) at `studio/assets/images/svg-logos/<id>.svg` where `<id>` follows the rule above. Run it through `assets/js/svg-clean.js --current-color --strip-comments` first if it came from a brand asset pack.
+2. (Optional) Add a circular-friendly avatar variant at `<id>-avatar.svg` if the wide wordmark won't fit a testimonial badge.
+3. Register it in the `LOGOS` array in [studio/assets/js/studio-logos.js](../assets/js/studio-logos.js) — copy an existing entry and update `name` + `viewBox` (and `scale` if the mark needs ink-density correction). Add `avatar: { viewBox, scale? }` only if you supplied an avatar variant.
+4. Run `npm run gen` to rebuild the sprite. The build hard-fails if any case-study `logo:` references a missing id.
+5. (Optional) Add `<div class="logo-mark" data-bd-animate="slide-up" data-bd-scrub data-logo="<id>"></div>` to the home-page logo grid in [studio/index.html](../../index.html) if the brand should appear there as social proof.
+
+If a case study sets `logo:` and the value isn't in the sprite, the build aborts with the full registry list and a "did you mean" hint derived from the case study's `client:` field.
 
 ## Shortcodes
 

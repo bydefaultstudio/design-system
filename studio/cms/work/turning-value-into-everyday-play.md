@@ -1,10 +1,11 @@
 ---
 type: case-study
-featured: true
+featured: false
 title: "Turning value into everyday play"
 synopsis: "How a gamified card game turned a promotional campaign into culture, 3.3M impressions, played and shared by Black Gen Z audiences nationwide."
 date: 2026-04-09
 client: "McDonald's"
+logo: mcdonalds
 year: 2026
 services: ["Campaign Identity", "Game Strategy", "Development", "Creative Direction"]
 categories: ["Food & Beverage"]

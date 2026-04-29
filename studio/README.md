@@ -228,6 +228,24 @@ Filtering and sorting UI will land in the top bar later — that's why the top b
 - JS follows [cms/js-code-structure.md](../cms/js-code-structure.md): named functions, one `console.log` at the top, init inside `DOMContentLoaded`, no globals (only `studioRefreshActiveNav` is exposed for Barba to call).
 - **Aspect ratios** — apply `data-ratio="W:H"` to any element to set its aspect ratio (e.g. `data-ratio="16:9"`). Available ratios: `1:1`, `4:3`, `3:2`, `16:9`, `21:9`, `4:5`, `9:16`. Defined globally at the bottom of `assets/css/studio.css`. Components set their own default `aspect-ratio`; `data-ratio` overrides it.
 
+### Scroll-state body class
+
+`assets/js/studio-scroll-state.js` adds `is-scrolling` to `<body>` while the user is actively scrolling, and removes it 500ms after scrolling stops. Any element can opt into "visible only while scrolling" with two CSS rules — no per-component scroll listener needed:
+
+```css
+.my-overlay {
+  opacity: 0;
+  transition: opacity var(--duration-xs) var(--ease-out);
+}
+body.is-scrolling .my-overlay {
+  opacity: 1;
+}
+```
+
+The listener is registered once at `DOMContentLoaded` on `window`, so it survives Barba page transitions automatically (Barba only swaps `[data-barba="container"]`). Don't re-bind it in `afterEnter` — that would stack listeners.
+
+First consumer: `.work-card-logo` on the home page work cards (`studio/index.html`), revealing the brand mark over the case study media while the user scrolls.
+
 ### Section naming convention
 
 Every `<section>` inside the Barba container must have a class following **`{page}-{role}`**:

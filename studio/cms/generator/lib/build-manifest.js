@@ -35,7 +35,7 @@ function toManifestRecord(entry) {
     hero: entry.hero || null,
     categories: entry.categories || [],
     author: entry.author || null,
-    feedVariant: entry.feedVariant || "standard",
+    layout: entry.layout || "cover",
     featured: Boolean(entry.featured)
   };
   if (entry.type === "article") {
@@ -47,6 +47,7 @@ function toManifestRecord(entry) {
     record.role = entry.role || null;
     record.services = entry.services || [];
     record.clientUrl = entry["client-url"] || null;
+    record.logo = entry.logo || null;
   }
   return record;
 }

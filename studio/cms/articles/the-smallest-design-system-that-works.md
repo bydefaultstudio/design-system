@@ -8,7 +8,7 @@ author:
   avatar: "https://bydefault.design/image/64x64?text=BD"
 categories: ["Systems", "Minimalism"]
 read-time: "3 min read"
-featured: true
+featured: false
 hero: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?q=80&w=2940&auto=format&fit=crop"
 thumbnail: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?q=80&w=2940&auto=format&fit=crop"
 thumbnail-ratio: "1:1"

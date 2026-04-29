@@ -1,10 +1,11 @@
 ---
 type: case-study
-featured: true
+featured: false
 title: "McDonald's Threadsetters"
 synopsis: "How we turned McDonald's crew uniforms into a cultural fashion moment, bridging fast food and streetwear with a campaign that Gen Z claimed as their own."
 date: 2026-04-24
 client: "McDonald's"
+logo: mcdonalds
 year: 2026
 services: ["Campaign Identity", "Creative Direction", "Social Media Marketing", "Development"]
 categories: ["Food & Beverage"]

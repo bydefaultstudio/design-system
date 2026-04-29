@@ -260,7 +260,7 @@ function initCaseStudySlider() {
         : '<img class="img-thumb" src="' + src + '" alt="' + alt + '" loading="lazy">';
 
       return '<div class="splide__slide case-study-slide">' +
-        '<a href="' + prefix + entry.url + '" class="post" data-post-type="standard">' +
+        '<a href="' + prefix + entry.url + '" class="post" data-layout="editorial">' +
           '<div class="post-thumbnail" data-ratio="16:9">' + media + '</div>' +
           '<div class="post-header"><span class="post-label label">Case study</span></div>' +
           '<div class="post-body">' +

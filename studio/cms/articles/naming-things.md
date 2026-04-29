@@ -8,7 +8,7 @@ author:
   avatar: "https://bydefault.design/image/64x64?text=BD"
 categories: ["Systems", "Naming"]
 read-time: "7 min read"
-featured: true
+featured: false
 hero: "https://images.unsplash.com/photo-1773332585754-f1436987743b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 thumbnail: "https://images.unsplash.com/photo-1773332585754-f1436987743b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 thumbnail-ratio: "1:1"

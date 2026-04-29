@@ -8,7 +8,7 @@ author:
   avatar: "https://bydefault.design/image/64x64?text=BD"
 categories: ["CSS", "Architecture"]
 read-time: "5 min read"
-featured: true
+featured: false
 hero: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2940&auto=format&fit=crop"
 thumbnail: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2940&auto=format&fit=crop"
 thumbnail-ratio: "4:5"

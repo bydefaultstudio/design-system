@@ -1,10 +1,11 @@
 ---
 type: case-study
-featured: true
+featured: false
 title: "Transforming presence into cultural belonging"
 synopsis: "How culture-first AR turned Verizon's HBCU sponsorship into sold-out events across 3 cities and a genuine connection with 2M fans."
 date: 2026-04-09
 client: "Verizon"
+logo: verizon
 year: 2026
 services: ["Campaign Identity", "AR Experience", "Creative Direction", "Motion Graphics & Film"]
 categories: ["Telecom & Media Network"]

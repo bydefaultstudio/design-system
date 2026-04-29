@@ -159,6 +159,7 @@
           <section class="services-formats bottom-large">
               <div class="accordion services-accordion" data-accordion="multi">
 
+                  <!-- Accordion 1-->
                   <article class="accordion-item" data-depth="0" data-service="advertising">
                     <button type="button" class="accordion-header" aria-expanded="false" aria-controls="service-panel-advertising">
                       <span class="accordion-title">Interactive Advertising</span>
@@ -166,16 +167,24 @@
                     </button>
                     <div class="accordion-content" id="service-panel-advertising" role="region">
                       <div class="accordion-inner">
-                        <div class="accordion-body">
-                        <div class="service-description">
-                          <p>The default ad unit asks nothing of the person looking at it. A static banner. A pre-roll someone skips. Built to be served, not used.</p>
-                          <p>We build the opposite. Rich media, shoppable formats, gamified units, high-impact display that asks the audience to tap, swipe, play, explore, or buy.</p>
-                          <p>The result is more time with the brand, more memory after the impression, and more influence at the moment a decision gets made.</p>
-                        </div>
+                        <div class="accordion-body" data-grid>
 
+                          <!-- Col Left-->
+                          <div class="block" data-col-start="1" data-col-span="5">
+                            <p>This paragraph demonstrates how body text will look across your layout.</p>
+                            <button class="button">Get started</button>
+                          </div>
 
-                        <div class="formats-section">
+                          <!-- Col Right-->
+                          <div class="block" data-col-start="7" data-col-span="6">
+                            <div class="service-description">
+                              <p>The default ad unit asks nothing of the person looking at it. A static banner. A pre-roll someone skips. Built to be served, not used.</p>
+                              <p>We build the opposite. Rich media, shoppable formats, gamified units, high-impact display that asks the audience to tap, swipe, play, explore, or buy.</p>
+                              <p>The result is more time with the brand, more memory after the impression, and more influence at the moment a decision gets made.</p>
+                            </div>
+                            <div class="formats-section">
                           <div class="accordion" data-accordion="single">
+                          
                           <div class="accordion-item" data-depth="1">
                             <button type="button" class="accordion-header" aria-expanded="false">
                               <span>Rich media display</span>
@@ -183,6 +192,7 @@
                             </button>
                             <div class="accordion-content"><div class="accordion-inner"><div class="accordion-body">Expandable, animated, interactive units. Built for open web, mobile, and programmatic.</div></div></div>
                           </div>
+
                           <div class="accordion-item" data-depth="1">
                             <button type="button" class="accordion-header" aria-expanded="false">
                               <span>Shoppable ad units</span>
@@ -190,6 +200,7 @@
                             </button>
                             <div class="accordion-content"><div class="accordion-inner"><div class="accordion-body">Direct-to-product formats that compress the path from impression to purchase.</div></div></div>
                           </div>
+
                           <div class="accordion-item" data-depth="1">
                             <button type="button" class="accordion-header" aria-expanded="false">
                               <span>Gamified formats</span>
@@ -197,6 +208,7 @@
                             </button>
                             <div class="accordion-content"><div class="accordion-inner"><div class="accordion-body">Gameplay applied to brand moments. Highest brand recall format we build.</div></div></div>
                           </div>
+
                           <div class="accordion-item" data-depth="1">
                             <button type="button" class="accordion-header" aria-expanded="false">
                               <span>High-impact takeovers</span>
@@ -204,6 +216,7 @@
                             </button>
                             <div class="accordion-content"><div class="accordion-inner"><div class="accordion-body">Full-page or premium placements designed for launch moments.</div></div></div>
                           </div>
+
                           <div class="accordion-item" data-depth="1">
                             <button type="button" class="accordion-header" aria-expanded="false">
                               <span>Interactive video</span>
@@ -212,13 +225,16 @@
                             <div class="accordion-content"><div class="accordion-inner"><div class="accordion-body">Branching, hotspot, and choose-your-path formats. Built to keep viewers in, not push them through.</div></div></div>
                           </div>
                           </div>
-                        </div>
+                            </div>
+                          </div>
+
 
                         </div>
                       </div>
                     </div>
                   </article>
 
+                  <!-- Accordion 2-->
                   <article class="accordion-item" data-depth="0" data-service="content">
                     <button type="button" class="accordion-header" aria-expanded="false" aria-controls="service-panel-content">
                       <span class="accordion-title">Interactive Content</span>
@@ -285,6 +301,7 @@
                     </div>
                   </article>
 
+                  <!-- Accordion 3-->
                   <article class="accordion-item" data-depth="0" data-service="activations">
                     <button type="button" class="accordion-header" aria-expanded="false" aria-controls="service-panel-activations">
                       <span class="accordion-title">Interactive Activations</span>
@@ -402,7 +419,7 @@
             </div>
           </section>
 
-          </div><!-- /.services-wrapper -->
+          </div>
 
         </div>
       </div>
@@ -412,8 +429,12 @@
 
   </div>
 
-  <!-- bd-cursor — desktop only, JS-driven -->
-  <div class="cursor-default" aria-hidden="true"></div>
+  <!-- bd-cursor — desktop-only tooltip-style label, JS-driven -->
+  <div class="cursor-label" aria-hidden="true">
+    <div class="cursor-label-icon cursor-label-icon-lead"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true" width="100%" height="100%"><use href="/assets/images/svg-icons/_sprite.svg#plus"/></svg></div>
+    <span class="cursor-label-text"></span>
+    <div class="cursor-label-icon cursor-label-icon-end"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true" width="100%" height="100%"><use href="/assets/images/svg-icons/_sprite.svg#plus"/></svg></div>
+  </div>
   <div class="cursor-halo" aria-hidden="true"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@barba/core@2.10.3/dist/barba.umd.min.js" defer></script>

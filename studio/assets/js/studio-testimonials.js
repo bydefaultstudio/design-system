@@ -43,7 +43,7 @@ var TESTIMONIALS = [
   {
     quote: "Their work led to a 10% YoY increase in site traffic, driving improved commercial growth and stronger audience engagement.",
     attribution: "Creative Director, Country & Townhouse",
-    brand: "country-and-townhouse",
+    brand: "country-and-town-house",
   },
   {
     quote: "They shaped who we are today and 100% the best investment we've made.",

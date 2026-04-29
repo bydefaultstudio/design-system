@@ -1,10 +1,11 @@
 ---
 type: case-study
-featured: true
+featured: false
 title: "Bringing contemporary energy to a legacy brand"
 synopsis: "How a startup accelerator buried inside a media giant got a brand as bold as the founders it backs."
 date: 2026-04-09
 client: "Comcast NBCUniversal LIFT Labs"
+logo: lift-labs
 year: 2026
 services: ["Brand Identity", "Brand Strategy", "Creative Direction"]
 categories: ["Tech & Innovation"]

@@ -197,8 +197,6 @@ function markReadPosts() {
 // thumb-hover.js hover-to-play behaviour; otherwise <img class="img-thumb">.
 
 function buildThumbnailBlock(entry) {
-  if (entry.feedVariant === "text") return { html: "", postRatioAttr: "" };
-
   var hasVideo = !!entry.thumbnailVideo;
   var src = hasVideo ? entry.thumbnailVideo : (entry.thumbnail || entry.hero);
   // Fallback: auto-generate a 4:5 placeholder with the title burned in
@@ -212,12 +210,12 @@ function buildThumbnailBlock(entry) {
 
   var alt = attrEscape(entry.thumbnailAlt || entry.title || "");
   var ratio = entry.thumbnailRatio || (usedPlaceholder ? "4:5" : "");
-  var isFeatured = Boolean(entry.featured) || entry.feedVariant === "featured";
+  var isCover = (entry.layout || "cover") === "cover";
   var mediaStyle = entry.thumbnailFocus
     ? ' style="object-position: ' + attrEscape(entry.thumbnailFocus) + ';"'
     : "";
-  var thumbRatioAttr = !isFeatured && ratio ? ' data-ratio="' + attrEscape(ratio) + '"' : "";
-  var postRatioAttr = isFeatured && ratio ? ' data-ratio="' + attrEscape(ratio) + '"' : "";
+  var thumbRatioAttr = !isCover && ratio ? ' data-ratio="' + attrEscape(ratio) + '"' : "";
+  var postRatioAttr = isCover && ratio ? ' data-ratio="' + attrEscape(ratio) + '"' : "";
 
   var mediaHtml;
   if (hasVideo) {
@@ -240,7 +238,8 @@ function buildThumbnailBlock(entry) {
 function renderFeedItem(entry) {
   var isArticle = entry.type === "article";
   var label = isArticle ? "Article" : "Case study";
-  var postType = entry.featured ? "featured" : (entry.feedVariant || "standard");
+  var layout = entry.layout || "cover";
+  var featuredAttr = entry.featured ? " data-featured" : "";
   var excerpt = entry.synopsis ? '<p class="post-excerpt">' + entry.synopsis + '</p>' : "";
   var clientLabel = !isArticle && entry.client ? '<span class="post-client-label label">' + entry.client + '</span>' : "";
 
@@ -254,7 +253,7 @@ function renderFeedItem(entry) {
   wrap.setAttribute("data-feed-type", entry.type);
   wrap.setAttribute("data-feed-date", entry.date);
   wrap.innerHTML =
-    '<a href="' + getStudioPrefix() + entry.url + '" class="post" data-post-type="' + postType + '"' + thumb.postRatioAttr + ">" +
+    '<a href="' + getStudioPrefix() + entry.url + '" class="post" data-layout="' + layout + '"' + featuredAttr + thumb.postRatioAttr + ">" +
       '<div class="post-header">' +
         '<span class="post-label label">' + label + '</span>' +
         '<div class="post-read-status badge label"><div class="svg-icn">' + ICON_CHECK + '</div>Read</div>' +

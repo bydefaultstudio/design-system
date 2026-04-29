@@ -1,6 +1,6 @@
 ---
 type: case-study
-featured: true
+featured: false
 title: "Mastercard's Interactive Map"
 synopsis: "How location data became a discovery tool, an interactive map that turned geograph data into something people actually wanted to explore."
 date: 2026-04-09

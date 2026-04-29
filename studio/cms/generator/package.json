@@ -6,8 +6,9 @@
   "main": "generate-studio.js",
   "type": "commonjs",
   "scripts": {
-    "gen": "node generate-studio.js",
+    "gen": "node build-icon-sprite.js && node build-logo-sprite.js && node generate-studio.js",
     "build:icons": "node build-icon-sprite.js",
+    "build:logos": "node build-logo-sprite.js",
     "watch": "node watch-studio.js",
     "serve": "python3 -m http.server 8080 -d ../../..",
     "serve:studio": "python3 -m http.server 8000 -d ../..",

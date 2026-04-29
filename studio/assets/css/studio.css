@@ -988,52 +988,7 @@ body.is-sidebar-collapsed .page-header {
 .section-content {
 }
 
-/* 12-col grid — opt-in via presence of data-grid (works on any element) */
-[data-grid] {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  column-gap: var(--studio-gap);
-  row-gap: var(--space-xl);
-}
 
-[data-grid] > * {
-  grid-column: 1 / -1;
-}
-
-[data-grid] > [data-col-span="1"]  { grid-column-end: span 1; }
-[data-grid] > [data-col-span="2"]  { grid-column-end: span 2; }
-[data-grid] > [data-col-span="3"]  { grid-column-end: span 3; }
-[data-grid] > [data-col-span="4"]  { grid-column-end: span 4; }
-[data-grid] > [data-col-span="5"]  { grid-column-end: span 5; }
-[data-grid] > [data-col-span="6"]  { grid-column-end: span 6; }
-[data-grid] > [data-col-span="7"]  { grid-column-end: span 7; }
-[data-grid] > [data-col-span="8"]  { grid-column-end: span 8; }
-[data-grid] > [data-col-span="9"]  { grid-column-end: span 9; }
-[data-grid] > [data-col-span="10"] { grid-column-end: span 10; }
-[data-grid] > [data-col-span="11"] { grid-column-end: span 11; }
-[data-grid] > [data-col-span="12"] { grid-column-end: span 12; }
-
-[data-grid] > [data-col-start="1"]  { grid-column-start: 1; }
-[data-grid] > [data-col-start="2"]  { grid-column-start: 2; }
-[data-grid] > [data-col-start="3"]  { grid-column-start: 3; }
-[data-grid] > [data-col-start="4"]  { grid-column-start: 4; }
-[data-grid] > [data-col-start="5"]  { grid-column-start: 5; }
-[data-grid] > [data-col-start="6"]  { grid-column-start: 6; }
-[data-grid] > [data-col-start="7"]  { grid-column-start: 7; }
-[data-grid] > [data-col-start="8"]  { grid-column-start: 8; }
-[data-grid] > [data-col-start="9"]  { grid-column-start: 9; }
-[data-grid] > [data-col-start="10"] { grid-column-start: 10; }
-[data-grid] > [data-col-start="11"] { grid-column-start: 11; }
-[data-grid] > [data-col-start="12"] { grid-column-start: 12; }
-
-@media (max-width: 768px) {
-  [data-grid] {
-    grid-template-columns: 1fr;
-  }
-  [data-grid] > * {
-    grid-column: 1 / -1;
-  }
-}
 
 
 .eyebrow-header {
@@ -1539,7 +1494,7 @@ article.article {
   transition: background-color var(--duration-l) var(--ease-out);
 }
 
-.post[data-post-type="featured"] {
+.post[data-layout="cover"] {
   padding: 0;
 }
 
@@ -1600,11 +1555,11 @@ article.article {
 }
 
 
-.post[data-post-type="featured"] .post-label {
+.post[data-layout="cover"] .post-label {
   color: var(--white-alpha-70);
 }
 
-.post[data-post-type="featured"] .post-client-label {
+.post[data-layout="cover"] .post-client-label {
   color: var(--white);
 }
 
@@ -1682,26 +1637,26 @@ article.article {
 }
 
 
-/* -- Featured post (full-bleed image with text overlay) -- */
+/* -- Cover layout (full-bleed image with text overlay) -- */
 /* Card height is driven by aspect-ratio on the post itself (default 4:5).
    Override with data-ratio="W:H" on the .post element. The :not([data-ratio])
    rule scopes the default so the global [data-ratio] block can win. */
 
-.post[data-post-type="featured"] {
+.post[data-layout="cover"] {
   position: relative;
   padding: 0;
 }
 
-.post[data-post-type="featured"]:not([data-ratio]) {
+.post[data-layout="cover"]:not([data-ratio]) {
   aspect-ratio: 4 / 5;
 }
 
-.post[data-post-type="featured"] .post-header {
+.post[data-layout="cover"] .post-header {
   padding: var(--studio-gap) var(--studio-gap) var(--space-5xl) var(--studio-gap);
     background: linear-gradient(to bottom, var(--black-alpha-30) 0%, transparent 100%);
 
 }
-.post[data-post-type="featured"] .post-thumbnail {
+.post[data-layout="cover"] .post-thumbnail {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -1710,7 +1665,7 @@ article.article {
   z-index: 0;
 }
 
-.post[data-post-type="featured"] .post-body {
+.post[data-layout="cover"] .post-body {
   position: relative;
   z-index: 1;
   justify-content: flex-end;
@@ -1719,20 +1674,20 @@ article.article {
   background: linear-gradient(to top, var(--black-alpha-70) 0%, transparent 70%);
 }
 
-.post[data-post-type="featured"] .post-title {
+.post[data-layout="cover"] .post-title {
   color: var(--white);
   /* font-size: var(--font-xl); */
 }
 
-.post[data-post-type="featured"] .post-excerpt {
+.post[data-layout="cover"] .post-excerpt {
   color: var(--white-alpha-80);
 }
 
-.post[data-post-type="featured"] .post-meta {
+.post[data-layout="cover"] .post-meta {
   color: var(--white-alpha-60);
 }
 
-.post[data-post-type="featured"] .post-read-status {
+.post[data-layout="cover"] .post-read-status {
   color: var(--white);
 }
 
@@ -2983,7 +2938,54 @@ body.is-animating .case-study-content {
   margin: 0;
 }
 
-/* -- Section 4: closing CTA (tabbed, dark) -- */
+
+
+/* 12-col grid — opt-in via presence of data-grid (works on any element) */
+[data-grid] {
+  display: grid !important;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--studio-gap);
+  row-gap: var(--space-xl);
+}
+
+[data-grid] > * {
+  grid-column: 1 / -1;
+}
+
+[data-grid] > [data-col-span="1"]  { grid-column-end: span 1; }
+[data-grid] > [data-col-span="2"]  { grid-column-end: span 2; }
+[data-grid] > [data-col-span="3"]  { grid-column-end: span 3; }
+[data-grid] > [data-col-span="4"]  { grid-column-end: span 4; }
+[data-grid] > [data-col-span="5"]  { grid-column-end: span 5; }
+[data-grid] > [data-col-span="6"]  { grid-column-end: span 6; }
+[data-grid] > [data-col-span="7"]  { grid-column-end: span 7; }
+[data-grid] > [data-col-span="8"]  { grid-column-end: span 8; }
+[data-grid] > [data-col-span="9"]  { grid-column-end: span 9; }
+[data-grid] > [data-col-span="10"] { grid-column-end: span 10; }
+[data-grid] > [data-col-span="11"] { grid-column-end: span 11; }
+[data-grid] > [data-col-span="12"] { grid-column-end: span 12; }
+
+[data-grid] > [data-col-start="1"]  { grid-column-start: 1; }
+[data-grid] > [data-col-start="2"]  { grid-column-start: 2; }
+[data-grid] > [data-col-start="3"]  { grid-column-start: 3; }
+[data-grid] > [data-col-start="4"]  { grid-column-start: 4; }
+[data-grid] > [data-col-start="5"]  { grid-column-start: 5; }
+[data-grid] > [data-col-start="6"]  { grid-column-start: 6; }
+[data-grid] > [data-col-start="7"]  { grid-column-start: 7; }
+[data-grid] > [data-col-start="8"]  { grid-column-start: 8; }
+[data-grid] > [data-col-start="9"]  { grid-column-start: 9; }
+[data-grid] > [data-col-start="10"] { grid-column-start: 10; }
+[data-grid] > [data-col-start="11"] { grid-column-start: 11; }
+[data-grid] > [data-col-start="12"] { grid-column-start: 12; }
+
+@media (max-width: 768px) {
+  [data-grid] {
+    grid-template-columns: 1fr;
+  }
+  [data-grid] > * {
+    grid-column: 1 / -1;
+  }
+}/* -- Section 4: closing CTA (tabbed, dark) -- */
 
 .services-cta {
   background: var(--text-primary);
@@ -3424,6 +3426,11 @@ body.is-animating .case-study-content {
   }
 }
 
+/* Temporary: hide static grid on home while ticker is under evaluation */
+.home-clients .logo-grid {
+  display: none;
+}
+
 /* ------- Home: Latest Work ------- */
 
 .work-cards {
@@ -3478,6 +3485,59 @@ a.work-card:hover {
 .work-card-stat-value .svg-icn {
   width: 1em;
   height: 1em;
+}
+
+/* Media block is the positioning context for the logo overlay
+   (and any future scroll-revealed overlay layered on top). */
+.work-card-media {
+  position: relative;
+}
+
+/* Brand logo overlay — fills .work-card-media. Decorative
+   (aria-hidden in markup); revealed only while body.is-scrolling.
+   Phase 1 ships text content; Phase 2 swaps for an <img>. */
+.work-card-logo {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  color: var(--white);
+  background-color: var(--black-alpha-40);
+  transition: opacity var(--duration-m) var(--ease-out);
+
+  /* Phase 1 text styling — sized to read as a stand-in logo.
+     The scrim above guarantees contrast over any video poster. */
+  font-size: var(--font-3xl);
+  font-weight: var(--font-weight-medium);
+  text-align: center;
+}
+
+/* Phase 2: caps the logo image when content becomes <img>. */
+.work-card-logo img {
+  max-width: 30%;
+  max-height: 40%;
+  width: auto;
+  height: auto;
+}
+
+body.is-scrolling .work-card-logo {
+  opacity: 1;
+}
+
+/* Reduced motion: keep the overlay permanently hidden rather than flashing
+   in/out on every scroll. It's purely decorative reinforcement, so hiding
+   it entirely is preferable to an instant opacity flip for vestibular
+   sensitivity. */
+@media (prefers-reduced-motion: reduce) {
+  .work-card-logo {
+    transition: none;
+  }
+  body.is-scrolling .work-card-logo {
+    opacity: 0;
+  }
 }
 
 /* ------- Testimonials ------- */

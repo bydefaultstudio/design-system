@@ -1,12 +1,23 @@
 /**
- * Script Purpose: Desktop custom cursor
+ * Script Purpose: Desktop tooltip-style cursor label
  * Author: Erlen Masson
- * Version: 3.0
- * Last Updated: April 8, 2026
- * Notes: Zero-dependency vanilla JS — no GSAP required
+ * Version: 4.0
+ * Last Updated: April 29, 2026
+ * Notes: Native cursor stays visible always. A small label hangs below it,
+ *        showing text and/or icons declared via data-cursor-label,
+ *        data-cursor-icon, data-cursor-icon-end on hovered elements.
  */
 
-console.log("Script - Cursor v3.0");
+// Wrapped in an IIFE so Barba re-loads of this script don't collide on the
+// top-level `const` declarations below. The window.__bdCursorInited guard
+// inside initBdCursor() prevents the listeners from being attached twice.
+(function () {
+console.log("Script - Cursor v4.0");
+
+const SPRITE_PATH = "/assets/images/svg-icons/_sprite.svg";
+// Must match the .cursor-label `transition: opacity` duration in bd-cursor.css.
+// If you tune one, tune the other.
+const FADE_MS = 150;
 
 function initBdCursor() {
   // Idempotency guard — Barba transitions may re-load this script when navigating
@@ -15,106 +26,154 @@ function initBdCursor() {
   if (window.__bdCursorInited) return;
   window.__bdCursorInited = true;
 
-  const cursor = document.querySelector(".cursor-default");
-  const cursorHalo = document.querySelector(".cursor-halo");
+  const label = document.querySelector(".cursor-label");
+  const halo = document.querySelector(".cursor-halo");
 
-  if (!cursor || !cursorHalo) {
-    console.warn("Custom Cursor skipped — .cursor-default or .cursor-halo not found.");
+  if (!label || !halo) {
+    console.warn("Custom Cursor skipped — .cursor-label or .cursor-halo not found.");
     return;
   }
 
   // Reduced-motion users get the OS cursor — strip the custom DOM so it can't render.
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    cursor.remove();
-    cursorHalo.remove();
+    label.remove();
+    halo.remove();
+    return;
+  }
+
+  const text = label.querySelector(".cursor-label-text");
+  const leadIcon = label.querySelector(".cursor-label-icon-lead");
+  const endIcon = label.querySelector(".cursor-label-icon-end");
+  const leadUse = leadIcon && leadIcon.querySelector("use");
+  const endUse = endIcon && endIcon.querySelector("use");
+
+  if (!text || !leadIcon || !endIcon || !leadUse || !endUse) {
+    console.warn("Custom Cursor skipped — .cursor-label internal structure malformed.");
     return;
   }
 
   // ------- Animation Configuration ------- //
-  // LERP only matters during the brief moments dots are visible (hover [data-cursor] or click).
-  // 1.0 = locked to pointer; lower = softer follow when the dot does appear.
+  // LERP only matters during the brief moments dots are visible (label hover or click).
+  // 1.0 = locked to pointer; lower = softer follow.
 
-  const CURSOR_LERP = 0.75;   // Cursor follow speed
-  const HALO_LERP = 0.75;     // Halo follow speed (matches cursor so layers stay together)
-  const SNAP_THRESHOLD = 0.5; // Snap to target below this distance (px)
+  const LABEL_LERP = 0.75;
+  const HALO_LERP = 0.2;
+  const SNAP_THRESHOLD = 0.5;
+  const LABEL_OFFSET_Y = 20;  // px below the cursor
 
-  // When true, the OS cursor is hidden inside [data-cursor] zones so the custom
-  // icon takes over the affordance. Form fields keep their native cursor via a
-  // CSS escape hatch in bd-cursor.css.
-  const HIDE_NATIVE_ON_DATA_CURSOR = true;
-
-  if (HIDE_NATIVE_ON_DATA_CURSOR) {
-    document.body.classList.add("bd-cursor-hides-native");
-  }
-
-  // ------- Cursor Type Detection ------- //
-
-  function getCursorTypeAtPoint(x, y) {
-    const el = document.elementFromPoint(x, y);
-    if (!el) return null;
-    const host = el.closest("[data-cursor]");
-    return host ? host.getAttribute("data-cursor") : null;
-  }
-
-  function setCursorType(type) {
-    const prev = setCursorType._activeType || null;
-    if (type === prev) return;
-
-    if (prev) cursor.classList.remove(`cursor-${prev}`);
-
-    if (type) {
-      cursor.classList.add("cursor-custom", `cursor-${type}`);
-    } else {
-      cursor.classList.remove("cursor-custom");
-    }
-
-    setCursorType._activeType = type || null;
-  }
-
-  // ------- Animation State ------- //
+  // ------- State ------- //
 
   let mouseX = 0;
   let mouseY = 0;
-  let cursorX = 0;
-  let cursorY = 0;
+  let labelX = 0;
+  let labelY = 0;
   let haloX = 0;
   let haloY = 0;
   let rafId = null;
   let lastTime = 0;
   let firstMove = true;
 
+  // Transition state machine
+  let activeTarget = null;
+  let phase = "idle";          // 'idle' | 'visible' | 'fading-out'
+  let fadeTimeoutId = null;
+
+  // ------- Target detection + content swap ------- //
+
+  function getCursorTargetAtPoint(x, y) {
+    const el = document.elementFromPoint(x, y);
+    if (!el) return null;
+    return el.closest("[data-cursor-label], [data-cursor-icon], [data-cursor-icon-end]");
+  }
+
+  function applyContent(target) {
+    const labelText = target.getAttribute("data-cursor-label") || "";
+    const iconLead = target.getAttribute("data-cursor-icon") || "";
+    const iconEnd = target.getAttribute("data-cursor-icon-end") || "";
+
+    text.textContent = labelText;
+
+    if (iconLead) {
+      leadUse.setAttribute("href", `${SPRITE_PATH}#${iconLead}`);
+      leadIcon.classList.add("is-active");
+    } else {
+      leadIcon.classList.remove("is-active");
+    }
+
+    if (iconEnd) {
+      endUse.setAttribute("href", `${SPRITE_PATH}#${iconEnd}`);
+      endIcon.classList.add("is-active");
+    } else {
+      endIcon.classList.remove("is-active");
+    }
+
+    label.classList.toggle("is-icon-only", Boolean(iconLead) && !labelText && !iconEnd);
+  }
+
+  function completeFadeOutThenIn() {
+    fadeTimeoutId = null;
+    if (activeTarget) {
+      applyContent(activeTarget);
+      label.classList.add("is-visible");
+      phase = "visible";
+    } else {
+      phase = "idle";
+    }
+  }
+
+  function transitionTo(newTarget) {
+    if (newTarget === activeTarget) return;
+    activeTarget = newTarget;
+
+    if (phase === "fading-out") {
+      // Mid fade-out — keep going, just update what'll show on completion.
+      if (fadeTimeoutId) clearTimeout(fadeTimeoutId);
+      fadeTimeoutId = setTimeout(completeFadeOutThenIn, FADE_MS);
+      return;
+    }
+
+    if (phase === "idle") {
+      if (newTarget) {
+        applyContent(newTarget);
+        label.classList.add("is-visible");
+        phase = "visible";
+      }
+      return;
+    }
+
+    // phase === 'visible' — start fade-out
+    label.classList.remove("is-visible");
+    phase = "fading-out";
+    if (fadeTimeoutId) clearTimeout(fadeTimeoutId);
+    fadeTimeoutId = setTimeout(completeFadeOutThenIn, FADE_MS);
+  }
+
   // ------- Animation Loop ------- //
 
   function animate(time) {
     if (!lastTime) lastTime = time;
-    const dt = (time - lastTime) / (1000 / 60); // Normalize to 60fps
+    const dt = (time - lastTime) / (1000 / 60);
     lastTime = time;
 
-    // Delta-time corrected lerp for consistent feel across refresh rates
-    const cursorFactor = 1 - Math.pow(1 - CURSOR_LERP, dt);
+    const labelFactor = 1 - Math.pow(1 - LABEL_LERP, dt);
     const haloFactor = 1 - Math.pow(1 - HALO_LERP, dt);
 
-    // Interpolate cursor position
-    cursorX += (mouseX - cursorX) * cursorFactor;
-    cursorY += (mouseY - cursorY) * cursorFactor;
-
-    // Interpolate halo position
+    labelX += (mouseX - labelX) * labelFactor;
+    labelY += (mouseY - labelY) * labelFactor;
     haloX += (mouseX - haloX) * haloFactor;
     haloY += (mouseY - haloY) * haloFactor;
 
-    // Snap when close enough
-    const cursorDist = Math.abs(mouseX - cursorX) + Math.abs(mouseY - cursorY);
+    const labelDist = Math.abs(mouseX - labelX) + Math.abs(mouseY - labelY);
     const haloDist = Math.abs(mouseX - haloX) + Math.abs(mouseY - haloY);
 
-    if (cursorDist < SNAP_THRESHOLD) { cursorX = mouseX; cursorY = mouseY; }
+    if (labelDist < SNAP_THRESHOLD) { labelX = mouseX; labelY = mouseY; }
     if (haloDist < SNAP_THRESHOLD) { haloX = mouseX; haloY = mouseY; }
 
-    // Apply transforms (GPU-composited, -50% preserves CSS centering offset)
-    cursor.style.transform = `translate3d(calc(${cursorX}px - 50%), calc(${cursorY}px - 50%), 0)`;
-    cursorHalo.style.transform = `translate3d(calc(${haloX}px - 50%), calc(${haloY}px - 50%), 0)`;
+    // Label is centered horizontally on cursor and offset below it.
+    label.style.transform = `translate3d(calc(${labelX}px - 50%), calc(${labelY}px + ${LABEL_OFFSET_Y}px), 0)`;
+    halo.style.transform = `translate3d(calc(${haloX}px - 50%), calc(${haloY}px - 50%), 0)`;
 
-    // Keep animating while there's distance to cover
-    if (cursorDist >= SNAP_THRESHOLD || haloDist >= SNAP_THRESHOLD) {
+    if (labelDist >= SNAP_THRESHOLD || haloDist >= SNAP_THRESHOLD) {
       rafId = requestAnimationFrame(animate);
     } else {
       rafId = null;
@@ -135,30 +194,37 @@ function initBdCursor() {
     mouseX = e.clientX;
     mouseY = e.clientY;
 
-    // Snap to mouse instantly on first move (avoid lerping from 0,0)
+    // Snap on first move so we don't lerp from (0,0).
     if (firstMove) {
-      cursorX = mouseX;
-      cursorY = mouseY;
+      labelX = mouseX;
+      labelY = mouseY;
       haloX = mouseX;
       haloY = mouseY;
-      cursor.style.transform = `translate3d(calc(${cursorX}px - 50%), calc(${cursorY}px - 50%), 0)`;
-      cursorHalo.style.transform = `translate3d(calc(${haloX}px - 50%), calc(${haloY}px - 50%), 0)`;
+      label.style.transform = `translate3d(calc(${labelX}px - 50%), calc(${labelY}px + ${LABEL_OFFSET_Y}px), 0)`;
+      halo.style.transform = `translate3d(calc(${haloX}px - 50%), calc(${haloY}px - 50%), 0)`;
       firstMove = false;
     }
 
     startAnimation();
 
-    const type = getCursorTypeAtPoint(mouseX, mouseY);
-    setCursorType(type);
+    transitionTo(getCursorTargetAtPoint(mouseX, mouseY));
   });
 
   document.addEventListener("mousedown", () => {
-    cursorHalo.classList.add("cursor-pressed");
+    halo.classList.add("cursor-pressed");
   });
 
   document.addEventListener("mouseup", () => {
-    cursorHalo.classList.remove("cursor-pressed");
+    halo.classList.remove("cursor-pressed");
   });
+
+  // Scroll keeps target in sync when the mouse is still but elements move
+  // beneath it. Browsers don't fire mousemove on scroll alone, so without
+  // this the label sticks to the last-hovered element's content.
+  window.addEventListener("scroll", () => {
+    if (firstMove) return;
+    transitionTo(getCursorTargetAtPoint(mouseX, mouseY));
+  }, { passive: true });
 }
 
 // Run immediately if DOM is already ready (Barba transitions or late script load),
@@ -168,3 +234,4 @@ if (document.readyState === "loading") {
 } else {
   initBdCursor();
 }
+})();

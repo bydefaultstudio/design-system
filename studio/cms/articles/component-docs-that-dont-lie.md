@@ -8,7 +8,7 @@ author:
   avatar: "https://bydefault.design/image/64x64?text=BD"
 categories: ["Documentation", "Components"]
 read-time: "4 min read"
-featured: true
+featured: false
 hero: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=2940&auto=format&fit=crop"
 thumbnail: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=2940&auto=format&fit=crop"
 thumbnail-ratio: "4:5"

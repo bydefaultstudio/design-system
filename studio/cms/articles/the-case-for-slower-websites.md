@@ -8,7 +8,7 @@ author:
   avatar: "https://bydefault.design/image/64x64?text=BD"
 categories: ["Performance", "Interaction design"]
 read-time: "5 min read"
-featured: true
+featured: false
 hero: "https://images.unsplash.com/photo-1656645123173-f98a07459f49?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 thumbnail: "https://images.unsplash.com/photo-1656645123173-f98a07459f49?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 thumbnail-ratio: "4:5"

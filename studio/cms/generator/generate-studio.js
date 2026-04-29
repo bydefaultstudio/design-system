@@ -132,7 +132,6 @@ function main() {
     }
     entry.seoTitle = entry["seo-title"];
     entry.seoDescription = entry["seo-description"];
-    entry.feedVariant = entry["feed-variant"];
 
     parsed.push(entry);
   }

@@ -1,6 +1,6 @@
 ---
 type: case-study
-featured: true
+featured: false
 title: "A website as dynamic as the people behind it"
 synopsis: "How a B2B data consultancy moved from corporate and forgettable to a digital presence that actually reflected the ambitious, curious team behind it."
 date: 2026-04-09
