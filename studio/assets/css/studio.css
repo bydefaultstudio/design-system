@@ -258,25 +258,31 @@ body.is-sidebar-collapsed .layout {
 
 /* -- Intro block (logo + intro line, centered) -- */
 
+/* Wrapper around .intro-block — narrows the link's box for visual breathing
+   room. Tune padding to taste. */
+.intro-block-wrap {
+  padding: var(--studio-gap) 0;
+}
+
 .intro-block {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-xl);
-  padding: var(--space-6xl) var(--studio-gap);
+  padding: var(--space-3xl) var(--space-xl);
   text-decoration: none;
   color: var(--text-primary);
   gap: var(--space-xl);
   background-color: transparent;
   transition: background-color var(--duration-m) var(--ease-out);
   font-size: var(--font-s);
+  border-radius: var(--radius-s);
 }
 
 a.intro-block:hover {
-  background-color: transparent;
+  background-color: var(--bg-faded-5);
   color: var(--text-primary);
-  opacity: 0.8;
 }
 
 .intro-block::after {

@@ -27,6 +27,26 @@ The persistent `.page-header` was reflowing the document on every show/hide beca
 - **Next-read morph** — `nextReadTop` now subtracts both `mobileBar.offsetHeight` AND `pageHeader.offsetHeight`. Card lands flush below the header where the entering article's `.article-lead` actually sits. ([studio-barba.js:411-414](studio/assets/js/studio-barba.js#L411))
 - **Cleanup** — dropped redundant `pageHeader.style.transform = ""` from close `.then()`. The `after` hook handles it. ([studio-barba.js:514-519](studio/assets/js/studio-barba.js#L514))
 
+## Shipped — sidebar logo wrapper (2026-04-30)
+
+Wrapped the sidebar logo link (`.intro-block`) in a parent `<div class="intro-block-wrap">` across all 24 sidebar instances: 7 hand-authored L0/L1 pages + the L2 generator template + 16 regenerated L2 article and case study pages. The wrapper is a placeholder for future visual tuning — its CSS rule is currently empty (just a comment hook).
+
+A 3D parallax hover effect with gradient backdrop was prototyped during the session and removed before commit. The wrapper div is the only retained residue. The static `a.intro-block:hover { opacity: 0.8 }` dim that was already in the file remains the only hover behavior.
+
+User-side tweaks made during the session that are also in this commit:
+- [studio/assets/css/studio.css](studio/assets/css/studio.css) — `.intro-block` padding tuned from `var(--space-6xl) var(--studio-gap)` → `var(--space-2xl) var(--space-xl)`
+- `a.intro-block:hover` background-color: `transparent` → `var(--bg-faded-3)`
+
+Files touched:
+- 8 sidebar templates: index, services, about, contact, styleguide, 404, page-template, L2 generator layout
+- 16 regenerated L2 pages under `studio/articles/` and `studio/work/`
+- [studio/assets/css/studio.css](studio/assets/css/studio.css)
+- [studio/assets/data/studio-content.json](studio/assets/data/studio-content.json) (manifest regen)
+
+Known nit not addressed: [studio/index.html:279](studio/index.html#L279) `.case-study-card-title` has a duplicated `data-bd-faded` attribute. Browsers ignore the dup, kept as-is unless flagged.
+
+---
+
 ## Shipped — sidebar pattern-b + featured feed overhaul (2026-04-27)
 
 Sidebar pattern-b migration plus a featured-feed overhaul shipped together.
