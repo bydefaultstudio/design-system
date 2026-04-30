@@ -29,6 +29,8 @@ The persistent `.page-header` was reflowing the document on every show/hide beca
 
 ## Shipped — sidebar logo wrapper (2026-04-30)
 
+**Pushed live to `origin/main` on 2026-04-30** as commit `44a12ed`.
+
 Wrapped the sidebar logo link (`.intro-block`) in a parent `<div class="intro-block-wrap">` across all 24 sidebar instances: 7 hand-authored L0/L1 pages + the L2 generator template + 16 regenerated L2 article and case study pages. The wrapper is a placeholder for future visual tuning — its CSS rule is currently empty (just a comment hook).
 
 A 3D parallax hover effect with gradient backdrop was prototyped during the session and removed before commit. The wrapper div is the only retained residue. The static `a.intro-block:hover { opacity: 0.8 }` dim that was already in the file remains the only hover behavior.
