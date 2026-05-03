@@ -42,6 +42,7 @@
   <link rel="stylesheet" href="assets/css/studio.css" />
   <link rel="stylesheet" href="assets/css/bd-video.css" />
   <link rel="stylesheet" href="assets/css/bd-cursor.css" />
+  <link rel="stylesheet" href="assets/css/products.css" />
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -56,7 +57,7 @@
           <nav class="nav" aria-label="Primary">
             <a href="/index.html" class="nav-link nav-link-home">Home</a>
             <a href="/index.html#work" class="nav-link">Work</a>
-            <a href="/services.html" class="nav-link">Services</a>
+            <a href="/products.html" class="nav-link">Products</a>
             <a href="/about.html" class="nav-link">About</a>
             <a href="/contact.html" class="nav-link">Contact</a>
           </nav>
@@ -135,8 +136,7 @@
             <div class="padding-global">
                 <div class="contact-block">
 
-                  <h1 class="contact-headline">Let&rsquo;s make something worth talking about.</h1>
-                  <p class="contact-speed-signal" data-contact-speed-signal>Takes 60 seconds. We read every message and reply within one business day.</p>
+                  <h1 class="contact-headline">Get in touch</h1>
 
                   <div class="contact-form-state" data-contact-form-state>
 
@@ -152,7 +152,7 @@
                     <div class="contact-field">
                       <div class="contact-inline">
                         <label for="contact-name" class="contact-label">Hey, my name is</label>
-                        <input type="text" id="contact-name" name="name" autocomplete="name" placeholder="your name" required>
+                        <input type="text" id="contact-name" name="name" autocomplete="name" placeholder="your full name" required>
                       </div>
                       <span class="form-error" id="contact-name-error" role="alert" hidden></span>
                     </div>
@@ -169,20 +169,22 @@
                       <span class="form-error" id="contact-email-error" role="alert" hidden></span>
                     </div>
 
-                    <!-- Service interest chips — multi-select -->
+                    <!-- Type chips — single-select radiogroup -->
                     <div class="contact-field">
-                      <span class="contact-label">I&rsquo;m curious about</span>
-                      <div class="contact-chips" role="group" aria-label="Service interest">
-                        <button type="button" class="button" data-variant="outline-faded" aria-pressed="false" data-chip-value="Interactive Advertising"><div class="svg-icn"><svg data-icon="check" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#check"/></svg></div>Interactive Advertising</button>
-                        <button type="button" class="button" data-variant="outline-faded" aria-pressed="false" data-chip-value="Interactive Content"><div class="svg-icn"><svg data-icon="check" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#check"/></svg></div>Interactive Content</button>
-                        <button type="button" class="button" data-variant="outline-faded" aria-pressed="false" data-chip-value="Interactive Activations"><div class="svg-icn"><svg data-icon="check" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#check"/></svg></div>Interactive Activations</button>
+                      <span class="contact-label">I&rsquo;m here about</span>
+                      <div class="contact-chips" role="radiogroup" aria-label="What you're here about" aria-required="true" id="contact-type-group">
+                        <button type="button" class="button" data-variant="outline-faded" role="radio" aria-checked="false" tabindex="0" data-chip-value="A new project"><div class="svg-icn"><svg data-icon="check" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#check"/></svg></div>a new project</button>
+                        <button type="button" class="button" data-variant="outline-faded" role="radio" aria-checked="false" tabindex="-1" data-chip-value="A product"><div class="svg-icn"><svg data-icon="check" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#check"/></svg></div>a product</button>
+                        <button type="button" class="button" data-variant="outline-faded" role="radio" aria-checked="false" tabindex="-1" data-chip-value="A general enquiry"><div class="svg-icn"><svg data-icon="check" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#check"/></svg></div>a general enquiry</button>
                       </div>
+                      <span class="form-error" id="contact-type-error" role="alert" hidden></span>
                     </div>
 
                     <!-- Message -->
                     <div class="contact-field">
-                      <label for="contact-message" class="contact-label">Anything else we should know? <span class="text-faded">(optional)</span></label>
-                      <textarea id="contact-message" name="message" rows="5" placeholder="Tell us about your project, timeline, or anything that'll help us prepare for the conversation."></textarea>
+                      <label for="contact-message" class="contact-label">Your message</label>
+                      <textarea id="contact-message" name="message" rows="5" placeholder="Type your message…" required></textarea>
+                      <span class="form-error" id="contact-message-error" role="alert" hidden></span>
                     </div>
 
                     <!-- Network error callout — hidden until needed -->
@@ -199,10 +201,12 @@
 
                   <!-- Success state — shown after submission -->
                   <div class="contact-success">
-                    <h2 class="contact-success-title">Message sent.</h2>
-                    <p class="contact-success-body" data-contact-success-body>Thanks for reaching out. We&rsquo;ll read this properly and come back to you within one business day.</p>
+                    <div class="contact-success-box">
+                      <h2 class="contact-success-title" data-contact-success-title>Message sent.</h2>
+                      <p class="contact-success-body">Your message was sent. We&rsquo;ll have a read and come back to you asap!</p>
+                    </div>
                     <div class="contact-recommendations" data-contact-recommendations>
-                      <p class="contact-recommendations-label label is-eyebrow is-serif">While you wait</p>
+                      <h3 class="contact-recommendations-label">While you wait</h3>
                     </div>
                   </div>
 
@@ -244,7 +248,9 @@
   <script src="assets/js/studio-feed.js" defer></script>
   <script src="assets/js/studio-article.js" defer></script>
   <script src="assets/js/studio-logos.js" defer></script>
+  <script src="assets/js/studio-testimonials.js" defer></script>
   <script src="assets/js/studio.js" defer></script>
+  <script src="assets/js/products.js" defer></script>
   <script src="assets/js/studio-barba.js" defer></script>
   <script src="assets/js/bd-cursor.js" defer></script>
   <script src="assets/js/studio-case-study.js" defer></script>

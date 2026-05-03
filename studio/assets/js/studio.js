@@ -12,24 +12,38 @@ console.log("Studio v0.7.0");
 //------- Page Visit Tracking -------//
 //
 
-// Record the current page path in sessionStorage so we know which pages
-// the user has seen this session. Called on init + after every Barba nav.
+// Record the current page path in two places:
+// - sessionStorage["pagesViewed"]: current-session journey, sent with the contact form
+// - localStorage["pagesViewed"]: all-time history, drives the feed's "Read" badge
+// Called on init + after every Barba nav.
 function trackPageView() {
   var path = location.pathname;
-  var viewed = JSON.parse(localStorage.getItem("pagesViewed") || "[]");
-  if (viewed.indexOf(path) === -1) {
-    viewed.push(path);
-    localStorage.setItem("pagesViewed", JSON.stringify(viewed));
+
+  var session = JSON.parse(sessionStorage.getItem("pagesViewed") || "[]");
+  if (!Array.isArray(session)) session = [];
+  if (session.indexOf(path) === -1) {
+    session.push(path);
+    sessionStorage.setItem("pagesViewed", JSON.stringify(session));
+  }
+
+  var all = JSON.parse(localStorage.getItem("pagesViewed") || "[]");
+  if (!Array.isArray(all)) all = [];
+  if (all.indexOf(path) === -1) {
+    all.push(path);
+    localStorage.setItem("pagesViewed", JSON.stringify(all));
   }
 }
 
-// Also capture referrer and landing page on first visit
+// Also capture referrer, landing page, and session start timestamp on first visit
 function initSessionTracking() {
   if (!sessionStorage.getItem("landingPage")) {
     sessionStorage.setItem("landingPage", location.pathname);
   }
   if (!sessionStorage.getItem("sessionReferrer") && document.referrer) {
     sessionStorage.setItem("sessionReferrer", document.referrer);
+  }
+  if (!sessionStorage.getItem("sessionStartedAt")) {
+    sessionStorage.setItem("sessionStartedAt", String(Date.now()));
   }
   trackPageView();
   document.addEventListener("studio:after-nav", trackPageView);
@@ -262,6 +276,7 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
   logoSlider();
   if (typeof mountTestimonialSliders === "function") mountTestimonialSliders();
   if (typeof initHomeFeatured === "function") initHomeFeatured();
+  if (typeof initProducts === "function") initProducts();
 
   // Re-init after Barba navigations
   // logoSlider is intentionally NOT here — it runs in the after hook's
@@ -272,5 +287,6 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
     initFeed();
     initServices();
     if (typeof initHomeFeatured === "function") initHomeFeatured();
+    if (typeof initProducts === "function") initProducts();
   });
 });

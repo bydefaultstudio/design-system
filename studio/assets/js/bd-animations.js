@@ -51,6 +51,12 @@
     return window.innerWidth < 768 ? "top 50%" : "bottom 75%";
   }
 
+  // data-bd-faded elements start later so the ghosted (0.2 opacity) reveal
+  // has time to register before the stagger fires.
+  function getFadeStartFor(element) {
+    return element.hasAttribute("data-bd-faded") ? "top 85%" : getFadeStart();
+  }
+
   function prefersReducedMotion() {
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }
@@ -266,7 +272,7 @@
     var scrubValue = getScrubValue(element);
     var config = {
       trigger: element,
-      start: getFadeStart(),
+      start: getFadeStartFor(element),
       end: endFn()
     };
     if (scrubValue !== undefined) {

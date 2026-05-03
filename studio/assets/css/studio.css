@@ -1001,6 +1001,7 @@ body.is-sidebar-collapsed .page-header {
   overflow: hidden;
   /* border-radius: var(--radius-m); */
   border: var(--border-s) solid var(--bg-faded-10);
+  border-radius: var(--radius-s);
 }
 
 /* Decorative autoplay videos (article bodies, section backgrounds). No JS —
@@ -1043,8 +1044,8 @@ body.is-sidebar-collapsed .page-header {
   content: counter(services-counter, decimal-leading-zero);
   align-self: start;
   padding-top: 0.6em;
-  font-family: var(--font-primary);
-  font-size: var(--font-2xs);
+  font-family: var(--font-tertiary);
+  font-size: var(--font-s);
   font-weight: var(--font-weight-regular);
   letter-spacing: 0.05em;
   color: var(--text-faded);
@@ -1145,6 +1146,7 @@ body.is-sidebar-collapsed .page-header {
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
+  border-radius: var(--radius-s);
 }
 
 .media-frame > img,
@@ -1292,6 +1294,19 @@ article.article {
   max-width: 600px;
 }
 
+/* TOC-link / hash jumps land below the fixed .page-header instead of behind it.
+   Mobile adds --mobile-bar-height because the page-header is pushed down by
+   the mobile bar at <=768px. */
+.article-body :is(h1, h2, h3, h4, h5, h6) {
+  scroll-margin-top: calc(var(--studio-bar-height) + var(--studio-gap));
+}
+
+@media (max-width: 768px) {
+  .article-body :is(h1, h2, h3, h4, h5, h6) {
+    scroll-margin-top: calc(var(--mobile-bar-height) + var(--studio-bar-height) + var(--space-m));
+  }
+}
+
 
 /* -- Table of contents -- */
 
@@ -1349,6 +1364,13 @@ article.article {
   flex-direction: column;
   align-items: flex-start;
   gap: var(--space-s);
+}
+
+.share-links .button {
+  --button-padding-y: var(--space-s);
+  --button-padding-x: var(--space-s);
+  --button-text-size: var(--font-s);
+  --icon-size: 1em;
 }
 
 /* -- Responsive: collapse sidebars on tablet -- */
@@ -1425,7 +1447,7 @@ article.article {
   text-decoration: none;
   color: var(--text-primary);
   overflow: hidden;
-  /* border-radius: var(--radius-m); */
+  border-radius: var(--radius-s);
   transition: background-color var(--duration-l) var(--ease-out);
 }
 
@@ -1759,6 +1781,7 @@ body.is-case-study-open .case-study-toggle-wrap .case-study-toggle-icon-close {
   position: relative;
   overflow: hidden;
   background-color: var(--background-faded);
+  border-radius: var(--radius-s);
 }
 
 .cs-media::after {
@@ -2188,6 +2211,25 @@ body.is-animating .case-study-content {
   }
 }
 
+/* -- Bottom-border-only inputs (name + email) -- */
+
+.contact-inline input,
+.contact-email-wrap input {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-radius: 0;
+  background-color: transparent;
+  border-color: var(--border-primary);
+  border-bottom-width: var(--border-m);
+}
+
+.contact-inline input:focus,
+.contact-email-wrap input:focus {
+  outline: none;
+  background-color: var(--input-background);
+}
+
 /* -- Chip groups (button-based selectable chips) -- */
 
 .contact-chips {
@@ -2312,8 +2354,15 @@ body.is-animating .case-study-content {
   gap: var(--space-l);
   margin-top: var(--space-2xl);
   padding-top: var(--space-2xl);
-  border-top: var(--border-s) solid var(--border-faded);
 
+}
+
+.contact-success-box {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  padding: var(--space-2xl);
+  border: var(--border-s) solid var(--border-faded);
 }
 
 .contact-success-title {
@@ -2326,70 +2375,30 @@ body.is-animating .case-study-content {
   color: var(--text-secondary);
 }
 
-/* -- Post-submit recommendations -- */
+/* -- Post-submit recommendations: 2-column editorial grid -- */
+/* Cards use the shared .post[data-layout="editorial"] component. The
+   eyebrow label spans both columns so it sits above the grid cleanly. */
 
 .contact-recommendations {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-m);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--feed-gap, var(--space-l));
   margin-top: var(--space-l);
 }
 
 .contact-recommendations-label {
-  color: var(--text-faded);
+  grid-column: 1 / -1;
   margin: 0;
 }
 
-.contact-rec-card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2xs);
-  padding: var(--space-l);
-  background-color: var(--background-faded);
-  text-decoration: none;
-  transition: border-color var(--duration-2xs) var(--ease-out);
+.contact-recommendations .post-item {
+  margin-bottom: 0;
 }
 
-.contact-rec-card:hover {
-  background-color: var(--background-darker);
-}
-
-.contact-rec-eyebrow {
-  font-family: var(--font-tertiary);
-  font-size: var(--font-xs);
-  font-weight: var(--font-weight-bold);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-l);
-  color: var(--text-faded);
-}
-
-.contact-rec-title {
-  font-family: var(--font-secondary);
-  font-size: var(--font-3xl);
-  font-weight: var(--font-weight-medium);
-  color: var(--text-primary);
-}
-
-.contact-rec-excerpt {
-  font-size: var(--font-s);
-  color: var(--text-secondary);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.contact-rec-meta {
-  font-family: var(--font-tertiary);
-  font-size: var(--font-xs);
-  font-weight: var(--font-weight-bold);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-l);
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  color: var(--text-faded);
+@media (max-width: 768px) {
+  .contact-recommendations {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* -- Mobile: full-width submit -- */
@@ -2434,6 +2443,7 @@ body.is-animating .case-study-content {
   background-color: var(--neutral-950);
   color: var(--text-primary);
   padding: 0 var(--space-2xl);
+  border-radius: var(--radius-s);
 }
 
 /* -- Top grid: links / brand / contact -- */
@@ -3377,8 +3387,9 @@ a.case-study-card:hover {
   align-items: center;
   gap: var(--space-s);
   margin-bottom: var(--space-xs);
+  font-family: var(--font-tertiary);
   font-weight: var(--font-weight-medium);
-  font-size: var(--font-2xl);
+  font-size: var(--font-5xl);
   color: var(--text-primary);
 }
 
@@ -3391,6 +3402,8 @@ a.case-study-card:hover {
    (and any future scroll-revealed overlay layered on top). */
 .case-study-card-media {
   position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-s);
 }
 
 /* Brand logo overlay — fills .case-study-card-media. Decorative
@@ -3459,6 +3472,16 @@ body.is-scrolling .case-study-card-logo {
 
 .home-clients {
 }
+
+.home-cta .button-group {
+  justify-content: center;
+}
+
+.cta-headline, .cta-paragraph {
+  text-wrap: balance;
+}
+
+
 
 .splide__arrow--prev svg {
     transform: scaleX(1) !important;

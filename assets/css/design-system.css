@@ -1139,13 +1139,15 @@ button.button {
   /* -- Visual -- */
   background-color: var(--button-bg);
   border: var(--border-s) solid var(--button-border);
+  border-radius: var(--radius-s);
+  
 
   /* -- Typography -- */
   font-family: var(--button-font);
   font-size: var(--button-text-size);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-xs);
-  letter-spacing: var(--letter-spacing-s);
+  /* letter-spacing: var(--letter-spacing-s); */
   text-transform: none;
   text-decoration: none;
   color: var(--button-text-color);
@@ -1156,7 +1158,7 @@ button.button {
 
   /* -- Other -- */
   cursor: pointer;
-  transition: background-color var(--duration-2xs) var(--ease-out), color var(--duration-2xs) var(--ease-out), border-color var(--duration-2xs) var(--ease-out), opacity var(--duration-2xs) var(--ease-out), transform var(--duration-2xs) var(--ease-out);
+  transition: background-color var(--duration-m) var(--ease-out), color var(--duration-2xs) var(--ease-out), border-color var(--duration-2xs) var(--ease-out), opacity var(--duration-2xs) var(--ease-out), transform var(--duration-2xs) var(--ease-out);
 }
 
 /* -- Hover -- */
@@ -1778,9 +1780,8 @@ input[type="url"]:focus,
 input[type="tel"]:focus,
 textarea:focus,
 select:focus {
-  outline: 2px solid var(--input-focus);
+  outline: 1px solid var(--input-focus);
   outline-offset: 2px;
-  border-color: var(--input-focus);
   box-shadow: none;
 }
 

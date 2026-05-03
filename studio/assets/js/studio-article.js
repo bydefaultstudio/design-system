@@ -86,8 +86,10 @@ function initToc() {
     tocVisibilityObserver.observe(inThisArticle);
   }
 
-  // 4. Scroll spy — highlight active TOC link
-  var topBarHeight = getMobileBarHeight();
+  // 4. Scroll spy — highlight the TOC link for the heading currently in view.
+  //    rootMargin top accounts for the full fixed chrome (mobile bar + page-header)
+  //    so the active state switches when the heading crosses below the header.
+  var topBarHeight = getMobileBarHeight() + readCssVarPx("--studio-bar-height");
   var tocLinks = document.querySelectorAll(".toc-link");
 
   tocObserver = new IntersectionObserver(function handleIntersect(entries) {
@@ -108,7 +110,11 @@ function initToc() {
     tocObserver.observe(h);
   });
 
-  // 5. Smooth scroll on TOC link click with top bar offset
+  // 5. Smooth scroll on TOC link click. scrollIntoView respects the
+  //    scroll-margin-top set on .article-body headings in studio.css,
+  //    so the offset for the fixed .page-header is handled in CSS.
+  //    Focus moves to the heading so keyboard Tab continues from there
+  //    and screen readers announce the new section.
   document.addEventListener("click", function handleTocClick(e) {
     var link = e.target.closest(".toc-link");
     if (!link) return;
@@ -118,8 +124,11 @@ function initToc() {
     var target = document.getElementById(targetId);
     if (!target) return;
 
-    var offset = target.getBoundingClientRect().top + window.scrollY - topBarHeight - 16;
-    window.scrollTo({ top: offset, behavior: "smooth" });
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+    if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: true });
+    history.pushState(null, "", "#" + targetId);
   });
 }
 

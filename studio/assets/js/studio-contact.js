@@ -27,7 +27,7 @@ console.log("Studio Contact v0.1.0");
   var formState = {
     touched: false,
     submitted: false,
-    fields: { name: false, email: false, message: false },
+    fields: { name: false, email: false, type: false, message: false },
     formEnteredAt: null
   };
 
@@ -43,45 +43,110 @@ console.log("Studio Contact v0.1.0");
   //------- Chip Toggle Logic -------//
   //
 
-  // Chip clicks use document-level delegation so they work after Barba swaps
+  // Chip clicks/keyboard use document-level delegation so they work after Barba swaps.
+  // radiogroup chips follow the WAI-ARIA APG radio pattern: roving tabindex,
+  // arrow keys to move and select, Home/End to jump, Space/Enter to activate.
   var chipsListenerBound = false;
 
   function initChips() {
     if (chipsListenerBound) return;
     chipsListenerBound = true;
 
-    document.addEventListener("click", function handleChipClick(e) {
-      var chip = e.target.closest(".contact-chips .button[data-chip-value]");
-      if (!chip) return;
-
-      var group = chip.closest("[role='radiogroup'], [role='group']");
-      if (!group) return;
-
-      var isRadio = group.getAttribute("role") === "radiogroup";
-
-      if (isRadio) {
-        // Single-select: deselect all others
-        group.querySelectorAll(".button[data-chip-value]").forEach(function deselect(c) {
-          c.classList.remove("is-selected");
-          c.setAttribute("aria-checked", "false");
-        });
-        chip.classList.add("is-selected");
-        chip.setAttribute("aria-checked", "true");
-      } else {
-        // Multi-select: toggle
-        var pressed = chip.getAttribute("aria-pressed") === "true";
-        chip.classList.toggle("is-selected", !pressed);
-        chip.setAttribute("aria-pressed", String(!pressed));
-      }
-
-      markTouched();
-    });
+    document.addEventListener("click", handleChipClick);
+    document.addEventListener("keydown", handleChipKeydown);
   }
 
-  // Read selected chip values from a group
+  function handleChipClick(e) {
+    var chip = e.target.closest(".contact-chips .button[data-chip-value]");
+    if (!chip) return;
+    var group = chip.closest("[role='radiogroup'], [role='group']");
+    if (!group) return;
+    selectChip(chip, group);
+    markTouched();
+    clearChipGroupError(group);
+  }
+
+  function handleChipKeydown(e) {
+    var chip = e.target.closest(".contact-chips .button[data-chip-value]");
+    if (!chip) return;
+    var group = chip.closest("[role='radiogroup']");
+    if (!group) return; // Only radiogroups need keyboard nav; multi-select groups use Tab/Space natively
+
+    var key = e.key;
+    var isNavKey = key === "ArrowLeft" || key === "ArrowUp" || key === "ArrowRight" || key === "ArrowDown" || key === "Home" || key === "End";
+    var isActionKey = key === " " || key === "Enter";
+
+    if (!isNavKey && !isActionKey) return;
+    e.preventDefault();
+
+    if (isActionKey) {
+      selectChip(chip, group);
+      markTouched();
+      clearChipGroupError(group);
+      return;
+    }
+
+    var chips = Array.prototype.slice.call(group.querySelectorAll(".button[data-chip-value]"));
+    var currentIndex = chips.indexOf(chip);
+    var nextIndex = currentIndex;
+
+    if (key === "ArrowLeft" || key === "ArrowUp") {
+      nextIndex = currentIndex > 0 ? currentIndex - 1 : chips.length - 1;
+    } else if (key === "ArrowRight" || key === "ArrowDown") {
+      nextIndex = currentIndex < chips.length - 1 ? currentIndex + 1 : 0;
+    } else if (key === "Home") {
+      nextIndex = 0;
+    } else if (key === "End") {
+      nextIndex = chips.length - 1;
+    }
+
+    if (nextIndex !== currentIndex) {
+      selectChip(chips[nextIndex], group);
+      chips[nextIndex].focus();
+      markTouched();
+      clearChipGroupError(group);
+    }
+  }
+
+  function selectChip(chip, group) {
+    var isRadio = group.getAttribute("role") === "radiogroup";
+
+    if (isRadio) {
+      // Single-select: deselect all others, update aria-checked + roving tabindex
+      group.querySelectorAll(".button[data-chip-value]").forEach(function deselect(c) {
+        c.classList.remove("is-selected");
+        c.setAttribute("aria-checked", "false");
+        c.setAttribute("tabindex", "-1");
+      });
+      chip.classList.add("is-selected");
+      chip.setAttribute("aria-checked", "true");
+      chip.setAttribute("tabindex", "0");
+      formState.fields.type = true;
+    } else {
+      // Multi-select: toggle aria-pressed
+      var pressed = chip.getAttribute("aria-pressed") === "true";
+      chip.classList.toggle("is-selected", !pressed);
+      chip.setAttribute("aria-pressed", String(!pressed));
+    }
+  }
+
+  function clearChipGroupError(group) {
+    var errorId = group.getAttribute("aria-describedby");
+    if (errorId) {
+      var errorEl = document.getElementById(errorId);
+      if (errorEl) errorEl.hidden = true;
+    }
+    group.removeAttribute("aria-invalid");
+    group.removeAttribute("aria-describedby");
+  }
+
+  // Read selected chip values from a group. Returns the data-chip-value(s) from
+  // chips marked aria-checked (radiogroup) or aria-pressed (group). For
+  // radiogroup the result is a single value or empty string; for multi-select
+  // groups it's a comma-joined list.
   function getChipValues(form, role) {
     var group = form.querySelector("[role='" + role + "']");
-    if (!group) return role === "radiogroup" ? "" : "";
+    if (!group) return "";
     var attr = role === "radiogroup" ? "aria-checked" : "aria-pressed";
     var selected = [];
     group.querySelectorAll(".button[data-chip-value]").forEach(function check(c) {
@@ -90,6 +155,22 @@ console.log("Studio Contact v0.1.0");
       }
     });
     return selected.join(", ");
+  }
+
+  function initRovingTabindex(form) {
+    // Each radiogroup needs exactly one tab stop. If a chip is already
+    // aria-checked, that's the stop; otherwise the first chip gets it.
+    form.querySelectorAll("[role='radiogroup']").forEach(function setupGroup(group) {
+      var chips = group.querySelectorAll(".button[data-chip-value]");
+      var checkedChip = group.querySelector(".button[aria-checked='true']");
+      chips.forEach(function setTabindex(chip, i) {
+        if (checkedChip) {
+          chip.setAttribute("tabindex", chip === checkedChip ? "0" : "-1");
+        } else {
+          chip.setAttribute("tabindex", i === 0 ? "0" : "-1");
+        }
+      });
+    });
   }
 
   //
@@ -191,11 +272,48 @@ console.log("Studio Contact v0.1.0");
     }
   }
 
+  function validateMessage(input) {
+    if (!input) return true;
+    var val = input.value.trim();
+    if (!val) {
+      showFieldError(input, "contact-message-error", "Tell us a sentence or two so we can prepare for the conversation.");
+      return false;
+    }
+    clearFieldError(input);
+    return true;
+  }
+
+  function validateType(form) {
+    var typeValue = getChipValues(form, "radiogroup");
+    if (typeValue) {
+      var errorEl = document.getElementById("contact-type-error");
+      if (errorEl) errorEl.hidden = true;
+      var group = form.querySelector("#contact-type-group");
+      if (group) {
+        group.removeAttribute("aria-invalid");
+        group.removeAttribute("aria-describedby");
+      }
+      return true;
+    }
+    var group2 = form.querySelector("#contact-type-group");
+    var errorEl2 = document.getElementById("contact-type-error");
+    if (group2) {
+      group2.setAttribute("aria-invalid", "true");
+      group2.setAttribute("aria-describedby", "contact-type-error");
+    }
+    if (errorEl2) {
+      errorEl2.textContent = "Pick one so we know how to route this.";
+      errorEl2.hidden = false;
+    }
+    return false;
+  }
+
   function initBlurValidation(form) {
     if (!form) return;
 
     var nameInput = form.querySelector("#contact-name");
     var emailInput = form.querySelector("#contact-email");
+    var messageInput = form.querySelector("#contact-message");
 
     if (nameInput) {
       nameInput.addEventListener("blur", function onNameBlur() {
@@ -208,17 +326,32 @@ console.log("Studio Contact v0.1.0");
         if (formState.fields.email || emailInput.value.trim()) validateEmail(emailInput);
       });
     }
+
+    if (messageInput) {
+      messageInput.addEventListener("blur", function onMessageBlur() {
+        if (formState.fields.message || messageInput.value.trim()) validateMessage(messageInput);
+      });
+    }
   }
 
   function validateAll(form) {
     var nameInput = form.querySelector("#contact-name");
     var emailInput = form.querySelector("#contact-email");
+    var messageInput = form.querySelector("#contact-message");
 
     var nameOk = validateName(nameInput);
     var emailOk = validateEmail(emailInput);
+    var typeOk = validateType(form);
+    var messageOk = validateMessage(messageInput);
 
     if (!nameOk && nameInput) { nameInput.focus(); return false; }
     if (!emailOk && emailInput) { emailInput.focus(); return false; }
+    if (!typeOk) {
+      var firstChip = form.querySelector("#contact-type-group .button[data-chip-value]");
+      if (firstChip) firstChip.focus();
+      return false;
+    }
+    if (!messageOk && messageInput) { messageInput.focus(); return false; }
 
     return true;
   }
@@ -231,19 +364,20 @@ console.log("Studio Contact v0.1.0");
     var name = (form.querySelector("#contact-name") || {}).value || "";
     var email = (form.querySelector("#contact-email") || {}).value || "";
     var message = (form.querySelector("#contact-message") || {}).value || "";
-    var services = getChipValues(form, "group");
-    var budget = getChipValues(form, "radiogroup");
+    var type = getChipValues(form, "radiogroup");
     var source = sessionStorage.getItem("contact_source") || "direct";
 
     var timeOnForm = formState.formEnteredAt
       ? Math.round((Date.now() - formState.formEnteredAt) / 1000)
       : 0;
 
+    var sessionStartedAt = parseInt(sessionStorage.getItem("sessionStartedAt"), 10) || Date.now();
+    var totalTimeOnSite = Math.round((Date.now() - sessionStartedAt) / 1000);
+
     return {
       name: name.trim(),
       email: email.trim(),
-      services: services,
-      budget: budget,
+      type: type,
       message: message.trim(),
       meta: {
         source: source,
@@ -253,6 +387,7 @@ console.log("Studio Contact v0.1.0");
         landingPage: sessionStorage.getItem("landingPage") || "",
         pagesViewed: JSON.parse(sessionStorage.getItem("pagesViewed") || "[]"),
         timeOnForm: timeOnForm,
+        totalTimeOnSite: totalTimeOnSite,
         viewport: window.innerWidth + "x" + window.innerHeight
       }
     };
@@ -322,11 +457,11 @@ console.log("Studio Contact v0.1.0");
     var successEl = getSuccessEl();
     if (!wrapper || !successEl) return;
 
-    // Personalise the success message
+    // Personalise the success title with the user's name
     var nameVal = (form.querySelector("#contact-name") || {}).value || "";
-    var bodyEl = successEl.querySelector("[data-contact-success-body]");
-    if (bodyEl && nameVal.trim()) {
-      bodyEl.textContent = "Thanks, " + nameVal.trim() + ". We\u2019ll read this properly and come back to you within one business day.";
+    var titleEl = successEl.querySelector("[data-contact-success-title]");
+    if (titleEl && nameVal.trim()) {
+      titleEl.textContent = "Thanks " + nameVal.trim() + ".";
     }
 
     // Show "Sent ✓" on the button
@@ -348,81 +483,13 @@ console.log("Studio Contact v0.1.0");
   //------- Post-Submit Recommendations -------//
   //
 
-  // Map service selections to keywords for scoring feed items
-  var SERVICE_KEYWORDS = {
-    "Interactive Advertising": ["advertising", "campaign", "ad", "media", "display"],
-    "Interactive Content": ["content", "editorial", "article", "website", "redesign"],
-    "Interactive Activations": ["activation", "campaign", "experience", "event", "identity"]
-  };
-
+  // Phase 1 stub: every chip choice shows latest article + latest case study
+  // from the manifest. Phase 2 will replace this with chip-driven, tag-filtered
+  // recommendations using a `contactPost` field in post frontmatter.
   function renderRecommendations(form) {
     var container = document.querySelector("[data-contact-recommendations]");
     if (!container) return;
-
-    var services = getChipValues(form, "group");
-    var selectedServices = services ? services.split(", ") : [];
-
-    // Collect keywords from selected services
-    var keywords = [];
-    selectedServices.forEach(function (svc) {
-      if (SERVICE_KEYWORDS[svc]) {
-        keywords = keywords.concat(SERVICE_KEYWORDS[svc]);
-      }
-    });
-
-    // Find feed items from the home page (Barba caches the L0 container)
-    var feedItems = document.querySelectorAll(".post-item");
-    if (!feedItems.length) {
-      // Try Barba's cached containers
-      var allContainers = document.querySelectorAll('[data-barba="container"]');
-      allContainers.forEach(function (c) {
-        if (!feedItems.length || feedItems.length === 0) {
-          var items = c.querySelectorAll(".post-item");
-          if (items.length) feedItems = items;
-        }
-      });
-    }
-
-    if (!feedItems.length) {
-      log("[studio-contact] no feed items in DOM — pulling fallback from manifest");
-      renderManifestFallback(container);
-      return;
-    }
-
-    // Score each feed item
-    var scored = [];
-    feedItems.forEach(function (item) {
-      var link = item.querySelector("a.post");
-      if (!link) return;
-
-      var title = (item.querySelector(".post-title") || {}).textContent || "";
-      var excerpt = (item.querySelector(".post-excerpt") || {}).textContent || "";
-      var readTime = (item.querySelector(".post-read-time") || {}).textContent || "";
-      var href = link.getAttribute("href") || "";
-      var titleLower = title.toLowerCase();
-      var excerptLower = excerpt.toLowerCase();
-
-      var score = 0;
-      keywords.forEach(function (kw) {
-        if (titleLower.indexOf(kw) !== -1) score += 2;
-        if (excerptLower.indexOf(kw) !== -1) score += 1;
-      });
-
-      scored.push({
-        title: title,
-        excerpt: excerpt,
-        readTime: readTime,
-        href: href,
-        score: score
-      });
-    });
-
-    // Sort by score descending, then take top 3
-    scored.sort(function (a, b) { return b.score - a.score; });
-    var top = scored.slice(0, 3);
-
-    log("[studio-contact] recommendations:", top.map(function (r) { return r.title + " (" + r.score + ")"; }));
-    renderCards(container, top);
+    renderManifestFallback(container);
   }
 
   function renderManifestFallback(container) {
@@ -438,78 +505,100 @@ console.log("Studio Contact v0.1.0");
         renderEvergreenFallback(container);
         return;
       }
-      var prefix = (typeof window.getStudioPrefix === "function") ? window.getStudioPrefix() : "";
       var picks = [];
-      var topArticle = articles[0];
-      if (topArticle) {
-        picks.push({
-          eyebrow: "Read our latest article",
-          title: topArticle.title,
-          excerpt: topArticle.synopsis || "",
-          readTime: topArticle.readTime || "",
-          href: prefix + topArticle.url
-        });
-      }
-      var topCase = cases[0];
-      if (topCase) {
-        picks.push({
-          eyebrow: "Explore our latest project",
-          title: topCase.title,
-          excerpt: topCase.synopsis || "",
-          readTime: "",
-          href: prefix + topCase.url
-        });
-      }
+      if (articles[0]) picks.push(articles[0]);
+      if (cases[0]) picks.push(cases[0]);
       renderCards(container, picks);
     }).catch(function () {
       renderEvergreenFallback(container);
     });
   }
 
+  // Manifest unavailable — hide the recommendations section entirely rather
+  // than render a sad text-only fallback that doesn't match the editorial layout.
   function renderEvergreenFallback(container) {
-    renderCards(container, [{
-      eyebrow: "More from By Default",
-      title: "See our latest writing",
-      excerpt: "",
-      readTime: "",
-      href: "/index.html#articles"
-    }]);
+    container.style.display = "none";
   }
 
+  // Renders post cards using the editorial layout. Mirrors renderFeedItem +
+  // buildThumbnailBlock from studio-feed.js so the recommendations look
+  // identical to the home feed (header → body → thumbnail order, video
+  // hover-to-play, placeholder fallback, ratio handling).
   function renderCards(container, items) {
-    items.forEach(function (rec) {
-      var card = document.createElement("a");
-      card.href = rec.href;
-      card.className = "contact-rec-card";
-
-      if (rec.eyebrow) {
-        var eyebrowEl = document.createElement("span");
-        eyebrowEl.className = "contact-rec-eyebrow";
-        eyebrowEl.textContent = rec.eyebrow;
-        card.appendChild(eyebrowEl);
-      }
-
-      var titleEl = document.createElement("span");
-      titleEl.className = "contact-rec-title";
-      titleEl.textContent = rec.title;
-      card.appendChild(titleEl);
-
-      if (rec.excerpt) {
-        var excerptEl = document.createElement("span");
-        excerptEl.className = "contact-rec-excerpt";
-        excerptEl.textContent = rec.excerpt;
-        card.appendChild(excerptEl);
-      }
-
-      if (rec.readTime) {
-        var metaEl = document.createElement("span");
-        metaEl.className = "contact-rec-meta";
-        metaEl.innerHTML = '<div class="svg-icn"><svg data-icon="clock" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#clock"/></svg></div>' + rec.readTime;
-        card.appendChild(metaEl);
-      }
-
-      container.appendChild(card);
+    // Clear any previously-rendered cards so double-fires don't stack
+    container.querySelectorAll(".post-item").forEach(function clear(el) {
+      el.parentNode.removeChild(el);
     });
+
+    var prefix = (typeof window.getStudioPrefix === "function") ? window.getStudioPrefix() : "";
+    var formatDate = (typeof window.formatStudioDate === "function") ? window.formatStudioDate : function (iso) { return iso; };
+    var attrEsc = (typeof window.attrEscape === "function") ? window.attrEscape : function (s) {
+      return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    };
+
+    items.forEach(function (entry) {
+      var isArticle = entry.type === "article";
+      var label = isArticle ? "Article" : "Case study";
+      var excerpt = entry.synopsis ? '<p class="post-excerpt">' + entry.synopsis + '</p>' : "";
+      var clientLabel = !isArticle && entry.client ? '<span class="post-client-label label">' + entry.client + '</span>' : "";
+
+      var metaParts = ['<span class="post-meta-item post-date label">' + formatDate(entry.date) + '</span>'];
+      if (isArticle && entry.readTime) {
+        metaParts.push('<span class="post-meta-item post-read-time label">' + entry.readTime + '</span>');
+      }
+
+      // Thumbnail block — mirrors buildThumbnailBlock in studio-feed.js
+      var hasVideo = !!entry.thumbnailVideo;
+      var src = hasVideo ? entry.thumbnailVideo : (entry.thumbnail || entry.hero);
+      var usedPlaceholder = false;
+      if (!src) {
+        src = "https://bydefault.design/image/400x500?text=" + encodeURIComponent(entry.title || "");
+        usedPlaceholder = true;
+      }
+      var alt = attrEsc(entry.thumbnailAlt || entry.title || "");
+      var ratio = entry.thumbnailRatio || (usedPlaceholder ? "4:5" : "");
+      var thumbRatioAttr = ratio ? ' data-ratio="' + attrEsc(ratio) + '"' : "";
+      var mediaStyle = entry.thumbnailFocus ? ' style="object-position: ' + attrEsc(entry.thumbnailFocus) + ';"' : "";
+
+      var mediaHtml;
+      if (hasVideo) {
+        var poster = entry.thumbnailVideoPoster || entry.thumbnail || entry.hero || "";
+        var posterAttr = poster ? ' poster="' + attrEsc(poster) + '"' : "";
+        mediaHtml = '<video class="vdo-thumb" src="' + attrEsc(src) + '"' + posterAttr +
+          ' muted playsinline preload="metadata" aria-hidden="true"' + mediaStyle + "></video>";
+      } else {
+        mediaHtml = '<img class="img-thumb" src="' + attrEsc(src) + '" alt="' + alt + '" loading="lazy"' + mediaStyle + ">";
+      }
+
+      var thumbHtml = '<div class="post-thumbnail"' + thumbRatioAttr + ">" + mediaHtml + "</div>";
+
+      var iconCheck = window.ICON_CHECK || "";
+      var readBadge = '<div class="post-read-status badge label"><div class="svg-icn">' + iconCheck + '</div>Read</div>';
+
+      var wrap = document.createElement("div");
+      wrap.className = "post-item";
+      wrap.innerHTML =
+        '<a href="' + prefix + entry.url + '" class="post" data-layout="editorial">' +
+          '<div class="post-header">' +
+            '<span class="post-label label">' + label + '</span>' +
+            readBadge +
+          '</div>' +
+          '<div class="post-body">' +
+            '<h3 class="post-title">' + entry.title + '</h3>' +
+            excerpt +
+            clientLabel +
+            '<div class="post-meta bottom-meta">' + metaParts.join("") + '</div>' +
+          '</div>' +
+          thumbHtml +
+        '</a>';
+
+      container.appendChild(wrap);
+    });
+
+    // Bind hover-to-play on any <video class="vdo-thumb"> we just rendered,
+    // and pick up any "is-read" state from past visits.
+    if (typeof window.initThumbHover === "function") window.initThumbHover(container);
+    if (typeof window.markReadPosts === "function") window.markReadPosts();
   }
 
   //
@@ -560,11 +649,12 @@ console.log("Studio Contact v0.1.0");
     formState = {
       touched: false,
       submitted: false,
-      fields: { name: false, email: false, message: false },
+      fields: { name: false, email: false, type: false, message: false },
       formEnteredAt: null
     };
 
     initChips();
+    initRovingTabindex(form);
     log("[studio-contact] ✓ chips ready");
 
     initUTM();
@@ -615,16 +705,31 @@ console.log("Studio Contact v0.1.0");
     switch (hash) {
 
       case "success":
-        var w = getWrapper();
-        if (w) w.classList.add("is-submitted");
-        renderRecommendations(form);
+        // Auto-fill a test name so the personalised "Thanks {name}." H2 renders
+        var nameInput = form.querySelector("#contact-name");
+        if (nameInput && !nameInput.value) {
+          nameInput.value = "Sarah";
+        }
+        showSuccess(form);
         break;
 
       case "error":
         var nameInput = form.querySelector("#contact-name");
         var emailInput = form.querySelector("#contact-email");
+        var messageInput = form.querySelector("#contact-message");
         if (nameInput) showFieldError(nameInput, "contact-name-error", "We need your name to know who we\u2019re talking to.");
         if (emailInput) showFieldError(emailInput, "contact-email-error", "That doesn\u2019t look quite right \u2014 check the email address.");
+        var typeGroup = form.querySelector("#contact-type-group");
+        var typeError = document.getElementById("contact-type-error");
+        if (typeGroup) {
+          typeGroup.setAttribute("aria-invalid", "true");
+          typeGroup.setAttribute("aria-describedby", "contact-type-error");
+        }
+        if (typeError) {
+          typeError.textContent = "Pick one so we know how to route this.";
+          typeError.hidden = false;
+        }
+        if (messageInput) showFieldError(messageInput, "contact-message-error", "Tell us a sentence or two so we can prepare for the conversation.");
         break;
 
       case "network":
@@ -633,12 +738,14 @@ console.log("Studio Contact v0.1.0");
         break;
 
       case "selected":
-        // Pre-select some chips for visual testing
-        var serviceChips = form.querySelectorAll('[role="group"] .button[data-chip-value]');
-        if (serviceChips[0]) { serviceChips[0].classList.add("is-selected"); serviceChips[0].setAttribute("aria-pressed", "true"); }
-        if (serviceChips[2]) { serviceChips[2].classList.add("is-selected"); serviceChips[2].setAttribute("aria-pressed", "true"); }
-        var budgetChips = form.querySelectorAll('[role="radiogroup"] .button[data-chip-value]');
-        if (budgetChips[1]) { budgetChips[1].classList.add("is-selected"); budgetChips[1].setAttribute("aria-checked", "true"); }
+        // Pre-select the middle chip in the Type radiogroup for visual testing
+        var typeChips = form.querySelectorAll("#contact-type-group .button[data-chip-value]");
+        typeChips.forEach(function setChip(c, i) {
+          var pick = i === 1;
+          c.classList.toggle("is-selected", pick);
+          c.setAttribute("aria-checked", String(pick));
+          c.setAttribute("tabindex", pick ? "0" : "-1");
+        });
         break;
 
       case "sending":

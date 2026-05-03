@@ -691,6 +691,51 @@ npm run serve:studio
 
 This serves `studio/` as the root — no `/studio` prefix in the URL. Port 2000 is a permanent convention; do not change it.
 
+### Per-page asset wiring
+
+**This is a recurring failure mode — read it before creating any new file under `studio/assets/js/` or `studio/assets/css/`.**
+
+Barba only swaps the `<div data-barba="container">` content. It does **not** swap `<head>`, and it does **not** swap the persistent chrome (`.page-header`, `.sidebar`, `.mobile-bar`). Every per-page asset must therefore be loaded on **every** page or it silently breaks on Barba navigation.
+
+Symptoms when the rule is violated: direct loads of the new page work fine; Barba navigation INTO that page (from any other page) renders unstyled (CSS missing) and/or page-init JS never runs (the `window.initX` function isn't defined yet).
+
+#### Checklist — every new per-page asset
+
+For both JS and CSS, add the `<link>` (CSS) or `<script>` (JS) tag to **all 8** hand-authored sources:
+
+1. `studio/index.html`
+2. `studio/about.html`
+3. `studio/services.html`
+4. `studio/contact.html`
+5. `studio/styleguide.html`
+6. `studio/404.html`
+7. `studio/templates/page-template.html`
+8. `studio/cms/generator/templates/layout.html` (uses `../assets/...` path prefix — note the `../`)
+
+Then regenerate L2 outputs:
+
+```bash
+cd studio/cms/generator && npm run gen
+```
+
+This rewrites the 16 L2 article + work HTML files with the new tag.
+
+#### Additional steps for JS only
+
+9. At the bottom of the JS file, expose the page-init function as a global: `window.initFoo = initFoo;`. The init function should query for its target element first and bail early if absent: `var el = document.querySelector(".foo-wrapper"); if (!el) return;`.
+
+10. In `studio/assets/js/studio.js`, add `if (typeof initFoo === "function") initFoo();` to **two** places inside the `initStudio` function:
+    - The DOMContentLoaded init block (around line 279). Fires on direct page load.
+    - The `studio:after-nav` listener at the bottom of `initStudio` (around line 290). Fires after every Barba transition.
+
+This mirrors the existing wiring for `initFeed` / `initServices` / `initHomeFeatured` / `initProducts`. Match it exactly — do not invent a new bootstrap form.
+
+#### Anti-patterns
+
+- **Do not** put page-specific markup inside the persistent chrome (`.page-header`, `.sidebar`, `.mobile-bar`). That chrome doesn't survive Barba transitions in a per-page-content sense — it stays as the originating page's version. If a feature needs page-specific chrome content, sync it via `studio-barba.js`'s `syncPageHeaderFrom` pattern (see `studio/assets/js/studio-barba.js:471-481`), or move the markup inside the Barba container.
+- **Do not** self-register `document.addEventListener("studio:after-nav", initFoo)` from inside the per-page JS file. It can work, but only if the file is loaded everywhere anyway (per step 1) — and it drifts from the canonical pattern. Use `window.initFoo` + studio.js call sites.
+- **Do not** rely on the `<script>` or `<link>` tag in the destination page's HTML to load the asset on Barba arrival. Barba does not execute fetched-page scripts and does not reload the document head.
+
 ### What does NOT apply in studio mode
 
 - BrandOS layout hierarchy (`page-wrapper → page-content → section → ...`) — studio has its own grid

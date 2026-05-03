@@ -1,0 +1,496 @@
+/**
+ * Style Purpose: Products page — page-scoped layout, walkthrough sticky-scroll,
+ *                quiz card, deployment tiles, reporting band, CTA. All scoped
+ *                under .products-wrapper or page-specific class names.
+ * Author: By Default
+ * Created: 2026-05-02
+ * Version: 0.1.0
+ * Last Updated: 2026-05-02
+ *
+ * Tokens only — no primitives, no hardcoded radii.
+ * Square corners across new components per design direction.
+ */
+
+
+/* ============================================================
+   PAGE WRAPPER
+   ============================================================ */
+
+.products-wrapper {
+}
+
+
+/* ============================================================
+   PAGE HERO
+   ============================================================ */
+
+.products-intro .page-headline,
+.products-quiz .page-headline,
+.products-deployment .page-headline,
+.products-cta .page-headline {
+  letter-spacing: -0.01em;
+}
+
+
+/* ============================================================
+   WALKTHROUGH (sticky-scroll image swap)
+   ============================================================ */
+
+.products-walkthrough .section-content {
+  align-items: start;
+}
+
+/* -- Text column ---------------------------------------------- */
+.walkthrough-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-section {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+  scroll-margin-top: calc(var(--studio-bar-height) + var(--space-l));
+}
+
+.product-section + .product-section {
+}
+
+/* -- Mobile inline image (hidden on desktop) ------------------ */
+.walkthrough-mobile-image {
+  display: none;
+  aspect-ratio: 1 / 1;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--background-faded);
+  margin-bottom: var(--space-xl);
+}
+
+/* -- Product number (label-styled chapter mark above heading) - */
+.product-number {
+  margin: 0;
+}
+
+.product-name {
+  margin: 0;
+  font-size: var(--headline-size);
+  font-weight: var(--headline-weight);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.product-tagline {
+  margin: 0;
+  font-size: var(--font-3xl);
+  font-weight: var(--font-weight-light);
+  line-height: 1.2;
+  color: var(--text-secondary);
+}
+
+.product-description {
+  max-width: 50ch;
+}
+
+/* Use-case list — disc marker swapped for the brand check icon.
+   Source: assets/images/svg-icons/check.svg (also #check in the sprite). */
+.use-case-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.use-case {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-s);
+}
+
+.use-case::before {
+  content: "";
+  flex: 0 0 0.9em;
+  align-self: center;
+  height: 0.9em;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z'/></svg>") center / contain no-repeat;
+          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z'/></svg>") center / contain no-repeat;
+}
+
+/* -- Action row (single CTA per product) ---------------------- */
+.product-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+/* -- Sticky image column (desktop) ---------------------------- */
+.walkthrough-image-col {
+  position: sticky;
+  top: calc(var(--studio-bar-height) + var(--studio-gap));
+  height: calc(100vh - var(--studio-bar-height) - var(--studio-gap) * 2);
+  align-self: start;
+}
+
+.walkthrough-image-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: var(--background-faded);
+  overflow: hidden;
+  border-radius: var(--radius-s);
+}
+
+.walkthrough-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity var(--duration-m) var(--ease-out);
+}
+
+.walkthrough-image.is-active {
+  opacity: 1;
+}
+
+/* All product image URLs — single placeholder for v1. */
+.walkthrough-image[data-image="shop"],
+.walkthrough-image[data-image="personalise"],
+.walkthrough-image[data-image="storytell"],
+.walkthrough-image[data-image="inform"],
+.walkthrough-image[data-image="map"],
+.walkthrough-mobile-image[data-image="shop"],
+.walkthrough-mobile-image[data-image="personalise"],
+.walkthrough-mobile-image[data-image="storytell"],
+.walkthrough-mobile-image[data-image="inform"],
+.walkthrough-mobile-image[data-image="map"] {
+  background-image: url("https://bydefault.design/image/1080x1080");
+}
+
+/* ============================================================
+   QUIZ — single big centered card; three panes via data-state
+   ============================================================ */
+
+.quiz-card {
+  background-color: var(--background-faded);
+  padding: var(--space-3xl) var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+  text-align: center;
+  align-items: center;
+}
+
+/* -- Progress stages ------------------------------------------ */
+.quiz-progress {
+  display: flex;
+  gap: var(--space-s);
+  align-items: center;
+  width: 100%;
+  max-width: 32rem;
+}
+
+.quiz-progress .stage {
+  flex: 1;
+  height: 2px;
+  background-color: var(--background-darker);
+  transition: background-color var(--duration-2xs) var(--ease-out);
+}
+
+.quiz-progress .stage.is-active {
+  background-color: var(--text-primary);
+}
+
+/* -- Pane visibility (driven by [data-state] on .quiz-card) --- */
+.quiz-card[data-state="idle"]   .quiz-step,
+.quiz-card[data-state="idle"]   .quiz-nav,
+.quiz-card[data-state="idle"]   .quiz-result,
+.quiz-card[data-state="quiz"]   .quiz-intro,
+.quiz-card[data-state="quiz"]   .quiz-result,
+.quiz-card[data-state="result"] .quiz-intro,
+.quiz-card[data-state="result"] .quiz-step,
+.quiz-card[data-state="result"] .quiz-nav {
+  display: none;
+}
+
+/* The active step's [hidden] is removed by JS; inactive steps keep theirs. */
+.quiz-step[hidden],
+.quiz-nav[hidden],
+.quiz-result[hidden] {
+  display: none;
+}
+
+/* -- IDLE ------------------------------------------------------ */
+.quiz-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-l);
+  max-width: 40rem;
+}
+
+.quiz-intro .page-headline {
+  margin: 0;
+}
+
+/* -- Question + options ---------------------------------------- */
+.quiz-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xl);
+  width: 100%;
+  max-width: 48rem;
+}
+
+.quiz-question {
+  margin: 0;
+  font-size: var(--font-3xl);
+  font-weight: var(--font-weight-light);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  max-width: 36rem;
+}
+
+.quiz-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-m);
+  width: 100%;
+}
+
+.quiz-option {
+  appearance: none;
+  padding: var(--space-l) var(--space-xl);
+  background-color: var(--background-plain);
+  border: var(--border-s) solid var(--border-faded);
+  font-family: var(--font-primary);
+  font-size: var(--font-m);
+  text-align: center;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background-color var(--duration-2xs) var(--ease-out),
+              border-color var(--duration-2xs) var(--ease-out),
+              color var(--duration-2xs) var(--ease-out);
+}
+
+.quiz-option:hover {
+  background-color: var(--background-plain);
+  border-color: var(--text-primary);
+}
+
+.quiz-option:focus-visible {
+  outline: var(--border-s) solid var(--text-primary);
+  outline-offset: 2px;
+}
+
+.quiz-option.is-selected,
+.quiz-option[aria-checked="true"] {
+  background-color: var(--text-primary);
+  border-color: var(--text-primary);
+  color: var(--background-plain);
+}
+
+/* -- Shared Prev/Next row -------------------------------------- */
+.quiz-nav {
+  display: flex;
+  gap: var(--space-m);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* -- Result ---------------------------------------------------- */
+.quiz-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xl);
+  width: 100%;
+  max-width: 48rem;
+}
+
+.result-intro {
+  margin: 0;
+  font-size: var(--font-l);
+  color: var(--text-faded);
+}
+
+.quiz-result-products {
+  display: flex;
+  gap: var(--space-l);
+  width: 100%;
+}
+
+.recommended-card {
+  flex: 1;
+  padding: var(--space-l);
+  background-color: var(--background-plain);
+  border: var(--border-s) solid var(--border-faded);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  text-align: left;
+}
+
+.recommended-card .name {
+  font-size: var(--font-2xl);
+  font-weight: var(--font-weight-light);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.recommended-card .reason {
+  margin: 0;
+  font-size: var(--font-s);
+  line-height: var(--line-height-l);
+  color: var(--text-secondary);
+}
+
+.quiz-result-actions {
+  display: flex;
+  gap: var(--space-m);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+
+/* ============================================================
+   DEPLOYMENT TILES
+   ============================================================ */
+
+.deployment-tile {
+  padding: var(--space-2xl);
+  background-color: var(--background-faded);
+  border: var(--border-s) solid var(--border-faded);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+}
+
+.deployment-tile-title {
+  margin: 0;
+  font-size: var(--font-3xl);
+  font-weight: var(--font-weight-light);
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.deployment-tile-copy {
+  margin: 0;
+  font-size: var(--font-m);
+  line-height: var(--line-height-l);
+  color: var(--text-secondary);
+}
+
+
+/* ============================================================
+   REPORTING BAND
+   ============================================================ */
+
+.products-reporting {
+  background-color: var(--yellow);
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.reporting-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-l);
+}
+
+.reporting-eyebrow {
+  margin: 0;
+  font-size: var(--font-s);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.reporting-headline {
+  margin: 0;
+  font-size: var(--font-9xl);
+  font-weight: var(--font-weight-light);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  max-width: 18ch;
+}
+
+.reporting-subline {
+  margin: 0;
+  font-size: var(--font-l);
+  line-height: var(--line-height-l);
+  max-width: 56ch;
+}
+
+
+/* ============================================================
+   GLOBAL CTA
+   ============================================================ */
+
+.products-cta .button-group {
+  margin-top: var(--space-l);
+}
+
+
+/* ============================================================
+   MOBILE OVERRIDES
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .walkthrough-image-col {
+    display: none;
+  }
+
+  .walkthrough-mobile-image {
+    display: block;
+  }
+
+  .product-section {
+    min-height: auto;
+    padding: var(--space-3xl) 0;
+    gap: var(--space-m);
+  }
+
+  .product-name {
+    font-size: var(--font-5xl);
+  }
+
+  .product-tagline {
+    font-size: var(--font-2xl);
+  }
+
+  .quiz-card {
+    padding: var(--space-2xl) var(--space-l);
+  }
+
+  .quiz-question {
+    font-size: var(--font-2xl);
+  }
+
+  .quiz-options {
+    flex-direction: column;
+  }
+
+  .quiz-option {
+    width: 100%;
+  }
+
+  .quiz-result-products {
+    flex-direction: column;
+  }
+
+  .reporting-headline {
+    font-size: var(--font-6xl);
+  }
+
+  .deployment-tile {
+    padding: var(--space-xl);
+  }
+}
