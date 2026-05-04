@@ -296,72 +296,103 @@
             </div>
           </section>
 
-          <!-- Section 3 — Quiz (single big centered card) -->
+          <!-- Section 3 — Quiz (three vertical zones: progress / content / footer) -->
           <section class="products-quiz" data-inset="all">
+            <div class="products-quiz-wrapper">
             <div class="quiz-card" id="quizCard" data-state="idle">
 
-              <!-- Progress stages -->
+              <!-- ZONE 1: Progress stages — always at the top -->
               <div class="quiz-progress" aria-hidden="true">
                 <div class="stage" data-stage="1"></div>
                 <div class="stage" data-stage="2"></div>
                 <div class="stage" data-stage="3"></div>
+                <div class="stage" data-stage="4"></div>
               </div>
 
-              <!-- IDLE state -->
-              <div class="quiz-intro" data-quiz-pane="idle">
-                <p class="eyebrow-header">Help me choose</p>
-                <h2 class="page-headline">Still not sure where to start?</h2>
-                <button type="button" class="button" id="quizStart" data-cursor-icon="arrow-right" data-cursor-label="Start quiz">Start quiz <div class="svg-icn"><svg data-icon="arrow-right" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#arrow-right"/></svg></div></button>
-              </div>
+              <!-- ZONE 2: Content — only one pane visible at a time, governed by [data-state] -->
+              <div class="quiz-content">
 
-              <!-- QUIZ steps -->
-              <div class="quiz-step" data-step="1" hidden>
-                <p class="quiz-question">Why are you building this?</p>
-                <div class="quiz-options" role="radiogroup" aria-label="Why are you building this?">
-                  <button type="button" class="quiz-option" data-answer="sales"     role="radio" aria-checked="false">Drive sales</button>
-                  <button type="button" class="quiz-option" data-answer="story"     role="radio" aria-checked="false">Tell a story</button>
-                  <button type="button" class="quiz-option" data-answer="data"      role="radio" aria-checked="false">Capture data</button>
-                  <button type="button" class="quiz-option" data-answer="awareness" role="radio" aria-checked="false">Build awareness</button>
+                <!-- IDLE pane -->
+                <div class="quiz-intro" data-quiz-pane="idle">
+                  <p class="eyebrow-header">Help me choose</p>
+                  <h2 class="page-headline">Still not sure where to start?</h2>
                 </div>
-              </div>
 
-              <div class="quiz-step" data-step="2" hidden>
-                <p class="quiz-question">Who's it for?</p>
-                <div class="quiz-options" role="radiogroup" aria-label="Who's it for?">
-                  <button type="button" class="quiz-option" data-answer="existing" role="radio" aria-checked="false">Existing customers</button>
-                  <button type="button" class="quiz-option" data-answer="new"      role="radio" aria-checked="false">New audiences</button>
-                  <button type="button" class="quiz-option" data-answer="partners" role="radio" aria-checked="false">Industry partners</button>
-                  <button type="button" class="quiz-option" data-answer="event"    role="radio" aria-checked="false">Event attendees</button>
+                <!-- QUIZ panes — 4 steps, only one visible (others have [hidden]) -->
+                <div class="quiz-step" data-quiz-pane="quiz" data-step="1" data-select="multi" hidden>
+                  <p class="quiz-question">What action should this drive?</p>
+                  <p class="quiz-sublabel">Pick all that apply</p>
+                  <div class="quiz-options" role="group" aria-label="What action should this drive?">
+                    <button type="button" class="quiz-option" data-answer="buy"       aria-pressed="false">Buy something</button>
+                    <button type="button" class="quiz-option" data-answer="learn"     aria-pressed="false">Learn something new</button>
+                    <button type="button" class="quiz-option" data-answer="customise" aria-pressed="false">Customise something</button>
+                    <button type="button" class="quiz-option" data-answer="explore"   aria-pressed="false">Explore a destination</button>
+                  </div>
                 </div>
-              </div>
 
-              <div class="quiz-step" data-step="3" hidden>
-                <p class="quiz-question">Which of these is closest to yours?</p>
-                <div class="quiz-options" role="radiogroup" aria-label="Which use case is closest to yours?">
-                  <button type="button" class="quiz-option" data-answer="SHOP"        role="radio" aria-checked="false">Lookbooks, product launches, drops</button>
-                  <button type="button" class="quiz-option" data-answer="PERSONALISE" role="radio" aria-checked="false">Style finders, matchers, curated picks</button>
-                  <button type="button" class="quiz-option" data-answer="STORYTELL"   role="radio" aria-checked="false">Brand manifestos, annual reports, founder stories</button>
-                  <button type="button" class="quiz-option" data-answer="INFORM"      role="radio" aria-checked="false">Industry surveys, white papers, insight reports</button>
-                  <button type="button" class="quiz-option" data-answer="MAP"         role="radio" aria-checked="false">Store locators, travel guides, event maps</button>
+                <div class="quiz-step" data-quiz-pane="quiz" data-step="2" data-select="single" hidden>
+                  <p class="quiz-question">What kind of project is this?</p>
+                  <p class="quiz-sublabel">Pick one</p>
+                  <div class="quiz-options" role="radiogroup" aria-label="What kind of project is this?">
+                    <button type="button" class="quiz-option" data-answer="campaign" role="radio" aria-checked="false">Campaign or launch</button>
+                    <button type="button" class="quiz-option" data-answer="guide"    role="radio" aria-checked="false">Guide/Recommend tool</button>
+                    <button type="button" class="quiz-option" data-answer="story"    role="radio" aria-checked="false">A short/long story</button>
+                    <button type="button" class="quiz-option" data-answer="research" role="radio" aria-checked="false">A research/insight piece</button>
+                    <button type="button" class="quiz-option" data-answer="location" role="radio" aria-checked="false">Explore a location</button>
+                    <button type="button" class="quiz-option" data-answer="unsure"   role="radio" aria-checked="false">Not sure yet</button>
+                  </div>
                 </div>
+
+                <div class="quiz-step" data-quiz-pane="quiz" data-step="3" data-select="single" hidden>
+                  <p class="quiz-question">What content do you have to start with?</p>
+                  <p class="quiz-sublabel">Pick one</p>
+                  <div class="quiz-options" role="radiogroup" aria-label="What content do you have to start with?">
+                    <button type="button" class="quiz-option" data-answer="existing" role="radio" aria-checked="false">Campaign assets</button>
+                    <button type="button" class="quiz-option" data-answer="new"      role="radio" aria-checked="false">New assets needed</button>
+                    <button type="button" class="quiz-option" data-answer="mix"      role="radio" aria-checked="false">A mix of both</button>
+                  </div>
+                </div>
+
+                <div class="quiz-step" data-quiz-pane="quiz" data-step="4" data-select="single" hidden>
+                  <p class="quiz-question">Where will the audience encounter this?</p>
+                  <p class="quiz-sublabel">Pick one</p>
+                  <div class="quiz-options" role="radiogroup" aria-label="Where will the audience encounter this?">
+                    <button type="button" class="quiz-option" data-answer="venue"  role="radio" aria-checked="false">A venue or store</button>
+                    <button type="button" class="quiz-option" data-answer="app"    role="radio" aria-checked="false">Inside an app or platform</button>
+                    <button type="button" class="quiz-option" data-answer="site"   role="radio" aria-checked="false">On its own dedicated site</button>
+                    <button type="button" class="quiz-option" data-answer="unsure" role="radio" aria-checked="false">Not sure yet</button>
+                  </div>
+                </div>
+
+                <!-- RESULT pane — actions moved to footer -->
+                <div class="quiz-result" id="quizResult" data-quiz-pane="result">
+                  <p class="result-intro">Our recommendations</p>
+                  <div class="quiz-result-products" id="quizResultProducts"></div>
+                  <p class="quiz-result-advice" id="quizResultAdvice"></p>
+                </div>
+
               </div>
 
-              <!-- Shared Prev/Next nav -->
-              <div class="quiz-nav" data-quiz-pane="quiz" hidden>
-                <button type="button" class="button" data-variant="outline-faded" id="quizPrev">Previous</button>
-                <button type="button" class="button" id="quizNext" disabled data-cursor-icon="arrow-right" data-cursor-label="Next">Next <div class="svg-icn"><svg data-icon="arrow-right" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#arrow-right"/></svg></div></button>
-              </div>
+              <!-- ZONE 3: Footer — always at the bottom; per-state action set -->
+              <div class="quiz-footer">
 
-              <!-- RESULT state -->
-              <div class="quiz-result" id="quizResult" data-quiz-pane="result" hidden>
-                <p class="result-intro">Sounds like you'd want…</p>
-                <div class="quiz-result-products" id="quizResultProducts"></div>
-                <div class="quiz-result-actions">
+                <div class="quiz-actions" data-quiz-pane="idle">
+                  <button type="button" class="button" id="quizStart" data-cursor-icon="arrow-right" data-cursor-label="Start quiz">Start quiz <div class="svg-icn"><svg data-icon="arrow-right" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#arrow-right"/></svg></div></button>
+                </div>
+
+                <div class="quiz-actions quiz-nav" data-quiz-pane="quiz">
+                  <button type="button" class="button" data-variant="outline-faded" id="quizPrev">Previous</button>
+                  <button type="button" class="button" id="quizNext" disabled data-cursor-icon="arrow-right" data-cursor-label="Next">Next <div class="svg-icn"><svg data-icon="arrow-right" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#arrow-right"/></svg></div></button>
+                </div>
+
+                <div class="quiz-actions quiz-result-actions" data-quiz-pane="result">
                   <a href="/contact.html" class="button" data-cursor-icon="arrow-right" data-cursor-label="Get in touch">Start a project <div class="svg-icn"><svg data-icon="arrow-right" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#arrow-right"/></svg></div></a>
                   <button type="button" class="button" data-variant="outline-faded" id="quizRestart" data-cursor-icon="refresh" data-cursor-label="Start over"><div class="svg-icn"><svg data-icon="refresh" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#refresh"/></svg></div> Start over</button>
                 </div>
+
               </div>
 
+            </div>
             </div>
           </section>
 
@@ -376,47 +407,51 @@
               <div class="block" data-col-span="11">
                 <h2 class="page-headline products-deployment-headline">Where your experience lives.</h2>
               </div>
-              <div class="block deployment-tile top-medium" data-col-start="1" data-col-span="4">
-                <h4 class="deployment-tile-title">Standalone</h4>
-                <p class="deployment-tile-copy">Its own URL, built, hosted, and ready to launch as a campaign destination.</p>
-              </div>
-              <div class="block deployment-tile top-medium" data-col-start="5" data-col-span="4">
-                <h4 class="deployment-tile-title">Embedded</h4>
-                <p class="deployment-tile-copy">Slotted into your existing site or app — right where your audience already is.</p>
-              </div>
-              <div class="block deployment-tile top-medium" data-col-start="9" data-col-span="4">
-                <h4 class="deployment-tile-title">In-venue</h4>
-                <p class="deployment-tile-copy">Activated at events with QR signage and second-screen experiences — ready to bring physical audiences in.</p>
+              <div class="deployment-tiles top-medium" data-col-span="12">
+                <div class="deployment-tile">
+                  <h4 class="deployment-tile-title">Standalone</h4>
+                  <p class="deployment-tile-copy">Its own URL, built, hosted, and ready to launch as a campaign destination.</p>
+                </div>
+                <div class="deployment-tile">
+                  <h4 class="deployment-tile-title">Embedded</h4>
+                  <p class="deployment-tile-copy">Slotted into your existing site or app — right where your audience already is.</p>
+                </div>
+                <div class="deployment-tile">
+                  <h4 class="deployment-tile-title">In-venue</h4>
+                  <p class="deployment-tile-copy">Activated at events with QR signage and second-screen experiences — ready to bring physical audiences in.</p>
+                </div>
               </div>
             </div>
           </section>
 
-          <!-- Section 5 — Reporting band -->
+          <!-- Section 5 — Reporting -->
           <section class="products-reporting" data-inset="all">
+            <div class="section-header">
+              <div class="section-header-start">
+                <p class="eyebrow-header">Every project</p>
+              </div>
+            </div>
             <div class="section-content top-medium bottom-medium" data-grid>
-              <div class="block reporting-block" data-col-start="2" data-col-span="10">
-                <p class="eyebrow-header reporting-eyebrow">Every project</p>
-                <h2 class="reporting-headline">Every interaction, captured and reported.</h2>
-                <p class="reporting-subline">Real audience behaviour, real numbers, real takeaways — yours after every campaign.</p>
+              <div class="block text-center" data-col-start="2" data-col-span="10">
+                <h2 class="page-headline">Every interaction, captured and reported.</h2>
+                <p class="page-subline">Real audience behaviour, real numbers, real takeaways — yours after every campaign.</p>
               </div>
             </div>
           </section>
 
           <!-- Section 6 — Global CTA -->
-          <section class="products-cta" data-inset="all">
+          <section class="home-section home-cta" data-inset="all">
             <div class="section-header">
               <div class="section-header-start">
                 <p class="eyebrow-header">Let's talk</p>
               </div>
             </div>
-            <div class="section-content top-medium bottom-medium" data-grid>
-              <div class="block" data-col-span="11">
-                <h2 class="page-headline products-cta-headline">Ready to talk?</h2>
-              </div>
-              <div class="block top-medium" data-col-start="6" data-col-span="6">
-                <p class="page-subline">Tell us what you're working on — we'll come back with how we'd build it.</p>
-                <div class="button-group">
-                  <a href="/contact.html" class="button" data-cursor-icon="arrow-right" data-cursor-label="Get in touch">Tell us what you're working on <div class="svg-icn"><svg data-icon="arrow-right" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#arrow-right"/></svg></div></a>
+            <div class="section-content top-large bottom-large" data-grid>
+              <div class="block text-center" data-col-start="3" data-col-span="8">
+                <h2 class="cta-headline" data-bd-animate="slide-up" data-bd-scrub>We'd love to partner with you and your team.</h2>
+                <p class="cta-paragraph" data-bd-animate="slide-up" data-bd-scrub>This paragraph demonstrates how body text will look across your layout. Bold text adds emphasis, while italics offer a subtle highlight.</p>
+                <div class="button-group" data-bd-animate="slide-up" data-bd-scrub data-col-start="2" data-col-span="10">
+                  <a href="/contact.html" class="button">Book a call <div class="svg-icn"><svg data-icon="arrow-right" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#arrow-right"/></svg></div></a>
                 </div>
               </div>
             </div>
