@@ -80,6 +80,16 @@ function initWalkthrough(scope) {
 
 var PRODUCT_PRIORITY = ["SHOP", "PERSONALISE", "STORYTELL", "INFORM", "MAP"];
 
+// Display names — keys stay uppercase (scoring/priority lookups); cards render
+// the sentence-cased version below.
+var PRODUCT_NAMES = {
+  SHOP:        "Shop",
+  PERSONALISE: "Personalise",
+  STORYTELL:   "Storytell",
+  INFORM:      "Inform",
+  MAP:         "Map"
+};
+
 var PRODUCT_TAGLINES = {
   SHOP:        "Product discovery, made immersive.",
   PERSONALISE: "A unique experience for every visitor.",
@@ -187,12 +197,10 @@ function syncNavButtons(card, stepNumber, answers) {
   next.disabled = !hasAnswer(answers[stepNumber]);
 
   // "See result" on the last step; "Next" otherwise. Keep trailing svg-icn intact.
-  // Sync data-cursor-label too so bd-cursor's hover label matches the visible text.
   var label = stepNumber === 4 ? "See result" : "Next";
   if (next.firstChild && next.firstChild.nodeType === Node.TEXT_NODE) {
     next.firstChild.textContent = label + " ";
   }
-  next.setAttribute("data-cursor-label", label);
 }
 
 // Single-select: replace selection. Updates aria-checked + .is-selected + tabindex.
@@ -271,12 +279,16 @@ function renderResult(card, answers) {
       thumb.className = "card-thumb";
       thumb.setAttribute("aria-hidden", "true");
       thumb.dataset.product = product;
+      var thumbImg = document.createElement("img");
+      thumbImg.src = "https://bydefault.design/image/1080x1080";
+      thumbImg.alt = "";
+      thumb.appendChild(thumbImg);
 
       var text = document.createElement("div");
       text.className = "card-text";
       var name = document.createElement("span");
       name.className = "name";
-      name.textContent = product;
+      name.textContent = PRODUCT_NAMES[product] || product;
       var tagline = document.createElement("p");
       tagline.className = "tagline";
       tagline.textContent = PRODUCT_TAGLINES[product] || "";

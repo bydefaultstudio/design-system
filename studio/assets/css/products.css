@@ -261,6 +261,7 @@
 
 .quiz-intro .page-headline {
   margin: 0;
+  font-size: var(--font-8xl);
 }
 
 /* -- Question + options ---------------------------------------- */
@@ -274,7 +275,7 @@
 
 .quiz-question {
   margin: 0;
-  font-size: var(--font-3xl);
+  font-size: var(--font-4xl);
   font-weight: var(--font-weight-light);
   line-height: 1.2;
   letter-spacing: -0.01em;
@@ -286,8 +287,6 @@
 .quiz-sublabel {
   margin: calc(-1 * var(--space-m)) 0 0;
   font-size: var(--font-s);
-  letter-spacing: var(--letter-spacing-l);
-  text-transform: uppercase;
   color: var(--text-faded);
 }
 
@@ -322,14 +321,15 @@
   min-height: 5rem;
   background-color: var(--background-plain);
   border: var(--border-s) solid var(--border-faded);
+  border-radius: var(--radius-s);
   font-family: var(--font-primary);
   font-size: var(--font-m);
   text-align: left;
   color: var(--text-primary);
   cursor: pointer;
-  transition: background-color var(--duration-2xs) var(--ease-out),
-              border-color var(--duration-2xs) var(--ease-out),
-              color var(--duration-2xs) var(--ease-out);
+  transition: background-color var(--duration-s) var(--ease-out),
+              border-color var(--duration-s) var(--ease-out),
+              color var(--duration-s) var(--ease-out);
 }
 
 /* Indicator — uses brand icons via mask-image so its colour follows the
@@ -461,6 +461,14 @@
   width: 3rem;
   height: 3rem;
   background-color: var(--background-darker);
+  overflow: hidden;
+}
+
+.recommended-card .card-thumb > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .recommended-card .card-text {
@@ -539,6 +547,13 @@
 }
 
 
+.reporting-paragraph {
+  text-wrap: balance;
+  font-size: var(--title-size);
+}
+
+
+
 /* ============================================================
    MOBILE OVERRIDES
    ============================================================ */
@@ -574,7 +589,7 @@
   }
 
   .quiz-question {
-    font-size: var(--font-2xl);
+    font-size: var(--font-4xl);
   }
 
   /* Collapse all per-step grids to a single column on mobile. */
