@@ -131,6 +131,11 @@
   // Reduces repetition across the 15+ animation functions
   function createScrollAnimation(sel, fromProps, toProps, self) {
     sel.forEach(function (element) {
+      // Skip children already handled by a scrub-group parent — their tween
+      // lives on the shared timeline; running the per-element path here
+      // would create a duplicate trigger on the same element.
+      if (element.dataset.bdScrubHandled === "true") return;
+
       var scrubValue = getScrubValue(element);
       var delayValue = getDelayValue(element);
 
@@ -161,6 +166,109 @@
     });
   }
 
+  // ------- Scrub Groups -------
+  //
+  // Pattern: a parent declares data-bd-scrub-group and owns ONE ScrollTrigger.
+  // Each child with data-bd-animate joins a shared gsap.timeline scrubbed by
+  // that trigger, with its tween positioned at `index * stagger`. This lets
+  // same-Y siblings reveal in sequence as the parent scrolls through its
+  // trigger range — something per-element triggers can't do, since aligned
+  // siblings all fire at the same scroll Y.
+  //
+  // API:
+  //   parent: data-bd-scrub-group
+  //   parent: data-bd-scrub-stagger="0.2"  (optional; default scrubGroupDefaultStagger)
+  //   child:  data-bd-animate="slide-up"   (or fade/slide/slide-*/scale-in/scale-up)
+
+  var scrubGroupDefaultStagger = 0.15;
+  var scrubGroupWarnedTypes = new Set();        // dedup unknown-type warnings
+  var scrubGroupWarnedChildren = new WeakSet(); // dedup conflicting-child warnings
+
+  function getScrubGroupProps(animateValue) {
+    switch (animateValue) {
+      case "slide-up":    return { from: { opacity: 0, y: 50 },      to: { opacity: 1, y: 0 } };
+      case "slide-down":  return { from: { opacity: 0, y: -50 },     to: { opacity: 1, y: 0 } };
+      case "slide-left":  return { from: { opacity: 0, x: -50 },     to: { opacity: 1, x: 0 } };
+      case "slide-right": return { from: { opacity: 0, x: 50 },      to: { opacity: 1, x: 0 } };
+      case "scale-in":    return { from: { opacity: 0, scale: 0.8 }, to: { opacity: 1, scale: 1 } };
+      case "scale-up":    return { from: { opacity: 1, scale: 0.8 }, to: { scale: 1 } };
+      case "slide":       return { from: { opacity: 0, y: 40 },      to: { opacity: 1, y: 0 } };
+      case "fade":        return { from: { opacity: 0 },             to: { opacity: 1 } };
+      default:
+        if (animateValue && !scrubGroupWarnedTypes.has(animateValue)) {
+          scrubGroupWarnedTypes.add(animateValue);
+          console.warn("bd-animations: unsupported data-bd-animate value '" + animateValue + "' inside scrub-group; falling back to fade");
+        }
+        return { from: { opacity: 0 }, to: { opacity: 1 } };
+    }
+  }
+
+  function processScrubGroups(self) {
+    var groups = self.selector("[data-bd-scrub-group]");
+
+    // Clear stale skip-flags on every reinit so removing data-bd-scrub-group
+    // from a parent doesn't leave its children permanently unanimated. We
+    // collect every node currently flagged in the active context, then let
+    // the loop below re-flag only the ones that are still grouped.
+    self.selector("[data-bd-scrub-handled]").forEach(function (el) {
+      delete el.dataset.bdScrubHandled;
+    });
+
+    groups.forEach(function (parent) {
+      var children = parent.querySelectorAll("[data-bd-animate]");
+      if (!children.length) return;
+
+      var staggerAttr = parseFloat(parent.getAttribute("data-bd-scrub-stagger"));
+      var stagger = (!isNaN(staggerAttr) && staggerAttr >= 0) ? staggerAttr : scrubGroupDefaultStagger;
+
+      // Pass start/end as function refs so invalidateOnRefresh re-evaluates
+      // the breakpoint on resize. Calling them eagerly here would lock the
+      // value to the viewport width at create time.
+      var tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: parent,
+          start: getFadeStart,
+          end: getFadeEnd,
+          scrub: true,
+          invalidateOnRefresh: true
+        }
+      });
+
+      // If the parent itself opts into a per-element animation, mark it as
+      // handled so createScrollAnimation skips it — otherwise the parent
+      // gets its own duplicate trigger that fights the timeline.
+      if (parent.hasAttribute("data-bd-animate")) {
+        parent.dataset.bdScrubHandled = "true";
+      }
+
+      children.forEach(function (child, index) {
+        // Footgun: data-bd-scrub on a child of a scrub-group is silently
+        // ignored — the parent's trigger owns scrub for the whole group.
+        // Warn once per element so the markup author can clean up.
+        if (child.hasAttribute("data-bd-scrub") && !scrubGroupWarnedChildren.has(child)) {
+          scrubGroupWarnedChildren.add(child);
+          console.warn("bd-animations: data-bd-scrub on a child of data-bd-scrub-group is ignored; remove it from the child markup", child);
+        }
+
+        var animateValue = child.getAttribute("data-bd-animate");
+        var props = getScrubGroupProps(animateValue);
+        var position = index * stagger;
+
+        gsap.set(child, props.from);
+        // duration: 1 is a unitless timeline beat — actual run time is
+        // determined by scroll progress through the parent's trigger range.
+        tl.to(child, Object.assign({}, props.to, {
+          duration: 1,
+          ease: "power2.out"
+        }), position);
+
+        // Flag prevents the per-element path in createScrollAnimation
+        // from creating a second trigger on this child.
+        child.dataset.bdScrubHandled = "true";
+      });
+    });
+  }
+
   //
   // ------- Scroll Reveal Animations ------- //
   //
@@ -174,6 +282,10 @@
       });
       return;
     }
+
+    // Scrub-groups must run FIRST so children get marked with
+    // dataset.bdScrubHandled before the per-element animation paths see them.
+    processScrubGroups(self);
 
     // Base animations (fade/slide)
     baseTextAnimations(self);
@@ -192,6 +304,7 @@
     slideFromLeft(self);
     slideFromRight(self);
     scaleIn(self);
+    scaleUp(self);
     rotateIn(self);
     expandSpacing(self);
     skewText(self);
@@ -250,19 +363,29 @@
   // ------- In-Viewport (above-fold on load) ------- //
 
   function fadeInViewport(self) {
+    var introLoading = document.body.classList.contains("is-intro-loading");
+
     self.selector("[data-bd-animate='in-view'], [data-text-animate='in-view']").forEach(function (el) {
       if (isInViewport(el)) {
-        // Already visible — animate immediately (no ScrollTrigger)
+        // Already visible — animate immediately (no ScrollTrigger).
+        // If the intro curtain is up, hold the reveal until studio:intro-complete
+        // so the user sees the animation, not its already-finished result.
         var delay = getDelayValue(el, 0);
         var fromY = parseFloat(el.getAttribute("data-bd-from-y") || "0") || 0;
         var fromX = parseFloat(el.getAttribute("data-bd-from-x") || "0") || 0;
         var fromScale = parseFloat(el.getAttribute("data-bd-from-scale") || "1") || 1;
 
-        gsap.fromTo(
-          el,
-          { autoAlpha: 0, y: fromY, x: fromX, scale: fromScale, force3D: true },
-          { autoAlpha: 1, y: 0, x: 0, scale: 1, duration: 0.8, delay: delay, ease: "power2.out" }
-        );
+        var fromState = { autoAlpha: 0, y: fromY, x: fromX, scale: fromScale, force3D: true };
+        var toState = { autoAlpha: 1, y: 0, x: 0, scale: 1, duration: 0.8, delay: delay, ease: "power2.out" };
+
+        if (introLoading) {
+          gsap.set(el, fromState);
+          document.addEventListener("studio:intro-complete", function runIt() {
+            gsap.to(el, toState);
+          }, { once: true });
+        } else {
+          gsap.fromTo(el, fromState, toState);
+        }
       } else {
         // Out of viewport — create a standard fade ScrollTrigger instead of mutating the attribute
         gsap.set(el, { opacity: 0 });
@@ -457,6 +580,18 @@
       self.selector("[data-bd-animate='scale-in']"),
       { opacity: 0, scale: 0.8 },
       { opacity: 1, scale: 1, ease: "power2.out" },
+      self
+    );
+  }
+
+  // scale-up — pure scale, no fade. Element stays fully visible; it just grows.
+  // opacity: 1 in fromProps overrides the .js [data-bd-animate] FOUC pre-hide
+  // rule in studio.css; without it the element would scale while invisible.
+  function scaleUp(self) {
+    createScrollAnimation(
+      self.selector("[data-bd-animate='scale-up']"),
+      { opacity: 1, scale: 0.8 },
+      { scale: 1, ease: "power2.out" },
       self
     );
   }
@@ -739,6 +874,31 @@
   window.bdAnimateElementsIn = function bdAnimateElementsIn(container) {
     if (!ctx || prefersReducedMotion()) return;
 
+    // If the intro curtain is up, set the from-state immediately and wait
+    // for studio:intro-complete to run the actual entry animation. Otherwise
+    // run it now (covers Barba transitions + second-visit cold loads).
+    if (document.body.classList.contains("is-intro-loading")) {
+      ctx.add(function () {
+        var elementsForGate = container.querySelectorAll("[data-bd-enter]");
+        if (elementsForGate.length) {
+          gsap.set(elementsForGate, { autoAlpha: 0 });
+        }
+      });
+      document.addEventListener("studio:intro-complete", function runEntry() {
+        runBdAnimateElementsIn(container);
+      }, { once: true });
+      return;
+    }
+
+    runBdAnimateElementsIn(container);
+  };
+
+  function runBdAnimateElementsIn(container) {
+    if (!ctx) return;
+    // Container may be detached if a Barba nav swapped it out before the
+    // gated event fired. Bail rather than animating nothing.
+    if (!container || !container.isConnected) return;
+
     ctx.add(function () {
       var elements = container.querySelectorAll("[data-bd-enter]");
       if (!elements.length) return;
@@ -781,11 +941,19 @@
         }
       });
     });
-  };
+  }
 
   //
   // ------- Initial Load ------- //
   //
+
+  function signalStudioReady() {
+    // Latched flag so listeners registered after the event fires can
+    // still detect that ready has happened (cheap belt-and-braces against
+    // script-order races on cached-font cold loads).
+    document.documentElement.dataset.studioReady = "true";
+    document.dispatchEvent(new CustomEvent("studio:ready"));
+  }
 
   document.fonts.ready
     .then(function () {
@@ -793,11 +961,20 @@
       window.bdAnimationsInit(container);
       window.bdAnimateElementsIn(container);
       addResizeListener();
+      // Refresh BEFORE the curtain dismisses — measurement work happens
+      // while the curtain hides any potential flicker. The curtain's own
+      // dismiss pipeline waits for this event before fading out.
+      if (typeof ScrollTrigger !== "undefined" && typeof ScrollTrigger.refresh === "function") {
+        ScrollTrigger.refresh();
+      }
+      signalStudioReady();
     })
     .catch(function () {
       console.error("bd-animations: font loading error, initializing anyway");
       var container = document.querySelector("[data-barba='container']") || document.body;
       window.bdAnimationsInit(container);
       addResizeListener();
+      // Don't strand the curtain on a font failure.
+      signalStudioReady();
     });
 })();

@@ -291,4 +291,13 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
     if (typeof initProductSpotlight === "function") initProductSpotlight();
     if (typeof initProducts === "function") initProducts();
   });
+
+  // Belt-and-braces ScrollTrigger refresh after the loading curtain dismisses,
+  // in case the fade alters layout. Primary refresh happens inside
+  // bd-animations.js BEFORE dismiss (so measurement is hidden by the curtain).
+  document.addEventListener("studio:intro-complete", function onIntroComplete() {
+    if (typeof ScrollTrigger !== "undefined" && typeof ScrollTrigger.refresh === "function") {
+      ScrollTrigger.refresh();
+    }
+  });
 });

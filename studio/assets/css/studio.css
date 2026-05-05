@@ -1009,6 +1009,51 @@ body.is-sidebar-collapsed .page-header {
   border-radius: var(--radius-s);
 }
 
+/* ------ HOME STATS (three-column data points beneath the hero) ------ */
+
+.home-stats-headline {
+  color: var(--text-primary);
+}
+
+.home-stats-headline-faded {
+  color: var(--text-faded);
+}
+
+.home-stats-item {
+  border-left: var(--border-s) solid var(--border-faded);
+  padding: 0 var(--space-2xl);
+}
+
+.home-stats-figure {
+  font-size: var(--font-6xl);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  margin: 0 0 var(--space-l);
+}
+
+.home-stats-label {
+  font-size: var(--font-m);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  margin: 0 0 var(--space-xs);
+}
+
+.home-stats-copy {
+  font-size: var(--font-s);
+  color: var(--text-faded);
+  margin: 0;
+}
+
+/* Mobile: data-grid auto-collapses at ≤768px; rotate divider to top */
+@media (max-width: 768px) {
+  .home-stats-item {
+    border-left: 0;
+    border-top: var(--border-s) solid var(--border-faded);
+    padding-left: 0;
+    padding-top: var(--space-l);
+  }
+}
+
 /* Decorative autoplay videos (article bodies, section backgrounds). No JS —
    pure HTML attributes (autoplay, muted, loop, playsinline). Distinct from
    the full .bd-video player. Emitted by the {{bg-video}} markdown shortcode

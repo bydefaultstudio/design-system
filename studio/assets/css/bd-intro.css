@@ -1,0 +1,90 @@
+/* ---------------------------------------------------------------
+ * bd-intro.css
+ * First-visit loading curtain — wordmark drops into place, holds
+ * until the page is ready, then fades to reveal the site.
+ *
+ * The curtain is hidden by default. bd-intro.js adds .bd-intro--active
+ * to show it. If JS is disabled, the curtain never appears.
+ * --------------------------------------------------------------- */
+
+.bd-intro {
+  /* Hidden by default. JS adds .bd-intro--active to show it. */
+  display: none;
+
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+
+  /* Component-scoped tokens — always dark, regardless of theme */
+  --bd-intro-bg: #0F0E0E;
+  --bd-intro-logo: #F1ECE0;
+
+  background: var(--bd-intro-bg);
+
+  opacity: 1;
+  transition: opacity var(--duration-m) var(--ease-in-out);
+}
+
+.bd-intro--active {
+  display: block;
+}
+
+.bd-intro--leaving {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Subtle vignette so the surface isn't dead-flat */
+.bd-intro::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    ellipse at center,
+    transparent 35%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  pointer-events: none;
+}
+
+.bd-intro-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.bd-intro-piece {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+  pointer-events: none;
+  user-select: none;
+  transform-origin: 50% 50%;
+}
+
+.bd-intro-piece svg {
+  display: block;
+  overflow: visible;
+}
+
+.bd-intro-piece path {
+  fill: var(--bd-intro-logo);
+}
+
+/* ---------------------------------------------------------------
+ * Scroll lock — applied to <body> while the curtain is up.
+ * iOS Safari rubber-bands through `overflow: hidden`, so we use
+ * `position: fixed` and JS sets `top: -scrollY` inline so visual
+ * scroll position is preserved on dismiss.
+ * --------------------------------------------------------------- */
+
+body.is-intro-loading {
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 100%;
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
