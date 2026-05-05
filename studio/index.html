@@ -150,6 +150,33 @@
 
         <div class="page-wrapper home-wrapper">
 
+          <!-- Intro -->
+          <section class="home-section home-intro" data-inset="all">
+            <div class="section-content top-large bottom-large" data-grid>
+              <div class="block gap-2xl" data-col-start="2" data-col-span="6">
+                <h1 class="page-headline home-headline" data-bd-animate="in-view" data-bd-from-y="12">Interactive stories that connect culture to commerce.</h1>
+              </div>
+              <div class="block gap-2xl" data-col-start="2" data-col-span="6">
+                <p class="text-secondary" data-bd-animate="in-view" data-bd-from-y="12" data-bd-delay="0.2">Setting a new premium standard in digital experience advertising for brands and publishers ready to turn attention into action. We ideate, design and build immersive content using our own proprietary technology, grounded in audience behaviour and creative direction. The result: stand-out campaigns built for speed, scale, and category leadership. From first scroll to long-term loyalty.</p>
+                <div class="button-group" data-bd-animate="in-view" data-bd-from-y="12" data-bd-delay="0.4">
+                  <button class="button">Book a call <div class="svg-icn"><svg data-icon="arrow-right" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#arrow-right"/></svg></div></button>
+                  <button class="button" data-variant="outline-faded">Learn More</button>
+                </div>
+              </div>
+              <div class="block" data-col-span="12" data-bd-animate="in-view" data-bd-from-y="12" data-bd-delay="0.6">
+                <div class="logo-ticker-section">
+                  <div class="logo-slider splide" aria-label="Client logos" data-exclude="country-and-town-house">
+                    <div class="splide__track logo-ticker-track">
+                      <ul class="splide__list logo-ticker-list">
+                        <!-- Slides injected by studio-logos.js -->
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           <!-- Hero -->
           <section class="home-hero" data-inset="top right left">
             <div class="bd-video" role="region" aria-label="Video player" data-bd-scrubber data-bd-mute data-bd-fullscreen data-bd-unmute-prompt data-bd-cues data-grid data-cursor-icon="play" data-cursor-label="Play Reel">
@@ -227,37 +254,6 @@
             </div>
           </section>
 
-           <!-- About -->
-          <section class="home-section home-intro" data-inset="all">
-            <div class="section-header">
-              <div class="section-header-start">
-                <p class="eyebrow-header">About</p>
-              </div>
-              <div class="section-header-end">
-                <a href="/about.html" class="button" data-variant="transparent" data-icon-only data-size="small" aria-label="Read more about us">
-                  <div class="svg-icn"><svg data-icon="arrow-right" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#arrow-right"/></svg></div>
-                </a>
-              </div>
-            </div>
-            <div class="section-content top-large bottom-large" data-grid>
-              <div class="block" data-col-span="10">
-              <h1 class="page-headline home-headline" data-bd-animate="slide-up" data-bd-scrub> By Default is <br> <span>A different kind of result.</span></h1>
-              </div>
-
-              <!-- Paragraph and buttons -->
-              <div class="block top-medium" data-col-start="6" data-col-span="6">
-              <p class="page-subline" data-bd-animate="slide-up" data-bd-scrub>Setting a new premium standard in digital experience advertising. We are not just a design studio, we ideate, design and build impactful solutions and immersive environments that drive audiences from first scroll through to long term loyalty. </p>
-              
-              <div class="button-group" data-bd-animate="slide-up" data-bd-scrub>
-                <button class="button">Book a call <div class="svg-icn"><svg data-icon="arrow-right" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#arrow-right"/></svg></div></button>
-                <button class="button" data-variant="outline-faded">Learn More</button>
-              </div>  
-            </div>
-
-
-            </div>
-          </section>
-
           <!-- Case Studies -->
           <section id="work" class="home-section home-case-studies" data-inset="all" style="display:none">
             <div class="section-header">
@@ -277,7 +273,7 @@
                 <div class="block case-study-card-info" data-col-span="4">
                   <div class="case-study-card-heading">
                     <p class="label case-study-card-client"></p>
-                    <h3 class="case-study-card-title" data-text-animate="words" data-bd-faded data-bd-scrub data-bd-faded></h3>
+                    <h3 class="case-study-card-title" data-text-animate="words" data-bd-faded data-bd-scrub></h3>
                   </div>
                   <p class="case-study-card-stat" hidden data-bd-animate="slide-up" data-bd-scrub>
                     <span class="case-study-card-stat-value">
@@ -300,63 +296,91 @@
             </template>
 
             <div class="section-content top-medium bottom-medium">
-              <!-- studio-home-featured.js clones the template above into here,
+              <!-- studio-home.js clones the template above into here,
                    one per case study with featured: true. -->
               <div class="case-study-cards" data-home-featured></div>
             </div>
           </section>
 
-          <!-- What We Do -->
-          <section class="home-section home-services" data-inset="all">
+          <!-- Product spotlight -->
+          <section class="home-section product-spotlight" aria-labelledby="product-spotlight-heading" data-inset="all" data-refresh>
             <div class="section-header">
               <div class="section-header-start">
-                <p class="eyebrow-header">What We Do</p>
+                <p class="eyebrow-header">What We Build</p>
               </div>
               <div class="section-header-end">
-                <a href="/services.html" class="button" data-variant="transparent" data-icon-only data-size="small" aria-label="See all services">
+                <a href="/products.html" class="button" data-variant="transparent" data-icon-only data-size="small" aria-label="See all products">
                   <div class="svg-icn"><svg data-icon="arrow-right" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#arrow-right"/></svg></div>
                 </a>
               </div>
             </div>
-            <div class="section-content top-large bottom-large">
-              <ol class="services-list">
-                <li class="services-list-item" data-bd-animate="slide-up" data-bd-scrub>Brand Strategy</li>
-                <li class="services-list-item" data-bd-animate="slide-up" data-bd-scrub>Identity Systems</li>
-                <li class="services-list-item" data-bd-animate="slide-up" data-bd-scrub>Digital Experiences</li>
+            <div class="section-content top-large bottom-large" data-grid>
+              <div class="block" data-col-span="8">
+                <h2 id="product-spotlight-heading" class="visually-hidden" data-bd-animate="slide-up" data-bd-scrub>Turn content into memorable experiences that drive engagement.</h2>
+              </div>
+              <ol class="product-spotlight-list">
+                <li class="product-spotlight-item is-active" data-product="shop" data-grid>
+                  <div class="product-spotlight-media" data-col-span="3" aria-hidden="true">
+                    <img src="https://bydefault.design/image/700x700" alt="" loading="lazy">
+                  </div>
+                  <a class="product-spotlight-info" data-col-start="5" data-col-span="8" href="/products.html#shop" data-cursor-icon="arrow-right" data-cursor-label="Learn more about Shop">
+                    <h3 class="product-spotlight-title">Shop</h3>
+                    <p class="product-spotlight-description">Product discovery, made immersive.</p>
+                  </a>
+                </li>
+                <li class="product-spotlight-item" data-product="personalise" data-grid>
+                  <div class="product-spotlight-media" data-col-span="3" aria-hidden="true">
+                    <img src="https://bydefault.design/image/700x700" alt="" loading="lazy">
+                  </div>
+                  <a class="product-spotlight-info" data-col-start="5" data-col-span="8" href="/products.html#personalise" data-cursor-icon="arrow-right" data-cursor-label="Learn more about Personalise">
+                    <h3 class="product-spotlight-title">Personalise</h3>
+                    <p class="product-spotlight-description">A unique experience for every visitor.</p>
+                  </a>
+                </li>
+                <li class="product-spotlight-item" data-product="storytell" data-grid>
+                  <div class="product-spotlight-media" data-col-span="3" aria-hidden="true">
+                    <img src="https://bydefault.design/image/700x700" alt="" loading="lazy">
+                  </div>
+                  <a class="product-spotlight-info" data-col-start="5" data-col-span="8" href="/products.html#storytell" data-cursor-icon="arrow-right" data-cursor-label="Learn more about Storytell">
+                    <h3 class="product-spotlight-title">Storytell</h3>
+                    <p class="product-spotlight-description">Made for stories worth finishing.</p>
+                  </a>
+                </li>
+                <li class="product-spotlight-item" data-product="inform" data-grid>
+                  <div class="product-spotlight-media" data-col-span="3" aria-hidden="true">
+                    <img src="https://bydefault.design/image/700x700" alt="" loading="lazy">
+                  </div>
+                  <a class="product-spotlight-info" data-col-start="5" data-col-span="8" href="/products.html#inform" data-cursor-icon="arrow-right" data-cursor-label="Learn more about Inform">
+                    <h3 class="product-spotlight-title">Inform</h3>
+                    <p class="product-spotlight-description">Make data fun to experience.</p>
+                  </a>
+                </li>
+                <li class="product-spotlight-item" data-product="map" data-grid>
+                  <div class="product-spotlight-media" data-col-span="3" aria-hidden="true">
+                    <img src="https://bydefault.design/image/700x700" alt="" loading="lazy">
+                  </div>
+                  <a class="product-spotlight-info" data-col-start="5" data-col-span="8" href="/products.html#map" data-cursor-icon="arrow-right" data-cursor-label="Learn more about Map">
+                    <h3 class="product-spotlight-title">Map</h3>
+                    <p class="product-spotlight-description">Tell stories through destinations.</p>
+                  </a>
+                </li>
               </ol>
             </div>
           </section>
 
-          <!-- Clients: testimonials + client logos in a unified section -->
+          <!-- Clients -->
           <section class="home-section home-clients" data-inset="all">
             <div class="section-header">
               <div class="section-header-start">
                 <p class="eyebrow-header">Clients</p>
-                
               </div>
             </div>
-            <!-- Text -->
+            <!-- Headline -->
             <div class="section-content top-medium" data-grid>
               <div class="block" data-col-start="7" data-col-span="5">
                 <h2 class="page-subline home-clients-headline" data-bd-animate="slide-up" data-bd-scrub>We work with clients who know the world is changing, and see it as an opportunity This paragraph demonstrates how body text will look across your layout.</h2>
                 <div class="button-group">
                   <a class="button" href="/contact.html" data-bd-animate="slide-up" data-bd-scrub>Get in touch <div class="svg-icn"><svg data-icon="arrow-right" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#arrow-right"/></svg></div></a>
-                </div>
-              </div>
-            </div>
-
-
-            <!-- Client logo ticker (A/B test against grid below) -->
-            <div class="section-content top-large bottom-large" data-grid>
-              <div class="block" data-col-span="12">
-                <div class="logo-ticker-section">
-                  <div class="logo-slider splide" aria-label="Client logos" data-exclude="country-and-town-house">
-                    <div class="splide__track logo-ticker-track">
-                      <ul class="splide__list logo-ticker-list">
-                        <!-- Slides injected by studio-logos.js -->
-                      </ul>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -421,17 +445,17 @@
             </div>
             <div class="section-content top-large bottom-large" data-grid>
               <div class="block text-center" data-col-start="3" data-col-span="8">
-                <h2 class="cta-headline" data-bd-animate="slide-up" data-bd-scrub>We'd love to partner with you and your team.</h2>
-                <p class="cta-paragraph" data-bd-animate="slide-up" data-bd-scrub>This paragraph demonstrates how body text will look across your layout. Bold text adds emphasis, while italics offer a subtle highlight. </p>
-                <div class="button-group" data-bd-animate="slide-up" data-bd-scrub data-col-start="2" data-col-span="10">
-                  <a href="/contact.html" class="button">Book a call <div class="svg-icn"><svg data-icon="arrow-right" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#arrow-right"/></svg></div></a>
+                <h2 class="cta-headline" data-bd-animate="slide-up" data-bd-scrub>Most projects begin with a 30-minute call.</h2>
+                <p class="cta-paragraph" data-bd-animate="slide-up" data-bd-scrub>We'll discuss your audience, your current campaign performance, and where interactive formats could outperform what you're running today. You'll leave the call with a working hypothesis and a recommended approach. Whether or not you choose to work with us.</p>
+                <div class="button-group" data-bd-animate="slide-up" data-bd-scrub>
+                  <a href="/contact.html" class="button">Book a discovery call <div class="svg-icn"><svg data-icon="arrow-right" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#arrow-right"/></svg></div></a>
                 </div>
               </div>
 
             </div>
           </section>
 
-          <!-- Section -->
+          <!-- Footer -->
           <footer class="footer" data-inset="all">
             <div class="footer-wrapper" data-theme="dark" data-bd-animate="slide-up" data-bd-scrub>
             <div class="footer-grid" data-grid>
@@ -505,7 +529,7 @@
   <script src="assets/js/studio-feed.js" defer></script>
   <script src="assets/js/studio-article.js" defer></script>
   <script src="assets/js/studio-logos.js" defer></script>
-  <script src="assets/js/studio-home-featured.js" defer></script>
+  <script src="assets/js/studio-home.js" defer></script>
   <script src="assets/js/studio-testimonials.js" defer></script>
   <script src="assets/js/studio-scroll-state.js" defer></script>
   <script src="assets/js/studio.js" defer></script>

@@ -2,16 +2,16 @@
 type: case-study
 featured: true
 stat:
-  value: "2M"
-  caption: "Fans reached across 3 sold-out HBCU events"
+  value: "53%"
+  caption: "Higher engagement than benchmark"
   icon: arrow-up
-title: "Transforming presence into cultural belonging"
-synopsis: "How culture-first AR turned Verizon's HBCU sponsorship into sold-out events across 3 cities and a genuine connection with 2M fans."
+title: "Sold out Verizon's Gen-Z Tour across 3 cities. A phygital cultural moment drove 53% higher engagement."
+synopsis: "We partnered with REVOLT to build Verizon's 'Back In Session' HBCU Tour. Full campaign identity, interactive RSVP site, AR social filters, merchandise, and collateral across 3 cities. 5,000+ RSVPs. Sold out."
 date: 2026-04-09
 client: "Verizon"
 logo: verizon
 year: 2026
-services: ["Campaign Identity", "AR Experience", "Creative Direction", "Motion Graphics & Film"]
+services: ["Campaign Branding", "Creative Direction", "Art Direction", "Web Design", "Development", "AR Development", "Illustration", "Motion Design", "Social Content", "Project Management"]
 categories: ["Telecom & Media Network"]
 hero: "https://cdn.prod.website-files.com/68e2be176459e98837a31ee6/690d186ce5a71d86c57ee150_thumb.avif"
 thumbnail: "https://cdn.prod.website-files.com/68e2be176459e98837a31ed9/690d14b8b7c2812b05f880e0_thumbnail.avif"
@@ -67,36 +67,44 @@ order: 2
 
 ## 01. Overview
 
-Verizon sought to deepen its connection with young Black audiences. As the brand expanded its its community initiatives, it identified historically Black Colleges and Universities as vital cultural hubs shaping the next generation of culture. Verizon partnered with REVOLT to launch “Back In Session” an HBCU tour celebrating student life, creativity, and connection. By Default joined as creative partner to design and deliver the experience across three key markets: Atlanta, Houston, and Washington, DC.
+Verizon wanted to connect with young Black audiences through music during HBCU Homecoming season. REVOLT partnered with By Default as its embedded creative agency to develop the full campaign brand identity, interactive digital experience, AR social filters, marketing collateral, and branded merchandise for the "Back In Session" HBCU Tour.
+
+We built a complete campaign from scratch in 10 weeks. A custom interactive RSVP site drove 5,000+ sign-ups and a 53% engagement rate. Custom AR Instagram and TikTok filters gave attendees a way to create and share branded content natively with friends and as keepsake memorabilia. The tour sold out across Houston, D.C., and Atlanta.
 
 ## 02. Challenge
 
-Verizon had reach but needed resonance. The brand’s traditional campaigns connected through scale, not intimacy. To engage Gen Z at HBCUs, Verizon required a presence that mirrored the culture rather than observing it. An initiative that empowered expression and participation.
+This audience lives online first. A physical event with standard marketing wasn't going to cut it. The digital experience had to feel as alive as the event itself.
 
 ## 03. Creative Concept
 
 ### Back In Session
 
-The idea celebrated return, the return to campus, to community, to self. Back In Session transformed Verizon’s presence into a vibrant living campus experience, amplifying the music, lifestyle, and creative energy of HBCUs. The concept invited participation, positioning Verizon as a facilitator of connection rather than a sponsor of events.
+We built every touchpoint around one strategic decision: bridge physical and digital experience so the campaign felt native to how this audience actually discovers, engages, and shares.
+
+The visual identity rooted itself in HBCU culture. Hand-drawn illustrations from a Black university student were integrated into the campaign brand identity — animated iconography, vibrant neon colours against black and white, bold typography. Every element felt like it belonged to the community, not to a brand trying to perform in it.
 
 #### What We Did:
 
-- Campaign Strategy
-- Creative Development
-- Brand Identity
-- Motion Design & Graphics
+- Campaign Branding
+- Creative Direction
+- Art Direction
+- Illustration
 
 ## 04. Applications
 
-From Tour to TouchpointThe campaign drew from the visual and cultural language of HBCU life. Verizon’s palette was reimagined through the vibrancy of school colors and marching-band illustration. Typography balanced clarity with energy, blending nostalgia and modernity across every touchpoint. From interactive ticketing platforms and influencer kits to event signage, AR filters, and digital experiences, each element reinforced cultural belonging. Live performances and motion design brought the tour to life. Transforming venues into celebrations of community. The campaign sold out in every city and generated thousands of signups, establishing a scalable model for future Verizon engagement.
+The RSVP website wasn't a standard form. It was an interactive, city-specific destination with video content, artist lineups, and location-based colour palettes for each city. The AR filters were yearbook-themed participation tools with face-tracking stickers, personalisation prompts, and switchable doodle themes — built for the way Gen-Z creates and shares content on socials.
+
+Physical merchandise matched the digital energy. Location-based animated social flyers. Branded merchandise including cups, wristbands, lanyards, and event passes. All of it built from scratch in 10 weeks.
 
 #### What We Did:
 
-- Web Design & Development
+- Web Design
+- Development
 - AR Development
-- Brand Guidelines
-- Campaign Materials
+- Motion Design
+- Social Content
+- Project Management
 
 ## 05. Outcome
 
-The collaboration created more than a marketing activation. It built a cultural bridge between brand and new-gen audience. Turning awareness into participation and participation into trust. Collecting first-party data and an authentic connection to sustain relationships with the next generation of Black creators, innovators and storytellers.
+19,318 visitors and 42,665 page views drove 22,801 interaction clicks at a 53% engagement rate. 5,000+ RSVPs. 69% video play rate (20,227 plays). The tour sold out across Houston, D.C., and Atlanta. Idea to launch in 10 weeks.

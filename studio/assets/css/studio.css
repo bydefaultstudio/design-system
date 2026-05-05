@@ -576,7 +576,7 @@ body.is-sound-off .sound-toggle .sound-icon-off {
 
 .sidebar-slot .sidebar-slot-link {
   padding: var(--studio-gap);
-  background-color: var(--bg-faded-3);
+  background-color: var(--bg-faded-7);
   border-radius: var(--radius-s);
 }
 
@@ -972,6 +972,11 @@ body.is-sidebar-collapsed .page-header {
   font-weight: var(--font-weight-light);
 }
 
+.home-headline {
+  font-size: 2.8vw;
+  margin: 0;
+}
+
 .page-subline {
   font-family: var(--font-secondary, var(--font-primary));
   font-size: var(--subline-size);
@@ -1133,8 +1138,7 @@ body.is-sidebar-collapsed .page-header {
 
 /* ------ ABOUT PAGE ------ */
 
-.about-wrapper {
-}
+
 
 .about-ticker {
   overflow: hidden;
@@ -3664,3 +3668,132 @@ body.is-scrolling .case-study-card-logo {
 [data-ratio="21:9"] { aspect-ratio: 21 / 9; }
 [data-ratio="4:5"]  { aspect-ratio: 4 / 5; }
 [data-ratio="9:16"] { aspect-ratio: 9 / 16; }
+
+
+/* ============================================================
+   HOME — PRODUCT SPOTLIGHT
+   Scroll-linked active item driven by studio-home.js initProductSpotlight.
+   JS toggles .is-active on the matching <li>; CSS descendants drive
+   image opacity, title color, description opacity together. Each <li>
+   uses a 2-col grid (media | info) — the info wrapper holds <h3> + <p>
+   in normal block flow. Image sits in the same row as its info — no
+   floating panel, no Y-position drift.
+   ============================================================ */
+
+/* Cursor parallax target — JS in studio-home.js writes lerped values
+   here on mousemove. Section-scoped so the variables don't leak to
+   sibling sections; they cascade down to .product-spotlight-media which
+   reads them in its transform. Default 0px / 0px renders as a no-op. */
+.product-spotlight {
+  --cursor-x: 0px;
+  --cursor-y: 0px;
+}
+
+.product-spotlight .product-spotlight-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Each <li> uses the studio's [data-grid] 12-col grid (defined at line
+   ~2873). Children opt in via data-col-span / data-col-start in the
+   markup: media spans cols 1–3, info spans cols 5–12 (col 4 is gutter).
+   Equal min-height keeps the scroll-progress mapping
+   (Math.round(progress * (n-1))) stable regardless of which row is
+   active — only opacity / color toggle, layout never shifts. */
+.product-spotlight .product-spotlight-item {
+  align-items: center;
+  min-height: 16rem;
+  border-bottom: var(--border-s) solid var(--border-faded);
+  padding: var(--space-3xl) 0;
+  margin: 0;
+}
+
+.product-spotlight .product-spotlight-media {
+  aspect-ratio: 5 / 3;
+  width: 100%;
+  opacity: 0;
+  /* Cursor parallax — JS lerp drives --cursor-x/y. No CSS transition on
+     transform; the lerp itself is the smoothing mechanism. */
+  transform: translate(var(--cursor-x), var(--cursor-y));
+}
+
+.product-spotlight .product-spotlight-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-s);
+  display: block;
+}
+
+/* .product-spotlight-info is an <a> wrapping <h3> + <p>. Link reset so it
+   inherits the spotlight's color/transition cascade. The whole right
+   column becomes the click target; bd-cursor renders the data-cursor-label
+   on hover ("Learn more about [product]"). */
+.product-spotlight .product-spotlight-info {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Inactive titles use a tokenised faded color (not opacity) so they stay
+   above WCAG 1.4.3 contrast against the page background. */
+.product-spotlight .product-spotlight-title {
+  margin: 0;
+  font-size: var(--headline-size);
+  font-weight: var(--font-weight-light);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--bg-faded-15);
+}
+
+.product-spotlight .product-spotlight-description {
+  margin: var(--space-s) 0 0;
+  font-size: var(--font-xl);
+  color: var(--text-faded);
+  opacity: 0;
+}
+
+.product-spotlight .product-spotlight-item.is-active .product-spotlight-title {
+  color: var(--text-primary);
+}
+
+.product-spotlight .product-spotlight-item.is-active .product-spotlight-media,
+.product-spotlight .product-spotlight-item.is-active .product-spotlight-description {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .product-spotlight .product-spotlight-title {
+    transition: color var(--duration-l) var(--ease-out);
+  }
+  .product-spotlight .product-spotlight-media,
+  .product-spotlight .product-spotlight-description {
+    transition: opacity var(--duration-l) var(--ease-out);
+  }
+}
+
+/* Reduced-motion fallback — JS adds .is-reduced-motion to the section. */
+.product-spotlight.is-reduced-motion .product-spotlight-title {
+  color: var(--text-primary);
+}
+
+.product-spotlight.is-reduced-motion .product-spotlight-media,
+.product-spotlight.is-reduced-motion .product-spotlight-description {
+  opacity: 1;
+}
+
+/* Mobile — [data-grid] auto-collapses to a single column at ≤768px,
+   so media + info stack naturally. We just relax min-height and tighten
+   the row gap; the 16/9 ratio gives compact rows on small screens while
+   keeping height consistent across active/inactive items. */
+@media (max-width: 767px) {
+  .product-spotlight .product-spotlight-item {
+    row-gap: var(--space-m);
+    min-height: auto;
+  }
+
+  .product-spotlight .product-spotlight-media {
+    aspect-ratio: 16 / 9;
+  }
+}

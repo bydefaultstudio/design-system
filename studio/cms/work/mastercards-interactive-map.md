@@ -1,6 +1,6 @@
 ---
 type: case-study
-featured: true
+featured: false
 stat:
   value: "3.4M"
   caption: "Map interactions in the campaign's first month"

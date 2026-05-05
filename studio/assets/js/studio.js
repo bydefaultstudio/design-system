@@ -276,6 +276,7 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
   logoSlider();
   if (typeof mountTestimonialSliders === "function") mountTestimonialSliders();
   if (typeof initHomeFeatured === "function") initHomeFeatured();
+  if (typeof initProductSpotlight === "function") initProductSpotlight();
   if (typeof initProducts === "function") initProducts();
 
   // Re-init after Barba navigations
@@ -287,6 +288,7 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
     initFeed();
     initServices();
     if (typeof initHomeFeatured === "function") initHomeFeatured();
+    if (typeof initProductSpotlight === "function") initProductSpotlight();
     if (typeof initProducts === "function") initProducts();
   });
 });

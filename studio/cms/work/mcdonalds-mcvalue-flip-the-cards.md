@@ -16,7 +16,7 @@ categories: ["Food & Beverage"]
 hero: "https://bydefault.design/image/1920x1080"
 thumbnail: "https://bydefault.design/image/800x1000"
 thumbnail-ratio: "4:5"
-order: 9
+order: 1
 ---
 
 {{img src="https://bydefault.design/image/1920x1080" ratio="16:9"}}

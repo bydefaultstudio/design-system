@@ -39,6 +39,8 @@
   var animationStagger = { chars: 0.05, words: 0.1, lines: 0.15 };
   var FADED_FROM_OPACITY = 0.2;
 
+
+
   function getFadeStart() {
     return window.innerWidth < 768 ? "top 100%" : "top 100%";
   }
@@ -50,6 +52,20 @@
   function getFadeEndChars() {
     return window.innerWidth < 768 ? "top 50%" : "bottom 75%";
   }
+
+  // Headline settings
+  var headlineWordStagger = 0.3;
+  var headlineFromOpacity = 0.1;
+
+
+  function headlineStart() {
+    return window.innerWidth < 768 ? "top 88%" : "top 88%";
+  }
+
+  function headlineEnd() {
+    return window.innerWidth < 768 ? "top 50%" : "bottom 65%";
+  }
+
 
   // data-bd-faded elements start later so the ghosted (0.2 opacity) reveal
   // has time to register before the stagger fires.
@@ -165,6 +181,7 @@
     // SplitText animations
     fadeCharacters(self);
     fadeWords(self);
+    fadeWordHeadline(self);
     fadeLines(self);
     fadeRichText(self);
     fadeList(self);
@@ -267,12 +284,15 @@
   // ------- SplitText Animations ------- //
   // Context tracks SplitText instances automatically in GSAP 3.12+
 
-  // Helper for SplitText scroll config — handles scrub vs once consistently
-  function splitScrollConfig(element, endFn) {
+  // Helper for SplitText scroll config — handles scrub vs once consistently.
+  // startFn is optional; defaults to the shared getFadeStart so existing
+  // callers stay identical. Pass a custom start function (e.g. headlineStart)
+  // for variants that need their own ScrollTrigger start position.
+  function splitScrollConfig(element, endFn, startFn) {
     var scrubValue = getScrubValue(element);
     var config = {
       trigger: element,
-      start: getFadeStartFor(element),
+      start: (startFn || getFadeStart)(),
       end: endFn()
     };
     if (scrubValue !== undefined) {
@@ -314,6 +334,26 @@
         ease: "power1.inOut",
         stagger: animationStagger.words,
         scrollTrigger: splitScrollConfig(element, getFadeEnd)
+      });
+    });
+  }
+
+  // Headline-only word fade. Independent from fadeWords so the home hero
+  // can be tuned without affecting case-study card titles or any future
+  // [data-text-animate='words'] usage. Tuning knobs live at the top of
+  // the file: headlineWordStagger, headlineFromOpacity, headlineStart(),
+  // headlineEnd().
+  function fadeWordHeadline(self) {
+    self.selector("[data-text-animate='word-headline']").forEach(function (element) {
+      var split = new SplitText(element, { type: "words", tag: "span" });
+      gsap.set(split.words, { opacity: headlineFromOpacity });
+      gsap.set(element, { opacity: 1 });
+
+      gsap.to(split.words, {
+        opacity: 1,
+        ease: "power1.inOut",
+        stagger: headlineWordStagger,
+        scrollTrigger: splitScrollConfig(element, headlineEnd, headlineStart)
       });
     });
   }
