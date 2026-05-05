@@ -27,6 +27,65 @@ The persistent `.page-header` was reflowing the document on every show/hide beca
 - **Next-read morph** — `nextReadTop` now subtracts both `mobileBar.offsetHeight` AND `pageHeader.offsetHeight`. Card lands flush below the header where the entering article's `.article-lead` actually sits. ([studio-barba.js:411-414](studio/assets/js/studio-barba.js#L411))
 - **Cleanup** — dropped redundant `pageHeader.style.transform = ""` from close `.then()`. The `after` hook handles it. ([studio-barba.js:514-519](studio/assets/js/studio-barba.js#L514))
 
+## Shipped — scrub-group animations + home stats (2026-05-05)
+
+**Shipped to `origin/main` on 2026-05-05** as commit `b81bb71`.
+
+Five threads landed in one commit:
+
+### 1. Scrub-group animation infrastructure
+
+New pattern in [studio/assets/js/bd-animations.js](studio/assets/js/bd-animations.js) for staggering same-Y siblings via one shared ScrollTrigger driving a `gsap.timeline()`. Solves the long-standing problem that per-element scroll triggers can't visually stagger aligned-row siblings — their tops share a Y position so they all fire at the same scroll moment.
+
+API:
+- Parent: `data-bd-scrub-group` (presence) + optional `data-bd-scrub-stagger="0.2"` (default `scrubGroupDefaultStagger = 0.15`)
+- Children: existing `data-bd-animate="<type>"` — supports slide-up, slide-down, slide-left, slide-right, slide, scale-in, scale-up, fade
+
+Implementation: `processScrubGroups(self)` runs first in `textAnimations` to mark grouped children with `data-bd-scrub-handled`, build the shared timeline, and position each tween at `index * stagger`. The skip-flag prevents the per-element path in `createScrollAnimation` from creating duplicate triggers. Clears stale flags on every reinit so removing `data-bd-scrub-group` from a parent doesn't leave children stuck. `console.warn` (deduped per element) for unsupported `data-bd-animate` values and for children that still carry `data-bd-scrub` redundantly. `start: getFadeStart` and `end: getFadeEnd` are passed as function refs so `invalidateOnRefresh` re-evaluates the breakpoint on resize.
+
+Six subagents validated the design and code: outsider-challenger pressure-tested the approach, gsap-expert reviewed lifecycle + correctness three times, a11y-expert checked reduced-motion + focus order twice, Explore audited naming/structure consistency, Plan agent challenged design alternatives. Findings folded into the plan's audit-trail section.
+
+### 2. New `scale-up` animation type
+
+Pure scale 0.8 → 1, no fade. Mirrors `scale-in` but doesn't tween opacity — element stays visible the whole time.
+
+Bug found and fixed during the round: the FOUC pre-hide rule at [studio.css:3685](studio/assets/css/studio.css#L3685) (`.js [data-bd-animate] { opacity: 0 }`) was leaving `scale-up` elements permanently invisible because the animation never touched opacity. Fix: `opacity: 1` in fromProps overrides the CSS rule via `gsap.set`. Both code paths covered (per-element `scaleUp` function and the scrub-group `getScrubGroupProps` lookup).
+
+Use cases: logos, badges, decorative images, hero accents — anywhere you want a subtle "press" or "settle" effect without a fade-in.
+
+### 3. Homepage stats section
+
+New `.home-stats` section beneath the hero video on the homepage. No `section-header` chrome — the H2 with a two-tone span split (primary + faded) is the visual anchor. Three stat columns (figure / label / copy) wrapped in a scrub-group so they stagger-reveal as the row scrolls past.
+
+- Markup at [studio/index.html:257–285](studio/index.html#L257)
+- CSS at [studio/assets/css/studio.css:1014–1060](studio/assets/css/studio.css#L1014)
+- Mobile: `data-grid` auto-collapses at ≤768px; `border-left` on each item rotates to `border-top` to preserve the divider rhythm when stacked
+
+### 4. Sidebar tagline standardised
+
+`Brand & Technology Studio` and `Design & Technology Studio` (mixed across pages) → `A Creative Technology Studio` everywhere. Updated 8 hand-authored sources + the L2 generator template, then regenerated 16 L2 outputs via `npm run gen`.
+
+### 5. bd-intro.css/js wired across all pages
+
+User added new `studio/assets/css/bd-intro.css` and `studio/assets/js/bd-intro.js` files during the session. Linked from every hand-authored source + the L2 generator template; L2 outputs regenerated so they pick up the new `<link>`. Per §18, this satisfies the per-page asset wiring rule (every per-page asset must load on every page or Barba arrival breaks).
+
+### Files touched (33 total)
+
+- **New:** [studio/assets/css/bd-intro.css](studio/assets/css/bd-intro.css), [studio/assets/js/bd-intro.js](studio/assets/js/bd-intro.js)
+- **Animation:** [studio/assets/js/bd-animations.js](studio/assets/js/bd-animations.js) — `+191/-0` (scrub-group + scaleUp + opacity fix)
+- **Styles:** [studio/assets/css/studio.css](studio/assets/css/studio.css) — `+45` (home-stats block)
+- **Markup:** [studio/index.html](studio/index.html) — `+47` (home-stats section, scrub-group attrs, sidebar tagline, bd-intro link, comment cleanup)
+- **Sidebar tagline + bd-intro wiring:** 6 other hand-authored pages + L2 generator template + 16 L2 outputs
+- **Manifest:** [studio/assets/data/studio-content.json](studio/assets/data/studio-content.json) (regen)
+
+### Notes / known nits
+
+- `power2.out` and numeric durations remain hardcoded in `bd-animations.js` (pre-existing across ~600 lines). Per CLAUDE.md §3 these should be motion tokens; a separate file-wide migration ticket will address the debt rather than touch it piecemeal.
+- The case-studies section at [studio/index.html:287](studio/index.html#L287) still has `style="display:none"` (inline style, violates §3) and its `id="work"` anchor is referenced by the sidebar nav. Flagged in the homepage cleanup pass; decision deferred to next session — options: (a) delete the section entirely, (b) swap inline style for `hidden` attribute, (c) keep as WIP.
+- The home-clients headline still contains demo filler text (`…This paragraph demonstrates how body text will look across your layout.`). Flagged, not actioned.
+
+---
+
 ## Shipped — sidebar logo wrapper (2026-04-30)
 
 **Pushed live to `origin/main` on 2026-04-30** as commit `44a12ed`.
