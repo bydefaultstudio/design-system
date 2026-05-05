@@ -521,23 +521,13 @@ body.is-sound-off .sound-toggle .sound-icon-off {
   display: flex;
   align-items: flex-start;
   gap: var(--studio-gap);
+  padding: var(--studio-gap);
+  background-color: var(--bg-faded-7);
   text-decoration: none;
   color: var(--text-primary);
-  transition: background-color var(--duration-m) var(--ease-out);
 }
 
-/* Bottom divider scaffold — variants set the color */
-.sidebar-slot-link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: var(--border-s);
-  transition: background-color var(--duration-m) var(--ease-out);
-}
-
-/* Left accent scaffold + active-state mechanism — variants set the color */
+/* Left accent — active-state indicator */
 .sidebar-slot-link::before {
   content: "";
   position: absolute;
@@ -545,6 +535,7 @@ body.is-sound-off .sound-toggle .sound-icon-off {
   top: 0;
   bottom: 0;
   width: 2px;
+  background-color: color-mix(in srgb, var(--text-primary), var(--alpha-5));
   transform: scaleY(0);
   transform-origin: top center;
   transition: transform var(--duration-xs) var(--ease-out);
@@ -554,16 +545,29 @@ body.is-sound-off .sound-toggle .sound-icon-off {
   transform: scaleY(1);
 }
 
+.sidebar-slot-link.is-active .sidebar-slot-link-excerpt {
+  color: color-mix(in srgb, var(--text-primary), var(--alpha-50));
+}
+
 .sidebar-slot-link-thumb {
-  object-fit: cover;
   flex-shrink: 0;
+  height: 80px;
   aspect-ratio: 1/1;
+  object-fit: cover;
 }
 
 .sidebar-slot-link-text {
   display: flex;
   flex-direction: column;
+  gap: var(--space-2xs);
   min-width: 0;
+}
+
+.sidebar-slot-link-title {
+  font-family: var(--font-secondary);
+  font-size: var(--font-m);
+  line-height: var(--line-height-m);
+  font-weight: var(--title-weight);
 }
 
 .sidebar-slot-link-excerpt {
@@ -572,53 +576,28 @@ body.is-sound-off .sound-toggle .sound-icon-off {
   line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-}
-
-.sidebar-slot .sidebar-slot-link {
-  padding: var(--studio-gap);
-  background-color: var(--bg-faded-7);
-  border-radius: var(--radius-s);
-}
-
-.sidebar-slot .sidebar-slot-link:hover,
-.sidebar-slot .sidebar-slot-link.is-active,
-.sidebar-slot .sidebar-slot-link.is-active:hover {
-  background-color: var(--bg-faded-7);
-  color: var(--text-primary);
-}
-
-.sidebar-slot .sidebar-slot-link.is-active .sidebar-slot-link-excerpt {
-  color: color-mix(in srgb, var(--text-primary), var(--alpha-50));
-}
-
-/* Gap replaces the divider as the separator */
-.sidebar-slot .sidebar-slot-link::after {
-  background-color: transparent;
-}
-
-.sidebar-slot .sidebar-slot-link::before {
-  background-color: color-mix(in srgb, var(--text-primary), var(--alpha-5));
-}
-
-.sidebar-slot .sidebar-slot-link-thumb {
-  height: 80px;
-}
-
-.sidebar-slot .sidebar-slot-link-text {
-  gap: var(--space-2xs);
-}
-
-.sidebar-slot .sidebar-slot-link-title {
-  font-family: var(--font-secondary);
-  font-size: var(--font-m);
-  line-height: var(--line-height-m);
-  font-weight: var(--title-weight);
-}
-
-.sidebar-slot .sidebar-slot-link-excerpt {
   font-size: var(--font-xs);
   line-height: var(--line-height-m);
   color: color-mix(in srgb, var(--text-primary), var(--alpha-50));
+}
+
+/* First-load reveal — initial hidden state, cleared by initSidebarReveal()
+   in studio-nav.js once the bd-intro curtain dismisses (or fonts.ready on
+   repeat visits). visibility: hidden keeps invisible cards out of the tab
+   order during the staggered delay window. Reduced-motion users see it
+   instantly. */
+.intro-block,
+.sidebar-slot-link {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-block,
+  .sidebar-slot-link {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
 
@@ -1550,7 +1529,7 @@ article.article {
 .post-body {
   display: flex;
   flex-direction: column;
-  gap: var(--space-s);
+  gap: var(--space-m);
 }
 
 /* Post labels */
@@ -3059,8 +3038,7 @@ body.is-animating .case-study-content {
   .skip-link,
   .error-page__code,
   .sidebar-slot-link,
-  .sidebar-slot-link::before,
-  .sidebar-slot-link::after {
+  .sidebar-slot-link::before {
     transition: none;
     animation: none;
   }
@@ -3740,18 +3718,32 @@ body.is-scrolling .case-study-card-logo {
   list-style: none;
 }
 
-/* Each <li> uses the studio's [data-grid] 12-col grid (defined at line
-   ~2873). Children opt in via data-col-span / data-col-start in the
-   markup: media spans cols 1–3, info spans cols 5–12 (col 4 is gutter).
+/* Row metrics live on the <li>; the [data-grid] moved one level inward
+   to .product-spotlight-link so the whole row is one tappable target.
    Equal min-height keeps the scroll-progress mapping
    (Math.round(progress * (n-1))) stable regardless of which row is
    active — only opacity / color toggle, layout never shifts. */
 .product-spotlight .product-spotlight-item {
-  align-items: center;
-  min-height: 16rem;
+  min-height: 20rem;
   border-bottom: var(--border-s) solid var(--border-faded);
   padding: var(--space-3xl) 0;
   margin: 0;
+}
+
+
+.product-spotlight .product-spotlight-item:last-child {
+  border: none;
+}
+
+/* Whole-row link wrapper. Anchor reset + grid host. Three children opt
+   into the [data-grid] 12-col layout via data-col-span / data-col-start
+   in the markup: media spans cols 1–3, info spans cols 5–9 (col 4 is
+   an explicit gutter between media and info), CTA spans cols 10–12. */
+.product-spotlight .product-spotlight-link {
+  display: grid;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
 }
 
 .product-spotlight .product-spotlight-media {
@@ -3771,67 +3763,95 @@ body.is-scrolling .case-study-card-logo {
   display: block;
 }
 
-/* .product-spotlight-info is an <a> wrapping <h3> + <p>. Link reset so it
-   inherits the spotlight's color/transition cascade. The whole right
-   column becomes the click target; bd-cursor renders the data-cursor-label
-   on hover ("Learn more about [product]"). */
+/* .product-spotlight-info is the middle grid cell (cols 4–9). Stacks
+   title + subline + description vertically with consistent spacing. */
 .product-spotlight .product-spotlight-info {
-  display: block;
-  color: inherit;
-  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
 }
 
-/* Inactive titles use a tokenised faded color (not opacity) so they stay
-   above WCAG 1.4.3 contrast against the page background. */
-.product-spotlight .product-spotlight-title {
-  margin: 0;
-  font-size: var(--headline-size);
-  font-weight: var(--font-weight-light);
-  line-height: 1;
-  letter-spacing: -0.02em;
+/* All text starts faded. Active state below changes the colors. Above
+   WCAG 1.4.3 contrast is maintained because --bg-faded-15 is computed
+   against the page background, not relied on for body copy reading. */
+.product-spotlight .product-spotlight-title,
+.product-spotlight .product-spotlight-subline,
+.product-spotlight .product-spotlight-description,
+.product-spotlight .product-spotlight-cta {
   color: var(--bg-faded-15);
 }
 
-.product-spotlight .product-spotlight-description {
-  margin: var(--space-s) 0 0;
-  font-size: var(--font-xl);
-  color: var(--text-faded);
-  opacity: 0;
+/* Per-element typography (color set in the grouped rule above). */
+.product-spotlight .product-spotlight-title {
+  margin: 0;
+  font-size: var(--font-7xl);
+  font-weight: var(--font-weight-light);
+  line-height: 1;
+  letter-spacing: -0.02em;
 }
 
-.product-spotlight .product-spotlight-item.is-active .product-spotlight-title {
+.product-spotlight .product-spotlight-subline {
+  margin: 0;
+  font-size: var(--font-xl);
+}
+
+.product-spotlight .product-spotlight-description {
+  margin: 0;
+  font-size: var(--font-s);
+  text-wrap: balance;
+}
+
+/* Subtle trending icon + label CTA, stacked icon-above-label and
+   horizontally centered. column-reverse keeps the icon visually first
+   without reordering the markup (label first reads naturally and the
+   icon is aria-hidden). The icon lifts -4px on row hover (gated on
+   prefers-reduced-motion below). */
+.product-spotlight .product-spotlight-cta {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: var(--space-s);
+  font-size: var(--font-s);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.product-spotlight .product-spotlight-cta .svg-icn {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Active state — text colors flip; media reveals via opacity. JS also
+   adds .is-active to every item under prefers-reduced-motion (see
+   studio-home.js initProductSpotlight), so no separate fallback rules. */
+.product-spotlight .product-spotlight-item.is-active .product-spotlight-title,
+.product-spotlight .product-spotlight-item.is-active .product-spotlight-subline,
+.product-spotlight .product-spotlight-item.is-active .product-spotlight-cta {
   color: var(--text-primary);
 }
 
-.product-spotlight .product-spotlight-item.is-active .product-spotlight-media,
 .product-spotlight .product-spotlight-item.is-active .product-spotlight-description {
+  color: var(--text-faded);
+}
+
+.product-spotlight .product-spotlight-item.is-active .product-spotlight-media {
   opacity: 1;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .product-spotlight .product-spotlight-title {
+  .product-spotlight .product-spotlight-title,
+  .product-spotlight .product-spotlight-subline,
+  .product-spotlight .product-spotlight-description,
+  .product-spotlight .product-spotlight-cta {
     transition: color var(--duration-l) var(--ease-out);
   }
-  .product-spotlight .product-spotlight-media,
-  .product-spotlight .product-spotlight-description {
+  .product-spotlight .product-spotlight-media {
     transition: opacity var(--duration-l) var(--ease-out);
   }
 }
 
-/* Reduced-motion fallback — JS adds .is-reduced-motion to the section. */
-.product-spotlight.is-reduced-motion .product-spotlight-title {
-  color: var(--text-primary);
-}
-
-.product-spotlight.is-reduced-motion .product-spotlight-media,
-.product-spotlight.is-reduced-motion .product-spotlight-description {
-  opacity: 1;
-}
-
-/* Mobile — [data-grid] auto-collapses to a single column at ≤768px,
-   so media + info stack naturally. We just relax min-height and tighten
-   the row gap; the 16/9 ratio gives compact rows on small screens while
-   keeping height consistent across active/inactive items. */
+/* Mobile — [data-grid] auto-collapses to a single column at ≤768px, so
+   media / info / CTA stack naturally as a vertical flow. */
 @media (max-width: 767px) {
   .product-spotlight .product-spotlight-item {
     row-gap: var(--space-m);

@@ -1,12 +1,12 @@
 /**
- * Script Purpose: Sidebar collapse, mobile drawer, page close, active nav, sidebar slot
+ * Script Purpose: Sidebar collapse, mobile drawer, page close, active nav, sidebar slot, first-load reveal
  * Author: By Default
  * Created: 2026-04-23
- * Version: 0.1.0
- * Last Updated: 2026-04-23
+ * Version: 0.2.0
+ * Last Updated: 2026-05-05
  */
 
-console.log("Studio Nav v0.1.0");
+console.log("Studio Nav v0.2.0");
 
 //
 //------- Sidebar Collapse -------//
@@ -245,9 +245,81 @@ function initSidebarSlot() {
 }
 
 //
+//------- Sidebar First-Load Reveal -------//
+//
+
+// Stagger fade-up of .intro-block + .sidebar-slot-link items on first paint.
+// Persistent sidebar means this must NOT re-run on Barba navigations — the
+// idempotency guard makes re-invocation a no-op. On first visit (curtain
+// shown) we wait for studio:intro-complete; on repeat visit (curtain
+// skipped, body.is-intro-loading absent) we run after document.fonts.ready.
+//
+// Load-order dependency: bd-intro.js must load before this script so that
+// body.is-intro-loading is set by the time initSidebarReveal() registers
+// its listener. Verified in all source pages — bd-intro.js precedes
+// studio-nav.js + studio.js in every <head>.
+function initSidebarReveal() {
+  if (window.__sidebarRevealRan) return;
+  window.__sidebarRevealRan = true;
+
+  var introBlock = document.querySelector(".intro-block");
+  var slotLinks = Array.prototype.slice.call(
+    document.querySelectorAll(".sidebar-slot-link")
+  );
+  var targets = [introBlock].concat(slotLinks).filter(Boolean);
+  if (!targets.length) return;
+
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduced) {
+    targets.forEach(function (el) {
+      el.style.opacity = "1";
+      el.style.visibility = "visible";
+    });
+    return;
+  }
+
+  function play() {
+    targets.forEach(function (el, i) {
+      // visibility: visible in the keyframes overrides the gating CSS rule
+      // for the lifetime of the animation (with fill: forwards). During the
+      // pre-start delay, no fill applies and the CSS rule keeps the element
+      // visibility: hidden — so invisible cards stay out of the tab order
+      // until their stagger slot begins.
+      var anim = el.animate(
+        [
+          { opacity: 0, transform: "translateY(0.5rem)", visibility: "visible" },
+          { opacity: 1, transform: "translateY(0)", visibility: "visible" }
+        ],
+        {
+          duration: 600,
+          easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+          delay: i * 60,
+          fill: "forwards"
+        }
+      );
+      // Bake the final state to inline styles so the gating CSS rule
+      // becomes inert, then release the animation handle.
+      anim.finished.then(function () {
+        anim.commitStyles();
+        anim.cancel();
+      }).catch(function () { /* aborted — fine */ });
+    });
+  }
+
+  if (document.body.classList.contains("is-intro-loading")) {
+    document.addEventListener("studio:intro-complete", play, { once: true });
+  } else if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(play);
+  } else {
+    requestAnimationFrame(play);
+  }
+}
+
+//
 //------- Expose on window -------//
 //
 
 window.studioRefreshActiveNav = studioRefreshActiveNav;
 window.initSidebarSlot = initSidebarSlot;
+window.initSidebarReveal = initSidebarReveal;
 window.syncNavHrefs = syncNavHrefs;

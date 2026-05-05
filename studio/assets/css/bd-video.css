@@ -114,6 +114,22 @@
 
 /* -- Center play/pause button -- */
 
+/* Disable the global :active press transform on video-player buttons.
+   The centered buttons use transform for positioning — letting the
+   global rule replace it would jump the hit zone away from the cursor
+   and silently drop the click. */
+.bd-video-center-play:active {
+  transform: translate(-50%, -50%);
+}
+
+.bd-video-unmute-prompt:active {
+  transform: translateX(-50%);
+}
+
+.bd-video-btn:active {
+  transform: none;
+}
+
 .bd-video-center-play {
   position: absolute;
   top: 50%;
@@ -220,6 +236,8 @@
 .bd-video.is-unmuted .bd-video-unmute-prompt {
   display: none;
 }
+
+
 
 
 /* -- Scrubber (seek bar) -- */

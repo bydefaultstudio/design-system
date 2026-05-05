@@ -244,11 +244,18 @@ function setupProductSpotlightParallax(section) {
   }
 
   parallaxState.onMove = function (e) {
-    var rect = section.getBoundingClientRect();
-    // Normalize cursor position to -0.5..+0.5 within the section.
+    // Normalize against the active row's bounds, not the section's.
+    // Section-level normalization meant the visible media drifted away
+    // from the cursor at rest whenever the active row was offset
+    // vertically inside the section. Falls back to section if no row is
+    // active yet (only true between init and the first ScrollTrigger
+    // tick).
+    var activeItem = section.querySelector(".product-spotlight-item.is-active");
+    var rect = (activeItem || section).getBoundingClientRect();
     var nx = (e.clientX - rect.left) / rect.width - 0.5;
     var ny = (e.clientY - rect.top) / rect.height - 0.5;
-    // Clamp in case mousemove fires just outside the section bounds.
+    // Clamp — cursor often sits well outside the active row's vertical
+    // bounds (it's only ~1/5 of the section).
     if (nx < -0.5) nx = -0.5; else if (nx > 0.5) nx = 0.5;
     if (ny < -0.5) ny = -0.5; else if (ny > 0.5) ny = 0.5;
     // Counter-parallax: target is the negative of cursor offset.

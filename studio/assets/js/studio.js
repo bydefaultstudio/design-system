@@ -270,6 +270,7 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
   initToc();
   initShareLinks();
   initSidebarSlot();
+  initSidebarReveal();
   initFeed();
   initNextRead();
   initServices();
