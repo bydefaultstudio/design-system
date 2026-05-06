@@ -893,6 +893,44 @@
     runBdAnimateElementsIn(container);
   };
 
+  // Single source of truth for the entry-animation vocabulary used by both
+  // the in-Barba reveal pass (runBdAnimateElementsIn → ctx-tracked) and the
+  // persistent-chrome pass (bdAnimateChromeIn → outside ctx).
+  function applyEnterAnimation(el, type, delay) {
+    switch (type) {
+      case "slide":
+      case "slide-up":
+        gsap.fromTo(
+          el,
+          { autoAlpha: 0, y: 40 },
+          { autoAlpha: 1, y: 0, duration: 0.8, ease: "power2.out", delay: delay }
+        );
+        break;
+      case "blur-in":
+        gsap.fromTo(
+          el,
+          { autoAlpha: 0, filter: "blur(10px)" },
+          { autoAlpha: 1, filter: "blur(0px)", duration: 0.8, ease: "power2.out", delay: delay }
+        );
+        break;
+      case "scale":
+        gsap.fromTo(
+          el,
+          { autoAlpha: 0, scale: 0.9 },
+          { autoAlpha: 1, scale: 1, duration: 0.8, ease: "power2.out", delay: delay }
+        );
+        break;
+      case "fade":
+      default:
+        gsap.fromTo(
+          el,
+          { autoAlpha: 0 },
+          { autoAlpha: 1, duration: 0.8, ease: "power2.out", delay: delay }
+        );
+        break;
+    }
+  }
+
   function runBdAnimateElementsIn(container) {
     if (!ctx) return;
     // Container may be detached if a Barba nav swapped it out before the
@@ -904,44 +942,40 @@
       if (!elements.length) return;
 
       elements.forEach(function (el) {
-        var type = el.getAttribute("data-bd-enter");
-        var delay = getDelayValue(el);
-
-        switch (type) {
-          case "slide":
-          case "slide-up":
-            gsap.fromTo(
-              el,
-              { autoAlpha: 0, y: 40 },
-              { autoAlpha: 1, y: 0, duration: 0.8, ease: "power2.out", delay: delay }
-            );
-            break;
-          case "blur-in":
-            gsap.fromTo(
-              el,
-              { autoAlpha: 0, filter: "blur(10px)" },
-              { autoAlpha: 1, filter: "blur(0px)", duration: 0.8, ease: "power2.out", delay: delay }
-            );
-            break;
-          case "scale":
-            gsap.fromTo(
-              el,
-              { autoAlpha: 0, scale: 0.9 },
-              { autoAlpha: 1, scale: 1, duration: 0.8, ease: "power2.out", delay: delay }
-            );
-            break;
-          case "fade":
-          default:
-            gsap.fromTo(
-              el,
-              { autoAlpha: 0 },
-              { autoAlpha: 1, duration: 0.8, ease: "power2.out", delay: delay }
-            );
-            break;
-        }
+        applyEnterAnimation(el, el.getAttribute("data-bd-enter"), getDelayValue(el));
       });
     });
   }
+
+  /**
+   * Animate persistent chrome (sidebar, page-header, etc.) — elements that
+   * live OUTSIDE the Barba container and must NOT be reverted by ctx.revert()
+   * on the next page nav. Uses the same [data-bd-enter] + data-bd-delay
+   * vocabulary as in-Barba reveals, but bypasses ctx so completed tweens
+   * survive Barba transitions.
+   *
+   * Per-element idempotency: animated elements get data-bd-revealed set,
+   * so future calls (e.g. after dynamic content reload) only animate fresh
+   * nodes. Pass a tighter scope (.sidebar-slot) for partial reveals.
+   */
+  window.bdAnimateChromeIn = function bdAnimateChromeIn(scope) {
+    if (!scope) return;
+    var elements = scope.querySelectorAll("[data-bd-enter]:not([data-bd-revealed])");
+    if (!elements.length) return;
+
+    if (prefersReducedMotion()) {
+      elements.forEach(function (el) {
+        gsap.set(el, { autoAlpha: 1 });
+        el.setAttribute("data-bd-revealed", "");
+      });
+      return;
+    }
+
+    elements.forEach(function (el) {
+      applyEnterAnimation(el, el.getAttribute("data-bd-enter"), getDelayValue(el));
+      el.setAttribute("data-bd-revealed", "");
+    });
+  };
 
   //
   // ------- Initial Load ------- //

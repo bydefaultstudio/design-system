@@ -6,7 +6,7 @@
  * Last Updated: 2026-05-06
  */
 
-console.log("Studio Nav v0.2.1");
+console.log("Studio Nav v0.3.0");
 
 //
 //------- Sidebar Collapse -------//
@@ -248,14 +248,20 @@ function initSidebarSlot() {
 //------- Sidebar First-Load Reveal -------//
 //
 
-// Stagger fade-up of .intro-block + .sidebar-slot-link items on first paint.
+// Trigger the entrance animation for the persistent sidebar (intro-block +
+// slot-link cards). The actual animation work lives in bd-animations.js's
+// bdAnimateChromeIn — this function is just the gate.
+//
 // Persistent sidebar means this must NOT re-run on Barba navigations — the
-// idempotency guard makes re-invocation a no-op. On first visit (curtain
-// shown) we wait for bd:intro-complete (curtain fully dismissed, page
-// unlocked) so the stagger plays in plain view — using studio:intro-complete
-// instead would run the animation behind the still-fading curtain. On
-// repeat visit (curtain skipped, body.is-intro-loading absent) we run
-// after document.fonts.ready.
+// idempotency guard handles duplicate listener attachment, and the per-element
+// data-bd-revealed marker (set by bdAnimateChromeIn) prevents re-animation if
+// the function is ever called again.
+//
+// On first visit (curtain shown) we wait for bd:intro-complete (curtain fully
+// dismissed, page unlocked) so the stagger plays in plain view — using
+// studio:intro-complete instead would run the animation behind the still-
+// fading curtain. On repeat visit (curtain skipped, body.is-intro-loading
+// absent) we run after document.fonts.ready.
 //
 // Load-order dependency: bd-intro.js must load before this script so that
 // body.is-intro-loading is set by the time initSidebarReveal() registers
@@ -265,56 +271,21 @@ function initSidebarReveal() {
   if (window.__sidebarRevealRan) return;
   window.__sidebarRevealRan = true;
 
-  var introBlock = document.querySelector(".intro-block");
-  var slotLinks = Array.prototype.slice.call(
-    document.querySelectorAll(".sidebar-slot-link")
-  );
-  var targets = [introBlock].concat(slotLinks).filter(Boolean);
-  if (!targets.length) return;
+  var sidebar = document.querySelector(".sidebar");
+  if (!sidebar) return;
 
-  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduced) {
-    targets.forEach(function (el) {
-      el.style.opacity = "1";
-      el.style.visibility = "visible";
-    });
-    return;
-  }
-
-  function play() {
-    targets.forEach(function (el, i) {
-      // visibility: visible in the keyframes overrides the gating CSS rule
-      // for the lifetime of the animation (with fill: forwards). During the
-      // pre-start delay, no fill applies and the CSS rule keeps the element
-      // visibility: hidden — so invisible cards stay out of the tab order
-      // until their stagger slot begins.
-      var anim = el.animate(
-        [
-          { opacity: 0, transform: "translateY(0.5rem)", visibility: "visible" },
-          { opacity: 1, transform: "translateY(0)", visibility: "visible" }
-        ],
-        {
-          duration: 600,
-          easing: "cubic-bezier(0.16, 1, 0.3, 1)",
-          delay: i * 60,
-          fill: "forwards"
-        }
-      );
-      // Bake the final state to inline styles so the gating CSS rule
-      // becomes inert, then release the animation handle.
-      anim.finished.then(function () {
-        anim.commitStyles();
-        anim.cancel();
-      }).catch(function () { /* aborted — fine */ });
-    });
+  function reveal() {
+    if (typeof window.bdAnimateChromeIn === "function") {
+      window.bdAnimateChromeIn(sidebar);
+    }
   }
 
   if (document.body.classList.contains("is-intro-loading")) {
-    document.addEventListener("bd:intro-complete", play, { once: true });
+    document.addEventListener("bd:intro-complete", reveal, { once: true });
   } else if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(play);
+    document.fonts.ready.then(reveal);
   } else {
-    requestAnimationFrame(play);
+    requestAnimationFrame(reveal);
   }
 }
 
