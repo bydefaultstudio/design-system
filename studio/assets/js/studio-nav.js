@@ -2,11 +2,11 @@
  * Script Purpose: Sidebar collapse, mobile drawer, page close, active nav, sidebar slot, first-load reveal
  * Author: By Default
  * Created: 2026-04-23
- * Version: 0.2.0
- * Last Updated: 2026-05-05
+ * Version: 0.2.1
+ * Last Updated: 2026-05-06
  */
 
-console.log("Studio Nav v0.2.0");
+console.log("Studio Nav v0.2.1");
 
 //
 //------- Sidebar Collapse -------//
@@ -251,8 +251,11 @@ function initSidebarSlot() {
 // Stagger fade-up of .intro-block + .sidebar-slot-link items on first paint.
 // Persistent sidebar means this must NOT re-run on Barba navigations — the
 // idempotency guard makes re-invocation a no-op. On first visit (curtain
-// shown) we wait for studio:intro-complete; on repeat visit (curtain
-// skipped, body.is-intro-loading absent) we run after document.fonts.ready.
+// shown) we wait for bd:intro-complete (curtain fully dismissed, page
+// unlocked) so the stagger plays in plain view — using studio:intro-complete
+// instead would run the animation behind the still-fading curtain. On
+// repeat visit (curtain skipped, body.is-intro-loading absent) we run
+// after document.fonts.ready.
 //
 // Load-order dependency: bd-intro.js must load before this script so that
 // body.is-intro-loading is set by the time initSidebarReveal() registers
@@ -307,7 +310,7 @@ function initSidebarReveal() {
   }
 
   if (document.body.classList.contains("is-intro-loading")) {
-    document.addEventListener("studio:intro-complete", play, { once: true });
+    document.addEventListener("bd:intro-complete", play, { once: true });
   } else if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(play);
   } else {
