@@ -55,7 +55,55 @@ Setting a new premium standard in digital experience advertising. We are not jus
 
 ---
 
-## Section 03 - Case Studies (dynamic)
+## Section 03 — Stats / The attention economy
+
+Frames the problem the studio's products are built to close: attention is scarce, memory is rare, the feed is saturated. Three problem-stats lead into a one-line bridge that hands off to the product spotlight.
+
+`Section Header`
+
+The attention economy
+
+(no end action)
+
+`Headline (h2, two-tone)`
+
+- Primary: **Attention is shrinking.**
+- Faded:  **Memory is rare.**
+
+`Stat 1`
+
+| Field | Copy |
+| --- | --- |
+| Figure | 1.7s |
+| Label  | The mobile scroll window |
+| Copy   | The time someone gives a piece of content before deciding to engage or scroll past. |
+| Source | [SQ Magazine — social media attention span statistics](https://sqmagazine.co.uk/social-media-attention-span-statistics/) |
+
+`Stat 2`
+
+| Field | Copy |
+| --- | --- |
+| Figure | 70% |
+| Label  | Forgotten in 24 hours |
+| Copy   | New information lost within a day — the cost of attention without participation. |
+| Source | Ebbinghaus forgetting curve (referenced in *Why Interactive v2*) |
+
+`Stat 3`
+
+| Field | Copy |
+| --- | --- |
+| Figure | 5,000 |
+| Label  | Ads per person, per day |
+| Copy   | The volume the average viewer is filtering against. Reach alone no longer earns memory. |
+| Source | [Advertising Week — Why Mobile Advertising Still Sucks](https://advertisingweek.com/why-mobile-advertising-still-sucks-and-why-ai-might-finally-change-things/) |
+
+`Bridge line (slide-up + scrub)`
+
+These are the formats we build to close that gap.
+
+---
+
+## Section 04 - Case Studies (dynamic)
 
 `Section Header`
 
@@ -67,7 +115,7 @@ End icon: → link to work page (phase 2)
 
 ---
 
-## Section 04 - What We Do
+## Section 05 - What We Do
 
 `Section Header`
 
@@ -83,7 +131,7 @@ End icon: → /products.html
 
 ---
 
-## Section 05 - Clients
+## Section 06 - Clients
 
 `Section Header`
 
@@ -116,7 +164,7 @@ Client 3
 
 ---
 
-## Section 06 — Feed (dynamic)
+## Section 07 — Feed (dynamic)
 
 `Section Header`
 
@@ -130,7 +178,7 @@ Feed
 
 ---
 
-## Section 07 — CTA (closing)
+## Section 08 — CTA (closing)
 
 `Section Header`
 
