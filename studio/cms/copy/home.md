@@ -55,13 +55,13 @@ Setting a new premium standard in digital experience advertising. We are not jus
 
 ---
 
-## Section 03 — Stats / The attention economy
+## Section 03 — Stats / Why Interactive?
 
-Frames the problem the studio's products are built to close: attention is scarce, memory is rare, the feed is saturated. Three problem-stats lead into a one-line bridge that hands off to the product spotlight.
+Frames the problem the studio's products are built to close: attention is scarce, memory is rare, the audience is overwhelmed. Three problem-stats lead into a one-line bridge that hands off to the product spotlight. Eyebrow mirrors the title of the *Why Interactive v2* research doc, framing the section as an argument the stats answer.
 
 `Section Header`
 
-The attention economy
+Why Interactive?
 
 (no end action)
 
@@ -92,10 +92,10 @@ The attention economy
 
 | Field | Copy |
 | --- | --- |
-| Figure | 5,000 |
-| Label  | Ads per person, per day |
-| Copy   | The volume the average viewer is filtering against. Reach alone no longer earns memory. |
-| Source | [Advertising Week — Why Mobile Advertising Still Sucks](https://advertisingweek.com/why-mobile-advertising-still-sucks-and-why-ai-might-finally-change-things/) |
+| Figure | 54% |
+| Label  | Feel overwhelmed by content |
+| Copy   | The audience isn't tuning brands out — they're protecting themselves from the volume. |
+| Source | *Why Interactive v2* — lead stat (general consumer-content research; verify exact citation) |
 
 `Bridge line (slide-up + scrub)`
 
