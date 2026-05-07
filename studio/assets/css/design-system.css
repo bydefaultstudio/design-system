@@ -148,7 +148,7 @@
      tracking (letter-spacing). -- */
 
   /* Headline — the biggest thing on a page; one per page (h1). */
-  --headline-size:      clamp(var(--font-3xl), 0.8rem + 3vw, var(--font-9xl));
+  --headline-size:     clamp(var(--font-3xl), 0.8rem + 3vw, var(--font-9xl));
   --headline-weight:   300;
   --headline-leading:  var(--line-height-s);
   --headline-tracking: -0.03em;
@@ -1425,7 +1425,13 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* -- Headings -- */
+/* -- Headings --
+   Element defaults follow a traditional editorial scale (Major Third).
+   Display-sized hero headings live on classes (.page-headline,
+   .article-headline, .cta-headline, etc.) which pull --headline-size or
+   --title-size directly. Decoupling element from display token means
+   plain <h1>/<h2> in body copy reads at a normal size, while hero
+   contexts opt in to display sizing via class. */
 h1,
 h2,
 h3,
@@ -1436,40 +1442,37 @@ h6 {
   font-weight: var(--font-weight-book);
   margin-top: var(--space-xl);
   margin-bottom: var(--space-l);
-  letter-spacing: -0.03em;
 }
 
 h1 {
-  font-size: var(--headline-size);
-  font-weight: var(--headline-weight);
-  line-height: var(--headline-leading);
-  letter-spacing: var(--headline-tracking);
+  font-size: clamp(var(--font-5xl), 0.8rem + 2vw, var(--font-7xl));
+  line-height: var(--line-height-s);
+  letter-spacing: -0.02em;
 }
 
 h2 {
-  font-size: var(--title-size);
-  font-weight: var(--title-weight);
-  line-height: var(--title-leading);
-  letter-spacing: var(--title-tracking);
+  font-size: clamp(var(--font-4xl), 0.8rem + 1.5vw, var(--font-6xl));
+  line-height: var(--line-height-m);
+  letter-spacing: -0.01em;
 }
 
 h3 {
-  font-size: var(--font-3xl);
+  font-size: clamp(var(--font-3xl), 0.8rem + 1.2vw, var(--font-5xl));
   line-height: var(--line-height-m);
 }
 
 h4 {
-  font-size: var(--font-2xl);
+  font-size: clamp(var(--font-2xl), 0.8rem + 1vw, var(--font-4xl));
   line-height: var(--line-height-m);
 }
 
 h5 {
-  font-size: var(--font-xl);
+  font-size: clamp(var(--font-xl), 0.8rem + 0.8vw, var(--font-3xl));
   line-height: var(--line-height-m);
 }
 
 h6 {
-  font-size: var(--font-xl);
+  font-size: clamp(var(--font-l), 0.8rem + 0.6vw, var(--font-2xl));
   line-height: var(--line-height-l);
 }
 

@@ -148,7 +148,9 @@
   //
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initFeedback);
+    document.addEventListener('DOMContentLoaded', function () {
+      initFeedback();
+    });
   } else {
     initFeedback();
   }

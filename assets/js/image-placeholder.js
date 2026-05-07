@@ -1,10 +1,14 @@
 /**
  * image-placeholder.js — Image Placeholder Tool UI
- * v1.3
+ * Loaded globally; exposes window.initImagePlaceholder for bd-site-init.js
+ * to call on initial load and after every Barba navigation.
+ * @version 1.4
  */
 
 (function () {
   'use strict';
+
+  console.log('[Image Placeholder] v1.4 loaded');
 
   var BASE_URL = '/image/';
   var CSS_COLORS = {
@@ -101,7 +105,10 @@
     });
   }
 
-  function initImageTool() {
+  function initImagePlaceholder() {
+    var elPreview = document.getElementById('img-preview');
+    if (!elPreview) return;
+
     var elWidth = document.getElementById('img-width');
     var elHeight = document.getElementById('img-height');
     var elBgPicker = document.getElementById('bg-picker');
@@ -109,7 +116,6 @@
     var elFgPicker = document.getElementById('fg-picker');
     var elFgText = document.getElementById('fg-text');
     var elCustomText = document.getElementById('custom-text');
-    var elPreview = document.getElementById('img-preview');
     var elUrlOutput = document.getElementById('url-output');
     var elDimsLabel = document.getElementById('dims-label');
 
@@ -219,12 +225,8 @@
     toggleOptionalElements(getCheckboxFlags());
     updatePreview();
 
-    console.log('Image Placeholder v1.3 — init OK');
+    console.log('[Image Placeholder] init');
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initImageTool);
-  } else {
-    initImageTool();
-  }
+  window.initImagePlaceholder = initImagePlaceholder;
 })();

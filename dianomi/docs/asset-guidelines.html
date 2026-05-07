@@ -388,39 +388,33 @@
       })();
     </script>
 
-    <!-- Dropdown -->
-    <script src="../../assets/js/dropdown.js"></script>
+    <!-- Site nav + UI globals -->
+    <script src="../../assets/js/nav.js" defer></script>
+    <script src="../../assets/js/dropdown.js" defer></script>
+    <script src="../../assets/js/auth-config.js" defer></script>
+    <script src="../../assets/js/theme-config.js" defer></script>
+    <script src="../../assets/js/theme-loader.js" defer></script>
+    <script src="../../assets/js/auth.js" defer></script>
+    <script src="../../assets/js/feedback.js" defer></script>
+    <script src="../../assets/js/copy-button.js" defer></script>
+    <script src="../../assets/js/number-input.js" defer></script>
+    <script src="../../assets/js/toast.js" defer></script>
+    <script src="../../assets/js/dialog.js" defer></script>
+    <script src="../../assets/js/accordion.js" defer></script>
+    <script src="../../assets/js/tabs.js" defer></script>
+    <script src="../../assets/js/rating.js" defer></script>
+    <script src="../../assets/js/md-strip.js" defer></script>
 
-    <!-- Site Navigation -->
-    <script src="../../assets/js/nav.js"></script>
-    <!-- Auth -->
-    <script src="../../assets/js/auth-config.js"></script>
-    <!-- Theme -->
-    <script src="../../assets/js/theme-config.js"></script>
-    <script src="../../assets/js/theme-loader.js"></script>
-    <!-- Auth (must load after theme scripts) -->
-    <script src="../../assets/js/auth.js"></script>
-    <!-- Feedback -->
-    <script src="../../assets/js/feedback.js"></script>
-    <!-- Copy to clipboard -->
-    <script src="../../assets/js/copy-button.js"></script>
-    <!-- Number input stepper -->
-    <script src="../../assets/js/number-input.js"></script>
-    <!-- Accordion -->
-    <script src="../../assets/js/accordion.js"></script>
-    <!-- Tabs -->
-    <script src="../../assets/js/tabs.js"></script>
-    <!-- Toast notifications -->
-    <script src="../../assets/js/toast.js"></script>
-    <!-- Dialog -->
-    <script src="../../assets/js/dialog.js"></script>
-    <!-- Rating -->
-    <script src="../../assets/js/rating.js"></script>
-    <!-- Markdown download/open — strips frontmatter and block HTML -->
-    <script src="../../assets/js/md-strip.js"></script>
-    <!-- Barba.js page transitions (vendored locally) — must load after auth/nav/theme -->
-    <script src="../../assets/js/vendor/barba/barba.min.js"></script>
-    <script src="../../assets/js/barba-init.js"></script>
+    <!-- Page-specific tool modules (each exposes window.initFoo) -->
+    <script src="../../assets/js/calculator.js" defer></script>
+    <script src="../../assets/js/world-clock.js" defer></script>
+    <script src="../../assets/js/image-placeholder.js" defer></script>
+    <script src="../../assets/js/svg-cleaner.js" defer></script>
+
+    <!-- Barba + dispatcher (must be last) -->
+    <script src="../../assets/js/vendor/barba/barba.min.js" defer></script>
+    <script src="../../assets/js/barba-init.js" defer></script>
+    <script src="../../assets/js/bd-site-init.js" defer></script>
 
     <script>
       /* Tag dismiss — delegated to document, attached once */

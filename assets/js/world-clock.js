@@ -1,14 +1,16 @@
 /**
  * World Clock — Tool Page Controller
  * Handles city search, config UI, preview iframe, and embed URL/iframe generation.
- * Version: 1.0.0
+ * Loaded globally; exposes window.initWorldClock for bd-site-init.js
+ * to call on initial load and after every Barba navigation.
+ * @version 1.1.0
  */
 
 (function () {
   'use strict';
 
-  var VERSION = '1.0.0';
-  console.log('[WorldClock Tool] v' + VERSION);
+  var VERSION = '1.1.0';
+  console.log('[WorldClock Tool] v' + VERSION + ' loaded');
 
   /* ---- IANA Timezone Database ---- */
 
@@ -405,9 +407,11 @@
 
   /* ---- Initialization ---- */
 
-  function init() {
-    /* Bind DOM */
+  function initWorldClock() {
+    /* Bind DOM — bail if this page isn't the world-clock tool */
     searchInput = document.getElementById('city-search');
+    if (!searchInput) return;
+
     searchResults = document.getElementById('city-search-results');
     tagContainer = document.getElementById('city-tags');
     presetContainer = document.getElementById('city-presets');
@@ -422,11 +426,15 @@
     themeToggleLight = document.getElementById('theme-light');
     themeToggleDark = document.getElementById('theme-dark');
 
+    /* Reset state for fresh container — Barba arrival means new DOM */
+    selectedCities = ['Europe/London', 'America/New_York', 'Asia/Tokyo'];
+    highlightIndex = -1;
+    filteredResults = [];
+    if (debounceTimer) { clearTimeout(debounceTimer); debounceTimer = null; }
+
     /* Search */
-    if (searchInput) {
-      searchInput.addEventListener('input', handleSearchInput);
-      searchInput.addEventListener('keydown', handleSearchKeydown);
-    }
+    searchInput.addEventListener('input', handleSearchInput);
+    searchInput.addEventListener('keydown', handleSearchKeydown);
 
     /* Options */
     [optShowCity, optShowTz, optShowSeconds, themeToggleLight, themeToggleDark].forEach(function (el) {
@@ -437,8 +445,13 @@
     var resetBtn = document.getElementById('btn-reset');
     if (resetBtn) resetBtn.addEventListener('click', handleReset);
 
-    /* Outside click */
+    /* Outside click — document-level listener; remove previous before re-adding so
+       Barba round-trips don't stack handlers. */
+    if (window.__bdWorldClockClick) {
+      document.removeEventListener('click', window.__bdWorldClockClick);
+    }
     document.addEventListener('click', handleDocumentClick);
+    window.__bdWorldClockClick = handleDocumentClick;
 
     /* Presets */
     if (presetContainer) renderPresets();
@@ -447,9 +460,9 @@
     renderTags();
     updatePreviewAndOutput();
 
-    console.log('[WorldClock Tool] Initialized');
+    console.log('[WorldClock Tool] init');
   }
 
-  document.addEventListener('DOMContentLoaded', init);
+  window.initWorldClock = initWorldClock;
 
 })();

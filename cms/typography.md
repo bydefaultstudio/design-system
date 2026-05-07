@@ -47,7 +47,9 @@ The scale uses a **progressive step** approach: +2px in the body range, +4px in 
 
 ## Headings
 
-All headings use `var(--font-secondary)` (trust-3a). `h1` and `h2` use the role-based type tokens (`--headline-*` and `--title-*`) with fluid `clamp()` sizing that scales smoothly with viewport width. Lower headings use fixed sizes from the type scale.
+All headings use `var(--font-secondary)` (trust-3a). Every level (`h1`–`h6`) uses fluid `clamp()` sizing that scales smoothly with viewport width — no breakpoints needed. Element defaults follow a traditional editorial scale (Major Third / ~1.25× progression).
+
+Display contexts (hero pages, feature CTAs) use the separate `--headline-size` and `--title-size` role tokens applied via classes like `.page-headline`, `.article-headline`, and `.cta-headline`. Element defaults stay smaller; classes opt into display sizing.
 
 <div class="demo-preview is-joined">
   <div class="block gap-xl">
@@ -84,16 +86,16 @@ All headings use `var(--font-secondary)` (trust-3a). `h1` and `h2` use the role-
 <h3>Structure creates clarity in complexity</h3>
 ```
 
-| Element | Size | Range | Line Height | Letter Spacing |
-| --- | --- | --- | --- | --- |
-| `h1` | `var(--headline-size)` | 32px → 56px (fluid) | `var(--line-height-s)` (1) | -0.02em |
-| `h2` | `var(--title-size)` | 24px → 40px (fluid) | `var(--line-height-m)` (1.2) | -0.01em |
-| `h3` | `var(--font-3xl)` | 28px | `var(--line-height-m)` (1.2) | — |
-| `h4` | `var(--font-2xl)` | 24px | `var(--line-height-m)` (1.2) | — |
-| `h5` | `var(--font-xl)` | 22px | `var(--line-height-m)` (1.2) | — |
-| `h6` | `var(--font-xl)` | 22px | `var(--line-height-l)` (1.4) | — |
+| Element | Range | Line Height | Letter Spacing |
+| --- | --- | --- | --- |
+| `h1` | 36px → 48px (fluid) | `var(--line-height-s)` (1) | -0.02em |
+| `h2` | 32px → 40px (fluid) | `var(--line-height-m)` (1.2) | -0.01em |
+| `h3` | 28px → 36px (fluid) | `var(--line-height-m)` (1.2) | — |
+| `h4` | 24px → 32px (fluid) | `var(--line-height-m)` (1.2) | — |
+| `h5` | 22px → 28px (fluid) | `var(--line-height-m)` (1.2) | — |
+| `h6` | 20px → 24px (fluid) | `var(--line-height-l)` (1.4) | — |
 
-`h1` and `h2` use `clamp()` for fluid sizing — no media query breakpoints needed. Display text uses negative letter-spacing for tighter, more impactful headlines.
+Each heading uses `clamp(min, fluid, max)` with primitive `--font-*` tokens at the floor and ceiling — no new tokens, no media queries. Display variants use `--headline-size` (28px → 64px) and `--title-size` (24px → 48px) on classes like `.page-headline` and `.cta-headline`, kept distinct from element defaults so plain `<h1>` and `<h2>` in body copy read at editorial size.
 
 ---
 

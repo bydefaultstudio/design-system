@@ -1,19 +1,22 @@
 /**
- * Script Purpose: CPM & Spend Calculator
- * Calculates campaign impressions, fees, payouts, and margins based on monthly spend
- * Supports checkbox-driven feature toggles for optional fields
- * Features: currency toggle, URL state sync, save/load, copy URL, reset
- * Version: 2.0.0
+ * calculator.js — CPM & Spend Calculator
+ * Calculates campaign impressions, fees, payouts, and margins based on monthly spend.
+ * Loaded globally; exposes window.initCpmCalculator for bd-site-init.js
+ * to call on initial load and after every Barba navigation.
+ * @version 2.1.0
  */
 
-console.log("CPM Calculator v2.0.0");
+(function () {
+  'use strict';
 
-//
-//------- State -------//
-//
+  console.log('[CPM Calculator] v2.1.0 loaded');
 
-var activeFlags = [];
-var activeCurrency = 'GBP';
+  //
+  //------- State -------//
+  //
+
+  var activeFlags = [];
+  var activeCurrency = 'GBP';
 
 var DEFAULTS = {
   campaignCPM: 15,
@@ -904,7 +907,15 @@ function setupEventListeners() {
 //------- Initialize -------//
 //
 
-document.addEventListener("DOMContentLoaded", function() {
+function initCpmCalculator() {
+  // Bail if calculator markup isn't on this page
+  var tableBody = document.getElementById('monthly-table-body');
+  if (!tableBody) return;
+
+  // Reset module state for fresh container — Barba arrival means new DOM
+  activeFlags = [];
+  activeCurrency = DEFAULTS.currency;
+
   // Hydrate from URL params (before table creation for currency)
   var hasURLState = hydrateFromURL();
 
@@ -931,7 +942,12 @@ document.addEventListener("DOMContentLoaded", function() {
   // Setup event listeners
   setupEventListeners();
 
-
   // Initial calculation
   recalculate();
-});
+
+  console.log('[CPM Calculator] init');
+}
+
+window.initCpmCalculator = initCpmCalculator;
+
+})();

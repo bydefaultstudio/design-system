@@ -180,6 +180,12 @@
     });
   }
 
+  // Re-executes <script> tags found INSIDE data-barba="container" on every Barba
+  // arrival. Vendor scripts in LIBRARY_PATTERNS are skipped after first load.
+  // Per-page scripts are typically loaded GLOBALLY at end of <body> (outside
+  // the container) and run via window.init* called from bd-site-init.js on
+  // bd:after-nav — so this function is mostly used for inline page scripts
+  // (e.g. table-scroll bootstraps) that genuinely belong to one page only.
   function reExecuteContainerScripts(container) {
     if (!container) return;
     var scripts = container.querySelectorAll('script');
@@ -239,6 +245,12 @@
     } catch (e) {
       console.warn('[Barba] gsap reinit error:', e);
     }
+
+    // Notify per-page tool modules that the new container is in the DOM.
+    // bd-site-init.js subscribes to this and calls each window.init* helper.
+    document.dispatchEvent(new CustomEvent('bd:after-nav', {
+      detail: { container: container }
+    }));
   }
 
   // ── Scenario resolver ──

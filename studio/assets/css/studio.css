@@ -1249,8 +1249,10 @@ article.article {
 
 .article-headline {
   margin: 0;
-  font-size: 4vw;
-  line-height: var(--line-height-m);
+  font-size: var(--headline-size);
+  font-weight: var(--headline-weight);
+  line-height: var(--headline-leading);
+  letter-spacing: var(--headline-tracking);
   text-wrap: balance;
 }
 
@@ -1989,7 +1991,10 @@ body.is-case-study-open .case-study-toggle-wrap .case-study-toggle-icon-close {
 }
 
 .case-study-slider-title {
+  font-size: var(--title-size);
   font-weight: var(--title-weight);
+  line-height: var(--title-leading);
+  letter-spacing: var(--title-tracking);
   margin: 0;
 }
 
@@ -3505,7 +3510,15 @@ body.is-scrolling .case-study-card-logo {
   justify-content: center;
 }
 
-.cta-headline, .cta-paragraph {
+.cta-headline {
+  font-size: var(--title-size);
+  font-weight: var(--title-weight);
+  line-height: var(--title-leading);
+  letter-spacing: var(--title-tracking);
+  text-wrap: balance;
+}
+
+.cta-paragraph {
   text-wrap: balance;
 }
 

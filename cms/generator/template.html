@@ -249,39 +249,33 @@
       })();
     </script>
 
-    <!-- Dropdown -->
-    <script src="{{NAV_BASE}}assets/js/dropdown.js"></script>
+    <!-- Site nav + UI globals -->
+    <script src="{{NAV_BASE}}assets/js/nav.js" defer></script>
+    <script src="{{NAV_BASE}}assets/js/dropdown.js" defer></script>
+    <script src="{{NAV_BASE}}assets/js/auth-config.js" defer></script>
+    <script src="{{NAV_BASE}}assets/js/theme-config.js" defer></script>
+    <script src="{{NAV_BASE}}assets/js/theme-loader.js" defer></script>
+    <script src="{{NAV_BASE}}assets/js/auth.js" defer></script>
+    <script src="{{NAV_BASE}}assets/js/feedback.js" defer></script>
+    <script src="{{NAV_BASE}}assets/js/copy-button.js" defer></script>
+    <script src="{{NAV_BASE}}assets/js/number-input.js" defer></script>
+    <script src="{{NAV_BASE}}assets/js/toast.js" defer></script>
+    <script src="{{NAV_BASE}}assets/js/dialog.js" defer></script>
+    <script src="{{NAV_BASE}}assets/js/accordion.js" defer></script>
+    <script src="{{NAV_BASE}}assets/js/tabs.js" defer></script>
+    <script src="{{NAV_BASE}}assets/js/rating.js" defer></script>
+    <script src="{{NAV_BASE}}assets/js/md-strip.js" defer></script>
 
-    <!-- Site Navigation -->
-    <script src="{{NAV_BASE}}assets/js/nav.js"></script>
-    <!-- Auth -->
-    <script src="{{NAV_BASE}}assets/js/auth-config.js"></script>
-    <!-- Theme -->
-    <script src="{{NAV_BASE}}assets/js/theme-config.js"></script>
-    <script src="{{NAV_BASE}}assets/js/theme-loader.js"></script>
-    <!-- Auth (must load after theme scripts) -->
-    <script src="{{NAV_BASE}}assets/js/auth.js"></script>
-    <!-- Feedback -->
-    <script src="{{NAV_BASE}}assets/js/feedback.js"></script>
-    <!-- Copy to clipboard -->
-    <script src="{{NAV_BASE}}assets/js/copy-button.js"></script>
-    <!-- Number input stepper -->
-    <script src="{{NAV_BASE}}assets/js/number-input.js"></script>
-    <!-- Accordion -->
-    <script src="{{NAV_BASE}}assets/js/accordion.js"></script>
-    <!-- Tabs -->
-    <script src="{{NAV_BASE}}assets/js/tabs.js"></script>
-    <!-- Toast notifications -->
-    <script src="{{NAV_BASE}}assets/js/toast.js"></script>
-    <!-- Dialog -->
-    <script src="{{NAV_BASE}}assets/js/dialog.js"></script>
-    <!-- Rating -->
-    <script src="{{NAV_BASE}}assets/js/rating.js"></script>
-    <!-- Markdown download/open — strips frontmatter and block HTML -->
-    <script src="{{NAV_BASE}}assets/js/md-strip.js"></script>
-    <!-- Barba.js page transitions (vendored locally) — must load after auth/nav/theme -->
-    <script src="{{NAV_BASE}}assets/js/vendor/barba/barba.min.js"></script>
-    <script src="{{NAV_BASE}}assets/js/barba-init.js"></script>
+    <!-- Page-specific tool modules (each exposes window.initFoo) -->
+    <script src="{{NAV_BASE}}assets/js/calculator.js" defer></script>
+    <script src="{{NAV_BASE}}assets/js/world-clock.js" defer></script>
+    <script src="{{NAV_BASE}}assets/js/image-placeholder.js" defer></script>
+    <script src="{{NAV_BASE}}assets/js/svg-cleaner.js" defer></script>
+
+    <!-- Barba + dispatcher (must be last) -->
+    <script src="{{NAV_BASE}}assets/js/vendor/barba/barba.min.js" defer></script>
+    <script src="{{NAV_BASE}}assets/js/barba-init.js" defer></script>
+    <script src="{{NAV_BASE}}assets/js/bd-site-init.js" defer></script>
 
     <script>
       /* Tag dismiss — delegated to document, attached once */
