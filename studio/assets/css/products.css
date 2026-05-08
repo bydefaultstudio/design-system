@@ -156,18 +156,23 @@
   opacity: 1;
 }
 
-/* All product image URLs — single placeholder for v1. */
-.walkthrough-image[data-image="shop"],
-.walkthrough-image[data-image="personalise"],
-.walkthrough-image[data-image="storytell"],
-.walkthrough-image[data-image="inform"],
-.walkthrough-image[data-image="map"],
-.walkthrough-mobile-image[data-image="shop"],
-.walkthrough-mobile-image[data-image="personalise"],
-.walkthrough-mobile-image[data-image="storytell"],
-.walkthrough-mobile-image[data-image="inform"],
-.walkthrough-mobile-image[data-image="map"] {
-  background-image: url("https://bydefault.design/image/1080x1080");
+/* Product walkthrough images — one labelled placeholder per data-image value.
+   Both desktop (.walkthrough-image) and mobile (.walkthrough-mobile-image)
+   reference the same source per slot. Swap the URLs for real assets when ready. */
+:is(.walkthrough-image, .walkthrough-mobile-image)[data-image="shop"] {
+  background-image: url("https://bydefault.design/image/800x1000?text=Shop");
+}
+:is(.walkthrough-image, .walkthrough-mobile-image)[data-image="personalise"] {
+  background-image: url("https://bydefault.design/image/800x1000?text=Personalise");
+}
+:is(.walkthrough-image, .walkthrough-mobile-image)[data-image="storytell"] {
+  background-image: url("https://bydefault.design/image/800x1000?text=Storytell");
+}
+:is(.walkthrough-image, .walkthrough-mobile-image)[data-image="inform"] {
+  background-image: url("https://bydefault.design/image/800x1000?text=Inform");
+}
+:is(.walkthrough-image, .walkthrough-mobile-image)[data-image="map"] {
+  background-image: url("https://bydefault.design/image/800x1000?text=Map");
 }
 
 /* ============================================================
