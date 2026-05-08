@@ -956,6 +956,53 @@ body.is-sidebar-collapsed .page-header {
   margin: 0;
 }
 
+/* Cycling word — last word of the home headline rotates through a list of
+   alternates. Items stack absolutely; one is active in flow at a time. JS
+   measures the longest item at init and locks min-width on the wrapper so
+   swaps don't reflow the line. The animation style is selected by the
+   data-cycle-style attribute and registered in studio-home.js. */
+.cycle-word {
+  display: inline-block;
+  position: relative;
+  vertical-align: baseline;
+  overflow: hidden;
+  /* Buffer below the baseline so overflow:hidden doesn't clip descenders
+     (g, p, y, etc.). Negative margin-bottom keeps external layout in place. */
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
+  /* min-width is set inline by JS after measurement */
+}
+
+.cycle-word-item {
+  display: inline-block;
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  white-space: nowrap;
+}
+
+.cycle-word-item.is-active {
+  position: relative;
+  visibility: visible;
+}
+
+/* Visually-hidden sibling that exposes the canonical word ("unforgettable")
+   to screen readers. The animated .cycle-word wrapper is aria-hidden, so
+   without this the H1 would have no last-word at all in the accessibility
+   tree. Standard "visually hidden" pattern; kept local until/unless a
+   foundation utility lands in design-system.css. */
+.cycle-word-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .page-subline {
   font-family: var(--font-secondary, var(--font-primary));
   font-size: var(--subline-size);
@@ -1005,6 +1052,7 @@ body.is-sidebar-collapsed .page-header {
 
 .home-stats-figure {
   font-size: var(--font-6xl);
+  font-family: var(--font-tertiary);
   font-weight: var(--font-weight-semi-bold);
   line-height: 1;
   letter-spacing: var(--letter-spacing-xs);
@@ -1163,12 +1211,6 @@ body.is-sidebar-collapsed .page-header {
 
 /* ------ ABOUT PAGE ------ */
 
-
-
-.about-ticker {
-  overflow: hidden;
-}
-
 /* -- Media frame (feature/hero mask — image, video, or BD-Video player) -- */
 
 .media-frame {
@@ -1188,21 +1230,127 @@ body.is-sidebar-collapsed .page-header {
   display: block;
 }
 
-.about-subline {
-  font-family: var(--font-secondary, var(--font-primary));
+/* -- Origin / Founding story -- */
+
+.about-origin-header {
+  margin-bottom: var(--space-3xl);
+}
+
+.about-origin-title {
+  max-width: 14ch;
+}
+
+.origin-prose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+  max-width: 62ch;
+  font-size: var(--font-l);
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+.origin-prose p { margin: 0; }
+
+.origin-lede {
+  font-size: var(--font-2xl);
+  line-height: 1.3;
+  color: var(--text-primary);
+}
+
+.origin-prose em {
   font-style: italic;
-  font-size: var(--font-xl);
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .origin-prose { font-size: var(--font-m); }
+  .origin-lede { font-size: var(--font-xl); }
+}
+
+/* -- Founders -- */
+
+[data-grid].founders-grid {
+  row-gap: var(--space-5xl);
+}
+
+.founder {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.founder-portrait {
+  margin: 0;
+}
+
+.founder-meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.founder-name {
+  margin: 0;
+  font-size: var(--font-3xl);
+  line-height: 1.1;
+}
+
+.founder-role {
+  margin: 0;
+  font-size: var(--font-m);
   color: var(--text-secondary);
 }
 
-.about-sub {
-  font-size: var(--font-2xl);
-  color: var(--text-secondary);
+.founder-bio {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  font-size: var(--font-m);
+  line-height: 1.55;
+  color: var(--text-primary);
+  max-width: 56ch;
+}
+
+.founder-bio p { margin: 0; }
+
+.founder-bio em {
+  font-style: italic;
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .founder-name { font-size: var(--font-2xl); }
+}
+
+/* -- Beliefs / Manifesto -- */
+
+[data-grid].beliefs-grid {
+  row-gap: var(--space-3xl);
+}
+
+.belief {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
   max-width: 44ch;
 }
 
-.about-sub-wrap {
-  padding: var(--space-5xl) var(--space-3xl);
+.belief-title {
+  margin: 0;
+  font-size: var(--font-2xl);
+  line-height: 1.15;
+}
+
+.belief p {
+  margin: 0;
+  font-size: var(--font-m);
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .belief-title { font-size: var(--font-xl); }
 }
 
 
@@ -2732,11 +2880,11 @@ body.is-animating .case-study-content {
   padding: var(--space-5xl) 0;
 }
 
-.service-description p {
+:is(.service-description, .capability-description) p {
   margin: 0 0 var(--space-m);
 }
 
-.service-description p:last-child { margin-bottom: 0; }
+:is(.service-description, .capability-description) p:last-child { margin-bottom: 0; }
 
 .service-stat {
   padding: var(--space-l);
@@ -2761,56 +2909,46 @@ body.is-animating .case-study-content {
   margin: 0;
 }
 
-/* -- Services accordion -- */
+/* -- Capabilities accordion (also styles legacy `.services-accordion`) -- */
 
-.services-accordion [data-depth="0"] > .accordion-header {
+:is(.services-accordion, .capabilities-accordion) [data-depth="0"] > .accordion-header {
   padding: var(--space-2xl) var(--studio-gap);
 }
 
 
-
-
-
-.services-accordion [data-depth="1"] > .accordion-header {
+:is(.services-accordion, .capabilities-accordion) [data-depth="1"] > .accordion-header {
   padding: var(--space-l);
 }
 
-.services-accordion .accordion-body {
+:is(.services-accordion, .capabilities-accordion) .accordion-body {
   display: flex;
   flex-direction: column;
   gap: var(--space-xl);
 }
 
 /* Parent items */
-.services-accordion [data-depth="0"] > .accordion-content > .accordion-inner {
-  /* display: flex; */
-  /* justify-content: flex-end; */
-}
-
-
-.services-accordion [data-depth="0"] > .accordion-header .accordion-title {
+:is(.services-accordion, .capabilities-accordion) [data-depth="0"] > .accordion-header .accordion-title {
   font-family: var(--font-secondary);
   font-size: var(--font-5xl);
 }
 
 /* Child items */
-.services-accordion [data-depth="1"] .accordion-header {
+:is(.services-accordion, .capabilities-accordion) [data-depth="1"] .accordion-header {
   font-family: var(--font-secondary);
   font-size: var(--font-2xl);
 }
 
-/* -- Formats section -- */
+/* -- Capability formats (inner accordion of formats per capability) -- */
 
-.formats-section {
+:is(.formats-section, .capability-formats) {
   border-top: var(--border-s) solid var(--border-faded);
 }
 
-
-.formats-section .accordion-item:last-child {
+:is(.formats-section, .capability-formats) .accordion-item:last-child {
   border-bottom: none;
 }
 
-.formats-section .accordion {
+:is(.formats-section, .capability-formats) .accordion {
   border-top: none;
 }
 
@@ -2950,7 +3088,7 @@ body.is-animating .case-study-content {
   }
 }/* -- Section 4: closing CTA (tabbed, dark) -- */
 
-.services-cta {
+:is(.services-cta, .about-cta) {
   background: var(--text-primary);
   color: var(--background-primary);
 }
@@ -3701,6 +3839,7 @@ body.is-scrolling .case-study-card-logo {
 [data-ratio="1:1"]  { aspect-ratio: 1 / 1; }
 [data-ratio="4:3"]  { aspect-ratio: 4 / 3; }
 [data-ratio="3:2"]  { aspect-ratio: 3 / 2; }
+[data-ratio="3:4"]  { aspect-ratio: 3 / 4; }
 [data-ratio="16:9"] { aspect-ratio: 16 / 9; }
 [data-ratio="21:9"] { aspect-ratio: 21 / 9; }
 [data-ratio="4:5"]  { aspect-ratio: 4 / 5; }

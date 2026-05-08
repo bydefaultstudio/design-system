@@ -1,28 +1,29 @@
 /**
- * Script Purpose: First-visit loading curtain
+ * Script Purpose: First-load loading curtain
  * Author: Erlen Masson
- * Version: 1.0.0
+ * Version: 1.1.0
  *
- * Plays once per browser session on the first cold load. Mounts a
- * dark overlay with a wordmark drop animation while the page boots
- * underneath, then dismisses when the page signals studio:ready.
+ * Plays on every real document load (first visit, refresh, hard refresh,
+ * deep-link arrival). Never plays on Barba SPA transitions — those don't
+ * fire DOMContentLoaded, so this script's boot() is unreachable on link
+ * clicks. Mounts a dark overlay with a wordmark drop animation while the
+ * page boots underneath, then dismisses when the page signals studio:ready.
  *
  *  - Scroll-locks <body> via position:fixed (iOS Safari safe).
  *  - Sets `inert` on .sidebar, .mobile-bar, .page-header, <main>
  *    so keyboard + screen-reader can't reach occluded content.
+ *  - Captures + restores keyboard focus across the lock window.
  *  - Reduced motion: skips the curtain entirely; still fires the
  *    intro-complete event so gated reveals run.
- *  - Hard refresh / new tab clears sessionStorage → curtain replays.
+ *  - bfcache restore mid-curtain: recovers via pageshow guard.
  */
 
 (function () {
   "use strict";
 
-  console.log("Script - bd-intro v1.0.0 (Studio)");
+  console.log("Script - bd-intro v1.1.0 (Studio)");
 
   /* ------------------------------- Config ------------------------------ */
-
-  var STORAGE_KEY = "bd:intro-played";
 
   var CONFIG = {
     size: 0.42,         // logo width as fraction of viewport (desktop)
@@ -85,19 +86,6 @@
 
   /* ------------------------------ Helpers ----------------------------- */
 
-  function hasPlayed() {
-    try {
-      return sessionStorage.getItem(STORAGE_KEY) === "1";
-    } catch (e) {
-      return true;
-    }
-  }
-
-  function markPlayed() {
-    try { sessionStorage.setItem(STORAGE_KEY, "1"); }
-    catch (e) { /* ignore */ }
-  }
-
   function prefersReducedMotion() {
     return window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -127,8 +115,14 @@
 
   var savedScrollY = 0;
   var inertElements = [];
+  var previouslyFocused = null;
 
   function lockPage() {
+    // Capture the current focus target BEFORE applying inert (which would
+    // strip focus from any element inside .sidebar / .mobile-bar /
+    // .page-header / <main>). Restored in unlockPage.
+    previouslyFocused = document.activeElement;
+
     savedScrollY = window.scrollY || window.pageYOffset || 0;
     document.body.style.top = "-" + savedScrollY + "px";
     document.body.classList.add("is-intro-loading");
@@ -144,13 +138,48 @@
     });
   }
 
+  // Idempotent: safe on a fresh document (no-op) and after a crashed prior
+  // run (clears residue). Restores body, scroll, inert, focus — all the
+  // state lockPage() touches. Called BEFORE the curtain fades so the
+  // page beneath is already at the correct scroll position; the fade then
+  // reveals it without a post-fade snap.
   function unlockPage() {
     document.body.classList.remove("is-intro-loading");
     document.body.style.top = "";
-    window.scrollTo(0, savedScrollY);
+    if (savedScrollY > 0) {
+      window.scrollTo(0, savedScrollY);
+    }
 
-    inertElements.forEach(function (el) { el.removeAttribute("inert"); });
+    inertElements.forEach(function (el) {
+      if (el && el.removeAttribute) el.removeAttribute("inert");
+    });
     inertElements = [];
+
+    // Belt-and-braces: clear any leftover inert on chrome regions from
+    // a crashed prior run (bfcache restore, exception in lockPage flow).
+    INERT_SELECTORS.forEach(function (sel) {
+      document.querySelectorAll(sel + "[inert]").forEach(function (el) {
+        el.removeAttribute("inert");
+      });
+    });
+
+    // Restore keyboard/AT focus. If the captured element is still in the
+    // DOM and focusable, refocus it. Otherwise fall back to <main> with a
+    // programmatic tabindex so screen readers announce the page heading.
+    if (previouslyFocused) {
+      var target = previouslyFocused;
+      previouslyFocused = null;
+      if (target && target !== document.body && document.contains(target) &&
+          typeof target.focus === "function") {
+        try { target.focus({ preventScroll: true }); } catch (e) { /* ignore */ }
+      } else {
+        var main = document.querySelector("main#main");
+        if (main && typeof main.focus === "function") {
+          if (!main.hasAttribute("tabindex")) main.setAttribute("tabindex", "-1");
+          try { main.focus({ preventScroll: true }); } catch (e) { /* ignore */ }
+        }
+      }
+    }
   }
 
   /* --------------------------- DOM construction ----------------------- */
@@ -345,9 +374,8 @@
   }
 
   function skipCurtain(curtain) {
-    // Mark, hide markup if present, fire events on next frame so
-    // gated reveals (which listen for studio:intro-complete) run.
-    markPlayed();
+    // Hide markup if present, fire events on next frame so gated reveals
+    // (which listen for studio:intro-complete) run.
     if (curtain && curtain.parentNode) curtain.parentNode.removeChild(curtain);
     requestAnimationFrame(dispatchAllComplete);
   }
@@ -356,13 +384,13 @@
     var curtain = document.getElementById("bd-intro");
     if (!curtain) return;
 
-    // Already played this session — no curtain, fire events immediately.
-    if (hasPlayed()) {
-      skipCurtain(curtain);
-      return;
-    }
+    // Defensive cleanup: clear any residue from a crashed prior run
+    // before re-locking. unlockPage() is idempotent so this is a no-op
+    // on a fresh document — cheap insurance.
+    unlockPage();
 
-    // Reduced motion — full bypass, no flash, no animation.
+    // Reduced motion — full bypass, no flash, no animation. AT users and
+    // anyone who wants to skip the intro can set this preference.
     if (prefersReducedMotion()) {
       skipCurtain(curtain);
       return;
@@ -383,17 +411,19 @@
     });
 
     allReady.then(function () {
-      markPlayed();
-
       // Dispatch studio:intro-complete BEFORE fade — gated reveals fire
       // during the curtain's exit, not after.
       document.dispatchEvent(new CustomEvent("studio:intro-complete"));
 
+      // Restore body state BEFORE fade so the page beneath is already at
+      // its restored scroll position. The fade then reveals it without a
+      // post-fade snap on long-page refreshes.
+      unlockPage();
+
       return fadeOutAndRemove(curtain);
     }).then(function () {
-      unlockPage();
-      // bd:intro-complete fires AFTER cleanup so listeners see the
-      // restored scroll/inert state.
+      // bd:intro-complete fires AFTER the curtain DOM is fully gone so
+      // post-curtain reveals (sidebar stagger) play in the open.
       document.dispatchEvent(new CustomEvent("bd:intro-complete"));
     }).catch(function (err) {
       // Hard failure path: still restore the page so the user isn't
@@ -405,6 +435,27 @@
       document.dispatchEvent(new CustomEvent("bd:intro-complete"));
     });
   }
+
+  /* --------------------------- bfcache recovery ----------------------- */
+  // If the user navigates away mid-curtain, the browser may freeze the
+  // page in bfcache with `is-intro-loading` + inert chrome still set.
+  // On Back, pageshow fires with `event.persisted === true` and no
+  // DOMContentLoaded — boot() never re-runs. Recover here so the user
+  // doesn't land on a scroll-locked, inert page.
+
+  window.addEventListener("pageshow", function (event) {
+    if (!event.persisted) return;
+    if (!document.body.classList.contains("is-intro-loading")) return;
+
+    var curtain = document.getElementById("bd-intro");
+    if (curtain) {
+      curtain.classList.remove("bd-intro--active", "bd-intro--leaving");
+    }
+    unlockPage();
+    // Flush gated listeners so anything waiting on the curtain finalizes.
+    document.dispatchEvent(new CustomEvent("studio:intro-complete"));
+    document.dispatchEvent(new CustomEvent("bd:intro-complete"));
+  });
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", boot);

@@ -358,3 +358,300 @@ function initProductSpotlight() {
 }
 
 window.initProductSpotlight = initProductSpotlight;
+
+
+// ------- Headline word cycle (home only) ------- //
+//
+// The last word of the home headline rotates through a list of alternates.
+// Animation style is picked by data-cycle-style on .cycle-word; each style
+// is a "builder" returning a repeat:-1 timeline. Cleanup runs from
+// studio-barba.js's `before` hook so the timeline tears down before the
+// leaving container is detached.
+//
+// To add a new style: write buildXyz(items, tokens), register it in
+// CYCLE_STRATEGIES, set data-cycle-style="xyz" on the markup.
+
+var CYCLE_WORD_SELECTOR = ".home-headline .cycle-word";
+var headlineCycleState = {
+  ctx: null,
+  timeline: null,
+  resizeHandler: null,
+  // Bumped on init/cleanup so a stale fonts.ready promise from a
+  // superseded init can detect it lost the race and bail.
+  generation: 0
+};
+
+var CYCLE_STRATEGIES = {
+  "slot": buildSlot,
+  "bounce-drop": buildBounceDrop
+};
+var DEFAULT_CYCLE_STYLE = "slot";
+
+function readDurationToken(name) {
+  var raw = getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim();
+  if (!raw) return null;
+  if (raw.indexOf("ms") !== -1) return parseFloat(raw) / 1000;
+  if (raw.indexOf("s") !== -1) return parseFloat(raw);
+  return null;
+}
+
+function readRawToken(name) {
+  return getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim();
+}
+
+function getCycleTokens() {
+  // GSAP accepts a cubic-bezier string directly, so reading CSS tokens
+  // keeps the headline in step with the rest of the platform's motion.
+  var easeInOut = readRawToken("--ease-in-out") || "power2.inOut";
+  var easeIn = readRawToken("--ease-in") || "power2.in";
+  return {
+    // ─── slot tweakables (banked) ───────────────────────────────────────
+    swapDuration: readDurationToken("--duration-m") || 0.6,
+    swapEase: easeInOut,
+
+    // pauseBetweenSwaps — hold time between swaps, seconds. 0 = continuous.
+    pauseBetweenSwaps: readDurationToken("--duration-6xl") || 3,
+
+    // ─── bounce-drop tweakables ─────────────────────────────────────────
+    // Tweak and reload — values are read fresh on every init.
+    //
+    // letterExitDuration   — how long one letter takes to fall out
+    // letterEnterDuration  — how long one letter takes to drop in + settle
+    // letterDelay          — gap between letters; bigger = slower ripple
+    // bounceStrength       — entry overshoot. 1.0 barely, 1.4 lively, 2.0 cartoony
+    // swapOverlap          — when entry begins as a fraction of exit (0.5 = midway)
+    // letterFadeOutFraction — fraction of letterExitDuration over which
+    //                         the opacity fade completes. Smaller = letters
+    //                         disappear sooner (fade finishes well before
+    //                         the clip edge). 1.0 = fade matches y-movement.
+    //
+    // bounceStrength is the one non-token ease — back.out has no CSS
+    // bezier equivalent. Deliberate exception to token-only motion.
+    letterExitDuration: readDurationToken("--duration-l") || 0.8,
+    letterExitEase: easeIn,
+    letterEnterDuration: readDurationToken("--duration-xl") || 1.2,
+    bounceStrength: "back.out(1.2)",
+    letterDelay: 0.05,
+    swapOverlap: 0.5,
+    letterFadeOutFraction: 0.15
+  };
+}
+
+// Slot-machine roll. Outgoing word slides up out, incoming slides up in.
+// Single axis, ease-in-out, one confident sweep.
+function buildSlot(items, tokens) {
+  for (var i = 0; i < items.length; i++) {
+    if (items[i].classList.contains("is-active")) {
+      gsap.set(items[i], { yPercent: 0, opacity: 1, visibility: "visible" });
+    } else {
+      gsap.set(items[i], { yPercent: 100, opacity: 1, visibility: "hidden" });
+    }
+  }
+  // repeatDelay holds the loop boundary (last swap → first swap) for the
+  // same gap as every other pair, so the cycle reads continuously.
+  var tl = gsap.timeline({ repeat: -1, repeatDelay: tokens.pauseBetweenSwaps });
+  for (var k = 0; k < items.length; k++) {
+    var outEl = items[k];
+    var inEl = items[(k + 1) % items.length];
+    // First swap at t=0; subsequent swaps after the inter-swap pause.
+    var position = (k === 0) ? 0 : "+=" + tokens.pauseBetweenSwaps;
+    tl.add(slotSwap(outEl, inEl, tokens), position);
+  }
+  return tl;
+}
+
+function slotSwap(outEl, inEl, tokens) {
+  return gsap.timeline()
+    .set(inEl, { yPercent: 100, opacity: 1, visibility: "visible" }, 0)
+    .to(outEl, { yPercent: -100, duration: tokens.swapDuration, ease: tokens.swapEase }, 0)
+    .to(inEl, { yPercent: 0, duration: tokens.swapDuration, ease: tokens.swapEase }, 0)
+    .set(outEl, { visibility: "hidden", yPercent: 100 });
+}
+
+// Per-letter drop with a bounce landing. Outgoing chars fall down with a
+// left→right stagger; incoming chars drop in from above and overshoot.
+function buildBounceDrop(items, tokens) {
+  if (typeof SplitText === "undefined") {
+    console.warn("[studio-home] SplitText missing, bounce-drop falling back to slot");
+    return buildSlot(items, tokens);
+  }
+
+  // SplitText.create inside gsap.context() auto-reverts on ctx.revert()
+  // (GSAP 3.11+). `create` is the forward-compatible API; prefer it over
+  // `new SplitText(...)`.
+  var splits = [];
+  for (var i = 0; i < items.length; i++) {
+    splits.push(SplitText.create(items[i], { type: "chars" }));
+  }
+
+  // Active item visible at y=0; all others parked above and hidden.
+  for (var j = 0; j < items.length; j++) {
+    var isActive = items[j].classList.contains("is-active");
+    gsap.set(items[j], { visibility: isActive ? "visible" : "hidden" });
+    gsap.set(splits[j].chars, {
+      yPercent: isActive ? 0 : -120,
+      opacity: isActive ? 1 : 0
+    });
+  }
+
+  // repeatDelay holds the loop boundary (last swap → first swap) for the
+  // same gap as every other pair, so the cycle reads continuously.
+  var tl = gsap.timeline({ repeat: -1, repeatDelay: tokens.pauseBetweenSwaps });
+  for (var k = 0; k < items.length; k++) {
+    var outItem = items[k];
+    var inItem = items[(k + 1) % items.length];
+    var outChars = splits[k].chars;
+    var inChars = splits[(k + 1) % items.length].chars;
+    // First swap at t=0; subsequent swaps after the inter-swap pause.
+    var position = (k === 0) ? 0 : "+=" + tokens.pauseBetweenSwaps;
+    tl.add(bounceDropSwap(outItem, outChars, inItem, inChars, tokens), position);
+  }
+  return tl;
+}
+
+function bounceDropSwap(outItem, outChars, inItem, inChars, tokens) {
+  // Entry leads at swapOverlap × letterExitDuration so the crossfade is
+  // independent of letterDelay or character count.
+  var entryStart = tokens.letterExitDuration * tokens.swapOverlap;
+  return gsap.timeline()
+    // Idempotent start state — every swap begins from a known config
+    // regardless of prior state, including the loop wrap.
+    .set(outChars, { yPercent: 0, opacity: 1 }, 0)
+    .set(inChars, { yPercent: -120, opacity: 0 }, 0)
+    // Outgoing y — full duration.
+    .to(outChars, {
+      yPercent: 120,
+      duration: tokens.letterExitDuration,
+      ease: tokens.letterExitEase,
+      stagger: tokens.letterDelay
+    }, 0)
+    // Outgoing fade — quicker, so chars are invisible before they reach
+    // the wrapper's bottom clip edge. Linear ease for a clean dissolve
+    // over the short window.
+    .to(outChars, {
+      opacity: 0,
+      duration: tokens.letterExitDuration * tokens.letterFadeOutFraction,
+      ease: "none",
+      stagger: tokens.letterDelay
+    }, 0)
+    // Show inItem when its first char starts moving so there's no
+    // phantom-container window before the entry animation.
+    .set(inItem, { visibility: "visible" }, entryStart)
+    // Incoming.
+    .to(inChars, {
+      yPercent: 0,
+      opacity: 1,
+      duration: tokens.letterEnterDuration,
+      ease: tokens.bounceStrength,
+      stagger: tokens.letterDelay
+    }, entryStart)
+    // Hide outItem at end of swap.
+    .set(outItem, { visibility: "hidden" });
+}
+
+function pickStrategy(wrapper) {
+  var key = wrapper.getAttribute("data-cycle-style") || DEFAULT_CYCLE_STYLE;
+  return CYCLE_STRATEGIES[key] || CYCLE_STRATEGIES[DEFAULT_CYCLE_STYLE];
+}
+
+// Width of the widest item, in pixels. Briefly forces each into the
+// layout flow to read offsetWidth, then restores prior styles.
+function measureLongestItem(wrapper, items) {
+  var prevMinWidth = wrapper.style.minWidth;
+  wrapper.style.minWidth = "0";
+  var max = 0;
+  var saved = [];
+  for (var i = 0; i < items.length; i++) {
+    saved.push({
+      position: items[i].style.position,
+      visibility: items[i].style.visibility
+    });
+    items[i].style.position = "relative";
+    items[i].style.visibility = "hidden";
+  }
+  for (var j = 0; j < items.length; j++) {
+    var w = items[j].offsetWidth;
+    if (w > max) max = w;
+  }
+  for (var k = 0; k < items.length; k++) {
+    items[k].style.position = saved[k].position;
+    items[k].style.visibility = saved[k].visibility;
+  }
+  wrapper.style.minWidth = prevMinWidth;
+  return max;
+}
+
+function applyMinWidth(wrapper, items) {
+  var px = measureLongestItem(wrapper, items);
+  if (px > 0) wrapper.style.minWidth = px + "px";
+}
+
+function initHeadlineCycle() {
+  // Guard before cleanup — cleanup calls timeline.kill() which assumes GSAP.
+  if (typeof gsap === "undefined") {
+    console.warn("[studio-home] GSAP missing, headline cycle bailing");
+    return;
+  }
+
+  var wrapper = document.querySelector(CYCLE_WORD_SELECTOR);
+  if (!wrapper) return;
+
+  // Idempotent — Barba may re-fire init on home re-entry.
+  cleanupHeadlineCycle();
+
+  // Reduced motion: leave the active item visible (CSS default), do nothing.
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  var items = wrapper.querySelectorAll(".cycle-word-item");
+  if (items.length < 2) return;
+
+  headlineCycleState.generation++;
+  var generation = headlineCycleState.generation;
+
+  // Wait for fonts so item widths are stable before measurement.
+  var ready = (document.fonts && document.fonts.ready) || Promise.resolve();
+  ready.then(function () {
+    // Bail if a newer init or cleanup has run while we were waiting.
+    if (generation !== headlineCycleState.generation) return;
+    if (!document.body.contains(wrapper)) return;
+
+    applyMinWidth(wrapper, items);
+
+    var build = pickStrategy(wrapper);
+    var tokens = getCycleTokens();
+
+    headlineCycleState.ctx = gsap.context(function () {
+      headlineCycleState.timeline = build(items, tokens);
+    }, wrapper);
+
+    headlineCycleState.resizeHandler = function () {
+      if (!document.body.contains(wrapper)) return;
+      applyMinWidth(wrapper, items);
+    };
+    window.addEventListener("resize", headlineCycleState.resizeHandler);
+  });
+}
+
+function cleanupHeadlineCycle() {
+  // Bump generation so any pending fonts.ready from the active cycle bails.
+  headlineCycleState.generation++;
+  if (headlineCycleState.timeline) {
+    headlineCycleState.timeline.kill();
+    headlineCycleState.timeline = null;
+  }
+  if (headlineCycleState.ctx) {
+    headlineCycleState.ctx.revert();
+    headlineCycleState.ctx = null;
+  }
+  if (headlineCycleState.resizeHandler) {
+    window.removeEventListener("resize", headlineCycleState.resizeHandler);
+    headlineCycleState.resizeHandler = null;
+  }
+}
+
+window.initHeadlineCycle = initHeadlineCycle;
+window.cleanupHeadlineCycle = cleanupHeadlineCycle;

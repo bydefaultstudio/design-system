@@ -279,6 +279,7 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
   if (typeof initHomeFeatured === "function") initHomeFeatured();
   if (typeof initProductSpotlight === "function") initProductSpotlight();
   if (typeof initProducts === "function") initProducts();
+  if (typeof initHeadlineCycle === "function") initHeadlineCycle();
 
   // Re-init after Barba navigations
   // logoSlider is intentionally NOT here — it runs in the after hook's
@@ -291,14 +292,18 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
     if (typeof initHomeFeatured === "function") initHomeFeatured();
     if (typeof initProductSpotlight === "function") initProductSpotlight();
     if (typeof initProducts === "function") initProducts();
+    if (typeof initHeadlineCycle === "function") initHeadlineCycle();
   });
 
   // Belt-and-braces ScrollTrigger refresh after the loading curtain dismisses,
-  // in case the fade alters layout. Primary refresh happens inside
-  // bd-animations.js BEFORE dismiss (so measurement is hidden by the curtain).
+  // in case the fade alters layout. The authoritative post-unlock refresh
+  // is wired in bd-animations.js on `bd:intro-complete`. This one fires
+  // earlier (during the fade) so any in-curtain reveals see fresh measurement.
+  // `{ once: true }` so future code re-dispatching `studio:intro-complete`
+  // (e.g. as a generic "page ready" signal) can't trigger redundant refreshes.
   document.addEventListener("studio:intro-complete", function onIntroComplete() {
     if (typeof ScrollTrigger !== "undefined" && typeof ScrollTrigger.refresh === "function") {
       ScrollTrigger.refresh();
     }
-  });
+  }, { once: true });
 });

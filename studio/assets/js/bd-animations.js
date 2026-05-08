@@ -989,6 +989,19 @@
     document.dispatchEvent(new CustomEvent("studio:ready"));
   }
 
+  // Authoritative ScrollTrigger refresh after the curtain dismisses.
+  // The pre-curtain refresh below measures triggers against a scroll-locked
+  // body (position:fixed; top:-Y), so trigger ranges are wrong relative to
+  // the natural layout. unlockPage() restores body + scroll BEFORE the
+  // fade, then bd:intro-complete fires after the fade finishes — by then
+  // the layout is correct and we can re-measure. Fires once per document
+  // load (whether full curtain, reduced-motion skip, or bfcache recovery).
+  document.addEventListener("bd:intro-complete", function onIntroDismissed() {
+    if (typeof ScrollTrigger !== "undefined" && typeof ScrollTrigger.refresh === "function") {
+      ScrollTrigger.refresh();
+    }
+  }, { once: true });
+
   document.fonts.ready
     .then(function () {
       var container = document.querySelector("[data-barba='container']") || document.body;

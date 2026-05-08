@@ -88,3 +88,18 @@ body.is-intro-loading {
   overflow: hidden;
   overscroll-behavior: contain;
 }
+
+/* Accessible name for the curtain — read by screen readers while the
+   visual wordmark drops. Standard sr-only pattern. Scoped here because
+   it's currently the only consumer in the studio app layer. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

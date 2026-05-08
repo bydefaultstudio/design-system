@@ -265,9 +265,10 @@
       </div>
     </main>
 
-    <!-- First-visit loading curtain (sibling of <main>, outside Barba) -->
-    <div class="bd-intro" id="bd-intro" aria-hidden="true">
-      <div class="bd-intro-stage" id="bd-intro-stage"></div>
+    <!-- Loading curtain (sibling of <main>, outside Barba) — plays on every real document load -->
+    <div class="bd-intro" id="bd-intro" role="status" aria-live="polite">
+      <span class="visually-hidden">Loading By Default</span>
+      <div class="bd-intro-stage" id="bd-intro-stage" aria-hidden="true"></div>
     </div>
 
     <div class="sidebar-backdrop" data-sidebar-backdrop aria-hidden="true"></div>

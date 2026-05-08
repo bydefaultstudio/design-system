@@ -552,6 +552,13 @@ function initStudioBarba() {
     // destroyed here (that would strip inline styles while the old container
     // is still visible). Full cleanup + reinit happens in the after hook's rAF.
     document.body.classList.remove("is-case-study-open");
+    // Headline word cycle (home only) — kill while the .cycle-word element
+    // is still in the DOM (i.e. before Barba detaches the leaving container)
+    // so gsap.context.revert() can restore its scoped styles cleanly.
+    var leavingNs = data && data.current ? data.current.namespace : null;
+    if (leavingNs === "home" && typeof window.cleanupHeadlineCycle === "function") {
+      window.cleanupHeadlineCycle();
+    }
     document.dispatchEvent(new CustomEvent("studio:before-nav"));
   });
 
