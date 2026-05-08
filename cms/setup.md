@@ -56,7 +56,7 @@ Update font families in `assets/css/design-system.css` under the **Brand Tokens*
 
 ## Logo
 
-Replace the logo files in `assets/images/logos/bydefault/`. There are six variants — three marks (primary, primary-centered, avatar) each with a black and a white version. See [Logo](../brand/logo.html) for the full file reference.
+Replace the logo files in `assets/images/logos/bydefault/`. There are six variants — three marks (primary, primary-centered, avatar) each with a black and a white version. See [Logo](/brand/logo.html) for the full file reference.
 
 ---
 
@@ -86,6 +86,29 @@ The documentation is ready to use, but you may want to:
 
 ---
 
+## Local Development (Netlify Functions)
+
+Forms (`feedback`, `new-campaign`, `new-proposal`, `access-support`) post to `/api/submit-form`, which is rewritten in `netlify.toml` to a Netlify Function that writes to Notion. To exercise that path locally, run **Netlify Dev** instead of a static server — it runs the Functions in `netlify/functions/` and proxies them through `/api/*`.
+
+VSCode Live Server (port 5501) is static-only, so any POST to `/api/*` returns 405. Use port 8888 (Netlify Dev) for any form testing.
+
+### One-time setup
+
+1. `npm install` — installs `netlify-cli` (~200 MB; first install takes 30–90 s).
+2. `npx netlify login` — browser flow.
+3. `npx netlify link` — choose the existing `bydefault.design` site. This is what lets `netlify dev` pull production env vars into your local session.
+4. `npx netlify env:list` — confirm the five keys: `NOTION_API_KEY`, `NOTION_DATABASE_ID_NEW_CAMPAIGN`, `NOTION_DATABASE_ID_NEW_PROPOSAL`, `NOTION_DATABASE_ID_FEEDBACK`, `NOTION_DATABASE_ID_ACCESS_SUPPORT`. See `.env.example` for the canonical list.
+
+### Each session
+
+```bash
+npm run dev
+```
+
+Opens `http://localhost:8888` with Functions live. Netlify Dev loads the **Local development (Netlify CLI)** context for env vars, so `NOTION_API_KEY` and the four `NOTION_DATABASE_ID_*` keys must be populated in that context on the Netlify dashboard. Submitting any form writes a real row to the production Notion database — there is no separate dev database, so test submissions are visible to the team.
+
+---
+
 ## Quick Checklist
 
 - [ ] Update brand colors in `assets/css/design-system.css` (Brand Tokens section)
@@ -95,6 +118,7 @@ The documentation is ready to use, but you may want to:
 - [ ] Update font loading (Typekit link in templates, `@font-face` in design-system.css)
 - [ ] Set up client theme (if applicable) — see [Client Theming](#client-theming)
 - [ ] Review and customize documentation
+- [ ] Run `npm run dev` to test forms locally on http://localhost:8888
 
 ---
 

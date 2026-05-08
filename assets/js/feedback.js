@@ -66,6 +66,8 @@
     var section = root.querySelector('.page-feedback');
     var dialog = root.querySelector('.feedback-modal');
     if (!section || !dialog) return;
+    if (section.dataset.feedbackInit === '1') return;
+    section.dataset.feedbackInit = '1';
 
     var yesBtn = section.querySelector('[data-feedback="yes"]');
     var noBtn = section.querySelector('[data-feedback="no"]');
