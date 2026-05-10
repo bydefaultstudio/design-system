@@ -948,14 +948,18 @@ body.is-sidebar-collapsed .page-header {
 /* ------ PAGE INTRO (shared) ------ */
 
 .page-headline {
+  font-size: var(--headline-size);
+  font-weight: var(--headline-weight);
+  color: var(--text-primary);
+}
+
+.page-title {
   font-size: var(--title-size);
   font-weight: var(--title-weight);
   color: var(--text-primary);
 }
 
 .home-headline {
-  font-size: var(--headline-size);
-  font-weight: var(--headline-weight);
   margin: 0;
 }
 
@@ -1213,15 +1217,103 @@ body.is-sidebar-collapsed .page-header {
 }
 
 
+/* ------ STICKY STACK (reusable layout primitive) ------
+   Combo with .section-content + data-grid. One side is a sticky
+   media element (.sticky-media); the other is a column of items
+   that scroll past it (.scroll-stack > *). Drop-in: no per-section
+   classes required. Per-section tweaks scope under that section's
+   parent class (e.g. .about-beliefs .scroll-stack > * h2 { ... }). */
+
+[data-grid].sticky-stack {
+  align-items: start;
+  /* align-items:start prevents the grid stretching both columns to
+     row height — sticky needs travel room inside its track.
+     grid-auto-flow:dense lets a later DOM child claim earlier columns
+     in the same row — needed because .sticky-media is DOM-first (so it
+     stacks first on mobile) but lives in cols 7-12 on desktop. Without
+     dense, the .scroll-stack falls to row 2 leaving a tall gap. */
+  grid-auto-flow: dense;
+}
+
+.sticky-media {
+  position: sticky;
+  top: calc(var(--studio-bar-height) + var(--studio-gap));
+  height: calc(100vh - var(--studio-bar-height) - var(--studio-gap) * 2);
+  align-self: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-stack {
+  display: flex;
+  flex-direction: column;
+  /* background-color: var(--bg-faded-3); */
+}
+
+/* Each scroll-stack item — applies to any element with this class regardless
+   of tag (article, div, etc.). Add the class on every direct child of
+   .scroll-stack — same pattern as .process-step inside .process-steps. */
+.scroll-stack-item {
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;     /* default — items vertically centred */
+  gap: var(--space-m);
+}
+
+/* Margin reset for text descendants at any depth — works whether the
+   item content is flat (text directly inside .scroll-stack-item) or
+   nested inside .block grouping wrappers. :where() keeps specificity
+   at zero so component-specific margin rules still win. */
+.scroll-stack-item :where(h1, h2, h3, h4, h5, h6, p, ul, ol) {
+  margin: 0;
+}
+
+/* Variants — vertical alignment of content inside each .scroll-stack-item.
+   Apply via data-align on the parent .scroll-stack; cascades to all items. */
+.scroll-stack[data-align="top"]    .scroll-stack-item { justify-content: flex-start;    }
+.scroll-stack[data-align="bottom"] .scroll-stack-item { justify-content: flex-end;      }
+.scroll-stack[data-align="space"]  .scroll-stack-item { justify-content: space-between; }
+
+@media (max-width: 768px) {
+  .sticky-media {
+    top: var(--mobile-bar-height, 0);
+    height: calc(100vh - var(--mobile-bar-height, 0px));
+  }
+  .scroll-stack {
+    gap: var(--space-2xl);
+  }
+  .scroll-stack-item {
+    min-height: auto;
+    gap: var(--space-s);
+  }
+  .scroll-stack-item h2 {
+    font-size: var(--font-xl);
+  }
+}
+
+/* Founders — longer scroll runway per item so the sticky portrait reads
+   clearly while the bio (single paragraph) scrolls past. */
+.about-founders .scroll-stack-item {
+  min-height: 100vh;
+  padding: 40vh 0;
+  /* background-color: var(--bg-faded-3); */
+}
+
+.syeda-bio {
+  padding-left: var(--studio-gap-2x)
+}
+
 /* ------ ABOUT PAGE ------ */
 
 /* -- Media frame (feature/hero mask — image, video, or BD-Video player) -- */
 
 .media-frame {
   width: 100%;
-  aspect-ratio: 16 / 9;
   overflow: hidden;
   border-radius: var(--radius-s);
+  background-color: var(--bg-faded-10);
 }
 
 .media-frame > img,
@@ -1234,21 +1326,27 @@ body.is-sidebar-collapsed .page-header {
   display: block;
 }
 
+/* Fill — desktop-only modifier. Drops the aspect-ratio constraint and
+   makes the media-frame fill its parent's height. Useful inside a tall
+   container such as .sticky-media (which sets height to remaining
+   viewport). Mobile reverts to the data-ratio sizing. */
+@media (min-width: 769px) {
+  .media-frame.is-fill {
+    height: 100%;
+    aspect-ratio: auto;
+  }
+}
+
 /* -- Origin / Founding story -- */
 
 .about-origin-header {
   margin-bottom: var(--space-3xl);
 }
 
-.about-origin-title {
-  max-width: 14ch;
-}
-
 .origin-prose {
   display: flex;
   flex-direction: column;
   gap: var(--space-l);
-  max-width: 62ch;
   font-size: var(--font-l);
   line-height: 1.5;
   color: var(--text-primary);
@@ -1313,7 +1411,6 @@ body.is-sidebar-collapsed .page-header {
   font-size: var(--font-m);
   line-height: 1.55;
   color: var(--text-primary);
-  max-width: 56ch;
 }
 
 .founder-bio p { margin: 0; }
@@ -1326,37 +1423,6 @@ body.is-sidebar-collapsed .page-header {
 @media (max-width: 768px) {
   .founder-name { font-size: var(--font-2xl); }
 }
-
-/* -- Beliefs / Manifesto -- */
-
-[data-grid].beliefs-grid {
-  row-gap: var(--space-3xl);
-}
-
-.belief {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-m);
-  max-width: 44ch;
-}
-
-.belief-title {
-  margin: 0;
-  font-size: var(--font-2xl);
-  line-height: 1.15;
-}
-
-.belief p {
-  margin: 0;
-  font-size: var(--font-m);
-  line-height: 1.55;
-  color: var(--text-secondary);
-}
-
-@media (max-width: 768px) {
-  .belief-title { font-size: var(--font-xl); }
-}
-
 
 [data-article] {
   position: relative;
@@ -2794,7 +2860,7 @@ body.is-animating .case-study-content {
   animation: error-code-fade var(--motion-page-fade-duration) var(--motion-page-fade-easing) both;
 }
 
-.error-page-headline {
+.error-page-heading {
   font-size: var(--font-8xl);
   line-height: 1.05;
   color: var(--text-primary);
@@ -2855,7 +2921,7 @@ body.is-animating .case-study-content {
 
 @media (max-width: 640px) {
   .error-page__code { font-size: var(--font-8xl); }
-  .error-page-headline { font-size: var(--font-6xl); }
+  .error-page-heading { font-size: var(--font-6xl); }
   .error-page__lede { font-size: var(--font-m); }
 }
 
@@ -2937,6 +3003,12 @@ body.is-animating .case-study-content {
 }
 
 /* Child items */
+
+.capability-cta-pitch {
+  font-size: var(--font-xl);
+}
+
+
 :is(.services-accordion, .capabilities-accordion) [data-depth="1"] .accordion-header {
   font-family: var(--font-secondary);
   font-size: var(--font-2xl);
@@ -2944,12 +3016,14 @@ body.is-animating .case-study-content {
 
 /* -- Capability formats (inner accordion of formats per capability) -- */
 
-:is(.formats-section, .capability-formats) {
-  border-top: var(--border-s) solid var(--border-faded);
-}
 
 :is(.formats-section, .capability-formats) .accordion-item:last-child {
   border-bottom: none;
+}
+:is(.formats-section, .capability-formats) .accordion-item:first-child {
+
+
+  border-top: var(--border-s) solid var(--border-faded);
 }
 
 :is(.formats-section, .capability-formats) .accordion {
@@ -3082,6 +3156,27 @@ body.is-animating .case-study-content {
 [data-grid] > [data-col-start="10"] { grid-column-start: 10; }
 [data-grid] > [data-col-start="11"] { grid-column-start: 11; }
 [data-grid] > [data-col-start="12"] { grid-column-start: 12; }
+
+/* Tablet auto-fallback: collapse 12-col to 6-col and remap spans so
+   3-up / 4-up card decks survive, while asymmetric layouts (7+5, 8+4,
+   centred col-start offsets) stack. Zero HTML changes required. */
+@media (max-width: 960px) {
+  [data-grid] {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  [data-grid] > [data-col-start] {
+    grid-column-start: auto;
+  }
+  [data-grid] > [data-col-span="4"]  { grid-column-end: span 3; }
+  [data-grid] > [data-col-span="5"]  { grid-column-end: span 6; }
+  [data-grid] > [data-col-span="6"]  { grid-column-end: span 6; }
+  [data-grid] > [data-col-span="7"]  { grid-column-end: span 6; }
+  [data-grid] > [data-col-span="8"]  { grid-column-end: span 6; }
+  [data-grid] > [data-col-span="9"]  { grid-column-end: span 6; }
+  [data-grid] > [data-col-span="10"] { grid-column-end: span 6; }
+  [data-grid] > [data-col-span="11"] { grid-column-end: span 6; }
+  [data-grid] > [data-col-span="12"] { grid-column-end: span 6; }
+}
 
 @media (max-width: 768px) {
   [data-grid] {
@@ -3841,13 +3936,28 @@ body.is-scrolling .case-study-card-logo {
    at the same (0,1,0) specificity. */
 
 [data-ratio="1:1"]  { aspect-ratio: 1 / 1; }
+[data-ratio="2:1"]  { aspect-ratio: 2 / 1; }
 [data-ratio="4:3"]  { aspect-ratio: 4 / 3; }
 [data-ratio="3:2"]  { aspect-ratio: 3 / 2; }
 [data-ratio="3:4"]  { aspect-ratio: 3 / 4; }
 [data-ratio="16:9"] { aspect-ratio: 16 / 9; }
 [data-ratio="21:9"] { aspect-ratio: 21 / 9; }
 [data-ratio="4:5"]  { aspect-ratio: 4 / 5; }
+[data-ratio="5:4"]  { aspect-ratio: 5 / 4; }
 [data-ratio="9:16"] { aspect-ratio: 9 / 16; }
+
+
+/* ------- Line length — global utility attribute ------- */
+/* Apply data-line-length="<value>" to any text element to constrain its
+   measure (max-width) to a known-good readability target. Values are named
+   typographically — headline (display titles) → wide (max comfortable prose).
+   Bringhurst: 45–75ch is the satisfactory range for body text; 66ch ideal. */
+
+[data-line-length="headline"] { max-width: var(--line-length-headline); }
+[data-line-length="small"]    { max-width: var(--line-length-small); }
+[data-line-length="body"]     { max-width: var(--line-length-body); }
+[data-line-length="medium"]   { max-width: var(--line-length-medium); }
+[data-line-length="wide"]     { max-width: var(--line-length-wide); }
 
 
 /* ============================================================
@@ -3941,7 +4051,7 @@ body.is-scrolling .case-study-card-logo {
 /* Per-element typography (color set in the grouped rule above). */
 .product-spotlight .product-spotlight-title {
   margin: 0;
-  font-size: var(--font-7xl);
+  font-size: var(--title-size);
   font-weight: var(--font-weight-light);
   line-height: 1;
   letter-spacing: -0.02em;
