@@ -62,11 +62,6 @@
   }
 }
 
-/* Design system component overrides — studio brand differences */
-
-
-
-
 /* Canonical sprite-logo contract — every place the studio renders a
    brand logo wraps the <svg> in `.svg-logo`. The wrapper carries
    inline aspect-ratio (from sprite metadata) and is the sizing surface;
@@ -444,10 +439,6 @@ a.intro-block:hover {
 .button.nav-btn:hover {
   background-color: color-mix(in srgb, var(--text-primary), var(--alpha-5));
 }
-
-/* [data-article] {
-  background-color: pink;
-} */
 
 
 [data-sidebar-toggle] .icon-sidebar-open {
@@ -2492,14 +2483,9 @@ body.is-animating .case-study-content {
 
 .contact-chips .button {
   flex: 1 1 auto;
-}
-
-.contact-chips .button {
   padding-left: 0;
   padding-right: 0;
 }
-
-
 
 .contact-chips .button.is-selected {
   --button-bg: var(--text-primary);
@@ -3562,7 +3548,7 @@ body.is-animating .case-study-content {
   }
 }
 
-/* ------- Split Grid ------- */
+/* ------ SPLIT GRID ------ */
 
 .split-grid {
   display: grid;
@@ -3578,7 +3564,7 @@ body.is-animating .case-study-content {
   }
 }
 
-/* ------- Logo Ticker ------- */
+/* ------ LOGO TICKER ------ */
 
 .logo-ticker-section {
   overflow: hidden;
@@ -3594,7 +3580,7 @@ body.is-animating .case-study-content {
   display: block;
 }
 
-/* ------- Home: Case Studies ------- */
+/* ------ HOME: CASE STUDIES ------ */
 
 .case-study-cards {
   display: flex;
@@ -3738,7 +3724,7 @@ body.is-scrolling .case-study-card-logo {
   }
 }
 
-/* ------- Testimonials ------- */
+/* ------ TESTIMONIALS ------ */
 
 .home-clients {
 }
@@ -3907,7 +3893,7 @@ body.is-scrolling .case-study-card-logo {
   }
 }
 
-/* ------- GSAP FOUC Prevention ------- */
+/* ------ GSAP FOUC PREVENTION ------ */
 /* Hide animated elements until JS reveals them.
    Scoped to .js so content remains visible if JavaScript is disabled. */
 
@@ -3916,7 +3902,7 @@ body.is-scrolling .case-study-card-logo {
   opacity: 0;
 }
 
-/* ------- Print Safety ------- */
+/* ------ PRINT SAFETY ------ */
 /* Ensure GSAP-animated elements are visible when printing */
 
 @media print {
@@ -3929,7 +3915,7 @@ body.is-scrolling .case-study-card-logo {
   }
 }
 
-/* ------- Aspect ratio — global utility attribute ------- */
+/* ------ ASPECT RATIO — global utility attribute ------ */
 /* Apply data-ratio="W:H" to any element to set its aspect ratio.
    Component defaults set their own aspect-ratio; data-ratio overrides it.
    Lives at the end of the file so source-order beats component defaults
@@ -3947,7 +3933,7 @@ body.is-scrolling .case-study-card-logo {
 [data-ratio="9:16"] { aspect-ratio: 9 / 16; }
 
 
-/* ------- Line length — global utility attribute ------- */
+/* ------ LINE LENGTH — global utility attribute ------ */
 /* Apply data-line-length="<value>" to any text element to constrain its
    measure (max-width) to a known-good readability target. Values are named
    typographically — headline (display titles) → wide (max comfortable prose).
