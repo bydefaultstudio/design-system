@@ -259,6 +259,41 @@ Blocks can change layout or alignment.
 
 ---
 
+## Self Alignment
+
+`data-align` centres the element itself within its parent — distinct from the `.align-*` classes above, which align *children* inside a flex block.
+
+| Attribute             | Effect                                                       |
+| --------------------- | ------------------------------------------------------------ |
+| `data-align="center"` | Centres self horizontally (`margin-inline: auto`, `justify-self: center`) |
+
+Use to centre a block without wrapping it in `data-grid` + `data-col-start` / `data-col-span`. Works in both normal block/flex flow and inside `data-grid` parents.
+
+### Width is required
+
+`margin-inline: auto` is a no-op without a width constraint. `.block` fills 100% of its parent by default, so `data-align="center"` alone does nothing visible.
+
+Pair with one of:
+
+* `data-line-length="headline | small | body | medium | wide"` — applies a max-width from the typography scale (see [Typography → Line Length](typography.html#line-length))
+* A `max-width` from a component class
+* An explicit `width`
+
+<div class="demo-preview is-joined">
+  <div class="block" data-align="center" data-line-length="medium" style="background: var(--background-faded); padding: var(--space-m); text-align: center; font-size: var(--font-xs);">
+    Centred block — measure capped by <code>data-line-length="medium"</code>.
+  </div>
+</div>
+
+```html
+<div class="block" data-align="center" data-line-length="medium">
+  <h2>Centred headline</h2>
+  <p>Centred paragraph with a comfortable measure.</p>
+</div>
+```
+
+---
+
 ## Grid
 
 Grids create **column-based layouts**.
