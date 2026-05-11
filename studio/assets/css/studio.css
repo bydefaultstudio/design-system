@@ -27,6 +27,19 @@
 }
 
 
+/* ------ PAGE SCROLL ------ */
+
+/* Smooth programmatic scroll (anchor links, scrollIntoView, scrollTo).
+   Does not affect wheel/trackpad input — that stays native. Gated by
+   prefers-reduced-motion to spare vestibular-sensitive users the
+   long-distance animated jumps. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+
 /* ------ TOKENS ------ */
 
 :root {
@@ -971,6 +984,14 @@ body.is-sidebar-collapsed .page-header {
   /* min-width is set inline by JS after measurement */
 }
 
+/* The cycle-word descender buffer shifts the inline word upward on a
+   single-line heading where text precedes the cycle. The H1 puts the
+   cycle-word on its own line (via <br>) so the buffer is invisible there;
+   here it's inline after "Make your content" and visible as a baseline jog. */
+#product-spotlight-heading .cycle-word {
+  padding-bottom: 0;
+}
+
 .cycle-word-item {
   display: inline-block;
   position: absolute;
@@ -985,11 +1006,11 @@ body.is-sidebar-collapsed .page-header {
   visibility: visible;
 }
 
-/* Visually-hidden sibling that exposes the canonical word ("unforgettable")
-   to screen readers. The animated .cycle-word wrapper is aria-hidden, so
-   without this the H1 would have no last-word at all in the accessibility
-   tree. Standard "visually hidden" pattern; kept local until/unless a
-   foundation utility lands in design-system.css. */
+/* Visually-hidden sibling that exposes the canonical word to screen readers.
+   The animated .cycle-word wrapper is aria-hidden, so without this the
+   heading would have no last-word at all in the accessibility tree. Standard
+   "visually hidden" pattern; kept local until/unless a foundation utility
+   lands in design-system.css. */
 .cycle-word-sr {
   position: absolute;
   width: 1px;

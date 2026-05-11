@@ -360,26 +360,28 @@ function initProductSpotlight() {
 window.initProductSpotlight = initProductSpotlight;
 
 
-// ------- Headline word cycle (home only) ------- //
+// ------- Headline word cycle ------- //
 //
-// The last word of the home headline rotates through a list of alternates.
-// Animation style is picked by data-cycle-style on .cycle-word; each style
-// is a "builder" returning a repeat:-1 timeline. Cleanup runs from
-// studio-barba.js's `before` hook so the timeline tears down before the
-// leaving container is detached.
+// Any `.cycle-word` wrapper on the page rotates its child `.cycle-word-item`s
+// through a list of alternates. Multiple instances on one page are supported;
+// each runs its own independent timeline. Animation style is picked by
+// data-cycle-style on .cycle-word; each style is a "builder" returning a
+// repeat:-1 timeline. Cleanup runs from studio-barba.js's `before` hook so
+// timelines tear down before the leaving container is detached.
+//
+// Currently lives in studio-home.js because both current consumers are on
+// home. If a non-home page ever wants the effect, extract to its own file
+// and wire per §18 (8 hand-authored sources + L2 generator template +
+// studio.js init call-sites).
 //
 // To add a new style: write buildXyz(items, tokens), register it in
 // CYCLE_STRATEGIES, set data-cycle-style="xyz" on the markup.
 
-var CYCLE_WORD_SELECTOR = ".home-headline .cycle-word";
-var headlineCycleState = {
-  ctx: null,
-  timeline: null,
-  resizeHandler: null,
-  // Bumped on init/cleanup so a stale fonts.ready promise from a
-  // superseded init can detect it lost the race and bail.
-  generation: 0
-};
+var CYCLE_WORD_SELECTOR = ".cycle-word";
+// One entry per wrapper: { wrapper, ctx, timeline, resizeHandler, generation }.
+// The per-entry generation counter guards stale fonts.ready resolves from a
+// superseded init, scoped to that wrapper.
+var headlineCycleStates = [];
 
 var CYCLE_STRATEGIES = {
   "slot": buildSlot,
@@ -597,26 +599,36 @@ function initHeadlineCycle() {
     return;
   }
 
-  var wrapper = document.querySelector(CYCLE_WORD_SELECTOR);
-  if (!wrapper) return;
-
   // Idempotent — Barba may re-fire init on home re-entry.
   cleanupHeadlineCycle();
 
-  // Reduced motion: leave the active item visible (CSS default), do nothing.
+  // Reduced motion: leave each active item visible (CSS default), do nothing.
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+  var wrappers = document.querySelectorAll(CYCLE_WORD_SELECTOR);
+  for (var i = 0; i < wrappers.length; i++) {
+    initOneCycle(wrappers[i]);
+  }
+}
+
+function initOneCycle(wrapper) {
   var items = wrapper.querySelectorAll(".cycle-word-item");
   if (items.length < 2) return;
 
-  headlineCycleState.generation++;
-  var generation = headlineCycleState.generation;
+  var state = {
+    wrapper: wrapper,
+    ctx: null,
+    timeline: null,
+    resizeHandler: null,
+    generation: 1
+  };
+  headlineCycleStates.push(state);
 
   // Wait for fonts so item widths are stable before measurement.
   var ready = (document.fonts && document.fonts.ready) || Promise.resolve();
   ready.then(function () {
-    // Bail if a newer init or cleanup has run while we were waiting.
-    if (generation !== headlineCycleState.generation) return;
+    // Bail if cleanup has run while we were waiting.
+    if (state.generation === 0) return;
     if (!document.body.contains(wrapper)) return;
 
     applyMinWidth(wrapper, items);
@@ -624,33 +636,37 @@ function initHeadlineCycle() {
     var build = pickStrategy(wrapper);
     var tokens = getCycleTokens();
 
-    headlineCycleState.ctx = gsap.context(function () {
-      headlineCycleState.timeline = build(items, tokens);
+    state.ctx = gsap.context(function () {
+      state.timeline = build(items, tokens);
     }, wrapper);
 
-    headlineCycleState.resizeHandler = function () {
+    state.resizeHandler = function () {
       if (!document.body.contains(wrapper)) return;
       applyMinWidth(wrapper, items);
     };
-    window.addEventListener("resize", headlineCycleState.resizeHandler);
+    window.addEventListener("resize", state.resizeHandler);
   });
 }
 
 function cleanupHeadlineCycle() {
-  // Bump generation so any pending fonts.ready from the active cycle bails.
-  headlineCycleState.generation++;
-  if (headlineCycleState.timeline) {
-    headlineCycleState.timeline.kill();
-    headlineCycleState.timeline = null;
+  for (var i = 0; i < headlineCycleStates.length; i++) {
+    var state = headlineCycleStates[i];
+    // Zero generation so any pending fonts.ready for this state bails.
+    state.generation = 0;
+    if (state.timeline) {
+      state.timeline.kill();
+      state.timeline = null;
+    }
+    if (state.ctx) {
+      state.ctx.revert();
+      state.ctx = null;
+    }
+    if (state.resizeHandler) {
+      window.removeEventListener("resize", state.resizeHandler);
+      state.resizeHandler = null;
+    }
   }
-  if (headlineCycleState.ctx) {
-    headlineCycleState.ctx.revert();
-    headlineCycleState.ctx = null;
-  }
-  if (headlineCycleState.resizeHandler) {
-    window.removeEventListener("resize", headlineCycleState.resizeHandler);
-    headlineCycleState.resizeHandler = null;
-  }
+  headlineCycleStates.length = 0;
 }
 
 window.initHeadlineCycle = initHeadlineCycle;
