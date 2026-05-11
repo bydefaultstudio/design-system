@@ -480,10 +480,13 @@ console.log("Notion Form v2.0.0");
     }
   }
 
-  function init() {
-    var containers = document.querySelectorAll('.notion-form[data-form]');
+  function initNotionForm(scope) {
+    var root = scope || document;
+    var containers = root.querySelectorAll('.notion-form[data-form]');
 
     containers.forEach(function(container, index) {
+      if (container.dataset.notionFormInit === '1') return;
+
       var formType = container.dataset.form;
 
       // Skip feedback — handled by feedback.js
@@ -494,12 +497,17 @@ console.log("Notion Form v2.0.0");
         return;
       }
 
+      container.dataset.notionFormInit = '1';
       initForm(container, formType, index);
     });
   }
 
-  document.addEventListener('DOMContentLoaded', function() {
-    init();
-  });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNotionForm);
+  } else {
+    initNotionForm();
+  }
+
+  window.initNotionForm = initNotionForm;
 
 })();

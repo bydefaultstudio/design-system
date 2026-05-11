@@ -202,28 +202,11 @@
   //------- URL & Redirect Helpers -------//
 
   function getLoginUrl(redirectPath) {
-    var base = getBasePrefix();
-    var url = base + LOGIN_PAGE;
+    var url = '/' + LOGIN_PAGE;
     if (redirectPath) {
       url += '?redirect=' + encodeURIComponent(redirectPath);
     }
     return url;
-  }
-
-  function getBasePrefix() {
-    // Determine path depth from site root for relative URLs
-    var navEl = document.getElementById('site-nav');
-    if (navEl && navEl.getAttribute('data-base')) {
-      return navEl.getAttribute('data-base');
-    }
-    // Fallback: count path segments
-    var path = window.location.pathname.replace(/^\/+/, '');
-    var segments = path.split('/').length - 1;
-    var prefix = '';
-    for (var i = 0; i < segments; i++) {
-      prefix += '../';
-    }
-    return prefix;
   }
 
   function redirectToLogin() {
@@ -289,8 +272,7 @@
       showContent();
       return;
     }
-    var base = getBasePrefix();
-    var url = base + ACCESS_DENIED_PAGE;
+    var url = '/' + ACCESS_DENIED_PAGE;
     var params = [];
     if (reason) params.push('reason=' + encodeURIComponent(reason));
     if (fromPath) params.push('from=' + encodeURIComponent(fromPath));
@@ -762,9 +744,6 @@
 
       // -- Role switcher section (admin only) --
       if (isAdmin) {
-        var navMount = document.getElementById('site-nav');
-        var basePath = navMount ? (navMount.getAttribute('data-base') || '') : '';
-
         var ICON_CHECK = '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
           + '<path d="M9.55 18L3.85 12.3L5.275 10.875L9.55 15.15L18.725 5.975L20.15 7.4L9.55 18Z" fill="currentColor"/>'
           + '</svg>';
@@ -814,7 +793,7 @@
             if (role === 'public') {
               window.location.reload();
             } else {
-              window.location.href = basePath + 'index.html';
+              window.location.href = '/index.html';
             }
           });
         });
@@ -839,7 +818,7 @@
                 sessionStorage.setItem('active-role', 'client');
                 sessionStorage.setItem('active-client', key);
                 window.__bdRoleSwitchPending = true;
-                window.location.href = basePath + key + '/index.html';
+                window.location.href = '/' + key + '/index.html';
               });
             });
           }
@@ -851,11 +830,9 @@
       accountDivider.className = 'dropdown-divider';
       menu.appendChild(accountDivider);
 
-      var navMountForAccount = document.getElementById('site-nav');
-      var basePathForAccount = navMountForAccount ? (navMountForAccount.getAttribute('data-base') || '') : '';
       var accountLink = document.createElement('a');
       accountLink.className = 'dropdown-item';
-      accountLink.href = basePathForAccount + 'auth/account.html';
+      accountLink.href = '/auth/account.html';
       accountLink.innerHTML = '<div class="svg-icn">'
         + '<svg data-icon="settings" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
         + '<path fill-rule="evenodd" clip-rule="evenodd" d="M12 8C14.2091 8 16 9.79086 16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8ZM12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10Z" fill="currentColor"/>'
@@ -895,7 +872,7 @@
       if (requiredRole !== 'public') {
         var loginLink = document.createElement('a');
         loginLink.className = 'top-nav-link';
-        loginLink.href = LOGIN_PAGE;
+        loginLink.href = '/' + LOGIN_PAGE;
         loginLink.innerHTML = '<div class="svg-icn">' + ICON_USER + '</div>'
           + '<span class="top-nav-link-label">Log in</span>';
         container.appendChild(loginLink);
@@ -932,8 +909,7 @@
 
     // If we're not on the login page, redirect there with the token
     if (!isLoginPage()) {
-      var base = getBasePrefix();
-      window.location.href = base + LOGIN_PAGE + '#' + tokenInfo.type + '_token=' + encodeURIComponent(tokenInfo.token);
+      window.location.href = '/' + LOGIN_PAGE + '#' + tokenInfo.type + '_token=' + encodeURIComponent(tokenInfo.token);
       return true;
     }
 
@@ -1488,6 +1464,15 @@
           }
         }
       }
+    } else if (IS_DEV) {
+      // Dev mode: synthesize a user matching the dev session so per-client
+      // pages (data-access="client:<folder>") have a clientFolder to compare.
+      // Without this, hasAccessForValue() sees an empty metadata object and
+      // denies access to every "client:*" page even when the dev session is
+      // configured for that exact client.
+      var devConfig = AUTH_CONFIG.devMode || {};
+      role = sessionStorage.getItem('active-role') || devConfig.defaultRole || 'admin';
+      user = createDevUser(role);
     }
     if (!role) role = sessionStorage.getItem('active-role') || DEFAULT_ROLE;
 

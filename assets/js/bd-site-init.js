@@ -25,6 +25,7 @@
     if (typeof window.initWorldClock === 'function')       window.initWorldClock();
     if (typeof window.initImagePlaceholder === 'function') window.initImagePlaceholder();
     if (typeof window.initSvgCleaner === 'function')       window.initSvgCleaner();
+    if (typeof window.initNotionForm === 'function')       window.initNotionForm();
   }
 
   if (document.readyState === 'loading') {

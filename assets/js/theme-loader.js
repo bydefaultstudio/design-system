@@ -185,10 +185,9 @@
   //------- Home Link -------//
 
   function setHomeLink(clientFolder) {
-    var basePath = getBasePath();
     var href = clientFolder
-      ? basePath + clientFolder + '/index.html'
-      : basePath + 'index.html';
+      ? '/' + clientFolder + '/index.html'
+      : '/index.html';
 
     var logoLink = document.querySelector('.top-nav-logo-link');
     if (logoLink) logoLink.href = href;
@@ -318,10 +317,12 @@
    * @param {Element} container — sidebar content element
    * @param {object} theme — theme config entry
    * @param {string} clientKey — client folder key
-   * @param {string} basePath — base URL prefix
    * @param {string} fallbackLabel — label for pages without a section key
+   *
+   * Page hrefs in THEME_CONFIG.themes[*].pages[] are absolute (start with `/`)
+   * so they resolve correctly regardless of the current page's depth.
    */
-  function injectClientSections(container, theme, clientKey, basePath) {
+  function injectClientSections(container, theme, clientKey) {
     // All pages including Tools — tool access is now managed via pages array
     var pages = theme.pages || [];
     var grouped = groupPagesBySection(pages);
@@ -333,7 +334,7 @@
       if (!sectionName) {
         sectionPages.forEach(function (page) {
           var a = document.createElement('a');
-          a.href = basePath + page.href;
+          a.href = page.href;
           a.className = 'nav-link' + (page.title === 'Home' ? ' nav-home' : '');
           var iconHtml = LINK_ICONS[page.title] || '';
           a.innerHTML = iconHtml + '<span>' + page.title + '</span>';
@@ -351,7 +352,7 @@
       } else {
         // Find overview page href for this section
         var overviewPage = sectionPages.find(function (p) { return p.title === 'Overview'; });
-        var iconHref = overviewPage ? basePath + overviewPage.href : '';
+        var iconHref = overviewPage ? overviewPage.href : '';
 
         // Sort so Overview is always first
         var sortedPages = sectionPages.slice().sort(function (a, b) {
@@ -360,7 +361,7 @@
           return 0;
         });
         var linkItems = sortedPages.map(function (page) {
-          return buildNavLink(basePath + page.href, page.title);
+          return buildNavLink(page.href, page.title);
         });
         container.appendChild(buildNavSection(sectionName, linkItems, clientKey, iconHref));
       }
@@ -384,9 +385,7 @@
     // Clear the team sidebar — client sees only their own nav
     sidebarContent.innerHTML = '';
 
-    var basePath = getBasePath();
-
-    injectClientSections(sidebarContent, theme, clientFolder, basePath);
+    injectClientSections(sidebarContent, theme, clientFolder);
   }
 
   //------- Auth Integration -------//
