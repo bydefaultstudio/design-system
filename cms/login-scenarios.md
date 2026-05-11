@@ -18,15 +18,15 @@ Use these links to test each authentication flow during development. Each link s
 
 | Scenario | URL | Description |
 |---|---|---|
-| Login | [/auth/login.html](../auth/login.html) | Standard email/password login form |
-| Forgot Password | [/auth/login.html#forgot](../auth/login.html#forgot) | Password recovery request form |
-| Reset Password | [/auth/login.html#recovery_token=dev](../auth/login.html#recovery_token=dev) | Password reset form (simulated token) |
-| Accept Invitation | [/auth/login.html#invite_token=dev](../auth/login.html#invite_token=dev) | New user invitation acceptance |
-| Email Confirmation | [/auth/login.html#confirmation_token=dev](../auth/login.html#confirmation_token=dev) | Email verification confirmation |
+| Login | [/auth/login.html](/auth/login.html) | Standard email/password login form |
+| Forgot Password | [/auth/login.html#forgot](/auth/login.html#forgot) | Password recovery request form |
+| Reset Password | [/auth/login.html#recovery_token=dev](/auth/login.html#recovery_token=dev) | Password reset form (simulated token) |
+| Accept Invitation | [/auth/login.html#invite_token=dev](/auth/login.html#invite_token=dev) | New user invitation acceptance |
+| Email Confirmation | [/auth/login.html#confirmation_token=dev](/auth/login.html#confirmation_token=dev) | Email verification confirmation |
 
 ## Other Auth Pages
 
 | Page | URL | Description |
 |---|---|---|
-| Account | [/auth/account.html](../auth/account.html) | User account management page |
-| Access Denied | [/access-denied.html](../access-denied.html) | Shown when a user lacks permission |
+| Account | [/auth/account.html](/auth/account.html) | User account management page |
+| Access Denied | [/access-denied.html](/access-denied.html) | Shown when a user lacks permission |

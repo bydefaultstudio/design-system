@@ -15,7 +15,7 @@ dropcap: true
 
 The brand runs on four type families. Each one has a job; together they cover everything from a 12px tooltip to a 72px hero headline.
 
-This page is the **brand-side** view — what each typeface is for, how it feels, and what to reach for in which situation. For the developer-facing token reference (sizes, weights, line heights), see [Typography](../design-system/typography.html).
+This page is the **brand-side** view — what each typeface is for, how it feels, and what to reach for in which situation. For the developer-facing token reference (sizes, weights, line heights), see [Typography](/design-system/typography.html).
 
 ---
 
@@ -144,5 +144,5 @@ IBM's open monospace from the Plex superfamily. Rounded, even, and unmistakably 
 
 ## See also
 
-- [Typography](../design-system/typography.html) — full token reference (sizes, weights, line heights, letter spacing)
-- [Tokens](../design-system/tokens.html) — every CSS variable with raw values
+- [Typography](/design-system/typography.html) — full token reference (sizes, weights, line heights, letter spacing)
+- [Tokens](/design-system/tokens.html) — every CSS variable with raw values

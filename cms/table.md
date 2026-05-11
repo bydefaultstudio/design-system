@@ -81,7 +81,7 @@ The `.table` class provides the default minimalistic style:
 | --- | --- |
 | Border collapse | `collapse` |
 | Width | `fit-content` (max 100%) |
-| Font size | `var(--text-body)` |
+| Font size | `var(--body-size)` |
 | Font variant | `tabular-nums` |
 | Header background | Transparent |
 | Header border | `var(--border-s) solid var(--border-secondary)` |
@@ -276,7 +276,7 @@ This section documents how the component is built. For usage, see the sections a
 |---|---|
 | Border collapse | `collapse` |
 | Width | `fit-content` (max `100%`) |
-| Font size | `var(--text-body)` |
+| Font size | `var(--body-size)` |
 | Cell padding | `var(--space-m) var(--space-l)` |
 | Header weight | `var(--font-weight-bold)` |
 | Header min width | `130px` |

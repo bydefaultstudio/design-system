@@ -131,7 +131,7 @@ Every interactive component must include:
 | Code / Pre / Kbd | `code`, `pre`, `kbd` | No | `code.md` |
 | Mark / Abbr / Figure | `mark`, `abbr`, `figure` | No | `mark.md` |
 
-> Asset Card, Book Cover, Don't Card, Sticky Bar and Copy Button are documented separately as **docs-site components** — they only exist to power this BrandOS docs site and are not part of the portable design system. See [Layer Discipline](../docs/setup.html) and CLAUDE.md §17.
+> Asset Card, Book Cover, Don't Card, Sticky Bar and Copy Button are documented separately as **docs-site components** — they only exist to power this BrandOS docs site and are not part of the portable design system. See [Layer Discipline](/docs/setup.html) and CLAUDE.md §17.
 
 ---
 

@@ -12,7 +12,7 @@ access: "team"
 client: "internal"
 ---
 
-The asset card is a uniform wrapper used by the [Brand Book](../client-template/brand-book.html) and any showcase page to present a single brand asset with context. The wrapper, preview frame, and footer stay consistent — only the content inside the preview slot changes:
+The asset card is a uniform wrapper used by the [Brand Book](/client-template/brand-book.html) and any showcase page to present a single brand asset with context. The wrapper, preview frame, and footer stay consistent — only the content inside the preview slot changes:
 
 - A **logo** SVG
 - A **font** specimen (`Aa` + alphabet)

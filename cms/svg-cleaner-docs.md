@@ -45,7 +45,7 @@ Locks on: **Size 100%**, **currentColor**, **Strip Comments**
 
 ### Icon
 
-Wraps the SVG in a `<div class="svg-icn">` container. The icon name is added as a `data-icon` attribute on the `<svg>` element. See the [Iconography docs](../design-system/iconography/) for full icon guidelines.
+Wraps the SVG in a `<div class="svg-icn">` container. The icon name is added as a `data-icon` attribute on the `<svg>` element. See the [Iconography docs](/design-system/iconography/) for full icon guidelines.
 
 Locks on: **Size 100%**, **currentColor**, **Strip Comments**
 

@@ -32,6 +32,14 @@
     <!-- Docs-site styles (layout, nav, page chrome, components, auth) -->
     <link rel="stylesheet" href="../assets/css/docs-site.css">
 
+    <!-- Per-tool styles (loaded on every page so Barba navigation to a tool renders styled) -->
+    <link rel="stylesheet" href="../assets/css/tools.css">
+    <link rel="stylesheet" href="../assets/css/svg-cleaner.css">
+    <link rel="stylesheet" href="../assets/css/world-clock.css">
+    <link rel="stylesheet" href="../assets/css/qr-code.css">
+    <link rel="stylesheet" href="../assets/css/image-placeholder.css">
+    <link rel="stylesheet" href="../assets/css/ad-preview.css">
+
     
 
     <!-- Early theme loader: apply cached client theme before first paint -->
@@ -79,7 +87,7 @@
       <div class="sticky-bar-container">
         <div class="sticky-bar-content">
           <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
-            <a href="../docs/index.html">Docs</a>
+            <a href="/docs/index.html">Docs</a>
             <span class="breadcrumb-separator">/</span>
             <span>Setup</span>
           </nav>
@@ -108,7 +116,7 @@
               </div>
             </div>
           </div>
-          <a href="../docs/index.html" class="sticky-bar-close" aria-label="Close Setup">
+          <a href="/docs/index.html" class="sticky-bar-close" aria-label="Close Setup">
             <div class="svg-icn"><svg data-icon="close-large" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M5.4 20L4 18.6L9.18579 13.4142C9.96684 12.6332 9.96684 11.3668 9.18579 10.5858L4 5.4L5.4 4L10.5858 9.18579C11.3668 9.96684 12.6332 9.96684 13.4142 9.18579L18.6 4L20 5.4L14.8142 10.5858C14.0332 11.3668 14.0332 12.6332 14.8142 13.4142L20 18.6L18.6 20L13.4142 14.8142C12.6332 14.0332 11.3668 14.0332 10.5858 14.8142L5.4 20Z" fill="currentColor"/></svg></div>
           </a>
         </div>
@@ -133,8 +141,8 @@
 <p><strong>Example:</strong></p>
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-kwdl0czbe" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-kwdl0czbe" class="language-css">/* assets/css/design-system.css — Brand Tokens section */
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-49ewwols4" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-49ewwols4" class="language-css">/* assets/css/design-system.css — Brand Tokens section */
 :root {
   --off-white: #fff7f1;
   --warm-black: #221f1c;
@@ -161,7 +169,7 @@
 </ul>
 <hr>
 <h2 id="logo">Logo</h2>
-<p>Replace the logo files in <code>assets/images/logos/bydefault/</code>. There are six variants — three marks (primary, primary-centered, avatar) each with a black and a white version. See <a href="../brand/logo.html">Logo</a> for the full file reference.</p>
+<p>Replace the logo files in <code>assets/images/logos/bydefault/</code>. There are six variants — three marks (primary, primary-centered, avatar) each with a black and a white version. See <a href="/brand/logo.html">Logo</a> for the full file reference.</p>
 <hr>
 <h2 id="project-brief">Project Brief</h2>
 <p>Fill in <code>PROJECT_BRIEF.md</code> with your project details:</p>
@@ -186,6 +194,26 @@
 <li>Add or remove documentation pages as needed</li>
 </ul>
 <hr>
+<h2 id="local-development-netlify-functions">Local Development (Netlify Functions)</h2>
+<p>Forms (<code>feedback</code>, <code>new-campaign</code>, <code>new-proposal</code>, <code>access-support</code>) post to <code>/api/submit-form</code>, which is rewritten in <code>netlify.toml</code> to a Netlify Function that writes to Notion. To exercise that path locally, run <strong>Netlify Dev</strong> instead of a static server — it runs the Functions in <code>netlify/functions/</code> and proxies them through <code>/api/*</code>.</p>
+<p>VSCode Live Server (port 5501) is static-only, so any POST to <code>/api/*</code> returns 405. Use port 8888 (Netlify Dev) for any form testing.</p>
+<h3 id="one-time-setup">One-time setup</h3>
+<ol>
+<li><code>npm install</code> — installs <code>netlify-cli</code> (~200 MB; first install takes 30–90 s).</li>
+<li><code>npx netlify login</code> — browser flow.</li>
+<li><code>npx netlify link</code> — choose the existing <code>bydefault.design</code> site. This is what lets <code>netlify dev</code> pull production env vars into your local session.</li>
+<li><code>npx netlify env:list</code> — confirm the five keys: <code>NOTION_API_KEY</code>, <code>NOTION_DATABASE_ID_NEW_CAMPAIGN</code>, <code>NOTION_DATABASE_ID_NEW_PROPOSAL</code>, <code>NOTION_DATABASE_ID_FEEDBACK</code>, <code>NOTION_DATABASE_ID_ACCESS_SUPPORT</code>. See <code>.env.example</code> for the canonical list.</li>
+</ol>
+<h3 id="each-session">Each session</h3>
+
+      <div class="code-block-wrapper">
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-8zjudnjt4" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-8zjudnjt4" class="language-bash">npm run dev
+</code></pre>
+      </div>
+    
+<p>Opens <code>http://localhost:8888</code> with Functions live. Netlify Dev loads the <strong>Local development (Netlify CLI)</strong> context for env vars, so <code>NOTION_API_KEY</code> and the four <code>NOTION_DATABASE_ID_*</code> keys must be populated in that context on the Netlify dashboard. Submitting any form writes a real row to the production Notion database — there is no separate dev database, so test submissions are visible to the team.</p>
+<hr>
 <h2 id="quick-checklist">Quick Checklist</h2>
 <ul>
 <li><input disabled="" type="checkbox"> Update brand colors in <code>assets/css/design-system.css</code> (Brand Tokens section)</li>
@@ -195,6 +223,7 @@
 <li><input disabled="" type="checkbox"> Update font loading (Typekit link in templates, <code>@font-face</code> in design-system.css)</li>
 <li><input disabled="" type="checkbox"> Set up client theme (if applicable) — see <a href="#client-theming">Client Theming</a></li>
 <li><input disabled="" type="checkbox"> Review and customize documentation</li>
+<li><input disabled="" type="checkbox"> Run <code>npm run dev</code> to test forms locally on <a href="http://localhost:8888" target="_blank" rel="noopener noreferrer">http://localhost:8888</a></li>
 </ul>
 <hr>
 <h2 id="client-theming">Client Theming</h2>
@@ -208,8 +237,8 @@
 </ul>
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-8avlpu2ik" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-8avlpu2ik">assets/css/design-system.css →  Brand primitives + semantic tokens
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-fx3rl3rdu" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-fx3rl3rdu">assets/css/design-system.css →  Brand primitives + semantic tokens
 docs-site.css               →  Uses semantic tokens (gets themed values)
 themes/client.css           →  Overrides tokens + component styles (must load last)
 </code></pre>
@@ -219,8 +248,8 @@ themes/client.css           →  Overrides tokens + component styles (must load 
 <p>Theme CSS <strong>must always load after</strong> all other stylesheets (<code>design-system.css</code>, <code>docs-site.css</code>). This ensures theme overrides win via the CSS cascade — no <code>!important</code> needed.</p>
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-lf5anfy15" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-lf5anfy15" class="language-html">&lt;!-- 1. Design System Framework --&gt;
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-q4iuzenu8" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-q4iuzenu8" class="language-html">&lt;!-- 1. Design System Framework --&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;../assets/css/design-system.css&quot; /&gt;
 &lt;!-- 2. Adobe Typekit + font preloads --&gt;
 ...
@@ -240,8 +269,8 @@ themes/client.css           →  Overrides tokens + component styles (must load 
 </ol>
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-v5if1lll0" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-v5if1lll0" class="language-js">&#39;client-name&#39;: {
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-tuydwxpxy" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-tuydwxpxy" class="language-js">&#39;client-name&#39;: {
   label: &#39;Client Name&#39;,
   css: &#39;themes/client-name.css&#39;,
   fonts: &#39;https://fonts.googleapis.com/css2?family=YourFont&amp;display=swap&#39;
@@ -254,8 +283,8 @@ themes/client.css           →  Overrides tokens + component styles (must load 
 </ol>
 
       <div class="code-block-wrapper">
-        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-vb144u9vb" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
-        <pre><code id="code-vb144u9vb" class="language-json">{
+        <button class="button copy-btn is-icon-only" data-size="xsmall" data-clipboard-target="#code-bd21s0c3m" data-tooltip="Copy" type="button" aria-label="Copy code"><span class="copy-btn-default"><div class="svg-icn"><svg data-icon="copy" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M8 14C8 15.1046 8.89543 16 10 16H18C19.1046 16 20 15.1046 20 14V6C20 4.89543 19.1046 4 18 4H10C8.89543 4 8 4.89543 8 6V14ZM6 18V2H22V18H6ZM2 22V6H4V20H18V22H2Z" fill="currentColor"/></svg></div></span><span class="copy-btn-copied"><div class="svg-icn"><svg data-icon="check" aria-hidden="true" width="100%" height="100%" viewBox="0 0 24 24" fill="none"><path d="M9.54998 18L3.84998 12.3L5.27498 10.875L8.13576 13.7358C8.91681 14.5168 10.1831 14.5168 10.9642 13.7358L18.725 5.97501L20.15 7.40001L9.54998 18Z" fill="currentColor"/></svg></div></span></button>
+        <pre><code id="code-bd21s0c3m" class="language-json">{
   &quot;roles&quot;: [&quot;client&quot;],
   &quot;clientFolder&quot;: &quot;client-name&quot;
 }
@@ -354,7 +383,7 @@ themes/client.css           →  Overrides tokens + component styles (must load 
             <!-- Table of Contents -->
             <aside class="docs-toc">
       <span class="toc-header">On this page</span>
-      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#brand-colors" class="toc-link">Brand Colors</a></li><li class="toc-item toc-level-2"><a href="#fonts" class="toc-link">Fonts</a></li><li class="toc-item toc-level-2"><a href="#logo" class="toc-link">Logo</a></li><li class="toc-item toc-level-2"><a href="#project-brief" class="toc-link">Project Brief</a></li><li class="toc-item toc-level-2"><a href="#meta-tags-amp-seo" class="toc-link">Meta Tags &amp; SEO</a></li><li class="toc-item toc-level-2"><a href="#documentation" class="toc-link">Documentation</a></li><li class="toc-item toc-level-2"><a href="#quick-checklist" class="toc-link">Quick Checklist</a></li><li class="toc-item toc-level-2"><a href="#client-theming" class="toc-link">Client Theming</a></li><li class="toc-item toc-level-2"><a href="#next-steps" class="toc-link">Next Steps</a></li></ul></nav></div>
+      <div class="toc-wrapper"><nav class="toc"><ul class="toc-list"><li class="toc-item toc-level-2"><a href="#brand-colors" class="toc-link">Brand Colors</a></li><li class="toc-item toc-level-2"><a href="#fonts" class="toc-link">Fonts</a></li><li class="toc-item toc-level-2"><a href="#logo" class="toc-link">Logo</a></li><li class="toc-item toc-level-2"><a href="#project-brief" class="toc-link">Project Brief</a></li><li class="toc-item toc-level-2"><a href="#meta-tags-amp-seo" class="toc-link">Meta Tags &amp; SEO</a></li><li class="toc-item toc-level-2"><a href="#documentation" class="toc-link">Documentation</a></li><li class="toc-item toc-level-2"><a href="#local-development-netlify-functions" class="toc-link">Local Development (Netlify Functions)</a></li><li class="toc-item toc-level-2"><a href="#quick-checklist" class="toc-link">Quick Checklist</a></li><li class="toc-item toc-level-2"><a href="#client-theming" class="toc-link">Client Theming</a></li><li class="toc-item toc-level-2"><a href="#next-steps" class="toc-link">Next Steps</a></li></ul></nav></div>
     </aside>
         </div>
 

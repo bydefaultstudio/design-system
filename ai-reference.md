@@ -388,9 +388,9 @@ These are the actual CSS custom property values from `design-system.css`. Always
 | `--font-9xl` | `4rem` | 64px |
 | `--font-10xl` | `4.5rem` | 72px |
 | **Semantic font sizes** | | |
-| `--text-body` | `var(--font-m)` |  |
+| `--body-size` | `clamp(var(--font-s), 0.875rem + 0.4vw, var(--font-l))` |  |
 | **UI font sizes** | | |
-| `--button-font-size` | `var(--text-body)` |  |
+| `--button-font-size` | `var(--body-size)` |  |
 | `--button-font-size-small` | `var(--font-xs)` |  |
 | **Line height tokens** | | |
 | `--line-height-xs` | `0.7` |  |
@@ -1051,7 +1051,7 @@ All headings use `--font-secondary` (RecifeText) at `--font-weight-regular` (400
 
 ## Body Text
 
-The default paragraph style used for all running content. The `--text-body` token controls the base size globally — changing it updates paragraphs, inputs, code, tables, and buttons at once. Size modifier classes let you step up or down from the default.
+The default paragraph style used for all running content. The `--body-size` token controls the base size globally — changing it updates paragraphs, inputs, code, tables, and buttons at once. Size modifier classes let you step up or down from the default.
 
 <div class="block gap-m">
       <p class="demo-eyebrow">Large</p>

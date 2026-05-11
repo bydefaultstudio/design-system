@@ -44,4 +44,4 @@ This design system publishes **AI-readable reference files** following the [llms
 | [`llms.txt`](https://bydefault.design/llms.txt) | Lightweight index with section links |
 | [`llms-full.txt`](https://bydefault.design/llms-full.txt) | Complete reference — all tokens, components, and rules |
 
-Both files are auto-generated on every deploy, so they stay up-to-date. For tool-specific setup instructions, see the [LLM documentation page](../docs/llms.html).
+Both files are auto-generated on every deploy, so they stay up-to-date. For tool-specific setup instructions, see the [LLM documentation page](/docs/llms.html).

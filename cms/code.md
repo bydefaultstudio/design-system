@@ -107,7 +107,7 @@ This section documents how the component is built. For usage, see the sections a
 | Property | Value |
 |---|---|
 | Font family | `var(--font-quaternary)` |
-| Font size | `calc(var(--text-body) - .2em)` |
+| Font size | `calc(var(--body-size) - .2em)` |
 | Background | `color-mix(in srgb, var(--text-primary), var(--alpha-5))` |
 | Padding | `var(--space-2xs) var(--space-xs)` |
 | Border radius | `var(--radius-xs)` |
@@ -123,7 +123,7 @@ This section documents how the component is built. For usage, see the sections a
 | Padding | `var(--space-l)` |
 | Overflow | `overflow-x: auto` |
 | Font family | `var(--font-quaternary)` |
-| Font size | `calc(var(--text-body) - 2px)` |
+| Font size | `calc(var(--body-size) - 2px)` |
 | Line height | `var(--line-height-xl)` |
 
 `pre code` resets the inline code background, padding, and border-radius to prevent stacking.

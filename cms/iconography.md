@@ -277,7 +277,7 @@ This shorthand only works in files processed by `cms/generator/generate-docs.js`
 
 ## SVG Cleaner Tool
 
-Use the [SVG Cleaner](../tools/svg-cleaner.html) to prepare icons before adding them to the codebase. The tool automates the required cleanup:
+Use the [SVG Cleaner](/tools/svg-cleaner.html) to prepare icons before adding them to the codebase. The tool automates the required cleanup:
 
 - Strips `xmlns` attributes
 - Sets fills to `currentColor` (when enabled)

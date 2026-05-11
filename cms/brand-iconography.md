@@ -12,7 +12,7 @@ access: "team"
 client: "internal"
 ---
 
-Browse, copy, and download every icon in the brand icon set. For usage guidelines, see the [Icon](../design-system/iconography.html) documentation.
+Browse, copy, and download every icon in the brand icon set. For usage guidelines, see the [Icon](/design-system/iconography.html) documentation.
 
 ---
 

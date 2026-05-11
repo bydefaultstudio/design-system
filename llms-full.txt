@@ -21,7 +21,7 @@ Every page section uses this exact structure. Copy-paste, then fill in the block
 ```html
 <section class="top-large bottom-large">
   <div class="padding-global">
-    <div class="container-medium">
+    <div class="container-m">
       <div class="block gap-m">
         <h2>Heading</h2>
         <p>Body text</p>
@@ -109,7 +109,7 @@ body
 ```html
 <section>
   <div class="padding-global">
-    <div class="container-medium">
+    <div class="container-m">
       <div class="block">
         <!-- Content -->
       </div>
@@ -156,7 +156,7 @@ Sections group **major content areas** and control **vertical spacing**.
 
 ```html
 <div class="padding-global">
-  <div class="container-medium">
+  <div class="container-m">
     <!-- Content -->
   </div>
 </div>
@@ -182,7 +182,7 @@ Containers constrain width and centre content in the viewport.
 * Use one container per section (in most cases)
 
 ```html
-<div class="container-medium">
+<div class="container-m">
   <div class="block">
     <h2>Heading</h2>
     <p>Content</p>
@@ -193,18 +193,18 @@ Containers constrain width and centre content in the viewport.
 ### Variants
 
 <div >
-    <div class="container-medium" >.container-medium</div>
+    <div class="container-m" >.container-m</div>
   </div>
   <div >
-    <div class="container-large" >.container-large</div>
+    <div class="container-l" >.container-l</div>
   </div>
 </div>
 
 | Class              | Use                    |
 | ------------------ | ---------------------- |
-| `.container-small` | Narrow layouts |
-| `.container-medium` | Default readable width |
-| `.container-large` | Wider layouts |
+| `.container-s` | Narrow layouts |
+| `.container-m` | Default readable width |
+| `.container-l` | Wider layouts |
 
 ---
 
@@ -220,9 +220,9 @@ Max-width utilities apply **width limits only**.
 
 | Class              | Use               |
 | ------------------ | ----------------- |
-| `.max-width-small` | Narrow constraint |
-| `.max-width-medium` | Default readable |
-| `.max-width-large` | Wide constraint |
+| `.max-width-s` | Narrow constraint |
+| `.max-width-m` | Default readable |
+| `.max-width-l` | Wide constraint |
 | `.max-width-full` | No constraint |
 
 **Rule of thumb**
@@ -893,8 +893,8 @@ These are the actual CSS custom property values from `design-system.css`. Always
 | Token | Value | Note |
 | --- | --- | --- |
 | **Typography** | | |
-| `--font-primary` | `"Inclusive Sans", sans-serif` |  |
-| `--font-secondary` | `"RecifeText", Georgia, serif` |  |
+| `--font-primary` | `"Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif` |  |
+| `--font-secondary` | `"Zalando Sans", "trust-3a","ivypresto-headline", "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", serif` |  |
 | `--font-tertiary` | `"Bugrino", sans-serif` |  |
 | `--font-quaternary` | `"IBM Plex Mono", monospace` |  |
 | **Palette** | | |
@@ -940,18 +940,17 @@ These are the actual CSS custom property values from `design-system.css`. Always
 | `--font-8xl` | `3.5rem` | 56px |
 | `--font-9xl` | `4rem` | 64px |
 | `--font-10xl` | `4.5rem` | 72px |
-| **Semantic font sizes** | | |
-| `--text-body` | `var(--font-m)` |  |
 | **Line height tokens** | | |
 | `--line-height-xs` | `0.7` |  |
 | `--line-height-s` | `1` |  |
-| `--line-height-m` | `1.3` |  |
+| `--line-height-m` | `1.2` |  |
 | `--line-height-l` | `1.4` |  |
 | `--line-height-xl` | `1.6` |  |
 | `--line-height-2xl` | `1.8` |  |
 | **Font weight tokens** | | |
 | `--font-weight-light` | `300` |  |
 | `--font-weight-regular` | `400` |  |
+| `--font-weight-book` | `450` |  |
 | `--font-weight-medium` | `500` |  |
 | `--font-weight-semi-bold` | `600` |  |
 | `--font-weight-bold` | `700` |  |
@@ -963,6 +962,31 @@ These are the actual CSS custom property values from `design-system.css`. Always
 | `--letter-spacing-m` | `0.06em` |  |
 | `--letter-spacing-l` | `0.12em` |  |
 | `--letter-spacing-xl` | `0.24em` |  |
+| **Headline — the biggest thing on a page; one per page (h1).** | | |
+| `--headline-size` | `clamp(var(--font-3xl), 0.8rem + 3vw, var(--font-9xl))` |  |
+| `--headline-weight` | `300` |  |
+| `--headline-leading` | `var(--line-height-s)` |  |
+| `--headline-tracking` | `-0.03em` |  |
+| **Subline** | | |
+| `--subline-size` | `var(--font-2xl)` |  |
+| `--subline-weight` | `300` |  |
+| **Title — section heads and recurring labels within a page (h2).** | | |
+| `--title-size` | `clamp(var(--font-2xl), 0.8rem + 2vw, var(--font-7xl))` |  |
+| `--title-weight` | `300` |  |
+| `--title-leading` | `var(--line-height-m)` |  |
+| `--title-tracking` | `-0.01em` |  |
+| **Label — meta rows, eyebrows, captions** | | |
+| `--label-size` | `var(--font-2xs)` |  |
+| `--label-weight` | `500` |  |
+| `--label-leading` | `var(--line-height-s)` |  |
+| `--label-tracking` | `var(--letter-spacing-m)` |  |
+| **Body — running text** | | |
+| `--body-size` | `clamp(var(--font-s), 0.875rem + 0.4vw, var(--font-l))` |  |
+| `--body-weight` | `var(--font-weight-regular)` |  |
+| `--body-leading` | `var(--line-height-xl)` |  |
+| `--body-tracking` | `0` |  |
+| **Icon Size** | | |
+| `--icon-size` | `1.3rem` |  |
 
 ### 2. SYSTEM TOKENS - COLORS
 
@@ -1036,7 +1060,7 @@ These are the actual CSS custom property values from `design-system.css`. Always
 | `--alpha-95` | `transparent 5%` |  |
 | **Semantic colours** | | |
 | `--text-primary` | `var(--off-black)` |  |
-| `--text-secondary` | `var(--neutral-800)` |  |
+| `--text-secondary` | `var(--neutral-700)` |  |
 | `--text-plain` | `var(--black)` |  |
 | `--text-faded` | `var(--black-alpha-50)` |  |
 | `--text-accent` | `var(--blue)` |  |
@@ -1052,7 +1076,7 @@ These are the actual CSS custom property values from `design-system.css`. Always
 | `--text-alpha-30` | `color-mix(in srgb, var(--text-primary), var(--alpha-30))` |  |
 | `--text-alpha-40` | `color-mix(in srgb, var(--text-primary), var(--alpha-40))` |  |
 | `--text-alpha-50` | `color-mix(in srgb, var(--text-primary), var(--alpha-50))` |  |
-| `--background-primary` | `var(--neutral-50)` |  |
+| `--background-primary` | `var(--white)` |  |
 | `--background-secondary` | `var(--neutral-100)` |  |
 | `--background-plain` | `var(--white)` |  |
 | `--background-faded` | `var(--black-alpha-5)` |  |
@@ -1085,8 +1109,6 @@ These are the actual CSS custom property values from `design-system.css`. Always
 | `--status-warning-bg` | `var(--yellow-lighter)` |  |
 | `--status-danger` | `var(--red)` |  |
 | `--status-danger-bg` | `var(--red-lighter)` |  |
-| `--status-accent` | `var(--purple)` |  |
-| `--status-accent-bg` | `var(--purple-lighter)` |  |
 | **Form semantic tokens** | | |
 | `--input-border` | `var(--border-secondary)` |  |
 | `--input-background` | `var(--black-alpha-5)` |  |
@@ -1177,16 +1199,31 @@ These are the actual CSS custom property values from `design-system.css`. Always
 | `--space-12xl` | `var(--12xl)` |  |
 | `--space-13xl` | `var(--13xl)` |  |
 | `--space-14xl` | `var(--14xl)` |  |
+| **Container widths** | | |
+| `--container-xs` | `480px` |  |
+| `--container-s` | `640px` |  |
+| `--container-m` | `960px` |  |
+| `--container-l` | `1200px` |  |
+| `--container-xl` | `1440px` |  |
+| **Max-widths** | | |
+| `--max-width-xs` | `480px` |  |
+| `--max-width-s` | `640px` |  |
+| `--max-width-m` | `960px` |  |
+| `--max-width-l` | `1200px` |  |
+| `--max-width-xl` | `1440px` |  |
 | **Section spacing variables** | | |
 | `--section-xs` | `var(--space-xl)` |  |
 | `--section-s` | `var(--space-2xl)` |  |
 | `--section-m` | `var(--space-6xl)` |  |
 | `--section-l` | `var(--space-10xl)` |  |
 | `--section-xl` | `var(--space-14xl)` |  |
+| **Accordion spacing variables** | | |
+| `--accordion-padding-x` | `var(--space-l)` |  |
+| `--accordion-padding-y` | `var(--space-l)` |  |
 | **Border width tokens** | | |
-| `--border-s` | `1.5px` |  |
-| `--border-m` | `2px` |  |
-| `--border-l` | `4px` |  |
+| `--border-s` | `0.0625rem` | 1px |
+| `--border-m` | `0.125rem` | 2px |
+| `--border-l` | `0.25rem` | 4px |
 | **Border composition variables** | | |
 | `--border-width` | `var(--border-s)` |  |
 | `--border-style` | `solid` |  |
@@ -1221,6 +1258,8 @@ These are the actual CSS custom property values from `design-system.css`. Always
 | `--duration-4xl` | `2000ms` |  |
 | `--duration-5xl` | `2500ms` |  |
 | `--duration-6xl` | `3000ms` |  |
+| `--duration-7xl` | `4000ms` |  |
+| `--duration-8xl` | `6000ms` |  |
 | **Page-level semantic motion** | | |
 | `--motion-page-open-duration` | `var(--duration-xl)` |  |
 | **800ms** | | |
@@ -1265,20 +1304,12 @@ These are the actual CSS custom property values from `design-system.css`. Always
 | **Border** | | |
 | `--border-primary` | `#e8e6e3` |  |
 | `--border-secondary` | `#3a3a3a` |  |
-| `--border-faded` | `rgba(255, 255, 255, 0.12)` |  |
-| **Black & white alpha (inverted for dark surfaces)** | | |
-| `--black-alpha-5` | `rgba(255, 255, 255, 0.05)` |  |
-| `--black-alpha-10` | `rgba(255, 255, 255, 0.08)` |  |
-| `--black-alpha-15` | `rgba(255, 255, 255, 0.12)` |  |
-| `--black-alpha-20` | `rgba(255, 255, 255, 0.16)` |  |
-| `--black-alpha-30` | `rgba(255, 255, 255, 0.22)` |  |
-| `--black-alpha-50` | `rgba(255, 255, 255, 0.45)` |  |
+| `--border-faded` | `var(--white-alpha-20)` |  |
 | **Status** | | |
 | `--status-info` | `var(--blue-light)` |  |
 | `--status-success` | `var(--green-light)` |  |
 | `--status-warning` | `var(--yellow-light)` |  |
 | `--status-danger` | `var(--red-light)` |  |
-| `--status-accent` | `var(--purple-light)` |  |
 | **Form** | | |
 | `--input-border` | `#3a3a3a` |  |
 | `--input-background` | `rgba(255, 255, 255, 0.08)` |  |
@@ -1449,7 +1480,6 @@ Status tokens now reference the dark shade of each accent colour family. `var(--
 <div class="color-row is-text-light"  data-token="--status-success"><span class="color-row-name">status-success</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
   <div class="color-row is-text-light"  data-token="--status-warning"><span class="color-row-name">status-warning</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
   <div class="color-row is-text-light"  data-token="--status-danger"><span class="color-row-name">status-danger</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
-  <div class="color-row is-text-light"  data-token="--status-accent"><span class="color-row-name">status-accent</span><span class="color-row-actions"><button class="color-copy-btn" data-format="hex" aria-label="Copy hex value">Hex</button><button class="color-copy-btn" data-format="css" aria-label="Copy CSS variable">CSS</button></span></div>
 </div>
 
 ---
@@ -1501,7 +1531,7 @@ Edit the `[data-theme="dark"]` block in `design-system.css` (section 2b). When c
 ## Typography
 Typography tokens provide a **consistent, modular system** for all text across the products. They are designed for **clarity, readability, and hierarchy**, while remaining flexible across devices.
 
-The system uses three font families — a primary sans-serif for body and UI, a secondary serif for headings, and a tertiary monospace for code and labels. For the full list of typography token values, see the [Tokens](tokens.html) page.
+The system uses four font families — a primary sans-serif for body and UI, a secondary display font for headings, a tertiary brand font for display and buttons, and a monospace for code. Fonts are self-hosted (Zalando Sans, Bugrino, IBM Plex Mono) or loaded via Adobe Typekit (trust-3a). For the full list of typography token values, see the [Tokens](tokens.html) page.
 
 ---
 
@@ -1534,7 +1564,9 @@ The scale uses a **progressive step** approach: +2px in the body range, +4px in 
 
 ## Headings
 
-All headings use `var(--font-secondary)` (RecifeText) at `var(--font-weight-regular)` (400). Each level steps down in size to create a clear visual hierarchy.
+All headings use `var(--font-secondary)` (trust-3a). Every level (`h1`–`h6`) uses fluid `clamp()` sizing that scales smoothly with viewport width — no breakpoints needed. Element defaults follow a traditional editorial scale (Major Third / ~1.25× progression).
+
+Display contexts (hero pages, feature CTAs) use the separate `--headline-size` and `--title-size` role tokens applied via classes like `.page-headline`, `.article-headline`, and `.cta-headline`. Element defaults stay smaller; classes opt into display sizing.
 
 <div class="block gap-m">
       <p class="demo-eyebrow">Heading 2</p>
@@ -1565,22 +1597,22 @@ All headings use `var(--font-secondary)` (RecifeText) at `var(--font-weight-regu
 <h3>Structure creates clarity in complexity</h3>
 ```
 
-| Element | Token | px | Mobile (≤768px) | Line Height | Value |
-| --- | --- | --- | --- | --- | --- |
-| `h1` | `var(--font-7xl)` | 48px | `var(--font-5xl)` (36px) | `var(--line-height-m)` | 1.3 |
-| `h2` | `var(--font-5xl)` | 36px | `var(--font-3xl)` (28px) | `var(--line-height-m)` | 1.3 |
-| `h3` | `var(--font-3xl)` | 28px | — | `var(--line-height-m)` | 1.3 |
-| `h4` | `var(--font-2xl)` | 24px | — | `var(--line-height-m)` | 1.3 |
-| `h5` | `var(--font-xl)` | 22px | — | `var(--line-height-m)` | 1.3 |
-| `h6` | `var(--font-xl)` | 22px | — | `var(--line-height-l)` | 1.4 |
+| Element | Range | Line Height | Letter Spacing |
+| --- | --- | --- | --- |
+| `h1` | 36px → 48px (fluid) | `var(--line-height-s)` (1) | -0.02em |
+| `h2` | 32px → 40px (fluid) | `var(--line-height-m)` (1.2) | -0.01em |
+| `h3` | 28px → 36px (fluid) | `var(--line-height-m)` (1.2) | — |
+| `h4` | 24px → 32px (fluid) | `var(--line-height-m)` (1.2) | — |
+| `h5` | 22px → 28px (fluid) | `var(--line-height-m)` (1.2) | — |
+| `h6` | 20px → 24px (fluid) | `var(--line-height-l)` (1.4) | — |
 
-Headings use `var(--line-height-m)` (1.3) so multi-line titles have breathing room. On mobile (≤768px), `h1` and `h2` step down a level to prevent giant titles from dominating small viewports.
+Each heading uses `clamp(min, fluid, max)` with primitive `--font-*` tokens at the floor and ceiling — no new tokens, no media queries. Display variants use `--headline-size` (28px → 64px) and `--title-size` (24px → 48px) on classes like `.page-headline` and `.cta-headline`, kept distinct from element defaults so plain `<h1>` and `<h2>` in body copy read at editorial size.
 
 ---
 
 ## Body Text
 
-The default paragraph style used for all running content. The `var(--text-body)` token controls the base size globally — changing it updates paragraphs, inputs, code, tables, and buttons at once. Size modifier classes let you step up or down from the default.
+The default paragraph style used for all running content. The `var(--body-size)` token controls the base size globally — changing it updates paragraphs, inputs, code, tables, and buttons at once. Size modifier classes let you step up or down from the default.
 
 <div class="block gap-m">
       <p class="demo-eyebrow">Large</p>
@@ -1649,7 +1681,7 @@ A small, uppercase label used to provide context above headings, within sections
 
 | Element | Token | Line Height | Value |
 | --- | --- | --- | --- |
-| `.eyebrow` | `var(--font-xs)` | `var(--line-height-m)` | 1.3 |
+| `.eyebrow` | `var(--font-xs)` | `var(--line-height-m)` | 1.2 |
 
 ---
 
@@ -1684,7 +1716,7 @@ Links use text-color underlines with a hover transition. The default state shows
 
 <div class="block gap-m">
       <p class="demo-eyebrow">External link</p>
-      <p >Typography is powered by <a href="https://fonts.google.com" target="_blank" rel="noopener noreferrer">Google Fonts</a> for web delivery.</p>
+      <p >Typography is powered by <a href="https://fonts.adobe.com/typekit" target="_blank" rel="noopener noreferrer">Adobe Typekit</a> and self-hosted variable fonts.</p>
     </div>
   </div>
 </div>
@@ -1694,7 +1726,7 @@ Links use text-color underlines with a hover transition. The default state shows
 <p>Read the full <a href="/brand">brand guidelines</a> before starting.</p>
 
 <!-- External link (icon added automatically) -->
-<p>Typography is powered by <a href="https://fonts.google.com" target="_blank" rel="noopener noreferrer">Google Fonts</a> for web delivery.</p>
+<p>Typography is powered by <a href="https://fonts.adobe.com/typekit" target="_blank" rel="noopener noreferrer">Adobe Typekit</a> and self-hosted variable fonts.</p>
 ```
 
 | Property | Value |
@@ -1714,7 +1746,7 @@ Links use text-color underlines with a hover transition. The default state shows
 The system uses four font stacks, each with a distinct role.
 
 <div class="block gap-m">
-      <p class="demo-eyebrow">Secondary — RecifeText</p>
+      <p class="demo-eyebrow">Secondary — trust-3a</p>
       <p >Typography is the voice of design</p>
     </div>
     <div class="block gap-m">
@@ -1734,12 +1766,12 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-secondary); }
 code, pre, kbd { font-family: var(--font-quaternary); }
 ```
 
-| Token | Font | Used For |
-| --- | --- | --- |
-| `var(--font-primary)` | Inclusive Sans | Body text, UI, labels |
-| `var(--font-secondary)` | RecifeText | Headings, blockquotes |
-| `var(--font-tertiary)` | Bugrino | Brand display, eyebrows, buttons, badges |
-| `var(--font-quaternary)` | IBM Plex Mono | Code, pre, kbd |
+| Token | Font | Source | Used For |
+| --- | --- | --- | --- |
+| `var(--font-primary)` | Zalando Sans | Self-hosted (variable font) | Body text, UI, labels |
+| `var(--font-secondary)` | trust-3a | Adobe Typekit | Headings, blockquotes |
+| `var(--font-tertiary)` | Bugrino | Self-hosted (woff2) | Brand display, eyebrows, buttons, badges |
+| `var(--font-quaternary)` | IBM Plex Mono | Self-hosted (ttf) | Code, pre, kbd |
 
 ---
 
@@ -1825,7 +1857,7 @@ line-height: var(--line-height-l);
 | --- | --- | --- |
 | `var(--line-height-xs)` | 0.7 | Tight display text |
 | `var(--line-height-s)` | 1 | Tight display text |
-| `var(--line-height-m)` | 1.3 | Headings, eyebrows |
+| `var(--line-height-m)` | 1.2 | Headings, eyebrows |
 | `var(--line-height-l)` | 1.4 | Body text, paragraphs |
 | `var(--line-height-xl)` | 1.6 | Small text, captions |
 | `var(--line-height-2xl)` | 1.8 | Spacious body text |
@@ -1857,10 +1889,36 @@ letter-spacing: var(--letter-spacing-xl);
 
 | Token | Value | Used For |
 | --- | --- | --- |
+| `var(--letter-spacing-xs)` | -0.03em | Negative tracking |
 | `var(--letter-spacing-s)` | 0.03em | Subtle tracking |
 | `var(--letter-spacing-m)` | 0.06em | Medium tracking |
 | `var(--letter-spacing-l)` | 0.12em | Wide tracking |
 | `var(--letter-spacing-xl)` | 0.24em | Eyebrows, labels |
+
+---
+
+## Type Roles
+
+Four semantic roles compose the primitive tokens into building blocks. Each role defines four dimensions: size, weight, leading (line-height), and tracking (letter-spacing).
+
+| Role | Size | Weight | Leading | Tracking | Used For |
+| --- | --- | --- | --- | --- | --- |
+| Headline | `clamp(--font-4xl, 1rem + 5vw, --font-8xl)` | 500 | `--line-height-s` (1) | -0.02em | Page hero, h1 |
+| Title | `clamp(--font-2xl, 0.8rem + 2vw, --font-6xl)` | 500 | `--line-height-m` (1.2) | -0.01em | Section heads, h2 |
+| Label | `--font-xs` (14px) | 500 | `--line-height-s` (1) | `--letter-spacing-m` (0.06em) | Eyebrows, meta, captions |
+| Body | `--body-size` (18px) | 400 | `--line-height-xl` (1.6) | 0 | Running text |
+
+```css
+/* Use role tokens directly */
+.custom-headline {
+  font-size: var(--headline-size);
+  font-weight: var(--headline-weight);
+  line-height: var(--headline-leading);
+  letter-spacing: var(--headline-tracking);
+}
+```
+
+Headline and title sizes use `clamp()` for fluid scaling — they grow with the viewport between a minimum and maximum, with no breakpoints needed.
 
 ---
 
@@ -2221,9 +2279,9 @@ Width classes modify the border thickness. The default is `var(--border-s)`.
 
 | Class | Token | px Equivalent |
 | --- | --- | --- |
-| `.border-s` | `var(--border-s)` | 1.5px |
-| `.border-m` | `var(--border-m)` | 2px |
-| `.border-l` | `var(--border-l)` | 4px |
+| `.border-s` | `var(--border-s)` | 1px (0.0625rem) |
+| `.border-m` | `var(--border-m)` | 2px (0.125rem) |
+| `.border-l` | `var(--border-l)` | 4px (0.25rem) |
 
 ---
 
@@ -2466,7 +2524,7 @@ Every interactive component must include:
 | Code / Pre / Kbd | `code`, `pre`, `kbd` | No | `code.md` |
 | Mark / Abbr / Figure | `mark`, `abbr`, `figure` | No | `mark.md` |
 
-> Asset Card, Book Cover, Don't Card, Sticky Bar and Copy Button are documented separately as **docs-site components** — they only exist to power this BrandOS docs site and are not part of the portable design system. See [Layer Discipline](../docs/setup.html) and CLAUDE.md §17.
+> Asset Card, Book Cover, Don't Card, Sticky Bar and Copy Button are documented separately as **docs-site components** — they only exist to power this BrandOS docs site and are not part of the portable design system. See [Layer Discipline](/docs/setup.html) and CLAUDE.md §17.
 
 ---
 
@@ -2663,7 +2721,6 @@ For cases where multiple children should stretch together, use `.align-stretch` 
 | `data-color="success"` | `data-color="green"` | Confirmations, positive outcomes |
 | `data-color="warning"` | `data-color="yellow"` | Caution, attention needed |
 | `data-color="info"` | `data-color="blue"` | Informational, neutral CTAs |
-| `data-color="accent"` | `data-color="purple"` | Emphasis, special actions |
 
 ### Primary coloured
 
@@ -2681,27 +2738,42 @@ For cases where multiple children should stretch together, use `.align-stretch` 
 
 ## Hover
 
-All buttons transition on hover. The CSS property used is `background-color` (not the `background` shorthand).
+All buttons transition on hover.
 
-**Filled buttons** (primary and all `data-color` variants): reduce to `opacity: 0.9`.
+**Filled buttons** (primary and all `data-color` variants): the button colour shifts via `color-mix` to blend 10% of the background into the text colour.
 
-**Unfilled variants** (outline, faded, outline-faded, transparent, text): gain a subtle accent fill at 10% alpha of the button's identity colour.
+**Unfilled variants** (outline, faded, outline-faded, transparent): gain a subtle accent fill at 10% alpha of the button's identity colour.
 
 ```css
 /* Filled hover */
-.button:hover { opacity: 0.9; }
+.button:hover {
+  --button-color: color-mix(in srgb, var(--text-primary), var(--background-primary) 10%);
+}
 
 /* Unfilled hover */
 .button[data-variant="outline"]:hover,
 .button[data-variant="faded"]:hover,
 .button[data-variant="outline-faded"]:hover,
-.button[data-variant="transparent"]:hover,
-.button[data-variant="text"]:hover {
+.button[data-variant="transparent"]:hover {
   background-color: color-mix(in srgb, var(--button-color), var(--alpha-10));
 }
 ```
 
-The **text** variant also adds an underline on hover.
+The **text** variant adds an underline on hover but does not gain a background fill.
+
+---
+
+## Press (active)
+
+When a button is pressed (`:active`), it scales down to 97% to simulate a physical press. The transform transitions at `--duration-2xs` (100ms) with `--ease-out` for a snappy feel.
+
+```css
+.button:active {
+  transform: scale(0.97);
+}
+```
+
+The **text** variant is excluded from the press effect since it has no visible container to scale. Users who prefer reduced motion see no transform.
 
 ---
 
@@ -2832,7 +2904,7 @@ This section documents how the component is built. For usage, see the sections a
 | `--button-border` | `var(--button-color)` | Border stroke |
 | `--button-text-color` | `var(--text-inverted)` | Text colour |
 | `--button-font` | `var(--font-secondary)` | Font family |
-| `--button-text-size` | `var(--text-body)` | Text size |
+| `--button-text-size` | `var(--body-size)` | Text size |
 | `--button-padding-y` | `var(--space-m)` | Vertical padding |
 | `--button-padding-x` | `var(--space-xl)` | Horizontal padding |
 | `--button-radius` | `0` | Corner radius |
@@ -2843,7 +2915,8 @@ This section documents how the component is built. For usage, see the sections a
 | Selector | Purpose |
 |---|---|
 | `.button` | Base component — all tokens, layout, typography, transitions |
-| `.button:hover` | Filled hover — `opacity: 0.9` |
+| `.button:hover` | Filled hover — `color-mix` tint shift |
+| `.button:active` | Press effect — `transform: scale(0.97)` |
 | `.button[data-variant="outline"]` | Transparent bg, primary border, text inherits `--button-color` |
 | `.button[data-variant="faded"]` | 15% alpha bg, no border, text inherits `--button-color` |
 | `.button[data-variant="outline-faded"]` | Transparent bg, faded border, text inherits `--button-color` |
@@ -2858,7 +2931,6 @@ This section documents how the component is built. For usage, see the sections a
 | `.button[data-color="success"]` / `[data-color="green"]` | Sets `--button-color` to `var(--status-success)` |
 | `.button[data-color="warning"]` / `[data-color="yellow"]` | Sets `--button-color` to `var(--status-warning)` |
 | `.button[data-color="info"]` / `[data-color="blue"]` | Sets `--button-color` to `var(--status-info)` |
-| `.button[data-color="accent"]` / `[data-color="purple"]` | Sets `--button-color` to `var(--status-accent)` |
 | `.button:disabled`, `.button.is-disabled` | Opacity 0.4, pointer events disabled |
 | `.button.is-loading` | Pointer disabled, opacity 0.6 |
 | `.button-group` | Flex container for grouping buttons with `var(--space-m)` gap |
@@ -2866,8 +2938,9 @@ This section documents how the component is built. For usage, see the sections a
 ### Key rules
 
 - **Colour cascade:** `--button-color` is the single source. It feeds `--button-bg`, `--button-border`, and `--button-faded` automatically. `data-color` attributes only override `--button-color` — every variant picks it up without extra selectors.
-- **Hover formula (filled):** `opacity: 0.9` on `.button:hover`.
-- **Hover formula (unfilled):** `background-color: color-mix(in srgb, var(--button-color), var(--alpha-10))` — applies to outline, faded, outline-faded, transparent, and text variants.
+- **Hover formula (filled):** `--button-color: color-mix(in srgb, var(--text-primary), var(--background-primary) 10%)` on `.button:hover`.
+- **Hover formula (unfilled):** `background-color: color-mix(in srgb, var(--button-color), var(--alpha-10))` — applies to outline, faded, outline-faded, transparent variants.
+- **Press effect:** `transform: scale(0.97)` on `.button:active` — excluded for text variant, disabled under `prefers-reduced-motion`.
 - **Focus ring:** inherits the global `:focus-visible` outline from the design system reset — no component-specific focus rule.
 - **Dark mode faded adjustment:** `--button-faded` changes from `var(--alpha-15)` to `var(--alpha-80)` in dark mode so the 15% tint remains visible on dark backgrounds.
 - **Transition:** `background-color`, `color`, `border-color`, and `opacity` all use `var(--duration-2xs) var(--ease-out)`.
@@ -2984,7 +3057,7 @@ This section documents how the component is built. For usage, see the sections a
 
 Callouts are used to **highlight important information** within content. They draw attention to informational notes, success tips, warnings, and other contextual messages.
 
-The `.callout` class is required. Type variants use `data-type` with the shared status vocabulary (`info`, `success`, `warning`, `danger`, `accent`). The icon layout uses the `data-icon` boolean attribute.
+The `.callout` class is required. Type variants use `data-type` with the shared status vocabulary (`info`, `success`, `warning`, `danger`). The icon layout uses the `data-icon` boolean attribute.
 
 ---
 
@@ -3015,8 +3088,6 @@ Callout types are powered by status colour tokens defined in `:root`:
 | `var(--status-warning-bg)` | `var(--yellow-lighter)` | Warning background |
 | `var(--status-danger)` | `var(--red)` | Risks, destructive actions |
 | `var(--status-danger-bg)` | `var(--red-lighter)` | Danger background |
-| `var(--status-accent)` | `var(--purple)` | Emphasis, special importance |
-| `var(--status-accent-bg)` | `var(--purple-lighter)` | Accent background |
 
 Callouts, badges, toasts, and other components reference these tokens directly — no intermediate `--callout-*` layer needed.
 
@@ -3044,7 +3115,6 @@ Use `data-type` to set the semantic variant. Each type applies a coloured backgr
 | `success` | Helpful advice, positive outcomes |
 | `warning` | Urgent information to avoid problems |
 | `danger` | Risks or negative outcomes |
-| `accent` | Key information, emphasis |
 
 ### Info
 
@@ -3098,19 +3168,6 @@ Use `data-type` to set the semantic variant. Each type applies a coloured backgr
 </div>
 ```
 
-### Accent
-
-<p class="callout-description">Key information users need to know.</p>
-  </div>
-</div>
-
-```html
-<div class="callout" data-type="accent">
-  <div class="callout-title">Important</div>
-  <p class="callout-description">Key information users need to know.</p>
-</div>
-```
-
 ---
 
 ## Callout with icon
@@ -3143,7 +3200,6 @@ How it works:
 | `success` | {{icon:bolt}} Lightning bolt | `{{icon:bolt}}` |
 | `warning` | {{icon:warning}} Warning triangle | `{{icon:warning}}` |
 | `danger` | {{icon:close-circled}} Close circle | `{{icon:close-circled}}` |
-| `accent` | {{icon:exclamation}} Exclamation circle | `{{icon:exclamation}}` |
 
 ### All types with icons
 
@@ -3160,10 +3216,6 @@ How it works:
 </div>
 
 <p class="callout-description">Risks or negative outcomes of certain actions.</p>
-  </div>
-</div>
-
-<p class="callout-description">Key information users need to know.</p>
   </div>
 </div>
 
@@ -3212,7 +3264,6 @@ This section documents how the component is built. For usage, see the sections a
 | `.callout[data-type="success"]` | Success variant — `var(--status-success-bg)` background |
 | `.callout[data-type="warning"]` | Warning variant — `var(--status-warning-bg)` background |
 | `.callout[data-type="danger"]` | Danger variant — `var(--status-danger-bg)` background |
-| `.callout[data-type="accent"]` | Accent variant — `var(--status-accent-bg)` background |
 | `.callout[data-icon]` | Enables two-column grid layout for icon + content |
 | `.callout-title` | Bold title row — semi-bold, `var(--font-s)` |
 | `.callout-description` | Body text — `var(--font-s)`, top margin `var(--space-xs)` |
@@ -3685,7 +3736,6 @@ The badge uses `data-color` for semantic colour variants. No component-level tok
 | `data-color="success"` | `data-color="green"` | Live, published, positive |
 | `data-color="warning"` | `data-color="yellow"` | Draft, pending, attention |
 | `data-color="info"` | `data-color="blue"` | Informational, neutral |
-| `data-color="accent"` | `data-color="purple"` | Emphasis, special |
 
 ```html
 <span class="badge">Default</span>
@@ -3693,7 +3743,6 @@ The badge uses `data-color` for semantic colour variants. No component-level tok
 <span class="badge" data-color="warning">Warning</span>
 <span class="badge" data-color="danger">Danger</span>
 <span class="badge" data-color="info">Info</span>
-<span class="badge" data-color="accent">Accent</span>
 ```
 
 ---
@@ -3745,7 +3794,6 @@ This section documents how the component is built. For usage, see the sections a
 | `.badge[data-color="warning"]`, `.badge[data-color="yellow"]` | Warning colour variant |
 | `.badge[data-color="danger"]`, `.badge[data-color="red"]` | Danger colour variant |
 | `.badge[data-color="info"]`, `.badge[data-color="blue"]` | Info colour variant |
-| `.badge[data-color="accent"]`, `.badge[data-color="purple"]` | Accent colour variant |
 
 ### Tabs
 
@@ -3993,7 +4041,6 @@ This section documents how the component is built. For usage, see the sections a
 | `.toast[data-type="warning"]`, `.toast[data-type="yellow"]` | Warning colour variant |
 | `.toast[data-type="danger"]`, `.toast[data-type="red"]` | Danger colour variant |
 | `.toast[data-type="info"]`, `.toast[data-type="blue"]` | Info colour variant |
-| `.toast[data-type="accent"]`, `.toast[data-type="purple"]` | Accent colour variant |
 | `.toast-message` | Message text span |
 | `.toast-close` | Dismiss button |
 
@@ -5196,7 +5243,7 @@ This section documents how the component is built. For usage, see the sections a
 | Property | Value |
 |---|---|
 | Font family | `var(--font-quaternary)` |
-| Font size | `calc(var(--text-body) - .2em)` |
+| Font size | `calc(var(--body-size) - .2em)` |
 | Background | `color-mix(in srgb, var(--text-primary), var(--alpha-5))` |
 | Padding | `var(--space-2xs) var(--space-xs)` |
 | Border radius | `var(--radius-xs)` |
@@ -5212,7 +5259,7 @@ This section documents how the component is built. For usage, see the sections a
 | Padding | `var(--space-l)` |
 | Overflow | `overflow-x: auto` |
 | Font family | `var(--font-quaternary)` |
-| Font size | `calc(var(--text-body) - 2px)` |
+| Font size | `calc(var(--body-size) - 2px)` |
 | Line height | `var(--line-height-xl)` |
 
 `pre code` resets the inline code background, padding, and border-radius to prevent stacking.
@@ -5395,7 +5442,7 @@ The `.table` class provides the default minimalistic style:
 | --- | --- |
 | Border collapse | `collapse` |
 | Width | `fit-content` (max 100%) |
-| Font size | `var(--text-body)` |
+| Font size | `var(--body-size)` |
 | Font variant | `tabular-nums` |
 | Header background | Transparent |
 | Header border | `var(--border-s) solid var(--border-secondary)` |
@@ -5512,7 +5559,7 @@ This section documents how the component is built. For usage, see the sections a
 |---|---|
 | Border collapse | `collapse` |
 | Width | `fit-content` (max `100%`) |
-| Font size | `var(--text-body)` |
+| Font size | `var(--body-size)` |
 | Cell padding | `var(--space-m) var(--space-l)` |
 | Header weight | `var(--font-weight-bold)` |
 | Header min width | `130px` |
@@ -5613,6 +5660,47 @@ Always include a `data-icon` attribute with a descriptive name. This makes icons
 ```
 
 Use lowercase kebab-case for icon names (e.g. `arrow-right`, `chevron-down`, `external-link`).
+
+---
+
+## Logos
+
+Logos follow the same data-attribute pattern as icons, using `data-logo` instead of `data-icon`. The wrapper uses a generic `.svg-logo` class, and the logo name goes on the `<svg>` element.
+
+```html
+<div class="svg-logo" >
+  <svg data-logo="by-default-centered" viewBox="0 0 1050 505" width="100%" height="100%" fill="none" aria-hidden="true">
+    <path d="..." fill="currentColor"/>
+  </svg>
+</div>
+```
+
+### Key differences from icons
+
+| | Icons | Logos |
+|---|---|---|
+| **Wrapper class** | `.svg-icn` | `.svg-logo` |
+| **Data attribute** | `data-icon="name"` | `data-logo="name"` |
+| **Aspect ratio** | Fixed 1:1 via CSS | Preserved via inline `` |
+| **Size** | Fixed (1.3rem default) | Responsive (width set by context) |
+
+### CSS targeting
+
+Use `:has()` to target the wrapper based on a specific logo:
+
+```css
+.svg-logo:has([data-logo="by-default-centered"]) {
+  width: var(--sidebar-logo-width);
+}
+```
+
+### SVG Cleaner workflow
+
+```bash
+node assets/js/svg-clean.js --logo --logo-name brand-name --current-color --strip-comments
+```
+
+This outputs a `<div class="svg-logo">` wrapper with `data-logo="brand-name"` on the `<svg>` element.
 
 ---
 
@@ -5742,7 +5830,7 @@ This shorthand only works in files processed by `cms/generator/generate-docs.js`
 
 ## SVG Cleaner Tool
 
-Use the [SVG Cleaner](../tools/svg-cleaner.html) to prepare icons before adding them to the codebase. The tool automates the required cleanup:
+Use the [SVG Cleaner](/tools/svg-cleaner.html) to prepare icons before adding them to the codebase. The tool automates the required cleanup:
 
 - Strips `xmlns` attributes
 - Sets fills to `currentColor` (when enabled)

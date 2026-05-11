@@ -450,7 +450,7 @@ This section documents how the component is built. For usage, see the sections a
 | `--button-border` | `var(--button-color)` | Border stroke |
 | `--button-text-color` | `var(--text-inverted)` | Text colour |
 | `--button-font` | `var(--font-secondary)` | Font family |
-| `--button-text-size` | `var(--text-body)` | Text size |
+| `--button-text-size` | `var(--body-size)` | Text size |
 | `--button-padding-y` | `var(--space-m)` | Vertical padding |
 | `--button-padding-x` | `var(--space-xl)` | Horizontal padding |
 | `--button-radius` | `0` | Corner radius |

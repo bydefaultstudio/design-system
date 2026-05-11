@@ -615,10 +615,10 @@ function generateTableOfContents(html) {
 function generateIndexPage(template, filesBySection) {
   // Simplified index: one card per section in a 2-column grid
   const sectionCards = [
-    { title: 'Brand Book', href: 'brand/', subtitle: 'Brand identity, values, positioning, and visual guidelines' },
-    { title: 'Design System', href: 'design-system/', subtitle: 'Tokens, components, and styling patterns' },
-    { title: 'Tools', href: 'tools/', subtitle: 'Utilities for ad operations, SVG processing, and more', access: 'team' },
-    { title: 'Documentation', href: 'docs/', subtitle: 'Technical docs for layout, CSS, JavaScript, and project setup' },
+    { title: 'Brand Book', href: '/brand/', subtitle: 'Brand identity, values, positioning, and visual guidelines' },
+    { title: 'Design System', href: '/design-system/', subtitle: 'Tokens, components, and styling patterns' },
+    { title: 'Tools', href: '/tools/', subtitle: 'Utilities for ad operations, SVG processing, and more', access: 'team' },
+    { title: 'Documentation', href: '/docs/', subtitle: 'Technical docs for layout, CSS, JavaScript, and project setup' },
   ];
 
   let cards = `<div class="docs-section">
@@ -711,11 +711,21 @@ function generateSectionIndexPage(section, template, files, filesBySection) {
   if (ungrouped.length > 0) {
     cards += `<div class="docs-section"><div class="book-page-list">`;
     for (const file of ungrouped) {
-      let cardHref = file.htmlName;
+      // Absolute href so the link resolves correctly from any depth and survives
+      // Barba transitions that don't update the chrome's data-base.
+      let cardHref = '/' + file.htmlPath;
       let cardAccess = deriveDataAccess(file.frontmatter);
       const cardActionUrl = file.frontmatter.actionUrl || file.frontmatter.toolUrl;
       if (cardActionUrl) {
-        cardHref = cardActionUrl;
+        // Frontmatter actionUrl normalized to absolute. Supports `./foo.html`,
+        // `../foo.html`, and bare `foo.html` — all rooted at /<section>/.
+        if (cardActionUrl.startsWith('/')) {
+          cardHref = cardActionUrl;
+        } else {
+          const sectionFolder = SECTION_FOLDERS[section] || section.toLowerCase();
+          const stripped = cardActionUrl.replace(/^(\.\.?\/)+/, '');
+          cardHref = '/' + sectionFolder + '/' + stripped;
+        }
         cardAccess = file.frontmatter.actionAccess || file.frontmatter.toolAccess || cardAccess;
       }
       cards += renderBookPage({
@@ -744,7 +754,7 @@ function generateSectionIndexPage(section, template, files, filesBySection) {
     cards += `<div class="docs-section"><h2 class="eyebrow">${sub}</h2><div class="book-page-list">`;
     for (const file of grouped[sub]) {
       cards += renderBookPage({
-        href: file.htmlName,
+        href: '/' + file.htmlPath,
         title: file.title,
         subtitle: file.frontmatter.subtitle,
         author: file.frontmatter.author,
@@ -765,7 +775,7 @@ function generateSectionIndexPage(section, template, files, filesBySection) {
     cards += `<div class="docs-section"><h2 class="eyebrow">Tools</h2><div class="book-page-list">`;
     for (const file of toolFiles) {
       cards += renderBookPage({
-        href: `../${file.htmlPath}`,
+        href: '/' + file.htmlPath,
         title: file.title,
         subtitle: file.frontmatter.subtitle,
         author: file.frontmatter.author,
@@ -1018,8 +1028,8 @@ function buildFooterHtml() {
  * - Any page can request additional scripts via the "scripts" frontmatter field.
  *   e.g. scripts: "splide, scroll-smoother"
  */
-function buildPageScripts(section, frontmatter) {
-  const base = '../';
+function buildPageScripts(section, frontmatter, navBase = '../') {
+  const base = navBase;
 
   // Script registry — maps keywords to script tag paths (load order matters)
   const SCRIPT_REGISTRY = {
@@ -1078,7 +1088,7 @@ function buildPageScripts(section, frontmatter) {
   }
 
   // Add script tags
-  parts.push(...scripts.map(src => `    <script src="${src}"></script>`));
+  parts.push(...scripts.map(src => `    <script src="${src}" defer></script>`));
 
   return parts.join('\n');
 }
@@ -1133,7 +1143,7 @@ function generatePage(file, template, pageOrder, sidebarOrderMap = {}) {
       <div class="sticky-bar-container">
         <div class="sticky-bar-content">
           <nav class="sticky-bar-breadcrumbs" aria-label="Breadcrumb">
-            <a href="../${file.htmlFolder}/index.html">${sectionLabel}</a>
+            <a href="/${file.htmlFolder}/index.html">${sectionLabel}</a>
             <span class="breadcrumb-separator">/</span>
             <span>${frontmatter.title}</span>
           </nav>
@@ -1162,7 +1172,7 @@ function generatePage(file, template, pageOrder, sidebarOrderMap = {}) {
               </div>
             </div>
           </div>
-          <a href="../${file.htmlFolder}/index.html" class="sticky-bar-close" aria-label="Close ${frontmatter.title}">
+          <a href="/${file.htmlFolder}/index.html" class="sticky-bar-close" aria-label="Close ${frontmatter.title}">
             ${getIcon('close-large')}
           </a>
         </div>
@@ -1230,7 +1240,6 @@ function generateNavJs(filesBySection, sidebarOrderMap) {
   var mount = document.getElementById('site-nav');
   if (!mount) return;
 
-  var base = mount.getAttribute('data-base') || '';
   var hasSidebar = mount.getAttribute('data-sidebar') !== 'false';
 
   // ── Shared SVG icons (loaded from assets/images/svg-icons/) ──
@@ -1255,7 +1264,7 @@ function generateNavJs(filesBySection, sidebarOrderMap) {
       + '</div>';
   }
 
-  headerLeft += '<a href="' + base + 'index.html" class="top-nav-logo-link">'
+  headerLeft += '<a href="/index.html" class="top-nav-logo-link">'
     + '<div class="svg-logo nav-logo"><svg data-logo="by-default-centered" width="100%" height="100%" viewBox="0 0 1050 505" fill="none" aria-hidden="true">'
     + '<path d="M88.578 500C28.971 500 0 462.371 0 412.421C0 362.471 28.971 326 88.578 326H113.542L114.874 324.668V268.332L116.206 267H170.152L171.484 268.332V498.668L170.152 500H88.578ZM88.578 444.056C104.562 444.056 118.548 432.734 118.548 412.754C118.548 392.774 104.562 381.452 88.578 381.452C72.594 381.452 58.608 392.774 58.608 412.754C58.608 432.734 72.594 444.056 88.578 444.056Z" fill="currentColor"/>'
     + '<path d="M270.184 504.995C218.236 504.995 185.602 466.7 185.602 412.754C185.602 358.808 216.238 320.513 268.186 320.513C313.474 320.513 348.106 348.152 348.106 405.095V429.071L346.774 430.403H257.863C250.537 430.403 245.875 434.399 245.875 441.725C245.875 451.382 253.867 459.041 268.852 459.041C280.174 459.041 286.834 454.712 288.166 448.385L289.498 447.053H343.444L344.776 448.385C341.113 483.35 309.811 504.995 270.184 504.995ZM279.175 397.769C286.501 397.769 290.497 393.107 290.497 385.781C290.497 375.125 281.506 367.133 268.519 367.133C255.532 367.133 246.541 375.125 246.541 385.781C246.541 393.107 250.537 397.769 257.863 397.769H279.175Z" fill="currentColor"/>'
@@ -1272,7 +1281,7 @@ function generateNavJs(filesBySection, sidebarOrderMap) {
   var ICON_CHEVRON_DOWN = '${esc(getRawIcon('chevron-down'))}';
 
   var headerRight = '<div class="top-nav-right">'
-    + '<a href="' + base + 'support.html" class="top-nav-link top-nav-contact-link" aria-label="Contact">'
+    + '<a href="/support.html" class="top-nav-link top-nav-contact-link" aria-label="Contact">'
     + '<div class="svg-icn">' + ICON_MAIL + '</div>'
     + '<span class="top-nav-link-label">Contact</span>'
     + '</a>'
@@ -1296,7 +1305,7 @@ function generateNavJs(filesBySection, sidebarOrderMap) {
       + '</button>'
       + '</div>'
       + '<div class="site-sidebar-content">'
-      + '<a href="' + base + 'index.html" class="nav-link nav-home" data-access="team">'
+      + '<a href="/index.html" class="nav-link nav-home" data-access="team">'
       + '<div class="svg-icn">' + ICON_HOME + '</div>'
       + '<span>Home</span>'
       + '</a>'
@@ -1313,16 +1322,8 @@ function generateNavJs(filesBySection, sidebarOrderMap) {
   // BEFORE the existing <main>, preserving it in place as a grid sibling.
   mount.insertAdjacentHTML('afterbegin', headerHtml + sidebarHtml);
 
-  // Fix relative paths in sidebar nav links
-  if (base && hasSidebar) {
-    var links = mount.querySelectorAll('.site-sidebar .nav-link, .site-sidebar .nav-section-icon');
-    for (var i = 0; i < links.length; i++) {
-      var href = links[i].getAttribute('href');
-      if (href && !href.startsWith('http') && !href.startsWith('/') && !href.startsWith('#')) {
-        links[i].setAttribute('href', base + href);
-      }
-    }
-  }
+  // Sidebar nav links are emitted as absolute paths so they resolve correctly
+  // regardless of the current page's depth — no runtime fixup needed.
 
   // ── Active link detection ──
   // Exposed as window.refreshNavActive so Barba.js can re-run after each
@@ -1516,7 +1517,9 @@ function buildNavSectionsHtml(filesBySection, sidebarOrderMap = {}) {
 
     const sectionIcon = sectionIconMap[section];
     const sectionFolder = SECTION_FOLDERS[section];
-    const sectionIndexHref = sectionFolder ? sectionFolder + '/index.html' : '';
+    // Absolute URLs (leading `/`) so links resolve from any page depth and survive
+    // Barba transitions that don't update the surrounding chrome's data-base.
+    const sectionIndexHref = sectionFolder ? '/' + sectionFolder + '/index.html' : '';
     // Slug used by Phase 3 directional transitions to detect same/different section
     const sectionSlug = slugifySection(section);
     const iconHtml = sectionIcon
@@ -1556,17 +1559,17 @@ function buildNavSectionsHtml(filesBySection, sidebarOrderMap = {}) {
 
     // Render ungrouped files first
     for (const file of ungrouped) {
-      // For Tools section: link to actual tool app, use actionAccess for visibility
-      let linkHref = file.htmlPath;
+      // For Tools section: link to actual tool app, use actionAccess for visibility.
+      // All hrefs are emitted as absolute paths (`/section/file.html`).
+      let linkHref = '/' + file.htmlPath;
       let linkAccess = deriveDataAccess(file.frontmatter);
       const navActionUrl = file.frontmatter.actionUrl || file.frontmatter.toolUrl;
       if (section === 'Tools' && navActionUrl) {
         // actionUrl is relative to the tool docs page (e.g. "./cpm-calculator.html").
-        // Sidebar links must be section-folder-rooted so nav.js's `base` prepend
-        // resolves correctly from any page in the site.
+        // Resolve to an absolute site path.
         const fileName = navActionUrl.replace(/^(\.\.?\/)+/, '');
         const sectionFolder = SECTION_FOLDERS[section] || 'tools';
-        linkHref = `${sectionFolder}/${fileName}`;
+        linkHref = '/' + sectionFolder + '/' + fileName;
         linkAccess = file.frontmatter.actionAccess || file.frontmatter.toolAccess || 'client';
       }
       html += `<li><a href="${linkHref}" class="nav-link" data-section="${sectionSlug}" data-order="${navPos}" data-access="${linkAccess}"><span>${file.title}</span></a></li>`;
@@ -1587,7 +1590,7 @@ function buildNavSectionsHtml(filesBySection, sidebarOrderMap = {}) {
       html += `<li class="nav-label">${sub}</li>`;
       for (const file of grouped[sub]) {
         const linkAccess = deriveDataAccess(file.frontmatter);
-        html += `<li><a href="${file.htmlPath}" class="nav-link" data-section="${sectionSlug}" data-order="${navPos}" data-access="${linkAccess}"><span>${file.title}</span></a></li>`;
+        html += `<li><a href="/${file.htmlPath}" class="nav-link" data-section="${sectionSlug}" data-order="${navPos}" data-access="${linkAccess}"><span>${file.title}</span></a></li>`;
         navPos++;
       }
     }
@@ -1610,7 +1613,7 @@ function buildNavSectionsHtml(filesBySection, sidebarOrderMap = {}) {
       for (const file of toolFiles) {
         const linkAccess = deriveDataAccess(file.frontmatter);
         const toolPos = sidebarOrderMap[file.htmlPath] || 999;
-        html += `<li><a href="${file.htmlPath}" class="nav-link" data-section="${toolsSectionSlug}" data-order="${toolPos}" data-access="${linkAccess}"><span>${file.title}</span></a></li>`;
+        html += `<li><a href="/${file.htmlPath}" class="nav-link" data-section="${toolsSectionSlug}" data-order="${toolPos}" data-access="${linkAccess}"><span>${file.title}</span></a></li>`;
       }
     }
 
@@ -1750,7 +1753,11 @@ function generateClientDocs(template) {
       let pageSubbar = '';
       if (title && frontmatter.section) {
         const sectionLabel = frontmatter.section;
-        const overviewHref = 'index.html';
+        // Absolute href so the link resolves correctly from any page depth
+        // (e.g. surviving Barba transitions where chrome data-base goes stale).
+        const overviewHref = sectionSlug
+          ? `/${clientKey}/${sectionSlug}/index.html`
+          : `/${clientKey}/index.html`;
         const mdPath = `${navBase}cms/clients/${clientKey}/${filename}`;
         pageSubbar = `<div class="sticky-bar sticky-bar-page">
           <div class="sticky-bar-container">
@@ -1816,7 +1823,7 @@ function generateClientDocs(template) {
         .replace('{{CLIENT_THEME_CSS}}', clientThemeCss)
         .replace('{{CLIENT_THEME_ATTR}}', `data-client-theme="${clientKey}"`)
         .replace('{{GOOGLE_FONTS}}', googleFonts)
-        .replace('{{PAGE_SCRIPTS}}', buildPageScripts(frontmatter.section || '', frontmatter))
+        .replace('{{PAGE_SCRIPTS}}', buildPageScripts(frontmatter.section || '', frontmatter, navBase))
         .replace('{{FOOTER_TEXT}}', buildFooterHtml())
         .replace('{{PAGE_ACCESS}}', deriveDataAccess(frontmatter))
         .replace('{{SECTION_SLUG}}', `${clientKey}-${slugifySection(frontmatter.section)}`)
@@ -1867,7 +1874,9 @@ function generateClientDocs(template) {
         title: file.title,
         subtitle: file.subtitle,
         author: file.author,
-        href: file.htmlPath,
+        // Absolute href so theme-loader.js can use the value directly without
+        // a per-page basePath prefix (which would go stale across Barba transitions).
+        href: '/' + file.htmlPath,
         section: file.section || null,
         order: file.order
       });
@@ -2063,10 +2072,9 @@ function generateClientSectionOverviews(template) {
     if (docsPages.length > 0) {
       let cards = '<div class="docs-section"><div class="grid cols-2 gap-xl">';
       for (const page of docsPages) {
-        // Extract just the filename — overview and pages are in the same directory
-        const href = page.href.split('/').pop();
+        // page.href is already absolute (`/<client>/docs/<file>.html`).
         cards += renderBookCover({
-          href,
+          href: page.href,
           title: page.title,
           subtitle: page.subtitle,
           author: page.author,
@@ -2086,7 +2094,7 @@ function generateClientSectionOverviews(template) {
       for (const toolKey of clientToolKeys) {
         const tool = toolRegistry[toolKey];
         cards += renderBookCover({
-          href: `../../tools/${toolKey}.html`,
+          href: `/tools/${toolKey}.html`,
           title: tool.title,
           subtitle: tool.subtitle,
           author: tool.author,
@@ -2114,17 +2122,17 @@ function generateClientSectionOverviews(template) {
 
     const newEntries = [];
     if (hasDocsOverview && !alreadyHasDocsOverview) {
-      newEntries.push(`{ title: 'Overview', href: '${clientKey}/docs/index.html', section: 'Docs' }`);
+      newEntries.push(`{ title: 'Overview', href: '/${clientKey}/docs/index.html', section: 'Docs' }`);
     }
     if (hasToolsOverview && !alreadyHasToolsOverview) {
-      newEntries.push(`{ title: 'Overview', href: '${clientKey}/tools/index.html', section: 'Tools' }`);
+      newEntries.push(`{ title: 'Overview', href: '/${clientKey}/tools/index.html', section: 'Tools' }`);
     }
     // Add individual tool pages to the pages array (for sidebar nav)
     for (const slug of clientToolKeys) {
       const tool = toolRegistry[slug];
       const alreadyHasTool = (theme.pages || []).some(p => p.href.includes(`tools/${slug}`));
       if (!alreadyHasTool) {
-        newEntries.push(`{ title: '${tool.title}', href: 'tools/${slug}.html', section: 'Tools' }`);
+        newEntries.push(`{ title: '${tool.title}', href: '/tools/${slug}.html', section: 'Tools' }`);
       }
     }
 
@@ -2663,11 +2671,9 @@ function generateClientIndexPages(template) {
       <h2 class="eyebrow">${section}</h2>
       <div class="grid cols-2 gap-xl">`;
       for (const page of sectionGroups[section]) {
-        const href = page.href.startsWith(clientKey + '/')
-          ? page.href.replace(clientKey + '/', '')
-          : page.href;
+        // page.href is absolute (`/<client>/<section>/<file>.html`) — use as-is.
         contentHtml += renderBookCover({
-          href,
+          href: page.href,
           title: page.title,
           subtitle: page.subtitle,
           author: page.author,
@@ -2685,9 +2691,8 @@ function generateClientIndexPages(template) {
       // Tools overview card first
       const toolsOverviewPage = (theme.pages || []).find(p => p.section === 'Tools' && p.title === 'Overview');
       if (toolsOverviewPage) {
-        const overviewHref = toolsOverviewPage.href.startsWith(clientKey + '/') ? toolsOverviewPage.href.replace(clientKey + '/', '') : toolsOverviewPage.href;
         contentHtml += renderBookCover({
-          href: overviewHref,
+          href: toolsOverviewPage.href,
           title: 'Overview',
           subtitle: 'All available tools and utilities',
         });
@@ -2695,7 +2700,7 @@ function generateClientIndexPages(template) {
       for (const toolKey of clientToolKeys) {
         const tool = toolRegistry[toolKey];
         contentHtml += renderBookCover({
-          href: `../tools/${toolKey}.html`,
+          href: `/tools/${toolKey}.html`,
           title: tool.title,
           subtitle: tool.subtitle,
           author: tool.author,

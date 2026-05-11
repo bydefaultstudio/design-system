@@ -101,8 +101,8 @@ Named aliases that map to the type scale for specific UI roles.
 
 | Token | Value | Description |
 | --- | --- | --- |
-| `var(--text-body)` | `var(--font-m)` | Global body text size |
-| `var(--button-font-size)` | `var(--text-body)` | Default button text |
+| `var(--body-size)` | `var(--font-m)` | Global body text size |
+| `var(--button-font-size)` | `var(--body-size)` | Default button text |
 | `var(--button-font-size-small)` | `var(--font-2xs)` | Small button text |
 
 ### Line Heights

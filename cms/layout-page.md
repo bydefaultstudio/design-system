@@ -14,7 +14,7 @@ client: "internal"
 
 Layout primitives control **structure and flow** — how content stacks, how columns form, and how sections are contained. They work with spacing tokens (see [Spacing](spacing.html)) but serve a different purpose: spacing defines distance, layout defines arrangement.
 
-For the full page hierarchy (`body → page-wrapper → page-content → section → padding-global → container → block`), see the [Layout docs](../docs/layout.html).
+For the full page hierarchy (`body → page-wrapper → page-content → section → padding-global → container → block`), see the [Layout docs](/docs/layout.html).
 
 ---
 

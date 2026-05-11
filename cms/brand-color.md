@@ -15,7 +15,7 @@ dropcap: true
 
 The By Default palette is built around a **warm neutral spine** and **five accent hues**. The neutrals do almost all of the work — the accents punctuate. This is a brand that gets loud rarely, and on purpose.
 
-This page is the **brand-side** view — what each colour is *for*, and how the palette behaves as a whole. For the developer-facing token reference (CSS variable names, hex values, semantic mappings), see [Color](../design-system/color.html).
+This page is the **brand-side** view — what each colour is *for*, and how the palette behaves as a whole. For the developer-facing token reference (CSS variable names, hex values, semantic mappings), see [Color](/design-system/color.html).
 
 ---
 
@@ -97,7 +97,7 @@ Five accents. Each one has a meaning the team should keep consistent — drift i
   </div>
 </div>
 
-Each hue ships with a four-step ramp — `lighter`, `light`, base, and `dark` — for backgrounds, fills, and text. The ramps are documented in full on the [Color](../design-system/color.html) token page.
+Each hue ships with a four-step ramp — `lighter`, `light`, base, and `dark` — for backgrounds, fills, and text. The ramps are documented in full on the [Color](/design-system/color.html) token page.
 
 ---
 
@@ -130,5 +130,5 @@ If a layout needs three accents to feel alive, the layout is the problem. Push h
 
 ## See also
 
-- [Color](../design-system/color.html) — full token reference, primitive scales, semantic mappings, alpha tokens
-- [Tokens](../design-system/tokens.html) — every CSS variable with raw values
+- [Color](/design-system/color.html) — full token reference, primitive scales, semantic mappings, alpha tokens
+- [Tokens](/design-system/tokens.html) — every CSS variable with raw values

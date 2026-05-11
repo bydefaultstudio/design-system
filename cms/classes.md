@@ -12,7 +12,7 @@ access: "team"
 client: "internal"
 ---
 
-A flat reference of every utility class in the system. Click any class, value, or token to copy it. For the full architecture and live demos see [Typography](typography.html), [Color](color.html), [Spacing](spacing.html), [Border](border.html), and [HTML Layout](../docs/layout.html).
+A flat reference of every utility class in the system. Click any class, value, or token to copy it. For the full architecture and live demos see [Typography](typography.html), [Color](color.html), [Spacing](spacing.html), [Border](border.html), and [HTML Layout](/docs/layout.html).
 
 Every chip on this page follows the same convention so the markdown source matches what gets copied:
 

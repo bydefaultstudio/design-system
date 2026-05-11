@@ -14,7 +14,7 @@ client: "internal"
 
 SVGs are lightweight by default, but vector software often exports bloated files with unnecessary precision, hidden elements, and metadata. These techniques help you produce clean, minimal SVGs before they reach the codebase.
 
-For automated cleanup, use the [SVG Cleaner](../tools/svg-cleaner.html) tool.
+For automated cleanup, use the [SVG Cleaner](/tools/svg-cleaner.html) tool.
 
 ---
 
@@ -129,7 +129,7 @@ The `<use>` element creates copies of a shape without duplicating the path data:
 
 ## SVG Cleaner Flags
 
-The [SVG Cleaner](../tools/svg-cleaner.html) automates most of these optimisations. See the [SVG Cleaner docs](../docs/svg-cleaner.html) for the full flag reference.
+The [SVG Cleaner](/tools/svg-cleaner.html) automates most of these optimisations. See the [SVG Cleaner docs](/docs/svg-cleaner.html) for the full flag reference.
 
 | Flag | What it does |
 |---|---|
