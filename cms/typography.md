@@ -140,12 +140,14 @@ The default paragraph style used for all running content. The `var(--body-size)`
 
 | Element | Font Size | Range (fluid) | Line Height |
 | --- | --- | --- | --- |
-| `.text-size-xlarge` | `clamp(var(--font-3xl), 1rem + 1.5vw, var(--font-7xl))` | 28 → 48px | `var(--line-height-m)` (1.2) |
-| `.text-size-large` | `clamp(var(--font-xl), 1rem + 1vw, var(--font-4xl))` | 22 → 32px | `var(--line-height-l)` (1.4) |
+| `.text-size-xlarge` | `clamp(var(--font-3xl), 1rem + 0.8vw, var(--font-5xl))` | 28 → 36px | `var(--line-height-m)` (1.2) |
+| `.text-size-large` | `clamp(var(--font-l), 1rem + 0.4vw, var(--font-2xl))` | 20 → 24px | `var(--line-height-l)` (1.4) |
 | `.text-size-medium` | `var(--body-size)` | 16 → 18px | `var(--line-height-l)` (1.4) |
 | `p` (default) | `var(--body-size)` | 16 → 18px | `var(--line-height-l)` (1.4) |
-| `.text-size-small` | `clamp(var(--font-xs), 0.7rem + 0.35vw, var(--font-s))` | 14 → 16px | `var(--line-height-xl)` (1.6) |
+| `.text-size-small` | `clamp(var(--font-xs), 0.8rem + 0.15vw, var(--font-s))` | 14 → 16px | `var(--line-height-xl)` (1.6) |
 | `.text-size-xsmall` | `var(--font-xs)` | 14px (fixed) | `var(--line-height-xl)` (1.6) |
+
+**Step rhythm at 1440px (typical desktop):** xsmall 14 → small 15 → medium 17.4 → large 21.8 → xlarge 28. Jumps stay in the 25–30% range (comfortable for prose hierarchy; research consensus avoids jumps above 50%).
 
 ---
 
