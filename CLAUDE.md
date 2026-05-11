@@ -781,6 +781,20 @@ You MUST delegate to these agents whenever the matching trigger applies — in p
   - the user mentions: accessibility, a11y, screen reader, keyboard, focus, ARIA, contrast, WCAG
   - touching focus management across Barba transitions
 
+- **`notion-expert`** — fires when:
+  - editing `netlify/functions/_notion-config.js`, `get-schema.js`, `submit-form.js`
+  - editing `assets/js/notion-form.js` or `assets/js/feedback.js`
+  - adding a new form type (registry + env var + page wiring) or a new Notion property formatter
+  - the user mentions: Notion, database, page, property, schema, form submission, feedback widget
+  - using the Notion MCP tools (`notion-search`, `notion-fetch`, `notion-create-pages`, `notion-update-page`) for project docs read/write
+
+- **`netlify-expert`** — fires when:
+  - editing `netlify.toml`, `_redirects`, `_headers`, or any file in `netlify/functions/`
+  - editing `tools/bump-version.js`, `tools/generate-llms-txt.js`, or `cms/generator/` (any change that affects build output)
+  - the user mentions: deploy, Netlify, redirect, function, edge, env var, build command, headers, CSP, custom domain
+  - adding a new Netlify Function, edge function, or redirect rule
+  - debugging Netlify build failures or deploy-preview issues
+
 ### Explicit invocation only
 
 - **`outsider-challenger`** — never auto-fire. Only invoke when the user explicitly says "challenge this", "outsider review", "is this over-engineered", or `@outsider-challenger`. Reads source only; ignores `CLAUDE.md` and `cms/` docs by design.
