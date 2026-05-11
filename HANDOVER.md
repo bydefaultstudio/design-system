@@ -2,11 +2,16 @@
 
 ## Status
 
-**8 commits ahead of `origin/main`. Nothing pushed.** Working tree clean (one untracked `deno.lock` left in place — see below).
+**13 commits ahead of `origin/main`. Nothing pushed.** Working tree clean except untracked `deno.lock`.
 
 ## Unpushed commits (top → bottom = newest → oldest)
 
 ```
+efcf0df  studio: homepage refresh + cycle-word generalization
+cce61f6  design-system: retune .text-size-* clamps for cleaner desktop rhythm
+d0f692d  design-system: fluid .text-size-* utilities
+fffe749  design-system: add data-align="center" attribute for self-centering blocks
+bd8defa  docs: handover for this session — homepage refresh, products bd-intro fix, line-length, parallax, absolute hrefs
 be19bd4  heading tokens: complete .page-headline → .page-title rename + --text-body → --body-size
 7579441  auth + notion-form + page-template: switch to absolute paths and §18 per-page asset wiring
 b021f81  CLAUDE.md: add notion-expert + netlify-expert to auto-delegate triggers
@@ -16,6 +21,76 @@ c1ad21e  studio: homepage copy refresh, products bd-intro wiring, line-length to
 48a01c5  studio: css cleanup — drop dead [data-article] block, empty override header, merge .contact-chips .button dupe, normalize 7-dash section headers to 6
 14d6f49  studio: tablet breakpoint for data-grid (6-col fallback ≤960px), plus sticky-stack primitive, page-title split, line-length utility
 ```
+
+## Latest commit — `efcf0df`
+
+User-authored homepage refresh that validates the day's design-system work in production:
+
+- **Intro section** dropped `data-grid` + `data-col-start="4" data-col-span="6"` for `data-align="center" data-line-length="medium"`. Lead paragraph uses `class="text-size-large"` — the retuned 20→24px fluid utility now in production.
+- **Closing CTA** same treatment: grid math gone, `data-align="center" data-line-length="body"`. New copy.
+- **Section 02 headline** copy refined ("Attention is hard to earn. It's even harder to keep.").
+- **Product spotlight** got a second cycle-word ("Make your content [interactive / engaging / impactful / immersive / shareable]"). That required generalizing the cycle engine — `studio-home.js` now uses a per-wrapper state array; multiple `.cycle-word` instances coexist on one page. Selector loosened from `.home-headline .cycle-word` to just `.cycle-word`. Cleanup per-state.
+- **Smooth scroll-behavior** added to `studio.css` at the top, gated behind `prefers-reduced-motion: no-preference`. Affects programmatic scrolls (anchor jumps, scrollIntoView) — wheel/trackpad input stays native.
+- **Cycle-word inline-vs-block fix** — `#product-spotlight-heading .cycle-word { padding-bottom: 0; }` so the descender buffer doesn't show on the inline cycle that follows preceding text. Block-level home-headline cycle (after `<br>`) keeps the buffer.
+
+## Previous commit — `cce61f6`
+
+The previous fluid utilities jumped 75% medium→large at 1440px — too aggressive per typographic-rhythm consensus (20-25% comfortable, 33-50% acceptable for display). User flagged it during smoke test. Dispatched a structural audit + research pass before retuning.
+
+**Findings:** primitive scale is fine (pragmatic 2/4/8px steps). Real issues were: utility ceilings set too high (large at `--font-4xl` 32px, xlarge at `--font-7xl` 48px), and small's `0.35vw` crashed into medium's 16px floor at 1440px.
+
+**Retuned values:**
+
+```css
+.text-size-xlarge { font-size: clamp(var(--font-3xl), 1rem + 0.8vw,  var(--font-5xl)); line-height: var(--line-height-m); }  /* 28 → 36 */
+.text-size-large  { font-size: clamp(var(--font-l),  1rem + 0.4vw,  var(--font-2xl)); line-height: var(--line-height-l); }  /* 20 → 24 */
+.text-size-medium { font-size: var(--body-size);                                       line-height: var(--line-height-l); }  /* 16 → 18 */
+.text-size-small  { font-size: clamp(var(--font-xs), 0.8rem + 0.15vw, var(--font-s));  line-height: var(--line-height-xl); } /* 14 → 16 */
+.text-size-xsmall { font-size: var(--font-xs);                                          line-height: var(--line-height-xl); } /* 14 fixed */
+```
+
+**Step rhythm at 1440px:** xsmall 14 → small 15 → medium 17.4 → large 21.8 → xlarge 28. Jumps now 14% / 16% / 33% / 29% — comfortable across the prose tier. At 2560px, large→xlarge widens to +50% — still inside the display-tier acceptable range.
+
+Path B (parallel `--font-fluid-*` scale tokens) discussed and shelved for now — Path A's tuning is sufficient until 3+ products are on the system.
+
+`cms/typography.md` body-text table updated; docgen still deferred.
+
+**Not yet done:** smoke-test on `localhost:2000/styleguide.html` at 375 / 1440 / 2560 viewports to confirm the new rhythm feels right.
+
+## Previous commit — `d0f692d`
+
+The five `.text-size-*` utility classes are now fluid (except xsmall, which stays fixed at 14px for accessibility). Math:
+
+```css
+.text-size-xlarge { font-size: clamp(var(--font-3xl), 1rem + 1.5vw, var(--font-7xl)); line-height: var(--line-height-m); }
+.text-size-large  { font-size: clamp(var(--font-xl),  1rem + 1vw,   var(--font-4xl)); line-height: var(--line-height-l); }
+.text-size-medium { font-size: var(--body-size);                                       line-height: var(--line-height-l); }
+.text-size-small  { font-size: clamp(var(--font-xs),  0.7rem + 0.35vw, var(--font-s)); line-height: var(--line-height-xl); }
+.text-size-xsmall { font-size: var(--font-xs);                                          line-height: var(--line-height-xl); }
+```
+
+Ranges (375 → 2560px): xlarge 28→48, large 22→32, medium 16→18 (via `--body-size`), small 14→16 (capped to preserve scale invariant), xsmall 14 fixed. All 9 cons walked through and accepted with the user; the two refinements that landed were explicit line-heights + the `--font-s` ceiling on small.
+
+`cms/typography.md` Body Text section updated with the new fluid behaviour and table. Pre-commit hook synced root `assets/css/design-system.css`. **Docs regen (`npm run docgen`) deferred** — user said the docs site can wait; no priority right now.
+
+**Not yet done:** smoke-test on `localhost:2000/styleguide.html` at 375 / 768 / 1440 / 2560 viewports; eyeball the curve and the leading at the upper end.
+
+## Previous commit — `fffe749`
+
+New `[data-align="center"]` foundation rule in `assets/css/design-system.css` Section 6, near the `.block` primitive:
+
+```css
+[data-align="center"] {
+  margin-inline: auto;
+  justify-self: center;
+}
+```
+
+Composes with `data-line-length="*"` (or any `max-width`) to drop the `data-grid` + `data-col-start="3" data-col-span="8"` pattern when all you want is a centered block. `margin-inline: auto` is a no-op without a width constraint — documented in the new `cms/layout.md` "Self Alignment" section with a live demo. `justify-self: center` covers the grid-context case.
+
+No selector collision with `studio.css`'s `.scroll-stack[data-align="top|bottom|space"]` (different values, scoped to scroll-stack). Pre-commit hook synced the studio copy in the same commit.
+
+**Not yet done:** smoke-test on `localhost:2000` and opportunistic refactor of `studio/index.html` / `studio/products.html` call sites still using `data-col-start="3" data-col-span="8"` for centered blocks.
 
 ## What landed this session (brief notes for browser verification)
 
