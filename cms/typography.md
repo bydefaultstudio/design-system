@@ -101,7 +101,7 @@ Each heading uses `clamp(min, fluid, max)` with primitive `--font-*` tokens at t
 
 ## Body Text
 
-The default paragraph style used for all running content. The `var(--text-body)` token controls the base size globally — changing it updates paragraphs, inputs, code, tables, and buttons at once. Size modifier classes let you step up or down from the default.
+The default paragraph style used for all running content. The `var(--body-size)` token controls the base size globally — changing it updates paragraphs, inputs, code, tables, and buttons at once. Size modifier classes let you step up or down from the default.
 
 <div class="demo-preview is-joined">
   <div class="block gap-xl">
@@ -398,6 +398,52 @@ line-height: var(--line-height-l);
 
 ---
 
+## Line Length
+
+Horizontal rhythm — the measure of a line of text. Bringhurst's *Elements of Typographic Style* gives a satisfactory range of **45 to 75 characters per line** for body text, with **66 characters** widely regarded as ideal. Below 45 = display territory; above 75 = unsuitable for long-form reading.
+
+Apply with `data-line-length="<value>"` on any text element. Values are named typographically — pick the role that fits the content, not a t-shirt size.
+
+<div class="demo-preview is-joined">
+  <div class="block gap-xl">
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Headline (20ch)</p>
+      <p data-line-length="headline" style="margin: 0; font-size: var(--font-2xl); line-height: var(--line-height-m);">Display titles where the line break becomes part of the design.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Small (40ch)</p>
+      <p data-line-length="small" style="margin: 0;">Narrow body — lead paragraphs, intro and CTA descriptions, punchy short copy that needs a tighter measure.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Body (55ch)</p>
+      <p data-line-length="body" style="margin: 0;">Standard body — short prose blocks, scroll-stack items, founder cards. The default workhorse measure for most body copy on the page.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Medium (65ch)</p>
+      <p data-line-length="medium" style="margin: 0;">Long-form body — origin stories, error page lede, multi-paragraph editorial. Sits at Bringhurst's ideal-measure mark for sustained reading.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Wide (75ch)</p>
+      <p data-line-length="wide" style="margin: 0;">Maximum comfortable measure for very long-form prose. The ceiling — beyond this, line-find fatigue sets in.</p>
+    </div>
+  </div>
+</div>
+
+```html
+<p data-line-length="body">Standard body copy.</p>
+<h1 data-line-length="headline">Display title.</h1>
+```
+
+| Token | Value | Used For |
+| --- | --- | --- |
+| `var(--line-length-headline)` | 20ch | Display titles, big numerals |
+| `var(--line-length-small)` | 40ch | Narrow body — leads, intros, CTA descriptions |
+| `var(--line-length-body)` | 55ch | Standard body — short prose, cards, beliefs |
+| `var(--line-length-medium)` | 65ch | Long-form body — origin, articles |
+| `var(--line-length-wide)` | 75ch | Maximum measure for very long-form prose |
+
+---
+
 ## Letter Spacing
 
 Tracking values used for labels, eyebrows, and display text. Values are em-based so they scale proportionally with font size.
@@ -446,7 +492,7 @@ Four semantic roles compose the primitive tokens into building blocks. Each role
 | Headline | `clamp(--font-4xl, 1rem + 5vw, --font-8xl)` | 500 | `--line-height-s` (1) | -0.02em | Page hero, h1 |
 | Title | `clamp(--font-2xl, 0.8rem + 2vw, --font-6xl)` | 500 | `--line-height-m` (1.2) | -0.01em | Section heads, h2 |
 | Label | `--font-xs` (14px) | 500 | `--line-height-s` (1) | `--letter-spacing-m` (0.06em) | Eyebrows, meta, captions |
-| Body | `--text-body` (18px) | 400 | `--line-height-xl` (1.6) | 0 | Running text |
+| Body | `--body-size` (18px) | 400 | `--line-height-xl` (1.6) | 0 | Running text |
 
 ```css
 /* Use role tokens directly */

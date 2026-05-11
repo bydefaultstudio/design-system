@@ -112,8 +112,6 @@
   --font-9xl: 4rem;      /* 64px */
   --font-10xl: 4.5rem;   /* 72px */
 
-  /* -- Semantic font sizes -- */
-  --text-body: var(--font-m);
 
   /* -- UI font sizes -- */
 
@@ -171,7 +169,7 @@
   --label-tracking: var(--letter-spacing-m);
 
   /* Body — running text */
-  --body-size:     var(--text-body);
+  --body-size:     clamp(var(--font-s), 0.7rem + 0.35vw, var(--font-m));
   --body-weight:   var(--font-weight-regular);
   --body-leading:  var(--line-height-xl);
   --body-tracking: 0;
@@ -535,26 +533,26 @@
   /* 160px */
 
   /* -- Spacing scale -- */
-  --space-none: var(--none);
-  --space-2xs: var(--2xs);
-  --space-xs: var(--xs);
-  --space-s: var(--s);
-  --space-m: var(--m);
-  --space-l: var(--l);
-  --space-xl: var(--xl);
-  --space-2xl: var(--2xl);
-  --space-3xl: var(--3xl);
-  --space-4xl: var(--4xl);
-  --space-5xl: var(--5xl);
-  --space-6xl: var(--6xl);
-  --space-7xl: var(--7xl);
-  --space-8xl: var(--8xl);
-  --space-9xl: var(--9xl);
-  --space-10xl: var(--10xl);
-  --space-11xl: var(--11xl);
-  --space-12xl: var(--12xl);
-  --space-13xl: var(--13xl);
-  --space-14xl: var(--14xl);
+  --space-none: var(--none); /* 0 */
+  --space-2xs: var(--2xs); /* 2px */
+  --space-xs: var(--xs); /* 4px */
+  --space-s: var(--s); /* 8px */
+  --space-m: var(--m); /* 12px */
+  --space-l: var(--l); /* 16px */
+  --space-xl: var(--xl); /* 24px */
+  --space-2xl: var(--2xl); /* 32px */
+  --space-3xl: var(--3xl); /* 40px */
+  --space-4xl: var(--4xl); /* 48px */
+  --space-5xl: var(--5xl); /* 56px */
+  --space-6xl: var(--6xl); /* 64px */
+  --space-7xl: var(--7xl); /* 72px */
+  --space-8xl: var(--8xl); /* 80px */
+  --space-9xl: var(--9xl); /* 88px */
+  --space-10xl: var(--10xl); /* 96px */
+  --space-11xl: var(--11xl); /* 104px */
+  --space-12xl: var(--12xl); /* 112px */
+  --space-13xl: var(--13xl); /* 120px */
+  --space-14xl: var(--14xl); /* 160px */
 
   /* -- Container widths -- */
   --container-xs: 480px;
@@ -569,6 +567,14 @@
   --max-width-m: 960px;
   --max-width-l: 1200px;
   --max-width-xl: 1440px;
+
+  /* -- Line length (typographic readability, 45–75ch range) -- */
+  --line-length-headline: 20ch;
+  --line-length-body: 55ch;
+
+  --line-length-small: 45ch;
+  --line-length-medium: 65ch;
+  --line-length-wide: 75ch;
 
   /* -- Section spacing variables -- */
   --section-xs: var(--space-xl);
@@ -1171,7 +1177,7 @@ button.button {
 }
 
 /* -- Active (press) -- */
-button:active, .button:active {
+.button:active {
   transform: scale(0.98);
 }
 
@@ -1419,7 +1425,7 @@ body {
   margin: 0;
   font-family: var(--font-primary);
   color: var(--text-primary);
-  font-size: var(--text-body);
+  font-size: var(--body-size);
   font-weight: var(--font-weight-regular);
   background-color: var(--background-primary);
   line-height: var(--line-height-l);
@@ -1430,8 +1436,8 @@ body {
 
 /* -- Headings --
    Element defaults follow a traditional editorial scale (Major Third).
-   Display-sized hero headings live on classes (.page-headline,
-   .article-headline, .cta-headline, etc.) which pull --headline-size or
+   Display-sized hero headings live on classes (.page-title,
+   .page-headline, .article-headline, .cta-headline, etc.) which pull --headline-size or
    --title-size directly. Decoupling element from display token means
    plain <h1>/<h2> in body copy reads at a normal size, while hero
    contexts opt in to display sizing via class. */
@@ -1442,7 +1448,7 @@ h4,
 h5,
 h6 {
   font-family: var(--font-secondary);
-  font-weight: var(--font-weight-book);
+  font-weight: var(--font-weight-regular);
   margin-top: var(--space-xl);
   margin-bottom: var(--space-l);
 }
@@ -1769,7 +1775,7 @@ input[type="tel"],
 textarea,
 select {
   font-family: var(--font-primary);
-  font-size: var(--text-body);
+  font-size: var(--body-size);
   line-height: var(--line-height-l);
   color: var(--input-text);
   background-color: var(--input-background);
@@ -2194,7 +2200,7 @@ input[type="radio"]:disabled:checked {
 }
 
 .notion-form-success p {
-  font-size: var(--text-body);
+  font-size: var(--body-size);
   color: var(--text-secondary);
   margin-bottom: var(--space-l);
 }
@@ -2213,7 +2219,7 @@ input[type="radio"]:disabled:checked {
 }
 
 .access-support-success p {
-  font-size: var(--text-body);
+  font-size: var(--body-size);
   color: var(--text-secondary);
 }
 
@@ -2233,7 +2239,7 @@ summary {
   align-items: center;
   gap: var(--space-m);
   font-family: var(--font-primary);
-  font-size: var(--text-body);
+  font-size: var(--body-size);
   color: var(--text-primary);
   padding: var(--space-s) var(--space-m);
   cursor: pointer;
@@ -2273,7 +2279,7 @@ summary:focus-visible {
 details .disclosure-content {
   padding: var(--space-s) var(--space-m) var(--space-m) calc(0.5em + var(--space-s) + var(--space-m));
   font-family: var(--font-primary);
-  font-size: var(--text-body);
+  font-size: var(--body-size);
   line-height: var(--line-height-xl);
   color: var(--text-secondary);
 }
@@ -2382,7 +2388,7 @@ details .disclosure-content {
 
 .card-description {
   color: var(--text-secondary);
-  font-size: var(--text-body);
+  font-size: var(--body-size);
   margin-bottom: 0;
 
 }
@@ -2776,7 +2782,7 @@ a[data-tooltip],
 /* -- Inline code -- */
 code {
   font-family: var(--font-quaternary);
-  font-size: calc(var(--text-body) - .2em);
+  font-size: calc(var(--body-size) - .2em);
   background-color: color-mix(in srgb, var(--text-primary), var(--alpha-5));
   padding: var(--space-2xs) var(--space-xs);
   border-radius: var(--radius-xs);
@@ -2791,7 +2797,7 @@ pre {
   padding: var(--space-l);
   overflow-x: auto;
   font-family: var(--font-quaternary);
-  font-size: calc(var(--text-body) - 2px);
+  font-size: calc(var(--body-size) - 2px);
   line-height: var(--line-height-xl);
 }
 
@@ -2921,7 +2927,7 @@ abbr[title] {
   width: fit-content;
   max-width: 100%;
   /* font-variant: tabular-nums; */
-  font-size: var(--text-body);
+  font-size: var(--body-size);
   margin-bottom: var(--space-2xl);
 }
 
