@@ -1065,21 +1065,26 @@ section {
 }
 
 /* -- Text size utilities -- */
+/* Fluid via clamp(rem + vw). xsmall stays fixed at the a11y floor.    */
+/* medium reuses --body-size so paragraphs reset cleanly to body size. */
 
 .text-size-xlarge {
-  font-size: var(--font-3xl);
+  font-size: clamp(var(--font-3xl), 1rem + 1.5vw, var(--font-7xl));
+  line-height: var(--line-height-m);
 }
 
 .text-size-large {
-  font-size: var(--font-xl);
+  font-size: clamp(var(--font-xl), 1rem + 1vw, var(--font-4xl));
+  line-height: var(--line-height-l);
 }
 
 .text-size-medium {
-  font-size: var(--font-m);
+  font-size: var(--body-size);
+  line-height: var(--line-height-l);
 }
 
 .text-size-small {
-  font-size: var(--font-s);
+  font-size: clamp(var(--font-xs), 0.7rem + 0.35vw, var(--font-s));
   line-height: var(--line-height-xl);
 }
 

@@ -103,6 +103,8 @@ Each heading uses `clamp(min, fluid, max)` with primitive `--font-*` tokens at t
 
 The default paragraph style used for all running content. The `var(--body-size)` token controls the base size globally — changing it updates paragraphs, inputs, code, tables, and buttons at once. Size modifier classes let you step up or down from the default.
 
+**Fluid sizing.** Four of the five `.text-size-*` utilities are fluid — they grow with viewport width via `clamp(rem + vw, ...)`. `.text-size-xsmall` stays fixed at 14px (the accessibility floor). `.text-size-medium` resolves to `var(--body-size)` itself, so it's the cleanest way to reset a paragraph to body sizing inside a container that overrides font-size.
+
 <div class="demo-preview is-joined">
   <div class="block gap-xl">
     <div class="block gap-m">
@@ -136,13 +138,14 @@ The default paragraph style used for all running content. The `var(--body-size)`
 <p class="text-size-xsmall">Captions and metadata.</p>
 ```
 
-| Element | Token | px | Line Height | Value |
-| --- | --- | --- | --- | --- |
-| `.text-size-xlarge` | `var(--font-3xl)` | 28px | `var(--line-height-l)` | 1.4 |
-| `.text-size-large` | `var(--font-xl)` | 22px | `var(--line-height-l)` | 1.4 |
-| `p` (default) | `var(--font-m)` | 18px | `var(--line-height-l)` | 1.4 |
-| `.text-size-small` | `var(--font-s)` | 16px | `var(--line-height-xl)` | 1.6 |
-| `.text-size-xsmall` | `var(--font-xs)` | 14px | `var(--line-height-xl)` | 1.6 |
+| Element | Font Size | Range (fluid) | Line Height |
+| --- | --- | --- | --- |
+| `.text-size-xlarge` | `clamp(var(--font-3xl), 1rem + 1.5vw, var(--font-7xl))` | 28 → 48px | `var(--line-height-m)` (1.2) |
+| `.text-size-large` | `clamp(var(--font-xl), 1rem + 1vw, var(--font-4xl))` | 22 → 32px | `var(--line-height-l)` (1.4) |
+| `.text-size-medium` | `var(--body-size)` | 16 → 18px | `var(--line-height-l)` (1.4) |
+| `p` (default) | `var(--body-size)` | 16 → 18px | `var(--line-height-l)` (1.4) |
+| `.text-size-small` | `clamp(var(--font-xs), 0.7rem + 0.35vw, var(--font-s))` | 14 → 16px | `var(--line-height-xl)` (1.6) |
+| `.text-size-xsmall` | `var(--font-xs)` | 14px (fixed) | `var(--line-height-xl)` (1.6) |
 
 ---
 
