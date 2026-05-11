@@ -731,6 +731,92 @@
   }
 
   //
+  // ------- Parallax (image cover) ------- //
+  //
+  // Markup:
+  //   <div class="some-mask" data-bd-parallax>
+  //     <img src="…" alt="…">
+  //   </div>
+  //
+  // The wrapper must have overflow: hidden and a defined height (or
+  // aspect-ratio). The inner image must be TALLER than the wrapper so it has
+  // "slack" to translate through — e.g. height: 120% with object-fit: cover.
+  //
+  // Attribute values:
+  //   data-bd-parallax           → "auto" (full slack)
+  //   data-bd-parallax="auto"    → full slack
+  //   data-bd-parallax="0.5"     → 50% of slack (subtler)
+  //
+  // If a more specific target is needed inside the wrapper, mark it with
+  // [data-bd-parallax-image]; otherwise the first <img> descendant is used.
+
+  function parallaxElements(self) {
+    if (prefersReducedMotion()) return;
+
+    var masks = self.selector("[data-bd-parallax]");
+    if (!masks.length) return;
+
+    masks.forEach(function (mask) {
+      var image = mask.querySelector("[data-bd-parallax-image]")
+        || mask.querySelector("img");
+      if (!image) return;
+
+      var attr = mask.getAttribute("data-bd-parallax");
+      var intensity = 1;
+      if (attr && attr !== "" && attr.toLowerCase() !== "auto") {
+        var parsed = parseFloat(attr);
+        if (!isNaN(parsed)) intensity = Math.max(0, Math.min(2, parsed));
+      }
+
+      // Function-based y values are re-read on ScrollTrigger.refresh thanks to
+      // invalidateOnRefresh, so layout changes (resize, font load, image
+      // decode, Barba arrival) update the slack automatically. Slack is
+      // clamped to >= 0 so an undecoded image (offsetHeight: 0) doesn't
+      // invert direction until its load event triggers the refresh.
+      function getSlack() {
+        return Math.max(0, image.offsetHeight - mask.offsetHeight);
+      }
+
+      var tween = gsap.fromTo(
+        image,
+        {
+          y: function () { return -(getSlack() / 2) * intensity; }
+        },
+        {
+          y: function () { return (getSlack() / 2) * intensity; },
+          ease: "none",
+          scrollTrigger: {
+            trigger: mask,
+            start: "top bottom",
+            end: "bottom top",
+            // scrub: 1 = playhead catches up over ~1s, smoothing the motion.
+            // Higher = more lag/smoother; lower (or true) = locked to scroll.
+            scrub: 1,
+            invalidateOnRefresh: true
+          }
+        }
+      );
+
+      // Lazy / below-the-fold images often have offsetHeight: 0 at init,
+      // which makes slack collapse to 0. Refresh the trigger when the
+      // image finally decodes so the function-based y values are re-read.
+      // self.add() returns its cleanup function so the listener is removed
+      // when ctx.revert() runs at page leave.
+      if (image.tagName === "IMG" && !image.complete) {
+        self.add(function () {
+          function onLoad() {
+            if (tween.scrollTrigger) tween.scrollTrigger.refresh();
+          }
+          image.addEventListener("load", onLoad, { once: true });
+          return function () {
+            image.removeEventListener("load", onLoad);
+          };
+        });
+      }
+    });
+  }
+
+  //
   // ------- Refresh Observer ------- //
   //
 
@@ -801,7 +887,9 @@
     ctx = gsap.context(function (self) {
       textAnimations(self);
       pinElements(self);
+      parallaxElements(self);
       refreshObserve(self);
+      setupParentTriggers(currentContainer, self);
     }, currentContainer);
   };
 
@@ -814,6 +902,8 @@
       activeObserver.disconnect();
       activeObserver = null;
     }
+    activeTriggerObservers.forEach(function (o) { o.disconnect(); });
+    activeTriggerObservers = [];
     if (ctx) {
       ctx.revert();
       ctx = null;
@@ -893,42 +983,128 @@
     runBdAnimateElementsIn(container);
   };
 
-  // Single source of truth for the entry-animation vocabulary used by both
-  // the in-Barba reveal pass (runBdAnimateElementsIn → ctx-tracked) and the
-  // persistent-chrome pass (bdAnimateChromeIn → outside ctx).
-  function applyEnterAnimation(el, type, delay) {
+  // Single source of truth for the entry-animation vocabulary used by:
+  //   - the in-Barba reveal pass (runBdAnimateElementsIn → ctx-tracked)
+  //   - the persistent-chrome pass (bdAnimateChromeIn → outside ctx)
+  //   - the active-trigger pass (setupParentTriggers → ctx-tracked, fires on class flip)
+  // From/to props are split so the active-trigger pass can pre-set elements to
+  // their start state and reset them on close without duplicating the lookup.
+  function getEnterFromProps(type) {
     switch (type) {
       case "slide":
       case "slide-up":
-        gsap.fromTo(
-          el,
-          { autoAlpha: 0, y: 40 },
-          { autoAlpha: 1, y: 0, duration: 0.8, ease: "power2.out", delay: delay }
-        );
-        break;
+        return { autoAlpha: 0, y: 40 };
       case "blur-in":
-        gsap.fromTo(
-          el,
-          { autoAlpha: 0, filter: "blur(10px)" },
-          { autoAlpha: 1, filter: "blur(0px)", duration: 0.8, ease: "power2.out", delay: delay }
-        );
-        break;
+        return { autoAlpha: 0, filter: "blur(10px)" };
       case "scale":
-        gsap.fromTo(
-          el,
-          { autoAlpha: 0, scale: 0.9 },
-          { autoAlpha: 1, scale: 1, duration: 0.8, ease: "power2.out", delay: delay }
-        );
-        break;
+        return { autoAlpha: 0, scale: 0.9 };
       case "fade":
       default:
-        gsap.fromTo(
-          el,
-          { autoAlpha: 0 },
-          { autoAlpha: 1, duration: 0.8, ease: "power2.out", delay: delay }
-        );
-        break;
+        return { autoAlpha: 0 };
     }
+  }
+
+  function getEnterToProps(type, delay) {
+    var base = { duration: 0.8, ease: "power2.out", delay: delay };
+    switch (type) {
+      case "slide":
+      case "slide-up":
+        return Object.assign({ autoAlpha: 1, y: 0 }, base);
+      case "blur-in":
+        return Object.assign({ autoAlpha: 1, filter: "blur(0px)" }, base);
+      case "scale":
+        return Object.assign({ autoAlpha: 1, scale: 1 }, base);
+      case "fade":
+      default:
+        return Object.assign({ autoAlpha: 1 }, base);
+    }
+  }
+
+  function applyEnterFromState(el) {
+    gsap.set(el, getEnterFromProps(el.getAttribute("data-bd-enter")));
+  }
+
+  function applyEnterAnimation(el, type, delay) {
+    gsap.fromTo(el, getEnterFromProps(type), getEnterToProps(type, delay));
+  }
+
+  //
+  // ------- Active-state parent trigger ------- //
+  //
+  // Generic mechanism: an element marked with [data-bd-parent="<state>"] is
+  // observed for the class .is-<state> being added or removed. When added, the
+  // [data-bd-enter] descendants play their entrance via applyEnterAnimation.
+  // When removed, descendants reset to their start state silently (no exit
+  // animation) — ready to replay on next activation. Children inherit the
+  // existing [data-bd-enter] vocabulary and data-bd-delay knobs.
+  //
+  // Cleanup: observers tracked in activeTriggerObservers and disconnected by
+  // bdAnimationsCleanup. Tweens are fired via ctx.add() so ctx.revert() kills
+  // any in-flight tween on Barba leave.
+
+  var activeTriggerObservers = [];
+
+  function setupParentTriggers(scope, ctxRef) {
+    // Idempotency on re-init: drop any leftover observers before rebinding.
+    activeTriggerObservers.forEach(function (o) { o.disconnect(); });
+    activeTriggerObservers = [];
+
+    if (prefersReducedMotion()) return;
+    var root = scope || document;
+    root.querySelectorAll("[data-bd-parent]").forEach(function (parent) {
+      setupOneParentTrigger(parent, ctxRef);
+    });
+  }
+
+  function setupOneParentTrigger(parent, ctxRef) {
+    var state = parent.getAttribute("data-bd-parent");
+    if (!state) return;
+    var stateClass = "is-" + state;
+
+    var children = Array.prototype.slice.call(
+      parent.querySelectorAll("[data-bd-enter]")
+    );
+    if (!children.length) return;
+
+    // Pre-set descendants to start state so they're "off" before first fire.
+    children.forEach(applyEnterFromState);
+
+    function fireEntrance() {
+      if (!ctxRef) return;
+      ctxRef.add(function () {
+        children.forEach(function (kid) {
+          applyEnterAnimation(
+            kid,
+            kid.getAttribute("data-bd-enter"),
+            getDelayValue(kid)
+          );
+        });
+      });
+    }
+
+    function resetToStart() {
+      children.forEach(function (kid) {
+        gsap.killTweensOf(kid);
+        applyEnterFromState(kid);
+      });
+    }
+
+    var lastOn = parent.classList.contains(stateClass);
+    // Cover deep-link / SSR-open / default-active scenarios: if the parent
+    // boots already in the on-state, fire the entrance once so descendants
+    // animate in rather than sitting invisible.
+    if (lastOn) fireEntrance();
+
+    var observer = new MutationObserver(function () {
+      var nowOn = parent.classList.contains(stateClass);
+      if (nowOn === lastOn) return;
+      lastOn = nowOn;
+      if (nowOn) fireEntrance();
+      else resetToStart();
+    });
+
+    observer.observe(parent, { attributes: true, attributeFilter: ["class"] });
+    activeTriggerObservers.push(observer);
   }
 
   function runBdAnimateElementsIn(container) {

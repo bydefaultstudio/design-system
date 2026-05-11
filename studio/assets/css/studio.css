@@ -1317,6 +1317,17 @@ body.is-sidebar-collapsed .page-header {
   display: block;
 }
 
+/* Parallax — grows the inner image past 100% so bd-animations.js has
+   vertical "slack" to translate through. The negative margin-top centers
+   the image inside the mask so the JS's symmetric y-range
+   (-slack/2 → +slack/2) doesn't expose empty space at either extreme.
+   Tune per-instance with --bd-parallax-overflow
+   (e.g. style="--bd-parallax-overflow: 30%"). */
+.media-frame[data-bd-parallax] > img {
+  height: calc(100% + var(--bd-parallax-overflow, 30%));
+  margin-top: calc(var(--bd-parallax-overflow, 30%) / -2);
+}
+
 /* Fill — desktop-only modifier. Drops the aspect-ratio constraint and
    makes the media-frame fill its parent's height. Useful inside a tall
    container such as .sticky-media (which sets height to remaining
