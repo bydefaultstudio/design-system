@@ -34,7 +34,9 @@
     bounce: 1.0,        // pace multiplier
     friction: 5.0,      // damping rate
     fadeMs: 600,        // curtain fade-out duration
-    staggerRatio: 0.16  // stagger as fraction of speed
+    staggerRatio: 0.16, // stagger as fraction of speed
+    verticalBias: -0.02,// logo centre offset from viewport centre, as fraction of viewport height. 0 = geometric centre. Negative shifts up (optical centre).
+    verticalBiasMax: 20 // hard cap in px so very tall viewports don't overshoot
   };
 
   var FALL_RATIO = 0.55;
@@ -196,7 +198,9 @@
     var scale = logoW / ORIGINAL_W;
     var logoH = ORIGINAL_H * scale;
     var logoOriginX = (stageW - logoW) / 2;
-    var logoOriginY = (stageH - logoH) / 2 + Math.min(40, stageH * 0.04);
+    var biasSign = CONFIG.verticalBias < 0 ? -1 : 1;
+    var biasPx = Math.min(CONFIG.verticalBiasMax, stageH * Math.abs(CONFIG.verticalBias));
+    var logoOriginY = (stageH - logoH) / 2 + biasSign * biasPx;
 
     var pieces = [];
 
