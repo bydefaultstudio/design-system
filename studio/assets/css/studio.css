@@ -27,18 +27,6 @@
 }
 
 
-/* ------ PAGE SCROLL ------ */
-
-/* Smooth programmatic scroll (anchor links, scrollIntoView, scrollTo).
-   Does not affect wheel/trackpad input — that stays native. Gated by
-   prefers-reduced-motion to spare vestibular-sensitive users the
-   long-distance animated jumps. */
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
-}
-
 
 /* ------ TOKENS ------ */
 
@@ -200,6 +188,17 @@ body.is-sidebar-collapsed .layout {
   box-sizing: border-box;
   padding: 0 var(--studio-gap);
   transition: width var(--duration-xl) var(--ease-out);
+}
+
+.sidebar::after {
+  content: "";
+  position: absolute;
+  top: var(--studio-gap);
+  bottom: var(--studio-gap);
+  right: 0;
+  width: var(--border-s);
+  background: var(--border-faded);
+  pointer-events: none;
 }
 
 .sidebar-inner {
@@ -514,68 +513,64 @@ body.is-sound-off .sound-toggle .sound-icon-off {
    sidebar from the manifest. Card-style: padded link with a faded
    background, vertical gap between cards. -- */
 
+/* Variant is set on the parent .sidebar-slot, never on the link or its children.
+   To switch looks: change one class on the <nav>.
+     <nav class="sidebar-slot slot-minimal">  → divider-line look (current default)
+     <nav class="sidebar-slot slot-card">     → background-card look */
+
 .sidebar-slot {
   display: flex;
   flex-direction: column;
-  gap: var(--space-s);
 }
+
+/* -- Base — invariant across variants -- */
 
 .sidebar-slot-link {
   position: relative;
   display: flex;
   align-items: flex-start;
   gap: var(--studio-gap);
-  padding: var(--studio-gap);
-  background-color: var(--background-faded);
   text-decoration: none;
   color: var(--text-primary);
-  border-radius: var(--radius-s);
+  transition: background-color var(--duration-m) var(--ease-out);
 }
 
-/* Left accent — active-state indicator */
-.sidebar-slot-link::before {
+.sidebar-slot-link::after {
   content: "";
   position: absolute;
   left: 0;
-  top: 0;
+  right: 0;
   bottom: 0;
-  width: 2px;
-  background-color: color-mix(in srgb, var(--text-primary), var(--alpha-5));
-  transform: scaleY(0);
-  transform-origin: top center;
-  transition: transform var(--duration-xs) var(--ease-out);
+  height: var(--border-s);
+  transition: background-color var(--duration-m) var(--ease-out);
 }
 
-.sidebar-slot-link.is-active::before {
-  transform: scaleY(1);
-}
-
-.sidebar-slot-link.is-active .sidebar-slot-link-excerpt {
+.sidebar-slot-link.is-active .sidebar-slot-excerpt {
   color: color-mix(in srgb, var(--text-primary), var(--alpha-50));
 }
 
-.sidebar-slot-link-thumb {
+.sidebar-slot-thumb {
   flex-shrink: 0;
   height: 80px;
   aspect-ratio: 1/1;
   object-fit: cover;
 }
 
-.sidebar-slot-link-text {
+.sidebar-slot-text {
   display: flex;
   flex-direction: column;
   gap: var(--space-2xs);
   min-width: 0;
 }
 
-.sidebar-slot-link-title {
+.sidebar-slot-title {
   font-family: var(--font-secondary);
   font-size: var(--font-m);
   line-height: var(--line-height-m);
   font-weight: var(--title-weight);
 }
 
-.sidebar-slot-link-excerpt {
+.sidebar-slot-excerpt {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   line-clamp: 2;
@@ -584,6 +579,56 @@ body.is-sound-off .sound-toggle .sound-icon-off {
   font-size: var(--font-xs);
   line-height: var(--line-height-m);
   color: color-mix(in srgb, var(--text-primary), var(--alpha-50));
+}
+
+/* -- Variant: slot-minimal — divider line, no card chrome -- */
+
+.sidebar-slot.slot-minimal .sidebar-slot-link {
+  padding: var(--studio-gap);
+}
+
+.sidebar-slot.slot-minimal .sidebar-slot-link:hover,
+.sidebar-slot.slot-minimal .sidebar-slot-link.is-active {
+  background-color: var(--background-faded);
+}
+
+.sidebar-slot.slot-minimal .sidebar-slot-link.is-active:hover {
+  background-color: var(--background-darker);
+}
+
+.sidebar-slot.slot-minimal .sidebar-slot-link::after {
+  background-color: var(--border-faded);
+}
+
+/* :has(+ ...) reaches the previous sibling — CSS has no prev-sibling combinator */
+.sidebar-slot.slot-minimal .sidebar-slot-link:hover::after,
+.sidebar-slot.slot-minimal .sidebar-slot-link:has(+ .sidebar-slot-link:hover)::after,
+.sidebar-slot.slot-minimal .sidebar-slot-link.is-active::after,
+.sidebar-slot.slot-minimal .sidebar-slot-link:has(+ .sidebar-slot-link.is-active)::after,
+.sidebar-slot.slot-minimal .sidebar-slot-link:last-child::after {
+  background-color: transparent;
+}
+
+/* -- Variant: slot-card — background cards, gap separator -- */
+
+.sidebar-slot.slot-card {
+  gap: var(--space-s);
+}
+
+.sidebar-slot.slot-card .sidebar-slot-link {
+  padding: var(--studio-gap);
+  background-color: var(--background-faded);
+  border-radius: var(--radius-s);
+}
+
+.sidebar-slot.slot-card .sidebar-slot-link:hover,
+.sidebar-slot.slot-card .sidebar-slot-link.is-active,
+.sidebar-slot.slot-card .sidebar-slot-link.is-active:hover {
+  background-color: var(--background-darker);
+}
+
+.sidebar-slot.slot-card .sidebar-slot-link::after {
+  background-color: transparent;
 }
 
 /* First-load reveal — initial hidden state, cleared by initSidebarReveal()
@@ -961,7 +1006,14 @@ body.is-sidebar-collapsed .page-header {
   font-size: var(--title-size);
   font-weight: var(--title-weight);
   color: var(--text-primary);
+  font-stretch: var(--title-width);
 }
+
+
+
+
+
+
 
 .home-headline {
   margin: 0;
@@ -998,7 +1050,6 @@ body.is-sidebar-collapsed .page-header {
   inset: 0;
   visibility: hidden;
   white-space: nowrap;
-  color: var(--text-primary);
 }
 
 .cycle-word-item.is-active {
@@ -1305,12 +1356,30 @@ body.is-sidebar-collapsed .page-header {
   }
 }
 
-/* Founders — longer scroll runway per item so the sticky portrait reads
-   clearly while the bio (single paragraph) scrolls past. */
-.about-founders .scroll-stack-item {
-  min-height: 100vh;
-  padding: 40vh 0;
-  /* background-color: var(--bg-faded-3); */
+/* Editorial sticky-release header per founder. The .founder-intro
+   container's height controls how long the header dwells at the top of
+   the viewport; when its bottom passes the sticky offset, the header
+   releases and scrolls up with the bio. */
+.founder-intro {
+  min-height: 70vh;
+}
+
+.founder-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  position: sticky;
+  top: calc(var(--studio-bar-height) + var(--studio-gap));
+  padding-bottom: var(--space-3xl);
+}
+
+@media (max-width: 768px) {
+  .founder-intro {
+    min-height: 40vh;
+  }
+  .founder-header {
+    top: var(--mobile-bar-height);
+  }
 }
 
 .syeda-bio {
@@ -1367,15 +1436,15 @@ body.is-sidebar-collapsed .page-header {
 }
 
 .origin-prose {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-l);
+  columns: 2;
+  column-gap: var(--space-2xl);
   font-size: var(--font-l);
   line-height: 1.5;
   color: var(--text-primary);
 }
 
 .origin-prose p { margin: 0; }
+.origin-prose p:not(:last-child) { margin-bottom: var(--space-l); }
 
 .origin-lede {
   font-size: var(--font-2xl);
@@ -1389,7 +1458,7 @@ body.is-sidebar-collapsed .page-header {
 }
 
 @media (max-width: 768px) {
-  .origin-prose { font-size: var(--font-m); }
+  .origin-prose { font-size: var(--font-m); columns: 1; }
   .origin-lede { font-size: var(--font-xl); }
 }
 
@@ -2313,6 +2382,10 @@ body.is-mobile-nav-open .sidebar-backdrop {
     transition: transform var(--duration-s) var(--ease-out);
   }
 
+  .sidebar::after {
+    display: none;
+  }
+
   body.is-mobile-nav-open .sidebar {
     transform: translateX(0);
   }
@@ -2772,6 +2845,11 @@ body.is-animating .case-study-content {
   align-items: center;
   width: 100%;
   color: var(--text-primary);
+}
+
+a.footer-logo:hover {
+  color: var(--text-secondary);
+
 }
 
 .footer-logo .svg-logo {
@@ -3658,7 +3736,6 @@ a.case-study-card:hover {
 
 .case-study-card-title {
   margin: 0;
-  font-weight: var(--font-weight-regular);
 }
 
 /* Stat: <p> wraps the whole thing — its rules style the caption text
@@ -4070,7 +4147,6 @@ body.is-scrolling .case-study-card-logo {
 .product-spotlight .product-spotlight-title {
   margin: 0;
   font-size: var(--title-size);
-  font-weight: var(--font-weight-light);
   line-height: 1;
   letter-spacing: -0.02em;
 }

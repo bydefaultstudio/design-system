@@ -280,6 +280,7 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
   if (typeof initProductSpotlight === "function") initProductSpotlight();
   if (typeof initProducts === "function") initProducts();
   if (typeof initHeadlineCycle === "function") initHeadlineCycle();
+  if (typeof initBdCounter === "function") initBdCounter();
 
   // Re-init after Barba navigations
   // logoSlider is intentionally NOT here — it runs in the after hook's
@@ -293,6 +294,7 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
     if (typeof initProductSpotlight === "function") initProductSpotlight();
     if (typeof initProducts === "function") initProducts();
     if (typeof initHeadlineCycle === "function") initHeadlineCycle();
+    if (typeof initBdCounter === "function") initBdCounter();
   });
 
   // Belt-and-braces ScrollTrigger refresh after the loading curtain dismisses,
