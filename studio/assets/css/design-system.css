@@ -133,6 +133,13 @@
   --font-weight-extra-bold: 800;
   --font-weight-black: 900;
 
+  /* -- Font width tokens (wdth axis, applied via font-stretch) -- */
+  --font-condensed: 75%;
+  --font-narrow:    87.5%;
+  --font-normal:    100%;
+  --font-wide:      112.5%;
+  --font-expanded:  125%;
+
   /* -- Letter spacing tokens (em-based for proportional scaling) -- */
   --letter-spacing-xs: -0.03em;
   --letter-spacing-s: 0.03em;
@@ -150,6 +157,7 @@
   --headline-weight:   300;
   --headline-leading:  var(--line-height-s);
   --headline-tracking: -0.03em;
+  --headline-width: var(--font-condensed);
 
   /* Subline */
   --subline-size: var(--font-2xl);
@@ -158,9 +166,10 @@
 
   /* Title — section heads and recurring labels within a page (h2). */
   --title-size:     clamp(var(--font-2xl), 0.8rem + 2vw, var(--font-7xl));
-  --title-weight:   300;
+  --title-weight:   400;
   --title-leading:  var(--line-height-m);
-  --title-tracking: -0.01em;
+  --title-tracking: -0.04em;
+
 
   /* Label — meta rows, eyebrows, captions */
   --label-size:     var(--font-2xs);
@@ -1102,6 +1111,13 @@ section {
   text-wrap: pretty;
 }
 
+/* -- Font width utilities -- */
+[data-font-width="condensed"] { font-stretch: var(--font-condensed); }
+[data-font-width="narrow"]    { font-stretch: var(--font-narrow); }
+[data-font-width="normal"]    { font-stretch: var(--font-normal); }
+[data-font-width="wide"]      { font-stretch: var(--font-wide); }
+[data-font-width="expanded"]  { font-stretch: var(--font-expanded); }
+
 /* -- Text alignment utilities -- */
 .text-left   { text-align: left; }
 .text-center { text-align: center; }
@@ -1468,13 +1484,13 @@ h6 {
 h1 {
   font-size: clamp(var(--font-5xl), 0.8rem + 2vw, var(--font-7xl));
   line-height: var(--line-height-s);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--headline-tracking);
 }
 
 h2 {
   font-size: clamp(var(--font-4xl), 0.8rem + 1.5vw, var(--font-6xl));
   line-height: var(--line-height-m);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--title-tracking);
 }
 
 h3 {
@@ -3622,24 +3638,26 @@ input[type="range"]:disabled::-webkit-slider-thumb {
 /* ------ 35. DROP CAP ------ */
 
 /*
- * Apply .drop-cap to a <p> element to style its first letter
- * as a large decorative initial. Use on long paragraphs only —
+ * Apply .drop-cap or data-drop-cap to a <p> element to style its first
+ * letter as a large decorative initial. Use on long paragraphs only —
  * the text must wrap alongside the letter for at least 3 lines.
  */
 
-.drop-cap::first-letter {
+.drop-cap::first-letter,
+[data-drop-cap]::first-letter {
   float: left;
   font-family: var(--font-secondary);
-  font-size: 3.5rem;
+  font-size: 3rem;
   font-weight: var(--font-weight-regular);
-  line-height: 0.82;
+  line-height: 0.94;
   color: var(--text-primary);
   padding-right: var(--space-s);
   margin-top: 0.06em;
   text-transform: uppercase;
 }
 
-.drop-cap::after {
+.drop-cap::after,
+[data-drop-cap]::after {
   content: "";
   display: table;
   clear: both;

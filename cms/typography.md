@@ -355,6 +355,49 @@ font-weight: var(--font-weight-bold);
 
 ---
 
+## Font Width
+
+The width of letters along the variable font's `wdth` axis (applied via CSS `font-stretch`). Zalando Sans supports 75% to 125%, exposed here as a five-step scale from condensed to expanded. Use narrower widths for compact UI chrome; wider widths for display moments that should feel broader on the page.
+
+<div class="demo-preview is-joined">
+  <div class="block gap-s">
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Condensed — 75%</p>
+      <div class="font-4xl" data-font-width="condensed">Width is a typographic axis</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Narrow — 87.5%</p>
+      <div class="font-4xl" data-font-width="narrow">Width is a typographic axis</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Normal — 100%</p>
+      <div class="font-4xl" data-font-width="normal">Width is a typographic axis</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Wide — 112.5%</p>
+      <div class="font-4xl" data-font-width="wide">Width is a typographic axis</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Expanded — 125%</p>
+      <div class="font-4xl" data-font-width="expanded">Width is a typographic axis</div>
+    </div>
+  </div>
+</div>
+
+```html
+<h2 data-font-width="expanded">Expanded headline</h2>
+```
+
+| Token | Value | Attribute |
+| --- | --- | --- |
+| `var(--font-condensed)` | 75%    | `data-font-width="condensed"` |
+| `var(--font-narrow)`    | 87.5%  | `data-font-width="narrow"`    |
+| `var(--font-normal)`    | 100%   | `data-font-width="normal"`    |
+| `var(--font-wide)`      | 112.5% | `data-font-width="wide"`      |
+| `var(--font-expanded)`  | 125%   | `data-font-width="expanded"`  |
+
+---
+
 ## Line Height
 
 Vertical rhythm values from tight display text to loose body copy. Headings use tighter values; body text uses looser values for readability.
