@@ -822,6 +822,30 @@ function initPlayerInstance(video) {
     centerBtn.setAttribute("data-tooltip", "Play");
   }
 
+  //
+  // -- Intro wipe sync --
+  //
+  // Defer autoplay until the intro curtain (bd-intro.js) is gone, so the
+  // video appears to start in sync with the reveal. No-op when bd-intro
+  // isn't running — i.e. any page without an intro, or Barba return to home
+  // where body.is-intro-loading is absent.
+
+  if (video.autoplay && document.body.classList.contains("is-intro-loading")) {
+    video.pause();
+    try { video.currentTime = 0; } catch (e) {}
+
+    var introWatchdog = setTimeout(function fallback() {
+      video.play().catch(function () {});
+      syncPausedState();
+    }, 4000);
+
+    document.addEventListener("bd:intro-complete", function startWithReveal() {
+      clearTimeout(introWatchdog);
+      video.play().catch(function () {});
+      syncPausedState();
+    }, { once: true });
+  }
+
   syncPausedState();
 
   //
