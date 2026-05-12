@@ -52,6 +52,56 @@
   font-weight: 700; font-style: italic; font-display: swap;
 }
 
+/* Trust 3a — loaded via Adobe Typekit (use.typekit.net/wgr3lwl.css).
+   The kit's <link> tag lives in each page's <head>; no local @font-face here. */
+
+/* ES Face — self-hosted (Light, Regular, Medium, SemiBold, Bold + italics) */
+@font-face {
+  font-family: "ES Face";
+  src: url("../fonts/es-face/ESFace-Light.otf") format("opentype");
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "ES Face";
+  src: url("../fonts/es-face/ESFace-LightItalic.otf") format("opentype");
+  font-weight: 300; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "ES Face";
+  src: url("../fonts/es-face/ESFace-Regular.otf") format("opentype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "ES Face";
+  src: url("../fonts/es-face/ESFace-Italic.otf") format("opentype");
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "ES Face";
+  src: url("../fonts/es-face/ESFace-Medium.otf") format("opentype");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "ES Face";
+  src: url("../fonts/es-face/ESFace-MediumItalic.otf") format("opentype");
+  font-weight: 500; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "ES Face";
+  src: url("../fonts/es-face/ESFace-SemiBold.otf") format("opentype");
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "ES Face";
+  src: url("../fonts/es-face/ESFace-Bold.otf") format("opentype");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "ES Face";
+  src: url("../fonts/es-face/ESFace-BoldItalic.otf") format("opentype");
+  font-weight: 700; font-style: italic; font-display: swap;
+}
+
 
 /* ------ 1. BRAND TOKENS ------ */
 
@@ -63,7 +113,16 @@
 :root {
   /* -- Typography -- */
   --font-primary: "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-secondary: "Zalando Sans", "trust-3a","ivypresto-headline", "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", serif;
+
+  /* Heading font candidates — switch --font-secondary between these two stacks
+     to A/B between Trust 3a (Typekit) and ES Face (self-hosted). Both stay
+     loaded; only the active stack wins on h1–h6 + .post-title. */
+  --font-trust-3a: "trust-3a", "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", serif;
+  --font-es-face: "ES Face", "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", serif;
+
+  --font-secondary: var(--font-es-face);
+  /* --font-secondary: var(--font-es-face); */
+
   --font-tertiary: "Bugrino", sans-serif;
   --font-quaternary: "IBM Plex Mono", monospace;
 
@@ -154,7 +213,7 @@
 
   /* Headline — the biggest thing on a page; one per page (h1). */
   --headline-size:     clamp(var(--font-3xl), 0.8rem + 3vw, var(--font-9xl));
-  --headline-weight:   300;
+  --headline-weight:   500;
   --headline-leading:  var(--line-height-s);
   --headline-tracking: -0.03em;
   --headline-width: var(--font-condensed);
@@ -169,6 +228,7 @@
   --title-weight:   400;
   --title-leading:  var(--line-height-m);
   --title-tracking: -0.04em;
+  --title-family: var(--font-primary);
 
 
   /* Label — meta rows, eyebrows, captions */
@@ -1159,7 +1219,7 @@ button.button {
   --button-bg: var(--button-color);
   --button-border: var(--button-color);
   --button-text-color: var(--text-inverted);
-  --button-font: var(--font-secondary);
+  --button-font: var(--font-primary);
   --button-text-size: var(--font-m);
   --button-padding-y: var(--space-l);
   --button-padding-x: var(--space-xl);
@@ -1475,10 +1535,10 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-secondary);
   font-weight: var(--font-weight-regular);
   margin-top: var(--space-xl);
   margin-bottom: var(--space-l);
+  font-family: var(--title-family);
 }
 
 h1 {
