@@ -4,6 +4,40 @@
 
 **13 commits ahead of `origin/main`. Nothing pushed.** Working tree clean except untracked `deno.lock`.
 
+## Active Plan — Studio launch punch list
+
+Full plan: `~/.claude/plans/i-am-working-ont-quiet-toucan.md`
+
+Studio is functionally close to done — pages, JS modules, Barba transitions, contact-form backend (Apps Script live), feed system, and Netlify config are all complete. Copy + media are user-owned and out of scope. Four work streams remain before launch, in priority order. One commit per stream.
+
+1. **Responsive — targeted CSS fixes** (6 concrete gaps)
+   - `studio.css:1239–1241` — clamp `.feed-headline` (10vw) and `.feed-subline` (2vw) so small phones stay legible
+   - `studio.css:278` — `.intro-block` mobile padding override (drop `--space-3xl` → `--space-l/xl` at ≤768px)
+   - `cdn/studio/css/hero.css:9` — `#key-visual-container` `100vh` → `100svh` for short devices
+   - `studio.css:1589–1600` — `.article-meta` add `flex-wrap: wrap`
+   - Visual sanity check 320/375/414/768/960px on all L0/L1 + sample L2
+   - Mobile drawer JS already wired in `studio-nav.js` — verify only, no rebuild
+   - Breakpoint-strategy unification deferred
+
+2. **SEO — full sweep**
+   - Create `studio/robots.txt` (allow all, point to sitemap, disallow `/styleguide.html`)
+   - Create `studio/sitemap.xml` via new `studio/cms/generator/lib/build-sitemap.js` (reuse `build-manifest.js` discovery); wire into `gen` script
+   - Create `studio/assets/images/og/og-default.jpg` (1200×630) — every page currently references a file that doesn't exist
+   - Extend L2 generator template to read `og:` front-matter from `studio/cms/articles/*.md` and `studio/cms/work/*.md`; fall back to default
+
+3. **Contact form — finish state styling**
+   - Hash-URL preview helper already wired (`studio-contact.js:690–700`). Sweep each state on `localhost:2000`:
+   - Done: `#success`, `#network`. Outstanding: `#sending`, `#selected`, `#error` (per-field validation), `#dialog` (abandon), `#sheet` (mobile bottom sheet)
+   - Replace any remaining `data-booking-url` placeholders with real Google Calendar URL (or remove if booking is post-launch)
+
+4. **Analytics + cookie consent — wire from zero** (launch blocker)
+   - GA4 + gtag.js (no GTM unless reason emerges)
+   - Build `studio/assets/js/studio-consent.js` — minimal accept/reject/preferences banner, `localStorage` key `studio.consent.v1`, default deny. Wire `[data-cookie-preferences]` in footer to re-open.
+   - Apply §18 per-page asset wiring: 8 hand-authored sources + L2 generator template, `window.initConsent` exposed, two call sites in `studio.js` (DOMContentLoaded + `studio:after-nav`)
+   - Fire `contact_submit` event in `studio-contact.js` on Apps Script success path (~line 432)
+
+**Out of scope (deferred):** copy + media (user-owned); feed post-submit recommendations Phase 2 (tag filtering — already commented in `studio-contact.js:486–493`); breakpoint-strategy unification; per-page OG for L0/L1 pages.
+
 ## Unpushed commits (top → bottom = newest → oldest)
 
 ```
