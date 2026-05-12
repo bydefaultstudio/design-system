@@ -76,11 +76,14 @@ function initFeedFilters() {
     var feed = document.querySelector("[data-feed]");
     if (!feed) return;
 
-    // Already active — just scroll to feed top
+    // Anchor on the .content-feed grid itself. scrollIntoView lands its top
+    // below the sticky filter bar (see .content-feed { scroll-margin-top } in
+    // studio.css). The grid is non-sticky so its bounding rect is reliable.
+    var anchor = feed;
+
+    // Already active — just scroll to the feed top
     if (btn.classList.contains("is-active")) {
-      var stickyOffset = readCssVarPx("--studio-bar-height") + readCssVarPx("--studio-gap");
-      var feedTop = feed.getBoundingClientRect().top + window.scrollY - stickyOffset;
-      window.scrollTo({ top: Math.max(0, feedTop), behavior: "smooth" });
+      anchor.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
 
@@ -122,6 +125,17 @@ function initFeedFilters() {
 
     // Phase 2: after hide completes, reflow + reveal + FLIP
     setTimeout(function hideAndShow() {
+      // Lock the section to its current height ONLY when the user is past the
+      // anchor. The page-shrink from items going hidden would otherwise cause
+      // the browser to auto-clamp scrollY (visible jump) before the smooth
+      // scroll runs. With min-height held, the page stays tall through the
+      // scroll → no clamp → smooth scroll lands cleanly.
+      var pastAnchor = anchor.getBoundingClientRect().top < 0;
+      var lockedHeight = pastAnchor ? anchor.offsetHeight : 0;
+      if (lockedHeight) {
+        anchor.style.minHeight = lockedHeight + "px";
+      }
+
       // Remove hidden items from flow
       toHide.forEach(function hide(item) {
         item.hidden = true;
@@ -153,10 +167,28 @@ function initFeedFilters() {
         });
       }
 
-      // Scroll after DOM has updated
-      var stickyOffset = readCssVarPx("--studio-bar-height") + readCssVarPx("--studio-gap");
-      var feedTop = feed.getBoundingClientRect().top + window.scrollY - stickyOffset;
-      window.scrollTo({ top: Math.max(0, feedTop), behavior: "smooth" });
+      // Phase 4: after FLIP settles, smooth-scroll to the section. CSS
+      // scroll-margin-top on .home-feed handles the offset declaratively.
+      setTimeout(function scrollAfterSettle() {
+        anchor.scrollIntoView({ behavior: "smooth", block: "start" });
+
+        // Release the height lock once the scroll has landed. The section
+        // then settles to its natural shorter height — that change happens
+        // below the user's viewport, so it's invisible.
+        if (!lockedHeight) return;
+        if ("onscrollend" in window) {
+          window.addEventListener("scrollend", function release() {
+            anchor.style.minHeight = "";
+          }, { once: true });
+        } else {
+          // Safari <18.2 fallback. Generous timeout so the release never fires
+          // while a long smooth scroll is still in flight (which would defeat
+          // the lock and cause the very clamp jump we're preventing).
+          setTimeout(function release() {
+            anchor.style.minHeight = "";
+          }, 1500);
+        }
+      }, flipDuration);
     }, hideDuration);
   });
 }

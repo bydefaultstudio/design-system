@@ -95,7 +95,6 @@
 }
 
 .text-label {
-  font-family: var(--font-secondary);
   font-size: var(--label-size);
   font-weight: var(--label-weight);
   line-height: var(--label-leading);
@@ -114,7 +113,6 @@
 /* ------ LABEL ROLE ------ */
 
 .label {
-  font-family: var(--font-secondary);
   font-size: var(--label-size);
   font-weight: var(--label-weight);
   line-height: var(--label-leading);
@@ -496,7 +494,6 @@ body.is-sound-off .sound-toggle .sound-icon-off {
   color: var(--text-faded);
   padding: 0 var(--studio-gap);
   margin: 0 0 var(--space-xs) 0;
-  font-family: var(--font-secondary);
   font-weight: var(--title-weight);
   font-size: var(--font-2xl);
   text-transform: none;
@@ -564,7 +561,6 @@ body.is-sound-off .sound-toggle .sound-icon-off {
 }
 
 .sidebar-slot-title {
-  font-family: var(--font-secondary);
   font-size: var(--font-m);
   line-height: var(--line-height-m);
   font-weight: var(--title-weight);
@@ -590,6 +586,7 @@ body.is-sound-off .sound-toggle .sound-icon-off {
 .sidebar-slot.slot-minimal .sidebar-slot-link:hover,
 .sidebar-slot.slot-minimal .sidebar-slot-link.is-active {
   background-color: var(--background-faded);
+  border-radius: var(--radius-s);
 }
 
 .sidebar-slot.slot-minimal .sidebar-slot-link.is-active:hover {
@@ -993,6 +990,15 @@ body.is-sidebar-collapsed .page-header {
 .home-wrapper {
 }
 
+/* Filter-click target. scrollIntoView on the grid lands its top below the
+   sticky filter bar with a small clearance. The sticky bar stays stuck at
+   viewport top; the .feed-masterhead intro scrolls off-screen.
+   Anchoring on .section-header directly would be wrong — it's position:
+   sticky and its bounding rect collapses to 0 when stuck. */
+.content-feed {
+  scroll-margin-top: var(--studio-bar-height);
+}
+
 
 /* ------ PAGE INTRO (shared) ------ */
 
@@ -1042,6 +1048,7 @@ body.is-sidebar-collapsed .page-header {
    here it's inline after "Make your content" and visible as a baseline jog. */
 #product-spotlight-heading .cycle-word {
   padding-bottom: 0;
+  overflow: inherit;
 }
 
 .cycle-word-item {
@@ -1075,7 +1082,6 @@ body.is-sidebar-collapsed .page-header {
 }
 
 .page-subline {
-  font-family: var(--font-secondary, var(--font-primary));
   font-size: var(--subline-size);
   font-weight: var(--subline-weight);
   line-height: var(--line-height-l);
@@ -1122,7 +1128,7 @@ body.is-sidebar-collapsed .page-header {
 }
 
 .home-stats-figure {
-  font-size: var(--font-6xl);
+  font-size: var(--font-7xl);
   font-family: var(--font-tertiary);
   font-weight: var(--font-weight-semi-bold);
   line-height: 1;
@@ -1216,7 +1222,31 @@ body.is-sidebar-collapsed .page-header {
  * and the columns reflow automatically — no JS redistribution needed.
  */
 
+.feed-masterhead {
+  padding: var(--space-8xl) var(--space-m);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: var(--space-l);
 
+}
+
+.feed-masterhead > * {
+  margin: 0;
+}
+
+.feed-headline {
+  font-family: var(--font-secondary);
+  font-size: 10vw;
+  font-weight: 600;
+}
+
+.feed-subline {
+  font-size: 2vw;
+  color: var(--text-faded);
+  font-style: italic;
+  font-family: var(--font-secondary);
+}
 
 .content-feed {
   padding-top: var(--feed-gap);
@@ -1318,7 +1348,6 @@ body.is-sidebar-collapsed .page-header {
    of tag (article, div, etc.). Add the class on every direct child of
    .scroll-stack — same pattern as .process-step inside .process-steps. */
 .scroll-stack-item {
-  min-height: 50vh;
   display: flex;
   flex-direction: column;
   justify-content: center;     /* default — items vertically centred */
@@ -1338,6 +1367,14 @@ body.is-sidebar-collapsed .page-header {
 .scroll-stack[data-align="top"]    .scroll-stack-item { justify-content: flex-start;    }
 .scroll-stack[data-align="bottom"] .scroll-stack-item { justify-content: flex-end;      }
 .scroll-stack[data-align="space"]  .scroll-stack-item { justify-content: space-between; }
+
+
+.about-beliefs .scroll-stack-item {
+    border-bottom: var(--border-s) solid var(--border-faded);
+    padding: var(--space-8xl) var(--space-l);
+
+}
+
 
 @media (max-width: 768px) {
   .sticky-media {
@@ -1360,6 +1397,12 @@ body.is-sidebar-collapsed .page-header {
    container's height controls how long the header dwells at the top of
    the viewport; when its bottom passes the sticky offset, the header
    releases and scrolls up with the bio. */
+
+.founder-erlen {
+  border-bottom: var(--border-s) solid var(--border-faded);
+
+}
+
 .founder-intro {
   min-height: 70vh;
 }
@@ -1371,6 +1414,13 @@ body.is-sidebar-collapsed .page-header {
   position: sticky;
   top: calc(var(--studio-bar-height) + var(--studio-gap));
   padding-bottom: var(--space-3xl);
+}
+
+.founder-header h2 {
+  font-stretch: var(--font-condensed);
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: var(--headline-size);
 }
 
 @media (max-width: 768px) {
@@ -1438,8 +1488,6 @@ body.is-sidebar-collapsed .page-header {
 .origin-prose {
   columns: 2;
   column-gap: var(--space-2xl);
-  font-size: var(--font-l);
-  line-height: 1.5;
   color: var(--text-primary);
 }
 
@@ -1864,7 +1912,6 @@ article.article {
 
 .post-title {
   margin: 0;
-  font-family: var(--font-secondary);
   font-weight: var(--title-weight);
   color: var(--text-primary);
   font-size: var(--font-2xl);
@@ -2207,7 +2254,6 @@ body.is-case-study-open .case-study-toggle-wrap .case-study-toggle-icon-close {
 /* -- Info panel typography -- */
 
 .case-study-content-inner h2 {
-  font-family: var(--font-secondary);
   margin: 0;
 }
 
@@ -3094,8 +3140,8 @@ a.footer-logo:hover {
 
 /* Parent items */
 :is(.services-accordion, .capabilities-accordion) [data-depth="0"] > .accordion-header .accordion-title {
-  font-family: var(--font-secondary);
   font-size: var(--font-5xl);
+  font-family: var(--title-family);
 }
 
 /* Child items */
@@ -3106,7 +3152,6 @@ a.footer-logo:hover {
 
 
 :is(.services-accordion, .capabilities-accordion) [data-depth="1"] .accordion-header {
-  font-family: var(--font-secondary);
   font-size: var(--font-2xl);
 }
 
@@ -3539,7 +3584,6 @@ a.footer-logo:hover {
 
 .sg-eyebrow {
   display: block;
-  font-family: var(--font-secondary);
   font-size: var(--label-size);
   font-weight: var(--label-weight);
   letter-spacing: var(--label-tracking);
@@ -3754,7 +3798,7 @@ a.case-study-card:hover {
   margin-bottom: var(--space-xs);
   font-family: var(--font-tertiary);
   font-weight: var(--font-weight-medium);
-  font-size: var(--font-5xl);
+  font-size: var(--font-7xl);
   color: var(--text-primary);
 }
 
@@ -3901,7 +3945,6 @@ body.is-scrolling .case-study-card-logo {
 }
 
 .testimonial-quote {
-  font-family: var(--font-secondary);
   font-size: var(--font-3xl);
   line-height: 1.3;
   color: var(--text-primary);
@@ -4032,6 +4075,7 @@ body.is-scrolling .case-study-card-logo {
 
 [data-ratio="1:1"]  { aspect-ratio: 1 / 1; }
 [data-ratio="2:1"]  { aspect-ratio: 2 / 1; }
+[data-ratio="3:1"]  { aspect-ratio: 3 / 1; }
 [data-ratio="4:3"]  { aspect-ratio: 4 / 3; }
 [data-ratio="3:2"]  { aspect-ratio: 3 / 2; }
 [data-ratio="3:4"]  { aspect-ratio: 3 / 4; }
