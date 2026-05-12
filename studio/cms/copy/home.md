@@ -14,7 +14,7 @@ The homepage answers three questions fast: what do you build, why does it work, 
 | Case Studies | Prove the claim. Real clients, real outcomes. |
 | What We Build | Show the product range. Let the reader self-select by use case. |
 | Clients | Build trust. Logos, testimonials, specificity about who you work with. |
-| Feed | Keep the site alive. Signal momentum. |
+| Labs | Keep the site alive. Signal momentum. |
 | Closing CTA | Convert. One clear next step. |
 
 ---
@@ -30,6 +30,9 @@ The homepage answers three questions fast: what do you build, why does it work, 
 | OG image alt | By Default |
 | Twitter title | By Default \| Creative Technology Studio |
 | Twitter description | (matches meta description) |
+| Barba `data-page-title` | By Default \| Creative Technology Studio |
+| Barba `data-page-description` | We build the digital experiences that turn audiences into participants. By Default is a creative technology studio working with brands and publishers worldwide. |
+| Barba `data-page-eyebrow` | (empty — home has no eyebrow) |
 
 ---
 
@@ -68,7 +71,7 @@ participants *(default / SR-only fallback)*, explorers, advocates, customers, fa
 
 `Subline`
 
-We're a creative technology studio that builds the digital experiences brands and publishers need to earn attention, hold it, and turn it into something that lasts.
+A creative technology studio helping brands build digital experiences that turn attention into action.
 
 `CTAs`
 
@@ -90,8 +93,8 @@ Why interactive?
 
 `Headline (h2, two-tone)`
 
-- Primary: **Attention is shrinking.**
-- Faded: **Memory is rare.**
+- Primary: **Attention is hard to earn.**
+- Faded: **It's even harder to keep.**
 
 `Stat 1`
 
@@ -146,11 +149,15 @@ End icon: → /products.html (a11y label **See all products**)
 
 `Headline (h2)`
 
-Interactive products built for the moments that matter.
+Make your content *[cycling word]*
+
+`Cycling word options (animation: bounce-drop, rendered in text-faded)`
+
+interactive *(default / SR-only fallback)*, engaging, impactful, immersive, shareable
 
 `Lead paragraph`
 
-Purpose-built formats that work on their own or stack together depending on the brief. We handle the creative, the build, and the performance reporting, so you always know what landed and what to do next.
+Every product is built around one idea: audience transformation. Not just reaching people, but turning attention into revenue.
 
 ### 01. Shop
 
@@ -165,7 +172,7 @@ Purpose-built formats that work on their own or stack together depending on the 
 
 | Field | Copy |
 | --- | --- |
-| Subline | A different experience for every visitor. |
+| Subline | A tailored experience for every visitor. |
 | Description | Experiences that adapt in real time to each visitor's interests, guiding them through your products, places, or stories based on what they actually care about. |
 | CTA label | Match intent |
 | Link | /products.html#personalise |
@@ -221,11 +228,16 @@ Slides injected by `studio-testimonials.js`. Controls: progress bar, pause toggl
 
 ---
 
-## Section 07 | Feed (dynamic)
+## Section 07 | Labs (dynamic feed)
 
 `Section header`
 
-Feed
+Labs
+
+`Feed masterhead`
+
+- Headline: **Labs**
+- Subline: Art, Design & Code
 
 `Feed filter buttons (segmented control)`
 
@@ -245,15 +257,15 @@ Let's talk
 
 `Headline (h2)`
 
-Ready to build something worth remembering?
+Let's build something together.
 
 `Paragraph`
 
-Whether it's a brand, an experience, or a campaign, the best work starts with a conversation. Tell us what you're building toward and we'll show you what's possible.
+Every project starts with a conversation. Tell us what you're building toward and we'll take it from there.
 
 `Button`
 
-Book a discovery call → /contact.html
+Book a call → /contact.html
 
 ---
 

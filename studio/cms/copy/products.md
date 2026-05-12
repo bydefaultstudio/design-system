@@ -71,7 +71,7 @@ Your products deserve more than a grid. SHOP is a scroll that lets people fall f
 
 `CTA`
 
-**Start a Project** → /contact.html
+**Book a call** → /contact.html
 
 ---
 
@@ -83,7 +83,7 @@ Your products deserve more than a grid. SHOP is a scroll that lets people fall f
 
 `Tagline`
 
-A unique experience for every visitor.
+A tailored experience for every visitor.
 
 `Description`
 
@@ -99,7 +99,7 @@ Experiences that adapt in real time to each visitor's interests — guiding them
 
 `CTA`
 
-**Start a Project** → /contact.html
+**Book a call** → /contact.html
 
 ---
 
@@ -127,7 +127,7 @@ Deep-scroll experiences that turn brand stories, reports, and announcements into
 
 `CTA`
 
-**Start a Project** → /contact.html
+**Book a call** → /contact.html
 
 ---
 
@@ -139,7 +139,7 @@ Deep-scroll experiences that turn brand stories, reports, and announcements into
 
 `Tagline`
 
-Make data fun to experience.
+Make complex data fun to experience.
 
 `Description`
 
@@ -155,7 +155,7 @@ Information that performs. INFORM turns dry research into an experience your aud
 
 `CTA`
 
-**Start a Project** → /contact.html
+**Book a call** → /contact.html
 
 ---
 
@@ -183,7 +183,7 @@ Take your audience on a journey through real places — zoom in, explore, discov
 
 `CTA`
 
-**Start a Project** → /contact.html
+**Book a call** → /contact.html
 
 ---
 

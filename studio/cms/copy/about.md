@@ -11,6 +11,19 @@
 
 ---
 
+## Barba container data
+
+| Attribute | Value |
+| --- | --- |
+| data-barba-namespace | about |
+| data-level | 1 |
+| data-order | 1 |
+| data-page-eyebrow | About |
+| data-page-title | About — By Default |
+| data-page-description | By Default is a creative technology studio founded by two neurodivergent creatives, built around a belief that inclusive design should be the default standard. |
+
+---
+
 ## Page header (persistent top bar — L1+ pages)
 
 `Eyebrow`
@@ -35,7 +48,7 @@ A creative technology studio in London, founded by two neurodivergent creatives.
 
 `Hero image`
 
-Placeholder (1920 × 1080), 2:1 ratio
+Placeholder (1920 × 1280), 2:1 ratio
 alt: *(decorative — empty alt)*
 
 ---
@@ -48,7 +61,7 @@ What we believe
 
 `Sticky media (right column, desktop)`
 
-Placeholder image (600 × 800), 5:4 ratio
+Placeholder image (1000 × 800), 3:4 ratio
 alt: *(decorative)*
 
 `Scroll stack (left column) — four belief items`
@@ -111,6 +124,8 @@ Where the brand goes from concept to materials your team can actually use. We pr
 
 `Button` → /contact.html?from=branding
 
+Book a call
+
 ---
 
 ### Capability 02 — Digital Experiences
@@ -141,6 +156,8 @@ Nothing we build stops needing work after launch. Ongoing maintenance, security 
 
 `Button` → /contact.html?from=experiences
 
+Book a call
+
 ---
 
 ### Capability 03 — Digital Campaigns
@@ -167,6 +184,8 @@ Making sure a campaign reaches and represents the audiences it speaks to. We wor
 
 `Button` → /contact.html?from=campaigns
 
+Book a call
+
 ---
 
 ## Section 04 — Our story
@@ -179,7 +198,7 @@ Our story
 
 (h2): Started in a small flat in Battersea.
 
-`Body`
+`Body` (first paragraph carries `data-drop-cap`)
 
 We started By Default in 2023. Two neurodivergent creatives in a small flat in Battersea, London, having a conversation that changed everything. Syeda said, *"Why don't we start our own agency?"* Erlen, never scared of a challenge, said, *"Sure, let's do it."* Little did we know it would be the hardest thing we'd ever do.
 
@@ -191,7 +210,7 @@ That belief gave us our name. Inclusive design shouldn't be something you opt in
 
 ## Section 05 — Founders
 
-Sticky-stack layout: each founder gets a sticky portrait beside a scroll-stack with a role+name cluster and a multi-paragraph bio. Mirror layout — Erlen image right, Syeda image left.
+Sticky-stack layout: each founder gets a sticky portrait beside a scroll-stack with a role+name cluster (wrapped in `<header class="founder-header">` inside `<div class="founder-intro">`) and a multi-paragraph bio with one pull-quote. Mirror layout — Erlen image right, Syeda image left.
 
 `Eyebrow`
 
@@ -212,7 +231,7 @@ Co-Founder, CEO & Head of Innovation
 
 Erlen Masson
 
-`Bio`
+`Bio` (first paragraph carries `data-drop-cap`)
 
 An award-winning designer, technologist, and innovator often described by clients as a "creative genius." As a kid, a teacher once told him, "He'll never amount to anything."
 
@@ -221,6 +240,10 @@ Erlen struggled with dyslexia growing up. Reading and writing never came easily,
 With over a decade of experience leading multi-disciplinary creative teams for culture-defining brands, including TIME Inc., Warner, and HYPEBEAST, and working on digital campaigns for Burberry, Moncler, and Nike.
 
 Erlen has helped shape how global audiences experience digital brand storytelling in new and innovative ways.
+
+`Pull-quote`
+
+> "The difference between a brand that gets noticed and a brand that gets remembered is participation. Content builds the trust that advertising can't buy. Media companies understand this. Every brand should."
 
 At By Default, Erlen leads innovation, building interactive technology that lets the studio design and deliver digital experiences at speed and scale without compromising creativity. He also leads conversations with businesses and industry peers on AI in design and digital spaces, championing its role in amplifying human creativity rather than replacing it.
 
@@ -241,15 +264,17 @@ Co-Founder & Strategy Director
 
 Syeda Masson
 
-`Bio`
+`Bio` (first paragraph carries `data-drop-cap`)
 
-Syeda begins every project with one question: *"How should this make someone feel?"*
-
-A brand and business strategist who thinks in systems, patterns and connecting big-picture vision to structured execution. Mapping how culture and behaviour shifts how consumers see and engage with modern brands today.
+Syeda begins every project with one question: *"How should this make someone feel?"* A brand and business strategist who thinks in systems, patterns and connecting big-picture vision to structured execution. Mapping how culture and behaviour shifts how consumers see and engage with modern brands today.
 
 Her decade long experience spans across luxury fashion brands, retail and digital commerce, where she's worked for Isabel Marant, Rick Owens, ASOS, Diesel, Selfridges and supported start up brands to launch.
 
 Those years grounded her belief in, 'feelings shape memory' and 'sweating the little details' others miss is what gets you remembered. A philosophy that continues to guide how she leads and builds brand experiences today.
+
+`Pull-quote`
+
+> "Inclusion isn't about designing for everyone. That's impossible. It starts with understanding who you're excluding and why, and building them in. The brands willing to do that work are the ones nobody else can compete with."
 
 Embracing her neurodiversity as a leader, she combines her divergent thinking which gives her a unique lens in viewing the world.
 
@@ -295,50 +320,54 @@ We stay accountable after launch. Everything we build is tested, optimised, and 
 
 ---
 
-## Section 07 — Let's talk (tabbed CTA)
+## Section 07 — Closing CTA
 
 `Eyebrow`
 
 Let's talk
 
-### Tab 01 — For Brands
+`Headline`
 
-`Heading`
+(h2): Let's build something together.
 
-(h2): Ready to turn your audience into participants?
+`Paragraph`
 
-`Description`
+Every project starts with a conversation. Tell us what you're building toward and we'll take it from there.
 
-The brands building for participation right now are the ones being remembered. Let's talk about where yours fits.
+`Button` → /contact.html
 
-`Button`
+Book a call
 
-Book a call → /contact.html?from=brand
+---
 
-### Tab 02 — For Publishers
+## Section 08 — Footer
 
-`Heading`
+`Explore` (nav column, left)
 
-(h2): Ready to turn your audience into premium inventory?
+- Home → /
+- Work → /work.html
+- News → /news.html
 
-`Description`
+`Brand` (centre column)
 
-Interactive is how publishers win larger partnership budgets and keep them. Tell us what you're building toward — we'll show you the formats your partners will pay for.
+By Default logo → /
 
-`Button`
+`Tagline`
 
-Book a call → /contact.html?from=publisher
+A *different* standard
 
-### Tab 03 — For Agencies
+`Get in touch` (nav column, right)
 
-`Heading`
+- newbiz@bydefault.studio → mailto:newbiz@bydefault.studio
+- LinkedIn → https://www.linkedin.com/company/bydefaultstudio/
 
-(h2): Ready to bring interactive to the pitch without building it?
+`Copyright`
 
-`Description`
+© 2025 ByDefault
 
-We work as the specialist partner behind media and creative agencies. Tell us what your client needs — we come prepared.
+`Legal` (nav row, bottom)
 
-`Button`
-
-Book a call → /contact.html?from=agency
+- Terms of Use → /terms.html
+- Privacy Notice → /privacy.html
+- Cookie Preferences (button — opens cookie preferences)
+- Accessibility → /accessibility.html
