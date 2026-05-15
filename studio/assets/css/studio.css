@@ -4264,3 +4264,22 @@ body.is-scrolling .case-study-card-logo {
     aspect-ratio: 16 / 9;
   }
 }
+
+
+/* ------ BOOK A CALL ------ */
+
+/* Full-viewport Google Appointment Schedule iframe.
+   .page-wrapper already adds padding-top: var(--studio-bar-height) on L1 pages,
+   so the iframe height is the remaining viewport space below the fixed page header. */
+.booking-iframe {
+  display: block;
+  width: 100%;
+  height: calc(100dvh - var(--studio-bar-height));
+  border: 0;
+}
+
+@media (max-width: 768px) {
+  .booking-iframe {
+    height: calc(100dvh - var(--mobile-bar-height) - var(--studio-bar-height));
+  }
+}
