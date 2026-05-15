@@ -2,8 +2,8 @@
  * Script Purpose: Studio Barba init — hierarchy-aware page transitions
  * Author: By Default
  * Created: 2026-04-11
- * Version: 0.4.0
- * Last Updated: 2026-04-23
+ * Version: 0.6.0
+ * Last Updated: 2026-05-15
  *
  * Architecture:
  *
@@ -28,13 +28,13 @@
  * Scenario rules:
  *   home → anything       open   (new page appears over the floor)
  *   anything → home       close  (current page leaves, floor revealed)
- *   non-home → non-home   swap   (conveyor — sibling exchange)
+ *   non-home → non-home   swap   (reuses push-up animation — asymmetric)
  *   same page / unknown   fade   (crossfade fallback)
  *
  * Reduced motion: instant swap.
  */
 
-// Studio Barba v0.4.0
+// Studio Barba v0.6.0
 
 // Flag set by click handler on .next-read — consumed once by resolveScenario
 var _nextReadNav = false;
@@ -99,7 +99,7 @@ function resolveScenario(fromEl, toEl) {
   // Home → Anything: open
   if (safeFromLevel === 0 && safeToLevel > 0) return "open";
 
-  // Non-home → Non-home: swap (conveyor)
+  // Non-home → Non-home: swap (reuses push-up)
   if (safeFromLevel > 0 && safeToLevel > 0) return "swap";
 
   // Same page or unknown
@@ -195,7 +195,7 @@ var MOTION = {
 var TRANSITION_MAP = {
   open:  "slide-up",
   close: "slide-down",
-  swap:  "conveyor-up",
+  swap:  "push-up",
   push:  "push-up",
   fade:  "fade",
 };
@@ -216,13 +216,26 @@ var HOME_SCALE_DOWN = 0.96;
 var HOME_DIM_OPACITY = 0.7;
 var HOME_TRANSFORM_ORIGIN = "50% 0%";
 
+// Page-transition travel distance. Used by slide-down's leave (close) and
+// slide-up's enter (open) so the two animations are true mirrors of each
+// other — same magnitude, opposite direction. 100vh = exactly one viewport
+// height. Paired with the clip-path applied to the leaving container in
+// studioLeave on close, so a scrolled article slides cleanly out as one
+// rigid strip — no content-whip.
+var PAGE_TRAVEL = "100vh";
+
+// All page transitions use PAGE_TRAVEL (100vh) — see clip-path in studioLeave for content-whip prevention on scrolled pages.
 var TRANSITIONS = {
 
   // -- slide-up --
-  // Default for "open". New page rises from below; home (the leaving
-  // container) scales down slightly and dims — selling the layered depth
-  // of the page model. Transform-origin: 50% 0% so the scale reads as
-  // "receding into the background", not "shrinking inward".
+  // Default for "open". New page rises one viewport height from below
+  // (PAGE_TRAVEL = 100vh → 0). Home (the leaving container) stays
+  // anchored in place but scales down slightly and dims — selling the
+  // layered depth of the page model. Transform-origin: 50% 0% so the
+  // scale reads as "receding into the background", not "shrinking
+  // inward". Mirror of slide-down: same travel magnitude, opposite
+  // direction; home's scale-dim here is inverted as home's scale-brighten
+  // in slide-down's enter.
   "slide-up": {
     leave: function slideUpLeave(el, motion, opts) {
       var offset = (opts && opts.scrollOffset) || 0;
@@ -241,8 +254,8 @@ var TRANSITIONS = {
       return animate(
         el,
         [
-          { transform: "translateY(100%)", opacity: 1 },
-          { transform: "translateY(0)",    opacity: 1 },
+          { transform: "translateY(" + PAGE_TRAVEL + ")", opacity: 1 },
+          { transform: "translateY(0)",                   opacity: 1 },
         ],
         { duration: motion.duration, easing: motion.easing, fill: "forwards" }
       );
@@ -250,9 +263,17 @@ var TRANSITIONS = {
   },
 
   // -- slide-down --
-  // Default for "close". Leaving page falls off the bottom; home (the
-  // entering container) scales BACK up from 0.96 → 1 and brightens from
-  // 0.7 → 1 — the inverse of slide-up's leaving animation.
+  // Default for "close". Leaving page slides one viewport height downward
+  // (PAGE_TRAVEL = 100vh) — physically clears the viewport, opaque the
+  // whole way, no fade needed. Home (the entering container) stays
+  // anchored in place but scales BACK up from 0.96 → 1 and brightens
+  // from 0.7 → 1, the inverse of slide-up's leave. Mirror of slide-up:
+  // same travel magnitude, opposite direction.
+  //
+  // The leaving container also receives a clip-path (applied in
+  // studioLeave) that constrains it to the user's current viewport strip,
+  // so on a scrolled article only the visible content slides out — no
+  // content from elsewhere in the article passes through the viewport.
   "slide-down": {
     leave: function slideDownLeave(el, motion, opts) {
       var offset = (opts && opts.scrollOffset) || 0;
@@ -260,8 +281,8 @@ var TRANSITIONS = {
       return animate(
         el,
         [
-          { transform: "translateY(" + startY + ")", opacity: 1 },
-          { transform: "translateY(calc(" + startY + " + 100%))", opacity: 1 },
+          { transform: "translateY(" + startY + ")",                                  opacity: 1 },
+          { transform: "translateY(calc(" + startY + " + " + PAGE_TRAVEL + "))",     opacity: 1 },
         ],
         { duration: motion.duration, easing: motion.easing, fill: "forwards" }
       );
@@ -279,40 +300,17 @@ var TRANSITIONS = {
     },
   },
 
-  // -- conveyor-up --
-  // Default for "swap". Leaving page rides off the TOP while the entering
-  // page rises from the bottom — single continuous upward sweep. Both
-  // opaque so the motion reads as a solid panel sweeping past, not a fade.
-  "conveyor-up": {
-    leave: function conveyorUpLeave(el, motion, opts) {
-      var offset = (opts && opts.scrollOffset) || 0;
-      var startY = offset + "px";
-      return animate(
-        el,
-        [
-          { transform: "translateY(" + startY + ")", opacity: 1 },
-          { transform: "translateY(calc(" + startY + " - 100%))", opacity: 1 },
-        ],
-        { duration: motion.duration, easing: motion.easing, fill: "forwards" }
-      );
-    },
-    enter: function conveyorUpEnter(el, motion) {
-      return animate(
-        el,
-        [
-          { transform: "translateY(100%)", opacity: 1 },
-          { transform: "translateY(0)",    opacity: 1 },
-        ],
-        { duration: motion.duration, easing: motion.easing, fill: "forwards" }
-      );
-    },
-  },
-
   // -- push-up --
-  // Used for next-read navigation. The current page pushes up so the
-  // next-read card at the bottom reaches the top of the viewport. The
-  // new page sits behind at translateY(0) — no enter animation needed.
-  // opts.nextReadTop is measured before the scroll snap in studioLeave.
+  // Used for "push" (next-read card click) and "swap" (non-home ↔ non-home
+  // sidebar nav). Asymmetric one-motion recipe: the current page pushes
+  // upward by a measured distance; the new page sits at translateY(0)
+  // behind, no enter animation. For push: opts.nextReadTop is measured
+  // to align the next-read card flush with the top of the viewport. For
+  // swap: nextReadTop is unset, falling back to window.innerHeight so
+  // the leaving page slides one viewport height off the top.
+  //
+  // clip-path applied in studioLeave (close + swap) prevents content-whip
+  // when a scrolled leaving page translates.
   "push-up": {
     leave: function pushUpLeave(el, motion, opts) {
       var pushDistance = (opts && opts.nextReadTop) || window.innerHeight;
@@ -412,11 +410,6 @@ var studioTransition = {
       var topBarHeight = (mobileBar ? mobileBar.offsetHeight : 0)
                        + (pageHeader ? pageHeader.offsetHeight : 0);
       if (nextRead) nextReadTop = nextRead.getBoundingClientRect().top - topBarHeight;
-
-      // Tag both sections so CSS can react declaratively during the morph.
-      var enteringTitle = data.next.container.querySelector(".article-lead");
-      if (nextRead) nextRead.classList.add("is-morphing");
-      if (enteringTitle) enteringTitle.classList.add("is-morphing");
     }
 
     // Scroll compensation: capture the user's scroll position, apply the
@@ -432,6 +425,22 @@ var studioTransition = {
       window.scrollTo(0, 0);
     }
     var scrollOffset = -scrollY;
+
+    // On close, clip the leaving container to the user's current viewport
+    // strip so only the visible content translates during the WAAPI slide.
+    // Without this, translating a tall (e.g. 4000px) article container
+    // exposes content from above/below the user's scroll position — which
+    // reads as "the article scrolling back to its top" while it also
+    // slides down. clip-path inset() values are in the element's own
+    // pre-transform coordinates, so they follow the translate cleanly.
+    if (scenario === "close" || scenario === "swap") {
+      var containerHeight = data.current.container.offsetHeight;
+      var viewportHeight = window.innerHeight;
+      var insetTop = scrollY;
+      var insetBottom = Math.max(0, containerHeight - scrollY - viewportHeight);
+      data.current.container.style.clipPath =
+        "inset(" + insetTop + "px 0 " + insetBottom + "px 0)";
+    }
 
     // GSAP element-out animations (skip for push — morph would conflict)
     var outPromise = Promise.resolve();
@@ -606,8 +615,7 @@ function initStudioBarba() {
       data.next.container.style.transform = "";
       data.next.container.style.transformOrigin = "";
       data.next.container.style.opacity = "";
-      var survivingTitle = data.next.container.querySelector(".article-lead.is-morphing");
-      if (survivingTitle) survivingTitle.classList.remove("is-morphing");
+      data.next.container.style.clipPath = "";
     }
     // Clear inline transform on the persistent page-header so subsequent
     // transitions start from a clean slate (close leaves it at translateY(-100%)

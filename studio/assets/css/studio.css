@@ -767,12 +767,6 @@ body.is-sidebar-collapsed .sidebar-footer {
 
 [data-barba="container"] {
   position: relative;
-  /* Always at least full main-area height so short pages still feel like a
-     full page sliding in / out. translateY(100%) in the transition animations
-     is "100% of the element's own height" — without this, short content
-     produces tiny slides. min-height carries through to the absolute
-     positioning during animation, so the page slides a full viewport. */
-  min-height: calc(100vh - var(--mobile-bar-height));
 }
 
 /* During a transition, both containers overlay each other so they can animate
@@ -808,8 +802,9 @@ body.is-animating [data-studio-role="enter"][data-studio-scenario="open"]  { z-i
 body.is-animating [data-studio-role="enter"][data-studio-scenario="close"] { z-index: 1; }
 body.is-animating [data-studio-role="leave"][data-studio-scenario="close"] { z-index: 2; }
 
-/* swap (conveyor): both panels travel together, equal layer */
-body.is-animating [data-studio-scenario="swap"] { z-index: 2; }
+/* swap (reuses push-up animation): leaving page sits on top, entering page revealed behind */
+body.is-animating [data-studio-role="leave"][data-studio-scenario="swap"] { z-index: 2; }
+body.is-animating [data-studio-role="enter"][data-studio-scenario="swap"] { z-index: 1; }
 
 /* push (next-read): leaving page sits on top, entering page revealed behind */
 body.is-animating [data-studio-role="leave"][data-studio-scenario="push"] { z-index: 2; }
