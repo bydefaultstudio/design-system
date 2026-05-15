@@ -219,7 +219,7 @@
   --headline-width: var(--font-condensed);
 
   /* Subline */
-  --subline-size: var(--font-2xl);
+  --subline-size: var(--text-size-l);
   --subline-weight: 300;
 
 
@@ -242,6 +242,14 @@
   --body-weight:   var(--font-weight-regular);
   --body-leading:  var(--line-height-xl);
   --body-tracking: 0;
+
+  /* Text size utility scale — fluid tokens consumed by .text-size-* utilities.
+     Use these on any selector when you want a utility-style size without the class. */
+  --text-size-xl: clamp(var(--font-3xl), 1rem + 0.8vw, var(--font-5xl));
+  --text-size-l:  clamp(var(--font-l),   1rem + 0.4vw, var(--font-2xl));
+  --text-size-m:  var(--body-size);
+  --text-size-s:  clamp(var(--font-xs), 0.8rem + 0.15vw, var(--font-s));
+  --text-size-xs: var(--font-xs);
 
   /* Icon Size */
   --icon-size: 1.3rem;
@@ -1134,31 +1142,31 @@ section {
 }
 
 /* -- Text size utilities -- */
-/* Fluid via clamp(rem + vw). xsmall stays fixed at the a11y floor.    */
-/* medium reuses --body-size so paragraphs reset cleanly to body size. */
+/* Each class consumes its matching --text-size-* token (defined in :root). */
+/* xs stays fixed at the a11y floor; m reuses --body-size for clean reset.  */
 
-.text-size-xlarge {
-  font-size: clamp(var(--font-3xl), 1rem + 0.8vw, var(--font-5xl));
+.text-size-xl {
+  font-size: var(--text-size-xl);
   line-height: var(--line-height-m);
 }
 
-.text-size-large {
-  font-size: clamp(var(--font-l), 1rem + 0.4vw, var(--font-2xl));
+.text-size-l {
+  font-size: var(--text-size-l);
   line-height: var(--line-height-l);
 }
 
-.text-size-medium {
-  font-size: var(--body-size);
+.text-size-m {
+  font-size: var(--text-size-m);
   line-height: var(--line-height-l);
 }
 
-.text-size-small {
-  font-size: clamp(var(--font-xs), 0.8rem + 0.15vw, var(--font-s));
+.text-size-s {
+  font-size: var(--text-size-s);
   line-height: var(--line-height-xl);
 }
 
-.text-size-xsmall {
-  font-size: var(--font-xs);
+.text-size-xs {
+  font-size: var(--text-size-xs);
   line-height: var(--line-height-xl);
 }
 

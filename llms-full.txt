@@ -322,6 +322,35 @@ Blocks can change layout or alignment.
 
 ---
 
+## Self Alignment
+
+`data-align` centres the element itself within its parent — distinct from the `.align-*` classes above, which align *children* inside a flex block.
+
+| Attribute             | Effect                                                       |
+| --------------------- | ------------------------------------------------------------ |
+| `data-align="center"` | Centres self horizontally (`margin-inline: auto`, `justify-self: center`) |
+
+Use to centre a block without wrapping it in `data-grid` + `data-col-start` / `data-col-span`. Works in both normal block/flex flow and inside `data-grid` parents.
+
+### Width is required
+
+`margin-inline: auto` is a no-op without a width constraint. `.block` fills 100% of its parent by default, so `data-align="center"` alone does nothing visible.
+
+Pair with one of:
+
+* `data-line-length="headline | small | body | medium | wide"` — applies a max-width from the typography scale (see [Typography → Line Length](typography.html#line-length))
+* A `max-width` from a component class
+* An explicit `width`
+
+```html
+<div class="block" data-align="center" data-line-length="medium">
+  <h2>Centred headline</h2>
+  <p>Centred paragraph with a comfortable measure.</p>
+</div>
+```
+
+---
+
 ## Grid
 
 Grids create **column-based layouts**.
@@ -894,7 +923,10 @@ These are the actual CSS custom property values from `design-system.css`. Always
 | --- | --- | --- |
 | **Typography** | | |
 | `--font-primary` | `"Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif` |  |
-| `--font-secondary` | `"Zalando Sans", "trust-3a","ivypresto-headline", "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", serif` |  |
+| `--font-trust-3a` | `"trust-3a", "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", serif` |  |
+| `--font-es-face` | `"ES Face", "Zalando Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", serif` |  |
+| `--font-secondary` | `var(--font-es-face)` |  |
+| **font-secondary: var(--font-es-face);** | | |
 | `--font-tertiary` | `"Bugrino", sans-serif` |  |
 | `--font-quaternary` | `"IBM Plex Mono", monospace` |  |
 | **Palette** | | |
@@ -956,6 +988,12 @@ These are the actual CSS custom property values from `design-system.css`. Always
 | `--font-weight-bold` | `700` |  |
 | `--font-weight-extra-bold` | `800` |  |
 | `--font-weight-black` | `900` |  |
+| **Font width tokens (wdth axis, applied via font-stretch)** | | |
+| `--font-condensed` | `75%` |  |
+| `--font-narrow` | `87.5%` |  |
+| `--font-normal` | `100%` |  |
+| `--font-wide` | `112.5%` |  |
+| `--font-expanded` | `125%` |  |
 | **Letter spacing tokens (em-based for proportional scaling)** | | |
 | `--letter-spacing-xs` | `-0.03em` |  |
 | `--letter-spacing-s` | `0.03em` |  |
@@ -967,6 +1005,7 @@ These are the actual CSS custom property values from `design-system.css`. Always
 | `--headline-weight` | `300` |  |
 | `--headline-leading` | `var(--line-height-s)` |  |
 | `--headline-tracking` | `-0.03em` |  |
+| `--headline-width` | `var(--font-condensed)` |  |
 | **Subline** | | |
 | `--subline-size` | `var(--font-2xl)` |  |
 | `--subline-weight` | `300` |  |
@@ -974,17 +1013,23 @@ These are the actual CSS custom property values from `design-system.css`. Always
 | `--title-size` | `clamp(var(--font-2xl), 0.8rem + 2vw, var(--font-7xl))` |  |
 | `--title-weight` | `300` |  |
 | `--title-leading` | `var(--line-height-m)` |  |
-| `--title-tracking` | `-0.01em` |  |
+| `--title-tracking` | `-0.04em` |  |
+| `--title-family` | `var(--font-primary)` |  |
 | **Label — meta rows, eyebrows, captions** | | |
 | `--label-size` | `var(--font-2xs)` |  |
 | `--label-weight` | `500` |  |
 | `--label-leading` | `var(--line-height-s)` |  |
 | `--label-tracking` | `var(--letter-spacing-m)` |  |
 | **Body — running text** | | |
-| `--body-size` | `clamp(var(--font-s), 0.875rem + 0.4vw, var(--font-l))` |  |
+| `--body-size` | `clamp(var(--font-s), 0.7rem + 0.35vw, var(--font-m))` |  |
 | `--body-weight` | `var(--font-weight-regular)` |  |
 | `--body-leading` | `var(--line-height-xl)` |  |
 | `--body-tracking` | `0` |  |
+| `--text-size-xl` | `clamp(var(--font-3xl), 1rem + 0.8vw, var(--font-5xl))` |  |
+| `--text-size-l` | `clamp(var(--font-l),   1rem + 0.4vw, var(--font-2xl))` |  |
+| `--text-size-m` | `var(--body-size)` |  |
+| `--text-size-s` | `clamp(var(--font-xs), 0.8rem + 0.15vw, var(--font-s))` |  |
+| `--text-size-xs` | `var(--font-xs)` |  |
 | **Icon Size** | | |
 | `--icon-size` | `1.3rem` |  |
 
@@ -1179,26 +1224,26 @@ These are the actual CSS custom property values from `design-system.css`. Always
 | **120px** | | |
 | `--14xl` | `10rem` |  |
 | **Spacing scale** | | |
-| `--space-none` | `var(--none)` |  |
-| `--space-2xs` | `var(--2xs)` |  |
-| `--space-xs` | `var(--xs)` |  |
-| `--space-s` | `var(--s)` |  |
-| `--space-m` | `var(--m)` |  |
-| `--space-l` | `var(--l)` |  |
-| `--space-xl` | `var(--xl)` |  |
-| `--space-2xl` | `var(--2xl)` |  |
-| `--space-3xl` | `var(--3xl)` |  |
-| `--space-4xl` | `var(--4xl)` |  |
-| `--space-5xl` | `var(--5xl)` |  |
-| `--space-6xl` | `var(--6xl)` |  |
-| `--space-7xl` | `var(--7xl)` |  |
-| `--space-8xl` | `var(--8xl)` |  |
-| `--space-9xl` | `var(--9xl)` |  |
-| `--space-10xl` | `var(--10xl)` |  |
-| `--space-11xl` | `var(--11xl)` |  |
-| `--space-12xl` | `var(--12xl)` |  |
-| `--space-13xl` | `var(--13xl)` |  |
-| `--space-14xl` | `var(--14xl)` |  |
+| `--space-none` | `var(--none)` | 0 |
+| `--space-2xs` | `var(--2xs)` | 2px |
+| `--space-xs` | `var(--xs)` | 4px |
+| `--space-s` | `var(--s)` | 8px |
+| `--space-m` | `var(--m)` | 12px |
+| `--space-l` | `var(--l)` | 16px |
+| `--space-xl` | `var(--xl)` | 24px |
+| `--space-2xl` | `var(--2xl)` | 32px |
+| `--space-3xl` | `var(--3xl)` | 40px |
+| `--space-4xl` | `var(--4xl)` | 48px |
+| `--space-5xl` | `var(--5xl)` | 56px |
+| `--space-6xl` | `var(--6xl)` | 64px |
+| `--space-7xl` | `var(--7xl)` | 72px |
+| `--space-8xl` | `var(--8xl)` | 80px |
+| `--space-9xl` | `var(--9xl)` | 88px |
+| `--space-10xl` | `var(--10xl)` | 96px |
+| `--space-11xl` | `var(--11xl)` | 104px |
+| `--space-12xl` | `var(--12xl)` | 112px |
+| `--space-13xl` | `var(--13xl)` | 120px |
+| `--space-14xl` | `var(--14xl)` | 160px |
 | **Container widths** | | |
 | `--container-xs` | `480px` |  |
 | `--container-s` | `640px` |  |
@@ -1211,6 +1256,12 @@ These are the actual CSS custom property values from `design-system.css`. Always
 | `--max-width-m` | `960px` |  |
 | `--max-width-l` | `1200px` |  |
 | `--max-width-xl` | `1440px` |  |
+| **Line length (typographic readability, 45–75ch range)** | | |
+| `--line-length-headline` | `20ch` |  |
+| `--line-length-body` | `55ch` |  |
+| `--line-length-small` | `45ch` |  |
+| `--line-length-medium` | `65ch` |  |
+| `--line-length-wide` | `75ch` |  |
 | **Section spacing variables** | | |
 | `--section-xs` | `var(--space-xl)` |  |
 | `--section-s` | `var(--space-2xl)` |  |
@@ -1614,9 +1665,13 @@ Each heading uses `clamp(min, fluid, max)` with primitive `--font-*` tokens at t
 
 The default paragraph style used for all running content. The `var(--body-size)` token controls the base size globally — changing it updates paragraphs, inputs, code, tables, and buttons at once. Size modifier classes let you step up or down from the default.
 
+**Fluid sizing.** Four of the five `.text-size-*` utilities are fluid — they grow with viewport width via `clamp(rem + vw, ...)`. `.text-size-xs` stays fixed at 14px (the accessibility floor). `.text-size-m` resolves to `var(--body-size)` itself, so it's the cleanest way to reset a paragraph to body sizing inside a container that overrides font-size.
+
+**Reusable tokens.** Each utility consumes a matching `--text-size-*` token (`--text-size-xl`, `--text-size-l`, `--text-size-m`, `--text-size-s`, `--text-size-xs`). Use the token directly on any custom selector when you want the utility's fluid sizing without applying the class.
+
 <div class="block gap-m">
       <p class="demo-eyebrow">Large</p>
-      <p class="text-size-large" >Introductory text and section summaries that sit between headings and body text in the hierarchy.</p>
+      <p class="text-size-l" >Introductory text and section summaries that sit between headings and body text in the hierarchy.</p>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Medium (default)</p>
@@ -1624,30 +1679,33 @@ The default paragraph style used for all running content. The `var(--body-size)`
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Small</p>
-      <p class="text-size-small" >Secondary content, supporting details, and supplementary information that doesn't need to compete with body text for attention.</p>
+      <p class="text-size-s" >Secondary content, supporting details, and supplementary information that doesn't need to compete with body text for attention.</p>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Extra Small</p>
-      <p class="text-size-xsmall" >Captions, footnotes, metadata, and fine print — available but not prominent.</p>
+      <p class="text-size-xs" >Captions, footnotes, metadata, and fine print — available but not prominent.</p>
     </div>
   </div>
 </div>
 
 ```html
-<p class="text-size-xlarge">Lead paragraph text.</p>
-<p class="text-size-large">Introductory text.</p>
+<p class="text-size-xl">Lead paragraph text.</p>
+<p class="text-size-l">Introductory text.</p>
 <p>Default body text (no class needed).</p>
-<p class="text-size-small">Smaller supporting text.</p>
-<p class="text-size-xsmall">Captions and metadata.</p>
+<p class="text-size-s">Smaller supporting text.</p>
+<p class="text-size-xs">Captions and metadata.</p>
 ```
 
-| Element | Token | px | Line Height | Value |
-| --- | --- | --- | --- | --- |
-| `.text-size-xlarge` | `var(--font-3xl)` | 28px | `var(--line-height-l)` | 1.4 |
-| `.text-size-large` | `var(--font-xl)` | 22px | `var(--line-height-l)` | 1.4 |
-| `p` (default) | `var(--font-m)` | 18px | `var(--line-height-l)` | 1.4 |
-| `.text-size-small` | `var(--font-s)` | 16px | `var(--line-height-xl)` | 1.6 |
-| `.text-size-xsmall` | `var(--font-xs)` | 14px | `var(--line-height-xl)` | 1.6 |
+| Element | Font Size | Range (fluid) | Line Height |
+| --- | --- | --- | --- |
+| `.text-size-xl` | `var(--text-size-xl)` → `clamp(var(--font-3xl), 1rem + 0.8vw, var(--font-5xl))` | 28 → 36px | `var(--line-height-m)` (1.2) |
+| `.text-size-l` | `var(--text-size-l)` → `clamp(var(--font-l), 1rem + 0.4vw, var(--font-2xl))` | 20 → 24px | `var(--line-height-l)` (1.4) |
+| `.text-size-m` | `var(--text-size-m)` → `var(--body-size)` | 16 → 18px | `var(--line-height-l)` (1.4) |
+| `p` (default) | `var(--body-size)` | 16 → 18px | `var(--line-height-l)` (1.4) |
+| `.text-size-s` | `var(--text-size-s)` → `clamp(var(--font-xs), 0.8rem + 0.15vw, var(--font-s))` | 14 → 16px | `var(--line-height-xl)` (1.6) |
+| `.text-size-xs` | `var(--text-size-xs)` → `var(--font-xs)` | 14px (fixed) | `var(--line-height-xl)` (1.6) |
+
+**Step rhythm at 1440px (typical desktop):** xs 14 → s 15 → m 17.4 → l 21.8 → xl 28. Jumps stay in the 25–30% range (comfortable for prose hierarchy; research consensus avoids jumps above 50%).
 
 ---
 
@@ -1822,29 +1880,66 @@ font-weight: var(--font-weight-bold);
 
 ---
 
+## Font Width
+
+The width of letters along the variable font's `wdth` axis (applied via CSS `font-stretch`). Zalando Sans supports 75% to 125%, exposed here as a five-step scale from condensed to expanded. Use narrower widths for compact UI chrome; wider widths for display moments that should feel broader on the page.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Narrow — 87.5%</p>
+      <div class="font-4xl" data-font-width="narrow">Width is a typographic axis</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Normal — 100%</p>
+      <div class="font-4xl" data-font-width="normal">Width is a typographic axis</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Wide — 112.5%</p>
+      <div class="font-4xl" data-font-width="wide">Width is a typographic axis</div>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Expanded — 125%</p>
+      <div class="font-4xl" data-font-width="expanded">Width is a typographic axis</div>
+    </div>
+  </div>
+</div>
+
+```html
+<h2 data-font-width="expanded">Expanded headline</h2>
+```
+
+| Token | Value | Attribute |
+| --- | --- | --- |
+| `var(--font-condensed)` | 75%    | `data-font-width="condensed"` |
+| `var(--font-narrow)`    | 87.5%  | `data-font-width="narrow"`    |
+| `var(--font-normal)`    | 100%   | `data-font-width="normal"`    |
+| `var(--font-wide)`      | 112.5% | `data-font-width="wide"`      |
+| `var(--font-expanded)`  | 125%   | `data-font-width="expanded"`  |
+
+---
+
 ## Line Height
 
 Vertical rhythm values from tight display text to loose body copy. Headings use tighter values; body text uses looser values for readability.
 
 <div class="block gap-m">
       <p class="demo-eyebrow">Small</p>
-      <p class="text-size-large" >Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+      <p class="text-size-l" >Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Medium</p>
-      <p class="text-size-large" >Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+      <p class="text-size-l" >Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Large</p>
-      <p class="text-size-large" >Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+      <p class="text-size-l" >Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Extra Large</p>
-      <p class="text-size-large" >Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+      <p class="text-size-l" >Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">2X Large</p>
-      <p class="text-size-large" >Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+      <p class="text-size-l" >Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
     </div>
   </div>
 </div>
@@ -1861,6 +1956,46 @@ line-height: var(--line-height-l);
 | `var(--line-height-l)` | 1.4 | Body text, paragraphs |
 | `var(--line-height-xl)` | 1.6 | Small text, captions |
 | `var(--line-height-2xl)` | 1.8 | Spacious body text |
+
+---
+
+## Line Length
+
+Horizontal rhythm — the measure of a line of text. Bringhurst's *Elements of Typographic Style* gives a satisfactory range of **45 to 75 characters per line** for body text, with **66 characters** widely regarded as ideal. Below 45 = display territory; above 75 = unsuitable for long-form reading.
+
+Apply with `data-line-length="<value>"` on any text element. Values are named typographically — pick the role that fits the content, not a t-shirt size.
+
+<div class="block gap-m">
+      <p class="demo-eyebrow">Small (40ch)</p>
+      <p data-line-length="small" >Narrow body — lead paragraphs, intro and CTA descriptions, punchy short copy that needs a tighter measure.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Body (55ch)</p>
+      <p data-line-length="body" >Standard body — short prose blocks, scroll-stack items, founder cards. The default workhorse measure for most body copy on the page.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Medium (65ch)</p>
+      <p data-line-length="medium" >Long-form body — origin stories, error page lede, multi-paragraph editorial. Sits at Bringhurst's ideal-measure mark for sustained reading.</p>
+    </div>
+    <div class="block gap-m">
+      <p class="demo-eyebrow">Wide (75ch)</p>
+      <p data-line-length="wide" >Maximum comfortable measure for very long-form prose. The ceiling — beyond this, line-find fatigue sets in.</p>
+    </div>
+  </div>
+</div>
+
+```html
+<p data-line-length="body">Standard body copy.</p>
+<h1 data-line-length="headline">Display title.</h1>
+```
+
+| Token | Value | Used For |
+| --- | --- | --- |
+| `var(--line-length-headline)` | 20ch | Display titles, big numerals |
+| `var(--line-length-small)` | 40ch | Narrow body — leads, intros, CTA descriptions |
+| `var(--line-length-body)` | 55ch | Standard body — short prose, cards, beliefs |
+| `var(--line-length-medium)` | 65ch | Long-form body — origin, articles |
+| `var(--line-length-wide)` | 75ch | Maximum measure for very long-form prose |
 
 ---
 

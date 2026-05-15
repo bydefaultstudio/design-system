@@ -103,17 +103,19 @@ Each heading uses `clamp(min, fluid, max)` with primitive `--font-*` tokens at t
 
 The default paragraph style used for all running content. The `var(--body-size)` token controls the base size globally — changing it updates paragraphs, inputs, code, tables, and buttons at once. Size modifier classes let you step up or down from the default.
 
-**Fluid sizing.** Four of the five `.text-size-*` utilities are fluid — they grow with viewport width via `clamp(rem + vw, ...)`. `.text-size-xsmall` stays fixed at 14px (the accessibility floor). `.text-size-medium` resolves to `var(--body-size)` itself, so it's the cleanest way to reset a paragraph to body sizing inside a container that overrides font-size.
+**Fluid sizing.** Four of the five `.text-size-*` utilities are fluid — they grow with viewport width via `clamp(rem + vw, ...)`. `.text-size-xs` stays fixed at 14px (the accessibility floor). `.text-size-m` resolves to `var(--body-size)` itself, so it's the cleanest way to reset a paragraph to body sizing inside a container that overrides font-size.
+
+**Reusable tokens.** Each utility consumes a matching `--text-size-*` token (`--text-size-xl`, `--text-size-l`, `--text-size-m`, `--text-size-s`, `--text-size-xs`). Use the token directly on any custom selector when you want the utility's fluid sizing without applying the class.
 
 <div class="demo-preview is-joined">
   <div class="block gap-xl">
     <div class="block gap-m">
       <p class="demo-eyebrow">Extra Large</p>
-      <p class="text-size-xlarge" style="margin: 0;">Lead paragraphs and hero text that needs to stand out from regular body copy.</p>
+      <p class="text-size-xl" style="margin: 0;">Lead paragraphs and hero text that needs to stand out from regular body copy.</p>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Large</p>
-      <p class="text-size-large" style="margin: 0;">Introductory text and section summaries that sit between headings and body text in the hierarchy.</p>
+      <p class="text-size-l" style="margin: 0;">Introductory text and section summaries that sit between headings and body text in the hierarchy.</p>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Medium (default)</p>
@@ -121,33 +123,33 @@ The default paragraph style used for all running content. The `var(--body-size)`
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Small</p>
-      <p class="text-size-small" style="margin: 0;">Secondary content, supporting details, and supplementary information that doesn't need to compete with body text for attention.</p>
+      <p class="text-size-s" style="margin: 0;">Secondary content, supporting details, and supplementary information that doesn't need to compete with body text for attention.</p>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Extra Small</p>
-      <p class="text-size-xsmall" style="margin: 0;">Captions, footnotes, metadata, and fine print — available but not prominent.</p>
+      <p class="text-size-xs" style="margin: 0;">Captions, footnotes, metadata, and fine print — available but not prominent.</p>
     </div>
   </div>
 </div>
 
 ```html
-<p class="text-size-xlarge">Lead paragraph text.</p>
-<p class="text-size-large">Introductory text.</p>
+<p class="text-size-xl">Lead paragraph text.</p>
+<p class="text-size-l">Introductory text.</p>
 <p>Default body text (no class needed).</p>
-<p class="text-size-small">Smaller supporting text.</p>
-<p class="text-size-xsmall">Captions and metadata.</p>
+<p class="text-size-s">Smaller supporting text.</p>
+<p class="text-size-xs">Captions and metadata.</p>
 ```
 
 | Element | Font Size | Range (fluid) | Line Height |
 | --- | --- | --- | --- |
-| `.text-size-xlarge` | `clamp(var(--font-3xl), 1rem + 0.8vw, var(--font-5xl))` | 28 → 36px | `var(--line-height-m)` (1.2) |
-| `.text-size-large` | `clamp(var(--font-l), 1rem + 0.4vw, var(--font-2xl))` | 20 → 24px | `var(--line-height-l)` (1.4) |
-| `.text-size-medium` | `var(--body-size)` | 16 → 18px | `var(--line-height-l)` (1.4) |
+| `.text-size-xl` | `var(--text-size-xl)` → `clamp(var(--font-3xl), 1rem + 0.8vw, var(--font-5xl))` | 28 → 36px | `var(--line-height-m)` (1.2) |
+| `.text-size-l` | `var(--text-size-l)` → `clamp(var(--font-l), 1rem + 0.4vw, var(--font-2xl))` | 20 → 24px | `var(--line-height-l)` (1.4) |
+| `.text-size-m` | `var(--text-size-m)` → `var(--body-size)` | 16 → 18px | `var(--line-height-l)` (1.4) |
 | `p` (default) | `var(--body-size)` | 16 → 18px | `var(--line-height-l)` (1.4) |
-| `.text-size-small` | `clamp(var(--font-xs), 0.8rem + 0.15vw, var(--font-s))` | 14 → 16px | `var(--line-height-xl)` (1.6) |
-| `.text-size-xsmall` | `var(--font-xs)` | 14px (fixed) | `var(--line-height-xl)` (1.6) |
+| `.text-size-s` | `var(--text-size-s)` → `clamp(var(--font-xs), 0.8rem + 0.15vw, var(--font-s))` | 14 → 16px | `var(--line-height-xl)` (1.6) |
+| `.text-size-xs` | `var(--text-size-xs)` → `var(--font-xs)` | 14px (fixed) | `var(--line-height-xl)` (1.6) |
 
-**Step rhythm at 1440px (typical desktop):** xsmall 14 → small 15 → medium 17.4 → large 21.8 → xlarge 28. Jumps stay in the 25–30% range (comfortable for prose hierarchy; research consensus avoids jumps above 50%).
+**Step rhythm at 1440px (typical desktop):** xs 14 → s 15 → m 17.4 → l 21.8 → xl 28. Jumps stay in the 25–30% range (comfortable for prose hierarchy; research consensus avoids jumps above 50%).
 
 ---
 
@@ -406,27 +408,27 @@ Vertical rhythm values from tight display text to loose body copy. Headings use 
   <div class="block gap-xl">
     <div class="block gap-m">
       <p class="demo-eyebrow">Extra Small</p>
-      <p class="text-size-large" style="margin: 0; line-height: var(--line-height-xs);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+      <p class="text-size-l" style="margin: 0; line-height: var(--line-height-xs);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Small</p>
-      <p class="text-size-large" style="margin: 0; line-height: var(--line-height-s);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+      <p class="text-size-l" style="margin: 0; line-height: var(--line-height-s);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Medium</p>
-      <p class="text-size-large" style="margin: 0; line-height: var(--line-height-m);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+      <p class="text-size-l" style="margin: 0; line-height: var(--line-height-m);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Large</p>
-      <p class="text-size-large" style="margin: 0; line-height: var(--line-height-l);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+      <p class="text-size-l" style="margin: 0; line-height: var(--line-height-l);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">Extra Large</p>
-      <p class="text-size-large" style="margin: 0; line-height: var(--line-height-xl);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+      <p class="text-size-l" style="margin: 0; line-height: var(--line-height-xl);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
     </div>
     <div class="block gap-m">
       <p class="demo-eyebrow">2X Large</p>
-      <p class="text-size-large" style="margin: 0; line-height: var(--line-height-2xl);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
+      <p class="text-size-l" style="margin: 0; line-height: var(--line-height-2xl);">Design tokens capture color, typography, spacing, and border values as reusable variables so that design and code stay in sync across every surface.</p>
     </div>
   </div>
 </div>
