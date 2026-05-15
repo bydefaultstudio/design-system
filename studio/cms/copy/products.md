@@ -71,7 +71,7 @@ Your products deserve more than a grid. SHOP is a scroll that lets people fall f
 
 `CTA`
 
-**Book a call** → /contact.html
+**Book a call** → /book.html
 
 ---
 
@@ -99,7 +99,7 @@ Experiences that adapt in real time to each visitor's interests — guiding them
 
 `CTA`
 
-**Book a call** → /contact.html
+**Book a call** → /book.html
 
 ---
 
@@ -127,7 +127,7 @@ Deep-scroll experiences that turn brand stories, reports, and announcements into
 
 `CTA`
 
-**Book a call** → /contact.html
+**Book a call** → /book.html
 
 ---
 
@@ -155,7 +155,7 @@ Information that performs. INFORM turns dry research into an experience your aud
 
 `CTA`
 
-**Book a call** → /contact.html
+**Book a call** → /book.html
 
 ---
 
@@ -183,7 +183,7 @@ Take your audience on a journey through real places — zoom in, explore, discov
 
 `CTA`
 
-**Book a call** → /contact.html
+**Book a call** → /book.html
 
 ---
 
@@ -385,7 +385,7 @@ This paragraph demonstrates how body text will look across your layout. Bold tex
 
 `CTA`
 
-**Book a call** → /contact.html
+**Book a call** → /book.html
 
 ---
 
@@ -394,8 +394,7 @@ This paragraph demonstrates how body text will look across your layout. Bold tex
 `Explore column`
 
 - Home → /
-- Work → /work.html
-- Services → /services.html
+- Work → /case-studies.html
 - News → /news.html
 
 `Brand tagline`

@@ -92,10 +92,10 @@ var PRODUCT_NAMES = {
 
 var PRODUCT_TAGLINES = {
   SHOP:        "Product discovery, made immersive.",
-  PERSONALISE: "A unique experience for every visitor.",
+  PERSONALISE: "The right experience for every visitor.",
   STORYTELL:   "Made for stories worth finishing.",
-  INFORM:      "Make data fun to experience.",
-  MAP:         "Tell stories through destinations."
+  INFORM:      "Make data worth exploring.",
+  MAP:         "Tell stories through real places."
 };
 
 var Q1_SCORES = {
@@ -115,14 +115,14 @@ var Q2_SCORES = {
 };
 
 var Q3_ADVICE = {
-  existing: "We can work with what you already have.",
-  new:      "We can create assets from scratch.",
+  existing: "We'll work with what you have.",
+  new:      "We'll create everything from scratch.",
   mix:      "We'll work with what you have and fill the gaps."
 };
 
 var Q4_DEPLOYMENTS = {
   venue: "an in-venue activation",
-  app:   "embedded into your platform",
+  app:   "an embed inside your platform",
   site:  "a standalone microsite"
   // "unsure" intentionally absent → no deployment sentence.
 };
