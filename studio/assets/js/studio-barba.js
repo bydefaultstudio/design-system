@@ -19,10 +19,11 @@
  *      read once at load; gsapMotion() bridges the cubic-bezier token to a
  *      GSAP ease (no CustomEase plugin needed, tokens stay source of truth).
  *
- * The page-overlay is injected once at init (ensureOverlay) — not hand-written
- * per page. The page-header's parked offscreen state for rise scenarios is a
- * CSS rule (body.is-animating[data-studio-scenario] .page-header), not inline
- * JS — GSAP overrides it while animating and it auto-reverts when is-animating
+ * The page-overlay is a persistent .page-overlay div in each page's chrome
+ * (queried, not JS-injected). The page-header's parked offscreen state for
+ * rise scenarios is a CSS rule (body.is-animating[data-studio-scenario]
+ * .page-header), not inline JS — GSAP overrides it while animating and it
+ * auto-reverts when is-animating
  * is removed (no WAAPI cancel race).
  *
  * Three-level page model:
@@ -251,18 +252,20 @@ var SLIDE_DOWN_ENTER_ORIGIN = "50% 0%";
 function riseTimeline(data) {
   if (prefersReducedMotion()) return Promise.resolve();
   var el = data.next.container;
-  var overlay = ensureOverlay();
+  var overlay = document.querySelector(".page-overlay");
   var header = document.querySelector(".page-header:not([hidden])");
   var gm = gsapMotion(MOTION.pageRise);
   return new Promise(function (resolve) {
     var tl = gsap.timeline({ onComplete: resolve });
     _pendingTimeline = tl;
-    tl.fromTo(
-      overlay,
-      { autoAlpha: 0 },
-      { autoAlpha: 1, duration: gm.duration * 0.3, ease: "none" },
-      0
-    );
+    if (overlay) {
+      tl.fromTo(
+        overlay,
+        { autoAlpha: 0 },
+        { autoAlpha: 1, duration: gm.duration * 0.3, ease: "none" },
+        0
+      );
+    }
     tl.fromTo(
       el,
       { y: "100vh", scale: 0.77, transformOrigin: "50% 100%" },
