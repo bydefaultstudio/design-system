@@ -302,28 +302,43 @@ var TRANSITIONS = {
   // so on a scrolled article only the visible content slides out — no
   // content from elsewhere in the article passes through the viewport.
   "slide-down": {
-    leave: function slideDownLeave(el, motion, opts) {
-      var offset = (opts && opts.scrollOffset) || 0;
-      var startY = offset + "px";
-      return animate(
-        el,
-        [
-          { transform: "translateY(" + startY + ")",                                  opacity: 1 },
-          { transform: "translateY(calc(" + startY + " + " + PAGE_TRAVEL + "))",     opacity: 1 },
-        ],
-        { duration: motion.duration, easing: motion.easing, fill: "forwards" }
-      );
+    leave: function slideDownLeave() {
+      return Promise.resolve();
     },
     enter: function slideDownEnter(el, motion) {
-      el.style.transformOrigin = SLIDE_DOWN_ENTER_ORIGIN;
-      return animate(
-        el,
-        [
-          { transform: "scale(" + SLIDE_DOWN_ENTER_SCALE_FROM + ")", opacity: SLIDE_DOWN_ENTER_OPACITY_FROM },
-          { transform: "scale(1)",                                    opacity: 1 },
-        ],
-        { duration: motion.duration, easing: motion.easing, fill: "forwards" }
-      );
+      if (prefersReducedMotion()) return Promise.resolve();
+      // The leaving container is still in the DOM (Barba removes it after
+      // both promises resolve); find it by the role attribute studioLeave set.
+      var leavingEl = document.querySelector('[data-studio-role="leave"]');
+      var offset = _pendingScrollOffset || 0;
+      var gm = gsapMotion(motion);
+      return new Promise(function slideDownTimeline(resolve) {
+        var tl = gsap.timeline({ onComplete: resolve });
+        _pendingTimeline = tl;
+        // Leaving page slides one viewport-height down, opaque the whole way.
+        // Exact mirror of the previous WAAPI keyframes: y goes from the
+        // scroll offset to offset + 100vh (window.innerHeight). The clip-path
+        // applied in studioLeave keeps a scrolled article from content-whip.
+        if (leavingEl) {
+          tl.fromTo(
+            leavingEl,
+            { y: offset },
+            { y: offset + window.innerHeight, duration: gm.duration, ease: gm.ease },
+            0
+          );
+        }
+        // Entering page (home) scales + brightens back from the receded state.
+        tl.fromTo(
+          el,
+          {
+            scale: SLIDE_DOWN_ENTER_SCALE_FROM,
+            opacity: SLIDE_DOWN_ENTER_OPACITY_FROM,
+            transformOrigin: SLIDE_DOWN_ENTER_ORIGIN,
+          },
+          { scale: 1, opacity: 1, duration: gm.duration, ease: gm.ease },
+          0
+        );
+      });
     },
   },
 
