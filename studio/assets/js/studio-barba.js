@@ -49,6 +49,13 @@ var _pendingScenario = null;
 // (defensive — it has normally completed by then). One timeline per transition.
 var _pendingTimeline = null;
 
+// Scroll offset (-scrollY) captured in the `before` hook and consumed by
+// studioLeave. Captured there because the compensating transform, the
+// is-animating class, and window.scrollTo(0,0) must all run in one
+// synchronous block — once scrollTo fires, window.scrollY reads 0, so the
+// value can't be re-derived later (fixes Bug B: page flash when scrolled).
+var _pendingScrollOffset = 0;
+
 document.addEventListener("click", function detectNextReadClick(e) {
   if (e.target.closest(".is-next-read") || e.target.closest(".case-study-slider a")) {
     _nextReadNav = true;
@@ -486,19 +493,11 @@ var studioTransition = {
       if (nextRead) nextReadTop = nextRead.getBoundingClientRect().top - topBarHeight;
     }
 
-    // Scroll compensation: capture the user's scroll position, apply the
-    // compensating transform to the leaving container BEFORE the scroll snap
-    // (so the user never sees an un-compensated frame), then snap the window
-    // to top so absolute-positioned containers render in the visible area.
-    // runLeave's WAAPI animation starts from translateY(scrollY) → end state,
-    // so the inline transform here is exactly the start frame — no double-
-    // application, no one-frame snap.
-    var scrollY = window.scrollY || 0;
-    if (scrollY > 0) {
-      data.current.container.style.transform = "translateY(" + scrollY + "px)";
-      window.scrollTo(0, 0);
-    }
-    var scrollOffset = -scrollY;
+    // Scroll compensation was applied atomically in the `before` hook (the
+    // transform on the leaving container, is-animating, and scrollTo(0,0)
+    // all run there in one synchronous block — see Bug B). Here we only
+    // consume the captured offset for the close/push animation math.
+    var scrollOffset = _pendingScrollOffset || 0;
 
     // On close, clip the leaving container to the user's current viewport
     // strip so only the visible content translates during the WAAPI slide.
@@ -511,6 +510,7 @@ var studioTransition = {
     // Rise (open/swap/fade) and push do not translate the leaving container,
     // so the clip is unnecessary for them.
     if (scenario === "close") {
+      var scrollY = -scrollOffset; // scrollOffset = -scrollY (captured in before)
       var containerHeight = data.current.container.offsetHeight;
       var viewportHeight = window.innerHeight;
       var insetTop = scrollY;
@@ -624,7 +624,21 @@ function initStudioBarba() {
   }
 
   window.barba.hooks.before(function onBefore(data) {
+    // Scroll compensation — ATOMIC with is-animating + scrollTo so there is
+    // never a painted frame where the leaving container is position:absolute
+    // top:0 without the offsetting transform (Bug B: page flashes to its top
+    // when navigating while scrolled). Set the transform while the container
+    // is still position:relative, THEN add is-animating, THEN snap to top.
+    var leavingEl = data && data.current ? data.current.container : null;
+    var scrollY = window.scrollY || 0;
+    _pendingScrollOffset = -scrollY;
+    if (leavingEl && scrollY > 0) {
+      leavingEl.style.transform = "translateY(" + scrollY + "px)";
+    }
     document.body.classList.add("is-animating");
+    if (scrollY > 0) {
+      window.scrollTo(0, 0);
+    }
     // Resolve scenario once per transition. studioLeave will read it from
     // _pendingScenario instead of re-resolving (which would re-consume the
     // _nextReadNav flag and misclassify next-read clicks).
