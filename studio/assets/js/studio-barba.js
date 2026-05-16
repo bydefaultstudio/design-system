@@ -68,7 +68,11 @@ var _pendingScrollOffset = 0;
 // scrollTo(0,0), because getBoundingClientRect includes ancestor transforms —
 // measuring after the bridge inflated pushDistance by scrollY and the article
 // over-travelled (Bug 4: push felt too fast / overshot the viewport top).
-var _pendingNextReadTop = 0;
+// null is the sentinel for "not measured" (not push, or a next-read click
+// with no .article-lead.is-next-read — e.g. .case-study-slider links) so
+// pushUpTimeline can fall back to a full-viewport push instead of a dead
+// zero-distance hold; a numeric 0 means "card already flush, no travel".
+var _pendingNextReadTop = null;
 
 // Rise header choreography (Bug 3) handoff: set by animatePageHeader's
 // open/swap/fade branch in the `before` hook, consumed by riseTimeline which
@@ -330,12 +334,19 @@ function riseTimeline(data) {
           gm.duration * 0.3
         );
       }
-      tl.fromTo(
-        header,
-        { y: "-100%" },
-        { y: 0, duration: gm.duration * 0.5, ease: gm.ease },
-        gm.duration * 0.5
-      );
+      // Beat 3 — slide the (new-eyebrow) header back in, landing last.
+      // Skipped when swapEyebrowText === "" (defensive: a swap into a page
+      // with no eyebrow — Beat 1 already slid the old header out and the
+      // midpoint hid it; there is nothing to bring back). null (from-home,
+      // no Beat 1) and a non-empty string (normal swap) both slide in.
+      if (swapEyebrowText !== "") {
+        tl.fromTo(
+          header,
+          { y: "-100%" },
+          { y: 0, duration: gm.duration * 0.5, ease: gm.ease },
+          gm.duration * 0.5
+        );
+      }
     }
   });
 }
@@ -378,10 +389,16 @@ function slideDownTimeline(data) {
 function pushUpTimeline(data, opts) {
   if (prefersReducedMotion()) return Promise.resolve();
   var leavingEl = data.current.container;
-  // Floor at 0 — under the corrected contract a legitimate 0 (card already
-  // flush below the header) must not fall back to a full-viewport push, and
-  // the floor prevents reverse-travel/overshoot on very short articles.
-  var pushDistance = Math.max(0, (opts && opts.nextReadTop) || 0);
+  // nextReadTop is the pre-bridge measured distance (Bug 4): a number (>= 0,
+  // floored — a flush card legitimately yields 0 / no travel, and the floor
+  // prevents reverse-travel on very short articles) when a next-read card was
+  // found, or null for a next-read click with no measurable card (e.g.
+  // .case-study-slider links) — fall back to a full-viewport push so it still
+  // animates instead of dead-cutting.
+  var nrt = opts ? opts.nextReadTop : null;
+  var pushDistance = typeof nrt === "number"
+    ? Math.max(0, nrt)
+    : window.innerHeight;
   var offset = _pendingScrollOffset || 0;
   var gm = gsapMotion(MOTION.pagePush);
   return new Promise(function (resolve) {
@@ -435,9 +452,11 @@ var studioTransition = {
     // Push distance was measured in the `before` hook BEFORE the bridge
     // transform + scrollTo poisoned getBoundingClientRect (Bug 4). Consume the
     // stashed value here, mirroring how scrollOffset consumes
-    // _pendingScrollOffset below. 0 when not push / no next-read card found.
-    var nextReadTop = _pendingNextReadTop || 0;
-    _pendingNextReadTop = 0;
+    // _pendingScrollOffset below. Pass it through verbatim — null (not push /
+    // no next-read card) vs numeric (measured, may be 0) is resolved in
+    // pushUpTimeline so a card-less next-read still animates.
+    var nextReadTop = _pendingNextReadTop;
+    _pendingNextReadTop = null;
 
     // Scroll compensation was applied atomically in the `before` hook (the
     // transform on the leaving container, is-animating, and scrollTo(0,0)
@@ -463,6 +482,18 @@ var studioTransition = {
       var insetBottom = Math.max(0, containerHeight - scrollY - viewportHeight);
       data.current.container.style.clipPath =
         "inset(" + insetTop + "px 0 " + insetBottom + "px 0)";
+    }
+
+    // Bug 1, synchronous pin: the before-hook +scrollY bridge is only correct
+    // while the leaving container was position:relative — once is-animating
+    // flipped it to absolute/top:0 the correct compensation is y:scrollOffset
+    // (-scrollY). riseTimeline also pins it via a position-0 tl.set, but that
+    // renders on the first GSAP tick, which is AFTER bdAnimateElementsOut runs
+    // below — leaving a multi-frame window where the scrolled page is still
+    // displaced. gsap.set renders immediately, closing that window. (close/push
+    // don't need this — their fromTo start value is already scrollOffset.)
+    if (scenario === "open" || scenario === "swap" || scenario === "fade") {
+      gsap.set(data.current.container, { y: scrollOffset });
     }
 
     // GSAP element-out animations (skip for push — morph would conflict)
@@ -583,10 +614,14 @@ function animatePageHeader(scenario, nextContainer) {
 
   if (prefersReducedMotion()) {
     // riseTimeline early-returns under reduced motion — finalise the header
-    // now (instant), no tween, no stale handoff.
+    // now (instant), no tween, no stale handoff. Set inline y:0 (NOT
+    // clearProps): is-animating + data-studio-scenario are already on <body>,
+    // so the CSS parked rule would otherwise hold the header offscreen for the
+    // whole transition and snap it in only when the after hook removes
+    // is-animating. Inline y:0 overrides the park so it rests in place at once.
     if (eyebrowEl) eyebrowEl.textContent = newEyebrow;
     pageHeader.toggleAttribute("hidden", !newEyebrow);
-    gsap.set(pageHeader, { clearProps: "transform" });
+    gsap.set(pageHeader, { y: 0 });
     _pendingHeaderOut = false;
     _pendingHeaderEyebrow = null;
     return Promise.resolve();
@@ -630,11 +665,15 @@ function initStudioBarba() {
     _pendingScrollOffset = -scrollY;
     // Bug 4: capture the next-read card's true position BEFORE the bridge
     // transform + scrollTo below poison getBoundingClientRect (it includes
-    // ancestor transforms). Reset unconditionally every transition (mirrors
-    // _pendingScrollOffset — prevents stale carry into a later non-push nav).
-    // Peek at _nextReadNav non-destructively: resolveScenario below stays its
-    // sole consumer (re-reading it here would misclassify the next-read click).
-    _pendingNextReadTop = 0;
+    // ancestor transforms). Reset these handoff globals unconditionally every
+    // transition (genuinely mirroring _pendingScrollOffset — the close/push
+    // branches of animatePageHeader return without clearing the header ones,
+    // so a hung bdAnimateElementsOut on a prior rise must not leak stale state
+    // into a later rise). Peek at _nextReadNav non-destructively: resolveScenario
+    // below stays its sole consumer (re-reading it here would misclassify).
+    _pendingNextReadTop = null;
+    _pendingHeaderOut = false;
+    _pendingHeaderEyebrow = null;
     if (_nextReadNav && leavingEl) {
       var nextReadEl = leavingEl.querySelector(".article-lead.is-next-read");
       if (nextReadEl) {
