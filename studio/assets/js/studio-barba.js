@@ -62,6 +62,14 @@ var _pendingTimeline = null;
 // value can't be re-derived later (fixes Bug B: page flash when scrolled).
 var _pendingScrollOffset = 0;
 
+// Next-read card top (viewport-relative, pre-bridge) captured in the `before`
+// hook for the "push" scenario and consumed by studioLeave. Mirrors
+// _pendingScrollOffset: it MUST be read before the bridge transform +
+// scrollTo(0,0), because getBoundingClientRect includes ancestor transforms —
+// measuring after the bridge inflated pushDistance by scrollY and the article
+// over-travelled (Bug 4: push felt too fast / overshot the viewport top).
+var _pendingNextReadTop = 0;
+
 document.addEventListener("click", function detectNextReadClick(e) {
   if (e.target.closest(".is-next-read") || e.target.closest(".case-study-slider a")) {
     _nextReadNav = true;
@@ -332,7 +340,10 @@ function slideDownTimeline(data) {
 function pushUpTimeline(data, opts) {
   if (prefersReducedMotion()) return Promise.resolve();
   var leavingEl = data.current.container;
-  var pushDistance = (opts && opts.nextReadTop) || window.innerHeight;
+  // Floor at 0 — under the corrected contract a legitimate 0 (card already
+  // flush below the header) must not fall back to a full-viewport push, and
+  // the floor prevents reverse-travel/overshoot on very short articles.
+  var pushDistance = Math.max(0, (opts && opts.nextReadTop) || 0);
   var offset = _pendingScrollOffset || 0;
   var gm = gsapMotion(MOTION.pagePush);
   return new Promise(function (resolve) {
@@ -383,20 +394,12 @@ var studioTransition = {
     data.next.container.setAttribute("data-studio-scenario", scenario);
     data.next.container.setAttribute("data-studio-role", "enter");
 
-    // For push scenario, capture next-read card position before scroll snap.
-    // Subtract the top bar height (mobile bar + persistent page-header) so the
-    // card stops flush BELOW the fixed page-header — aligned with the entering
-    // article's .article-lead (which sits below the header in flow due to
-    // the wrapper's padding-top).
-    var nextReadTop = 0;
-    if (scenario === "push") {
-      var nextRead = data.current.container.querySelector(".article-lead.is-next-read");
-      var mobileBar = document.querySelector(".mobile-bar");
-      var pageHeader = document.querySelector(".page-header:not([hidden])");
-      var topBarHeight = (mobileBar ? mobileBar.offsetHeight : 0)
-                       + (pageHeader ? pageHeader.offsetHeight : 0);
-      if (nextRead) nextReadTop = nextRead.getBoundingClientRect().top - topBarHeight;
-    }
+    // Push distance was measured in the `before` hook BEFORE the bridge
+    // transform + scrollTo poisoned getBoundingClientRect (Bug 4). Consume the
+    // stashed value here, mirroring how scrollOffset consumes
+    // _pendingScrollOffset below. 0 when not push / no next-read card found.
+    var nextReadTop = _pendingNextReadTop || 0;
+    _pendingNextReadTop = 0;
 
     // Scroll compensation was applied atomically in the `before` hook (the
     // transform on the leaving container, is-animating, and scrollTo(0,0)
@@ -549,6 +552,23 @@ function initStudioBarba() {
     var leavingEl = data && data.current ? data.current.container : null;
     var scrollY = window.scrollY || 0;
     _pendingScrollOffset = -scrollY;
+    // Bug 4: capture the next-read card's true position BEFORE the bridge
+    // transform + scrollTo below poison getBoundingClientRect (it includes
+    // ancestor transforms). Reset unconditionally every transition (mirrors
+    // _pendingScrollOffset — prevents stale carry into a later non-push nav).
+    // Peek at _nextReadNav non-destructively: resolveScenario below stays its
+    // sole consumer (re-reading it here would misclassify the next-read click).
+    _pendingNextReadTop = 0;
+    if (_nextReadNav && leavingEl) {
+      var nextReadEl = leavingEl.querySelector(".article-lead.is-next-read");
+      if (nextReadEl) {
+        var nrMobileBar = document.querySelector(".mobile-bar");
+        var nrPageHeader = document.querySelector(".page-header:not([hidden])");
+        var nrTopBar = (nrMobileBar ? nrMobileBar.offsetHeight : 0)
+                     + (nrPageHeader ? nrPageHeader.offsetHeight : 0);
+        _pendingNextReadTop = nextReadEl.getBoundingClientRect().top - nrTopBar;
+      }
+    }
     if (leavingEl && scrollY > 0) {
       leavingEl.style.transform = "translateY(" + scrollY + "px)";
     }
