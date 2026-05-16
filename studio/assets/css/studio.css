@@ -50,7 +50,7 @@
   --duration-stagger: 30ms;
   --sidebar-logo-width: 220px;
   --feed-gap: calc(var(--space-l));
-  --studio-page-overlay-color: rgba(0, 0, 0, 0.2);
+  --studio-page-overlay-color: rgba(0, 0, 0, 0.05);
 }
 
 /* Dark mode token overrides */
@@ -885,18 +885,27 @@ body.is-animating[data-studio-scenario="fade"] .page-header {
   transition: opacity var(--duration-xs) var(--ease-out);
 }
 
-/* All sticky elements that live inside the Barba container suffer the same
-   transformed-ancestor issue as .section-header: when the container animates
-   with translateY(...), the sticky child detaches from the viewport, rides
-   the transform, then snaps. Fade them during transitions to hide the jump.
-   (.page-header avoids this entirely by living outside the Barba wrapper.)
-   Transition is set on this rule so the fast fade-out applies during the
-   transition; .toc-block / .share-block keep their existing slower fade-in
-   transition (--duration-l) for the reveal after is-animating is removed. */
+/* Every position:sticky / position:fixed element INSIDE the Barba container
+   suffers the transformed-ancestor issue: while is-animating the container is
+   position:absolute (sticky has no scroll context) and carries a transform
+   (becomes the containing block) — the child detaches from the viewport,
+   rides/snaps. Fade them out during the transition to hide the jump; they
+   auto-revert when is-animating is removed. (.page-header / .sidebar /
+   .mobile-bar / .page-overlay avoid this entirely by living OUTSIDE the Barba
+   wrapper, so they are not listed here.) [data-transition-hide] is the general
+   opt-in escape hatch for future sticky/fixed markup. ScrollTrigger-driven
+   parallax ([data-bd-parallax]) and pin ([data-pin]) are deliberately NOT
+   here — opacity only masks a live scrub trigger; they are killed in the
+   Barba before hook instead (studio-barba.js) so the trigger never runs
+   against the transforming container. Fast fade-out (--duration-xs) applies
+   during the transition; per-element base rules govern the fade back in. */
 body.is-animating .section-header,
 body.is-animating .toc-block,
 body.is-animating .share-block,
-body.is-animating .case-study-content-inner {
+body.is-animating .case-study-content-inner,
+body.is-animating .sticky-media,
+body.is-animating .founder-header,
+body.is-animating [data-transition-hide] {
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--duration-xs) var(--ease-out);
@@ -1389,6 +1398,8 @@ body.is-sidebar-collapsed .page-header {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Baseline so the transition opacity-hide fades back in, not pops */
+  transition: opacity var(--duration-xs) var(--ease-out);
 }
 
 .scroll-stack {
@@ -1467,6 +1478,8 @@ body.is-sidebar-collapsed .page-header {
   position: sticky;
   top: calc(var(--studio-bar-height) + var(--studio-gap));
   padding-bottom: var(--space-3xl);
+  /* Baseline so the transition opacity-hide fades back in, not pops */
+  transition: opacity var(--duration-xs) var(--ease-out);
 }
 
 .founder-header h2 {
@@ -3800,12 +3813,16 @@ a.footer-logo:hover {
   flex-direction: column;
   align-items: center;
   gap: var(--space-s);
+  background-color: var(--background-faded);
+  padding: var(--space-l) var(--space-xl);
+  border-radius: var(--radius-s);
 }
 
 /* Big stat — the slide's headline. */
 .report-ticker-value {
-  font-size: var(--font-3xl);
-  font-weight: var(--font-weight-light);
+  margin: 0;
+  font-size: var(--font-4xl);
+  font-weight: var(--font-weight-medium);
   line-height: 1;
   letter-spacing: -0.01em;
   color: var(--text-primary);
@@ -3818,7 +3835,8 @@ a.footer-logo:hover {
   display: flex;
   align-items: center;
   gap: var(--space-xs);
-  font-size: var(--font-s);
+  margin: 0;
+  font-size: var(--font-xs);
   line-height: var(--line-height-m);
   color: var(--text-secondary);
   white-space: nowrap;
@@ -3826,9 +3844,8 @@ a.footer-logo:hover {
 
 /* Icon size + color override. .svg-icn base handles centering + aspect-ratio. */
 .report-ticker-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  color: var(--text-faded);
+  --icon-size: 1.3em;
+  margin-right: var(--space-xs);
 }
 
 /* Mobile scale-down — keeps slides legible at narrow widths. */
