@@ -661,10 +661,13 @@ function initStudioBarba() {
     // y against a position:absolute, transformed container → the visible
     // parallax/pin jump. ctx.revert() is synchronous, so this does not split
     // the Bug B atomic block; it also means the next-read measurement below is
-    // taken against the cleaned (parallax-free) layout the destination settles
-    // into. Mirrors the cleanupHeadlineCycle() call already done here for the
-    // same "revert while still in DOM / untransformed" reason. The after hook
-    // keeps a second (idempotent) bdAnimationsCleanup as defense.
+    // taken against the cleaned layout the destination settles into. On a page
+    // with both [data-pin] and a next-read card this releases the pin-spacer
+    // BEFORE that measurement — intentional (measure the pin-free target),
+    // not a push-distance regression. Mirrors the cleanupHeadlineCycle() call
+    // already done here for the same "revert while still in DOM / untransformed"
+    // reason. The after hook keeps a second (idempotent) bdAnimationsCleanup as
+    // defense; requestError (barba.init) rebuilds if the next fetch fails.
     if (typeof window.bdAnimationsCleanup === "function") {
       window.bdAnimationsCleanup();
     }
@@ -856,6 +859,18 @@ function initStudioBarba() {
     transitions: [studioTransition],
     prevent: shouldPrevent,
     debug: false,
+    // The before hook kills bd-animations BEFORE the next page is fetched. On a
+    // failed fetch Barba never runs the after hook (it hard-redirects instead),
+    // so the current page would be left with dead parallax/pin until the
+    // reload lands. Rebuild them on the still-present current container here.
+    // Return nothing → keep Barba's default hard-redirect fallback.
+    requestError: function onRequestError() {
+      var cur = document.querySelector('[data-barba="container"]');
+      if (cur && typeof window.bdAnimationsInit === "function") {
+        window.bdAnimationsInit(cur);
+        if (typeof ScrollTrigger !== "undefined") ScrollTrigger.refresh();
+      }
+    },
   });
 
   // Initial sync — persistent header lives in static HTML with hand-authored eyebrow,
