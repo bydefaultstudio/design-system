@@ -83,14 +83,6 @@ function initToc() {
         if (shareBlock) shareBlock.classList.toggle("is-visible", visible);
       });
     }, { threshold: 0 });
-    // Seed .is-visible synchronously from the current position so a scrolled
-    // push nav (where it was already visible) doesn't drop the class for a
-    // frame until the observer's first async callback (flash). Same predicate
-    // the observer uses: visible === not intersecting the viewport.
-    var r = inThisArticle.getBoundingClientRect();
-    var seeded = r.bottom <= 0 || r.top >= (window.innerHeight || document.documentElement.clientHeight);
-    if (tocBlock) tocBlock.classList.toggle("is-visible", seeded);
-    if (shareBlock) shareBlock.classList.toggle("is-visible", seeded);
     tocVisibilityObserver.observe(inThisArticle);
   }
 
