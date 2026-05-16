@@ -45,6 +45,10 @@ var _nextReadNav = false;
 // the one-shot _nextReadNav flag and misclassify next-read clicks).
 var _pendingScenario = null;
 
+// The active GSAP transition timeline. Stored so the after hook can kill it
+// (defensive — it has normally completed by then). One timeline per transition.
+var _pendingTimeline = null;
+
 document.addEventListener("click", function detectNextReadClick(e) {
   if (e.target.closest(".is-next-read") || e.target.closest(".case-study-slider a")) {
     _nextReadNav = true;
@@ -186,6 +190,54 @@ var MOTION = {
   pageRise: readMotion("open"), // rise reuses open timing across open/swap/fade
 };
 
+// GSAP has no built-in cubic-bezier ease and the CustomEase plugin isn't
+// loaded. To keep the design system motion tokens as the single source of
+// truth (CLAUDE.md §3 — never hardcode easing), parse the token's
+// cubic-bezier(x1,y1,x2,y2) and return a GSAP-compatible easing function.
+// Standard WebKit UnitBezier solve: Newton-Raphson with a bisection fallback.
+function cssCubicBezierToEase(cssValue) {
+  var m = /cubic-bezier\(\s*([-\d.]+)\s*,\s*([-\d.]+)\s*,\s*([-\d.]+)\s*,\s*([-\d.]+)\s*\)/.exec(cssValue || "");
+  if (!m) return "power2.inOut"; // safe GSAP fallback if token isn't a cubic-bezier
+  var x1 = +m[1], y1 = +m[2], x2 = +m[3], y2 = +m[4];
+  function curve(t, a, b) {
+    var c = 3 * a, bb = 3 * (b - a) - c, aa = 1 - c - bb;
+    return ((aa * t + bb) * t + c) * t;
+  }
+  function curveSlope(t, a, b) {
+    var c = 3 * a, bb = 3 * (b - a) - c, aa = 1 - c - bb;
+    return (3 * aa * t + 2 * bb) * t + c;
+  }
+  function solveForT(x) {
+    var t = x;
+    for (var i = 0; i < 8; i++) {
+      var dx = curve(t, x1, x2) - x;
+      if (Math.abs(dx) < 1e-6) return t;
+      var d = curveSlope(t, x1, x2);
+      if (Math.abs(d) < 1e-6) break;
+      t -= dx / d;
+    }
+    var lo = 0, hi = 1;
+    t = x;
+    for (var j = 0; j < 20; j++) {
+      var xv = curve(t, x1, x2);
+      if (Math.abs(xv - x) < 1e-6) break;
+      if (x > xv) lo = t; else hi = t;
+      t = (lo + hi) / 2;
+    }
+    return t;
+  }
+  return function easeFn(p) {
+    if (p <= 0) return 0;
+    if (p >= 1) return 1;
+    return curve(solveForT(p), y1, y2);
+  };
+}
+
+// Convert a MOTION entry { duration(ms), easing(css) } to GSAP params.
+function gsapMotion(m) {
+  return { duration: (m.duration || 0) / 1000, ease: cssCubicBezierToEase(m.easing) };
+}
+
 //
 //------- Transition Map -------//
 //
@@ -269,66 +321,51 @@ var TRANSITIONS = {
   },
 
   // -- rise --
-  // Default for "open", "swap", "fade". Sequenced choreography:
+  // Default for "open", "swap", "fade". One GSAP timeline, three actors,
+  // all parallel — total duration = motion.duration (no chained phase 2):
   //
-  //   Phase 1 (0 → motion.duration) — page rise:
-  //     1. Leaving page stays still (scroll-compensated by studioLeave).
-  //     2. .page-overlay fades in fast then holds (keyframe offsets [0, 0.3, 1]).
-  //     3. Entering page rises 100vh and scales 0.77 → 1 from bottom-center.
-  //     For swap/fade, animatePageHeader fires concurrently to slide the OLD
-  //     header out (translateY(0) → -100%) and swap the eyebrow text offscreen.
+  //   - .page-overlay: autoAlpha 0 → 1 over the first 30%, then holds (GSAP
+  //     keeps the end value for the remaining 70% of the timeline).
+  //   - entering page (el): y 100vh → 0, scale 0.77 → 1, origin bottom-center.
+  //   - .page-header: parked at translateY(-100%) by the CSS rule
+  //     body.is-animating[data-studio-scenario=…] .page-header; slides
+  //     y -100% → 0 starting at 50% so it lands exactly with the page.
   //
-  //   Phase 2 (motion.duration → 2x motion.duration) — page-header slide-in:
-  //     The header sits at translateY(-100%) (already prepared by animatePageHeader
-  //     in the before hook) and slides DOWN to translateY(0). z-index 400 lifts
-  //     it above the now-settled entering page (300) and the overlay (200). The
-  //     header arrives last and sits on top of everything.
-  //
-  // riseEnter chains phase 2 onto phase 1 so the total enter promise is twice
-  // the motion duration. With sync:true, barba waits for both leave and enter
-  // before running the after hook (which cleans up the overlay etc).
+  // The leaving page stays still (scroll-compensated in studioLeave). The
+  // whole visual lives in `enter`; `leave` is a no-op resolve. With sync:true
+  // barba waits for both — the timeline's onComplete resolves enter.
   "rise": {
-    leave: function riseLeave(el, motion) {
-      var overlay = document.querySelector(".page-overlay");
-      if (!overlay) return Promise.resolve();
-      return animate(
-        overlay,
-        [
-          { opacity: 0, offset: 0 },
-          { opacity: 1, offset: 0.3 },
-          { opacity: 1, offset: 1 },
-        ],
-        { duration: motion.duration, easing: motion.easing, fill: "forwards" }
-      );
+    leave: function riseLeave() {
+      return Promise.resolve();
     },
     enter: function riseEnter(el, motion) {
-      el.style.transformOrigin = "50% 100%";
-      var risePromise = animate(
-        el,
-        [
-          { transform: "translateY(100vh) scale(0.77)" },
-          { transform: "translateY(0) scale(1)" },
-        ],
-        { duration: motion.duration, easing: motion.easing, fill: "forwards" }
-      );
-      return risePromise.then(function onRiseDone() {
-        // Phase 2: slide the page-header in last. animatePageHeader has already
-        // prepared the header (eyebrow text set, [hidden] removed, transform
-        // pre-positioned at -100%) for rise scenarios. Half the rise duration
-        // keeps the total transition snappy (rise + header ≈ 1.5× the rise).
-        var pageHeader = document.querySelector(".page-header");
-        if (!pageHeader || pageHeader.hasAttribute("hidden")) return Promise.resolve();
-        var headerDuration = Math.round(motion.duration * 0.5);
-        return animate(
-          pageHeader,
-          [{ transform: "translateY(-100%)" }, { transform: "translateY(0)" }],
-          { duration: headerDuration, easing: motion.easing, fill: "forwards" }
-        ).then(function onHeaderInDone() {
-          // Pin the end state to inline so the after hook's cancel-then-clear
-          // sequence can't briefly expose the underlying -100% (set by
-          // animatePageHeader for open) between the two synchronous operations.
-          pageHeader.style.transform = "translateY(0)";
-        });
+      if (prefersReducedMotion()) return Promise.resolve();
+      var overlay = ensureOverlay();
+      var header = document.querySelector(".page-header:not([hidden])");
+      var gm = gsapMotion(motion);
+      return new Promise(function riseTimeline(resolve) {
+        var tl = gsap.timeline({ onComplete: resolve });
+        _pendingTimeline = tl;
+        tl.fromTo(
+          overlay,
+          { autoAlpha: 0 },
+          { autoAlpha: 1, duration: gm.duration * 0.3, ease: "none" },
+          0
+        );
+        tl.fromTo(
+          el,
+          { y: "100vh", scale: 0.77, transformOrigin: "50% 100%" },
+          { y: 0, scale: 1, duration: gm.duration, ease: gm.ease },
+          0
+        );
+        if (header) {
+          tl.fromTo(
+            header,
+            { y: "-100%" },
+            { y: 0, duration: gm.duration * 0.5, ease: gm.ease },
+            gm.duration * 0.5
+          );
+        }
       });
     },
   },
@@ -650,43 +687,54 @@ function initStudioBarba() {
     if (typeof window.initSidebarSlot === "function") {
       window.initSidebarSlot();
     }
-    // Cancel any WAAPI animations with fill:forwards before removing
-    // is-animating. Without this, the final keyframe persists indefinitely
-    // (the page-overlay would stay at opacity 1 and cover the new page once
-    // the entering container's elevated z-index drops back to auto). Order
-    // matters: cancel first, then remove the class — otherwise there's a
-    // one-frame flash where the overlay is still painted over a now-low
-    // z-index container.
+    // Kill the GSAP transition timeline (rise). It has normally completed
+    // already (onComplete resolved `enter`); kill() is defensive against
+    // very fast navigation interrupting it.
+    if (_pendingTimeline) {
+      _pendingTimeline.kill();
+      _pendingTimeline = null;
+    }
+
     var pageOverlay = document.querySelector(".page-overlay");
-    if (pageOverlay) {
-      pageOverlay.getAnimations().forEach(function (a) { a.cancel(); });
-      pageOverlay.style.opacity = "";
-    }
-    // Clean up role/scenario attributes + cancel any container animations
-    // (transform/opacity held by fill:forwards) + clear inline styles set
-    // by the animation (transform from scroll-compensation, transformOrigin
-    // from rise's bottom-center origin, clipPath from close).
-    if (data && data.next && data.next.container) {
-      data.next.container.getAnimations().forEach(function (a) { a.cancel(); });
-      data.next.container.removeAttribute("data-studio-role");
-      data.next.container.removeAttribute("data-studio-scenario");
-      data.next.container.style.transform = "";
-      data.next.container.style.transformOrigin = "";
-      data.next.container.style.opacity = "";
-      data.next.container.style.clipPath = "";
-    }
-    // Cancel page-header animations + clear inline transform so subsequent
-    // transitions start from a clean slate (close leaves it at translateY(-100%)
-    // held by fill:forwards until cleanup; swap/fade leave it at translateY(0);
-    // open leaves it at translateY(0) which is identity but still worth
-    // clearing).
     var pageHeader = document.querySelector(".page-header");
-    if (pageHeader) {
-      pageHeader.getAnimations().forEach(function (a) { a.cancel(); });
-      pageHeader.style.transform = "";
+    var nextContainer = data && data.next ? data.next.container : null;
+
+    // close/push still use the WAAPI `animate()` helper with fill:forwards
+    // (ported to GSAP in later steps). Cancel those so the final keyframe
+    // doesn't persist after is-animating is removed. GSAP tweens are NOT
+    // returned by getAnimations(), so this is a no-op for rise.
+    if (pageOverlay) pageOverlay.getAnimations().forEach(function (a) { a.cancel(); });
+    if (pageHeader) pageHeader.getAnimations().forEach(function (a) { a.cancel(); });
+    if (nextContainer) {
+      nextContainer.getAnimations().forEach(function (a) { a.cancel(); });
+      nextContainer.removeAttribute("data-studio-role");
+      nextContainer.removeAttribute("data-studio-scenario");
     }
+
+    // Cleanup order matters — two opposing constraints:
+    //
+    //  1. Overlay must reset BEFORE is-animating is removed. While
+    //     is-animating is set the entering container is z-index 300; once
+    //     removed it drops to auto. If the overlay (z-index 200) were still
+    //     opaque at that moment it would cover the new page for a frame.
+    //  2. Header must reset AFTER is-animating is removed. The CSS rule
+    //     body.is-animating[data-studio-scenario] .page-header parks it at
+    //     translateY(-100%). GSAP holds its end-state (translateY(0)) as an
+    //     inline transform that OVERRIDES that rule — so the header stays
+    //     correct through the class removal. If we cleared its inline while
+    //     is-animating were still set, the parked -100% rule would apply
+    //     for a frame (this was the root of Bug A).
+    if (pageOverlay) {
+      gsap.set(pageOverlay, { clearProps: "opacity,visibility,transform" });
+    }
+
     document.body.classList.remove("is-animating");
     document.body.removeAttribute("data-studio-scenario");
+
+    gsap.set([pageHeader, nextContainer].filter(Boolean), {
+      clearProps: "transform,transformOrigin,opacity,visibility,clipPath",
+    });
+
     window.scrollTo(0, 0);
 
     // Deferred init — runs after layout settles (is-animating removed,
