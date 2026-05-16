@@ -402,19 +402,23 @@ var TRANSITIONS = {
   // a scrolled leaving page translates.
   "push-up": {
     leave: function pushUpLeave(el, motion, opts) {
+      if (prefersReducedMotion()) return Promise.resolve();
       var pushDistance = (opts && opts.nextReadTop) || window.innerHeight;
       var offset = (opts && opts.scrollOffset) || 0;
-      var startY = offset + "px";
-      var endY = (offset - pushDistance) + "px";
-
-      return animate(
-        el,
-        [
-          { transform: "translateY(" + startY + ")" },
-          { transform: "translateY(" + endY + ")" },
-        ],
-        { duration: motion.duration, easing: motion.easing, fill: "forwards" }
-      );
+      var gm = gsapMotion(motion);
+      // Exact mirror of the previous WAAPI keyframes — y from the scroll
+      // offset to offset - pushDistance. The new page sits at translateY(0)
+      // behind (no enter animation). Visually unchanged from before.
+      return new Promise(function pushUpTimeline(resolve) {
+        var tl = gsap.timeline({ onComplete: resolve });
+        _pendingTimeline = tl;
+        tl.fromTo(
+          el,
+          { y: offset },
+          { y: offset - pushDistance, duration: gm.duration, ease: gm.ease },
+          0
+        );
+      });
     },
     enter: function pushUpEnter() {
       // No animation — new page is already in position behind the leaving page
@@ -604,16 +608,28 @@ function animatePageHeader(scenario, nextContainer) {
   var newEyebrow = ((nextContainer && nextContainer.getAttribute("data-page-eyebrow")) || "").trim();
 
   if (scenario === "close") {
-    // Close keeps a WAAPI slide-up for now (ported to GSAP in a later step).
     // Close is NOT a rise scenario, so the CSS parked-state rule doesn't
-    // apply here — the header animates out then hides.
-    return animate(
-      pageHeader,
-      [{ transform: "translateY(0)" }, { transform: "translateY(-100%)" }],
-      { duration: MOTION.pageClose.duration, easing: MOTION.pageClose.easing, fill: "forwards" }
-    ).then(function onCloseDone() {
+    // apply — the header slides up off the top then hides. GSAP gsap.to
+    // (not part of _pendingTimeline; runs concurrently with slide-down).
+    function finishClose() {
       pageHeader.toggleAttribute("hidden", true);
       if (eyebrowEl) eyebrowEl.textContent = "";
+    }
+    if (prefersReducedMotion()) {
+      finishClose();
+      return Promise.resolve();
+    }
+    var gmc = gsapMotion(MOTION.pageClose);
+    return new Promise(function (resolve) {
+      gsap.to(pageHeader, {
+        y: "-100%",
+        duration: gmc.duration,
+        ease: gmc.ease,
+        onComplete: function onCloseHeaderDone() {
+          finishClose();
+          resolve();
+        },
+      });
     });
   }
 
