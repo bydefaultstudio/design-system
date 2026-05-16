@@ -854,15 +854,18 @@ body.is-sidebar-collapsed .page-overlay {
   }
 }
 
-/* Lift the persistent page-header to the HIGHEST stack level during rise
-   scenarios (open / swap / fade) so it animates in on top of everything:
-   leaving page (1), overlay (200), entering page (300), header (400). The
-   header slides in last in the rise sequence (after the page has settled),
-   so it always finishes the choreography on top. */
+/* During rise scenarios (open / swap / fade) the page-header is the highest
+   layer — leaving page (1), overlay (200), entering page (300), header (400) —
+   and starts PARKED offscreen at translateY(-100%). The GSAP timeline slides
+   it in; when is-animating is removed in the after hook this rule stops
+   applying and the header returns to its resting translateY(0) automatically.
+   No inline transform juggling = no WAAPI cancel race (fixes Bug A). The GSAP
+   tween overrides this transform while it runs. */
 body.is-animating[data-studio-scenario="open"] .page-header,
 body.is-animating[data-studio-scenario="swap"] .page-header,
 body.is-animating[data-studio-scenario="fade"] .page-header {
   z-index: 400;
+  transform: translateY(-100%);
 }
 
 

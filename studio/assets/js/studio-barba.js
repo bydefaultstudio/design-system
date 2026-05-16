@@ -551,43 +551,26 @@ function animatePageHeader(scenario, nextContainer) {
   var eyebrowEl = pageHeader.querySelector(".eyebrow-header");
   var newEyebrow = ((nextContainer && nextContainer.getAttribute("data-page-eyebrow")) || "").trim();
 
-  if (scenario === "open") {
-    // Prepare for the post-rise slide-in: set text, reveal, park offscreen.
-    if (eyebrowEl) eyebrowEl.textContent = newEyebrow;
-    pageHeader.toggleAttribute("hidden", !newEyebrow);
-    if (newEyebrow) pageHeader.style.transform = "translateY(-100%)";
-    return Promise.resolve();
-  }
-
   if (scenario === "close") {
+    // Close keeps a WAAPI slide-up for now (ported to GSAP in a later step).
+    // Close is NOT a rise scenario, so the CSS parked-state rule doesn't
+    // apply here — the header animates out then hides.
     return animate(
       pageHeader,
       [{ transform: "translateY(0)" }, { transform: "translateY(-100%)" }],
       { duration: MOTION.pageClose.duration, easing: MOTION.pageClose.easing, fill: "forwards" }
     ).then(function onCloseDone() {
-      // The `after` hook clears pageHeader.style.transform on every transition,
-      // so don't duplicate that here. Just hide the element and reset the eyebrow.
       pageHeader.toggleAttribute("hidden", true);
       if (eyebrowEl) eyebrowEl.textContent = "";
     });
   }
 
-  if (scenario === "swap" || scenario === "fade") {
-    // Slide the OLD header out over the first ~30% of the rise duration.
-    // Update the eyebrow text offscreen, then leave the header parked at
-    // translateY(-100%) for riseEnter to slide back in after the rise.
-    var upDuration = Math.round(MOTION.pageRise.duration * 0.3);
-    return animate(
-      pageHeader,
-      [{ transform: "translateY(0)" }, { transform: "translateY(-100%)" }],
-      { duration: upDuration, easing: MOTION.pageRise.easing, fill: "forwards" }
-    ).then(function onHeaderUpDone() {
-      if (eyebrowEl) eyebrowEl.textContent = newEyebrow;
-      pageHeader.toggleAttribute("hidden", !newEyebrow);
-    });
-  }
-
-  // push — instant eyebrow swap, header doesn't move
+  // open / swap / fade / push — just set the eyebrow text + reveal.
+  // For rise scenarios (open/swap/fade) the CSS rule
+  //   body.is-animating[data-studio-scenario="..."] .page-header
+  // parks the header at translateY(-100%) the moment is-animating is added;
+  // the rise timeline slides it in. No inline transform here = no WAAPI
+  // cancel race (fixes Bug A). For push the header doesn't move.
   if (eyebrowEl) eyebrowEl.textContent = newEyebrow;
   pageHeader.toggleAttribute("hidden", !newEyebrow);
   return Promise.resolve();
