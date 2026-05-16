@@ -252,12 +252,23 @@ var SLIDE_DOWN_ENTER_ORIGIN = "50% 0%";
 function riseTimeline(data) {
   if (prefersReducedMotion()) return Promise.resolve();
   var el = data.next.container;
+  // The leaving page must stay visually pinned where the user was scrolled
+  // to while the new page rises over it. The before hook stamped a
+  // translateY(+scrollY) bridge on it (Bug B) which close/push overwrite via
+  // their fromTo — rise never animated the leaving container, so that stale
+  // bridge displaced the scrolled page off-screen. Pin it at y:offset
+  // (= -scrollY = _pendingScrollOffset) for the whole rise (Bug 1).
+  var leavingEl = data.current ? data.current.container : null;
+  var offset = _pendingScrollOffset || 0;
   var overlay = document.querySelector(".page-overlay");
   var header = document.querySelector(".page-header:not([hidden])");
   var gm = gsapMotion(MOTION.pageRise);
   return new Promise(function (resolve) {
     var tl = gsap.timeline({ onComplete: resolve });
     _pendingTimeline = tl;
+    if (leavingEl) {
+      tl.set(leavingEl, { y: offset }, 0);
+    }
     if (overlay) {
       tl.fromTo(
         overlay,
