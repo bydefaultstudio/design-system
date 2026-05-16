@@ -1735,7 +1735,9 @@ article.article {
   max-width: 220px;
   margin: 0 auto;
   opacity: 0;
-  transition: opacity var(--duration-l) var(--ease-out);
+  /* --duration-s (fade-swaps), not --duration-l (page-level): sidebar chrome
+     reveal — 800ms read as "slowly reappearing" after a transition */
+  transition: opacity var(--duration-s) var(--ease-out);
 }
 
 .toc-block.is-visible,
