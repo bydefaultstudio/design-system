@@ -732,26 +732,22 @@ function initStudioBarba() {
     if (typeof window.initSidebarSlot === "function") {
       window.initSidebarSlot();
     }
-    // Kill the GSAP transition timeline (rise). It has normally completed
-    // already (onComplete resolved `enter`); kill() is defensive against
-    // very fast navigation interrupting it.
-    if (_pendingTimeline) {
-      _pendingTimeline.kill();
-      _pendingTimeline = null;
-    }
-
     var pageOverlay = document.querySelector(".page-overlay");
     var pageHeader = document.querySelector(".page-header");
     var nextContainer = data && data.next ? data.next.container : null;
 
-    // close/push still use the WAAPI `animate()` helper with fill:forwards
-    // (ported to GSAP in later steps). Cancel those so the final keyframe
-    // doesn't persist after is-animating is removed. GSAP tweens are NOT
-    // returned by getAnimations(), so this is a no-op for rise.
-    if (pageOverlay) pageOverlay.getAnimations().forEach(function (a) { a.cancel(); });
-    if (pageHeader) pageHeader.getAnimations().forEach(function (a) { a.cancel(); });
+    // Every transition is a GSAP timeline/tween now. Kill the transition
+    // timeline (rise / slide-down / push-up) and any standalone tweens on
+    // the animated elements (the close-header gsap.to isn't in the
+    // timeline). GSAP holds its end-state as an inline style, so the
+    // clearProps below fully resets it — there is no WAAPI cancel()
+    // revert-to-pre-state race, so Bug A is structurally gone.
+    if (_pendingTimeline) {
+      _pendingTimeline.kill();
+      _pendingTimeline = null;
+    }
+    gsap.killTweensOf([pageOverlay, pageHeader, nextContainer].filter(Boolean));
     if (nextContainer) {
-      nextContainer.getAnimations().forEach(function (a) { a.cancel(); });
       nextContainer.removeAttribute("data-studio-role");
       nextContainer.removeAttribute("data-studio-scenario");
     }
