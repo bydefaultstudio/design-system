@@ -2,23 +2,28 @@
  * Script Purpose: Studio Barba init — hierarchy-aware page transitions
  * Author: By Default
  * Created: 2026-04-11
- * Version: 0.7.0
+ * Version: 0.8.0
  * Last Updated: 2026-05-16
  *
- * Architecture:
+ * Architecture (GSAP timelines, CSS-driven parked state):
  *
- *   1. Resolver — resolveScenario(fromEl, toEl) → "open" | "close" | "swap" | "fade" | "push"
- *      Answers "what's happening?" based on data-level attributes.
+ *   1. resolveScenario(fromEl, toEl) → "open" | "close" | "swap" | "fade" | "push"
+ *      "What's happening?" — from the two containers' data-level attributes.
  *
- *   2. Map — TRANSITION_MAP { open: "rise", close: "slide-down", ... }
- *      Answers "which animation runs for this scenario?"
- *      Change one line here to globally swap how a scenario looks.
+ *   2. runTransition(scenario, data, opts) — a switch that builds and runs the
+ *      scenario's GSAP timeline. open/swap/fade → riseTimeline; close →
+ *      slideDownTimeline; push → pushUpTimeline. One timeline per transition,
+ *      stored on _pendingTimeline for the after hook to kill.
  *
- *   3. Library — TRANSITIONS { "rise": { leave(), enter() }, ... }
- *      Named animations. Each receives the scenario's motion token (not its own).
+ *   3. MOTION { pageRise, pageClose, pagePush } — design system motion tokens
+ *      read once at load; gsapMotion() bridges the cubic-bezier token to a
+ *      GSAP ease (no CustomEase plugin needed, tokens stay source of truth).
  *
- *   4. Motion tokens — MOTION { pageOpen, pageClose, pageSwap, pageFade, pageRise }
- *      Read once from CSS custom properties. Indexed by scenario name.
+ * The page-overlay is injected once at init (ensureOverlay) — not hand-written
+ * per page. The page-header's parked offscreen state for rise scenarios is a
+ * CSS rule (body.is-animating[data-studio-scenario] .page-header), not inline
+ * JS — GSAP overrides it while animating and it auto-reverts when is-animating
+ * is removed (no WAAPI cancel race).
  *
  * Three-level page model:
  *   L0 = home (index.html)         — the master / feed
@@ -26,16 +31,16 @@
  *   L2 = case studies / articles   — feed items
  *
  * Scenario rules:
- *   home → anything       open   (rise: overlay + entering page lifts in)
+ *   home → anything       open   (rise: overlay dims, entering page lifts in)
  *   anything → home       close  (slide-down: page falls away, home revealed)
- *   non-home → non-home   swap   (rise: same as open, with header up-then-down)
+ *   non-home → non-home   swap   (rise: same as open)
  *   next-read card click  push   (push-up: card aligned flush with header)
  *   same page / unknown   fade   (rise: defensive fallback)
  *
- * Reduced motion: instant swap.
+ * Reduced motion: instant swap (each timeline builder early-returns).
  */
 
-// Studio Barba v0.7.0
+// Studio Barba v0.8.0
 
 // Flag set by click handler on .next-read — consumed once by resolveScenario
 var _nextReadNav = false;
@@ -80,11 +85,6 @@ function readNumberAttr(el, attr) {
   return Number.isFinite(n) ? n : NaN;
 }
 
-// Capitalize first letter — turns "open" into "Open" for MOTION key lookup
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
 // Resolve which scenario applies based on the two containers' data-level.
 //
 // Returns a semantic scenario name (not an animation name):
@@ -116,19 +116,6 @@ function resolveScenario(fromEl, toEl) {
 
   // Same page or unknown
   return "fade";
-}
-
-// Wrap WAAPI Animation in a promise
-function animate(el, keyframes, options) {
-  return new Promise(function runAnimation(resolve) {
-    if (!el || prefersReducedMotion()) {
-      resolve();
-      return;
-    }
-    var anim = el.animate(keyframes, options);
-    anim.onfinish = resolve;
-    anim.oncancel = resolve;
-  });
 }
 
 // Detect external / non-Barba links so we can let the browser handle them normally
@@ -189,12 +176,9 @@ function readMotion(scope) {
 }
 
 var MOTION = {
-  pageOpen: readMotion("open"),
+  pageRise: readMotion("open"),  // open/swap/fade all rise — reuse open timing
   pageClose: readMotion("close"),
-  pageSwap: readMotion("swap"),
-  pageFade: readMotion("fade"),
-  pagePush: readMotion("swap"), // push reuses swap timing
-  pageRise: readMotion("open"), // rise reuses open timing across open/swap/fade
+  pagePush: readMotion("swap"),  // push reuses swap timing
 };
 
 // GSAP has no built-in cubic-bezier ease and the CustomEase plugin isn't
@@ -246,235 +230,123 @@ function gsapMotion(m) {
 }
 
 //
-//------- Transition Map -------//
+//------- Transition Timelines -------//
 //
-// Maps each scenario (what's happening) to an animation name (what it looks
-// like). Change one line here to globally swap the visual for a scenario.
-// The animation always receives the *scenario's* motion token, so the timing
-// still matches the intent even if the visual changes.
+// One GSAP timeline per scenario. Each builder takes Barba's `data`
+// (data.current.container = leaving, data.next.container = entering) plus
+// per-scenario opts, stores the timeline on _pendingTimeline so the after
+// hook can kill it, and returns a Promise that resolves on completion.
+// Reduced motion short-circuits to an instant resolve (no animation).
 
-var TRANSITION_MAP = {
-  open:  "rise",
-  close: "slide-down",
-  swap:  "rise",
-  push:  "push-up",
-  fade:  "rise",
-};
-
-//
-//------- Transition Library -------//
-//
-// Named animations. Each entry has a leave(el, motion, opts) and
-// enter(el, motion, opts) method. They receive:
-//   el     — the Barba container to animate
-//   motion — { duration, easing } from the scenario's motion token
-//   opts   — { scrollOffset } (leave only — for scroll compensation)
-
-// slide-down's enter brings home back up from a scaled/dimmed state.
-// These are the start values for that animation (home appears scaled
-// and dim, then animates back to identity). Studio-specific stylistic
-// choices, not foundation-level motion semantics.
+// slide-down's enter brings home back from a scaled/dimmed state. Start
+// values for that — studio-specific stylistic choices, not foundation tokens.
 var SLIDE_DOWN_ENTER_SCALE_FROM = 0.96;
 var SLIDE_DOWN_ENTER_OPACITY_FROM = 0.7;
 var SLIDE_DOWN_ENTER_ORIGIN = "50% 0%";
 
-// Page-transition travel distance. Used by slide-down's leave (close) and
-// slide-up's enter (open) so the two animations are true mirrors of each
-// other — same magnitude, opposite direction. 100vh = exactly one viewport
-// height. Paired with the clip-path applied to the leaving container in
-// studioLeave on close, so a scrolled article slides cleanly out as one
-// rigid strip — no content-whip.
-var PAGE_TRAVEL = "100vh";
-
-// All page transitions use PAGE_TRAVEL (100vh) — see clip-path in studioLeave for content-whip prevention on scrolled pages.
-var TRANSITIONS = {
-
-  // -- slide-down --
-  // Default for "close". Leaving page slides one viewport height downward
-  // (PAGE_TRAVEL = 100vh) — physically clears the viewport, opaque the
-  // whole way, no fade needed. Home (the entering container) stays
-  // anchored in place but scales BACK up from 0.96 → 1 and brightens
-  // from 0.7 → 1, the inverse of slide-up's leave. Mirror of slide-up:
-  // same travel magnitude, opposite direction.
-  //
-  // The leaving container also receives a clip-path (applied in
-  // studioLeave) that constrains it to the user's current viewport strip,
-  // so on a scrolled article only the visible content slides out — no
-  // content from elsewhere in the article passes through the viewport.
-  "slide-down": {
-    leave: function slideDownLeave() {
-      return Promise.resolve();
-    },
-    enter: function slideDownEnter(el, motion) {
-      if (prefersReducedMotion()) return Promise.resolve();
-      // The leaving container is still in the DOM (Barba removes it after
-      // both promises resolve); find it by the role attribute studioLeave set.
-      var leavingEl = document.querySelector('[data-studio-role="leave"]');
-      var offset = _pendingScrollOffset || 0;
-      var gm = gsapMotion(motion);
-      return new Promise(function slideDownTimeline(resolve) {
-        var tl = gsap.timeline({ onComplete: resolve });
-        _pendingTimeline = tl;
-        // Leaving page slides one viewport-height down, opaque the whole way.
-        // Exact mirror of the previous WAAPI keyframes: y goes from the
-        // scroll offset to offset + 100vh (window.innerHeight). The clip-path
-        // applied in studioLeave keeps a scrolled article from content-whip.
-        if (leavingEl) {
-          tl.fromTo(
-            leavingEl,
-            { y: offset },
-            { y: offset + window.innerHeight, duration: gm.duration, ease: gm.ease },
-            0
-          );
-        }
-        // Entering page (home) scales + brightens back from the receded state.
-        tl.fromTo(
-          el,
-          {
-            scale: SLIDE_DOWN_ENTER_SCALE_FROM,
-            opacity: SLIDE_DOWN_ENTER_OPACITY_FROM,
-            transformOrigin: SLIDE_DOWN_ENTER_ORIGIN,
-          },
-          { scale: 1, opacity: 1, duration: gm.duration, ease: gm.ease },
-          0
-        );
-      });
-    },
-  },
-
-  // -- rise --
-  // Default for "open", "swap", "fade". One GSAP timeline, three actors,
-  // all parallel — total duration = motion.duration (no chained phase 2):
-  //
-  //   - .page-overlay: autoAlpha 0 → 1 over the first 30%, then holds (GSAP
-  //     keeps the end value for the remaining 70% of the timeline).
-  //   - entering page (el): y 100vh → 0, scale 0.77 → 1, origin bottom-center.
-  //   - .page-header: parked at translateY(-100%) by the CSS rule
-  //     body.is-animating[data-studio-scenario=…] .page-header; slides
-  //     y -100% → 0 starting at 50% so it lands exactly with the page.
-  //
-  // The leaving page stays still (scroll-compensated in studioLeave). The
-  // whole visual lives in `enter`; `leave` is a no-op resolve. With sync:true
-  // barba waits for both — the timeline's onComplete resolves enter.
-  "rise": {
-    leave: function riseLeave() {
-      return Promise.resolve();
-    },
-    enter: function riseEnter(el, motion) {
-      if (prefersReducedMotion()) return Promise.resolve();
-      var overlay = ensureOverlay();
-      var header = document.querySelector(".page-header:not([hidden])");
-      var gm = gsapMotion(motion);
-      return new Promise(function riseTimeline(resolve) {
-        var tl = gsap.timeline({ onComplete: resolve });
-        _pendingTimeline = tl;
-        tl.fromTo(
-          overlay,
-          { autoAlpha: 0 },
-          { autoAlpha: 1, duration: gm.duration * 0.3, ease: "none" },
-          0
-        );
-        tl.fromTo(
-          el,
-          { y: "100vh", scale: 0.77, transformOrigin: "50% 100%" },
-          { y: 0, scale: 1, duration: gm.duration, ease: gm.ease },
-          0
-        );
-        if (header) {
-          tl.fromTo(
-            header,
-            { y: "-100%" },
-            { y: 0, duration: gm.duration * 0.5, ease: gm.ease },
-            gm.duration * 0.5
-          );
-        }
-      });
-    },
-  },
-
-  // -- push-up --
-  // Used for "push" only (next-read card click). Asymmetric one-motion recipe:
-  // the current page pushes upward by a measured distance; the new page sits
-  // at translateY(0) behind, no enter animation. opts.nextReadTop is measured
-  // to align the next-read card flush with the top of the viewport.
-  //
-  // clip-path applied in studioLeave (close only) prevents content-whip when
-  // a scrolled leaving page translates.
-  "push-up": {
-    leave: function pushUpLeave(el, motion, opts) {
-      if (prefersReducedMotion()) return Promise.resolve();
-      var pushDistance = (opts && opts.nextReadTop) || window.innerHeight;
-      var offset = (opts && opts.scrollOffset) || 0;
-      var gm = gsapMotion(motion);
-      // Exact mirror of the previous WAAPI keyframes — y from the scroll
-      // offset to offset - pushDistance. The new page sits at translateY(0)
-      // behind (no enter animation). Visually unchanged from before.
-      return new Promise(function pushUpTimeline(resolve) {
-        var tl = gsap.timeline({ onComplete: resolve });
-        _pendingTimeline = tl;
-        tl.fromTo(
-          el,
-          { y: offset },
-          { y: offset - pushDistance, duration: gm.duration, ease: gm.ease },
-          0
-        );
-      });
-    },
-    enter: function pushUpEnter() {
-      // No animation — new page is already in position behind the leaving page
-      return Promise.resolve();
-    },
-  },
-
-  // -- fade --
-  // Crossfade fallback. Used when the scenario is unknown or when the same
-  // page is navigated to.
-  "fade": {
-    leave: function fadeLeave(el, motion) {
-      return animate(
-        el,
-        [{ opacity: 1 }, { opacity: 0 }],
-        { duration: motion.duration, easing: motion.easing, fill: "forwards" }
+// rise — open / swap / fade. Overlay dims, entering page lifts + scales in,
+// page-header slides in (parked at -100% by the CSS rule). All parallel in
+// one timeline, total = pageRise duration. Leaving page stays still
+// (scroll-compensated in the before hook).
+function riseTimeline(data) {
+  if (prefersReducedMotion()) return Promise.resolve();
+  var el = data.next.container;
+  var overlay = ensureOverlay();
+  var header = document.querySelector(".page-header:not([hidden])");
+  var gm = gsapMotion(MOTION.pageRise);
+  return new Promise(function (resolve) {
+    var tl = gsap.timeline({ onComplete: resolve });
+    _pendingTimeline = tl;
+    tl.fromTo(
+      overlay,
+      { autoAlpha: 0 },
+      { autoAlpha: 1, duration: gm.duration * 0.3, ease: "none" },
+      0
+    );
+    tl.fromTo(
+      el,
+      { y: "100vh", scale: 0.77, transformOrigin: "50% 100%" },
+      { y: 0, scale: 1, duration: gm.duration, ease: gm.ease },
+      0
+    );
+    if (header) {
+      tl.fromTo(
+        header,
+        { y: "-100%" },
+        { y: 0, duration: gm.duration * 0.5, ease: gm.ease },
+        gm.duration * 0.5
       );
-    },
-    enter: function fadeEnter(el, motion) {
-      return animate(
-        el,
-        [{ opacity: 0 }, { opacity: 1 }],
-        { duration: motion.duration, easing: motion.easing, fill: "forwards" }
-      );
-    },
-  },
-};
-
-//
-//------- Runners -------//
-//
-// Look up the animation for a scenario and run it. The animation always
-// receives the scenario's motion token, so the timing follows the intent
-// even if you remap which animation a scenario uses.
-
-// rise serves three scenarios (open/swap/fade) but always uses pageRise
-// timing for visual consistency. Other animations key off their scenario.
-function motionForScenario(scenario, animationName) {
-  if (animationName === "rise") return MOTION.pageRise;
-  return MOTION["page" + capitalize(scenario)] || MOTION.pageFade;
+    }
+  });
 }
 
-function runLeave(el, scenario, scrollOffset, extra) {
-  var animationName = TRANSITION_MAP[scenario] || "fade";
-  var transition = TRANSITIONS[animationName] || TRANSITIONS["fade"];
-  var motion = motionForScenario(scenario, animationName);
-  var opts = { scrollOffset: scrollOffset };
-  if (extra) { for (var k in extra) { if (extra.hasOwnProperty(k)) opts[k] = extra[k]; } }
-  return transition.leave(el, motion, opts);
+// slide-down — close. Leaving page slides one viewport-height down (opaque);
+// home scales + brightens back from the receded state. The clip-path applied
+// in studioLeave keeps a scrolled article from content-whip.
+function slideDownTimeline(data) {
+  if (prefersReducedMotion()) return Promise.resolve();
+  var leavingEl = data.current.container;
+  var el = data.next.container;
+  var offset = _pendingScrollOffset || 0;
+  var gm = gsapMotion(MOTION.pageClose);
+  return new Promise(function (resolve) {
+    var tl = gsap.timeline({ onComplete: resolve });
+    _pendingTimeline = tl;
+    if (leavingEl) {
+      tl.fromTo(
+        leavingEl,
+        { y: offset },
+        { y: offset + window.innerHeight, duration: gm.duration, ease: gm.ease },
+        0
+      );
+    }
+    tl.fromTo(
+      el,
+      {
+        scale: SLIDE_DOWN_ENTER_SCALE_FROM,
+        opacity: SLIDE_DOWN_ENTER_OPACITY_FROM,
+        transformOrigin: SLIDE_DOWN_ENTER_ORIGIN,
+      },
+      { scale: 1, opacity: 1, duration: gm.duration, ease: gm.ease },
+      0
+    );
+  });
 }
 
-function runEnter(el, scenario) {
-  var animationName = TRANSITION_MAP[scenario] || "fade";
-  var transition = TRANSITIONS[animationName] || TRANSITIONS["fade"];
-  var motion = motionForScenario(scenario, animationName);
-  return transition.enter(el, motion, {});
+// push-up — push (next-read card). Current article pushes up by a measured
+// distance; the next article sits at y:0 behind (no enter animation).
+function pushUpTimeline(data, opts) {
+  if (prefersReducedMotion()) return Promise.resolve();
+  var leavingEl = data.current.container;
+  var pushDistance = (opts && opts.nextReadTop) || window.innerHeight;
+  var offset = _pendingScrollOffset || 0;
+  var gm = gsapMotion(MOTION.pagePush);
+  return new Promise(function (resolve) {
+    var tl = gsap.timeline({ onComplete: resolve });
+    _pendingTimeline = tl;
+    tl.fromTo(
+      leavingEl,
+      { y: offset },
+      { y: offset - pushDistance, duration: gm.duration, ease: gm.ease },
+      0
+    );
+  });
+}
+
+// Dispatch a scenario to its timeline. open / swap / fade all rise; close
+// slides down; push pushes up. Unknown → rise (safe default).
+function runTransition(scenario, data, opts) {
+  switch (scenario) {
+    case "close":
+      return slideDownTimeline(data);
+    case "push":
+      return pushUpTimeline(data, opts);
+    case "open":
+    case "swap":
+    case "fade":
+    default:
+      return riseTimeline(data);
+  }
 }
 
 //
@@ -544,16 +416,16 @@ var studioTransition = {
       outPromise = window.bdAnimateElementsOut(data.current.container);
     }
 
-    // After elements are out: run WAAPI page transition.
-    // GSAP cleanup is deferred to the after hook so ctx.revert() doesn't
-    // snap animated elements to opacity:0 while the leaving page is still visible.
+    // After elements are out: run the scenario's GSAP timeline. The whole
+    // transition (both containers, overlay, header) lives in that one
+    // timeline; studioEnter is a no-op. sync:true makes barba wait for both.
+    // GSAP cleanup is deferred to the after hook.
     return outPromise.then(function () {
-      return runLeave(data.current.container, scenario, scrollOffset, { nextReadTop: nextReadTop });
+      return runTransition(scenario, data, { nextReadTop: nextReadTop });
     });
   },
-  enter: function studioEnter(data) {
-    var scenario = data.next.container.getAttribute("data-studio-scenario") || "fade";
-    return runEnter(data.next.container, scenario);
+  enter: function studioEnter() {
+    return Promise.resolve();
   },
 };
 
