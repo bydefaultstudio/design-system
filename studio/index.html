@@ -139,6 +139,9 @@
         </div>
       </div>
 
+      <!-- Page overlay (rise transition) — opacity driven by studio-barba.js -->
+      <div class="page-overlay"></div>
+
       <div data-barba="wrapper">
         <div data-barba="container"
              data-barba-namespace="home"
@@ -230,7 +233,7 @@
           <section id="main" class="home-section home-intro">
             <div class="section-content top-large bottom-medium text-center" data-line-length="medium" data-align="center">
               <div class="block gap-l">
-                <h1 class="page-headline home-headline">Turn your audience into<br><span class="cycle-word" data-cycle-style="bounce-drop" aria-hidden="true"><span class="cycle-word-item is-active">participants</span><span class="cycle-word-item">explorers</span><span class="cycle-word-item">advocates</span><span class="cycle-word-item">customers</span><span class="cycle-word-item">fans</span></span><span class="cycle-word-sr">participants</span></h1>
+                <h1 class="page-headline home-headline">Turn your audience into<br><span class="cycle-word text-faded" data-cycle-style="bounce-drop" aria-hidden="true"><span class="cycle-word-item is-active">participants</span><span class="cycle-word-item">explorers</span><span class="cycle-word-item">advocates</span><span class="cycle-word-item">customers</span><span class="cycle-word-item">fans</span></span><span class="cycle-word-sr">participants</span></h1>
                 <p class="text-secondary text-size-l" data-text-wrap="balance" data-bd-animate="slide-up" data-bd-scrub>Helping brands build interactive digital experiences that turn attention into action.</p>
                 <div class="button-group justify-center" data-bd-animate="slide-up" data-bd-scrub>
                   <a href="/book.html" class="button">Book a call <div class="svg-icn"><svg data-icon="arrow-right" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#arrow-right"/></svg></div></a>
@@ -328,10 +331,16 @@
               </a>
             </template>
 
-            <div class="section-content top-medium bottom-medium">
+            <div class="section-content top-xl bottom-large">
               <!-- studio-home.js clones the template above into here,
                    one per case study with featured: true. -->
               <div class="case-study-cards" data-home-featured></div>
+              <div class="top-medium text-center" data-bd-animate="slide-up" data-bd-scrub>
+                <a href="/case-studies.html" class="button" data-variant="faded" data-cursor-icon="arrow-right" data-cursor-label="View all">
+                  View all case studies
+                  <div class="svg-icn"><svg data-icon="arrow-right" width="100%" height="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="/assets/images/svg-icons/_sprite.svg#arrow-right"/></svg></div>
+                </a>
+              </div>
             </div>
           </section>
 
@@ -506,7 +515,7 @@
               </div>
             </div>
             <div class="section-content top-large bottom-large padding-global">
-              <div class="block text-center" data-align="center">
+              <div class="block text-center align-center" data-align="center">
                 <h2 class="cta-headline" data-bd-animate="slide-up" data-bd-scrub>Let's build something together.</h2>
                 <p class="cta-paragraph" data-line-length="body" data-bd-animate="slide-up" data-bd-scrub>Every project starts with a conversation. Tell us what you're building toward and we'll take it from there.</p>
                 <div class="button-group justify-center" data-bd-animate="slide-up" data-bd-scrub>

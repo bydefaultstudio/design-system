@@ -2,22 +2,22 @@
  * Script Purpose: Studio Barba init — hierarchy-aware page transitions
  * Author: By Default
  * Created: 2026-04-11
- * Version: 0.6.0
- * Last Updated: 2026-05-15
+ * Version: 0.7.0
+ * Last Updated: 2026-05-16
  *
  * Architecture:
  *
- *   1. Resolver — resolveScenario(fromEl, toEl) → "open" | "close" | "swap" | "fade"
+ *   1. Resolver — resolveScenario(fromEl, toEl) → "open" | "close" | "swap" | "fade" | "push"
  *      Answers "what's happening?" based on data-level attributes.
  *
- *   2. Map — TRANSITION_MAP { open: "slide-up", close: "slide-down", ... }
+ *   2. Map — TRANSITION_MAP { open: "rise", close: "slide-down", ... }
  *      Answers "which animation runs for this scenario?"
  *      Change one line here to globally swap how a scenario looks.
  *
- *   3. Library — TRANSITIONS { "slide-up": { leave(), enter() }, ... }
+ *   3. Library — TRANSITIONS { "rise": { leave(), enter() }, ... }
  *      Named animations. Each receives the scenario's motion token (not its own).
  *
- *   4. Motion tokens — MOTION { pageOpen, pageClose, pageSwap, pageFade }
+ *   4. Motion tokens — MOTION { pageOpen, pageClose, pageSwap, pageFade, pageRise }
  *      Read once from CSS custom properties. Indexed by scenario name.
  *
  * Three-level page model:
@@ -26,15 +26,16 @@
  *   L2 = case studies / articles   — feed items
  *
  * Scenario rules:
- *   home → anything       open   (new page appears over the floor)
- *   anything → home       close  (current page leaves, floor revealed)
- *   non-home → non-home   swap   (reuses push-up animation — asymmetric)
- *   same page / unknown   fade   (crossfade fallback)
+ *   home → anything       open   (rise: overlay + entering page lifts in)
+ *   anything → home       close  (slide-down: page falls away, home revealed)
+ *   non-home → non-home   swap   (rise: same as open, with header up-then-down)
+ *   next-read card click  push   (push-up: card aligned flush with header)
+ *   same page / unknown   fade   (rise: defensive fallback)
  *
  * Reduced motion: instant swap.
  */
 
-// Studio Barba v0.6.0
+// Studio Barba v0.7.0
 
 // Flag set by click handler on .next-read — consumed once by resolveScenario
 var _nextReadNav = false;
@@ -182,6 +183,7 @@ var MOTION = {
   pageSwap: readMotion("swap"),
   pageFade: readMotion("fade"),
   pagePush: readMotion("swap"), // push reuses swap timing
+  pageRise: readMotion("open"), // rise reuses open timing across open/swap/fade
 };
 
 //
@@ -193,11 +195,11 @@ var MOTION = {
 // still matches the intent even if the visual changes.
 
 var TRANSITION_MAP = {
-  open:  "slide-up",
+  open:  "rise",
   close: "slide-down",
-  swap:  "push-up",
+  swap:  "rise",
   push:  "push-up",
-  fade:  "fade",
+  fade:  "rise",
 };
 
 //
@@ -209,12 +211,13 @@ var TRANSITION_MAP = {
 //   motion — { duration, easing } from the scenario's motion token
 //   opts   — { scrollOffset } (leave only — for scroll compensation)
 
-// Home scale-and-dim: how much home recedes during a page open. Tweakable
-// here without leaking into the design system tokens (these are studio-
-// specific stylistic choices, not foundation-level motion semantics).
-var HOME_SCALE_DOWN = 0.96;
-var HOME_DIM_OPACITY = 0.7;
-var HOME_TRANSFORM_ORIGIN = "50% 0%";
+// slide-down's enter brings home back up from a scaled/dimmed state.
+// These are the start values for that animation (home appears scaled
+// and dim, then animates back to identity). Studio-specific stylistic
+// choices, not foundation-level motion semantics.
+var SLIDE_DOWN_ENTER_SCALE_FROM = 0.96;
+var SLIDE_DOWN_ENTER_OPACITY_FROM = 0.7;
+var SLIDE_DOWN_ENTER_ORIGIN = "50% 0%";
 
 // Page-transition travel distance. Used by slide-down's leave (close) and
 // slide-up's enter (open) so the two animations are true mirrors of each
@@ -226,41 +229,6 @@ var PAGE_TRAVEL = "100vh";
 
 // All page transitions use PAGE_TRAVEL (100vh) — see clip-path in studioLeave for content-whip prevention on scrolled pages.
 var TRANSITIONS = {
-
-  // -- slide-up --
-  // Default for "open". New page rises one viewport height from below
-  // (PAGE_TRAVEL = 100vh → 0). Home (the leaving container) stays
-  // anchored in place but scales down slightly and dims — selling the
-  // layered depth of the page model. Transform-origin: 50% 0% so the
-  // scale reads as "receding into the background", not "shrinking
-  // inward". Mirror of slide-down: same travel magnitude, opposite
-  // direction; home's scale-dim here is inverted as home's scale-brighten
-  // in slide-down's enter.
-  "slide-up": {
-    leave: function slideUpLeave(el, motion, opts) {
-      var offset = (opts && opts.scrollOffset) || 0;
-      var startY = offset + "px";
-      el.style.transformOrigin = HOME_TRANSFORM_ORIGIN;
-      return animate(
-        el,
-        [
-          { transform: "translateY(" + startY + ") scale(1)",                              opacity: 1 },
-          { transform: "translateY(" + startY + ") scale(" + HOME_SCALE_DOWN + ")", opacity: HOME_DIM_OPACITY },
-        ],
-        { duration: motion.duration, easing: motion.easing, fill: "forwards" }
-      );
-    },
-    enter: function slideUpEnter(el, motion) {
-      return animate(
-        el,
-        [
-          { transform: "translateY(" + PAGE_TRAVEL + ")", opacity: 1 },
-          { transform: "translateY(0)",                   opacity: 1 },
-        ],
-        { duration: motion.duration, easing: motion.easing, fill: "forwards" }
-      );
-    },
-  },
 
   // -- slide-down --
   // Default for "close". Leaving page slides one viewport height downward
@@ -288,29 +256,91 @@ var TRANSITIONS = {
       );
     },
     enter: function slideDownEnter(el, motion) {
-      el.style.transformOrigin = HOME_TRANSFORM_ORIGIN;
+      el.style.transformOrigin = SLIDE_DOWN_ENTER_ORIGIN;
       return animate(
         el,
         [
-          { transform: "scale(" + HOME_SCALE_DOWN + ")", opacity: HOME_DIM_OPACITY },
-          { transform: "scale(1)",                       opacity: 1 },
+          { transform: "scale(" + SLIDE_DOWN_ENTER_SCALE_FROM + ")", opacity: SLIDE_DOWN_ENTER_OPACITY_FROM },
+          { transform: "scale(1)",                                    opacity: 1 },
         ],
         { duration: motion.duration, easing: motion.easing, fill: "forwards" }
       );
     },
   },
 
-  // -- push-up --
-  // Used for "push" (next-read card click) and "swap" (non-home ↔ non-home
-  // sidebar nav). Asymmetric one-motion recipe: the current page pushes
-  // upward by a measured distance; the new page sits at translateY(0)
-  // behind, no enter animation. For push: opts.nextReadTop is measured
-  // to align the next-read card flush with the top of the viewport. For
-  // swap: nextReadTop is unset, falling back to window.innerHeight so
-  // the leaving page slides one viewport height off the top.
+  // -- rise --
+  // Default for "open", "swap", "fade". Sequenced choreography:
   //
-  // clip-path applied in studioLeave (close + swap) prevents content-whip
-  // when a scrolled leaving page translates.
+  //   Phase 1 (0 → motion.duration) — page rise:
+  //     1. Leaving page stays still (scroll-compensated by studioLeave).
+  //     2. .page-overlay fades in fast then holds (keyframe offsets [0, 0.3, 1]).
+  //     3. Entering page rises 100vh and scales 0.77 → 1 from bottom-center.
+  //     For swap/fade, animatePageHeader fires concurrently to slide the OLD
+  //     header out (translateY(0) → -100%) and swap the eyebrow text offscreen.
+  //
+  //   Phase 2 (motion.duration → 2x motion.duration) — page-header slide-in:
+  //     The header sits at translateY(-100%) (already prepared by animatePageHeader
+  //     in the before hook) and slides DOWN to translateY(0). z-index 400 lifts
+  //     it above the now-settled entering page (300) and the overlay (200). The
+  //     header arrives last and sits on top of everything.
+  //
+  // riseEnter chains phase 2 onto phase 1 so the total enter promise is twice
+  // the motion duration. With sync:true, barba waits for both leave and enter
+  // before running the after hook (which cleans up the overlay etc).
+  "rise": {
+    leave: function riseLeave(el, motion) {
+      var overlay = document.querySelector(".page-overlay");
+      if (!overlay) return Promise.resolve();
+      return animate(
+        overlay,
+        [
+          { opacity: 0, offset: 0 },
+          { opacity: 1, offset: 0.3 },
+          { opacity: 1, offset: 1 },
+        ],
+        { duration: motion.duration, easing: motion.easing, fill: "forwards" }
+      );
+    },
+    enter: function riseEnter(el, motion) {
+      el.style.transformOrigin = "50% 100%";
+      var risePromise = animate(
+        el,
+        [
+          { transform: "translateY(100vh) scale(0.77)" },
+          { transform: "translateY(0) scale(1)" },
+        ],
+        { duration: motion.duration, easing: motion.easing, fill: "forwards" }
+      );
+      return risePromise.then(function onRiseDone() {
+        // Phase 2: slide the page-header in last. animatePageHeader has already
+        // prepared the header (eyebrow text set, [hidden] removed, transform
+        // pre-positioned at -100%) for rise scenarios. Half the rise duration
+        // keeps the total transition snappy (rise + header ≈ 1.5× the rise).
+        var pageHeader = document.querySelector(".page-header");
+        if (!pageHeader || pageHeader.hasAttribute("hidden")) return Promise.resolve();
+        var headerDuration = Math.round(motion.duration * 0.5);
+        return animate(
+          pageHeader,
+          [{ transform: "translateY(-100%)" }, { transform: "translateY(0)" }],
+          { duration: headerDuration, easing: motion.easing, fill: "forwards" }
+        ).then(function onHeaderInDone() {
+          // Pin the end state to inline so the after hook's cancel-then-clear
+          // sequence can't briefly expose the underlying -100% (set by
+          // animatePageHeader for open) between the two synchronous operations.
+          pageHeader.style.transform = "translateY(0)";
+        });
+      });
+    },
+  },
+
+  // -- push-up --
+  // Used for "push" only (next-read card click). Asymmetric one-motion recipe:
+  // the current page pushes upward by a measured distance; the new page sits
+  // at translateY(0) behind, no enter animation. opts.nextReadTop is measured
+  // to align the next-read card flush with the top of the viewport.
+  //
+  // clip-path applied in studioLeave (close only) prevents content-whip when
+  // a scrolled leaving page translates.
   "push-up": {
     leave: function pushUpLeave(el, motion, opts) {
       var pushDistance = (opts && opts.nextReadTop) || window.innerHeight;
@@ -361,10 +391,17 @@ var TRANSITIONS = {
 // receives the scenario's motion token, so the timing follows the intent
 // even if you remap which animation a scenario uses.
 
+// rise serves three scenarios (open/swap/fade) but always uses pageRise
+// timing for visual consistency. Other animations key off their scenario.
+function motionForScenario(scenario, animationName) {
+  if (animationName === "rise") return MOTION.pageRise;
+  return MOTION["page" + capitalize(scenario)] || MOTION.pageFade;
+}
+
 function runLeave(el, scenario, scrollOffset, extra) {
   var animationName = TRANSITION_MAP[scenario] || "fade";
   var transition = TRANSITIONS[animationName] || TRANSITIONS["fade"];
-  var motion = MOTION["page" + capitalize(scenario)] || MOTION.pageFade;
+  var motion = motionForScenario(scenario, animationName);
   var opts = { scrollOffset: scrollOffset };
   if (extra) { for (var k in extra) { if (extra.hasOwnProperty(k)) opts[k] = extra[k]; } }
   return transition.leave(el, motion, opts);
@@ -373,7 +410,7 @@ function runLeave(el, scenario, scrollOffset, extra) {
 function runEnter(el, scenario) {
   var animationName = TRANSITION_MAP[scenario] || "fade";
   var transition = TRANSITIONS[animationName] || TRANSITIONS["fade"];
-  var motion = MOTION["page" + capitalize(scenario)] || MOTION.pageFade;
+  var motion = motionForScenario(scenario, animationName);
   return transition.enter(el, motion, {});
 }
 
@@ -433,7 +470,10 @@ var studioTransition = {
     // reads as "the article scrolling back to its top" while it also
     // slides down. clip-path inset() values are in the element's own
     // pre-transform coordinates, so they follow the translate cleanly.
-    if (scenario === "close" || scenario === "swap") {
+    //
+    // Rise (open/swap/fade) and push do not translate the leaving container,
+    // so the clip is unnecessary for them.
+    if (scenario === "close") {
       var containerHeight = data.current.container.offsetHeight;
       var viewportHeight = window.innerHeight;
       var insetTop = scrollY;
@@ -492,13 +532,19 @@ function syncPageHeaderFrom(container) {
 // Coordinate the persistent page-header with the page transition. Runs in the
 // `before` hook with the resolved scenario.
 //
-//   open  — header slides DOWN from above the viewport (translateY -100% → 0),
-//           in sync with the entering page sliding UP from below. Eyebrow set
-//           upfront so the bar carries the right label as it slides in.
-//   close — header slides UP off the top (translateY 0 → -100%), in sync with
-//           the leaving page sliding DOWN. After the animation, hide + clear.
-//   swap / push / fade — header doesn't move; eyebrow swaps instantly via the
-//           same path as syncPageHeaderFrom (used on cross-type swaps).
+//   open         — Prepare phase only: set the new eyebrow, remove [hidden],
+//                   park the header at translateY(-100%) (offscreen, above).
+//                   riseEnter chains the actual slide-down AFTER the page rise
+//                   completes, so the header arrives last and lands on top.
+//   close        — header slides UP off the top (translateY 0 → -100%), in sync
+//                   with the leaving page sliding down. After the animation, hide
+//                   + clear the eyebrow.
+//   swap / fade  — Animate the OLD header out (translateY 0 → -100%) over the
+//                   first ~30% of the rise duration, then swap the eyebrow text
+//                   offscreen. The slide-IN with the new eyebrow happens in
+//                   riseEnter after the page rise completes.
+//   push         — header doesn't move; eyebrow swaps instantly (matches the
+//                   continuous-article feel of the next-read transition).
 function animatePageHeader(scenario, nextContainer) {
   var pageHeader = document.querySelector(".page-header");
   if (!pageHeader) return Promise.resolve();
@@ -506,13 +552,11 @@ function animatePageHeader(scenario, nextContainer) {
   var newEyebrow = ((nextContainer && nextContainer.getAttribute("data-page-eyebrow")) || "").trim();
 
   if (scenario === "open") {
+    // Prepare for the post-rise slide-in: set text, reveal, park offscreen.
     if (eyebrowEl) eyebrowEl.textContent = newEyebrow;
-    pageHeader.removeAttribute("hidden");
-    return animate(
-      pageHeader,
-      [{ transform: "translateY(-100%)" }, { transform: "translateY(0)" }],
-      { duration: MOTION.pageOpen.duration, easing: MOTION.pageOpen.easing, fill: "forwards" }
-    );
+    pageHeader.toggleAttribute("hidden", !newEyebrow);
+    if (newEyebrow) pageHeader.style.transform = "translateY(-100%)";
+    return Promise.resolve();
   }
 
   if (scenario === "close") {
@@ -528,7 +572,22 @@ function animatePageHeader(scenario, nextContainer) {
     });
   }
 
-  // swap / push / fade — instant eyebrow swap, header doesn't move
+  if (scenario === "swap" || scenario === "fade") {
+    // Slide the OLD header out over the first ~30% of the rise duration.
+    // Update the eyebrow text offscreen, then leave the header parked at
+    // translateY(-100%) for riseEnter to slide back in after the rise.
+    var upDuration = Math.round(MOTION.pageRise.duration * 0.3);
+    return animate(
+      pageHeader,
+      [{ transform: "translateY(0)" }, { transform: "translateY(-100%)" }],
+      { duration: upDuration, easing: MOTION.pageRise.easing, fill: "forwards" }
+    ).then(function onHeaderUpDone() {
+      if (eyebrowEl) eyebrowEl.textContent = newEyebrow;
+      pageHeader.toggleAttribute("hidden", !newEyebrow);
+    });
+  }
+
+  // push — instant eyebrow swap, header doesn't move
   if (eyebrowEl) eyebrowEl.textContent = newEyebrow;
   pageHeader.toggleAttribute("hidden", !newEyebrow);
   return Promise.resolve();
@@ -553,6 +612,9 @@ function initStudioBarba() {
       data && data.current ? data.current.container : null,
       data && data.next ? data.next.container : null
     );
+    // Surface the scenario on <body> so CSS can react during the transition
+    // (e.g. lifting .page-header above the .page-overlay during rise).
+    document.body.setAttribute("data-studio-scenario", _pendingScenario);
     // Coordinate the persistent page-header with the page transition. open/close
     // animate the header in/out; swap/push/fade just sync the eyebrow text.
     animatePageHeader(_pendingScenario, data && data.next ? data.next.container : null);
@@ -605,11 +667,24 @@ function initStudioBarba() {
     if (typeof window.initSidebarSlot === "function") {
       window.initSidebarSlot();
     }
-    document.body.classList.remove("is-animating");
-    // Clean up role/scenario attributes + any inline styles set by the
-    // animation (transform from scroll-compensation, transformOrigin/opacity
-    // from the home scale-and-dim) so they don't leak into the next transition.
+    // Cancel any WAAPI animations with fill:forwards before removing
+    // is-animating. Without this, the final keyframe persists indefinitely
+    // (the page-overlay would stay at opacity 1 and cover the new page once
+    // the entering container's elevated z-index drops back to auto). Order
+    // matters: cancel first, then remove the class — otherwise there's a
+    // one-frame flash where the overlay is still painted over a now-low
+    // z-index container.
+    var pageOverlay = document.querySelector(".page-overlay");
+    if (pageOverlay) {
+      pageOverlay.getAnimations().forEach(function (a) { a.cancel(); });
+      pageOverlay.style.opacity = "";
+    }
+    // Clean up role/scenario attributes + cancel any container animations
+    // (transform/opacity held by fill:forwards) + clear inline styles set
+    // by the animation (transform from scroll-compensation, transformOrigin
+    // from rise's bottom-center origin, clipPath from close).
     if (data && data.next && data.next.container) {
+      data.next.container.getAnimations().forEach(function (a) { a.cancel(); });
       data.next.container.removeAttribute("data-studio-role");
       data.next.container.removeAttribute("data-studio-scenario");
       data.next.container.style.transform = "";
@@ -617,12 +692,18 @@ function initStudioBarba() {
       data.next.container.style.opacity = "";
       data.next.container.style.clipPath = "";
     }
-    // Clear inline transform on the persistent page-header so subsequent
+    // Cancel page-header animations + clear inline transform so subsequent
     // transitions start from a clean slate (close leaves it at translateY(-100%)
-    // until cleanup; open leaves it at translateY(0) which is identity but
-    // still worth clearing).
+    // held by fill:forwards until cleanup; swap/fade leave it at translateY(0);
+    // open leaves it at translateY(0) which is identity but still worth
+    // clearing).
     var pageHeader = document.querySelector(".page-header");
-    if (pageHeader) pageHeader.style.transform = "";
+    if (pageHeader) {
+      pageHeader.getAnimations().forEach(function (a) { a.cancel(); });
+      pageHeader.style.transform = "";
+    }
+    document.body.classList.remove("is-animating");
+    document.body.removeAttribute("data-studio-scenario");
     window.scrollTo(0, 0);
 
     // Deferred init — runs after layout settles (is-animating removed,
@@ -639,6 +720,9 @@ function initStudioBarba() {
       }
       if (typeof window.logoSlider === "function") {
         window.logoSlider();
+      }
+      if (typeof window.initReportTicker === "function") {
+        window.initReportTicker();
       }
       if (typeof window.mountTestimonialSliders === "function") {
         window.mountTestimonialSliders();

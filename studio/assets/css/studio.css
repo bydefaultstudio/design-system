@@ -50,6 +50,7 @@
   --duration-stagger: 30ms;
   --sidebar-logo-width: 220px;
   --feed-gap: calc(var(--space-l));
+  --studio-page-overlay-color: rgba(0, 0, 0, 0.2);
 }
 
 /* Dark mode token overrides */
@@ -794,21 +795,75 @@ body.is-animating [data-barba="container"] {
  * and would cover it).
  */
 
-/* open (home → page): the entering page sits ON TOP of stationary home */
+/* The scenario attribute on each container is the SCENARIO name
+   (open / close / swap / push / fade), not the animation name. So
+   z-index rules below are keyed off the scenario. open/swap/fade all
+   use the "rise" animation and need entering above the .page-overlay
+   (z-index 200); close and push keep their original stacking. */
+
+/* open (home → page) — rise: home sits still beneath the overlay,
+   the new page rises above it. */
 body.is-animating [data-studio-role="leave"][data-studio-scenario="open"]  { z-index: 1; }
-body.is-animating [data-studio-role="enter"][data-studio-scenario="open"]  { z-index: 2; }
+body.is-animating [data-studio-role="enter"][data-studio-scenario="open"]  { z-index: 300; }
 
 /* close (page → home): the leaving page falls AWAY in front of home */
 body.is-animating [data-studio-role="enter"][data-studio-scenario="close"] { z-index: 1; }
 body.is-animating [data-studio-role="leave"][data-studio-scenario="close"] { z-index: 2; }
 
-/* swap (reuses push-up animation): leaving page sits on top, entering page revealed behind */
-body.is-animating [data-studio-role="leave"][data-studio-scenario="swap"] { z-index: 2; }
-body.is-animating [data-studio-role="enter"][data-studio-scenario="swap"] { z-index: 1; }
+/* swap (non-home ↔ non-home) — rise: same shape as open. */
+body.is-animating [data-studio-role="leave"][data-studio-scenario="swap"] { z-index: 1; }
+body.is-animating [data-studio-role="enter"][data-studio-scenario="swap"] { z-index: 300; }
 
 /* push (next-read): leaving page sits on top, entering page revealed behind */
 body.is-animating [data-studio-role="leave"][data-studio-scenario="push"] { z-index: 2; }
 body.is-animating [data-studio-role="enter"][data-studio-scenario="push"] { z-index: 1; }
+
+/* fade (defensive fallback) — rise: same shape as open. */
+body.is-animating [data-studio-role="leave"][data-studio-scenario="fade"] { z-index: 1; }
+body.is-animating [data-studio-role="enter"][data-studio-scenario="fade"] { z-index: 300; }
+
+
+/* ------ PAGE OVERLAY (rise transition) ------ */
+
+/* A persistent dim layer used by the "rise" page transition. Covers the
+   main content area + page-header, but leaves the sidebar (desktop) and
+   mobile-bar at full brightness. Opacity is driven by WAAPI in
+   studio-barba.js — default state is invisible. */
+.page-overlay {
+  position: fixed;
+  top: 0;
+  left: var(--sidebar-width);
+  right: 0;
+  bottom: 0;
+  background-color: var(--studio-page-overlay-color);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 200;
+}
+
+/* Track sidebar collapse — mirror of the .page-header rule so the overlay's
+   left edge always aligns with the sidebar's current width. */
+body.is-sidebar-collapsed .page-overlay {
+  left: var(--sidebar-collapsed-width);
+}
+
+@media (max-width: 768px) {
+  .page-overlay {
+    top: var(--mobile-bar-height);
+    left: 0;
+  }
+}
+
+/* Lift the persistent page-header to the HIGHEST stack level during rise
+   scenarios (open / swap / fade) so it animates in on top of everything:
+   leaving page (1), overlay (200), entering page (300), header (400). The
+   header slides in last in the rise sequence (after the page has settled),
+   so it always finishes the choreography on top. */
+body.is-animating[data-studio-scenario="open"] .page-header,
+body.is-animating[data-studio-scenario="swap"] .page-header,
+body.is-animating[data-studio-scenario="fade"] .page-header {
+  z-index: 400;
+}
 
 
 /* ------ SECTION HEADER (sticky pattern) ------ */
@@ -3726,11 +3781,71 @@ a.footer-logo:hover {
   display: block;
 }
 
+/* ------ REPORT TICKER (Products → Reporting section) ------ */
+/* Auto-scrolling stats ticker. Slides hand-authored in products.html;
+   Splide instance mounted by initReportTicker (products.js). */
+
+/* Outer container — clips ticker overflow at the section edges. */
+.report-ticker-section {
+  overflow: hidden;
+  margin-top: var(--space-2xl);
+}
+
+/* Slide layout — value stacked above the inline label row. */
+.report-ticker-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-s);
+}
+
+/* Big stat — the slide's headline. */
+.report-ticker-value {
+  font-size: var(--font-3xl);
+  font-weight: var(--font-weight-light);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* Label is itself the inline row: icon + caption text on one line. */
+.report-ticker-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--font-s);
+  line-height: var(--line-height-m);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* Icon size + color override. .svg-icn base handles centering + aspect-ratio. */
+.report-ticker-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--text-faded);
+}
+
+/* Mobile scale-down — keeps slides legible at narrow widths. */
+@media (max-width: 600px) {
+  .report-ticker-value {
+    font-size: var(--font-2xl);
+  }
+
+  .report-ticker-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
 /* ------ HOME: CASE STUDIES ------ */
 
 .case-study-cards {
   display: flex;
   flex-direction: column;
+  gap: var(--space-12xl);
 }
 
 /* Card is a link; reset link styles so inner type rules win. */
@@ -3738,7 +3853,6 @@ a.footer-logo:hover {
   display: grid;
   text-decoration: none;
   color: var(--text-primary);
-  margin: var(--space-12xl) 0;
   overflow: hidden;
 }
 
@@ -3772,6 +3886,7 @@ a.case-study-card:hover {
 
 .case-study-card-title {
   margin: 0;
+  font-size: var(--text-size-xl);
 }
 
 /* Stat: <p> wraps the whole thing — its rules style the caption text
@@ -3879,7 +3994,7 @@ body.is-scrolling .case-study-card-logo {
 }
 
 .cta-headline {
-  font-size: var(--title-size);
+  font-size: var(--headline-size);
   font-weight: var(--title-weight);
   line-height: var(--title-leading);
   letter-spacing: var(--title-tracking);
