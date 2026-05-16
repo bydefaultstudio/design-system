@@ -70,6 +70,15 @@ var _pendingScrollOffset = 0;
 // over-travelled (Bug 4: push felt too fast / overshot the viewport top).
 var _pendingNextReadTop = 0;
 
+// Rise header choreography (Bug 3) handoff: set by animatePageHeader's
+// open/swap/fade branch in the `before` hook, consumed by riseTimeline which
+// owns the actual tweens (so the after hook's kill+clearProps contract is
+// unchanged). _pendingHeaderOut = was there a visible old header to slide out;
+// _pendingHeaderEyebrow = the new eyebrow to swap in offscreen at the midpoint
+// (null = no midpoint swap — already applied for the no-old-header case).
+var _pendingHeaderOut = false;
+var _pendingHeaderEyebrow = null;
+
 document.addEventListener("click", function detectNextReadClick(e) {
   if (e.target.closest(".is-next-read") || e.target.closest(".case-study-slider a")) {
     _nextReadNav = true;
@@ -291,7 +300,36 @@ function riseTimeline(data) {
       { y: 0, scale: 1, duration: gm.duration, ease: gm.ease },
       0
     );
+    // Header choreography (Bug 3). Consume the handoff into locals and clear
+    // the globals immediately (the swap callback fires during playback, so it
+    // must close over the local, not the global). Beat 1: old header slides
+    // out (only if there was a visible one). Midpoint: eyebrow text swaps
+    // offscreen. Beat 3: header slides in last and lands on top. All in this
+    // timeline → after hook's kill + clearProps cleans it; GSAP owns the
+    // visible state start-to-end, so Bug A stays structurally fixed.
+    var doHeaderOut = _pendingHeaderOut;
+    var swapEyebrowText = _pendingHeaderEyebrow;
+    _pendingHeaderOut = false;
+    _pendingHeaderEyebrow = null;
     if (header) {
+      if (doHeaderOut) {
+        tl.to(
+          header,
+          { y: "-100%", duration: gm.duration * 0.3, ease: gm.ease },
+          0
+        );
+      }
+      if (swapEyebrowText !== null) {
+        tl.call(
+          function swapHeaderEyebrow() {
+            var eb = header.querySelector(".eyebrow-header");
+            if (eb) eb.textContent = swapEyebrowText;
+            header.toggleAttribute("hidden", !swapEyebrowText);
+          },
+          null,
+          gm.duration * 0.3
+        );
+      }
       tl.fromTo(
         header,
         { y: "-100%" },
@@ -477,19 +515,26 @@ function syncPageHeaderFrom(container) {
 // Coordinate the persistent page-header with the page transition. Runs in the
 // `before` hook with the resolved scenario.
 //
-//   open         — Prepare phase only: set the new eyebrow, remove [hidden],
-//                   park the header at translateY(-100%) (offscreen, above).
-//                   riseEnter chains the actual slide-down AFTER the page rise
-//                   completes, so the header arrives last and lands on top.
+//   open         — From home, where the header is [hidden]/empty: no old
+//                   header to slide out. Reveal it with the NEW eyebrow,
+//                   parked offscreen (translateY(-100%)); riseTimeline's
+//                   Beat 3 slides it in last so it lands on top.
 //   close        — header slides UP off the top (translateY 0 → -100%), in sync
 //                   with the leaving page sliding down. After the animation, hide
 //                   + clear the eyebrow.
-//   swap / fade  — Animate the OLD header out (translateY 0 → -100%) over the
-//                   first ~30% of the rise duration, then swap the eyebrow text
-//                   offscreen. The slide-IN with the new eyebrow happens in
-//                   riseEnter after the page rise completes.
+//   swap / fade  — Old header IS visible. Pin it at y:0 (overriding the CSS
+//                   parked rule so it doesn't snap offscreen — no pop) keeping
+//                   the OLD eyebrow. riseTimeline runs the 3-beat choreography:
+//                   Beat 1 slide old header out, swap eyebrow offscreen at the
+//                   midpoint, Beat 3 slide new header in last.
 //   push         — header doesn't move; eyebrow swaps instantly (matches the
 //                   continuous-article feel of the next-read transition).
+//
+// The open/swap/fade tweens live in riseTimeline's _pendingTimeline (not here)
+// so the after hook's kill + clearProps contract is unchanged and GSAP owns
+// the visible state start-to-end — the CSS parked rule is only the Bug A race
+// net for the before→set micro-gap. This branch only preps the start state
+// synchronously (same tick is-animating is added) and stashes the handoff.
 function animatePageHeader(scenario, nextContainer) {
   var pageHeader = document.querySelector(".page-header");
   if (!pageHeader) return Promise.resolve();
@@ -522,14 +567,45 @@ function animatePageHeader(scenario, nextContainer) {
     });
   }
 
-  // open / swap / fade / push — just set the eyebrow text + reveal.
-  // For rise scenarios (open/swap/fade) the CSS rule
-  //   body.is-animating[data-studio-scenario="..."] .page-header
-  // parks the header at translateY(-100%) the moment is-animating is added;
-  // the rise timeline slides it in. No inline transform here = no WAAPI
-  // cancel race (fixes Bug A). For push the header doesn't move.
-  if (eyebrowEl) eyebrowEl.textContent = newEyebrow;
-  pageHeader.toggleAttribute("hidden", !newEyebrow);
+  if (scenario === "push") {
+    // push — header doesn't move; eyebrow swaps instantly (continuous-article
+    // feel). Unchanged from before.
+    if (eyebrowEl) eyebrowEl.textContent = newEyebrow;
+    pageHeader.toggleAttribute("hidden", !newEyebrow);
+    return Promise.resolve();
+  }
+
+  // open / swap / fade — prep the header start state synchronously and stash
+  // the handoff; riseTimeline owns the tweens. hasOldHeader: is there a
+  // visible header (non-empty eyebrow, not [hidden]) to slide out?
+  var oldEyebrow = (eyebrowEl ? eyebrowEl.textContent : "").trim();
+  var hasOldHeader = !pageHeader.hasAttribute("hidden") && oldEyebrow !== "";
+
+  if (prefersReducedMotion()) {
+    // riseTimeline early-returns under reduced motion — finalise the header
+    // now (instant), no tween, no stale handoff.
+    if (eyebrowEl) eyebrowEl.textContent = newEyebrow;
+    pageHeader.toggleAttribute("hidden", !newEyebrow);
+    gsap.set(pageHeader, { clearProps: "transform" });
+    _pendingHeaderOut = false;
+    _pendingHeaderEyebrow = null;
+    return Promise.resolve();
+  }
+
+  _pendingHeaderOut = hasOldHeader;
+  if (hasOldHeader) {
+    // Keep the OLD eyebrow; pin at y:0 so the CSS parked rule can't snap it
+    // offscreen before Beat 1 slides it out. New eyebrow swaps at the midpoint.
+    _pendingHeaderEyebrow = newEyebrow;
+    gsap.set(pageHeader, { y: 0 });
+  } else {
+    // No old header (from home). Apply the NEW eyebrow now, parked offscreen,
+    // ready for Beat 3 to slide in. No Beat 1, no midpoint swap.
+    if (eyebrowEl) eyebrowEl.textContent = newEyebrow;
+    pageHeader.toggleAttribute("hidden", !newEyebrow);
+    gsap.set(pageHeader, { y: "-100%" });
+    _pendingHeaderEyebrow = null;
+  }
   return Promise.resolve();
 }
 
