@@ -655,6 +655,19 @@ function initStudioBarba() {
   }
 
   window.barba.hooks.before(function onBefore(data) {
+    // Kill bd-animations FIRST — before the bridge transform, is-animating, and
+    // scrollTo below. The parallax (scrub) and pin ScrollTriggers otherwise
+    // stay live through the whole transition, computing start/end and scrubbed
+    // y against a position:absolute, transformed container → the visible
+    // parallax/pin jump. ctx.revert() is synchronous, so this does not split
+    // the Bug B atomic block; it also means the next-read measurement below is
+    // taken against the cleaned (parallax-free) layout the destination settles
+    // into. Mirrors the cleanupHeadlineCycle() call already done here for the
+    // same "revert while still in DOM / untransformed" reason. The after hook
+    // keeps a second (idempotent) bdAnimationsCleanup as defense.
+    if (typeof window.bdAnimationsCleanup === "function") {
+      window.bdAnimationsCleanup();
+    }
     // Scroll compensation — ATOMIC with is-animating + scrollTo so there is
     // never a painted frame where the leaving container is position:absolute
     // top:0 without the offsetting transform (Bug B: page flashes to its top
