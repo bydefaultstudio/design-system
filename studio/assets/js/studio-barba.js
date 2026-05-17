@@ -5,26 +5,30 @@
  * Version: 0.8.0
  * Last Updated: 2026-05-16
  *
- * Architecture (GSAP timelines, CSS-driven parked state):
+ * Architecture (one GSAP timeline factory, stage-only transforms):
  *
- *   1. resolveScenario(fromEl, toEl) → "open" | "close" | "swap" | "fade" | "push"
- *      "What's happening?" — from the two containers' data-level attributes.
+ *   1. resolveScenario(fromEl, toEl) → "enter" | "exit" | "swap" | "advance"
+ *      | "fade" — from the two containers' data-level attributes.
  *
- *   2. runTransition(scenario, data, opts) — a switch that builds and runs the
- *      scenario's GSAP timeline. open/swap/fade → riseTimeline; close →
- *      slideDownTimeline; push → pushUpTimeline. One timeline per transition,
- *      stored on _pendingTimeline for the after hook to kill.
+ *   2. buildTransition(scenario, data, opts) — THE factory. Builds one GSAP
+ *      timeline from the SCENARIOS descriptor table (page-stage shape +
+ *      serial page-header beats + overlay). Replaces the old per-scenario
+ *      builders + runTransition + the _pendingHeader* handoff globals. Stored
+ *      on _pendingTimeline for the after hook to kill. One reduced-motion
+ *      guard at the top (duration:0 state-only timeline).
  *
- *   3. MOTION { pageRise, pageClose, pagePush } — design system motion tokens
- *      read once at load; gsapMotion() bridges the cubic-bezier token to a
- *      GSAP ease (no CustomEase plugin needed, tokens stay source of truth).
+ *   3. MOTION { enter, exit, swap, advance, fade } — design system motion
+ *      tokens read once at load (token NAMES unchanged: --motion-page-open/
+ *      close/swap/fade); gsapMotion() bridges the cubic-bezier token to a
+ *      GSAP ease (no CustomEase plugin, tokens stay source of truth).
  *
- * The page-overlay is a persistent .page-overlay div in each page's chrome
- * (queried, not JS-injected). The page-header's parked offscreen state for
- * rise scenarios is a CSS rule (body.is-animating[data-studio-scenario]
- * .page-header), not inline JS — GSAP overrides it while animating and it
- * auto-reverts when is-animating
- * is removed (no WAAPI cancel race).
+ * Transforms target the inner [data-barba-stage] only — never the container
+ * (Phase 1/2), so it's never a containing-block trap for sticky/fixed. The
+ * leaving container is pinned position:fixed (CSS-scoped to
+ * data-studio-role=leave) so the entering page never reflows. The page-header
+ * is choreographed entirely inside the factory timeline (serial OUT → page →
+ * eyebrow swap → IN for enter/exit/swap; instant eyebrow for advance/fade) —
+ * no CSS parked rule, no before-hook prep.
  *
  * Three-level page model:
  *   L0 = home (index.html)         — the master / feed
@@ -32,13 +36,13 @@
  *   L2 = case studies / articles   — feed items
  *
  * Scenario rules:
- *   home → anything       open   (rise: overlay dims, entering page lifts in)
- *   anything → home       close  (slide-down: page falls away, home revealed)
- *   non-home → non-home   swap   (rise: same as open)
- *   next-read card click  push   (push-up: card aligned flush with header)
- *   same page / unknown   fade   (rise: defensive fallback)
+ *   home → anything       enter    (rise: overlay dims, entering page lifts in)
+ *   anything → home        exit    (drop: page falls away, home revealed)
+ *   non-home → non-home    swap    (rise: same shape as enter)
+ *   next-read card click   advance (push: frozen — title-shift, sides ride)
+ *   same page / unknown    fade    (true crossfade)
  *
- * Reduced motion: instant swap (each timeline builder early-returns).
+ * Reduced motion: single guard in buildTransition (instant state swap).
  */
 
 // Studio Barba v0.8.0
@@ -55,36 +59,39 @@ var _pendingScenario = null;
 // (defensive — it has normally completed by then). One timeline per transition.
 var _pendingTimeline = null;
 
-// Scroll offset (-scrollY) captured in the `before` hook and consumed by
-// studioLeave. Captured there because the compensating transform, the
-// is-animating class, and window.scrollTo(0,0) must all run in one
-// synchronous block — once scrollTo fires, window.scrollY reads 0, so the
-// value can't be re-derived later (fixes Bug B: page flash when scrolled).
-var _pendingScrollOffset = 0;
-
-// Next-read card top (viewport-relative, pre-bridge) captured in the `before`
-// hook for the "push" scenario and consumed by studioLeave. Mirrors
-// _pendingScrollOffset: it MUST be read before the bridge transform +
-// scrollTo(0,0), because getBoundingClientRect includes ancestor transforms —
-// measuring after the bridge inflated pushDistance by scrollY and the article
-// over-travelled (Bug 4: push felt too fast / overshot the viewport top).
-// null is the sentinel for "not measured" (not push, or a next-read click
-// with no .article-lead.is-next-read — e.g. .case-study-slider links) so
-// pushUpTimeline can fall back to a full-viewport push instead of a dead
-// zero-distance hold; a numeric 0 means "card already flush, no travel".
+// Next-read card top (viewport-relative, pre-pin) captured in the `before`
+// hook for the "advance" scenario and consumed by studioLeave. It MUST be
+// read before the inline `top` pin + scrollTo(0,0): getBoundingClientRect
+// includes ancestor offsets, so measuring after would inflate pushDistance
+// (Bug 4: advance felt too fast / overshot the viewport top). null is the
+// sentinel for "not measured" (not advance, or a next-read click with no
+// .article-lead.is-next-read) so the factory falls back to a full-viewport
+// push instead of a dead zero-distance hold; a numeric 0 means "card already
+// flush, no travel".
 var _pendingNextReadTop = null;
 
-// Rise header choreography (Bug 3) handoff: set by animatePageHeader's
-// open/swap/fade branch in the `before` hook, consumed by riseTimeline which
-// owns the actual tweens (so the after hook's kill+clearProps contract is
-// unchanged). _pendingHeaderOut = was there a visible old header to slide out;
-// _pendingHeaderEyebrow = the new eyebrow to swap in offscreen at the midpoint
-// (null = no midpoint swap — already applied for the no-old-header case).
-var _pendingHeaderOut = false;
-var _pendingHeaderEyebrow = null;
+// Scroll offset (window.scrollY) captured in the `before` hook BEFORE the
+// scrollTo(0,0) zeroes it, consumed by studioLeave. Used only by the `exit`
+// (drop) shape to clip the leaving stage to the originally-visible viewport
+// strip so deep-scroll content above it can't whip into view as the stage
+// drops. Same capture-before-pin discipline as _pendingNextReadTop; 0 is a
+// valid value (exit from the top → no-op inset).
+var _pendingScrollOffset = 0;
+
+// Leaving stage's full (untransformed) document height, measured in the
+// `before` hook BEFORE the pin/transform could poison the rect. Used with
+// _pendingScrollOffset to clip the `exit` leaving stage to a viewport-sized
+// STRIP (top AND bottom inset) — a top-only inset on a full-document-height
+// stage leaves the rest of the page painting over the home stage for the
+// whole drop, hiding it until the very end. The strip travels off as the
+// stage drops, progressively revealing home.
+var _pendingStageHeight = 0;
 
 document.addEventListener("click", function detectNextReadClick(e) {
-  if (e.target.closest(".is-next-read") || e.target.closest(".case-study-slider a")) {
+  // Only the article next-read card triggers the "advance" push. The
+  // case-study slider deliberately uses the standard lateral transition
+  // ("swap", resolved by level) — not the next-read push.
+  if (e.target.closest(".is-next-read")) {
     _nextReadNav = true;
   }
 });
@@ -109,17 +116,17 @@ function readNumberAttr(el, attr) {
 
 // Resolve which scenario applies based on the two containers' data-level.
 //
-// Returns a semantic scenario name (not an animation name):
-//   "push"  — next-read click (article → article via next-read card)
-//   "open"  — home → anything
-//   "close" — anything → home
-//   "swap"  — non-home → non-home
-//   "fade"  — fallback
+// Returns a finalised scenario name (see SCENARIOS):
+//   "advance" — next-read click (article → next article via the card)
+//   "enter"   — home → anything
+//   "exit"    — anything → home
+//   "swap"    — non-home → non-home
+//   "fade"    — fallback (same page / unknown)
 function resolveScenario(fromEl, toEl) {
   // Next-read click — consume the flag set by the click handler
   if (_nextReadNav) {
     _nextReadNav = false;
-    return "push";
+    return "advance";
   }
 
   const fromLevel = readNumberAttr(fromEl, "data-level");
@@ -127,13 +134,13 @@ function resolveScenario(fromEl, toEl) {
   const safeFromLevel = Number.isFinite(fromLevel) ? fromLevel : 0;
   const safeToLevel = Number.isFinite(toLevel) ? toLevel : 0;
 
-  // Anything → Home: close
-  if (safeToLevel === 0 && safeFromLevel > 0) return "close";
+  // Anything → Home
+  if (safeToLevel === 0 && safeFromLevel > 0) return "exit";
 
-  // Home → Anything: open
-  if (safeFromLevel === 0 && safeToLevel > 0) return "open";
+  // Home → Anything
+  if (safeFromLevel === 0 && safeToLevel > 0) return "enter";
 
-  // Non-home → Non-home: swap (reuses push-up)
+  // Non-home → Non-home
   if (safeFromLevel > 0 && safeToLevel > 0) return "swap";
 
   // Same page or unknown
@@ -197,11 +204,30 @@ function readMotion(scope) {
   };
 }
 
+// Keyed by the finalised scenario name. The CSS custom-property TOKEN names
+// never change (--motion-page-open/close/swap/fade is the design-system
+// contract) — only the scenario identifiers were renamed, so the readMotion
+// argument stays the token suffix. advance keeps the swap token so its frozen
+// timing is bit-identical to the old pushUpTimeline. fade now consumes the
+// previously-unused --motion-page-fade (resolves the old fade==rise borrow).
 var MOTION = {
-  pageRise: readMotion("open"),  // open/swap/fade all rise — reuse open timing
-  pageClose: readMotion("close"),
-  pagePush: readMotion("swap"),  // push reuses swap timing
+  enter: readMotion("open"),
+  exit: readMotion("close"),
+  swap: readMotion("swap"),
+  advance: readMotion("swap"),
+  fade: readMotion("fade"),
 };
+
+// Header slide (out/in) has no semantic motion token yet (--motion-element-*
+// is reserved in cms/motion.md but undefined). Per motion.md, an un-named
+// motion event may read primitives directly — never hardcode ms/easing.
+// Follow-up ticket: add --motion-element-{enter,exit} to cms/motion.md.
+var HEADER_DUR = (parseInt(readToken("--duration-s"), 10) || 400) / 1000;
+var HEADER_EASE = cssCubicBezierToEase(readToken("--ease-in-out"));
+
+// Overlay reaches full dim at 30% of the rise page tween. A dimensionless
+// choreography ratio of a token-derived duration (not a hardcoded duration).
+var OVERLAY_RATIO = 0.3;
 
 // GSAP has no built-in cubic-bezier ease and the CustomEase plugin isn't
 // loaded. To keep the design system motion tokens as the single source of
@@ -280,183 +306,273 @@ function stageOf(container) {
   );
 }
 
-// rise — open / swap / fade. Overlay dims, entering page lifts + scales in,
-// page-header slides in (parked at -100% by the CSS rule). All parallel in
-// one timeline, total = pageRise duration. Leaving page stays still
-// (scroll-compensated in the before hook).
-function riseTimeline(data) {
-  if (prefersReducedMotion()) return Promise.resolve();
-  // Animate the entering page's STAGE, never the container. The container is
-  // pinned (position:fixed) by the before hook and never transformed, so its
-  // sticky/fixed descendants keep a clean containing block; the stage carries
-  // the rise. The leaving page stays put — pinned via inline `top: -scrollY`
-  // (no transform) in the before hook — while the new page rises over it.
-  var el = stageOf(data.next.container);
-  var overlay = document.querySelector(".page-overlay");
-  var header = document.querySelector(".page-header:not([hidden])");
-  var gm = gsapMotion(MOTION.pageRise);
-  return new Promise(function (resolve) {
-    var tl = gsap.timeline({ onComplete: resolve });
-    _pendingTimeline = tl;
-    // Promote the stage for the duration of the transition; the after hook
-    // clears willChange (with transform) before the rAF that refreshes
-    // ScrollTrigger, so nothing measures a layer-promoted node.
-    gsap.set(el, { willChange: "transform" });
-    if (overlay) {
-      tl.fromTo(
-        overlay,
-        { autoAlpha: 0 },
-        { autoAlpha: 1, duration: gm.duration * 0.3, ease: "none" },
-        0
-      );
-    }
-    tl.fromTo(
-      el,
-      { y: "100vh", scale: 0.77, transformOrigin: "50% 100%" },
-      { y: 0, scale: 1, duration: gm.duration, ease: gm.ease },
-      0
-    );
-    // Header choreography (Bug 3). Consume the handoff into locals and clear
-    // the globals immediately (the swap callback fires during playback, so it
-    // must close over the local, not the global). Beat 1: old header slides
-    // out (only if there was a visible one). Midpoint: eyebrow text swaps
-    // offscreen. Beat 3: header slides in last and lands on top. All in this
-    // timeline → after hook's kill + clearProps cleans it; GSAP owns the
-    // visible state start-to-end, so Bug A stays structurally fixed.
-    var doHeaderOut = _pendingHeaderOut;
-    var swapEyebrowText = _pendingHeaderEyebrow;
-    _pendingHeaderOut = false;
-    _pendingHeaderEyebrow = null;
-    if (header) {
-      if (doHeaderOut) {
-        tl.to(
-          header,
-          { y: "-100%", duration: gm.duration * 0.3, ease: gm.ease },
-          0
-        );
-      }
-      if (swapEyebrowText !== null) {
-        tl.call(
-          function swapHeaderEyebrow() {
-            var eb = header.querySelector(".eyebrow-header");
-            if (eb) eb.textContent = swapEyebrowText;
-            header.toggleAttribute("hidden", !swapEyebrowText);
-          },
-          null,
-          gm.duration * 0.3
-        );
-      }
-      // Beat 3 — slide the (new-eyebrow) header back in, landing last.
-      // Skipped when swapEyebrowText === "" (defensive: a swap into a page
-      // with no eyebrow — Beat 1 already slid the old header out and the
-      // midpoint hid it; there is nothing to bring back). null (from-home,
-      // no Beat 1) and a non-empty string (normal swap) both slide in.
-      if (swapEyebrowText !== "") {
-        tl.fromTo(
-          header,
-          { y: "-100%" },
-          { y: 0, duration: gm.duration * 0.5, ease: gm.ease },
-          gm.duration * 0.5
-        );
-      }
-    }
-  });
+// Finalised transition taxonomy. One factory (buildTransition) builds a single
+// GSAP timeline per transition from this data table — no per-scenario builder
+// functions, no _pendingHeader* handoff globals.
+//   shape  — the page-stage motion: rise (enter/swap), drop (exit),
+//            push (advance, frozen geometry), fade (true crossfade).
+//   header — "serial": OUT fully → page → eyebrow swap → IN (enter/exit/swap).
+//            "instant": eyebrow swaps at t=0, no header motion (advance/fade).
+var SCENARIOS = {
+  enter: { motion: "enter", shape: "rise", header: "serial" },
+  exit: { motion: "exit", shape: "drop", header: "serial" },
+  swap: { motion: "swap", shape: "rise", header: "serial" },
+  advance: { motion: "advance", shape: "push", header: "instant" },
+  fade: { motion: "fade", shape: "fade", header: "instant" },
+};
+
+// nextReadTop (advance): a number ≥ 0 (floored — a flush card legitimately
+// yields 0 / no travel) when a next-read card was measured pre-pin (Bug 4),
+// or null for a next-read click with no measurable card → full-viewport
+// fallback so it still animates.
+function resolvePushDistance(opts) {
+  var nrt = opts ? opts.nextReadTop : null;
+  return typeof nrt === "number" ? Math.max(0, nrt) : window.innerHeight;
 }
 
-// slide-down — close. Leaving page slides one viewport-height down (opaque);
-// home scales + brightens back from the receded state. The clip-path applied
-// in studioLeave keeps a scrolled article from content-whip.
-function slideDownTimeline(data) {
-  if (prefersReducedMotion()) return Promise.resolve();
-  // Animate the STAGES, never the containers. The leaving container is pinned
-  // (position:fixed; top:-scrollY) by the before hook so it already holds the
-  // user's on-screen scroll position WITHOUT a transform — so the leaving
-  // stage starts at a neutral y:0 (adding the old `offset` would double-count
-  // the scroll compensation now that the pin, not a transform, owns it) and
-  // travels one viewport down. Entering page is home, brought back from its
-  // scaled/dimmed receded state.
-  var leavingStage = stageOf(data.current.container);
-  var el = stageOf(data.next.container);
-  var gm = gsapMotion(MOTION.pageClose);
-  return new Promise(function (resolve) {
-    var tl = gsap.timeline({ onComplete: resolve });
-    _pendingTimeline = tl;
-    if (leavingStage) {
-      gsap.set(leavingStage, { willChange: "transform" });
+// Instant header sync — eyebrow text + hidden toggle, no motion. Used by the
+// advance/fade ("instant") path and the reduced-motion guard. Clears any
+// inline transform so a prior interrupted slide can't leave it offscreen.
+function applyHeaderInstant(header, newEyebrow) {
+  if (!header) return;
+  var eb = header.querySelector(".eyebrow-header");
+  if (eb) eb.textContent = newEyebrow;
+  header.toggleAttribute("hidden", !newEyebrow);
+  gsap.set(header, { clearProps: "transform" });
+}
+
+// Pure synchronous reader (no tweens, no globals) — what the header does this
+// transition. enter from home has no visible old header (→ no OUT, just IN);
+// exit goes to home (no eyebrow, OUT only, hide after); swap does the full
+// OUT → swap → IN.
+function planHeader(scenario, headerEl, nextContainer) {
+  var desc = SCENARIOS[scenario];
+  var newEyebrow = (
+    (nextContainer && nextContainer.getAttribute("data-page-eyebrow")) || ""
+  ).trim();
+  if (!desc || desc.header === "instant") {
+    return { out: false, in: false, swapAtEnd: false, hideAfter: false, newEyebrow: newEyebrow };
+  }
+  if (scenario === "exit") {
+    return { out: true, in: false, swapAtEnd: false, hideAfter: true, newEyebrow: "" };
+  }
+  // enter / swap
+  var eb = headerEl ? headerEl.querySelector(".eyebrow-header") : null;
+  var oldEyebrow = (eb ? eb.textContent : "").trim();
+  var hasVisibleOld =
+    headerEl && !headerEl.hasAttribute("hidden") && oldEyebrow !== "";
+  return {
+    out: !!hasVisibleOld, // enter-from-home: no visible old header → no OUT
+    in: newEyebrow !== "", // skip IN if the next page has no eyebrow
+    swapAtEnd: true, // swap eyebrow text after the page beat, before IN
+    hideAfter: false,
+    newEyebrow: newEyebrow,
+  };
+}
+
+// Append the page-stage tween(s) to `tl` at position `pos` for the shape.
+// Explicit per-shape branches (readability over a parametric tween). The
+// container is never transformed — only the stage (Phase 2). y:"100vh" stays
+// (the stage is full-document-height, so yPercent would be wrong — amdt C).
+function installShape(tl, shape, ctx, pos) {
+  var gm = ctx.gm;
+  if (shape === "rise") {
+    if (ctx.overlay) {
       tl.fromTo(
-        leavingStage,
-        { y: 0 },
-        { y: window.innerHeight, duration: gm.duration, ease: gm.ease },
-        0
+        ctx.overlay,
+        { autoAlpha: 0 },
+        { autoAlpha: 1, duration: gm.duration * OVERLAY_RATIO, ease: "none" },
+        pos
       );
     }
-    gsap.set(el, { willChange: "transform" });
     tl.fromTo(
-      el,
+      ctx.enterStage,
+      { y: "100vh", scale: 0.77, transformOrigin: "50% 100%" },
+      { y: 0, scale: 1, duration: gm.duration, ease: gm.ease },
+      pos
+    );
+  } else if (shape === "drop") {
+    // Issue B — clip the leaving stage to the originally-visible viewport
+    // STRIP before it falls. The container is pinned top:-scrollY, so in the
+    // stage's own (untransformed) box the visible viewport is the band
+    // y in [scrollOffset, scrollOffset + innerHeight]. We inset BOTH the top
+    // (scrollOffset px — hides the deep-scroll content above the user that
+    // would otherwise whip in) AND the bottom (everything below the viewport
+    // — a top-only inset on a full-document-height stage keeps the rest of
+    // the page painting over the z-index:1 home stage for the whole drop,
+    // hiding home until the very end). Static (set, never tweened): clip-path
+    // is evaluated in the element's pre-transform box, so the y translate
+    // carries this strip rigidly with the page — it slides off as the stage
+    // drops, progressively revealing home, with no GSAP shape interpolation.
+    // Guarded scrollOffset > 0 (same discipline as the before-hook pin /
+    // scrollTo): exit-from-top has nothing to whip and a clip would only
+    // impose a needless clipping context on the leaving page's fixed/sticky
+    // chrome for the whole drop. No offset → no clip at all.
+    if (ctx.scrollOffset > 0) {
+      var vh = window.innerHeight;
+      var bottomInset = Math.max(0, ctx.stageHeight - ctx.scrollOffset - vh);
+      tl.set(
+        ctx.leaveStage,
+        {
+          clipPath:
+            "inset(" + ctx.scrollOffset + "px 0px " + bottomInset + "px 0px)",
+        },
+        pos
+      );
+    }
+    tl.fromTo(
+      ctx.leaveStage,
+      { y: 0 },
+      { y: window.innerHeight, duration: gm.duration, ease: gm.ease },
+      pos
+    );
+    tl.fromTo(
+      ctx.enterStage,
       {
         scale: SLIDE_DOWN_ENTER_SCALE_FROM,
         opacity: SLIDE_DOWN_ENTER_OPACITY_FROM,
         transformOrigin: SLIDE_DOWN_ENTER_ORIGIN,
       },
       { scale: 1, opacity: 1, duration: gm.duration, ease: gm.ease },
-      0
+      pos
     );
-  });
+  } else if (shape === "push") {
+    // Frozen advance geometry — leaving stage slides up by the measured
+    // distance so the next title lands where the card title was; the side
+    // sticky chrome rides up rigidly with it (no mask).
+    tl.fromTo(
+      ctx.leaveStage,
+      { y: 0 },
+      { y: -ctx.pushDistance, duration: gm.duration, ease: gm.ease },
+      pos
+    );
+  } else {
+    // fade — true crossfade, NO y/scale (resolves the old fade==rise borrow).
+    tl.fromTo(
+      ctx.leaveStage,
+      { autoAlpha: 1 },
+      { autoAlpha: 0, duration: gm.duration, ease: gm.ease },
+      pos
+    );
+    tl.fromTo(
+      ctx.enterStage,
+      { autoAlpha: 0 },
+      { autoAlpha: 1, duration: gm.duration, ease: gm.ease },
+      pos
+    );
+  }
 }
 
-// push-up — push (next-read card). Current article pushes up by a measured
-// distance; the next article sits at y:0 behind (no enter animation).
-function pushUpTimeline(data, opts) {
-  if (prefersReducedMotion()) return Promise.resolve();
-  // Frozen visible treatment: the leaving article slides up by exactly the
-  // measured next-read distance so the next article's title lands where the
-  // card title was. The whole STAGE translates, so the side sticky chrome
-  // (toc / share / sticky-media) rides up rigidly WITH the article instead of
-  // being opacity-masked (user-approved — title-shift geometry is what's
-  // frozen, the sides riding is the deliberate improvement).
-  var leavingStage = stageOf(data.current.container);
-  // nextReadTop is the pre-pin measured distance (Bug 4): a number (>= 0,
-  // floored — a flush card legitimately yields 0 / no travel, and the floor
-  // prevents reverse-travel on very short articles) when a next-read card was
-  // found, or null for a next-read click with no measurable card (e.g.
-  // .case-study-slider links) — fall back to a full-viewport push so it still
-  // animates instead of dead-cutting.
-  var nrt = opts ? opts.nextReadTop : null;
-  var pushDistance = typeof nrt === "number"
-    ? Math.max(0, nrt)
-    : window.innerHeight;
-  var gm = gsapMotion(MOTION.pagePush);
+// THE factory. One timeline per transition (stored on _pendingTimeline so the
+// kill/clearProps contract is unchanged). Replaces riseTimeline /
+// slideDownTimeline / pushUpTimeline / runTransition and the per-builder
+// reduced-motion early-returns. studioLeave calls this directly.
+function buildTransition(scenario, data, opts) {
+  var desc = SCENARIOS[scenario] || SCENARIOS.fade; // unknown → fade (safe)
+  var enterStage = stageOf(data.next.container);
+  var leaveStage = stageOf(data.current.container);
+  var overlay = desc.shape === "rise" ? document.querySelector(".page-overlay") : null;
+  var header = document.querySelector(".page-header");
+  var hp = planHeader(scenario, header, data.next.container);
+
+  // Single reduced-motion guard (replaces the per-builder early-returns).
+  // duration:0 timeline (not a bare Promise.resolve — matches the animated
+  // path's resolve-on-onComplete shape against Barba's sync barrier). No
+  // willChange, full clearProps on the entering stage so no transform/scale
+  // residue leaks.
+  if (prefersReducedMotion()) {
+    return new Promise(function (resolve) {
+      var rtl = gsap.timeline({ onComplete: resolve });
+      _pendingTimeline = rtl;
+      rtl.set(
+        enterStage,
+        { clearProps: "transform,transformOrigin,scale,opacity,willChange" },
+        0
+      );
+      applyHeaderInstant(header, hp.newEyebrow);
+    });
+  }
+
+  var gm = gsapMotion(MOTION[desc.motion]);
   return new Promise(function (resolve) {
     var tl = gsap.timeline({ onComplete: resolve });
     _pendingTimeline = tl;
-    // Stage starts neutral (y:0): the leaving container is already pinned at
-    // the on-screen scroll position via the before-hook inline `top`, so the
-    // pure -pushDistance translate is frame-identical to the old
-    // container-transform approach without double-counting scrollY.
-    gsap.set(leavingStage, { willChange: "transform" });
-    tl.fromTo(
-      leavingStage,
-      { y: 0 },
-      { y: -pushDistance, duration: gm.duration, ease: gm.ease },
-      0
-    );
-  });
-}
 
-// Dispatch a scenario to its timeline. open / swap / fade all rise; close
-// slides down; push pushes up. Unknown → rise (safe default).
-function runTransition(scenario, data, opts) {
-  switch (scenario) {
-    case "close":
-      return slideDownTimeline(data);
-    case "push":
-      return pushUpTimeline(data, opts);
-    case "open":
-    case "swap":
-    case "fade":
-    default:
-      return riseTimeline(data);
-  }
+    // Promote only the stage(s) this scenario actually transforms. Cleared
+    // (with transform) before the rAF that refreshes ScrollTrigger.
+    //   rise  — entering rises (leaving is pinned, not transformed)
+    //   drop  — leaving slides down AND entering (home) scales/opacities in
+    //   push  — leaving slides up (entering is untouched)
+    //   fade  — both crossfade
+    var promote = [];
+    if (desc.shape !== "push") promote.push(enterStage);
+    if (desc.shape !== "rise") promote.push(leaveStage);
+    gsap.set(promote, { willChange: "transform" });
+
+    // advance / fade — eyebrow swaps instantly (continuous feel), no header
+    // motion. Page beat at t=0.
+    if (desc.header === "instant") {
+      applyHeaderInstant(header, hp.newEyebrow);
+      installShape(tl, desc.shape, {
+        enterStage: enterStage,
+        leaveStage: leaveStage,
+        overlay: overlay,
+        gm: gm,
+        pushDistance: resolvePushDistance(opts),
+        scrollOffset: opts && typeof opts.scrollOffset === "number" ? opts.scrollOffset : 0,
+        stageHeight: opts && typeof opts.stageHeight === "number" ? opts.stageHeight : 0,
+      }, 0);
+      return;
+    }
+
+    // SERIAL header choreography (user-specified, sequential — not overlapped):
+    // Beat A: OUT (only if a visible old header) → Beat B: page (+ overlay) →
+    // eyebrow swap → Beat C: IN. .to for OUT (header rests at y:0, no from
+    // needed); fromTo immediateRender:false for IN so the sequenced from-state
+    // is applied at its position, not at build (no fromTo fight on the header).
+    var pageStart = 0;
+    if (hp.out && header) {
+      tl.to(header, { y: "-100%", duration: HEADER_DUR, ease: HEADER_EASE }, 0);
+      pageStart = HEADER_DUR;
+    }
+
+    installShape(tl, desc.shape, {
+      enterStage: enterStage,
+      leaveStage: leaveStage,
+      overlay: overlay,
+      gm: gm,
+      pushDistance: resolvePushDistance(opts),
+      scrollOffset: opts && typeof opts.scrollOffset === "number" ? opts.scrollOffset : 0,
+      stageHeight: opts && typeof opts.stageHeight === "number" ? opts.stageHeight : 0,
+    }, pageStart);
+    var pageEnd = pageStart + gm.duration;
+
+    // INVARIANT: this swap/unhide call and the IN fromTo below share the
+    // SAME position (pageEnd). GSAP runs same-position items in insertion
+    // order, so the call MUST stay inserted before the fromTo — it unhides
+    // the header (enter-from-home: it was [hidden]) so the IN slide is
+    // visible. Do not reorder these two blocks.
+    if ((hp.swapAtEnd || hp.hideAfter) && header) {
+      tl.call(
+        function swapHeaderEyebrow() {
+          var eb = header.querySelector(".eyebrow-header");
+          if (eb) eb.textContent = hp.newEyebrow;
+          header.toggleAttribute("hidden", !hp.newEyebrow);
+        },
+        null,
+        pageEnd
+      );
+    }
+
+    if (hp.in && header) {
+      tl.fromTo(
+        header,
+        { y: "-100%" },
+        { y: 0, duration: HEADER_DUR, ease: HEADER_EASE, immediateRender: false },
+        pageEnd
+      );
+    }
+  });
 }
 
 //
@@ -479,32 +595,46 @@ var studioTransition = {
     data.next.container.setAttribute("data-studio-scenario", scenario);
     data.next.container.setAttribute("data-studio-role", "enter");
 
-    // Push distance was measured in the `before` hook BEFORE the pin +
+    // Advance distance was measured in the `before` hook BEFORE the pin +
     // scrollTo could poison getBoundingClientRect (Bug 4). Pass it through
     // verbatim — null (not advance / no next-read card) vs numeric (measured,
-    // may be 0) is resolved in pushUpTimeline so a card-less next-read still
+    // may be 0) is resolved in the factory so a card-less next-read still
     // animates.
     var nextReadTop = _pendingNextReadTop;
     _pendingNextReadTop = null;
 
-    // No clip-path and no per-scenario container transform any more. Every
-    // scenario pins the leaving container out of flow via the before-hook
-    // inline `top: -scrollY` (non-transform) and animates only the stage, so
-    // the whole page moves as one rigid unit — a tall scrolled article can't
-    // content-whip, which is the only thing the old close clip-path guarded.
+    // Scroll offset captured pre-scrollTo (Issue B). Consumed only by the
+    // `exit` (drop) shape to strip-clip the leaving stage.
+    var scrollOffset = _pendingScrollOffset;
+    _pendingScrollOffset = 0;
+    var stageHeight = _pendingStageHeight;
+    _pendingStageHeight = 0;
 
-    // GSAP element-out animations (skip for push — morph would conflict)
+    // No per-scenario CONTAINER transform any more: every scenario pins the
+    // leaving container out of flow via the before-hook inline `top: -scrollY`
+    // (non-transform, so its sticky/fixed descendants never hit the
+    // containing-block trap) and animates only the stage. clip-path on the
+    // CONTAINER is still forbidden (it would reintroduce that trap), but the
+    // `exit` drop DOES need a strip clip — applied to the STAGE (already the
+    // transformed node, paint-only, no box/containing-block change) so the
+    // above-scroll content can't whip in as the full-height stage falls.
+
+    // GSAP element-out animations (skip for advance — morph would conflict
+    // with the frozen title-shift).
     var outPromise = Promise.resolve();
-    if (scenario !== "push" && typeof window.bdAnimateElementsOut === "function") {
+    if (scenario !== "advance" && typeof window.bdAnimateElementsOut === "function") {
       outPromise = window.bdAnimateElementsOut(data.current.container);
     }
 
-    // After elements are out: run the scenario's GSAP timeline. The whole
-    // transition (both containers, overlay, header) lives in that one
-    // timeline; studioEnter is a no-op. sync:true makes barba wait for both.
-    // GSAP cleanup is deferred to the after hook.
+    // After elements are out: build + run the scenario's one GSAP timeline
+    // (page stage + overlay + serial header all in it). studioEnter is a
+    // no-op; sync:true makes barba wait for both. Cleanup is in the after hook.
     return outPromise.then(function () {
-      return runTransition(scenario, data, { nextReadTop: nextReadTop });
+      return buildTransition(scenario, data, {
+        nextReadTop: nextReadTop,
+        scrollOffset: scrollOffset,
+        stageHeight: stageHeight,
+      });
     });
   },
   enter: function studioEnter() {
@@ -540,106 +670,12 @@ function syncPageHeaderFrom(container) {
   pageHeader.toggleAttribute("hidden", !newEyebrow);
 }
 
-// Coordinate the persistent page-header with the page transition. Runs in the
-// `before` hook with the resolved scenario.
-//
-//   open         — From home, where the header is [hidden]/empty: no old
-//                   header to slide out. Reveal it with the NEW eyebrow,
-//                   parked offscreen (translateY(-100%)); riseTimeline's
-//                   Beat 3 slides it in last so it lands on top.
-//   close        — header slides UP off the top (translateY 0 → -100%), in sync
-//                   with the leaving page sliding down. After the animation, hide
-//                   + clear the eyebrow.
-//   swap / fade  — Old header IS visible. Pin it at y:0 (overriding the CSS
-//                   parked rule so it doesn't snap offscreen — no pop) keeping
-//                   the OLD eyebrow. riseTimeline runs the 3-beat choreography:
-//                   Beat 1 slide old header out, swap eyebrow offscreen at the
-//                   midpoint, Beat 3 slide new header in last.
-//   push         — header doesn't move; eyebrow swaps instantly (matches the
-//                   continuous-article feel of the next-read transition).
-//
-// The open/swap/fade tweens live in riseTimeline's _pendingTimeline (not here)
-// so the after hook's kill + clearProps contract is unchanged and GSAP owns
-// the visible state start-to-end — the CSS parked rule is only the Bug A race
-// net for the before→set micro-gap. This branch only preps the start state
-// synchronously (same tick is-animating is added) and stashes the handoff.
-function animatePageHeader(scenario, nextContainer) {
-  var pageHeader = document.querySelector(".page-header");
-  if (!pageHeader) return Promise.resolve();
-  var eyebrowEl = pageHeader.querySelector(".eyebrow-header");
-  var newEyebrow = ((nextContainer && nextContainer.getAttribute("data-page-eyebrow")) || "").trim();
-
-  if (scenario === "close") {
-    // Close is NOT a rise scenario, so the CSS parked-state rule doesn't
-    // apply — the header slides up off the top then hides. GSAP gsap.to
-    // (not part of _pendingTimeline; runs concurrently with slide-down).
-    function finishClose() {
-      pageHeader.toggleAttribute("hidden", true);
-      if (eyebrowEl) eyebrowEl.textContent = "";
-    }
-    if (prefersReducedMotion()) {
-      finishClose();
-      return Promise.resolve();
-    }
-    var gmc = gsapMotion(MOTION.pageClose);
-    return new Promise(function (resolve) {
-      gsap.to(pageHeader, {
-        y: "-100%",
-        duration: gmc.duration,
-        ease: gmc.ease,
-        onComplete: function onCloseHeaderDone() {
-          finishClose();
-          resolve();
-        },
-      });
-    });
-  }
-
-  if (scenario === "push") {
-    // push — header doesn't move; eyebrow swaps instantly (continuous-article
-    // feel). Unchanged from before.
-    if (eyebrowEl) eyebrowEl.textContent = newEyebrow;
-    pageHeader.toggleAttribute("hidden", !newEyebrow);
-    return Promise.resolve();
-  }
-
-  // open / swap / fade — prep the header start state synchronously and stash
-  // the handoff; riseTimeline owns the tweens. hasOldHeader: is there a
-  // visible header (non-empty eyebrow, not [hidden]) to slide out?
-  var oldEyebrow = (eyebrowEl ? eyebrowEl.textContent : "").trim();
-  var hasOldHeader = !pageHeader.hasAttribute("hidden") && oldEyebrow !== "";
-
-  if (prefersReducedMotion()) {
-    // riseTimeline early-returns under reduced motion — finalise the header
-    // now (instant), no tween, no stale handoff. Set inline y:0 (NOT
-    // clearProps): is-animating + data-studio-scenario are already on <body>,
-    // so the CSS parked rule would otherwise hold the header offscreen for the
-    // whole transition and snap it in only when the after hook removes
-    // is-animating. Inline y:0 overrides the park so it rests in place at once.
-    if (eyebrowEl) eyebrowEl.textContent = newEyebrow;
-    pageHeader.toggleAttribute("hidden", !newEyebrow);
-    gsap.set(pageHeader, { y: 0 });
-    _pendingHeaderOut = false;
-    _pendingHeaderEyebrow = null;
-    return Promise.resolve();
-  }
-
-  _pendingHeaderOut = hasOldHeader;
-  if (hasOldHeader) {
-    // Keep the OLD eyebrow; pin at y:0 so the CSS parked rule can't snap it
-    // offscreen before Beat 1 slides it out. New eyebrow swaps at the midpoint.
-    _pendingHeaderEyebrow = newEyebrow;
-    gsap.set(pageHeader, { y: 0 });
-  } else {
-    // No old header (from home). Apply the NEW eyebrow now, parked offscreen,
-    // ready for Beat 3 to slide in. No Beat 1, no midpoint swap.
-    if (eyebrowEl) eyebrowEl.textContent = newEyebrow;
-    pageHeader.toggleAttribute("hidden", !newEyebrow);
-    gsap.set(pageHeader, { y: "-100%" });
-    _pendingHeaderEyebrow = null;
-  }
-  return Promise.resolve();
-}
+// (The persistent page-header is now choreographed entirely inside
+// buildTransition's single timeline — serial OUT → page → eyebrow swap → IN
+// for enter/exit/swap, instant eyebrow for advance/fade. There is no separate
+// animatePageHeader and no before-hook header prep: the factory's first
+// header tween sets its own start state inline at timeline build, so there is
+// no parked-state micro-gap to race — the CSS parked rule is deleted.)
 
 //
 //------- Initialize -------//
@@ -653,32 +689,34 @@ function initStudioBarba() {
 
   window.barba.hooks.before(function onBefore(data) {
     // Scroll compensation — ATOMIC with is-animating + scrollTo so there is
-    // never a painted frame where the leaving container is position:absolute
-    // top:0 without the offsetting compensation (Bug B: page flashes to its
-    // top when navigating while scrolled). Two compensation methods, branched
-    // by scenario below:
-    //   rise (open/swap/fade): the leaving page does NOT visibly move (only
-    //     the new page rises), so compensate with a NON-transform inline
-    //     `top: -scrollY`. No transform on the leaving container → its
-    //     position:sticky/fixed descendants don't fall into the
-    //     transformed-ancestor containing-block trap (no fade needed for them
-    //     on rise — see studio.css scenario-split opacity rule).
-    //   close/push: the leaving page IS the motion (slides down / pushes up),
-    //     so it must be transformed — keep the original translateY bridge.
+    // never a painted frame where the leaving page is is-animating +
+    // scroll-zeroed but NOT yet pinned (Bug B). One non-transform pin for
+    // every scenario (leaving container position:fixed; top:-scrollY, CSS
+    // scoped to data-studio-role=leave); the visible motion is on the stage.
     var leavingEl = data && data.current ? data.current.container : null;
     var scrollY = window.scrollY || 0;
-    _pendingScrollOffset = -scrollY;
-    // Bug 4: capture the next-read card's true position BEFORE the bridge
-    // transform + scrollTo below poison getBoundingClientRect (it includes
-    // ancestor transforms). Reset these handoff globals unconditionally every
-    // transition (genuinely mirroring _pendingScrollOffset — the close/push
-    // branches of animatePageHeader return without clearing the header ones,
-    // so a hung bdAnimateElementsOut on a prior rise must not leak stale state
-    // into a later rise). Peek at _nextReadNav non-destructively: resolveScenario
-    // below stays its sole consumer (re-reading it here would misclassify).
+    // Bug 4: capture the next-read card's true position BEFORE the pin +
+    // scrollTo below poison getBoundingClientRect (it includes ancestor
+    // offsets). Reset _pendingNextReadTop unconditionally so a hung
+    // bdAnimateElementsOut on a prior transition can't leak a stale value.
+    // _nextReadNav stays read only by resolveScenario below (its sole
+    // consumer — re-reading here would misclassify).
     _pendingNextReadTop = null;
-    _pendingHeaderOut = false;
-    _pendingHeaderEyebrow = null;
+    // Same capture-before-scrollTo discipline: snapshot the scroll offset now
+    // (window.scrollY is zeroed in the atomic block below) for the `exit`
+    // stage clip. Reset-then-set unconditionally so a hung prior transition
+    // can't leak a stale value.
+    _pendingScrollOffset = scrollY;
+    // Measure the leaving stage's full height NOW (pre-pin, no transform yet
+    // so the rect is the true untransformed document height). Needed for the
+    // `exit` strip clip's bottom inset. Same reset-then-set discipline.
+    _pendingStageHeight = 0;
+    if (leavingEl) {
+      var leavingStageEl = stageOf(leavingEl);
+      if (leavingStageEl) {
+        _pendingStageHeight = leavingStageEl.getBoundingClientRect().height;
+      }
+    }
     if (_nextReadNav && leavingEl) {
       var nextReadEl = leavingEl.querySelector(".article-lead.is-next-read");
       if (nextReadEl) {
@@ -747,9 +785,10 @@ function initStudioBarba() {
     // Surface the scenario on <body> so CSS can react during the transition
     // (e.g. lifting .page-header above the .page-overlay during rise).
     document.body.setAttribute("data-studio-scenario", _pendingScenario);
-    // Coordinate the persistent page-header with the page transition. open/close
-    // animate the header in/out; swap/push/fade just sync the eyebrow text.
-    animatePageHeader(_pendingScenario, data && data.next ? data.next.container : null);
+    // The page-header is choreographed inside buildTransition's timeline now —
+    // no before-hook header prep. The factory's first header tween sets its
+    // own start state inline at build (synchronous, same tick as Barba leave),
+    // so there is no parked-state micro-gap to race; the CSS park is deleted.
     // Lightweight state cleanup — remove body classes and disconnect observers
     // so they don't fire during the transition. Splide instances are NOT
     // destroyed here (that would strip inline styles while the old container
@@ -766,6 +805,21 @@ function initStudioBarba() {
   });
 
   window.barba.hooks.afterEnter(function onAfterEnter(data) {
+    // Amendment I — the factory timeline has completed (sync:true: leave's
+    // promise resolved on onComplete before this hook), so the entering stage
+    // is at its identity end-state but still carries that inline transform +
+    // willChange. productSpotlightTrigger / bd-counter rebuild on the
+    // studio:after-nav dispatch below (before the `after` hook's authoritative
+    // clear), so clear the entering stage HERE first — they must never measure
+    // a transformed / layer-promoted node. Idempotent with the after-hook
+    // clear (clearProps on already-cleared props is a no-op); end-state is
+    // identity so this is visually a no-op — it only removes the latent trap.
+    var aiStage = stageOf(data.next.container);
+    if (aiStage) {
+      gsap.set(aiStage, {
+        clearProps: "transform,transformOrigin,scale,opacity,willChange",
+      });
+    }
     updateMetaFromContainer(data.next.container);
     // Sync body[data-current-level] with the new container's data-level
     // (drives close-button visibility + any future level-aware CSS hooks)
@@ -825,19 +879,14 @@ function initStudioBarba() {
       nextContainer.removeAttribute("data-studio-scenario");
     }
 
-    // Cleanup order matters — two opposing constraints:
-    //
-    //  1. Overlay must reset BEFORE is-animating is removed. While
-    //     is-animating is set the entering container is z-index 300; once
-    //     removed it drops to auto. If the overlay (z-index 200) were still
-    //     opaque at that moment it would cover the new page for a frame.
-    //  2. Header must reset AFTER is-animating is removed. The CSS rule
-    //     body.is-animating[data-studio-scenario] .page-header parks it at
-    //     translateY(-100%). GSAP holds its end-state (translateY(0)) as an
-    //     inline transform that OVERRIDES that rule — so the header stays
-    //     correct through the class removal. If we cleared its inline while
-    //     is-animating were still set, the parked -100% rule would apply
-    //     for a frame (this was the root of Bug A).
+    // Overlay must reset BEFORE is-animating is removed: while is-animating is
+    // set the entering container is z-index 300; once removed it drops to
+    // auto, and a still-opaque overlay (z-index 200) would cover the new page
+    // for a frame. (The old "header must reset AFTER is-animating" constraint
+    // is retired — Phase 3 deletes the CSS parked-header rule it dodged, so
+    // the header has no is-animating-conditional state left to race; it's
+    // cleared together with the stages below. Bug A stays structurally fixed
+    // by GSAP timeline ownership, not by this ordering.)
     if (pageOverlay) {
       gsap.set(pageOverlay, { clearProps: "opacity,visibility,transform" });
     }
@@ -845,19 +894,17 @@ function initStudioBarba() {
     document.body.classList.remove("is-animating");
     document.body.removeAttribute("data-studio-scenario");
 
-    // Header resets AFTER is-animating (Bug A — see above): its own gsap.set,
-    // kept separate so retargeting the page-motion clear onto the stages
-    // can't disturb the header's post-is-animating timing. No clipPath now
-    // (the close clip-path was deleted with the container-transform model).
-    gsap.set([pageHeader].filter(Boolean), {
-      clearProps: "transform,transformOrigin,opacity,visibility",
-    });
-    // Stages carried the page motion — clear transform + the willChange set
-    // at timeline start, synchronously here (before the rAF) so
-    // bdAnimationsInit / ScrollTrigger.refresh never measure a transformed or
-    // layer-promoted stage.
-    gsap.set([nextStage, leavingStage].filter(Boolean), {
-      clearProps: "transform,transformOrigin,opacity,visibility,willChange",
+    // Header + stages carried the transition motion. Clear transform +
+    // willChange synchronously here (before the rAF) so bdAnimationsInit /
+    // ScrollTrigger.refresh never measure a transformed / layer-promoted
+    // node. nextStage was already cleared in afterEnter (amendment I) —
+    // re-clearing is an idempotent no-op.
+    // clipPath: the `exit` drop sets a static strip clip on the leaving
+    // stage. The leaving stage normally detaches with its container, but a
+    // reused/cached container would otherwise keep a phantom clip (same
+    // defensive case as the inline `top` clear below).
+    gsap.set([pageHeader, nextStage, leavingStage].filter(Boolean), {
+      clearProps: "transform,transformOrigin,opacity,visibility,clipPath,willChange",
     });
 
     // Defensive: the before hook sets an inline `top` on the leaving
