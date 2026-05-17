@@ -1187,6 +1187,24 @@ body.is-sidebar-collapsed .page-header {
   border: 0;
 }
 
+/* Visually-hidden polite live region announced on every Barba navigation
+   (route-change announcement — SR users otherwise get no page-change cue
+   because the title swap is silent and <main> has no accessible name).
+   Persistent chrome (sibling of .page-overlay, outside the Barba wrapper)
+   so it survives container swaps. Same standard "visually hidden" technique
+   as .cycle-word-sr above. */
+.route-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .page-subline {
   font-size: var(--subline-size);
   font-weight: var(--subline-weight);

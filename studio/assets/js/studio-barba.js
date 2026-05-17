@@ -828,6 +828,19 @@ function initStudioBarba() {
       });
     }
     updateMetaFromContainer(data.next.container);
+    // a11y (WCAG 4.1.3): announce the route change. The title swap is silent
+    // to screen readers and the focused <main> has no accessible name, so
+    // without this a Barba navigation is unannounced. Write the new page
+    // name into the persistent visually-hidden polite region (.route-status,
+    // outside the Barba wrapper so it survives the swap). Prefer the short
+    // eyebrow ("About", "Products"); fall back to the freshly-set title.
+    var routeStatus = document.getElementById("studio-route-status");
+    if (routeStatus) {
+      var routeName = (
+        data.next.container.getAttribute("data-page-eyebrow") || ""
+      ).trim();
+      routeStatus.textContent = routeName || document.title;
+    }
     // Sync body[data-current-level] with the new container's data-level
     // (drives close-button visibility + any future level-aware CSS hooks)
     var newLevel = data.next.container.getAttribute("data-level") || "0";
