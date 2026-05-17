@@ -785,6 +785,19 @@ body.is-animating [data-barba="container"] {
   background: var(--background-primary);
 }
 
+/* The single per-page transform layer. Every page transition animates THIS
+   element (never the container), so the container never becomes a containing
+   block for its position:sticky/fixed descendants and the whole page + its
+   sticky chrome moves as one rigid unit. Must stay exactly position:relative
+   + display:block + width:100% with zero box-spacing — its box must coincide
+   with the container content box or the scale pivot and the advance
+   title-shift geometry shift. Do not add padding/margin/border/size here. */
+[data-barba-stage] {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
 
 /*
  * Z-index per scenario. Barba 2.x does NOT add .barba-leave/.barba-enter
@@ -3813,18 +3826,18 @@ a.footer-logo:hover {
   display: block;
 }
 
-/* ------ REPORT TICKER (Products → Reporting section) ------ */
+/* ------ TICKER (Products → Reporting section) ------ */
 /* Auto-scrolling stats ticker. Slides hand-authored in products.html;
    Splide instance mounted by initReportTicker (products.js). */
 
 /* Outer container — clips ticker overflow at the section edges. */
-.report-ticker-section {
+.ticker-section {
   overflow: hidden;
   margin-top: var(--space-2xl);
 }
 
 /* Slide layout — value stacked above the inline label row. */
-.report-ticker-slide {
+.ticker-slide {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3835,7 +3848,7 @@ a.footer-logo:hover {
 }
 
 /* Big stat — the slide's headline. */
-.report-ticker-value {
+.ticker-value {
   font-size: var(--font-4xl);
   font-weight: var(--font-weight-medium);
   line-height: 1;
@@ -3847,7 +3860,7 @@ a.footer-logo:hover {
 }
 
 /* Label is itself the inline row: icon + caption text on one line. */
-.report-ticker-label {
+.ticker-label {
   display: flex;
   align-items: center;
   gap: var(--space-xs);
@@ -3859,20 +3872,37 @@ a.footer-logo:hover {
 }
 
 /* Icon size + color override. .svg-icn base handles centering + aspect-ratio. */
-.report-ticker-icon {
+.ticker-icon {
   --icon-size: 1em;
 }
 
 /* Mobile scale-down — keeps slides legible at narrow widths. */
 @media (max-width: 600px) {
-  .report-ticker-value {
+  .ticker-value {
     font-size: var(--font-2xl);
   }
 
-  .report-ticker-icon {
+  .ticker-icon {
     width: 1rem;
     height: 1rem;
   }
+}
+
+/* Stacked variant — left-aligned: larger icon at the top with a wide gap
+   below it, then the value, then the label. Temporary A/B against the base
+   centered card layout (see products.html → Reporting section, Layout B). */
+.ticker-slider[data-variant="stacked"] .ticker-slide {
+  align-items: flex-start;
+}
+
+.ticker-slider[data-variant="stacked"] .ticker-icon {
+  --icon-size: 2rem;
+  margin-bottom: var(--space-l);
+}
+
+.ticker-slider[data-variant="stacked"] .ticker-value,
+.ticker-slider[data-variant="stacked"] .ticker-label {
+  text-align: left;
 }
 
 /* ------ HOME: CASE STUDIES ------ */
