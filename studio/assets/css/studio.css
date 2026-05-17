@@ -899,12 +899,11 @@ body.is-animating[data-studio-scenario="fade"] .page-header {
    Barba wrapper — never affected, not listed.)
 
    Parallax [data-bd-parallax] is different: its jump is caused by
-   scrollTo(0,0) re-driving the live ScrollTrigger scrub, NOT the transform —
-   so it stays faded on EVERY scenario (including rise). Its trigger is
-   deliberately not killed early (doing so reverted the bd-animations context
-   on a still-visible page and made content vanish — see git history); the
-   after-hook bdAnimationsCleanup→Init→refresh repositions it on the settled
-   page. [data-transition-hide] is the general opt-in hatch (close/push only,
+   scrollTo(0,0) re-driving the live ScrollTrigger scrub, NOT the transform.
+   It is no longer faded here — the before hook freezes its scrub triggers in
+   place via ScrollTrigger.disable(false) (Phase 0), so it holds position with
+   the leaving page instead of jumping. [data-transition-hide] is the general
+   opt-in hatch (close/push only,
    same as the sticky set). [data-pin] is unused in studio markup — dropped.
    Transition here = fast fade-OUT; base rules below own the fade back IN. */
 body.is-animating[data-studio-scenario="close"] .section-header,
@@ -920,8 +919,7 @@ body.is-animating[data-studio-scenario="push"] .share-block,
 body.is-animating[data-studio-scenario="push"] .case-study-content-inner,
 body.is-animating[data-studio-scenario="push"] .sticky-media,
 body.is-animating[data-studio-scenario="push"] .founder-header,
-body.is-animating[data-studio-scenario="push"] [data-transition-hide],
-body.is-animating [data-bd-parallax] {
+body.is-animating[data-studio-scenario="push"] [data-transition-hide] {
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--duration-xs) var(--ease-out);
@@ -3831,17 +3829,21 @@ a.footer-logo:hover {
   flex-direction: column;
   align-items: center;
   gap: var(--space-s);
+  background-color: var(--background-faded);
+  border-radius: var(--radius-s);
+  padding: var(--space-l) var(--space-xl);
 }
 
 /* Big stat — the slide's headline. */
 .report-ticker-value {
-  font-size: var(--font-3xl);
-  font-weight: var(--font-weight-light);
+  font-size: var(--font-4xl);
+  font-weight: var(--font-weight-medium);
   line-height: 1;
   letter-spacing: -0.01em;
   color: var(--text-primary);
   white-space: nowrap;
   text-align: center;
+  margin: 0;
 }
 
 /* Label is itself the inline row: icon + caption text on one line. */
@@ -3853,13 +3855,12 @@ a.footer-logo:hover {
   line-height: var(--line-height-m);
   color: var(--text-secondary);
   white-space: nowrap;
+  margin: 0;
 }
 
 /* Icon size + color override. .svg-icn base handles centering + aspect-ratio. */
 .report-ticker-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  color: var(--text-faded);
+  --icon-size: 1em;
 }
 
 /* Mobile scale-down — keeps slides legible at narrow widths. */

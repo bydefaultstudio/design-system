@@ -694,6 +694,25 @@ function initStudioBarba() {
     var isRise = _pendingScenario === "open"
               || _pendingScenario === "swap"
               || _pendingScenario === "fade";
+    // Parallax freeze (Phase 0). The scrollTo(0,0) in the atomic block below
+    // would re-drive the live [data-bd-parallax] scrub:1 ScrollTrigger on the
+    // still-visible leaving page — the parallax "jump". Freeze just those
+    // triggers in place: disable(false) stops them updating WITHOUT reverting
+    // their tween values. The `false` is mandatory — the default `true`
+    // reverts the bd-animations context on a still-visible page and makes
+    // content vanish (a known dead-end). Scoped to parallax triggers inside
+    // the leaving container only, so bd-animations scroll-reveals are
+    // untouched. The frozen triggers die with the leaving context in the
+    // after hook (bdAnimationsCleanup) — no restore needed. Runs before the
+    // atomic block (synchronous, no paint) so Bug B atomicity is preserved.
+    if (typeof ScrollTrigger !== "undefined" && leavingEl) {
+      ScrollTrigger.getAll()
+        .filter(function isLeavingParallaxTrigger(st) {
+          return st.trigger && leavingEl.contains(st.trigger)
+              && st.trigger.closest("[data-bd-parallax]");
+        })
+        .forEach(function freezeTrigger(st) { st.disable(false); });
+    }
     // Atomic positioning block — one synchronous task, no paint between
     // statements, so there is never a frame with the container absolute/top:0
     // and no compensation (Bug B).
