@@ -592,6 +592,13 @@ var studioTransition = {
     // .barba-leave / .barba-enter classes).
     data.current.container.setAttribute("data-studio-scenario", scenario);
     data.current.container.setAttribute("data-studio-role", "leave");
+    // a11y: the leaving page animates out over several hundred ms before
+    // Barba removes it. inert takes it out of the AT tree AND the keyboard
+    // tab order for that window so focus/screen-reader can't land in a
+    // departing page (mirrors the drawer's inert-on-.main pattern). Barba
+    // detaches the node in `after`, so the attribute dies with it; the
+    // defensive after-hook clear also strips it for any cached-reuse case.
+    data.current.container.setAttribute("inert", "");
     data.next.container.setAttribute("data-studio-scenario", scenario);
     data.next.container.setAttribute("data-studio-role", "enter");
 
@@ -904,7 +911,7 @@ function initStudioBarba() {
     // reused/cached container would otherwise keep a phantom clip (same
     // defensive case as the inline `top` clear below).
     gsap.set([pageHeader, nextStage, leavingStage].filter(Boolean), {
-      clearProps: "transform,transformOrigin,opacity,visibility,clipPath,willChange",
+      clearProps: "transform,transformOrigin,scale,opacity,visibility,clipPath,willChange",
     });
 
     // Defensive: the before hook sets an inline `top` on the leaving
@@ -914,6 +921,9 @@ function initStudioBarba() {
     // removes the inline even though GSAP didn't set it.)
     if (leavingContainer && leavingContainer.isConnected) {
       gsap.set(leavingContainer, { clearProps: "top" });
+      // Same defensive reasoning: drop the inert set in studioLeave if a
+      // cached leaving container is ever reused (normally Barba detaches it).
+      leavingContainer.removeAttribute("inert");
     }
 
     window.scrollTo(0, 0);

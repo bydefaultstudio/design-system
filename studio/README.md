@@ -102,8 +102,8 @@ Studio uses **Barba 2.x** (loaded from CDN, no parent dependency) with a single 
 | Level | Pages | Role |
 |---|---|---|
 | **L0** | `index.html` | Home — the floor. Always conceptually beneath everything. Never moves. |
-| **L1** | `about.html`, `work.html`, `contact.html` | Top-level destinations. Open over home, close down to reveal home. |
-| **L2** | `work/case-study-*.html`, `articles/article-*.html` | Feed items (case studies, articles). Same opening / closing as L1, but L2 → L2 sibling navigation uses a special conveyor transition. |
+| **L1** | `about.html`, `services.html`, `products.html`, `contact.html`, `styleguide.html` | Top-level destinations. Rise over home (`enter`), drop down to reveal home (`exit`). |
+| **L2** | `work/*.html`, `articles/*.html` | Feed items (case studies, articles). Same enter/exit as L1; L2 → L2 sibling navigation uses `swap`. The article next-read card uses `advance` (a frozen continuous-reading push). |
 
 Every Barba container declares its level via `data-level` and its position via `data-order`:
 
@@ -123,35 +123,49 @@ Current pages:
 | `index.html` | `0` | `0` |
 | `about.html` | `1` | `1` |
 | `contact.html` | `1` | `2` |
-| `work/mastercards-interactive-map.html` | `2` | `0` |
-| `articles/naming-things.html` | `2` | `0` |
+| `products.html` | `1` | `4` |
+| `work/*.html` (case studies) | `2` | per front-matter |
+| `articles/*.html` | `2` | per front-matter |
 
-### Scenarios and transitions
+L2 pages are generated; the generator fills `data-level` / `data-order` from front-matter.
 
-The transition system separates **scenarios** (what's happening) from **animations** (what it looks like). `resolveScenario()` determines the scenario; `TRANSITION_MAP` near the top of `studio-barba.js` controls which animation runs for each scenario.
+### Architecture (read before touching the transition code)
 
-| From → To | Scenario | Default animation | What it looks like |
-|---|---|---|---|
-| **Home → anything** (L0 → L1 / L0 → L2) | `open` | `slide-up` | New page rises from the bottom; home scales down and dims underneath. |
-| **Anything → home** (L1 → L0 / L2 → L0) | `close` | `slide-down` | Current page falls off the bottom; home scales back up and brightens. |
-| **Non-home → non-home** (L1 ↔ L1, L2 ↔ L2, L1 ↔ L2) | `swap` | `conveyor-up` | **Conveyor**: old page rides off the top while the new page rises from the bottom in a single continuous upward sweep. |
-| Same page or unknown | `fade` | `fade` | Crossfade fallback. |
+The whole transition system rests on **one invariant**:
 
-**Swapping a transition:** change one line in `TRANSITION_MAP` (e.g. `open: "fade"`) and the scenario's visual changes globally. The animation always receives the scenario's motion token, so the timing stays correct regardless of which animation you map to it.
+> `[data-barba="container"]` is **never** transformed, **never** `position:absolute`, and **never** carries an opaque `background`. A single inner **`[data-barba-stage]`** wrapper is the **only** transformed node, and the opaque page background lives on **`.page-wrapper`** (inside the stage), so it rides the transform with the content.
 
-**Why one rule for all non-home transitions?** It's the simplest mental model: if you're not going to home and you're not coming from home, you're swapping siblings — conveyor handles all of those cases.
+Consequences that have each been a real bug when violated:
 
-Reduced-motion users get instant swaps automatically via `prefers-reduced-motion: reduce`.
+- **Transforms target `stageOf(container)`** = `container > [data-barba-stage]` (falls back to the container only if the wrapper is missing — every page must have the wrapper). Transforming the container makes it the containing block for its `position:fixed`/`sticky` descendants, which then snap.
+- **Background must be on `.page-wrapper`, not the container.** The container never moves; an opaque background on it (or on the leaving-pin rule) sits static over the `.page-overlay` during `enter` and over home during `exit` — the page reads as "no overlay / no home underneath". `.main` / `.layout` are the opaque backstop beneath everything.
+- **The leaving container is pinned `position:fixed`** (CSS-scoped to `[data-studio-role="leave"]`, set atomically in the `before` hook) so the entering page stays in flow and never reflows. Scroll is never zeroed while a page is still visible.
+- The hard-refresh loading curtain (`bd-intro.js`) and the GSAP/ScrollTrigger system (`bd-animations.js`) are independent; never `ScrollTrigger.refresh()` with a live stage transform.
+
+### Scenarios and the transition factory
+
+`resolveScenario(fromEl, toEl)` reads the two containers' `data-level` and returns one of **five scenarios**. There is **no `TRANSITION_MAP`** — a single `buildTransition(scenario, data, opts)` factory builds one GSAP timeline per navigation from the **`SCENARIOS` descriptor table** near the top of `studio-barba.js`. Each descriptor is `{ motion, shape, header }`.
+
+| Trigger | Scenario | Shape | Motion token | What it looks like |
+|---|---|---|---|---|
+| **Home → anything** (L0 → L1/L2) | `enter` | `rise` | `--motion-page-open` | Entering stage lifts up from the bottom + scales in; `.page-overlay` dims home beneath. |
+| **Anything → home** (L1/L2 → L0) | `exit` | `drop` | `--motion-page-close` | Leaving stage falls away; home scales/brightens in behind. |
+| **Non-home → non-home** (L1↔L1, L2↔L2, L1↔L2) | `swap` | `rise` | `--motion-page-swap` | Same shape as `enter`. The case-study slider uses this (standard lateral move). |
+| **Article next-read card** | `advance` | `push` | `--motion-page-swap` | **Frozen geometry**: the leaving article slides up so the next article's title lands where the card title was. Side sticky chrome rides up with it. |
+| Same URL / unknown | `fade` | `fade` | `--motion-page-fade` | True crossfade fallback. |
+
+Notes:
+
+- **Token names are unchanged** (`--motion-page-open/close/swap/fade`); only the scenario identifiers are `enter/exit/swap/advance/fade`. Timing always comes from the scenario's motion token (see [`cms/motion.md`](../../cms/motion.md)) — no hardcoded durations/easings.
+- **`exit` strip-clips the leaving stage** (a static, paint-only `clip-path: inset(...)` on the stage, `drop` only) so a deep-scrolled page can't whip its above-scroll content into view as it falls. The clip is captured pre-pin and only applied when scrolled.
+- **Page-header choreography** is folded into the same timeline: `enter/exit/swap` run it **serially** — OUT fully → page transition → eyebrow text swap → IN; `advance/fade` swap the eyebrow **instantly** (continuous-reading feel).
+- **Reduced motion**: a single guard in `buildTransition` returns a `duration:0` state-only timeline — instant swap, sticky chrome correct, no per-scenario branches.
+
+To change a scenario's feel, edit its row in the `SCENARIOS` table (shape / header / motion) — never add per-scenario builder functions or a map.
 
 ### Close button
 
-Every non-home page has an X in the top-right of the main area. It's a real `<a href="index.html">` (computed relative to the current page so it works at any depth) that Barba intercepts and runs the `close` scenario. **Same code path as clicking "Home" in the sidebar** — no special close logic.
-
-The close button:
-- Is **injected once** by `studio.js` on init (no per-page HTML)
-- Is **shown / hidden via CSS** based on `body[data-current-level]` (set on init from the initial Barba container, kept in sync by the `afterEnter` Barba hook)
-- Has its `href` re-computed after every Barba navigation, so it always points to the right relative path back to `index.html`
-- Falls back to a real navigation when JavaScript is disabled
+Every non-home page has a close control in the persistent **`.page-header`** bar (`<a id="studio-close-btn" class="close-btn" href="index.html">`, the path written relative to the page's depth). It is **real per-page HTML** inside `.page-header` (not injected by JS); Barba intercepts the click and runs the `exit` scenario. **Same code path as clicking "Home" in the sidebar** — no special close logic. The eyebrow text + close bar are part of the serial header choreography above, and the bar falls back to a real navigation when JavaScript is disabled.
 
 ### What's inside the Barba container, what's outside
 
