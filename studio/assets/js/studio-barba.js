@@ -273,23 +273,17 @@ var SLIDE_DOWN_ENTER_ORIGIN = "50% 0%";
 function riseTimeline(data) {
   if (prefersReducedMotion()) return Promise.resolve();
   var el = data.next.container;
-  // The leaving page must stay visually pinned where the user was scrolled
-  // to while the new page rises over it. The before hook stamped a
-  // translateY(+scrollY) bridge on it (Bug B) which close/push overwrite via
-  // their fromTo — rise never animated the leaving container, so that stale
-  // bridge displaced the scrolled page off-screen. Pin it at y:offset
-  // (= -scrollY = _pendingScrollOffset) for the whole rise (Bug 1).
-  var leavingEl = data.current ? data.current.container : null;
-  var offset = _pendingScrollOffset || 0;
+  // The leaving page is positioned by an inline `top: -scrollY` set in the
+  // before hook (no transform), so it stays visually pinned where the user
+  // was scrolled to while the new page rises over it — WITHOUT becoming a
+  // transformed ancestor. rise therefore applies no transform to the leaving
+  // container at all (close/push do, because they move it).
   var overlay = document.querySelector(".page-overlay");
   var header = document.querySelector(".page-header:not([hidden])");
   var gm = gsapMotion(MOTION.pageRise);
   return new Promise(function (resolve) {
     var tl = gsap.timeline({ onComplete: resolve });
     _pendingTimeline = tl;
-    if (leavingEl) {
-      tl.set(leavingEl, { y: offset }, 0);
-    }
     if (overlay) {
       tl.fromTo(
         overlay,
@@ -484,17 +478,11 @@ var studioTransition = {
         "inset(" + insetTop + "px 0 " + insetBottom + "px 0)";
     }
 
-    // Bug 1, synchronous pin: the before-hook +scrollY bridge is only correct
-    // while the leaving container was position:relative — once is-animating
-    // flipped it to absolute/top:0 the correct compensation is y:scrollOffset
-    // (-scrollY). riseTimeline also pins it via a position-0 tl.set, but that
-    // renders on the first GSAP tick, which is AFTER bdAnimateElementsOut runs
-    // below — leaving a multi-frame window where the scrolled page is still
-    // displaced. gsap.set renders immediately, closing that window. (close/push
-    // don't need this — their fromTo start value is already scrollOffset.)
-    if (scenario === "open" || scenario === "swap" || scenario === "fade") {
-      gsap.set(data.current.container, { y: scrollOffset });
-    }
+    // rise no longer pins the leaving container with a transform — the before
+    // hook positions it via inline `top: -scrollY` (no transform, so its
+    // sticky/fixed descendants don't fall into the containing-block trap).
+    // close/push still transform the leaving container via their own fromTo
+    // (start value = scrollOffset), unchanged.
 
     // GSAP element-out animations (skip for push — morph would conflict)
     var outPromise = Promise.resolve();
@@ -657,9 +645,17 @@ function initStudioBarba() {
   window.barba.hooks.before(function onBefore(data) {
     // Scroll compensation — ATOMIC with is-animating + scrollTo so there is
     // never a painted frame where the leaving container is position:absolute
-    // top:0 without the offsetting transform (Bug B: page flashes to its top
-    // when navigating while scrolled). Set the transform while the container
-    // is still position:relative, THEN add is-animating, THEN snap to top.
+    // top:0 without the offsetting compensation (Bug B: page flashes to its
+    // top when navigating while scrolled). Two compensation methods, branched
+    // by scenario below:
+    //   rise (open/swap/fade): the leaving page does NOT visibly move (only
+    //     the new page rises), so compensate with a NON-transform inline
+    //     `top: -scrollY`. No transform on the leaving container → its
+    //     position:sticky/fixed descendants don't fall into the
+    //     transformed-ancestor containing-block trap (no fade needed for them
+    //     on rise — see studio.css scenario-split opacity rule).
+    //   close/push: the leaving page IS the motion (slides down / pushes up),
+    //     so it must be transformed — keep the original translateY bridge.
     var leavingEl = data && data.current ? data.current.container : null;
     var scrollY = window.scrollY || 0;
     _pendingScrollOffset = -scrollY;
@@ -684,20 +680,47 @@ function initStudioBarba() {
         _pendingNextReadTop = nextReadEl.getBoundingClientRect().top - nrTopBar;
       }
     }
-    if (leavingEl && scrollY > 0) {
-      leavingEl.style.transform = "translateY(" + scrollY + "px)";
-    }
-    document.body.classList.add("is-animating");
-    if (scrollY > 0) {
-      window.scrollTo(0, 0);
-    }
-    // Resolve scenario once per transition. studioLeave will read it from
-    // _pendingScenario instead of re-resolving (which would re-consume the
-    // _nextReadNav flag and misclassify next-read clicks).
+    // Resolve scenario BEFORE positioning so the atomic block can branch its
+    // compensation method. Still called exactly once per transition — the
+    // sole consumer of the one-shot _nextReadNav. studioLeave reads
+    // _pendingScenario (its `_pendingScenario || resolveScenario(...)`
+    // short-circuits, so it never re-consumes). resolveScenario does no DOM
+    // mutation/measurement, so moving it above the positioning block keeps the
+    // Bug 4 next-read measurement (already done above) unaffected.
     _pendingScenario = resolveScenario(
       data && data.current ? data.current.container : null,
       data && data.next ? data.next.container : null
     );
+    var isRise = _pendingScenario === "open"
+              || _pendingScenario === "swap"
+              || _pendingScenario === "fade";
+    // Atomic positioning block — one synchronous task, no paint between
+    // statements, so there is never a frame with the container absolute/top:0
+    // and no compensation (Bug B).
+    if (isRise) {
+      // is-animating flips the container to position:absolute; top:0
+      // (studio.css). Inline `top:-scrollY` (no !important on that rule)
+      // overrides it — applied ONLY to the leaving container, never to
+      // data.next. No transform → no containing-block trap for its
+      // sticky/fixed descendants.
+      document.body.classList.add("is-animating");
+      if (leavingEl && scrollY > 0) {
+        leavingEl.style.top = (-scrollY) + "px";
+      }
+      if (scrollY > 0) {
+        window.scrollTo(0, 0);
+      }
+    } else {
+      // close/push — unchanged from the original bridge: transform while still
+      // position:relative, THEN is-animating, THEN snap to top.
+      if (leavingEl && scrollY > 0) {
+        leavingEl.style.transform = "translateY(" + scrollY + "px)";
+      }
+      document.body.classList.add("is-animating");
+      if (scrollY > 0) {
+        window.scrollTo(0, 0);
+      }
+    }
     // Surface the scenario on <body> so CSS can react during the transition
     // (e.g. lifting .page-header above the .page-overlay during rise).
     document.body.setAttribute("data-studio-scenario", _pendingScenario);
@@ -796,6 +819,16 @@ function initStudioBarba() {
     gsap.set([pageHeader, nextContainer].filter(Boolean), {
       clearProps: "transform,transformOrigin,opacity,visibility,clipPath",
     });
+
+    // Defensive: rise sets an inline `top` on the leaving container. Barba
+    // normally detaches that node so the inline dies with it, but if a cached
+    // container is ever reused, a stale `top` would offset it. Clear it if the
+    // node is still connected. (clearProps removes the inline even though GSAP
+    // didn't set it.)
+    var leavingContainer = data && data.current ? data.current.container : null;
+    if (leavingContainer && leavingContainer.isConnected) {
+      gsap.set(leavingContainer, { clearProps: "top" });
+    }
 
     window.scrollTo(0, 0);
 
