@@ -266,24 +266,42 @@ var SLIDE_DOWN_ENTER_SCALE_FROM = 0.96;
 var SLIDE_DOWN_ENTER_OPACITY_FROM = 0.7;
 var SLIDE_DOWN_ENTER_ORIGIN = "50% 0%";
 
+// Resolve a container's transform stage — the single inner element every
+// transition animates, so the container itself is never transformed and
+// therefore never a containing block for its position:sticky/fixed
+// descendants (the whole page + its sticky chrome moves as one rigid unit).
+// `:scope >` is mandatory (a reused/cached container must not match a nested
+// stage); falls back to the container if the wrapper is absent so a
+// half-migrated page degrades to the old behaviour instead of throwing.
+function stageOf(container) {
+  return (
+    (container && container.querySelector(":scope > [data-barba-stage]")) ||
+    container
+  );
+}
+
 // rise — open / swap / fade. Overlay dims, entering page lifts + scales in,
 // page-header slides in (parked at -100% by the CSS rule). All parallel in
 // one timeline, total = pageRise duration. Leaving page stays still
 // (scroll-compensated in the before hook).
 function riseTimeline(data) {
   if (prefersReducedMotion()) return Promise.resolve();
-  var el = data.next.container;
-  // The leaving page is positioned by an inline `top: -scrollY` set in the
-  // before hook (no transform), so it stays visually pinned where the user
-  // was scrolled to while the new page rises over it — WITHOUT becoming a
-  // transformed ancestor. rise therefore applies no transform to the leaving
-  // container at all (close/push do, because they move it).
+  // Animate the entering page's STAGE, never the container. The container is
+  // pinned (position:fixed) by the before hook and never transformed, so its
+  // sticky/fixed descendants keep a clean containing block; the stage carries
+  // the rise. The leaving page stays put — pinned via inline `top: -scrollY`
+  // (no transform) in the before hook — while the new page rises over it.
+  var el = stageOf(data.next.container);
   var overlay = document.querySelector(".page-overlay");
   var header = document.querySelector(".page-header:not([hidden])");
   var gm = gsapMotion(MOTION.pageRise);
   return new Promise(function (resolve) {
     var tl = gsap.timeline({ onComplete: resolve });
     _pendingTimeline = tl;
+    // Promote the stage for the duration of the transition; the after hook
+    // clears willChange (with transform) before the rAF that refreshes
+    // ScrollTrigger, so nothing measures a layer-promoted node.
+    gsap.set(el, { willChange: "transform" });
     if (overlay) {
       tl.fromTo(
         overlay,
@@ -350,21 +368,29 @@ function riseTimeline(data) {
 // in studioLeave keeps a scrolled article from content-whip.
 function slideDownTimeline(data) {
   if (prefersReducedMotion()) return Promise.resolve();
-  var leavingEl = data.current.container;
-  var el = data.next.container;
-  var offset = _pendingScrollOffset || 0;
+  // Animate the STAGES, never the containers. The leaving container is pinned
+  // (position:fixed; top:-scrollY) by the before hook so it already holds the
+  // user's on-screen scroll position WITHOUT a transform — so the leaving
+  // stage starts at a neutral y:0 (adding the old `offset` would double-count
+  // the scroll compensation now that the pin, not a transform, owns it) and
+  // travels one viewport down. Entering page is home, brought back from its
+  // scaled/dimmed receded state.
+  var leavingStage = stageOf(data.current.container);
+  var el = stageOf(data.next.container);
   var gm = gsapMotion(MOTION.pageClose);
   return new Promise(function (resolve) {
     var tl = gsap.timeline({ onComplete: resolve });
     _pendingTimeline = tl;
-    if (leavingEl) {
+    if (leavingStage) {
+      gsap.set(leavingStage, { willChange: "transform" });
       tl.fromTo(
-        leavingEl,
-        { y: offset },
-        { y: offset + window.innerHeight, duration: gm.duration, ease: gm.ease },
+        leavingStage,
+        { y: 0 },
+        { y: window.innerHeight, duration: gm.duration, ease: gm.ease },
         0
       );
     }
+    gsap.set(el, { willChange: "transform" });
     tl.fromTo(
       el,
       {
@@ -382,8 +408,14 @@ function slideDownTimeline(data) {
 // distance; the next article sits at y:0 behind (no enter animation).
 function pushUpTimeline(data, opts) {
   if (prefersReducedMotion()) return Promise.resolve();
-  var leavingEl = data.current.container;
-  // nextReadTop is the pre-bridge measured distance (Bug 4): a number (>= 0,
+  // Frozen visible treatment: the leaving article slides up by exactly the
+  // measured next-read distance so the next article's title lands where the
+  // card title was. The whole STAGE translates, so the side sticky chrome
+  // (toc / share / sticky-media) rides up rigidly WITH the article instead of
+  // being opacity-masked (user-approved — title-shift geometry is what's
+  // frozen, the sides riding is the deliberate improvement).
+  var leavingStage = stageOf(data.current.container);
+  // nextReadTop is the pre-pin measured distance (Bug 4): a number (>= 0,
   // floored — a flush card legitimately yields 0 / no travel, and the floor
   // prevents reverse-travel on very short articles) when a next-read card was
   // found, or null for a next-read click with no measurable card (e.g.
@@ -393,15 +425,19 @@ function pushUpTimeline(data, opts) {
   var pushDistance = typeof nrt === "number"
     ? Math.max(0, nrt)
     : window.innerHeight;
-  var offset = _pendingScrollOffset || 0;
   var gm = gsapMotion(MOTION.pagePush);
   return new Promise(function (resolve) {
     var tl = gsap.timeline({ onComplete: resolve });
     _pendingTimeline = tl;
+    // Stage starts neutral (y:0): the leaving container is already pinned at
+    // the on-screen scroll position via the before-hook inline `top`, so the
+    // pure -pushDistance translate is frame-identical to the old
+    // container-transform approach without double-counting scrollY.
+    gsap.set(leavingStage, { willChange: "transform" });
     tl.fromTo(
-      leavingEl,
-      { y: offset },
-      { y: offset - pushDistance, duration: gm.duration, ease: gm.ease },
+      leavingStage,
+      { y: 0 },
+      { y: -pushDistance, duration: gm.duration, ease: gm.ease },
       0
     );
   });
@@ -443,46 +479,19 @@ var studioTransition = {
     data.next.container.setAttribute("data-studio-scenario", scenario);
     data.next.container.setAttribute("data-studio-role", "enter");
 
-    // Push distance was measured in the `before` hook BEFORE the bridge
-    // transform + scrollTo poisoned getBoundingClientRect (Bug 4). Consume the
-    // stashed value here, mirroring how scrollOffset consumes
-    // _pendingScrollOffset below. Pass it through verbatim — null (not push /
-    // no next-read card) vs numeric (measured, may be 0) is resolved in
-    // pushUpTimeline so a card-less next-read still animates.
+    // Push distance was measured in the `before` hook BEFORE the pin +
+    // scrollTo could poison getBoundingClientRect (Bug 4). Pass it through
+    // verbatim — null (not advance / no next-read card) vs numeric (measured,
+    // may be 0) is resolved in pushUpTimeline so a card-less next-read still
+    // animates.
     var nextReadTop = _pendingNextReadTop;
     _pendingNextReadTop = null;
 
-    // Scroll compensation was applied atomically in the `before` hook (the
-    // transform on the leaving container, is-animating, and scrollTo(0,0)
-    // all run there in one synchronous block — see Bug B). Here we only
-    // consume the captured offset for the close/push animation math.
-    var scrollOffset = _pendingScrollOffset || 0;
-
-    // On close, clip the leaving container to the user's current viewport
-    // strip so only the visible content translates during the WAAPI slide.
-    // Without this, translating a tall (e.g. 4000px) article container
-    // exposes content from above/below the user's scroll position — which
-    // reads as "the article scrolling back to its top" while it also
-    // slides down. clip-path inset() values are in the element's own
-    // pre-transform coordinates, so they follow the translate cleanly.
-    //
-    // Rise (open/swap/fade) and push do not translate the leaving container,
-    // so the clip is unnecessary for them.
-    if (scenario === "close") {
-      var scrollY = -scrollOffset; // scrollOffset = -scrollY (captured in before)
-      var containerHeight = data.current.container.offsetHeight;
-      var viewportHeight = window.innerHeight;
-      var insetTop = scrollY;
-      var insetBottom = Math.max(0, containerHeight - scrollY - viewportHeight);
-      data.current.container.style.clipPath =
-        "inset(" + insetTop + "px 0 " + insetBottom + "px 0)";
-    }
-
-    // rise no longer pins the leaving container with a transform — the before
-    // hook positions it via inline `top: -scrollY` (no transform, so its
-    // sticky/fixed descendants don't fall into the containing-block trap).
-    // close/push still transform the leaving container via their own fromTo
-    // (start value = scrollOffset), unchanged.
+    // No clip-path and no per-scenario container transform any more. Every
+    // scenario pins the leaving container out of flow via the before-hook
+    // inline `top: -scrollY` (non-transform) and animates only the stage, so
+    // the whole page moves as one rigid unit — a tall scrolled article can't
+    // content-whip, which is the only thing the old close clip-path guarded.
 
     // GSAP element-out animations (skip for push — morph would conflict)
     var outPromise = Promise.resolve();
@@ -680,20 +689,17 @@ function initStudioBarba() {
         _pendingNextReadTop = nextReadEl.getBoundingClientRect().top - nrTopBar;
       }
     }
-    // Resolve scenario BEFORE positioning so the atomic block can branch its
-    // compensation method. Still called exactly once per transition — the
-    // sole consumer of the one-shot _nextReadNav. studioLeave reads
-    // _pendingScenario (its `_pendingScenario || resolveScenario(...)`
-    // short-circuits, so it never re-consumes). resolveScenario does no DOM
-    // mutation/measurement, so moving it above the positioning block keeps the
-    // Bug 4 next-read measurement (already done above) unaffected.
+    // Resolve scenario once per transition — the sole consumer of the
+    // one-shot _nextReadNav. studioLeave reads _pendingScenario (its
+    // `_pendingScenario || resolveScenario(...)` short-circuits, so it never
+    // re-consumes). resolveScenario does no DOM mutation/measurement, so it's
+    // safe above the positioning block. All scenarios now share ONE
+    // non-transform pin — there is no longer a per-scenario compensation
+    // branch.
     _pendingScenario = resolveScenario(
       data && data.current ? data.current.container : null,
       data && data.next ? data.next.container : null
     );
-    var isRise = _pendingScenario === "open"
-              || _pendingScenario === "swap"
-              || _pendingScenario === "fade";
     // Parallax freeze (Phase 0). The scrollTo(0,0) in the atomic block below
     // would re-drive the live [data-bd-parallax] scrub:1 ScrollTrigger on the
     // still-visible leaving page — the parallax "jump". Freeze just those
@@ -714,31 +720,29 @@ function initStudioBarba() {
         .forEach(function freezeTrigger(st) { st.disable(false); });
     }
     // Atomic positioning block — one synchronous task, no paint between
-    // statements, so there is never a frame with the container absolute/top:0
-    // and no compensation (Bug B).
-    if (isRise) {
-      // is-animating flips the container to position:absolute; top:0
-      // (studio.css). Inline `top:-scrollY` (no !important on that rule)
-      // overrides it — applied ONLY to the leaving container, never to
-      // data.next. No transform → no containing-block trap for its
-      // sticky/fixed descendants.
-      document.body.classList.add("is-animating");
-      if (leavingEl && scrollY > 0) {
-        leavingEl.style.top = (-scrollY) + "px";
-      }
-      if (scrollY > 0) {
-        window.scrollTo(0, 0);
-      }
-    } else {
-      // close/push — unchanged from the original bridge: transform while still
-      // position:relative, THEN is-animating, THEN snap to top.
-      if (leavingEl && scrollY > 0) {
-        leavingEl.style.transform = "translateY(" + scrollY + "px)";
-      }
-      document.body.classList.add("is-animating");
-      if (scrollY > 0) {
-        window.scrollTo(0, 0);
-      }
+    // statements, so there is never a frame where the leaving page is
+    // is-animating + scroll-zeroed but NOT yet pinned (Bug B).
+    //
+    // The pin (position:fixed) is CSS-scoped to [data-studio-role="leave"]
+    // so the ENTERING container stays position:relative in normal flow and
+    // never reflows on the is-animating→removed flip (that flip was the
+    // "advance" end-jump). data-studio-role is also set in studioLeave, but
+    // it MUST be set here too so the pin rule applies in this same paint-free
+    // task as is-animating + scrollTo — otherwise a scrolled leaving page
+    // could paint unpinned for a frame. The inline `top:-scrollY` (no
+    // !important on the rule) overrides its top:0 so the leaving page stays
+    // where the user was scrolled — WITHOUT a transform, so its sticky/fixed
+    // descendants never fall into the containing-block trap. The visible
+    // motion lives entirely on the stage (see the timelines).
+    document.body.classList.add("is-animating");
+    if (leavingEl) {
+      leavingEl.setAttribute("data-studio-role", "leave");
+    }
+    if (leavingEl && scrollY > 0) {
+      leavingEl.style.top = (-scrollY) + "px";
+    }
+    if (scrollY > 0) {
+      window.scrollTo(0, 0);
     }
     // Surface the scenario on <body> so CSS can react during the transition
     // (e.g. lifting .page-header above the .page-overlay during rise).
@@ -798,6 +802,10 @@ function initStudioBarba() {
     var pageOverlay = document.querySelector(".page-overlay");
     var pageHeader = document.querySelector(".page-header");
     var nextContainer = data && data.next ? data.next.container : null;
+    var leavingContainer = data && data.current ? data.current.container : null;
+    // The stages are what the timelines transformed (never the containers).
+    var nextStage = nextContainer ? stageOf(nextContainer) : null;
+    var leavingStage = leavingContainer ? stageOf(leavingContainer) : null;
 
     // Every transition is a GSAP timeline/tween now. Kill the transition
     // timeline (rise / slide-down / push-up) and any standalone tweens on
@@ -809,7 +817,9 @@ function initStudioBarba() {
       _pendingTimeline.kill();
       _pendingTimeline = null;
     }
-    gsap.killTweensOf([pageOverlay, pageHeader, nextContainer].filter(Boolean));
+    gsap.killTweensOf(
+      [pageOverlay, pageHeader, nextStage, leavingStage].filter(Boolean)
+    );
     if (nextContainer) {
       nextContainer.removeAttribute("data-studio-role");
       nextContainer.removeAttribute("data-studio-scenario");
@@ -835,16 +845,26 @@ function initStudioBarba() {
     document.body.classList.remove("is-animating");
     document.body.removeAttribute("data-studio-scenario");
 
-    gsap.set([pageHeader, nextContainer].filter(Boolean), {
-      clearProps: "transform,transformOrigin,opacity,visibility,clipPath",
+    // Header resets AFTER is-animating (Bug A — see above): its own gsap.set,
+    // kept separate so retargeting the page-motion clear onto the stages
+    // can't disturb the header's post-is-animating timing. No clipPath now
+    // (the close clip-path was deleted with the container-transform model).
+    gsap.set([pageHeader].filter(Boolean), {
+      clearProps: "transform,transformOrigin,opacity,visibility",
+    });
+    // Stages carried the page motion — clear transform + the willChange set
+    // at timeline start, synchronously here (before the rAF) so
+    // bdAnimationsInit / ScrollTrigger.refresh never measure a transformed or
+    // layer-promoted stage.
+    gsap.set([nextStage, leavingStage].filter(Boolean), {
+      clearProps: "transform,transformOrigin,opacity,visibility,willChange",
     });
 
-    // Defensive: rise sets an inline `top` on the leaving container. Barba
-    // normally detaches that node so the inline dies with it, but if a cached
-    // container is ever reused, a stale `top` would offset it. Clear it if the
-    // node is still connected. (clearProps removes the inline even though GSAP
-    // didn't set it.)
-    var leavingContainer = data && data.current ? data.current.container : null;
+    // Defensive: the before hook sets an inline `top` on the leaving
+    // container (the non-transform pin). Barba normally detaches that node so
+    // the inline dies with it, but if a cached container is ever reused a
+    // stale `top` would offset it. Clear it if still connected. (clearProps
+    // removes the inline even though GSAP didn't set it.)
     if (leavingContainer && leavingContainer.isConnected) {
       gsap.set(leavingContainer, { clearProps: "top" });
     }

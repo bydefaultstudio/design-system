@@ -776,13 +776,43 @@ body.is-animating [data-barba="wrapper"] {
   pointer-events: none;
 }
 
-body.is-animating [data-barba="container"] {
-  position: absolute;
+/* ONLY the leaving container is taken out of flow during a transition. The
+   entering container stays position:relative in normal flow at scroll 0 the
+   whole time, so it never undergoes a position:fixed→static flip when
+   is-animating is removed — that flip was a one-frame reflow of the entering
+   page (the "advance" end-jump). Scoping to [data-studio-role="leave"]
+   structurally deletes that failure class for every scenario.
+
+   position:fixed (not absolute) keeps the leaving container from being a
+   containing block for its own sticky/fixed descendants — combined with the
+   transform living only on [data-barba-stage], the leaving page + its sticky
+   chrome move as one rigid unit. Its inline `top:-scrollY` (set in the
+   before-hook atomic block, no !important here) overrides top:0 so it stays
+   where the user was scrolled. fixed is viewport-relative, so inset past the
+   sidebar by hand — left/right, not width:100% — mirroring the .page-overlay
+   rule below. No bottom/height: it sizes to content so the stage can
+   translate it. data-studio-role="leave" is set on the leaving container in
+   the before-hook atomic block so this rule (the pin) applies in the same
+   paint-free task as is-animating + scrollTo (Bug B). */
+body.is-animating [data-studio-role="leave"] {
+  position: fixed;
   top: 0;
-  left: 0;
+  left: var(--sidebar-width);
   right: 0;
-  width: 100%;
   background: var(--background-primary);
+}
+
+/* Track sidebar collapse — mirror of the .page-overlay rule so the leaving
+   container's left edge always aligns with the sidebar's current width. */
+body.is-sidebar-collapsed.is-animating [data-studio-role="leave"] {
+  left: var(--sidebar-collapsed-width);
+}
+
+@media (max-width: 768px) {
+  body.is-animating [data-studio-role="leave"] {
+    top: var(--mobile-bar-height);
+    left: 0;
+  }
 }
 
 /* The single per-page transform layer. Every page transition animates THIS
@@ -1000,6 +1030,13 @@ body.is-sidebar-collapsed .page-header {
    container's own page-wrapper so the entering page is correctly padded
    BEFORE animating in (driven by the container's own data-level, not by
    body[data-current-level] which updates late in afterEnter). */
+/* The [data-barba-stage] wrapper sits between the container and .page-wrapper,
+   so the reservation must traverse it (`> [data-barba-stage] > .page-wrapper`).
+   The plain `> .page-wrapper` pair is kept as the stageOf()-degrade fallback
+   (a container without a stage still gets padded). Without this the L1/L2
+   page jams under the fixed .page-header and the next-read title snaps up. */
+[data-barba="container"][data-level="1"] > [data-barba-stage] > .page-wrapper,
+[data-barba="container"][data-level="2"] > [data-barba-stage] > .page-wrapper,
 [data-barba="container"][data-level="1"] > .page-wrapper,
 [data-barba="container"][data-level="2"] > .page-wrapper {
   padding-top: var(--studio-bar-height);
