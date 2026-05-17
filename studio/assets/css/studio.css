@@ -50,7 +50,7 @@
   --duration-stagger: 30ms;
   --sidebar-logo-width: 220px;
   --feed-gap: calc(var(--space-l));
-  --studio-page-overlay-color: rgba(0, 0, 0, 0.2);
+  --studio-page-overlay-color: rgba(0, 0, 0, 0.05);
 }
 
 /* Dark mode token overrides */
@@ -885,25 +885,46 @@ body.is-animating[data-studio-scenario="fade"] .page-header {
   transition: opacity var(--duration-xs) var(--ease-out);
 }
 
-/* All sticky elements that live inside the Barba container suffer the same
-   transformed-ancestor issue as .section-header: when the container animates
-   with translateY(...), the sticky child detaches from the viewport, rides
-   the transform, then snaps. Fade them during transitions to hide the jump.
-   (.page-header avoids this entirely by living outside the Barba wrapper.)
-   Transition is set on this rule so the fast fade-out applies during the
-   transition; .toc-block / .share-block keep their existing slower fade-in
-   transition (--duration-l) for the reveal after is-animating is removed. */
+/* Every position:sticky / position:fixed / parallax element INSIDE the Barba
+   container suffers the transformed-ancestor issue: while is-animating the
+   container is position:absolute (sticky loses its scroll context) and carries
+   a transform (becomes the containing block) — the child detaches from the
+   viewport, rides/snaps. Fade them out during the transition to hide the jump;
+   they auto-revert when is-animating is removed. (.page-header / .sidebar /
+   .mobile-bar / .page-overlay avoid this entirely by living OUTSIDE the Barba
+   wrapper, so they are not listed.)
+
+   Parallax ([data-bd-parallax]) and pin ([data-pin]) are masked here too —
+   opacity-only, on purpose: their ScrollTriggers are deliberately NOT killed
+   early (reverting the bd-animations context on a still-visible page made all
+   revealed content vanish — see git history). The trigger keeps running behind
+   opacity:0; the existing after-hook bdAnimationsCleanup→Init→refresh rebuilds
+   it correctly on the settled page. [data-transition-hide] is the general
+   opt-in hatch for future markup. Transition on this rule = fast fade-OUT;
+   per-element base rules below own the fade back IN. */
 body.is-animating .section-header,
 body.is-animating .toc-block,
 body.is-animating .share-block,
-body.is-animating .case-study-content-inner {
+body.is-animating .case-study-content-inner,
+body.is-animating .sticky-media,
+body.is-animating .founder-header,
+body.is-animating [data-bd-parallax],
+body.is-animating [data-pin],
+body.is-animating [data-transition-hide] {
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--duration-xs) var(--ease-out);
 }
 
-/* Baseline transition for .case-study-content-inner (the others already have one) */
-.case-study-content-inner {
+/* Baseline opacity transition so these fade back IN (not pop) when
+   is-animating is removed — the fade also masks the ≤1-frame stale-position
+   seam before the after-hook ScrollTrigger.refresh lands. .section-header /
+   .toc-block / .share-block already carry their own opacity transition. */
+.case-study-content-inner,
+.sticky-media,
+.founder-header,
+[data-bd-parallax],
+[data-pin] {
   transition: opacity var(--duration-xs) var(--ease-out);
 }
 
