@@ -3860,16 +3860,22 @@ a.footer-logo:hover {
    Splide instance mounted by initReportTicker (products.js). */
 
 /* Outer container — clips ticker overflow at the section edges. */
+
+.reporting-headline {
+  font-size: var(--headline-size);
+}
+
 .ticker-section {
   overflow: hidden;
   margin-top: var(--space-2xl);
 }
 
-/* Slide layout — value stacked above the inline label row. */
+/* Slide layout — left-aligned: icon at the top with a wide gap below it,
+   then the value, then the label. */
 .ticker-slide {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--space-s);
   background-color: var(--background-faded);
   border-radius: var(--radius-s);
@@ -3879,30 +3885,32 @@ a.footer-logo:hover {
 /* Big stat — the slide's headline. */
 .ticker-value {
   font-size: var(--font-4xl);
+  /* font-family: var(--font-tertiary); */
   font-weight: var(--font-weight-medium);
   line-height: 1;
   letter-spacing: -0.01em;
   color: var(--text-primary);
   white-space: nowrap;
-  text-align: center;
+  text-align: left;
   margin: 0;
 }
 
-/* Label is itself the inline row: icon + caption text on one line. */
+/* Caption beneath the value. */
 .ticker-label {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  font-size: var(--font-s);
+  font-size: var(--font-xs);
   line-height: var(--line-height-m);
   color: var(--text-secondary);
   white-space: nowrap;
+  text-align: left;
   margin: 0;
 }
 
-/* Icon size + color override. .svg-icn base handles centering + aspect-ratio. */
+/* Larger feature icon, set off from the value by a wide bottom margin.
+   .svg-icn base handles centering + aspect-ratio. */
 .ticker-icon {
-  --icon-size: 1em;
+  --icon-size: 1.3rem;
+  margin-bottom: var(--space-l);
+  color: var(--text-faded);
 }
 
 /* Mobile scale-down — keeps slides legible at narrow widths. */
@@ -3915,23 +3923,6 @@ a.footer-logo:hover {
     width: 1rem;
     height: 1rem;
   }
-}
-
-/* Stacked variant — left-aligned: larger icon at the top with a wide gap
-   below it, then the value, then the label. Temporary A/B against the base
-   centered card layout (see products.html → Reporting section, Layout B). */
-.ticker-slider[data-variant="stacked"] .ticker-slide {
-  align-items: flex-start;
-}
-
-.ticker-slider[data-variant="stacked"] .ticker-icon {
-  --icon-size: 2rem;
-  margin-bottom: var(--space-l);
-}
-
-.ticker-slider[data-variant="stacked"] .ticker-value,
-.ticker-slider[data-variant="stacked"] .ticker-label {
-  text-align: left;
 }
 
 /* ------ HOME: CASE STUDIES ------ */

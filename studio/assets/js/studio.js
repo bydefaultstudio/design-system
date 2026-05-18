@@ -256,6 +256,7 @@ function logoSlider() {
 
 window.logoSlider = logoSlider;
 window.destroyLogoSliders = destroyLogoSliders;
+window.ensureSplideAutoScroll = ensureSplideAutoScroll;
 
 document.addEventListener("DOMContentLoaded", function initStudio() {
   initSidebarCollapse();
@@ -275,6 +276,7 @@ document.addEventListener("DOMContentLoaded", function initStudio() {
   initNextRead();
   initServices();
   logoSlider();
+  if (typeof initReportTicker === "function") initReportTicker();
   if (typeof mountTestimonialSliders === "function") mountTestimonialSliders();
   if (typeof initHomeFeatured === "function") initHomeFeatured();
   if (typeof initProductSpotlight === "function") initProductSpotlight();

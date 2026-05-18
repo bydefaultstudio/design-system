@@ -1,9 +1,10 @@
 /**
- * Script Purpose: Products page — sticky-scroll image swap and 4-step quiz.
+ * Script Purpose: Products page — sticky-scroll image swap, 4-step quiz, and
+ *                 reporting-section stats ticker.
  * Author: By Default
  * Created: 2026-05-02
- * Version: 0.3.0
- * Last Updated: 2026-05-04
+ * Version: 0.4.0
+ * Last Updated: 2026-05-16
  *
  * Features:
  *   1. Sticky-scroll IntersectionObserver — swaps the right-column image as
@@ -13,13 +14,20 @@
  *      deployment phrase (Q4). Q2 + Q4 each include a "Not sure yet" filler
  *      that contributes nothing. Renders 1-3 recommended-card elements with
  *      thumbnail + name + tagline.
+ *   3. Report ticker — non-interactive Splide + AutoScroll carousel for the
+ *      Reporting section. Slides hand-authored in HTML. Mirrors the home page
+ *      logo ticker's speed, gap, breakpoint, and Barba teardown semantics.
  *
  * Bootstrap:
- *   Exposed via window.initProducts; called from studio.js on DOMContentLoaded
- *   and on the studio:after-nav event dispatched by studio-barba.js.
+ *   - initProducts (walkthrough + quiz) is exposed via window.initProducts
+ *     and called from studio.js on DOMContentLoaded and on studio:after-nav.
+ *   - initReportTicker is exposed separately and called from studio.js on
+ *     DOMContentLoaded + studio-barba.js's after-hook rAF — matching the
+ *     logoSlider lifecycle. Intentionally NOT called from studio:after-nav
+ *     (same double-init race the logoSlider comment in studio.js warns about).
  */
 
-console.log("Script - Products v0.3.0");
+console.log("Script - Products v0.4.0");
 
 
 // ------ Module state ------ //
@@ -473,3 +481,124 @@ function initProducts() {
 }
 
 window.initProducts = initProducts;
+
+
+// ------ Report ticker (Reporting section) ------ //
+// Non-interactive Splide + AutoScroll ticker. Slides hand-authored in
+// products.html. Mounts every .ticker-slider on the page (the page can carry
+// more than one layout variant). Lifecycle mirrors studio.js's logoSlider:
+// DOMContentLoaded + studio-barba.js's after-hook rAF. NOT from studio:after-nav.
+
+var reportTickerSplides = [];
+var reportTickerMotionMql = null;
+var reportTickerMotionListener = null;
+// Bumped on every initReportTicker call. A deferred CDN-load callback only
+// mounts if its captured generation is still current — a newer init (e.g. a
+// fast Barba re-nav) supersedes any still-pending mount, so two callbacks can
+// never both mount onto the same node.
+var reportTickerGen = 0;
+
+function destroyReportTicker() {
+  for (var i = 0; i < reportTickerSplides.length; i++) {
+    // destroy(true) — fully strip loop clones from the DOM so re-mounting
+    // on Barba re-entry doesn't accumulate stale .splide__slide--clone nodes.
+    reportTickerSplides[i].destroy(true);
+  }
+  reportTickerSplides = [];
+
+  if (reportTickerMotionMql && reportTickerMotionListener) {
+    reportTickerMotionMql.removeEventListener("change", reportTickerMotionListener);
+    reportTickerMotionMql = null;
+    reportTickerMotionListener = null;
+  }
+}
+
+// One shared prefers-reduced-motion listener for every mounted instance.
+// Splide AutoScroll does not honor the media query natively, so toggle each.
+function ensureReportTickerMotionListener(motionMql) {
+  if (reportTickerMotionListener) return;
+  reportTickerMotionMql = motionMql;
+  reportTickerMotionListener = function handleMotionChange(e) {
+    for (var i = 0; i < reportTickerSplides.length; i++) {
+      var instance = reportTickerSplides[i];
+      var autoScroll = instance.Components && instance.Components.AutoScroll;
+      if (!autoScroll) continue;
+      if (e.matches) {
+        autoScroll.pause();
+      } else {
+        autoScroll.play();
+      }
+    }
+  };
+  motionMql.addEventListener("change", reportTickerMotionListener);
+}
+
+function mountReportTicker(root) {
+  var motionMql = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  var instance = new Splide(root, {
+    type: "loop",
+    autoWidth: true,
+    arrows: false,
+    pagination: false,
+    gap: "1rem",
+    drag: false,
+    autoScroll: {
+      // gate autoStart manually; the shared listener toggles it afterwards.
+      autoStart: !motionMql.matches,
+      speed: 0.3,
+      pauseOnHover: false,
+    },
+    breakpoints: {
+      600: {
+        gap: "1rem",
+        autoScroll: { speed: 0.3 },
+      },
+    },
+  }).mount({
+    AutoScroll: window.splide.Extensions.AutoScroll,
+  });
+
+  reportTickerSplides.push(instance);
+  ensureReportTickerMotionListener(motionMql);
+}
+
+function initReportTicker() {
+  destroyReportTicker();
+
+  if (!document.querySelector(".ticker-slider")) return;
+
+  if (typeof window.ensureSplideAutoScroll !== "function") {
+    console.warn("[products] ensureSplideAutoScroll missing — studio.js not loaded yet");
+    return;
+  }
+
+  // One CDN-load gate for the whole page (both layout variants), not one per
+  // slider — avoids duplicate Splide/AutoScroll <script> injection when this
+  // page is the first Splide consumer (e.g. reached via Barba, no logo slider).
+  var gen = ++reportTickerGen;
+  window.ensureSplideAutoScroll(function onSplideReady() {
+    // A newer init (fast Barba re-nav) supersedes this pending mount.
+    if (gen !== reportTickerGen) return;
+
+    // Re-query at callback time: Barba may have swapped the container between
+    // queuing and the CDN-load resolving. Mount only the live nodes.
+    var roots = document.querySelectorAll(".ticker-slider");
+    for (var i = 0; i < roots.length; i++) {
+      var root = roots[i];
+      var list = root.querySelector(".splide__list");
+      if (!list || !list.children.length) continue;
+      mountReportTicker(root);
+    }
+
+    // Splide's loop clones expand each track; refresh once, after every
+    // instance has mounted, so downstream ScrollTrigger scrubs re-measure
+    // against the final layout.
+    if (typeof ScrollTrigger !== "undefined") {
+      ScrollTrigger.refresh();
+    }
+  });
+}
+
+window.initReportTicker = initReportTicker;
+window.destroyReportTicker = destroyReportTicker;
