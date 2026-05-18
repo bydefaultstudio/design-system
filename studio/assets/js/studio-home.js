@@ -416,7 +416,7 @@ function getCycleTokens() {
     swapEase: easeInOut,
 
     // pauseBetweenSwaps — hold time between swaps, seconds. 0 = continuous.
-    pauseBetweenSwaps: readDurationToken("--duration-6xl") || 3,
+    pauseBetweenSwaps: readDurationToken("--duration4xl") || 2,
 
     // ─── bounce-drop tweakables ─────────────────────────────────────────
     // Tweak and reload — values are read fresh on every init.
@@ -445,7 +445,7 @@ function getCycleTokens() {
 
 // Slot-machine roll. Outgoing word slides up out, incoming slides up in.
 // Single axis, ease-in-out, one confident sweep.
-function buildSlot(items, tokens) {
+function buildSlot(items, tokens, opts) {
   for (var i = 0; i < items.length; i++) {
     if (items[i].classList.contains("is-active")) {
       gsap.set(items[i], { yPercent: 0, opacity: 1, visibility: "visible" });
@@ -455,7 +455,11 @@ function buildSlot(items, tokens) {
   }
   // repeatDelay holds the loop boundary (last swap → first swap) for the
   // same gap as every other pair, so the cycle reads continuously.
-  var tl = gsap.timeline({ repeat: -1, repeatDelay: tokens.pauseBetweenSwaps });
+  var tl = gsap.timeline({
+    repeat: -1,
+    repeatDelay: tokens.pauseBetweenSwaps,
+    paused: !!(opts && opts.paused)
+  });
   for (var k = 0; k < items.length; k++) {
     var outEl = items[k];
     var inEl = items[(k + 1) % items.length];
@@ -476,10 +480,10 @@ function slotSwap(outEl, inEl, tokens) {
 
 // Per-letter drop with a bounce landing. Outgoing chars fall down with a
 // left→right stagger; incoming chars drop in from above and overshoot.
-function buildBounceDrop(items, tokens) {
+function buildBounceDrop(items, tokens, opts) {
   if (typeof SplitText === "undefined") {
     console.warn("[studio-home] SplitText missing, bounce-drop falling back to slot");
-    return buildSlot(items, tokens);
+    return buildSlot(items, tokens, opts);
   }
 
   // SplitText.create inside gsap.context() auto-reverts on ctx.revert()
@@ -502,7 +506,11 @@ function buildBounceDrop(items, tokens) {
 
   // repeatDelay holds the loop boundary (last swap → first swap) for the
   // same gap as every other pair, so the cycle reads continuously.
-  var tl = gsap.timeline({ repeat: -1, repeatDelay: tokens.pauseBetweenSwaps });
+  var tl = gsap.timeline({
+    repeat: -1,
+    repeatDelay: tokens.pauseBetweenSwaps,
+    paused: !!(opts && opts.paused)
+  });
   for (var k = 0; k < items.length; k++) {
     var outItem = items[k];
     var inItem = items[(k + 1) % items.length];
@@ -594,8 +602,8 @@ function applyMinWidth(wrapper, items) {
 
 function initHeadlineCycle() {
   // Guard before cleanup — cleanup calls timeline.kill() which assumes GSAP.
-  if (typeof gsap === "undefined") {
-    console.warn("[studio-home] GSAP missing, headline cycle bailing");
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+    console.warn("[studio-home] GSAP/ScrollTrigger missing, headline cycle bailing");
     return;
   }
 
@@ -637,7 +645,24 @@ function initOneCycle(wrapper) {
     var tokens = getCycleTokens();
 
     state.ctx = gsap.context(function () {
-      state.timeline = build(items, tokens);
+      state.timeline = build(items, tokens, { paused: true });
+
+      // Gate first play on the wrapper entering the viewport. The H1 cycle
+      // sits below the hero video on desktop, so without this gate the
+      // cycle would spin offscreen while the user watches the video. The
+      // delayedCall holds "participants" (or the first word) for one beat
+      // after the trigger fires so fast scrollers still read it.
+      state.scrollTrigger = ScrollTrigger.create({
+        trigger: wrapper,
+        start: "top 80%",
+        once: true,
+        onEnter: function () {
+          gsap.delayedCall(tokens.pauseBetweenSwaps, function () {
+            if (state.generation === 0 || !state.timeline) return;
+            state.timeline.play(0);
+          });
+        }
+      });
     }, wrapper);
 
     state.resizeHandler = function () {
@@ -664,6 +689,10 @@ function cleanupHeadlineCycle() {
     if (state.resizeHandler) {
       window.removeEventListener("resize", state.resizeHandler);
       state.resizeHandler = null;
+    }
+    if (state.scrollTrigger) {
+      state.scrollTrigger.kill();
+      state.scrollTrigger = null;
     }
   }
   headlineCycleStates.length = 0;
